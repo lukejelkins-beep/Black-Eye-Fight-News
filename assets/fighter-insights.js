@@ -279,26 +279,51 @@
     '<div class="befn-pro-fight-main"><strong class="befn-v3-opponent">'+escapeHTML(x.opponent)+'</strong>'+
     '<span class="befn-v3-method">'+escapeHTML(x.method||'Method unavailable')+'</span>'+
     '<time class="befn-v3-date">'+escapeHTML(x.date||'Date unavailable')+'</time></div>'+
-    '<div class="befn-pro-fight-side"><span class="befn-power-result '+klass+'">'+symbol+'</span></div></li>';
+    '<div class="befn-pro-fight-side"><span class="befn-power-result '+klass+'">'+symbol+'</span></div>'+
+    (window.BEFNStatsProfile&&statsFor(f)?window.BEFNStatsProfile.fightDetail(statsFor(f),{date:x.date,opponent:x.opponent}):'')+'</li>';
   }).join('');
   const pills=fights.map(x=>{const [s,k]=resultSymbol(x.outcome||x.result);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
-  // UFC fighters outside the V3 statistics snapshot: same profile shell,
-  // honest "Unrated" panel and "Stats pending" tiles until data arrives.
-  return '<section class="befn-profile-insights befn-pro-insights befn-v3-pending" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
-   '<aside class="befn-pro-score is-unrated" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating</span>'+
-   '<strong class="befn-v3-score">Unrated</strong><span class="befn-pro-progress" aria-hidden="true"><span style="width:0%"></span></span>'+
+  // UFC fighters outside the old V3 snapshot use the stats build directly when
+  // their file exists: v2 ratings (if eligible) and the stats sections.
+  const stats=statsFor(f),SP=window.BEFNStatsProfile,v2=stats?.ratings?.eligible?stats.ratings:null;
+  const bonus=v2?engine.credentialBonuses({credentials:credentialsFor(f)}):null;
+  const v2Score=id=>{
+   if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
+   const base=v2.skills?.[id]?.roster;
+   return Number.isFinite(base)?Math.min(99,base+Math.max(0,bonus?.[id]?.points||0)):null;
+  };
+  const v2Overall=v2?engine.overall(['striking','grappling','wrestling','defence','form'].map(id=>({id,score:v2Score(id)}))):null;
+  const v2Meters=v2?[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']].map(([id,label])=>{
+   const sc=v2Score(id),d=id==='form'?null:v2.skills?.[id]?.division;
+   const hint=id==='form'?'Weighted to recent fights and opponent strength':
+    Number.isFinite(d)&&stats.division?ordinal(d)+' in '+stats.division:null;
+   return proMeter(label,sc,id!=='form',scoreTier(sc),hint,id==='form'?'':driversHTML(v2.skills?.[id]?.drivers));
+  }).join(''):'';
+  const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
+  const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
+  const tier=scoreTier(v2Overall);
+  return '<section class="befn-profile-insights befn-pro-insights'+(v2?'':' befn-v3-pending')+'" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
+   '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating</span>'+
+   '<strong class="befn-v3-score">'+(v2Overall===null?'Unrated':v2Overall+'<small>/100</small>')+'</strong>'+
+   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(v2Overall||0)+'%"></span></span>'+
    verifiedTag+
    (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>'+
+   (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
-   proSection('ratings','Ratings','UFC statistics pending','<div class="befn-pro-meters">'+
-    known.map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join('')+'</div>')+
+   proSection('ratings','Ratings',v2?'Percentile vs. UFC roster':'UFC statistics pending','<div class="befn-pro-meters">'+
+    (v2?v2Meters:known.map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
+    (v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
+     ' rated UFC fighters, using the whole UFC career with recent fights counting most. Recent form is out of 100.</p>':''))+
    proSection('fights','Recent fights','Up to five recorded UFC fights',
-    history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'<p class="befn-pro-note">Fight history awaiting verification</p>')+
+    (history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'<p class="befn-pro-note">Fight history awaiting verification</p>')+
+    (SP&&stats?SP.history(stats,matched):''))+
    '</div>'+
-   proSection('stats','Recent performance','Per-fight averages appear once UFC statistics are recorded',
+   proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages appear once UFC statistics are recorded',
+    SP&&stats?SP.statsPanel(stats):
     '<div class="befn-pro-tiles">'+metric.map(([label,value,note])=>'<div><strong>'+escapeHTML(String(value))+'</strong>'+
     '<span>'+escapeHTML(label)+'</span><small>'+escapeHTML(note)+'</small></div>').join('')+'</div>')+
+   (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
    '</section>';
  }
  function renderProfile(f){
@@ -449,7 +474,10 @@
  // Ratings v2: per-fighter files from scripts/build-ufc-stats.py, loaded on
  // demand (names.json maps display names to provider slugs).
  const statsNames=new Map(),statsCache=new Map(),statsPending=new Set();
- let statsMeta=null;
+ let statsMeta=null,statsDivisions=null;
+ fetch("data/ufc-stats/divisions.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema===1&&d.divisions){statsDivisions=d;update();}
+ }).catch(()=>{});
  fetch("data/ufc-stats/names.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.names)return;
   statsMeta=d;
@@ -494,6 +522,7 @@
   // Ratings v2 (whole UFC career, recency-weighted, roster + division percentiles)
   // replace the last-five V3 ratings as soon as the fighter's stats file loads.
   const stats=statsFor(f),v2=stats?.ratings?.eligible?stats.ratings:null;
+  const SP=window.BEFNStatsProfile;
   const bonus=v2?engine.credentialBonuses({credentials:credentialsFor(f)}):null;
   const v2Score=id=>{
    if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
@@ -597,20 +626,23 @@
     '<time class="befn-v3-date">'+escapeHTML(b.date||'Date unavailable')+'</time></div>'+
     '<div class="befn-pro-fight-side"><span class="befn-power-result '+klass+'">'+symbol+'</span>'+
     (band?'<small class="befn-pro-opp is-'+band.toLowerCase()+'" title="Opponent strength: '+Math.round(q*100)+'th percentile">'+band+' opp.</small>':'')+
-    '</div></li>';
-  }).join('')+'</ul>';
-  const statsBody='<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
+    '</div>'+(SP&&stats?SP.fightDetail(stats,{boutId:b.boutId,date:b.date,opponent:b.opponent}):'')+'</li>';
+  }).join('')+'</ul>'+(SP&&stats?SP.history(stats,v3.recent.map(b=>b.boutId)):'');
+  const statsBody=SP&&stats?SP.statsPanel(stats):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
    '<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small>'+
    (rank?'<b class="befn-pro-rank">'+escapeHTML(rank)+'</b>':'')+'</div>').join('')+'</div>';
+  const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
   return '<section class="befn-profile-insights befn-pro-insights" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    scorePanel+
+   (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
    proSection('ratings','Ratings',rosterSize?'Percentile vs. UFC roster':'UFC ratings',ratingsBody)+
    proSection('fights','Recent fights','Last five UFC bouts',fightCards)+
    '</div>'+
-   proSection('stats','Recent performance','Per-fight averages, last five UFC bouts',statsBody+
+   proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages, last five UFC bouts',statsBody+
     renderPerformanceHighlights(f,v3)+
     (statRows?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':''))+
+   (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
    '</section>';
  }
  function renderV3Boards(){

@@ -1,4 +1,4 @@
-/* BEFN fighter profile — sumo-style shell (hero, section tabs, cards).
+/* BEFN fighter profile in the Sumo look: light and borderless on cream (2026-11-21).
  * Scoped to #fighterDialog.befn-pro-dialog so the older V3/legacy rules
  * never leak in and this file never leaks out. Palette mirrors sumo.css. */
 #fighterDialog.befn-pro-dialog{
@@ -19,142 +19,144 @@
  background:var(--pro-ink);color:#fff;border-bottom:3px solid var(--pro-gold)}
 .befn-pro-back{background:none;border:0;color:var(--pro-gold-soft);font-weight:800;font-size:13px;padding:6px 0;cursor:pointer}
 .befn-pro-back:hover{color:#fff}
-.befn-pro-crumb{flex:1;min-width:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#cbbfbd;font-weight:800;
+.befn-pro-crumb{flex:1;min-width:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#cbbfbd;font-weight:800;
  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .befn-pro-close{width:36px;height:36px;flex:0 0 36px;border-radius:8px;border:1px solid #6b5a5f;background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer}
 .befn-pro-close:hover{background:#3a3034}
 
-/* Hero */
-.befn-pro-hero{display:grid;grid-template-columns:210px minmax(0,1fr) 250px;gap:24px;align-items:start;padding:24px;
- background:var(--pro-ink);color:#fff;border-radius:12px;min-width:0}
-.befn-pro-photo [data-fighter-portrait]{position:relative;width:100%;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#3a3135}
+/* Hero: light and borderless on the page cream, like the Sumo profile.
+   The portrait fades into the page instead of sitting in a framed box. */
+.befn-pro-hero{display:grid;grid-template-columns:260px minmax(0,1fr) 250px;gap:28px;align-items:end;padding:8px 0 4px;
+ background:none;color:var(--pro-ink);min-width:0}
+.befn-pro-photo [data-fighter-portrait]{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:#ece4d9;border-radius:0}
+.befn-pro-photo [data-fighter-portrait].is-loaded{background:none}
 .befn-pro-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
+/* Official UFC portraits are shot on white: multiply lets the white take the
+   page colour, so the fighter sits on the page like the Sumo cut-outs. */
+.befn-pro-photo [data-fighter-portrait].is-loaded>img{mix-blend-mode:multiply;
+ -webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent);mask-image:linear-gradient(to bottom,#000 70%,transparent)}
 /* Same honest-fallback contract as the legacy .dialog-bio portrait: a broken
    image is hidden so "Photo unavailable" shows; a loaded one hides it. */
 .befn-pro-photo img.is-error{display:none!important}
 .befn-pro-photo [data-fighter-portrait]>img{opacity:0;z-index:1}
 .befn-pro-photo [data-fighter-portrait].is-loaded>img{opacity:1}
 .befn-pro-photo .is-loaded .befn-portrait-fallback{visibility:hidden}
-.befn-pro-photo .befn-portrait-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#d8cecc}
-.befn-pro-photo .befn-portrait-fallback strong{font:900 46px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-gold-soft)}
-.befn-pro-photo .befn-portrait-fallback span{font-size:11px;letter-spacing:.12em;text-transform:uppercase}
-.befn-pro-id{min-width:0}
-.befn-pro-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--pro-gold-soft)}
-.befn-pro-id h2{font:900 clamp(40px,4.4vw,58px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:6px 0 8px;
- color:#fff;overflow-wrap:anywhere;letter-spacing:-.01em}
-.befn-pro-record{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
-.befn-pro-record strong{font:900 30px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-gold)}
-.befn-pro-record span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#bfb2b0;font-weight:800}
-.befn-pro-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 18px;margin:14px 0 0}
+.befn-pro-photo .befn-portrait-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--pro-muted)}
+.befn-pro-photo .befn-portrait-fallback strong{font:900 52px/1 'Barlow Condensed',Impact,sans-serif;color:#b9aca4}
+.befn-pro-photo .befn-portrait-fallback span{font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.befn-pro-id{min-width:0;padding-bottom:6px}
+.befn-pro-eyebrow{display:block;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--pro-red)}
+.befn-pro-id h2{font:900 clamp(44px,5vw,68px)/.95 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:6px 0 10px;
+ color:var(--pro-ink);overflow-wrap:anywhere;letter-spacing:-.01em}
+.befn-pro-record{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.befn-pro-record strong{font:900 40px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+.befn-pro-record span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-muted);font-weight:800}
+.befn-pro-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 18px;margin:16px 0 0}
 .befn-pro-facts div{min-width:0}
-.befn-pro-facts dt{font-size:12px;color:#cbbfbd}
-.befn-pro-facts dd{margin:2px 0 0;font-size:15px;font-weight:700;color:#fff;overflow-wrap:anywhere}
+.befn-pro-facts dt{font-size:12px;color:var(--pro-muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.befn-pro-facts dd{margin:3px 0 0;font-size:16px;font-weight:700;color:var(--pro-ink);overflow-wrap:anywhere}
 #fighterDialog.befn-pro-dialog .befn-title-belts{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 6px}
-#fighterDialog.befn-pro-dialog .befn-title-belt{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border:1px solid #8d7140;border-radius:999px;background:#2e2619;color:#f6dd9a;font-size:11px;font-weight:800}
-#fighterDialog.befn-pro-dialog .befn-reign{margin-top:14px;padding-top:12px;border-top:1px solid #3d3337}
-#fighterDialog.befn-pro-dialog .befn-reign>strong{display:block;font-size:12px;color:var(--pro-gold-soft);letter-spacing:.06em;margin-bottom:8px}
-#fighterDialog.befn-pro-dialog .befn-reign>div{display:flex;flex-wrap:wrap;gap:8px}
-#fighterDialog.befn-pro-dialog .befn-reign span{display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:var(--pro-panel2);border:1px solid #4a3d42;border-radius:7px;font-size:14px;font-weight:700;color:#fff}
-#fighterDialog.befn-pro-dialog .befn-reign b{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#bfb2b0}
+#fighterDialog.befn-pro-dialog .befn-title-belt{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:0;border-radius:999px;background:var(--pro-red);color:#fff;font-size:12px;font-weight:800}
+#fighterDialog.befn-pro-dialog .befn-reign{margin-top:16px;padding-top:14px;border-top:1px solid var(--pro-border)}
+#fighterDialog.befn-pro-dialog .befn-reign>strong{display:block;font-size:12px;color:var(--pro-red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+#fighterDialog.befn-pro-dialog .befn-reign>div{display:flex;flex-wrap:wrap;gap:6px 28px}
+#fighterDialog.befn-pro-dialog .befn-reign span{display:flex;flex-direction:column-reverse;gap:2px;padding:0;background:none;border:0;font:900 26px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+#fighterDialog.befn-pro-dialog .befn-reign b{font:700 12px 'DM Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--pro-muted)}
 #fighterDialog.befn-pro-dialog .befn-top-credentials:empty{display:none}
-#fighterDialog.befn-pro-dialog .befn-top-credentials{margin-top:12px;color:#eee0df;font-size:12px}
+#fighterDialog.befn-pro-dialog .befn-top-credentials{margin-top:12px;color:var(--pro-text);font-size:12px}
 
-/* Hero rating panel */
-.befn-pro-rating{min-width:0}
-.befn-pro-score{display:flex;flex-direction:column;gap:10px;padding:16px;background:var(--pro-panel2);border:1px solid var(--pro-line);border-radius:10px;color:#fff}
-.befn-pro-tag{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--pro-gold-soft)}
-.befn-pro-score .befn-v3-score{font:900 clamp(56px,6vw,76px)/.9 'Barlow Condensed',Impact,sans-serif;color:#fff;letter-spacing:-.02em}
-.befn-pro-score .befn-v3-score small{font-size:22px;color:#bba88f;margin-left:4px}
-.befn-pro-score p{margin:0;font-size:12px;color:#d8cecc}
-.befn-pro-progress{display:block;height:7px;border-radius:9px;background:#4a3d3d;overflow:hidden}
-.befn-pro-progress span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#b57630,var(--pro-gold))}
-.befn-pro-score.is-red .befn-pro-progress span{background:linear-gradient(90deg,#8f2c2f,#d0574f)}
-.befn-pro-score.is-amber .befn-pro-progress span{background:linear-gradient(90deg,#a56a21,#e3a53c)}
-.befn-pro-score.is-emerald .befn-pro-progress span,.befn-pro-score.is-legendary .befn-pro-progress span{background:linear-gradient(90deg,#b57630,var(--pro-gold),#fff0b0)}
+/* Rating: big plain number with a thin bar, no panel. */
+.befn-pro-rating{min-width:0;padding-bottom:6px}
+.befn-pro-score{display:flex;flex-direction:column;gap:10px;padding:0;background:none;border:0;color:var(--pro-ink)}
+.befn-pro-tag{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--pro-red)}
+.befn-pro-score .befn-v3-score{font:900 clamp(64px,7vw,88px)/.85 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink);letter-spacing:-.02em}
+.befn-pro-score .befn-v3-score small{font-size:24px;color:var(--pro-muted);margin-left:4px}
+.befn-pro-score p{margin:0;font-size:13px;color:var(--pro-muted)}
+.befn-pro-progress{display:block;height:5px;border-radius:9px;background:#e6ddd1;overflow:hidden}
+.befn-pro-progress span{display:block;height:100%;border-radius:inherit;background:var(--pro-red)}
 .befn-pro-score .befn-v3-status{display:flex;flex-wrap:wrap;gap:6px}
 .befn-pro-score .befn-v3-status:empty{display:none}
-.befn-pro-score .befn-v3-status span,.befn-pro-score .befn-v3-status small{padding:3px 8px;border-radius:999px;background:#3c3236;border:1px solid #5d4c52;font-size:11px;font-weight:800;color:#f2e6e4}
-.befn-pro-form{display:flex;flex-direction:column;gap:7px;padding-top:10px;border-top:1px solid #4a3d42}
-.befn-pro-form>span{font-size:12px;color:#d8cecc;font-weight:700}
+.befn-pro-score .befn-v3-status span,.befn-pro-score .befn-v3-status small{padding:4px 10px;border-radius:999px;background:#ebe3d8;border:0;font-size:12px;font-weight:800;color:var(--pro-ink)}
+.befn-pro-form{display:flex;flex-direction:column;gap:7px;padding-top:4px;border-top:0}
+.befn-pro-form>span{font-size:12px;color:var(--pro-muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
 .befn-pro-form>div{display:flex;gap:5px;flex-wrap:wrap}
-#fighterDialog.befn-pro-dialog .befn-power-result{display:inline-grid;place-items:center;min-width:28px;height:28px;padding:0 6px;border-radius:6px;font-size:12px;font-weight:900;border:1px solid}
-#fighterDialog.befn-pro-dialog .befn-power-result.is-win{background:#163d2e;color:#7ff0b8;border-color:#2f9a69}
-#fighterDialog.befn-pro-dialog .befn-power-result.is-loss{background:#4f2227;color:#ffa2a3;border-color:#c34f55}
-#fighterDialog.befn-pro-dialog .befn-power-result.is-draw,#fighterDialog.befn-pro-dialog .befn-power-result.is-no-contest{background:#3c3630;color:#fbd48e;border-color:#a8894c}
+#fighterDialog.befn-pro-dialog .befn-power-result{display:inline-grid;place-items:center;min-width:28px;height:28px;padding:0 6px;border-radius:6px;font-size:12px;font-weight:900;border:0}
+#fighterDialog.befn-pro-dialog .befn-power-result.is-win{background:#dff2e8;color:#1b7a50}
+#fighterDialog.befn-pro-dialog .befn-power-result.is-loss{background:#fbe3e4;color:#b02a32}
+#fighterDialog.befn-pro-dialog .befn-power-result.is-draw,#fighterDialog.befn-pro-dialog .befn-power-result.is-no-contest{background:#f5ecd6;color:#86651a}
 /* UFC profiles without V3 data keep the older hero panel; tidy it in the slot. */
-.befn-pro-rating .befn-v3-hero{padding:16px;background:var(--pro-panel2);border:1px solid var(--pro-line);border-radius:10px;color:#fff}
+.befn-pro-rating .befn-v3-hero{padding:0;background:none;border:0;color:var(--pro-ink)}
 .befn-pro-rating .befn-v3-hero .befn-v3-score{font:900 44px/1 'Barlow Condensed',Impact,sans-serif}
 
-/* Section tabs */
+/* Section tabs: one dark bar, as on the Sumo profile. */
 .befn-pro-nav{position:sticky;top:59px;z-index:3;display:flex;gap:4px;padding:6px;background:var(--pro-ink);border-radius:10px;overflow-x:auto;scrollbar-width:none}
 .befn-pro-nav::-webkit-scrollbar{display:none}
-.befn-pro-nav button{flex:0 0 auto;border:0;background:transparent;color:#e8dcda;font-weight:800;font-size:13px;padding:9px 14px;border-radius:7px;cursor:pointer}
+.befn-pro-nav button{flex:0 0 auto;min-height:44px;border:0;background:transparent;color:#e8dcda;font-weight:800;font-size:13px;padding:0 14px;border-radius:7px;cursor:pointer}
 .befn-pro-nav button:hover,.befn-pro-nav button:focus-visible{background:#3a2f33;color:#fff}
 .befn-pro-nav button[hidden]{display:none}
 
-/* Body cards */
-.befn-pro-body{display:flex;flex-direction:column;gap:16px;min-width:0}
-.befn-pro-insights{display:flex;flex-direction:column;gap:16px;min-width:0}
-.befn-pro-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:16px;align-items:start}
+/* Sections: no boxes. Space and a thin rule separate them. */
+.befn-pro-body{display:flex;flex-direction:column;gap:28px;min-width:0}
+.befn-pro-insights{display:flex;flex-direction:column;gap:32px;min-width:0}
+.befn-pro-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;align-items:start}
 .befn-pro-card,#fighterDialog.befn-pro-dialog .befn-profile-block,#fighterDialog.befn-pro-dialog .befn-v3-history,#fighterDialog.befn-pro-dialog .befn-v3-stat-panel{
- background:var(--pro-card);border:1px solid var(--pro-border);border-radius:12px;padding:16px 18px;min-width:0;color:var(--pro-text);
- box-shadow:0 10px 28px rgba(15,7,9,.06);scroll-margin-top:120px}
-.befn-pro-card>header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:10px;margin-bottom:12px;border-bottom:2px solid var(--pro-ink)}
+ background:none;border:0;border-radius:0;padding:0;min-width:0;color:var(--pro-text);box-shadow:none;scroll-margin-top:120px}
+.befn-pro-card>header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--pro-border)}
 .befn-pro-card h3,#fighterDialog.befn-pro-dialog .befn-profile-block>h3,#fighterDialog.befn-pro-dialog .befn-v3-stat-panel>h3{
- font:900 26px/1 'Barlow Condensed',Impact,sans-serif!important;text-transform:uppercase;margin:0!important;padding:0!important;
+ font:900 30px/1 'Barlow Condensed',Impact,sans-serif!important;text-transform:uppercase;margin:0!important;padding:0!important;
  background:none!important;color:var(--pro-ink)!important;letter-spacing:.01em}
 .befn-pro-card>header small{font-size:12px;color:var(--pro-muted);font-weight:700;text-align:right}
-#fighterDialog.befn-pro-dialog .befn-profile-block>h3{padding-bottom:10px!important;margin-bottom:12px!important;border-bottom:2px solid var(--pro-ink)}
+#fighterDialog.befn-pro-dialog .befn-profile-block>h3{padding-bottom:10px!important;margin-bottom:14px!important;border-bottom:1px solid var(--pro-border)}
 #fighterDialog.befn-pro-dialog .befn-profile-block .befn-profile-body{background:none;color:var(--pro-text);padding:0}
 .befn-pro-note{font-size:12px;line-height:1.55;color:var(--pro-muted);margin:12px 0 0}
 
 /* Rating meters */
-.befn-pro-meters{display:flex;flex-direction:column;gap:13px}
-.befn-pro-meter-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:800}
-.befn-pro-meter-head b{font:900 22px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
-.befn-pro-meter-head b small{font:700 11px 'DM Sans',sans-serif;color:var(--pro-muted)}
+.befn-pro-meters{display:flex;flex-direction:column;gap:14px}
+.befn-pro-meter-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:800;color:var(--pro-ink)}
+.befn-pro-meter-head b{font:900 24px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+.befn-pro-meter-head b small{font:700 12px 'DM Sans',sans-serif;color:var(--pro-muted)}
 .befn-pro-meter-head b.is-unrated{font:700 13px 'DM Sans',sans-serif;color:var(--pro-muted)}
-.befn-pro-track{display:block;height:8px;margin-top:6px;border-radius:9px;background:#ece4da;overflow:hidden}
+.befn-pro-track{display:block;height:6px;margin-top:6px;border-radius:9px;background:#e6ddd1;overflow:hidden}
 .befn-pro-track>span{display:block;height:100%;border-radius:inherit;background:var(--pro-gold)}
 .befn-pro-meter.is-red .befn-pro-track>span{background:#c9504a}
 .befn-pro-meter.is-amber .befn-pro-track>span{background:#e3a53c}
 .befn-pro-meter.is-lime .befn-pro-track>span{background:#8dbb45}
 .befn-pro-meter.is-emerald .befn-pro-track>span{background:var(--pro-green)}
 .befn-pro-meter.is-legendary .befn-pro-track>span{background:linear-gradient(90deg,var(--pro-green),#1d7cc0)}
-.befn-pro-meter-hint{display:block;margin-top:4px;font-size:11px;color:var(--pro-muted)}
+.befn-pro-meter-hint{display:block;margin-top:4px;font-size:12px;color:var(--pro-muted)}
 
-/* Fight cards (sumo recent-form style) */
-#fighterDialog.befn-pro-dialog .befn-pro-fight-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+/* Fight rows: light, a coloured edge for the result, a thin divider. */
+#fighterDialog.befn-pro-dialog .befn-pro-fight-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
 #fighterDialog.befn-pro-dialog .befn-pro-fight-list>li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;
- padding:8px 10px 8px 8px;margin:0;background:var(--pro-panel);color:#fff;border-radius:9px;border-left:4px solid #6b5a5f}
+ padding:10px 6px 10px 10px;margin:0;background:none;color:var(--pro-ink);border-radius:0;border-left:4px solid #c8bdb5;border-bottom:1px solid var(--pro-border)}
 #fighterDialog.befn-pro-dialog .befn-pro-fight-list>li.is-win{border-left-color:#2f9a69}
 #fighterDialog.befn-pro-dialog .befn-pro-fight-list>li.is-loss{border-left-color:#c34f55}
-.befn-pro-opp-photo{position:relative;width:52px;height:52px;border-radius:7px;overflow:hidden;background:#3a3135;display:grid;place-items:center}
-.befn-pro-opp-photo b{font:900 18px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-gold-soft)}
-.befn-pro-opp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
+.befn-pro-opp-photo{position:relative;width:52px;height:52px;border-radius:50%;overflow:hidden;background:#e9e1d6;display:grid;place-items:center}
+.befn-pro-opp-photo b{font:900 18px/1 'Barlow Condensed',Impact,sans-serif;color:#9a8d86}
+.befn-pro-opp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
 .befn-pro-fight-main{display:flex;flex-direction:column;gap:2px;min-width:0}
-#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-opponent{font:800 19px/1.05 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:#fff;overflow-wrap:anywhere}
-#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-method{font-size:12px;color:#e8dcda;overflow-wrap:anywhere}
-#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-date{font-size:11px;color:#b5a8a6}
+#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-opponent{font:800 20px/1.05 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--pro-ink);overflow-wrap:anywhere}
+#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-method{font-size:13px;color:var(--pro-text);overflow-wrap:anywhere}
+#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-date{font-size:12px;color:var(--pro-muted)}
 .befn-pro-fight-side{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
-.befn-pro-opp{font-size:10px;font-weight:800;letter-spacing:.04em;padding:2px 7px;border-radius:999px;border:1px solid #5d4c52;color:#e8dcda;white-space:nowrap}
-.befn-pro-opp.is-elite{border-color:#c79c2e;color:#ffd970;background:#3a2f12}
-.befn-pro-opp.is-strong{border-color:#2f9a69;color:#9df0c6}
+.befn-pro-opp{font-size:12px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:999px;background:#ebe3d8;color:var(--pro-ink);white-space:nowrap}
+.befn-pro-opp.is-elite{background:#fbefc6;color:#7a5900}
+.befn-pro-opp.is-strong{background:#dff2e8;color:#1b7a50}
 
-/* Stat tiles */
-.befn-pro-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.befn-pro-tiles>div{position:relative;display:flex;flex-direction:column;gap:3px;padding:12px;background:#f6f0e7;border:1px solid var(--pro-border);border-radius:9px;min-width:0}
-.befn-pro-tiles strong{font:900 30px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
-.befn-pro-tiles span{font-size:12px;font-weight:800;color:var(--pro-text)}
-.befn-pro-tiles small{font-size:11px;color:var(--pro-muted)}
-.befn-pro-rank{align-self:flex-start;margin-top:4px;font-size:10px;font-weight:900;letter-spacing:.06em;padding:2px 7px;border-radius:999px;background:var(--pro-ink);color:var(--pro-gold)}
-#fighterDialog.befn-pro-dialog .befn-performance-highlights{margin-top:14px}
-#fighterDialog.befn-pro-dialog .befn-v3-statistics{margin-top:14px;border-top:1px solid var(--pro-border);padding-top:10px}
-#fighterDialog.befn-pro-dialog .befn-v3-statistics summary{cursor:pointer;font-weight:800;font-size:13px;color:var(--pro-ink)}
-#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li{display:flex;flex-direction:column;gap:2px;padding:10px;background:#f6f0e7;border:1px solid var(--pro-border);border-radius:8px;color:var(--pro-text);margin:0}
-#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li strong{font:900 22px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
-#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li small{font-size:11px;color:var(--pro-muted)}
+/* Stat tiles: big plain numbers on a thin top rule. */
+.befn-pro-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px 20px}
+.befn-pro-tiles>div{position:relative;display:flex;flex-direction:column;gap:3px;padding:10px 0 0;background:none;border:0;border-top:2px solid var(--pro-ink);border-radius:0;min-width:0}
+.befn-pro-tiles strong{font:900 36px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+.befn-pro-tiles span{font-size:13px;font-weight:800;color:var(--pro-text)}
+.befn-pro-tiles small{font-size:12px;color:var(--pro-muted)}
+.befn-pro-rank{align-self:flex-start;margin-top:4px;font-size:12px;font-weight:900;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:var(--pro-red);color:#fff}
+#fighterDialog.befn-pro-dialog .befn-performance-highlights{margin-top:20px}
+#fighterDialog.befn-pro-dialog .befn-v3-statistics{margin-top:18px;border-top:1px solid var(--pro-border);padding-top:10px}
+#fighterDialog.befn-pro-dialog .befn-v3-statistics summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:800;font-size:13px;color:var(--pro-ink)}
+#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px 20px}
+#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li{display:flex;flex-direction:column;gap:2px;padding:8px 0 0;background:none;border:0;border-top:1px solid var(--pro-border);border-radius:0;color:var(--pro-text);margin:0}
+#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li strong{font:900 24px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li small{font-size:12px;color:var(--pro-muted)}
 
 /* Legacy blocks reused inside the new shell (boxing, non-V3 MMA) */
 #fighterDialog.befn-pro-dialog .befn-power-bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
@@ -172,11 +174,10 @@
 
 /* Tablet */
 @media (max-width:980px){
- .befn-pro-hero{grid-template-columns:170px minmax(0,1fr);gap:18px}
+ .befn-pro-hero{grid-template-columns:200px minmax(0,1fr);gap:22px;align-items:end}
  .befn-pro-rating{grid-column:1/-1}
- .befn-pro-score{flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px 18px}
+ .befn-pro-score{flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px 22px}
  .befn-pro-score .befn-pro-progress{flex:1 1 180px}
- .befn-pro-form{border-top:0;padding-top:0}
  .befn-pro-grid{grid-template-columns:minmax(0,1fr)}
  .befn-pro-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -186,31 +187,31 @@
  .befn-pro{padding:0 12px 20px;gap:12px}
  .befn-pro-bar{margin:0 -12px;padding:8px 12px}
  /* Photo beside the name; everything else runs full width beneath. */
- .befn-pro-hero{grid-template-columns:120px minmax(0,1fr);gap:4px 12px;padding:14px;border-radius:10px;align-items:start}
+ .befn-pro-hero{grid-template-columns:120px minmax(0,1fr);gap:4px 14px;padding:6px 0 0;align-items:start}
  .befn-pro-id{display:contents}
  .befn-pro-photo{grid-column:1;grid-row:1/span 4;margin-bottom:8px}
  .befn-pro-id>*{grid-column:2}
  .befn-pro-id>.befn-pro-facts,.befn-pro-id>.befn-reign,.befn-pro-id>.befn-top-credentials,.befn-pro-rating{grid-column:1/-1}
  .befn-pro-id h2{font-size:clamp(28px,8.5vw,38px);margin:4px 0}
  .befn-pro-record{margin-bottom:6px}
- .befn-pro-record strong{font-size:24px}
- .befn-pro-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid #3d3337}
- .befn-pro-facts dt{font-size:11px}
+ .befn-pro-record strong{font-size:30px}
+ .befn-pro-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--pro-border)}
+ .befn-pro-facts dt{font-size:12px}
  .befn-pro-facts dd{font-size:13px}
- #fighterDialog.befn-pro-dialog .befn-reign span{font-size:13px;padding:6px 8px}
+ #fighterDialog.befn-pro-dialog .befn-reign span{font-size:22px}
  .befn-pro-rating{margin-top:10px}
- .befn-pro-score .befn-v3-score{font-size:52px}
+ .befn-pro-score .befn-v3-score{font-size:60px}
  .befn-pro-nav{top:55px}
- .befn-pro-card,#fighterDialog.befn-pro-dialog .befn-profile-block{padding:14px;border-radius:10px}
  .befn-pro-card>header{flex-direction:column;align-items:flex-start;gap:3px}
  .befn-pro-card>header small{text-align:left}
  #fighterDialog.befn-pro-dialog .befn-pro-fight-list>li{grid-template-columns:44px minmax(0,1fr) auto;gap:10px}
  .befn-pro-opp-photo{width:44px;height:44px}
- .befn-pro-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .befn-pro-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+ .befn-pro-insights{gap:26px}
 }
 @media (prefers-reduced-motion:reduce){#fighterDialog.befn-pro-dialog *{scroll-behavior:auto!important}}
 
-/* Fighter Scout directory cards: sumo rikishi-card style (photo over an ink name band). */
+/* Fighter Scout directory cards (unchanged here; the Fighters page belongs to the phase 1 plan). */
 #fighterGrid .fighter-card{border:1px solid #2b2326;border-radius:12px;overflow:hidden;background:#171315;color:#fff;min-height:0}
 #fighterGrid .fighter-card:hover,#fighterGrid .fighter-card:focus-visible{border-color:#f3c332;box-shadow:0 14px 30px rgba(15,7,9,.22)}
 #fighterGrid .fighter-image{height:clamp(170px,20vw,230px);background:#2b2326}
@@ -225,11 +226,128 @@
 
 /* Ratings v2: "What drives this" breakdown under each skill meter. */
 .befn-pro-drivers{margin-top:6px}
-.befn-pro-drivers summary{cursor:pointer;font-size:11px;font-weight:800;color:var(--pro-muted);list-style:none}
+.befn-pro-drivers summary{min-height:32px;display:flex;align-items:center;cursor:pointer;font-size:12px;font-weight:800;color:var(--pro-red);list-style:none}
 .befn-pro-drivers summary::-webkit-details-marker{display:none}
 .befn-pro-drivers summary::before{content:'▸ ';}
 .befn-pro-drivers[open] summary::before{content:'▾ ';}
-.befn-pro-drivers ul{list-style:none;margin:6px 0 2px;padding:8px 10px;background:#f6f0e7;border:1px solid var(--pro-border);border-radius:8px;display:grid;gap:5px}
+.befn-pro-drivers ul{list-style:none;margin:4px 0 2px;padding:2px 0 2px 12px;background:none;border:0;border-left:2px solid var(--pro-border);display:grid;gap:6px}
 .befn-pro-drivers li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;font-size:12px;color:var(--pro-text);margin:0}
 .befn-pro-drivers li b{font-weight:800;color:var(--pro-ink);text-align:right}
-.befn-pro-drivers li small{grid-column:1/-1;font-size:10.5px;color:var(--pro-muted)}
+.befn-pro-drivers li small{grid-column:1/-1;font-size:12px;color:var(--pro-muted)}
+
+/* Stage 4: stats sections (assets/fighter-stats-profile.js). */
+.bsp-tag{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-muted);margin-bottom:8px}
+.bsp-note{display:block;margin-top:8px;font-size:12px;color:var(--pro-muted)}
+.bsp-none{font-size:13px;color:var(--pro-muted);margin:6px 0}
+.bsp-big{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.bsp-big>div{padding:10px 0 0;background:none;border:0;border-top:2px solid var(--pro-ink);min-width:0}
+.bsp-big strong{display:block;font:900 clamp(38px,4.6vw,54px)/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+.bsp-big span{display:block;margin-top:4px;font-size:13px;font-weight:800;color:var(--pro-text)}
+.bsp-big small{display:block;font-size:12px;color:var(--pro-muted)}
+.bsp-latest{margin-top:22px;padding:14px 16px;background:var(--pro-ink);color:#fff;border-radius:12px;border-left:4px solid #6b5a5f}
+.bsp-latest.is-win{border-left-color:#2f9a69}.bsp-latest.is-loss{border-left-color:#c34f55}
+.bsp-latest .bsp-tag{color:#cbbfbd}
+.bsp-latest-main{display:flex;gap:10px;align-items:center}
+.bsp-latest-main strong{display:block;font:800 21px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.bsp-latest-main small{display:block;font-size:12px;color:#d8cecc}
+.bsp-latest-stats{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:13px;color:#e8dcda}
+.bsp-latest-stats b{font:900 18px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-gold);margin-right:4px}
+
+/* Round detail inside fight rows and the full history list (both light). */
+#fighterDialog.befn-pro-dialog .befn-pro-fight-list>li{grid-template-areas:"photo main side" "detail detail detail"}
+#fighterDialog.befn-pro-dialog .befn-pro-fight-list>li>.bsp-detail{grid-area:detail}
+.bsp-detail{margin-top:6px}
+.bsp-detail>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:13px;font-weight:800;color:var(--pro-red)}
+.bsp-rounds{display:grid;gap:6px;margin:4px 0 8px}
+.bsp-round-key,.bsp-round{display:grid;grid-template-columns:34px minmax(0,1fr) minmax(0,1fr);gap:4px 10px;align-items:center}
+.bsp-round-key{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--pro-muted)}
+.bsp-round b{font:900 16px 'Barlow Condensed',Impact,sans-serif}
+.bsp-round small{grid-column:2/-1;font-size:12px;color:var(--pro-muted)}
+.bsp-pair{display:flex;align-items:center;gap:6px;min-width:0}
+.bsp-pair em{font-style:normal;font-weight:800;font-size:13px;min-width:22px}
+.bsp-bar{display:block;flex:1;height:8px;border-radius:6px;background:#e6ddd1;overflow:hidden;min-width:20px}
+.bsp-bar>span{display:block;height:100%;border-radius:inherit}
+.bsp-bar.is-own>span{background:var(--pro-red)}
+.bsp-bar.is-opp>span,.bsp-bar.is-avg>span{background:#a99c95}
+.bsp-bar.is-own.is-better>span{background:var(--pro-green)}
+.bsp-cards{margin-top:6px}
+.bsp-cards-scroll{overflow-x:auto;max-width:100%}
+.bsp-cards table{border-collapse:collapse;font-size:13px;min-width:100%}
+.bsp-cards th,.bsp-cards td{padding:6px 8px;text-align:center;border-bottom:1px solid rgba(128,128,128,.25);white-space:nowrap}
+.bsp-cards th[scope=row]{text-align:left;font-weight:700}
+.bsp-cards td.is-won{color:#1b7a50;font-weight:800}.bsp-cards td.is-lost{color:#b02a32}
+.bsp-history{margin-top:12px;border-top:1px solid var(--pro-border);padding-top:6px}
+.bsp-history>summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:800;color:var(--pro-ink)}
+.bsp-history>summary small{font-weight:600;color:var(--pro-muted)}
+.bsp-history ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:0}
+.bsp-history li{padding:8px 6px 8px 10px;background:none;border:0;border-bottom:1px solid var(--pro-border);border-radius:0;border-left:4px solid #c8bdb5}
+.bsp-history li.is-win{border-left-color:#2f9a69}.bsp-history li.is-loss{border-left-color:#c34f55}
+.bsp-history-row{display:flex;gap:10px;align-items:center}
+.bsp-history-row strong{display:block;font:800 17px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--pro-ink)}
+.bsp-history-row small{font-size:12px;color:var(--pro-muted)}
+
+/* Stats window switcher, splits, pace. */
+.bsp-windows{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.bsp-windows button{min-height:44px;padding:0 16px;border-radius:999px;border:0;background:#ebe3d8;color:var(--pro-ink);font-weight:800;font-size:13px;cursor:pointer}
+.bsp-windows button[aria-pressed="true"]{background:var(--pro-ink);color:#fff;border-color:var(--pro-ink)}
+.bsp-split-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 28px;margin-top:22px}
+.bsp-split,.bsp-pace{padding:10px 0 0;background:none;border:0;border-top:1px solid var(--pro-border)}
+.bsp-split-row{display:grid;grid-template-columns:70px minmax(0,1fr) 44px;gap:8px;align-items:center;font-size:13px;margin-top:6px}
+.bsp-split-row b{text-align:right}
+.bsp-pace strong{display:block;font:900 34px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+.bsp-pace small{font-size:12px;color:var(--pro-muted)}
+
+/* Compare with division average. */
+.bsp-compare{display:grid;gap:10px}
+.bsp-compare-key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;font-weight:800}
+.bsp-compare-key span::before{content:'';display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+.bsp-compare-key .is-own::before{background:var(--pro-red)}.bsp-compare-key .is-avg::before{background:#a99c95}
+.bsp-compare-row{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);gap:4px 12px;align-items:center}
+.bsp-compare-label{font-size:13px;font-weight:700}
+.bsp-compare-label small{font-weight:600;color:var(--pro-muted)}
+.bsp-compare-bars{display:grid;grid-template-columns:minmax(0,1fr) 52px;gap:4px 8px;align-items:center;font-size:13px}
+.bsp-compare-bars b{text-align:right}
+
+@media (max-width:640px){
+ .bsp-big{grid-template-columns:minmax(0,1fr)}
+ .bsp-big>div{display:grid;grid-template-columns:auto 1fr;gap:0 12px;align-items:center}
+ .bsp-big strong{grid-row:1/span 2;font-size:34px}
+ .bsp-compare-row{grid-template-columns:minmax(0,1fr)}
+ .bsp-round-key,.bsp-round{grid-template-columns:30px minmax(0,1fr) minmax(0,1fr);gap:4px 8px}
+}
+
+/* Hover-preview names (fighter-hover.js wraps known fighters in .fighter-mention,
+   styled light for the old dark rows): inherit the light profile's ink colour. */
+#fighterDialog.befn-pro-dialog .fighter-mention,#fighterDialog.befn-pro-dialog .fighter-hover-name{color:inherit}
+#fighterDialog.befn-pro-dialog .befn-pro-id h2 .fighter-mention{color:var(--pro-ink)}
+#fighterDialog.befn-pro-dialog .bsp-latest .fighter-mention{color:#fff}
+
+/* Performance highlights, restyled light to match the profile. */
+#fighterDialog.befn-pro-dialog .befn-performance-highlights{background:none;border:0;border-radius:0;padding:0;box-shadow:none;color:var(--pro-text)}
+#fighterDialog.befn-pro-dialog .befn-performance-highlights header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:0 0 8px;margin:0 0 12px;border-bottom:1px solid var(--pro-border);background:none}
+#fighterDialog.befn-pro-dialog .befn-performance-highlights h3{font:900 24px/1 'Barlow Condensed',Impact,sans-serif!important;text-transform:uppercase;color:var(--pro-ink)!important;margin:0!important}
+#fighterDialog.befn-pro-dialog .befn-performance-highlights header small{color:var(--pro-muted);font-size:12px}
+#fighterDialog.befn-pro-dialog .befn-highlight-card{background:none;border:0;border-top:2px solid var(--pro-ink);border-radius:0;padding:10px 0 0;color:var(--pro-text);box-shadow:none}
+#fighterDialog.befn-pro-dialog .befn-highlight-card>span{color:var(--pro-text);font-size:13px;font-weight:800}
+#fighterDialog.befn-pro-dialog .befn-highlight-card>strong,#fighterDialog.befn-pro-dialog .befn-highlight-card.is-elite>strong,
+#fighterDialog.befn-pro-dialog .befn-highlight-card.is-podium>strong{font:900 36px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
+#fighterDialog.befn-pro-dialog .befn-highlight-card footer b{background:#ebe3d8;color:var(--pro-ink);border:0;border-radius:999px;padding:3px 8px;font-size:12px}
+#fighterDialog.befn-pro-dialog .befn-highlight-card footer b.is-gold{background:var(--pro-red);color:#fff}
+#fighterDialog.befn-pro-dialog .bsp-history>summary{justify-content:flex-start;text-align:left}
+#fighterDialog.befn-pro-dialog .befn-v3-statistics,#fighterDialog.befn-pro-dialog .befn-v3-statistics[open]{background:none!important;border:0;border-top:1px solid var(--pro-border);border-radius:0;box-shadow:none;color:var(--pro-text)}
+#fighterDialog.befn-pro-dialog .befn-v3-statistics>summary{background:none!important;color:var(--pro-ink)!important;padding:0!important}
+
+/* Readers never see text under 12 px (DIRECTION.md). */
+#fighterDialog.befn-pro-dialog .befn-title-belt small,#fighterDialog.befn-pro-dialog .befn-title-belt{font-size:12px}
+@media (max-width:640px){
+ /* Rating stacks on a phone: label, number, bar, last five. */
+ .befn-pro-score{flex-direction:column;align-items:stretch;gap:8px}
+ .befn-pro-score .befn-pro-progress{flex:none}
+}
+#fighterDialog.befn-pro-dialog .bsp-history>summary small,#fighterDialog.befn-pro-dialog .bsp-compare-label small{font-size:12px}
+
+/* "Unrated" is a word, not a number: smaller, and never wider than its column
+   (also when the condensed web font has not loaded and a wide fallback is used). */
+.befn-pro-rating,.befn-pro-score{min-width:0;max-width:100%}
+.befn-pro-score .befn-v3-score{max-width:100%;overflow-wrap:anywhere}
+.befn-pro-score.is-unrated .befn-v3-score{font-size:clamp(34px,3.6vw,48px);line-height:1}

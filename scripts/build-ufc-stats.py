@@ -489,7 +489,37 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
     (out_dir / "names.json").write_text(json.dumps({"schema": SCHEMA, "asOf": as_of.isoformat(), "rated": rated,
                                                     "names": names},
                                                    separators=(",", ":"), sort_keys=True), encoding="utf-8")
+    (out_dir / "divisions.json").write_text(json.dumps(division_averages(index_rows, as_of), separators=(",", ":")),
+                                            encoding="utf-8")
     return index
+
+
+DIVISION_WINDOW = "l36"
+DIVISION_MIN_FIGHTS = 3   # a fighter counts toward the average with 3+ complete-stat fights in the window
+DIVISION_MIN_PEERS = 8    # a division average needs at least this many such fighters
+
+
+def division_averages(index_rows: dict, as_of: dt.date) -> dict:
+    """Mean leaderboard rates per official division (last 36 months), for profile comparisons."""
+    groups: dict[str, list] = {}
+    labels = {}
+    for row in index_rows.values():
+        slug = row.get("divisionSlug")
+        if not slug or (row["statFights"].get(DIVISION_WINDOW) or 0) < DIVISION_MIN_FIGHTS:
+            continue
+        groups.setdefault(slug, []).append(row["rates"][DIVISION_WINDOW])
+        labels[slug] = row["division"]
+    out = {}
+    for slug, rows in sorted(groups.items()):
+        if len(rows) < DIVISION_MIN_PEERS:
+            continue
+        means = []
+        for i, _ in enumerate(INDEX_RATES):
+            values = [r[i] for r in rows if r[i] is not None]
+            means.append(round(sum(values) / len(values), 3) if len(values) >= DIVISION_MIN_PEERS else None)
+        out[slug] = {"label": labels[slug], "fighters": len(rows), "rates": means}
+    return {"schema": SCHEMA, "asOf": as_of.isoformat(), "window": DIVISION_WINDOW,
+            "minFights": DIVISION_MIN_FIGHTS, "rateFields": list(INDEX_RATES), "divisions": out}
 
 
 def latest_event_date(today: dt.date | None = None) -> dt.date:
