@@ -102,7 +102,7 @@
 
   // One fighter's figure: a cutout over a red disc, else the photo in the disc, else initials.
   function figureHTML(fig, name, esc) {
-    if (fig && fig.cutout) return '<span class="sb-fig" aria-hidden="true"><span class="sb-disc"></span><img class="sb-cut" src="' + esc(fig.cutout) + '" alt="" width="120" height="150" loading="lazy" decoding="async" onerror="this.remove()"></span>';
+    if (fig && fig.cutout) return '<span class="sb-fig" aria-hidden="true"><span class="sb-disc' + (fig.flag ? ' has-flag' : '') + '">' + (fig.flag ? '<img class="sb-flag" src="' + esc(fig.flag) + '" alt="" width="132" height="132" loading="lazy" decoding="async" onerror="this.remove()">' : '') + '</span><img class="sb-cut" src="' + esc(fig.cutout) + '" alt="" width="120" height="150" loading="lazy" decoding="async" onerror="this.remove()"></span>';
     if (fig && fig.photo) return '<span class="sb-fig sb-fig-photo" aria-hidden="true"><span class="sb-disc"><img src="' + esc(fig.photo) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span><b>' + esc(initialsOf(name)) + '</b></span>';
     return '<span class="sb-fig sb-fig-initials" aria-hidden="true"><span class="sb-disc"><b>' + esc(initialsOf(name)) + '</b></span></span>';
   }

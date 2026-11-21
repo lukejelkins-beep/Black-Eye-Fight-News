@@ -53,13 +53,66 @@ def judge(alpha):
     return True, f"coverage {cover:.2f}", cleaned
 
 
+FRAME_W, FRAME_H = 400, 500  # every cutout ends up 4:5 with the head at the same size, so cards line up
+
+
+def frame(im):
+    """Head-and-shoulders crop, same head size for every fighter. im: RGBA PIL image. Uses only the mask (no face model).
+
+    The neck is the first clear narrowing below the head; the head height is top-of-hair to just under the chin.
+    Shots with no neck (face fills the frame) use the whole figure as the head. The crop is then 2.1 head heights tall,
+    centred on the head, and cut at the bottom of the source when the source has no more body to show.
+    """
+    import numpy as np
+    from PIL import Image
+    a = np.array(im)[:, :, 3] > 128
+    rows = np.where(a.any(axis=1))[0]
+    top, bottom = int(rows[0]), int(rows[-1])
+    fh = bottom - top + 1
+    width = np.array([(np.where(a[y])[0][-1] - np.where(a[y])[0][0] + 1) if a[y].any() else 0 for y in range(a.shape[0])], float)
+    sm = np.convolve(width, np.ones(7) / 7, mode="same")
+    neck = None
+    run = 0.0
+    for y in range(top + int(0.12 * fh), top + int(0.65 * fh)):
+        run = max(run, sm[y])
+        if sm[y] < 0.8 * run and sm[min(y + int(0.15 * fh), bottom)] > 1.15 * sm[y]:
+            neck = y
+            break
+    shoulder_ratio = sm[min(top + int(0.85 * fh), bottom)] / max(sm[top + int(0.2 * fh)], 1)
+    if neck is not None:
+        head_h = (neck - top) * 1.08
+    elif shoulder_ratio >= 1.3:
+        head_h = 0.30 * fh
+    else:
+        head_h = fh / 1.15
+    cols = np.where(a[top:top + int(head_h)].any(axis=0))[0]
+    cx = (cols[0] + cols[-1]) / 2
+    box_h = 2.1 * head_h
+    box_top = top - 0.06 * head_h
+    if box_top + box_h > bottom + 1:
+        box_h = bottom + 1 - box_top
+    box_w = box_h * FRAME_W / FRAME_H
+    left = cx - box_w / 2
+    canvas = Image.new("RGBA", (int(round(box_w)), int(round(box_h))), (0, 0, 0, 0))
+    canvas.alpha_composite(im, (int(round(-left)), int(round(-box_top)))) if False else canvas.paste(
+        im.crop((int(round(left)), int(round(box_top)), int(round(left + box_w)), int(round(box_top + box_h)))), (0, 0))
+    return canvas.resize((FRAME_W, FRAME_H), Image.LANCZOS)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--only", help="comma-separated slugs (default: every card fighter)")
+    ap.add_argument("--reframe", action="store_true", help="re-crop the existing cutouts to the common framing (no model needed)")
     args = ap.parse_args()
     from PIL import Image
-    from rembg import new_session, remove
     import numpy as np
+    if args.reframe:
+        for f in sorted(OUT_DIR.glob("*.webp")):
+            framed = frame(Image.open(f).convert("RGBA"))
+            framed.save(f, quality=88, method=6)
+        print("reframed", len(list(OUT_DIR.glob("*.webp"))), "cutouts")
+        return 0
+    from rembg import new_session, remove
     snaps = json.loads((DATA / "ufc-card-snapshots.json").read_text())["fighters"]
     images = {i["id"]: i for i in json.loads((DATA / "ufc-image-register.json").read_text())["images"]}
     fold = lambda t: re.sub(r"[^a-z0-9]", "", unicodedata.normalize("NFKD", str(t or "")).encode("ascii", "ignore").decode().lower())
@@ -88,7 +141,7 @@ def main() -> int:
         ok, reason, cleaned = judge(arr[:, :, 3])
         if ok:
             arr[:, :, 3] = cleaned
-            Image.fromarray(arr).save(OUT_DIR / f"{slug}.webp", quality=88, method=6)
+            frame(Image.fromarray(arr)).save(OUT_DIR / f"{slug}.webp", quality=88, method=6)
         reg["cutouts"][slug] = {"ok": ok, "reason": reason}
     reg["cutouts"] = dict(sorted(reg["cutouts"].items()))
     reg["note"] = ("Derived from the owner-cleared portraits in data/ufc-image-register.json (rights owner-cleared, credit ESPN). "

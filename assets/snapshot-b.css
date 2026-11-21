@@ -14,6 +14,8 @@
 #main #upcoming-cards-root .sb-disc b,#main #upcoming-cards-root .sb-fig-photo>b{color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Barlow Condensed",sans-serif;font-size:40px;font-weight:800;letter-spacing:.03em}
 #main #upcoming-cards-root .sb-fig-photo>b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0}
 #main #upcoming-cards-root .sb-fig-photo .sb-disc{z-index:1}
+#main #upcoming-cards-root .sb-disc.has-flag{background:#f8f4ed}
+#main #upcoming-cards-root .sb-disc .sb-flag{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 #main #upcoming-cards-root .sb-cut{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:150px;width:auto;max-width:none}
 #main #upcoming-cards-root .sb-name{display:block;border:0!important;text-decoration:none!important;color:#111013!important;-webkit-text-fill-color:#111013!important;font-size:15px;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
 #main #upcoming-cards-root .sb-record{display:block;color:#111013;font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:800;line-height:1;letter-spacing:.02em}
