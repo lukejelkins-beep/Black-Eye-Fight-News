@@ -73,10 +73,13 @@
   const SCORE_MAIN = [['power', 'Power'], ['defence', 'Defence'], ['wrestling', 'Wrestling'], ['durability', 'Durability']];
   const SCORE_MORE = [['striking', 'Striking'], ['grappling', 'Grappling']];
 
+  // Scores are ON for readers (owner approved the release, 2026-11-21). Kill switch: BEFN_FEATURES.snapshotScores = false,
+  // or ?snapshotScores=off on the address, hides them and stops the scores file being requested.
   function scoresEnabled(g) {
     if (!g) return false;
-    if (g.BEFN_FEATURES && g.BEFN_FEATURES.snapshotScores === true) return true;
-    try { return /[?&]snapshotScores=preview(&|$)/.test((g.location && g.location.search) || ''); } catch (e) { return false; }
+    if (g.BEFN_FEATURES && g.BEFN_FEATURES.snapshotScores === false) return false;
+    try { if (/[?&]snapshotScores=off(&|$)/.test((g.location && g.location.search) || '')) return false; } catch (e) { return true; }
+    return true;
   }
 
   // Scores for a bout on a card, in the order of `names`. null when the event or bout is not in the file.

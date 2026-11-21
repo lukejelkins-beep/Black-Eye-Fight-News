@@ -420,8 +420,8 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot:not([data-tiles])"))el.remove();
   schedule();
  }).catch(()=>{});
- // Attribute scores stay OFF unless the page opts in (BEFN_FEATURES.snapshotScores or ?snapshotScores=preview).
- // The file is not even requested while the flag is off.
+ // Attribute scores are on for readers. Kill switch: BEFN_FEATURES.snapshotScores=false or ?snapshotScores=off.
+ // The file is not requested while the switch is off.
  let cardScores=null;
  if(window.BEFNSnapshotTiles?.scoresEnabled(window))fetch("data/ufc-card-scores.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!Array.isArray(d.events))return;

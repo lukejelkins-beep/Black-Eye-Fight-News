@@ -81,15 +81,16 @@ const scoreData = {
     scores: [sc({ power: { score: 80, band: 'green' } }), sc({ power: { score: 20, band: 'red' }, durability: null })] }] }]
 };
 // the flag is off unless the page opts in
-assert.strictEqual(T.scoresEnabled(undefined), false);
-assert.strictEqual(T.scoresEnabled({}), false);
-assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: {} }), false);
-assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: { snapshotScores: 'true' } }), false, 'only boolean true');
+assert.strictEqual(T.scoresEnabled(undefined), false, 'no window, no scores');
+assert.strictEqual(T.scoresEnabled({}), true, 'on by default');
+assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: {} }), true);
 assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: { snapshotScores: true } }), true);
-assert.strictEqual(T.scoresEnabled({ location: { search: '?snapshotScores=preview' } }), true);
-assert.strictEqual(T.scoresEnabled({ location: { search: '?x=1&snapshotScores=preview&y=2' } }), true);
-assert.strictEqual(T.scoresEnabled({ location: { search: '?snapshotScores=1' } }), false);
-assert.strictEqual(T.scoresEnabled({ location: { search: '?notsnapshotScores=preview' } }), false);
+assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: { snapshotScores: false } }), false, 'kill switch in page config');
+assert.strictEqual(T.scoresEnabled({ BEFN_FEATURES: { snapshotScores: 'false' } }), true, 'only boolean false switches off');
+assert.strictEqual(T.scoresEnabled({ location: { search: '?snapshotScores=off' } }), false, 'kill switch in the address');
+assert.strictEqual(T.scoresEnabled({ location: { search: '?x=1&snapshotScores=off&y=2' } }), false);
+assert.strictEqual(T.scoresEnabled({ location: { search: '?notsnapshotScores=off' } }), true);
+assert.strictEqual(T.scoresEnabled({ location: { search: '?snapshotScores=preview' } }), true, 'old preview address still works');
 
 // lookup in the order of the names, flipping when the file has the bout the other way round
 const sCardNames = ['Aa Bb', 'Cc Dd'];
