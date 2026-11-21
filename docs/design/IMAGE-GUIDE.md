@@ -34,3 +34,6 @@ Which sources are you permitted to republish (promoter press kits, licences, Wik
 
 ## Event posters (added 2026-11-19)
 The owner holds permission to republish official event posters. `scripts/cache-event-posters.py` (workflow "Cache official event posters", twice a day) downloads each poster link recorded in `data/upcoming-cards.json` and `data/historical-posters.json` once, saves `assets/img/posters/<event-id>-portrait.webp` or `-landscape.webp` (900 or 1280 px wide), and records image URL, source page, credit, rights, size and checksum in `data/poster-register.json`. `assets/local-posters.js` tells the Upcoming and Results pages to use these copies first. Failed downloads are retried up to three times. Originals are not committed.
+
+## UFC cutouts (added 2026-11-21)
+Fighters on announced UFC cards get a transparent cutout made offline from their owner-cleared portrait in `assets/img/ufc/` by `scripts/build-ufc-cutouts.py` (rembg, no web fetch, no new photo). Results and reasons are in `data/ufc-cutout-register.json`; a failed check means the page shows the original photo in a disc. Cutouts are derivatives of the cleared portraits and carry the same credit (ESPN) and rights status.
