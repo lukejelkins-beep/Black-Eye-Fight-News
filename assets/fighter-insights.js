@@ -412,6 +412,65 @@
    (valid?Math.max(2,Math.min(100,score)):0)+'%"></span></span>'+
    (hint?'<small class="befn-pro-meter-hint">'+escapeHTML(hint)+'</small>':'')+(extra||'')+'</div>';
  }
+ // Phase 3 step 2: last-five tiles for announced UFC bouts (data/ufc-card-snapshots.json, built hourly).
+ let cardSnapshots=null;
+ fetch("data/ufc-card-snapshots.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.fighters)return;
+  cardSnapshots=d;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot:not([data-tiles])"))el.remove();
+  schedule();
+ }).catch(()=>{});
+ // Attribute scores stay OFF unless the page opts in (BEFN_FEATURES.snapshotScores or ?snapshotScores=preview).
+ // The file is not even requested while the flag is off.
+ let cardScores=null;
+ if(window.BEFNSnapshotTiles?.scoresEnabled(window))fetch("data/ufc-card-scores.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!Array.isArray(d.events))return;
+  cardScores=d;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot:not([data-scores])"))el.remove();
+  schedule();
+ }).catch(()=>{});
+ function scoresFor(article,names){
+  const T=window.BEFNSnapshotTiles;
+  if(!T||!cardScores)return "";
+  const card=article.closest("#upcoming-cards-root [data-upcoming-card]");
+  return card?T.scoresHTML(T.lookupScores(cardScores,card.dataset.upcomingCard||"",names),names,{esc:escapeHTML}):"";
+ }
+ function tilePair(article,names){
+  const T=window.BEFNSnapshotTiles;
+  if(!T||!cardSnapshots)return null;
+  if(!article.closest("#upcoming-cards-root"))return null;
+  const card=article.closest("[data-upcoming-card]");
+  return T.lookup(cardSnapshots,card?.dataset?.upcomingCard||"",names);
+ }
+ function tilesFor(article,names){
+  const T=window.BEFNSnapshotTiles,pair=tilePair(article,names);
+  return pair?T.html(pair[0],pair[1],{esc:escapeHTML}):"";
+ }
+ // Phase 3 redesign (layout B): tale of the tape from data/ufc-fighter-tape.json and cutouts from data/ufc-cutout-register.json.
+ // Both are optional. Without them the snapshot still renders, with dashes and photo discs instead.
+ let fighterTape=null,cutoutRegister=null;
+ fetch("data/ufc-fighter-tape.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.fighters)return;
+  fighterTape=d;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-tape])"))el.remove();
+  schedule();
+ }).catch(()=>{});
+ fetch("data/ufc-cutout-register.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(!d?.cutouts)return;
+  cutoutRegister=d.cutouts;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-cuts])"))el.remove();
+  schedule();
+ }).catch(()=>{});
+ function figureFor(entry){
+  const slug=entry?.slug;
+  if(!slug)return null;
+  if(cutoutRegister?.[slug]?.ok===true)return {cutout:"assets/img/ufc-cutouts/"+slug+".webp"};
+  return {photo:"assets/img/ufc/"+slug+"-thumb.webp"};
+ }
+ const formLetters=p=>latestRows(p).map(x=>{
+  const r=String(x.outcome||x.result||"").toUpperCase().trim();
+  return r==="W"||r==="WIN"?"W":r==="L"||r==="LOSS"?"L":r==="NC"||r==="NO CONTEST"?"NC":"D";
+ });
  // Ratings v2: per-fighter files from scripts/build-ufc-stats.py, loaded on
  // demand (names.json maps display names to provider slugs).
  const statsNames=new Map(),statsCache=new Map(),statsPending=new Set();
@@ -780,10 +839,53 @@
 
    '</details>';
  }
+ // Layout B panels (UFC upcoming cards): Stats (last-five tiles), Scores (only when the flag is on), Fights.
+ function bTabs(article,names){
+  const tabs=[["stats","Stats"]];
+  if(scoresFor(article,names))tabs.push(["scores","Scores"]);
+  tabs.push(["fights","Fights"]);
+  return tabs;
+ }
+ function bPanel(id,article,names,f){
+  if(id==="scores")return scoresFor(article,names);
+  if(id==="fights"){
+   const sides=f.map((p,i)=>'<div><h4>'+escapeHTML(names[i])+' · recent form</h4>'+formHTML(p)+
+    '<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p)+'</div>').join("");
+   return lastFivePanel(f,names)+'<div class="befn-snapshot-extra">'+sides+'</div>';
+  }
+  return tilesFor(article,names)+'<details class="sb-totals"><summary>Tracked totals</summary>'+statsPanel(f,names)+'</details>';
+ }
+ function renderSnapshotB(article,names,f,pair){
+  const B=window.BEFNSnapshotB,T=window.BEFNSnapshotTiles;
+  const key=matchupKey(article,names);
+  const tapeFor=i=>fighterTape?.fighters?.[T.fold(names[i])]||{};
+  const side=i=>({...(pair[i]||{}),tape:tapeFor(i)});
+  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):"—",form:formLetters(f[i]),fig:figureFor(pair[i])}));
+  const shared=pair[0]?.division&&pair[0].division===pair[1]?.division?pair[0].division:"";
+  const tabs=bTabs(article,names),stored=selectedTabs.get(key);
+  const active=tabs.some(t=>t[0]===stored)?stored:"stats";
+  const h={esc:escapeHTML,today:new Date(),division:shared};
+  const buttons=f.map(p=>p?
+   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
+   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-tiles="1"'+
+   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(cardScores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+   '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
+   B.tapeHTML(sides,side(0),side(1),h)+
+   B.analysisHTML(B.analysisLines(side(0),side(1),names,h.today),h)+
+   B.tabsHTML(tabs,active,h)+
+   '<div class="sb-panel">'+bPanel(active,article,names,f)+'</div>'+
+   '<div class="befn-snapshot-links">'+buttons+'</div>'+
+   '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
+ }
  function renderSnapshot(article){
   const names=[getName(article,0),getName(article,1)];
   if(names.some(x=>!x))return "";
   const f=names.map(profileFor),sport=sportFor(article,f[0],f[1]);
+  if(window.BEFNSnapshotB&&sport==="MMA"){
+   const pair=tilePair(article,names);
+   if(pair&&tilesFor(article,names))return renderSnapshotB(article,names,f,pair);
+  }
   const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
   const metricHTML=labels.map((label,i)=>{
    const m0=rows[0][i],m1=rows[1][i];
@@ -810,11 +912,13 @@
     '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
    ).join("")+'</div>'+
    '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
-  return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" '+(openSnapshots.has(key)?'open':'')+'>'+
+  const tiles=tilesFor(article,names),scores=scoresFor(article,names);
+  return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'"'+(tiles?' data-tiles="1"':'')+(scores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
    '<div class="befn-snapshot-body">'+
    '<div class="befn-snapshot-head"><div><strong>'+escapeHTML(names[0])+'</strong>'+
    '</div><div><strong>'+escapeHTML(names[1])+'</strong></div></div>'+
+   tiles+scores+
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
    historyTab+talePanel(f,names)+
@@ -909,7 +1013,7 @@
   if(!snap)return;
   const key=snap.dataset.snapshotKey;
   const id=btn.dataset.befnHistoryTab;
-  if(!["fights","stats"].includes(id))return;
+  if(!["fights","stats","scores"].includes(id))return;
   selectedTabs.set(key,id);
   for(const tab of snap.querySelectorAll("[data-befn-history-tab]")){
    const active=tab.dataset.befnHistoryTab===id;
@@ -920,8 +1024,8 @@
   if(!article)return;
   const names=[getName(article,0),getName(article,1)];
   const f=names.map(profileFor);
-  const panel=snap.querySelector(".befn-history-panel");
-  if(panel)panel.innerHTML=id==="stats"?statsPanel(f,names):lastFivePanel(f,names);
+  const panel=snap.querySelector(".sb-panel,.befn-history-panel");
+  if(panel)panel.innerHTML=snap.dataset.b?bPanel(id,article,names,f):id==="stats"?statsPanel(f,names):lastFivePanel(f,names);
  },true);
  document.addEventListener("click",e=>{
   const button=e.target.closest?.("[data-credential-info]");

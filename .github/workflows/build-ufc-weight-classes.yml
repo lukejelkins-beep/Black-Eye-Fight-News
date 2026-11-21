@@ -1,0 +1,64 @@
+name: Build UFC weight classes per fight
+on:
+  workflow_dispatch:
+  schedule:
+    # Once a day. The free UFCStats export updates after each card; output is deterministic, so no change is a no-op.
+    - cron: '17 3 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-ufc-weight-classes.py'
+      - 'tests/test_ufc_weight_classes.py'
+      - 'scripts/build-ufc-fighter-tape.py'
+      - 'tests/test_ufc_fighter_tape.py'
+      - '.github/workflows/build-ufc-weight-classes.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/build-ufc-weight-classes.py'
+      - 'tests/test_ufc_weight_classes.py'
+      - 'scripts/build-ufc-fighter-tape.py'
+      - 'tests/test_ufc_fighter_tape.py'
+      - '.github/workflows/build-ufc-weight-classes.yml'
+permissions:
+  contents: write
+concurrency:
+  group: befn-ufc-weight-classes
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test weight class matching and divisions
+        run: python -m unittest discover -s tests -p 'test_ufc_weight_classes.py' -v
+      - name: Test tale of the tape parsing
+        run: python -m unittest discover -s tests -p 'test_ufc_fighter_tape.py' -v
+      - name: Build (free UFCStats CSV export, no key, no paid worker)
+        run: |
+          python scripts/build-ufc-weight-classes.py --out "$RUNNER_TEMP/ufc-bout-weight-classes.json"
+          python scripts/build-ufc-fighter-tape.py --out "$RUNNER_TEMP/ufc-fighter-tape.json"
+      - name: Commit only if changed (rebuild on a fresh main, never rebase generated files)
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'BEFN stats calculator'
+          git config user.email 'befn-stats-calculator@users.noreply.github.com'
+          branch="${GITHUB_REF_NAME}"
+          for i in 1 2 3; do
+            git fetch -q origin "$branch"
+            git reset -q --hard "origin/$branch"
+            python scripts/build-ufc-weight-classes.py
+            python scripts/build-ufc-fighter-tape.py
+            git add -A data/ufc-bout-weight-classes.json data/ufc-fighter-tape.json
+            if git diff --cached --quiet; then echo 'No weight classes changed'; exit 0; fi
+            git commit -q -m 'Refresh UFC weight classes per fight from the UFCStats export'
+            if git push -q origin "HEAD:$branch"; then exit 0; fi
+            sleep 5
+          done
+          exit 1

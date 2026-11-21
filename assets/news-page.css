@@ -49,10 +49,20 @@
 .np-intl-title{font:800 clamp(20px,2.1vw,24px)/1.05 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
 .np-intl-original{font-size:13px;line-height:1.4;color:#b8b0b3;overflow-wrap:anywhere}
 
+/* Tidy (21 Nov): a lead with no photo is shorter, and its sport tile no longer sits under the headline. */
+.np-lead:has(.np-photo-empty){min-height:clamp(220px,26vw,300px)}
+.np-lead .np-photo-empty span{display:none}
 @media(max-width:760px){
   .np-leads,.np-intl-grid{grid-template-columns:minmax(0,1fr)}
   .np-lead{min-height:300px}
+  .np-lead:has(.np-photo-empty){min-height:240px}
+  .np-section-head{flex-wrap:wrap;gap:4px 12px}
+  .np-section-head h2{flex:1 1 100%}
+  .np-lead-meta{row-gap:2px}
   .np-row-link{gap:14px}
 }
 
 .np-button{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:8px;background:#cf1824;color:#fff;font:700 15px/1 'DM Sans',system-ui,sans-serif}
+
+.np-updated{margin:6px 0 0;font-size:12px;color:#b8b0b3}
+.np-updated span{color:#f3c332;font-weight:700}

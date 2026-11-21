@@ -1,0 +1,55 @@
+/* Fight snapshot layout B (Phase 3 redesign): tale of the tape, analysis, tabs. Light card surface (see fights-page.css).
+   Tokens from docs/design/DIRECTION.md: red #cf1824, gold #f3c332, ink #111013, cream #f8f4ed. Nothing under 12 px, tap targets 44 px. */
+#main #upcoming-cards-root .sb-tape,#main #upcoming-cards-root .sb-analysis{margin:0 0 14px;padding:4px 0 14px;border-bottom:1px solid #ece6dc;color:#111013}
+#main #upcoming-cards-root .sb-title-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 0 6px}
+#main #upcoming-cards-root .sb-title{margin:0!important;color:#111013!important;-webkit-text-fill-color:#111013!important;font-family:"Barlow Condensed",sans-serif;font-size:20px!important;font-weight:800;letter-spacing:.03em;text-transform:uppercase;line-height:1.1;white-space:nowrap}
+#main #upcoming-cards-root .sb-division{color:#4a4448;font-size:12px;font-weight:700;text-align:right}
+#main #upcoming-cards-root .sb-head{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:6px 0 10px}
+#main #upcoming-cards-root .sb-fighter{display:flex;flex-direction:column;gap:3px;min-width:0;align-items:flex-start;text-align:left}
+#main #upcoming-cards-root .sb-fighter.sb-b{align-items:flex-end;text-align:right}
+#main #upcoming-cards-root .sb-fig{position:relative;display:block;width:132px;height:150px;clip-path:inset(0 round 0 0 66px 66px);margin-bottom:4px}
+#main #upcoming-cards-root .sb-fig-photo,#main #upcoming-cards-root .sb-fig-initials{height:132px;clip-path:none}
+#main #upcoming-cards-root .sb-disc{position:absolute;left:0;right:0;bottom:0;height:132px;border-radius:50%;background:#cf1824;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#main #upcoming-cards-root .sb-disc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+#main #upcoming-cards-root .sb-disc b,#main #upcoming-cards-root .sb-fig-photo>b{color:#fff!important;-webkit-text-fill-color:#fff!important;font-family:"Barlow Condensed",sans-serif;font-size:40px;font-weight:800;letter-spacing:.03em}
+#main #upcoming-cards-root .sb-fig-photo>b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0}
+#main #upcoming-cards-root .sb-fig-photo .sb-disc{z-index:1}
+#main #upcoming-cards-root .sb-cut{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:150px;width:auto;max-width:none}
+#main #upcoming-cards-root .sb-name{display:block;border:0!important;text-decoration:none!important;color:#111013!important;-webkit-text-fill-color:#111013!important;font-size:15px;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+#main #upcoming-cards-root .sb-record{display:block;color:#111013;font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:800;line-height:1;letter-spacing:.02em}
+#main #upcoming-cards-root .sb-form{display:flex;gap:4px;margin-top:2px}
+#main #upcoming-cards-root .sb-form i{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font:700 12px "DM Sans",sans-serif;font-style:normal;color:#fff!important;-webkit-text-fill-color:#fff!important;background:#8a8387}
+#main #upcoming-cards-root .sb-form i.is-win{background:#2f8f2b}
+#main #upcoming-cards-root .sb-form i.is-loss{background:#cf1824}
+#main #upcoming-cards-root .sb-rows{display:grid}
+#main #upcoming-cards-root .sb-row{display:grid;grid-template-columns:minmax(0,1fr) 104px minmax(0,1fr);gap:8px;align-items:center;min-height:42px;border-top:1px solid #ece6dc}
+#main #upcoming-cards-root .sb-val{justify-self:start;color:#111013!important;-webkit-text-fill-color:#111013!important;font-size:16px;font-weight:700;padding:2px 8px;border-radius:6px;margin-left:-8px}
+#main #upcoming-cards-root .sb-val+.sb-lab+.sb-val{justify-self:end;margin-left:0;margin-right:-8px}
+#main #upcoming-cards-root .sb-val.is-lead{background:#fbeeb8;font-weight:800}
+#main #upcoming-cards-root .sb-lab{color:#6b6468;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-align:center;line-height:1.2}
+#main #upcoming-cards-root .sb-note{margin:10px 0 0;color:#6b6468;font-size:12px;line-height:1.45}
+#main #upcoming-cards-root .sb-analysis ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+#main #upcoming-cards-root .sb-analysis li{margin:0;padding:6px 0 6px 12px;border-left:4px solid #cfc8bd;color:#111013;font-size:15px;line-height:1.4}
+#main #upcoming-cards-root .sb-analysis li.is-a{border-left-color:#cf1824}
+#main #upcoming-cards-root .sb-analysis li.is-b{border-left-color:#f3c332}
+#main #upcoming-cards-root .sb-tabs{display:flex;gap:0;border-bottom:1px solid #ece6dc;margin:0 0 12px}
+#main #upcoming-cards-root .sb-tabs button{flex:1;min-height:44px;border:0;border-bottom:3px solid transparent;background:transparent;color:#6b6468!important;-webkit-text-fill-color:#6b6468!important;font:700 14px "DM Sans",sans-serif;cursor:pointer;border-radius:0}
+#main #upcoming-cards-root .sb-tabs button.is-active{color:#111013!important;-webkit-text-fill-color:#111013!important;border-bottom-color:#cf1824}
+#main #upcoming-cards-root .sb-panel .st-tiles,#main #upcoming-cards-root .sb-panel .st-scores{border-bottom:0;padding-top:0}
+#main #upcoming-cards-root .sb-panel .st-title{display:none}
+#main #upcoming-cards-root .sb-totals{margin-top:8px}
+#main #upcoming-cards-root .sb-totals>summary{display:flex;align-items:center;min-height:44px;color:#cf1824;font:700 12px "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+@media(min-width:900px){
+ #main #upcoming-cards-root .sb-head{padding-inline:12%}
+ #main #upcoming-cards-root .sb-fig{width:156px;height:176px;clip-path:inset(0 round 0 0 78px 78px)}
+ #main #upcoming-cards-root .sb-fig-photo,#main #upcoming-cards-root .sb-fig-initials{height:156px}
+ #main #upcoming-cards-root .sb-disc{height:156px}
+ #main #upcoming-cards-root .sb-cut{height:176px}
+ #main #upcoming-cards-root .sb-name{font-size:17px}
+ #main #upcoming-cards-root .sb-record{font-size:36px}
+ #main #upcoming-cards-root .sb-row{grid-template-columns:minmax(0,1fr) 160px minmax(0,1fr)}
+ #main #upcoming-cards-root .sb-tape,#main #upcoming-cards-root .sb-analysis{max-width:760px}
+}
+@media(min-width:900px){
+ #main #upcoming-cards-root .sb-tabs,#main #upcoming-cards-root .sb-panel{max-width:760px}
+}

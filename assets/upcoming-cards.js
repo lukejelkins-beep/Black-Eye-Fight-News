@@ -1,7 +1,7 @@
 /* Sourced future boxing/MMA cards; never assign unverified fights to prelims. */
 window.UpcomingCards=(()=>{
  'use strict';
- let feed=null,error='',loading=null,lastCheck=0;
+ let feed=null,error='',loading=null,lastCheck=0,newsStories=null;
  const opened=new Set(),active=new Map();
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const href=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
@@ -193,6 +193,12 @@ window.UpcomingCards=(()=>{
   const d=new Date(day+'T12:00:00Z');
   return '<h4 class="upcoming-list-date"><span>'+esc(d.toLocaleDateString('en-AU',{day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase())+'</span> <span>· '+esc(d.toLocaleDateString('en-AU',{weekday:'long',timeZone:'UTC'}))+'</span></h4>';
  }
+ // Latest three headlines that name a fighter on this card (exact or close spelling only; see related-news.js).
+ function relatedNewsHTML(e){
+  const rn=window.BEFNRelatedNews;if(!rn||!Array.isArray(newsStories))return '';
+  const names=e.bouts.flatMap(b=>Array.isArray(b.fighters)?b.fighters:[]);
+  return rn.relatedHTML(rn.relatedNews(newsStories,names,3),{esc,safeURL:href},{showNames:true,when:iso=>new Date(iso).toLocaleDateString('en-AU',{day:'numeric',month:'short'})});
+ }
  function eventCard(e){
   const sections=groups.map(([key,label])=>({key,label,rows:e.bouts.filter(b=>b.section===key)})).filter(g=>g.rows.length);
   const allOption={key:'all',label:'All',rows:e.bouts};
@@ -216,9 +222,9 @@ window.UpcomingCards=(()=>{
   // go straight to the card itself, without duplicate times, source links
   // or long editorial notes. Source URLs remain in the underlying JSON.
   return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" data-befn-sport="'+esc(e.sport)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
-   '<div class="upcoming-expanded"><div class="upcoming-card-bar"><strong>Fight card</strong><span>'+e.bouts.length+' total</span></div>'+tabs+panels+'</div></details>';
+   '<div class="upcoming-expanded"><div class="upcoming-card-bar"><strong>Fight card</strong><span>'+e.bouts.length+' total</span></div>'+tabs+panels+relatedNewsHTML(e)+'</div></details>';
  }
- function listing(sport){
+ function listingRaw(sport){
   if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
   const today=localDate(),recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
   const query=String(window.BEFNFightsUI?.query||'').trim().toLowerCase();
@@ -297,6 +303,8 @@ window.UpcomingCards=(()=>{
   }
   pump();
  }
+ function listing(sport){return markLead(listingRaw(sport))}
+ function markLead(html){const i=html.indexOf('has-poster');if(i<0)return html;const d=html.lastIndexOf('<details class="result-event upcoming-event"',i);return d<0?html:html.slice(0,d)+'<details class="result-event upcoming-event is-lead"'+html.slice(d+'<details class="result-event upcoming-event"'.length);}
  function render(sport){const markup='<div id="upcoming-cards-root" data-local-day="'+localDate()+'" data-upcoming-sport="'+esc(sport)+'">'+listing(sport)+'</div>';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>{hydratePortraits();reconcileHeroImages()});return markup}
  function refreshCountdowns(){
   document.querySelectorAll('.upcoming-time-countdown[data-upcoming-start]').forEach(el=>{
@@ -386,7 +394,14 @@ window.UpcomingCards=(()=>{
         {cache:'no-store',signal:AbortSignal.timeout(9000)});
       if(bonus.ok)enriched=mergeUfcResearch(next,await bonus.json());
     }catch{}
-    if(!feed||JSON.stringify(feed)!==JSON.stringify(enriched)){feed=enriched;update()}
+    let newsChanged=false;
+    try{
+     const base='https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/data/news-live.json';
+     const sets=await Promise.all([base,'data/news-live.json'].map(async u=>{try{const r=await fetch(u+'?t='+Math.floor(Date.now()/300000),{cache:'no-store',signal:AbortSignal.timeout(9000)});if(!r.ok)return null;const d=await r.json();return Array.isArray(d.articles)?d:null}catch{return null}}));
+     const fresh=sets.filter(Boolean).sort((a,b)=>(Date.parse(b.lastSuccessfulAt)||0)-(Date.parse(a.lastSuccessfulAt)||0))[0];
+     if(fresh&&JSON.stringify(fresh.articles)!==JSON.stringify(newsStories)){newsStories=fresh.articles;newsChanged=true}
+    }catch{}
+    if(!feed||JSON.stringify(feed)!==JSON.stringify(enriched)||newsChanged){feed=enriched;update()}
     error='';
    }catch{error='unavailable';if(!feed)update()}
    finally{lastCheck=Date.now();loading=null}
