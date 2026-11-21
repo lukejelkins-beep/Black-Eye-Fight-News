@@ -101,7 +101,13 @@
     return '<section class="rn-block" aria-label="' + h.esc(heading) + '"><div class="rn-head"><strong>' + h.esc(heading) + '</strong><span>Latest ' + items.length + '</span></div><ul class="rn-list">' + rows + '</ul></section>';
   }
 
-  const api = { parts, words, ratio, closeSpelling, relatedNews, relatedHTML };
+  /* Does this text name this fighter (same rules as relatedNews)? Used by the Fight Talk promotion filter. */
+  function namedIn(text, fighterName) {
+    const who = prepare(fighterName);
+    return !!who && names(words(text), who);
+  }
+
+  const api = { parts, words, ratio, closeSpelling, relatedNews, relatedHTML, namedIn };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.BEFNRelatedNews = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
