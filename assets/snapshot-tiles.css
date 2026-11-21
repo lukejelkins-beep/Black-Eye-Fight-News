@@ -23,3 +23,15 @@
  #main #upcoming-cards-root .st-tiles .st-label{font-size:13px}
  #main #upcoming-cards-root .st-tiles .st-head em{font-size:32px}
 }
+
+/* The older score bars, form and credentials under the tiles, restyled for the light card (they were built for a dark panel). */
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-bars{border-block:1px solid #ece6dc;padding:14px 0;gap:8px}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-metric b{color:#111013!important;-webkit-text-fill-color:#111013!important;font-family:"Barlow Condensed",sans-serif;font-size:17px;font-weight:800}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-metric-label{color:#4a4448!important;-webkit-text-fill-color:#4a4448!important;font-size:12px;font-weight:700}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-metric .befn-power-track{height:10px;border:0;border-radius:5px;box-shadow:none;background:#ece6dc}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-metric .befn-power-track::after{display:none}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-metric .befn-power-fill{border-right:0;box-shadow:none;background:var(--bar)}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-extra h4{color:#6b6468!important;-webkit-text-fill-color:#6b6468!important;font-size:12px!important;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-extra>div+div{border-left:1px solid #ece6dc}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-extra .befn-credential-empty{color:#6b6468;font-size:12px}
+#main #upcoming-cards-root .upcoming-expanded .befn-snapshot-disclaimer{color:#6b6468;font-size:12px}
