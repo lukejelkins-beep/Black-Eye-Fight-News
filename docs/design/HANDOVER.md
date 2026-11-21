@@ -26,7 +26,7 @@ Written so a fresh chat or tool can continue without the old conversation. Read 
 - #352 News page shows "Updated N min ago" and ticks every 30 seconds. News already re-checks every 5 minutes with a "Show fresh updates" button; Fights, Results and Fight Talk already poll. Site cache is about 5 minutes, so "live" means within about 10 minutes.
 
 ## Next, in order
-1. **Related news on cards** (Phase 2 step 3): latest three stories naming a fighter or fight on cards and fighter pages. Exact or close-spelling matches only, using the results importer's name rules.
+1. **Related news on cards** (Phase 2 step 3, built in PR for feat/related-news-on-cards-20261121, awaiting "Merge N"): latest three stories naming a fighter or fight on cards and fighter pages. Exact or close-spelling matches only, using the results importer's name rules.
 2. **Fight Talk page filters** (step 4): by fighter, promotion and sport, same labels as the Fights page.
 3. **Publisher embeds:** check all 32 feeds on a rotation (currently 3 per run).
 4. **Roster gaps:** 55 of 215 fighters have no verified account; fill from official promotion pages and fighters' own sites, keeping the supporting link. Unsupported stays blank.

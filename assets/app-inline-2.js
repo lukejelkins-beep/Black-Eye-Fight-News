@@ -1103,6 +1103,8 @@ const navGroup={highlights:'fights',champions:'fighters',leaderboards:'fighters'
 const subLinks={fighters:['Fighters',[['#fighters','Fighter scout','fighters'],['#champions','Champions','champions'],['#leaderboards','UFC stats','leaderboards']]],fights:['Fights',[['#fights','Upcoming and results','fights'],['#highlights','Fight film','highlights']]]};
 function subNavHTML(key){const g=subLinks[navGroup[key]||key];return g?'<nav class="sh-sub" aria-label="'+g[0]+' sections">'+g[1].map(([href,label,k])=>'<a href="'+href+'"'+(k===key?' aria-current="page"':'')+'>'+label+'</a>').join('')+'</nav>':'';}
 function renderAnalysis(){return renderFrame('<div class="np"><header class="np-head"><h1>Analysis</h1><p>Fight breakdowns for the biggest cards are on the way. Until then, see who is fighting next.</p></header><a class="np-button" href="#fights">See upcoming fights</a></div>');}
+// Latest three headlines that name this fighter (exact or close spelling only; see assets/related-news.js).
+function fighterRelatedNews(f){const rn=window.BEFNRelatedNews;if(!rn||!f||!Array.isArray(desk.articles))return '';return rn.relatedHTML(rn.relatedNews(desk.articles,[f.name],3),{esc,safeURL},{when:v=>new Date(v).toLocaleDateString('en-AU',{day:'numeric',month:'short'})});}
 function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;const recent=f.latest||[];const picture=f.photo||portraitURL(f.name);const img=`<div class="befn-portrait-slot" data-fighter-portrait="${esc(f.name)}" data-portrait-state="fallback">${fighterPortraitFallback(f.name)}${picture?`<img loading="eager" src="${safeURL(picture)}" alt="Photograph of ${esc(f.name)}" referrerpolicy="no-referrer">`:''}</div>`;
  const ins=window.BEFNFighterInsights;
  const isUfc=!!ins?.hasV3(f);
@@ -1117,7 +1119,7 @@ function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;cons
 <div class="befn-pro-rating" data-befn-pro-rating></div>
 </header>
 <nav class="befn-pro-nav" aria-label="Profile sections">${[['ratings','Ratings'],['fights','Fights'],['stats','Stats'],['profile','Profile']].map(([k,l])=>`<button type="button" data-pro-jump="${k}">${l}</button>`).join('')}</nav>
-<div class="befn-pro-body">${ins?.renderProfile(f)||''}${legacy}</div>
+<div class="befn-pro-body">${ins?.renderProfile(f)||''}${legacy}${fighterRelatedNews(f)}</div>
 </div>`;
  dialog.classList.remove('befn-v3-dialog');
  dialog.classList.add('befn-pro-dialog');
