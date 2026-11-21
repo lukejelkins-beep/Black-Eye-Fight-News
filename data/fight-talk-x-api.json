@@ -1,8 +1,8 @@
 {
   "platform": "X",
-  "status": "connected",
+  "status": "unavailable",
   "type": "original-source-posts",
-  "attemptedAt": "2026-11-21T21:53:23.828Z",
+  "attemptedAt": "2026-11-21T23:23:26.025Z",
   "checkedAt": "2026-11-21T21:53:23.828Z",
   "updatedAt": "2026-11-21T21:53:23.828Z",
   "trackedAccounts": 141,
@@ -22,9 +22,9 @@
   "returnedCount": 20,
   "matchedOriginalPosts": 20,
   "postCount": 180,
-  "paidXApiCalls": 139,
+  "paidXApiCalls": 140,
   "budgetMonth": "2026-11",
-  "estimatedReservedUsd": 0.4726,
+  "estimatedReservedUsd": 0.476,
   "monthlyBudgetUsd": 2,
   "billingNote": "Pessimistic request reservations, not confirmed provider charges. Provider prepaid balance and disabled auto top-ups remain necessary.",
   "posts": [
@@ -4034,5 +4034,7 @@
       "verifiedHandle": "wbcmoro",
       "sourceProvider": "twitterapi.io"
     }
-  ]
+  ],
+  "message": "X API temporarily unavailable; existing public posts retained.",
+  "lastErrorCode": "TwitterAPI.io returned HTTP 503"
 }
