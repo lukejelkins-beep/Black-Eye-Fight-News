@@ -1,7 +1,7 @@
 {
-  "attemptedAt": "2026-11-21T09:30:35.024Z",
-  "checkedAt": "2026-11-21T09:30:35.024Z",
-  "updatedAt": "2026-11-21T08:41:30.642Z",
+  "attemptedAt": "2026-11-21T09:53:44.238Z",
+  "checkedAt": "2026-11-21T09:53:44.238Z",
+  "updatedAt": "2026-11-21T09:37:43Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
   "sourcesChecked": 6,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,70 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
+      "Instagram": 36,
+      "X": 34,
       "Bluesky": 6,
-      "X": 27,
-      "Threads": 8
+      "Threads": 7,
+      "Reddit": 1
     },
     "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ssigyhif2s",
+      "cid": "bafyreicuvbpohvaegofxrtzlxaam3eyybhw6q3zkdgfttstffyc5rsruay",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Amari Jones moves to 18-0 (16 KOs) after stopping DeAundre Pettus in round eight. 🥊🔥 \n\nThe IBF No. 1 middleweight contender has now recorded three stoppage wins in 2026 and wants his world title shot next.",
+      "postedAt": "2026-11-21T09:37:43Z",
+      "date": "21 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2ssigyhif2s",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2sscf5gcm22",
+      "cid": "bafyreieulhtfxm6tlhuee5e4hebjgatgcgh3ewfkqwcerm43lm6acbvv2i",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Lauren Price makes Welsh boxing history with a 100-90 shutout to become undisputed welterweight champion. 🥊🏆\n\n Gabriela Fundora retains her undisputed flyweight crown after dropping Jasmina Zapotoczna twice. Both remain unbeaten. \n\n#undisputed",
+      "postedAt": "2026-11-21T09:34:20Z",
+      "date": "21 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2sscf5gcm22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2spdwi6ls2f",
       "cid": "bafyreievdx5m5hn4eu3k7lkrodehcjeaqi5wj4x7u45eojdfmomz3al7x4",
@@ -115,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -139,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -187,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -211,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -259,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -283,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -307,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -331,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -379,7 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -451,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -475,7 +524,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -499,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -571,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -643,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -715,7 +764,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -739,7 +788,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -763,7 +812,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -811,7 +860,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -836,54 +885,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-21T09:30:35.024Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2qfaax5jy24",
-      "cid": "bafyreibpfcteau7re3s5qtwaluucxqf6efkvuxtyo6amj5tdbuxhr47rc4",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Oscar De La Hoya says Ryan Garcia would become a superstar and the face of boxing if he beats Floyd Mayweather. 🌟\n\nThe Golden Boy promoter made the claim during an interview with Fight Hub TV as speculation continues over a February 6 world title clash. 🥊🔰",
-      "postedAt": "2026-11-20T10:35:10Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2qfaax5jy24",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2q3vadi3g2e",
-      "cid": "bafyreiavmynynqbppjh7flu37yjxxafgug7qzdljvqvrkffvqzjn25itey",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Canelo Alvarez vs Willy Hutchinson has moved a step closer after the WBC delayed Hutchinson's mandatory obligation.\n\nThe decision opens the door for a potential WBC light heavyweight title fight this March in Saudi Arabia. 🇸🇦",
-      "postedAt": "2026-11-20T07:47:56Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2q3vadi3g2e",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1555,7 +1556,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T08:20:24.137Z",
+      "engagementCheckedAt": "2026-11-21T09:53:44.238Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
