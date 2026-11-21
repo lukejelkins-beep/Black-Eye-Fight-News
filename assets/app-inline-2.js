@@ -951,7 +951,7 @@ function talkFilter(id,label,options){
 }
 
 function talkCoverage(posts){
- const statuses=liveTalk.platformStatus.filter(p=>Object.hasOwn(talkPlatforms,p.platform));
+ const statuses=liveTalk.platformStatus.filter(p=>Object.hasOwn(talkPlatforms,p.platform)).filter((p,i,all)=>all.findIndex(q=>q.platform===p.platform)===i);
  const automatic=statuses.filter(p=>p.state==='connected');
  const picked=new Set(posts.filter(p=>p.summary).map(p=>p.platform));
  const verifiedEmbeds=new Set(posts.filter(p=>p.nativeEmbed).map(p=>p.platform));
@@ -959,7 +959,17 @@ function talkCoverage(posts){
   +'<p>Public post display uses the official platform widgets; it does not require a Meta App Review.</p>'
   +'<p>Automatic source discovery: '+(automatic.map(p=>esc(p.platform)).join(', ')||'awaiting a feed check')+'. Other posts are sourced from direct public links.</p>'
   +(verifiedEmbeds.size?'<p>Linked original post embeds: '+[...verifiedEmbeds].map(esc).join(', ')+'. Publication dates of reporting are not post dates.</p>':'')
-  +(statuses.length?'<ul>'+statuses.map(p=>'<li><strong>'+esc(p.platform)+'</strong> · '+(p.state==='connected'?'Automatic collection active':p.state==='source-linked'?'Public post links available':'Automated account discovery limited; direct embeds supported')+'</li>').join('')+'</ul>':'')
+  +(statuses.length?'<ul class="talk-platform-health">'+statuses.map(p=>{
+    const mine=liveTalk.posts.filter(x=>x.platform===p.platform&&Date.parse(x.postedAt));
+    const newest=mine.length?Math.max(...mine.map(x=>Date.parse(x.postedAt))):0;
+    const ago=ms=>{const h=(Date.now()-ms)/36e5;return h<1?Math.max(1,Math.round(h*60))+' min ago':h<48?Math.round(h)+' h ago':Math.round(h/24)+' days ago'};
+    const stale=newest&&(Date.now()-newest)>7*864e5;
+    const paused=p.state==='unavailable';
+    const state=paused?'Paused: the platform refused access, so no new posts are being read':p.state==='connected'?'Automatic collection active':p.state==='source-linked'?'Public post links only':'Not connected; direct embeds only';
+    const checked=p.state==='connected'&&liveTalk.checkedAt&&Date.parse(liveTalk.checkedAt)?' · last check '+ago(Date.parse(liveTalk.checkedAt)):'';
+    const latest=newest?' · newest post '+ago(newest)+(stale?' (older than 7 days, hidden from Live)':''):' · no posts held';
+    return '<li><strong>'+esc(p.platform)+'</strong> · '+state+checked+latest+'</li>';
+   }).join('')+'</ul>':'')
   +'</details>';
 }
 
