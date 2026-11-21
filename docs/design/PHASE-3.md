@@ -5,7 +5,7 @@ Status: **proposal, waiting for the owner's OK.** Nothing here is built yet. Eac
 Numbering note: `REVIEW-2026-11-17.md` still labels Phase 3 "polish and speed". `PHASE-1.md`, `PHASE-2.md` and the 19 Nov roadmap use Phase 3 for stats snapshots, and this plan follows that. The polish-and-speed items (image weight, accessibility pass) stay on the list as "Later".
 
 ## Goal
-Open an upcoming UFC bout and see both fighters side by side at a glance: record, recent form, striking, takedowns, control, finishing, and three 0-100 scores (**Power, Defence, Wrestling**). Every number comes from verified data and says how many fights it rests on. Missing is shown as a dash, never as zero.
+Open an upcoming UFC bout and see both fighters side by side at a glance: record, recent form, striking, takedowns, control, finishing, and 0-100 attribute scores (**Power, Defence, Wrestling** first, from the agreed six). Every number comes from verified data and says how many fights it rests on. Missing is shown as a dash, never as zero.
 
 ## Owner decisions (21 Nov)
 - First snapshot shows **stat tiles plus the three 0-100 scores**.
@@ -26,13 +26,17 @@ Open an upcoming UFC bout and see both fighters side by side at a glance: record
 ## Steps
 1. **Snapshot data file.** A script builds `data/ufc-card-snapshots.json` from `ufc-fighter-v3.json` for fighters on announced UFC cards only: tiles, bout counts, and a coverage flag. Offline, read-only, tested. Fighters not in the file show "Snapshot not available yet", not a blank. No visible site change.
 2. **Snapshot panel (tiles).** On an upcoming UFC bout: mirrored bars and big numbers for both fighters, "based on last N fights" under each, phone first (390 px), same look as the cards. Replaces the current snapshot content. Scores are not shown yet.
-3. **Power, Defence, Wrestling scores, hidden.** Offline calibration with a held-out test, minimum sample size, fairness check by division, written method (so the owner can read how a score is made). Output sits in the data file and renders only behind a feature flag that is **OFF** by default. Reviewing it is a separate approval from merging the code.
+3. **Attribute scores (Power, Defence, Wrestling first), hidden.** Offline calibration with a held-out test, minimum sample size, fairness check by division, written method (so the owner can read how a score is made). Output sits in the data file and renders only behind a feature flag that is **OFF** by default. Reviewing it is a separate approval from merging the code.
 4. **Release.** Owner reviews screenshots with the flag on a preview, then approves switching scores on. Verify the deployed SHA and live QA, and update release tracker #171.
 
-## Open questions for the owner
-1. **Certification gate for tiles.** Should tiles appear for every fighter with verified metrics (705 of 714), or only for independently certified careers? The stricter option shows fewer fighters at first. Recommendation: use the same gate the fighter profile uses today, and confirm it against #171 before step 2.
-2. **Window.** Tiles use the last five fights today. Show Last 5 / Last 10 / Career toggles (the approved V3 design) or last five only for the first version? Recommendation: last five only first.
-3. **Score names.** Keep Power, Defence, Wrestling exactly, or use the file's striking / wrestling / grappling / defence / form set? Recommendation: your three, with the method note saying what each measures.
+## Owner answers (21 Nov)
+1. **Tiles for every fighter** with verified metrics (705 of 714 today), not only certified careers. Fighters without data show a dash and "limited data".
+2. **Window:** the card snapshot shows **last five fights only**. Last 5 / Last 10 / Career toggles stay on the fighter profile (the approved V3 design), where there is room for them. Owner: any option is fine if it looks modern, seamless and in line with the current design.
+3. **Scores:** use the **six attribute bars from the analysis method the owner agreed** in the roadmap chat: Striking, Power, Defence, Wrestling, Grappling, Durability, ranked against the weight division. The card snapshot may show a subset (Power, Defence, Wrestling first) to keep it to one screen.
+
+## Still open
+- **Durability** has no formula in the code today (the V3 engine has striking, wrestling, grappling, defence, form and power). It needs a written definition, for example how rarely a fighter is knocked down or finished, before it is shown. Until agreed it is left out.
+- **Percentile method sign-off.** The agreed method says bars are "ranked against the weight division". The existing V3 engine does this with percentiles against the whole roster and the division, shrinking small samples toward the average (n/(n+4)), needing at least 3 fights with full round stats and 8 division peers. That exact formula and its weights have not had a separate owner sign-off; step 3 writes it up in plain English for approval before any score is shown.
 
 ## Costs and limits
 Nothing new to pay for: no new API, no new worker, GitHub Actions minutes only.
