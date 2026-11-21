@@ -49,7 +49,8 @@ test('clean sweep and a finishing move, but fusen is never a technique',()=>{
 test('first meeting only for an announced pair with no regular or special bout',()=>{
  const first=facts(7,8).find(x=>x.k==='first');
  assert.ok(first);assert.equal(first.s,60);
- assert.match(factText(first,name).rest,/no earlier bout between them in BEFN’s records/);
+ assert.equal(factText(first,name).lead,'First time facing each other.');
+ assert.equal(factText(first,name).scope,'BEFN bout records');
  assert.ok(!facts(11,12).some(x=>x.k==='first'),'a playoff meeting means it is not their first');
  assert.ok(!facts(1,2).some(x=>x.k==='first'));
 });

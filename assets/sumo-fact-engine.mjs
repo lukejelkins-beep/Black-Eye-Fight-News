@@ -204,8 +204,8 @@ export function factText(f,name){
     lead:f.n+' meetings since '+bashoMonth(f.first)+(level?', and it’s level at '+f.wa+'–'+f.wb+'.':': '+n(f.a)+' leads '+f.wa+'–'+f.wb+'.'),
     rest:f.top?'The longest series between two wrestlers BEFN tracks.':'',scope:'BEFN bout records'};
   }
-  case 'first':return {tag:'First meeting',lead:'The first meeting between '+n(f.a)+' and '+n(f.b)+'.',
-   rest:'There’s no earlier bout between them in BEFN’s records.',scope:'BEFN bout records'};
+  case 'first':return {tag:'First meeting',lead:'First time facing each other.',
+   rest:'',scope:'BEFN bout records'};
   case 'sweep':return {tag:'Clean sweep',lead:n(f.w)+' has won all '+f.n+' of their meetings.',
    rest:'The first was in '+bashoMonth(f.first)+'.',scope:'BEFN bout records'};
   case 'streak':return {tag:'Streak',lead:n(f.w)+' has won their last '+f.n+' meetings.',
