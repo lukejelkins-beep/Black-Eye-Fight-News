@@ -1,0 +1,30 @@
+name: UFC V4 R2 career pilot offline tests
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'assets/fighter-insights.js'
+      - 'index.html'
+      - 'scripts/ufc-v4-r2-career-gate.mjs'
+      - 'scripts/ufc-v4-r2-career-panel.mjs'
+      - 'scripts/ufc-v4-r2-v3-pilot-adapter.mjs'
+      - 'tests/test-ufc-v4-r2-career-gate.mjs'
+      - 'tests/test-ufc-v4-r2-career-panel.mjs'
+      - 'tests/test-ufc-v4-r2-v3-pilot-adapter.mjs'
+      - 'tests/test-ufc-v4-r2-v3-integration.mjs'
+      - '.github/workflows/verify-ufc-v4-r2.yml'
+permissions:
+  contents: read
+jobs:
+  offline-r2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify feature-off and full-history gating
+        run: node --test tests/test-ufc-v4-r2-career-gate.mjs tests/test-ufc-v4-r2-career-panel.mjs tests/test-ufc-v4-r2-v3-pilot-adapter.mjs tests/test-ufc-v4-r2-v3-integration.mjs
+      - name: Assert no live activation
+        run: echo 'R2 remains OFF; this workflow cannot authorize merge or deployment.'
