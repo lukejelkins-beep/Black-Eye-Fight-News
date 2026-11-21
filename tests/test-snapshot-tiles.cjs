@@ -106,6 +106,16 @@ assert.ok(sOut.includes('Attribute scores') && sOut.includes('>80<') && sOut.inc
 assert.ok(sOut.includes('st-band-green') && sOut.includes('st-band-red') && sOut.includes('width:80%'));
 assert.ok(sOut.includes('Ranked against all UFC fighters.'), 'mixed basis (only some attributes are division) falls back to roster wording');
 assert.ok(sOut.includes('Aa Bb is new to Welterweight (was Lightweight).'));
+// ranked in one division, last fought in another: name the bout's division, never "new to" their own division
+const elsewhere = JSON.parse(JSON.stringify(scoreData));
+elsewhere.fighters.aabb = { name: 'Aa Bb', division: 'Light Heavyweight', latestBoutDivision: 'Heavyweight', newToDivision: false, previousDivision: null };
+const sElsewhere = T.scoresHTML(T.lookupScores(elsewhere, 'e1', sCardNames), sCardNames, { esc });
+assert.ok(sElsewhere.includes('Aa Bb’s last bout was at Heavyweight.'), 'the one-off move is reported');
+assert.ok(!sElsewhere.includes('is new to'), 'and not as a division change');
+const settled = JSON.parse(JSON.stringify(scoreData));
+settled.fighters.aabb = { name: 'Aa Bb', division: 'Welterweight', latestBoutDivision: 'Welterweight', newToDivision: true, previousDivision: 'Lightweight' };
+assert.ok(T.scoresHTML(T.lookupScores(settled, 'e1', sCardNames), sCardNames, { esc })
+  .includes('Aa Bb is new to Welterweight (was Lightweight).'), 'agreeing divisions keep the move note');
 assert.ok(sOut.includes('not predictions'));
 assert.ok(/Durability[^]*?<span class="st-num">—<\/span>/.test(sOut) || sOut.includes('>—<'), 'a missing score is a dash');
 assert.ok(sOut.includes('More scores') && sOut.includes('Striking') && sOut.includes('Grappling'));

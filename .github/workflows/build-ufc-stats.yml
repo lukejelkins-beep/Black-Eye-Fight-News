@@ -43,7 +43,9 @@ on:
       - 'tests/test_ufc_card_scores.py'
       - 'tests/test_ufc_snapshot_scores.py'
       - 'tests/ufc-ratings-parity.cjs'
+      - 'tests/test-snapshot-tiles.cjs'
       - 'assets/fighter-power-index.js'
+      - 'assets/snapshot-tiles.js'
       - '.github/workflows/build-ufc-stats.yml'
 permissions:
   contents: write
@@ -74,6 +76,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ufc_card_snapshots.py' -v
       - name: Test snapshot scores (formulas, gates, division rule; scores stay off in the site)
         run: python -m unittest discover -s tests -p 'test_ufc_*scores.py' -v
+      - name: Test the snapshot panel wording (division basis, moves, escaping)
+        run: node tests/test-snapshot-tiles.cjs
       - name: Build statistics and ratings (no provider requests; reference date = latest saved UFC event)
         run: python scripts/build-ufc-stats.py --parity-out "$RUNNER_TEMP/ratings-parity.json"
       - name: Build card snapshot tiles (reads saved files only, no provider requests)
