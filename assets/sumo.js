@@ -903,13 +903,14 @@ function lastBoutFor(w){
 /** Poster hero figure: a clean full-body cut-out in front of the red disc, otherwise the
  * approved photo cropped into the disc. No photo: the disc alone. */
 function posterFigure(w){
+  const cc=originCountry(w.birthplace),ca=' data-country="'+e(cc?cc.code:'none')+'"';
   const c=STATE.cutouts?.[String(w.sourceId)],photo=STATE.photoIndex?.[String(w.sourceId)];
   const photoOk=photo?.approved===true&&/^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||''));
   const cutOk=photoOk&&c&&c.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/cutout\/[a-zA-Z0-9_-]+\.webp$/.test(String(c.path||''));
   const label=' role="img" aria-label="'+e('Photograph of '+w.shikonaEn)+'"';
-  if(cutOk)return '<div class="sumo-poster-stage is-cutout"'+label+'><img src="'+e(c.path)+'" alt="" decoding="async" fetchpriority="high"></div>';
-  if(photoOk)return '<div class="sumo-poster-stage is-photo"'+label+'><img src="'+e(photo.path)+'" alt="" decoding="async" fetchpriority="high"></div>';
-  return '<div class="sumo-poster-stage is-empty" aria-hidden="true"></div>';
+  if(cutOk)return '<div class="sumo-poster-stage is-cutout"'+ca+label+'><img src="'+e(c.path)+'" alt="" decoding="async" fetchpriority="high"></div>';
+  if(photoOk)return '<div class="sumo-poster-stage is-photo"'+ca+label+'><img src="'+e(photo.path)+'" alt="" decoding="async" fetchpriority="high"></div>';
+  return '<div class="sumo-poster-stage is-empty"'+ca+' aria-hidden="true"></div>';
 }
 function posterHero(w,{r,wins,losses,careerPercent}){
   const country=originCountry(w.birthplace),current=weightHeight(w),age=ageInJapan(w.birthDate);
@@ -1080,6 +1081,21 @@ function h2hKimaritePanel(history,a,firstName,secondName){
   if(!history?.rows?.length)return '';
   return '<section class="sumo-h2h-kimarite"><h2>Kimarite breakdown</h2><p class="section-intro">Techniques in '+e(firstName)+'’s wins and losses against '+e(secondName)+'. Only named techniques from '+history.rows.length+' cached meetings are included; these are '+(history.complete?'all recorded regular meetings':'a partial historical sample')+'.</p><div class="sumo-kimarite-grid">'+h2hKimariteChart(history,a,firstName,secondName,true)+h2hKimariteChart(history,a,firstName,secondName,false)+'</div></section>';
 }
+function faceOffSide(w,id,name,side){
+  const country=originCountry(w?.birthplace),cc=country?country.code:'none';
+  const c=w&&STATE.cutouts?.[String(w.sourceId)],photo=w&&STATE.photoIndex?.[String(w.sourceId)];
+  const photoOk=photo?.approved===true&&/^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||''));
+  const cutOk=photoOk&&c&&c.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/cutout\/[a-zA-Z0-9_-]+\.webp$/.test(String(c.path||''));
+  const img=cutOk?'<img class="fo-img is-cutout" src="'+e(c.path)+'" alt="" decoding="async">':
+    photoOk?'<img class="fo-img is-photo" src="'+e(photo.path)+'" alt="" decoding="async">':'';
+  const label=w?' role="img" aria-label="'+e('Photograph of '+name)+'"':' aria-hidden="true"';
+  const rank=w?.currentRank?'<span class="fo-rank">'+e(w.currentRank)+'</span>':'';
+  const nm=w?'<a href="#profile/'+Number(w.sourceId)+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>';
+  const meta=[w?.heya?w.heya+' stable':'',country?country.name:''].filter(Boolean).map(x=>'<span>'+e(x)+'</span>').join('');
+  return '<div class="fo-side fo-'+side+'" data-country="'+e(cc)+'"><div class="fo-stage"'+label+'><i class="fo-disc"></i>'+img+'</div>'+
+    '<div class="fo-info">'+rank+'<h2>'+nm+'</h2>'+(w?.shikonaJp?'<div class="fo-jp">'+e(String(w.shikonaJp).split(/[\s　(（]+/)[0])+'</div>':'')+
+    '<div class="fo-meta">'+meta+'</div></div></div>';
+}
 function renderHeadToHead(a,b) {
   const first=wrestler(a),second=wrestler(b);
   if(!first&&!second)return '<a href="#rikishi">← Rikishi directory</a>'+note('Neither wrestler is in the tracked roster.');
@@ -1098,11 +1114,11 @@ function renderHeadToHead(a,b) {
   else if(STATE.h2hLoadFailed)coverage='Complete chronology could not load. Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' meetings.';
   else coverage='Showing '+(history?.rows.length||0)+' of '+(history?.total||'unknown')+' sourced meetings. Full cache has not yet loaded.';
   return back+pageHead('Head-to-head',firstName+' vs '+secondName)+
-    '<div class="sumo-h2h-hero"><div>'+fighterOnCard(first,a,firstName,{hero:true})+'</div>'+
-    '<div class="sumo-h2h-score"><span>Career series · regular recorded bouts</span>'+
-    '<strong>'+e(history?history.wins+'–'+history.losses:'Unavailable')+'</strong>'+
-    '<small>'+e(history?history.total+' recorded meetings':'Series loading')+'</small></div>'+
-    '<div>'+fighterOnCard(second,b,secondName,{hero:true})+'</div></div>'+
+    '<section class="sumo-faceoff" aria-label="'+e(firstName+' versus '+secondName)+'">'+
+      faceOffSide(first,a,firstName,'a')+
+      '<div class="fo-score"><span>Career series</span><strong>'+e(history?history.wins+'–'+history.losses:'—')+'</strong>'+
+      '<small>'+e(history?history.total+' recorded meetings':'Series loading')+'</small></div>'+
+      faceOffSide(second,b,secondName,'b')+'</section>'+
     rivalryPanelMarkup(a,b)+
     '<div class="sumo-h2h-comparison">'+comparisonGrid(first,second)+'</div>'+
     h2hKimaritePanel(history,a,firstName,secondName)+
