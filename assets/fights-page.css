@@ -159,3 +159,32 @@
 #main .fights-unified .upcoming-list-group details.upcoming-event.is-lead[open]{background:#fff!important;border:1px solid #e7e1d8!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{background:#151115!important;border-radius:14px 14px 0 0!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead:not([open])>summary.upcoming-event-summary.upcoming-schedule-row{border-radius:14px!important}
+
+
+/* The fight-snapshot history is displayed on white fight cards. Override the
+   legacy dark-theme text colours so opponents and cage durations stay legible. */
+#main #upcoming-cards-root .upcoming-expanded .befn-history-panel{
+ background:#fff!important;
+ border-color:#e2dbcf!important;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fighter b,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-desc strong{
+ color:#171317!important;
+ -webkit-text-fill-color:#171317!important;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fighter span,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-desc small,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-desc span,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-cage-note{
+ color:#645d64!important;
+ -webkit-text-fill-color:#645d64!important;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-duration strong{
+ color:#a71522!important;
+ -webkit-text-fill-color:#a71522!important;
+ font-variant-numeric:tabular-nums;
+}
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fight,
+#main #upcoming-cards-root .upcoming-expanded .befn-history-fighter{
+ border-bottom-color:#e6dfd6!important;
+}
