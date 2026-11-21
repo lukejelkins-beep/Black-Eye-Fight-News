@@ -1,6 +1,6 @@
-import {currentFactFeed,HIGH_WIN_PCT_THRESHOLD,rollingWinPercentageRows,ROLLING_BASHO_MAX,FACT_DIVISIONS} from './sumo-facts-data.mjs';
+import {currentFactFeed,HIGH_WIN_PCT_THRESHOLD,rollingWinPercentageRows,ROLLING_BASHO_MAX,FACT_DIVISIONS} from './sumo-facts-data.mjs?v=20261121-v1';
 const ROOT=document.querySelector('#sumo-main');
-const CATS=[['all','All stories'],['fire','On fire 🔥'],['percent','Win % Leaders'],['title','Title race'],['watch','Record watch'],['stablemates','Stablemate Showdowns'],['family','Family ties'],['records','Record holders']];
+const CATS=[['all','All stories'],['fire','On fire 🔥'],['rising','Rising stars'],['percent','Win % Leaders'],['title','Title race'],['watch','Record watch'],['stablemates','Stablemate Showdowns'],['family','Family ties'],['records','Record holders']];
 const S={roster:null,details:null,photos:{},feed:null,filter:'all',query:'',rollingBashos:1};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const profile=w=>'sumo.html#profile/'+encodeURIComponent(w.sourceId);
@@ -126,7 +126,7 @@ function render(){
  const highPct=f.fresh?f.rows.filter(w=>w.bouts>=(w.division==='Makushita'?3:5)&&w.wins*100>=HIGH_WIN_PCT_THRESHOLD*w.bouts).length:'—';
  ROOT.innerHTML='<div class="sumo-facts"><header class="facts-top"><span class="facts-kicker">BEFN SUMO · THE DOHYO DIARIES</span>'+
  '<h1>Sumo <em>Fun Facts</em></h1>'+
- '<p>Family dynasties. Rare stablemate playoffs. Hot streaks. Win percentages over 1–30 basho, record holders and tournament milestones. Every story features a currently tracked rikishi.</p></header>'+
+ '<p>Family dynasties. Rare stablemate playoffs. Hot streaks. Fast-rising newcomers. Win percentages over 1–30 basho, record holders and tournament milestones. Every story features a currently tracked rikishi.</p></header>'+
  '<div class="facts-status"><b'+(f.fresh?'':' class="is-stale"')+'>'+(f.fresh?'Current tournament snapshot':'Live form paused — source data out of date')+'</b>'+
  '<span>'+esc(f.bashoLabel)+' · Updated '+esc(dateLabel(f.asOf))+'</span></div>'+
  '<section class="facts-statbar" aria-label="Tracked wrestler statistics">'+
@@ -138,7 +138,7 @@ function render(){
  CATS.map(([id,label])=>'<button type="button" data-fact-filter="'+id+'" aria-pressed="'+(id===S.filter)+'">'+label+'</button>').join('')+
  '</div><label class="facts-find"><input id="facts-search" type="search" aria-label="Search facts" placeholder="Search wrestlers or stories…" value="'+esc(S.query)+'" autocomplete="off"></label></div>'+
  '<section id="facts-results" aria-live="polite"></section>'+
- '<aside class="facts-about"><strong>Always date-checked:</strong> Tournament stories recalculate from each successful Sumo preview banzuke refresh. If data is older than 48 hours, all live-form stories are withheld. Family facts are linked to external sources and display only while featured wrestlers remain in the tracked roster. Historical record-holder stories need a fresh editorial review every 90 days. Stablemates usually meet only in exceptional title playoffs; only individually sourced completed meetings appear. Win percentages are wins divided by completed decisions (W+L), requiring 5 bouts in Makuuchi/Jūryō or 3 in Makushita. These are completed-bout figures for the three tracked divisions, not live play-by-play or all-division records.'+
+ '<aside class="facts-about"><strong>Always date-checked:</strong> Tournament stories recalculate from each successful Sumo preview banzuke refresh. If data is older than 48 hours, all live-form stories are withheld. Family facts are linked to external sources and display only while featured wrestlers remain in the tracked roster. Historical record-holder stories need a fresh editorial review every 90 days. Stablemates usually meet only in exceptional title playoffs; only individually sourced completed meetings appear. Win percentages are wins divided by completed decisions (W+L), requiring 5 bouts in Makuuchi/Jūryō or 3 in Makushita. These are completed-bout figures for the three tracked divisions, not live play-by-play or all-division records. Rising stars use the cached banzuke and bout history of wrestlers now in Makushita or above: ranked basho count from a wrestler’s first banzuke appearance, and a basho’s record is shown only when every regular bout is recorded.'+
  '<div class="facts-linkrow"><a href="sumo.html#basho">Latest results</a><a href="sumo-stables.html">Explore stables</a>'+
  '<a href="https://www.sumo.or.jp/EnHonbashoMain/leaders/" target="_blank" rel="noopener noreferrer">Official JSA leaders ↗</a></div></aside></div>';
  ROOT.querySelectorAll('[data-fact-filter]').forEach(b=>b.addEventListener('click',()=>{S.filter=b.dataset.factFilter;refreshCards();}));
