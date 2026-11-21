@@ -85,11 +85,11 @@
 #main .fights-unified .upcoming-list-group:first-of-type .upcoming-list-heading{margin-top:18px!important}
 /* lead card: poster contained, copy padded */
 #main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{padding:0 0 14px!important;column-gap:0!important}
-#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media{display:block!important;overflow:hidden!important;border-radius:14px 14px 0 0!important;height:clamp(160px,24vw,240px)!important;background:#1d1519!important}
-#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 22%!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media{display:block!important;overflow:hidden!important;border-radius:14px 14px 0 0!important;width:100%!important;height:auto!important;aspect-ratio:16 / 9!important;max-height:none!important;background:#1d1519!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-content{padding:14px 8px 0 18px!important;margin:0!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-row-chevron{padding-right:14px!important}
-@media(max-width:600px){#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media{height:190px!important}#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-title{font-size:26px!important}}
+@media(max-width:600px){#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-title{font-size:26px!important}}
 #main #upcoming-cards-root details.upcoming-event.is-lead,#main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{border-left:0!important;box-shadow:none!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead :is(.upcoming-hero-times,.upcoming-hero-times *,strong,b){color:#fff!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-times{color:#cfc8cf!important}
@@ -134,3 +134,6 @@
 #main .fights-unified .upcoming-list-group details.upcoming-event.is-lead[open]{background:#fff!important;border:1px solid #e7e1d8!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{background:#151115!important;border-radius:14px 14px 0 0!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead:not([open])>summary.upcoming-event-summary.upcoming-schedule-row{border-radius:14px!important}
+
+/* Event posters: keep the official artwork centred inside the defined frame. */
+#main #upcoming-cards-root details.upcoming-event:not(.is-lead) .upcoming-hero-poster{object-fit:contain!important;object-position:center center!important}
