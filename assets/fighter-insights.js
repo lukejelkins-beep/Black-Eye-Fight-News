@@ -807,14 +807,16 @@
  // scouting summaries omitted cageSec. Only match the same opponent and date.
  function historyCageSeconds(row,officialFights){
   const saved=Number.isInteger(row?.cageSec)&&row.cageSec>=0?row.cageSec:null;
-  const opponent=norm(row?.opponent||"");
+  // Normalise letters such as Polish ł that NFKD does not decompose.
+  const matchName=value=>norm(String(value||"").replace(/[łŁ]/g,"l").replace(/[øØ]/g,"o").replace(/[đĐðÐ]/g,"d"));
+  const opponent=matchName(row?.opponent);
   const rawDate=String(row?.date||"").trim();
   const monthYear=rawDate.match(/^([A-Za-z]+)\s+(\d{4})$/);
   const monthIndex=monthYear?["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"].indexOf(monthYear[1].slice(0,3).toLowerCase()):-1;
   const time=monthYear?NaN:Date.parse(rawDate);
   const fight=Array.isArray(officialFights)?officialFights.find(b=>{
    if(!Number.isInteger(b?.seconds)||b.seconds<0||!opponent)return false;
-   const other=norm(b.opponent||"");
+   const other=matchName(b.opponent);
    // Legacy rows sometimes prefix a fighter with two initials, e.g. "CU Carlos Ulberg".
    if(!other||!(opponent===other||(opponent.endsWith(other)&&opponent.length-other.length<=3)))return false;
    const eventDate=String(b.date||"");
