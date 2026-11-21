@@ -39,6 +39,8 @@ Open an upcoming UFC bout and see both fighters side by side at a glance: record
 - **Percentile method sign-off.** Now written in `SNAPSHOT-METHOD.md` for approval.
 - **Division ranking.** The agreed method ranks against the weight division. The profile engine ranks against the whole roster only; the division step exists in the Python copy. Step 3 ports it (division percentile with at least 8 peers, else roster), as set out in `SNAPSHOT-METHOD.md`.
 
+- **Data source and cross-division rule** (found in testing, see `SNAPSHOT-METHOD.md`): the snapshot should read `data/ufc-stats`, not the profile's data file, and the profile should later move onto the same numbers.
+
 ## Costs and limits
 Nothing new to pay for: no new API, no new worker, GitHub Actions minutes only.
 

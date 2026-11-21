@@ -36,3 +36,16 @@ Power, Defence, Wrestling and Durability bars first (Striking and Grappling one 
 
 ## How it is checked before anything is shown
 Held-out test: scores computed from fights before a cutoff are compared with what happened in later fights (for example, do higher Durability fighters get stopped less?). Report by division. Tiny divisions and fighters under the sample gate stay blank. Method and results go in the PR; nothing is switched on until the owner approves the screenshots.
+
+## Test results, 21 Nov 2026 (prototype on `data/ufc-stats`, not yet in the repo)
+**Real fighters.** Bars were compared for the main events on announced UFC cards and for well-known fighters. They mostly match reputation: Makhachev reads Defence 98, Wrestling 91, Grappling 98 but Striking 29; Chandler reads Durability 4 and Defence 7; Holloway Durability 76 but Wrestling 10; Kape and Lopes read Power 98 and 92. Odd-looking results were small samples (7 to 13 fights) or percentiles set by a thin division.
+
+**Backtest.** Scores built from each fighter's last five fights before a cutoff, compared with what happened in their later fights (347 fighters at a 21 May 2025 cutoff, 377 at 21 Nov 2024; results agree).
+- **Power:** the top quarter scored KO wins in 25 to 28% of later fights, the bottom quarter 11%. Rank correlation 0.28 to 0.33, a little better than just using past KO-win rate (0.26 to 0.30).
+- **Durability:** the top quarter was KO'd in 12 to 13% of later fights, the bottom quarter 22 to 24%. Correlation 0.20 to 0.24 (in the right direction), better than past KO-loss rate alone (0.16 to 0.20) and better than strikes absorbed alone (0.11 to 0.12).
+- Other weightings were tried (for example 20/60/20 for Durability and 30/70 for Power); none beat the proposed weights, so they stay as proposed.
+- **Honest read:** both carry real but modest signal, as expected from five fights of data. They describe a fighter's recent record; they do not predict a fight.
+
+## Two findings that change the proposal
+1. **Data source.** The profile's data file (`ufc-fighter-v3.json`) has no knockdowns absorbed, strike defence or takedown accuracy, so Durability cannot be built from it. `data/ufc-stats` (rebuilt hourly from saved round data) has all of them and already has division percentiles. **Revised proposal:** the snapshot reads `data/ufc-stats`. The profile's numbers differ for the same fighter (for example Joshua Van: Wrestling 19 and Grappling 52 on the profile engine, 62 and 23 in `ufc-stats`), so the profile should move onto the same data so card and profile agree.
+2. **Cross-division bouts.** A bout between fighters from different divisions (for example Oliveira, Lightweight, vs Lopes, Featherweight) would compare percentiles on different bases. **Rule:** use the division percentile only when both fighters are in the same division with 8 or more peers; otherwise show roster percentiles for both and say so.
