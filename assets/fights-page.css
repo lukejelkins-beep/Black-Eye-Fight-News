@@ -1,0 +1,95 @@
+/* Fights page, "Fight night" look (owner picked option C, 21 Nov 2026).
+   Cream page, live text headings, compact rows, next big card first.
+   Loaded after every other stylesheet; scoped to #main .fights-unified. */
+#main .fights-unified{--fp-red:#cf1824;--fp-ink:#111013;--fp-cream:#f8f4ed;--fp-line:#e3dccf;--fp-mute:#5c5660;max-width:1120px;margin:0 auto;padding:20px 16px 56px}
+#main .fights-unified .calendar-photo-heading{margin:0 0 14px!important}
+#main .fights-unified .calendar-photo-heading h1,
+#main .fights-unified #upcoming-cards-root .upcoming-list-heading,
+#main .fights-unified .fights-result-group>h2{
+ all:unset;display:block;box-sizing:border-box;transform:none!important;filter:none!important;background:none!important;-webkit-text-fill-color:currentColor!important;-webkit-text-stroke:0!important;
+ font:900 clamp(34px,5vw,52px)/.95 'Barlow Condensed',Impact,sans-serif!important;text-transform:uppercase!important;letter-spacing:.01em!important;font-style:normal!important;color:var(--fp-ink)!important;padding:0 0 10px!important;border-bottom:4px solid var(--fp-red);width:fit-content}
+#main .fights-unified #upcoming-cards-root .upcoming-list-heading,
+#main .fights-unified .fights-result-group>h2{font-size:clamp(24px,3.2vw,32px)!important;margin:26px 0 10px!important;border-bottom-width:3px}
+#main .fights-unified .calendar-photo-heading h1::after,
+#main .fights-unified #upcoming-cards-root .upcoming-list-heading::after{display:none!important;content:none!important}
+/* controls */
+#main .fights-unified .fights-controls{display:grid;gap:10px;margin:0 0 6px}
+#main .fights-unified .fights-search{border-radius:10px;border:1px solid var(--fp-line);background:#fff}
+#main .fights-unified .fights-view-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--fp-line)}
+#main .fights-unified .fights-view-tab{font:800 15px/1 'DM Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:14px 0;color:var(--fp-mute);background:none;border:0;border-bottom:4px solid transparent;margin-bottom:-1px;min-height:44px}
+#main .fights-unified .fights-view-tab.is-active{color:var(--fp-ink);border-bottom-color:var(--fp-red)}
+/* panels: no dark box */
+#main .fights-unified #fights-active-content,
+#main .fights-unified #fights-active-content .frame,
+#main .fights-unified .upcoming-schedule,
+#main .fights-unified #results-content,
+#main .fights-unified .fights-result-group,
+#main .fights-unified .upcoming-list-group{background:transparent!important;box-shadow:none!important;border:0!important;padding-left:0!important;padding-right:0!important;color:var(--fp-ink)}
+/* date separators */
+#main .fights-unified .upcoming-list-date,
+#main .fights-unified .fights-result-date{font:800 12px/1 'DM Sans',sans-serif!important;letter-spacing:.14em;text-transform:uppercase;color:var(--fp-mute)!important;margin:18px 0 8px!important;display:flex;gap:6px}
+#main .fights-unified .upcoming-list-date span:first-child,
+#main .fights-unified .fights-result-date span:first-child{color:var(--fp-red)!important}
+/* rows */
+#main .fights-unified details.upcoming-event,
+#main .fights-unified details.befn-result-list-event{background:#fff!important;border:1px solid var(--fp-line)!important;border-left:4px solid var(--fp-red)!important;border-radius:10px!important;margin:0 0 8px!important;overflow:hidden;box-shadow:none!important}
+#main .fights-unified details.befn-result-list-event>summary,
+#main #upcoming-cards-root details.upcoming-event>summary.upcoming-event-summary.upcoming-schedule-row{display:grid!important;grid-template-columns:72px minmax(0,1fr) 24px!important;gap:12px!important;align-items:center;padding:8px 12px 8px 8px!important;min-height:72px!important;cursor:pointer;list-style:none;background:transparent!important;color:var(--fp-ink)!important}
+#main .fights-unified details>summary::-webkit-details-marker{display:none}
+#main .fights-unified .upcoming-hero-media,
+#main .fights-unified .befn-result-thumb{width:72px!important;height:72px!important;min-width:0;max-width:none;margin:0!important;border-radius:8px;overflow:hidden;background:var(--fp-ink)!important;position:relative;display:block}
+#main .fights-unified .upcoming-hero-fallback{display:none!important}
+#main .fights-unified .upcoming-hero-media img,
+#main .fights-unified .befn-result-thumb img{width:100%!important;height:100%!important;object-fit:cover;object-position:center top;display:block}
+#main .fights-unified .befn-result-thumb:not(:has(img:not([hidden]))){background:linear-gradient(135deg,#151115,#2a1f27)!important}
+#main .fights-unified .upcoming-hero-content,
+#main .fights-unified .befn-result-summary-copy{display:grid!important;gap:3px;min-width:0;justify-items:start!important;justify-content:start!important;align-content:center;text-align:left!important;padding:0!important;margin:0!important}
+#main .fights-unified .upcoming-hero-title,
+#main .fights-unified .befn-result-summary-copy strong{font:900 clamp(19px,2.4vw,24px)/1.05 'Barlow Condensed',Impact,sans-serif!important;text-transform:uppercase;letter-spacing:.01em;color:var(--fp-ink)!important;text-decoration:none!important;overflow-wrap:anywhere}
+#main .fights-unified .upcoming-row-kicker,
+#main .fights-unified .befn-result-summary-copy small{font:800 11px/1 'DM Sans',sans-serif!important;letter-spacing:.12em;text-transform:uppercase;color:var(--fp-red)!important}
+#main .fights-unified .upcoming-hero-times,
+#main .fights-unified .upcoming-hero-location,
+#main .fights-unified .befn-result-outcome{font:500 13px/1.3 'DM Sans',sans-serif!important;color:var(--fp-mute)!important;text-decoration:none!important;border:0!important}
+#main .fights-unified .upcoming-hero-times strong,#main .fights-unified .befn-result-outcome strong{color:var(--fp-ink)}
+#main .fights-unified .upcoming-hero-location{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#main .fights-unified .upcoming-row-chevron,
+#main .fights-unified .befn-result-caret{color:var(--fp-red)!important;font-size:20px;text-align:center}
+#main .fights-unified details[open]>summary .upcoming-row-chevron,
+#main .fights-unified details[open]>summary .befn-result-caret{transform:rotate(180deg)}
+/* expanded card stays readable on white */
+#main .fights-unified .upcoming-expanded,
+#main .fights-unified .befn-result-expanded{background:var(--fp-cream)!important;color:var(--fp-ink);border-top:1px solid var(--fp-line);padding:12px}
+/* next big card: first upcoming event gets the poster treatment */
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead{border-left-width:0!important;background:var(--fp-ink)!important;border-radius:14px!important;margin-bottom:14px!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{grid-template-columns:minmax(0,1fr) 24px!important;grid-template-areas:"media media" "copy chev";padding:0 14px 14px 0!important;gap:0!important;min-height:0!important}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-hero-media{grid-area:media;width:100%!important;height:clamp(180px,32vw,300px)!important;border-radius:0}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-hero-content{grid-area:copy;padding:14px 0 0 16px}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-row-chevron{grid-area:chev;align-self:end;color:#f3c332!important}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-hero-title{color:#fff!important;font-size:clamp(28px,4.4vw,44px)!important}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead :is(.upcoming-hero-times,.upcoming-hero-location){color:#cfc8cf!important}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-row-kicker{color:#f3c332!important}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-expanded{background:#fff!important}
+@media(max-width:600px){
+ #main .fights-unified{padding:14px 12px 96px}
+ #main .fights-unified details.upcoming-event>summary,#main .fights-unified details.befn-result-list-event>summary{grid-template-columns:60px minmax(0,1fr) 20px;gap:10px}
+ #main .fights-unified .upcoming-hero-media,#main .fights-unified .befn-result-thumb{width:60px!important;height:60px!important}
+}
+/* rows with no artwork: no empty tile, no initials */
+#main #upcoming-cards-root details.upcoming-event>summary.upcoming-event-summary.upcoming-schedule-row.is-artwork-missing{grid-template-columns:minmax(0,1fr) 24px!important;padding-left:14px!important}
+#main #upcoming-cards-root summary.is-artwork-missing .upcoming-hero-media{display:none!important}
+#main .fights-unified .befn-result-thumb.is-placeholder,#main .fights-unified .befn-result-thumb:not(:has(img:not([hidden]))):not(:has(img[src])){display:none}
+/* tighten the gap under the tabs */
+#main .fights-unified #fights-active-content>div,#main .fights-unified #fights-active-content>div>div{margin-top:0!important;padding-top:0!important}
+#main .fights-unified .upcoming-schedule,#main .fights-unified .upcoming-list-group{padding-top:0!important;margin-top:0!important}
+#main .fights-unified .upcoming-list-group:first-of-type .upcoming-list-heading{margin-top:18px!important}
+/* lead card: poster contained, copy padded */
+#main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{padding:0 0 14px!important;column-gap:0!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media{display:block!important;overflow:hidden!important;border-radius:14px 14px 0 0!important;height:clamp(160px,24vw,240px)!important;background:#1d1519!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 22%!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-content{padding:14px 8px 0 18px!important;margin:0!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-row-chevron{padding-right:14px!important}
+@media(max-width:600px){#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-media{height:190px!important}#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-title{font-size:26px!important}}
+#main #upcoming-cards-root details.upcoming-event.is-lead,#main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{border-left:0!important;box-shadow:none!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead :is(.upcoming-hero-times,.upcoming-hero-times *,strong,b){color:#fff!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-times{color:#cfc8cf!important}

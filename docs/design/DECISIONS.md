@@ -3,6 +3,7 @@
 Format: date — decision — who — where it shows up.
 
 ## 2026-11-21
+- Fights page restyled in the Fight night look (Phase 1 step 3): compact white rows with a red edge and poster thumbnail, date separators, and the first event that has a poster shown as a dark lead card. Styles live in `assets/fights-page.css`, scoped to the Fights page; no data or ordering changes. — Owner picked the Fight night look; plan approved ("I like that plan") — PR for the Fights page.
 - Translated sumo news from Japan refreshes every 3 hours (owner), not every 15 minutes; the language job's schedule is `27 */3 * * *`. The earlier 15-minute change (PR #321) no longer applies to it. A topic filter drops boxing, ONE, New Japan and other non-sumo headlines that the 相撲 search also returns from the same publishers (first live run: 5 of 60 were not sumo). Names-only sumo headlines are kept. — Owner — PR for branch feat/sumo-relevance-3h.
 
 ## 2026-11-19
