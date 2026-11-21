@@ -478,6 +478,16 @@ const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';con
 const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';
 function renderHome(){
  const leads=newsLeads();
+ // Isolated BEFN font/layout experiment. Main remains on the existing news-first layout.
+ if(window.BEFNDesign12Home?.render){
+  const helpers=newsPageHelpers();
+  const intl=window.BEFNNewsPage.languageHTML(
+   window.BEFNNewsPage.usableLanguageStories(desk.language,activeSport()),helpers,6);
+  return renderFrame(window.BEFNDesign12Home.render({
+   leads,pool:newsPool(),helpers,newsFeed:renderNewsFeed(),
+   languageHTML:intl,updatedLine:updatedLine(),sport:activeSport()
+  }));
+ }
  const head='<header class="np-head"><h1>News</h1><p>'+(activeSport()==='all'?'Boxing, MMA, grappling and sumo, from the publishers that cover them.':'Latest '+esc(activeSport())+' news from the publishers that cover it.')+'</p>'+updatedLine()+'</header>';
  if(!leads.length)return renderFrame('<div class="np">'+head+'<p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>'+window.BEFNCoverage.panel(activeSport()));
  const h=newsPageHelpers();
