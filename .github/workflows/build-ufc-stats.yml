@@ -16,7 +16,9 @@ on:
       - 'data/ufc-divisions.json'
       - 'scripts/build-ufc-stats.py'
       - 'scripts/ufc_ratings.py'
+      - 'scripts/build-ufc-card-snapshots.py'
       - 'tests/test_ufc_stats_build.py'
+      - 'tests/test_ufc_card_snapshots.py'
       - '.github/workflows/build-ufc-stats.yml'
   pull_request:
     branches: [main]
@@ -27,6 +29,8 @@ on:
       - 'scripts/refresh-ufc-divisions.py'
       - 'scripts/ufc_ratings.py'
       - 'tests/test_ufc_ratings.py'
+      - 'scripts/build-ufc-card-snapshots.py'
+      - 'tests/test_ufc_card_snapshots.py'
       - 'tests/ufc-ratings-parity.cjs'
       - 'assets/fighter-power-index.js'
       - '.github/workflows/build-ufc-stats.yml'
@@ -53,8 +57,12 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ufc_divisions.py' -v
       - name: Test ratings v2 (formulas, gates, percentiles, form, roster)
         run: python -m unittest discover -s tests -p 'test_ufc_ratings.py' -v
+      - name: Test card snapshot build (tiles, coverage, nulls)
+        run: python -m unittest discover -s tests -p 'test_ufc_card_snapshots.py' -v
       - name: Build statistics and ratings (no provider requests; reference date = latest saved UFC event)
         run: python scripts/build-ufc-stats.py --parity-out "$RUNNER_TEMP/ratings-parity.json"
+      - name: Build card snapshot tiles (reads saved files only, no provider requests)
+        run: python scripts/build-ufc-card-snapshots.py --out "$RUNNER_TEMP/ufc-card-snapshots.json"
       - name: Python ratings must match the browser engine exactly
         run: node tests/ufc-ratings-parity.cjs "$RUNNER_TEMP/ratings-parity.json"
       - name: Commit only changed statistics (rebuild on a fresh main, never rebase generated files)
@@ -69,7 +77,8 @@ jobs:
             git fetch -q origin "$branch"
             git reset -q --hard "origin/$branch"
             python scripts/build-ufc-stats.py
-            git add -A data/ufc-stats
+            python scripts/build-ufc-card-snapshots.py
+            git add -A data/ufc-stats data/ufc-card-snapshots.json
             if git diff --cached --quiet; then echo 'No statistics changed'; exit 0; fi
             git commit -q -m 'Refresh UFC fighter statistics and ratings from saved round data'
             if git push -q origin "HEAD:$branch"; then exit 0; fi
