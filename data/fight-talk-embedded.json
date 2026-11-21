@@ -1,15 +1,15 @@
 {
-  "attemptedAt": "2026-11-21T00:11:36.280Z",
-  "checkedAt": "2026-11-21T00:11:36.280Z",
+  "attemptedAt": "2026-11-21T01:31:57.338Z",
+  "checkedAt": "2026-11-21T01:31:57.338Z",
   "windowDays": 28,
-  "articlesChecked": 30,
+  "articlesChecked": 31,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 45,
-  "publisherSourcesConfigured": 32,
-  "linksFound": 13,
+  "publisherSourcesConfigured": 33,
+  "linksFound": 10,
   "newEmbedsVerified": 2,
-  "newPublisherLinksDiscovered": 1,
+  "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
   "xApiEstimatedSpendUsd": 0,
@@ -182,6 +182,25 @@
     },
     {
       "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-20T20:30:00+00:00",
+      "discoveredAt": "2026-11-21T01:31:57.338Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/522581/usman-nurmagomedov-breaks-silence-after-release-from-jail-brendan-schaub-rips-him",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df9bkfZCh-A/"
+    },
+    {
+      "type": "post",
       "platform": "X",
       "sport": "boxing",
       "name": "The Ring",
@@ -257,6 +276,25 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/Df2j14EGols/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "grappling",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-20T15:39:00+00:00",
+      "discoveredAt": "2026-11-21T01:31:57.338Z",
+      "sourcePublisher": "MMA Junkie",
+      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/20/sean-omalley-marlon-moraes-raf-16-announced/92886287007/",
+      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df-s8pmxdSg/"
     },
     {
       "type": "post",
@@ -2318,44 +2356,6 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/Dfulh49ClkS/"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-14T19:22:35.354Z",
-      "discoveredAt": "2026-11-14T19:22:35.354Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 12,
-      "url": "https://www.threads.com/t/Dfu6EPukaeI/"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-14T01:48:29.857Z",
-      "discoveredAt": "2026-11-14T01:48:29.857Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 12,
-      "url": "https://www.threads.com/t/DfsvUc8Gyht/"
     }
   ],
   "seenOriginals": [
@@ -3302,6 +3302,14 @@
     {
       "url": "https://www.instagram.com/p/Df8Olr_KHJ5embed/",
       "firstSeen": "2026-11-21T00:11:36.280Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df9bkfZCh-A/",
+      "firstSeen": "2026-11-21T01:31:57.338Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df-s8pmxdSg/",
+      "firstSeen": "2026-11-21T01:31:57.338Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
