@@ -474,9 +474,11 @@ function renderNewsFeed(){
   +controls+junkie+'<div class="np-rows">'+(shown.length?shown.map(a=>window.BEFNNewsPage.rowHTML(a,h)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
   +more+sourceHealth()+'</div>';
 }
+const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';const m=Math.max(0,Math.floor((Date.now()-t)/60000));return m<1?'just now':m<60?m+' min ago':m<48*60?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' days ago'};
+const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';
 function renderHome(){
  const leads=newsLeads();
- const head='<header class="np-head"><h1>News</h1><p>'+(activeSport()==='all'?'Boxing, MMA, grappling and sumo, from the publishers that cover them.':'Latest '+esc(activeSport())+' news from the publishers that cover it.')+'</p></header>';
+ const head='<header class="np-head"><h1>News</h1><p>'+(activeSport()==='all'?'Boxing, MMA, grappling and sumo, from the publishers that cover them.':'Latest '+esc(activeSport())+' news from the publishers that cover it.')+'</p>'+updatedLine()+'</header>';
  if(!leads.length)return renderFrame('<div class="np">'+head+'<p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>'+window.BEFNCoverage.panel(activeSport()));
  const h=newsPageHelpers();
  const intl=window.BEFNNewsPage.languageHTML(window.BEFNNewsPage.usableLanguageStories(desk.language,activeSport()),h,6);
@@ -485,6 +487,7 @@ function renderHome(){
 }
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
 setInterval(()=>loadDesk(true),5*60*1000);
+setInterval(()=>{if(document.hidden)return;document.querySelectorAll('[data-updated-at] span').forEach(el=>{const v=agoText(el.parentElement.dataset.updatedAt);if(v&&el.textContent!==v)el.textContent=v});},30000);
 setInterval(()=>{if(document.hidden)return;document.querySelectorAll('[data-mat-start]').forEach(el=>{const v=window.FightTime.relative(el.dataset.matStart);if(el.textContent!==v)el.textContent=v;});document.querySelectorAll('[data-mat-status]').forEach(el=>{const event=desk.events.find(item=>item.id===el.dataset.matStatus);if(!event)return;const html=window.EventStatus?.badge(event)||'';if(el.innerHTML!==html)el.innerHTML=html;});},15000);
 
 function defenceLabel(value){return Number.isInteger(value)&&value>=0?`${value} ${value===1?'Defence':'Defences'}`:'Defences unverified';}
