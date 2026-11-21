@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+"""Make transparent fighter cutouts for fighters on announced UFC cards: assets/img/ufc-cutouts/<slug>.webp.
+
+Source: the owner-cleared portrait already in assets/img/ufc/<slug>-portrait.webp (see data/ufc-image-register.json).
+Background removal runs offline with rembg (isnet-general-use model, the same model as the Sumo cutouts, DECISIONS PR #323).
+Nothing is fetched from the web, and no photo is added: each cutout is a derivative of a portrait BEFN already holds.
+
+A cutout is kept only when it passes the checks below. Otherwise the page shows the original photo in a disc.
+Results are recorded in data/ufc-cutout-register.json. Existing cutouts are never redone, so output is stable.
+
+Checks: the figure covers 25-75% of the frame, is one connected piece (small specks are dropped), and the head area
+is present (the top 30% of the figure is not mostly empty). Sources under 300 px wide are skipped.
+Run: pip install "rembg[cpu]" onnxruntime pillow numpy scipy; python scripts/build-ufc-cutouts.py
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import unicodedata
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA = ROOT / "data"
+SRC = ROOT / "assets/img/ufc"
+OUT_DIR = ROOT / "assets/img/ufc-cutouts"
+REGISTER = DATA / "ufc-cutout-register.json"
+MIN_COVER, MAX_COVER = 0.25, 0.75
+MIN_WIDTH = 300  # cutouts are shown at about 150 px, so a 300 px source stays sharp on 2x screens
+
+
+def judge(alpha):
+    """alpha: 2-D uint8 array. Returns (ok, reason, cleaned_alpha)."""
+    import numpy as np
+    from scipy import ndimage
+    mask = alpha > 128
+    cover = float(mask.mean())
+    if not MIN_COVER <= cover <= MAX_COVER:
+        return False, f"coverage {cover:.2f} outside {MIN_COVER}-{MAX_COVER}", alpha
+    labels, n = ndimage.label(mask)
+    if n == 0:
+        return False, "empty", alpha
+    sizes = ndimage.sum(mask, labels, range(1, n + 1))
+    keep = 1 + int(np.argmax(sizes))
+    if sizes[keep - 1] < 0.85 * mask.sum():
+        return False, "figure is split into pieces", alpha
+    cleaned = np.where(labels == keep, alpha, 0).astype(np.uint8)
+    rows = np.where((cleaned > 128).any(axis=1))[0]
+    top, bottom = rows[0], rows[-1]
+    head = (cleaned[top:top + max(1, int((bottom - top) * 0.3))] > 128).mean()
+    if head < 0.15:
+        return False, "head area looks empty", alpha
+    return True, f"coverage {cover:.2f}", cleaned
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--only", help="comma-separated slugs (default: every card fighter)")
+    args = ap.parse_args()
+    from PIL import Image
+    from rembg import new_session, remove
+    import numpy as np
+    snaps = json.loads((DATA / "ufc-card-snapshots.json").read_text())["fighters"]
+    images = {i["id"]: i for i in json.loads((DATA / "ufc-image-register.json").read_text())["images"]}
+    fold = lambda t: re.sub(r"[^a-z0-9]", "", unicodedata.normalize("NFKD", str(t or "")).encode("ascii", "ignore").decode().lower())
+    by_name = {fold(i["name"]): i["id"] for i in images.values()}
+    # The snapshot slug can be missing; the image register id matched on the folded name is the fallback.
+    wanted = [s.strip() for s in args.only.split(",")] if args.only else sorted(
+        {v.get("slug") or by_name.get(k) or "unmatched-" + k for k, v in snaps.items()})
+    reg = json.loads(REGISTER.read_text()) if REGISTER.exists() else {"version": 1, "cutouts": {}}
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    session = None
+    for slug in wanted:
+        entry = reg["cutouts"].get(slug)
+        if entry and (entry["ok"] is False or (OUT_DIR / f"{slug}.webp").exists()) and not args.only:
+            continue
+        img = images.get(slug)
+        src = SRC / f"{slug}-portrait.webp"
+        if not img or not src.exists():
+            reg["cutouts"][slug] = {"ok": False, "reason": "no portrait in the image register"}
+            continue
+        if Image.open(src).width < MIN_WIDTH:
+            reg["cutouts"][slug] = {"ok": False, "reason": f"source portrait under {MIN_WIDTH}px wide"}
+            continue
+        session = session or new_session("isnet-general-use")
+        out = remove(Image.open(src).convert("RGB"), session=session)
+        arr = np.array(out)
+        ok, reason, cleaned = judge(arr[:, :, 3])
+        if ok:
+            arr[:, :, 3] = cleaned
+            Image.fromarray(arr).save(OUT_DIR / f"{slug}.webp", quality=88, method=6)
+        reg["cutouts"][slug] = {"ok": ok, "reason": reason}
+    reg["cutouts"] = dict(sorted(reg["cutouts"].items()))
+    reg["note"] = ("Derived from the owner-cleared portraits in data/ufc-image-register.json (rights owner-cleared, credit ESPN). "
+                   "ok=false means the page keeps the original photo in a disc.")
+    REGISTER.write_text(json.dumps(reg, indent=1, sort_keys=True) + "\n")
+    good = sum(1 for v in reg["cutouts"].values() if v["ok"])
+    print(f"{good} cutouts kept of {len(reg['cutouts'])} checked")
+    for s, v in reg["cutouts"].items():
+        if not v["ok"]:
+            print("  fallback:", s, "-", v["reason"])
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
