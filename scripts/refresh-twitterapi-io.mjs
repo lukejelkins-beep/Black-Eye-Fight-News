@@ -9,7 +9,7 @@
  * TWITTERAPI_IO_API_KEY, never printed or written to the repository.
  */
 import fs from 'node:fs';
-import {X_POLICY,accountGroups,buildQuery,reservePlan,
+import {X_POLICY,accountGroups,priorityNames,priorityGroups,buildQuery,reservePlan,
  finalizeLedger,normalizeTweets,mergeXFeed} from './twitterapi-io-core.mjs';
 const budgetPath='data/fight-talk-x-budget.json';
 const feedPath='data/fight-talk-x-api.json';
@@ -20,8 +20,9 @@ const key=String(process.env.TWITTERAPI_IO_API_KEY||'').trim();
 const cmd=process.argv[2];
 const now=Date.now(),checkedAt=new Date(now).toISOString();
 const budget=read(budgetPath,{});
+const priority=priorityNames(read('data/upcoming-cards.json',{}),read('data/results.json',{}),now);
 if(cmd==='reserve'){
- const plan=reservePlan(budget,config,now,!!key);
+ const plan=reservePlan(budget,config,now,!!key,priority);
  if(plan.reason==='reserved')write(budgetPath,plan.state);
  console.log('BEFN X budget gate:',plan.reason,
   '; tracked groups:',accountGroups(config).length,
@@ -42,7 +43,7 @@ if(!Number.isFinite(age)||age<0||age>45*60_000){
  console.log('BEFN X collection skipped: reservation expired.');
  process.exit(0);
 }
-const allGroups=accountGroups(config);
+const allGroups=p.priority?priorityGroups(config,priority):accountGroups(config);
 const group=allGroups[p.groupIndex];
 if(!group||group.length!==p.handles?.length||
    group.some((x,i)=>x.username.toLowerCase()!==p.handles[i].toLowerCase())){
