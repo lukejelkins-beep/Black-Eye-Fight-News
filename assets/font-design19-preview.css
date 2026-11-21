@@ -1,0 +1,165 @@
+/* BEFN DESIGN 19 / UNBOUNDED — PREVIEW ONLY.
+ * Typography test; keep existing live page structure, cards, colors, photos and feeds.
+ * Never merge without the owner's explicit approval.
+ * Body copy deliberately stays DM Sans for legibility at mobile sizes.
+ */
+:root { --befn-design19-display:'Unbounded','Arial Black',system-ui,sans-serif; }
+
+/* Actual current header is .sh; retain the wordmark text and five-tab nav. */
+.sh .sh-brand{
+  font-family:var(--befn-design19-display)!important;
+  font-size:clamp(12px,1.2vw,15px)!important;
+  font-weight:900!important;
+  line-height:1.18!important;
+  letter-spacing:-.065em!important;
+}
+.sh .mainnav a{
+  font-family:var(--befn-design19-display)!important;
+  font-size:clamp(9px,.85vw,11px)!important;
+  font-weight:800!important;
+  letter-spacing:-.045em!important;
+  padding-inline:clamp(9px,1vw,16px);
+}
+.sh-sports button,.sh-sub a{
+  font-family:var(--befn-design19-display)!important;
+  font-weight:700!important;
+  font-size:clamp(10px,.85vw,12px)!important;
+  letter-spacing:-.055em!important;
+}
+
+/* Headings throughout the current SPA, not simulated static mockup content. */
+#main h1,#main h2,#main h3{
+  font-family:var(--befn-design19-display)!important;
+  font-weight:800!important;
+  letter-spacing:-.055em;
+  overflow-wrap:anywhere;
+  min-width:0;
+}
+
+/* Retire Design D's metallic/italic/skew treatment on this preview alone. */
+:is(.front-home-head h1,.front-follow-up-head h2,.section-heading h1,.section-heading h2,
+    .film-section-head h2,#talk-results .talk-section-head h2,
+    #upcoming-cards-root .upcoming-list-heading){
+  font-family:var(--befn-design19-display)!important;
+  font-weight:900!important;
+  font-style:normal!important;
+  line-height:1.16!important;
+  letter-spacing:-.07em!important;
+  transform:none!important;
+  filter:none!important;
+  text-shadow:none!important;
+  background:none!important;
+  background-clip:initial!important;
+  -webkit-background-clip:initial!important;
+  -webkit-text-fill-color:currentColor!important;
+  -webkit-text-stroke:0!important;
+  padding-top:0!important;
+}
+/* Respect cream/ink sections and dark event/film sections. */
+#main .front-home-head h1,#main .front-follow-up-head h2,
+#main .section-heading h1,#main .section-heading h2,
+#main .fights-unified .calendar-photo-heading h1,
+#main .fighters-unified .section-heading h1{
+  color:#161315!important;
+}
+#main .front-home-head h1{font-size:clamp(26px,3.15vw,43px)!important}
+#main .section-heading h1,#main .section-heading h2{
+  font-size:clamp(24px,3vw,42px)!important;
+}
+#main .front-follow-up-head h2,#main .film-section-head h2,
+#talk-results .talk-section-head h2{
+  font-size:clamp(22px,2.25vw,31px)!important;
+}
+#upcoming-cards-root .upcoming-list-heading{font-size:clamp(20px,2.15vw,28px)!important}
+
+/* Editorial feature / article cards: smaller sizes compensate for Unbounded's width. */
+#main .front-lead-copy h2{
+  font-size:clamp(19px,2.2vw,31px)!important;
+  line-height:1.16!important;
+}
+#main .front-brief-card h3{
+  font-size:clamp(16px,1.3vw,20px)!important;
+  line-height:1.22!important;
+}
+#main .news-grid .live-news-card .live-news-copy h3,
+#main .news-card h3{
+  font-size:clamp(16px,1.7vw,22px)!important;
+  line-height:1.2!important;
+}
+#main .np-head h1{font-size:clamp(24px,3vw,40px)!important;line-height:1.15!important}
+#main .np-lead-title{font-size:clamp(20px,2.1vw,29px)!important;line-height:1.17!important}
+#main .np-row-title,#main .np-intl-title{
+  font-size:clamp(15px,1.35vw,19px)!important;line-height:1.25!important;
+}
+#main .np-section-head h2,#main .np-list-head h2{
+  font-size:clamp(19px,2vw,27px)!important;
+}
+#main .feature-box h3,#main .film-copy h3,#main .fighter-body h3{
+  font-size:clamp(17px,1.8vw,25px)!important;
+  line-height:1.2!important;
+}
+
+/* Dense fight-card rows stay compact and readable. Preserve all results/status colors. */
+#main .fights-unified .calendar-photo-heading h1,
+#main .fighters-unified .section-heading h1{
+  font-family:var(--befn-design19-display)!important;
+  font-size:clamp(23px,2.8vw,37px)!important;
+  line-height:1.2!important;
+  letter-spacing:-.065em!important;
+}
+#main .fights-unified .upcoming-hero-title,
+#main .fights-unified .befn-result-summary-copy strong{
+  font-family:var(--befn-design19-display)!important;
+  font-weight:800!important;
+  font-size:clamp(13px,1.2vw,17px)!important;
+  line-height:1.23!important;
+  letter-spacing:-.05em!important;
+  overflow-wrap:anywhere;
+}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-hero-title,
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-title{
+  font-size:clamp(18px,2.2vw,27px)!important;
+}
+
+/* Accent text uses compact geometric type while paragraphs, dates and statistics
+   retain the existing body font for density and accessibility. */
+#main .eyebrow,#main .front-story-meta,#main .card-kicker,
+#main .np-chip,#main .np-tag,#main .sh-sub,
+#main .section-heading .eyebrow{
+  font-family:var(--befn-design19-display)!important;
+  font-weight:700!important;
+  letter-spacing:-.025em!important;
+}
+#main .front-story-meta{font-size:10px!important}
+#main .np-chip,#main .np-tag{font-size:10px!important}
+
+/* Small screens: no clipping, no enlarged sideways scroll and no tiny reading copy. */
+@media(max-width:760px){
+  .sh .mainnav a{font-size:9px!important;letter-spacing:-.06em!important;padding-inline:8px}
+  .sh .mainnav{gap:0}
+  .sh-sports button{font-size:10px!important;padding-inline:4px}
+  #main .front-home-head h1{font-size:clamp(20px,5.5vw,28px)!important}
+  #main .section-heading h1,#main .section-heading h2{
+    font-size:clamp(21px,5.5vw,29px)!important;
+  }
+  #main .front-follow-up-head h2,#main .film-section-head h2,
+  #talk-results .talk-section-head h2{
+    font-size:clamp(18px,4.8vw,23px)!important;
+    line-height:1.22!important;
+  }
+  #main .front-lead-copy h2{font-size:clamp(18px,4.9vw,23px)!important}
+  #main .front-brief-card h3{font-size:clamp(15px,4.2vw,19px)!important}
+  #main .fights-unified .calendar-photo-heading h1,
+  #main .fighters-unified .section-heading h1{font-size:clamp(21px,5.2vw,28px)!important}
+  #main .np-lead-title{font-size:clamp(19px,5.2vw,25px)!important}
+  #main .np-row-title{font-size:clamp(15px,4vw,19px)!important}
+}
+@media(max-width:390px){
+  .sh .navrail{padding-inline:5px}
+  .sh .mainnav a{font-size:8px!important;padding-inline:6px}
+  .sh-sports-group{gap:4px}
+  .sh-sports button{font-size:9px!important}
+  #main .front-home-head h1{font-size:19px!important}
+  #main .front-follow-up-head h2{font-size:18px!important}
+  #talk-results .talk-section-head h2{font-size:18px!important}
+}
