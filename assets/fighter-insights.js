@@ -808,7 +808,7 @@
  // opponent plus calendar date (allowing a one-day timezone difference)
  // rather than inferring duration from the result method.
  function historyOpponentKey(value){
-  return String(value||"").replace(/^\s*[A-Za-z]{1,3}\s+(?=[A-Za-zÀ-ÿ])/,"")
+  return String(value||"").replace(/^\s*[A-Z]{2,3}\s+(?=[A-ZÀ-Ý])/,"")
    .replace(/\b(?:jr|sr)\.?$/i,"").replace(/[łŁ]/g,"l").replace(/[øØ]/g,"o")
    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
    .replace(/[^a-z0-9]/gi,"").toLowerCase();
