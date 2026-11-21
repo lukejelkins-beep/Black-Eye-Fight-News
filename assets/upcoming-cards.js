@@ -218,7 +218,7 @@ window.UpcomingCards=(()=>{
   return '<details class="result-event upcoming-event" data-upcoming-card="'+esc(e.id)+'" data-befn-sport="'+esc(e.sport)+'" '+(opened.has(e.id)?'open':'')+'>'+summary+
    '<div class="upcoming-expanded"><div class="upcoming-card-bar"><strong>Fight card</strong><span>'+e.bouts.length+' total</span></div>'+tabs+panels+'</div></details>';
  }
- function listing(sport){
+ function listingRaw(sport){
   if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
   const today=localDate(),recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
   const query=String(window.BEFNFightsUI?.query||'').trim().toLowerCase();
@@ -297,6 +297,8 @@ window.UpcomingCards=(()=>{
   }
   pump();
  }
+ function listing(sport){return markLead(listingRaw(sport))}
+ function markLead(html){const i=html.indexOf('has-poster');if(i<0)return html;const d=html.lastIndexOf('<details class="result-event upcoming-event"',i);return d<0?html:html.slice(0,d)+'<details class="result-event upcoming-event is-lead"'+html.slice(d+'<details class="result-event upcoming-event"'.length);}
  function render(sport){const markup='<div id="upcoming-cards-root" data-local-day="'+localDate()+'" data-upcoming-sport="'+esc(sport)+'">'+listing(sport)+'</div>';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>{hydratePortraits();reconcileHeroImages()});return markup}
  function refreshCountdowns(){
   document.querySelectorAll('.upcoming-time-countdown[data-upcoming-start]').forEach(el=>{

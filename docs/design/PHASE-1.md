@@ -14,7 +14,7 @@ News · Fights (Upcoming and Results as tabs) · Fighters · Analysis · Fight T
 ## Steps (each is its own PR to `main`, checked at 390 px and 1280 px)
 1. **Shared tokens.** One stylesheet for colour, type, spacing and radius, used by the main site and Sumo. No visible change.
 2. **Compact header and navigation.** Replace the logo band (about 170 px tall) with a 56 px header and the five-item bar. Mobile keeps a bottom tab bar with the same five items.
-3. **Fights page.** The Results and Upcoming lists in the compact result-row pattern, posters first.
+3. **Fights page.** The Results and Upcoming lists in the compact result-row pattern, posters first. ✅ built (awaiting merge)
 4. **News page.** Lead story, then a tight list. Live text headings instead of image headings.
 5. **Fighters page.** Card grid first; staff review tools moved out of the reader view.
 
