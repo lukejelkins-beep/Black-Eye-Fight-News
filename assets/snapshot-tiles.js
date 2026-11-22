@@ -113,8 +113,15 @@
     const bases = Object.values(entry.basis || {});
     const division = entry.division && bases.length && bases.every(x => x === 'division');
     const rank = division ? 'Ranked against ' + entry.division + ' fighters.' : 'Ranked against all UFC fighters.';
-    const moved = entry.info.map((f, i) => f && f.newToDivision && f.previousDivision
-      ? names[i] + ' is new to ' + f.division + ' (was ' + f.previousDivision + ').' : '').filter(Boolean);
+    const moved = entry.info.map((f, i) => {
+      if (!f) return '';
+      // Ranked in one division, last fought in another: say where, rather than call them new to their own division.
+      if (f.latestBoutDivision && f.division && f.latestBoutDivision !== f.division) {
+        return names[i] + '’s last bout was at ' + f.latestBoutDivision + '.';
+      }
+      return f.newToDivision && f.previousDivision
+        ? names[i] + ' is new to ' + f.division + ' (was ' + f.previousDivision + ').' : '';
+    }).filter(Boolean);
     return '<section class="st-scores" aria-label="Attribute scores">' +
       '<h3 class="st-title">Attribute scores</h3>' +
       '<div class="st-rows">' + main + '</div>' +
