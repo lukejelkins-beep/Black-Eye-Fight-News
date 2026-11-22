@@ -38,8 +38,22 @@
 /* Keep the five items together on the left; older rules stretched them across the bar. */
 .sh .mainnav{flex:0 1 auto}
 .sh .mainnav a{flex:0 0 auto}
-.sh .befn-mobile-title{color:#fff;font:900 20px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase}
-.sh .befn-mobile-actions button{color:#fff}
 .sh .mainnav{width:auto;justify-content:flex-start;display:flex}
 .sh .mainnav a{justify-content:flex-start;min-height:0;font-size:13px;letter-spacing:.08em}
-.sh .befn-mobile-title{display:block!important}
+
+/* Phone masthead: index.html builds this bar in assets/mobile-app.js (title plus
+   Install app / Alerts / Menu). The title reads on two lines, like the desktop
+   brand lockup, so it can never run under the buttons, and the buttons meet the
+   44 px tap target from docs/design/WORKING-AGREEMENT.md. */
+@media(max-width:760px){
+  .sh .befn-mobile-topbar{align-items:center;gap:12px;min-height:56px;padding:6px 0}
+  .sh .befn-mobile-title{display:block!important;flex:1 1 auto;min-width:0;color:#fff;font:900 20px/1.04 'Barlow Condensed',Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase;white-space:normal;overflow-wrap:break-word}
+  .sh .befn-mobile-actions{gap:8px}
+  .sh .befn-mobile-actions button,.sh .befn-mobile-actions .befn-install-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 12px;color:#fff;font:800 11px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.02em}
+  .sh .befn-mobile-actions .befn-install-button{color:#211417}
+}
+@media(max-width:370px){
+  .sh .befn-mobile-title{font-size:18px}
+  .sh .befn-mobile-actions{gap:6px}
+  .sh .befn-mobile-actions button,.sh .befn-mobile-actions .befn-install-button{padding:0 9px;font-size:10px}
+}
