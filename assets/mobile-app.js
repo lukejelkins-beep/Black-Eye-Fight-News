@@ -64,7 +64,9 @@
    if(document.querySelector('.befn-mobile-tabs'))return;
    const rail=$('.navrail');if(!rail)return;
    const bar=document.createElement('div');bar.className='befn-mobile-topbar';
-   const name=document.createElement('strong');name.className='befn-mobile-title';name.textContent='BLACK EYE FIGHT NEWS';
+   const name=document.createElement('strong');name.className='befn-mobile-title';
+   /* Two lines, same words, so the masthead never runs under the action buttons. */
+   name.append('BLACK EYE ',document.createElement('br'),'FIGHT NEWS');
    const actions=document.createElement('div');actions.className='befn-mobile-actions';
    const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Alerts';alerts.addEventListener('click',()=>window.BEFNAlerts?.open?.());
    const menu=document.createElement('button');menu.type='button';menu.textContent='Menu';menu.addEventListener('click',()=>openMenu(menu));
