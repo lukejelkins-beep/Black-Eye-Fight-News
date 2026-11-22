@@ -11,7 +11,7 @@ import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verificati
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
-import { bestMatchupFact, rivalryFacts, factText } from './sumo-fact-engine.mjs?v=20261121-first-short';
+import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
@@ -900,6 +900,17 @@ function lastBoutFor(w){
   const done=currentProfileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss');
   return done.length?done[done.length-1]:null;
 }
+/** Landmark cut-out for the hero's top-left slot (RU, UA, MN, KZ). Shown to readers only when the
+ * record is approved; ?landmarks=preview shows unapproved ones for owner review. Else the kanji stays. */
+function landmarkHtml(w){
+  const cc=originCountry(w.birthplace)?.code,m=cc&&STATE.landmarks?.[cc];
+  if(!m||!/^assets\/sumo-landmarks\/[a-z]{2}\.webp$/.test(String(m.path||'')))return '';
+  const preview=typeof location!=='undefined'&&new URLSearchParams(location.search).get('landmarks')==='preview';
+  if(m.approved!==true&&!preview)return '';
+  const fade=(Array.isArray(m.fade)?m.fade:[]).filter(x=>x==='left'||x==='bottom').map(x=>' fade-'+x[0]).join('');
+  const wide=Number(m.width)/Number(m.height)>1.4?' style="--lm-scale:1.5"':'';
+  return '<div class="sumo-poster-landmark'+fade+'" data-country="'+e(cc)+'"'+wide+'><img src="'+e(m.path)+'" alt="'+e(m.alt||'')+'" width="'+Number(m.width)+'" height="'+Number(m.height)+'" decoding="async"></div>';
+}
 /** Poster hero figure: a clean full-body cut-out in front of the red disc, otherwise the
  * approved photo cropped into the disc. No photo: the disc alone. */
 function posterFigure(w){
@@ -934,7 +945,8 @@ function posterHero(w,{r,wins,losses,careerPercent}){
   }
   const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h],['Weight · undated',current.mass==='—'?null:current.mass]]
     .filter(([,v])=>v!==null&&v!==undefined).map(([k,v])=>'<span>'+e(k)+' <strong>'+e(v)+'</strong></span>').join('');
-  return '<section class="sumo-poster">'+
+  const landmark=landmarkHtml(w);
+  return '<section class="sumo-poster'+(landmark?' has-landmark':'')+'">'+landmark+
     (kanji?'<div class="sumo-poster-kanji" aria-hidden="true" style="--kanji-count:'+[...kanji].length+'">'+e(kanji)+'</div>':'')+
     posterFigure(w)+
     '<div class="sumo-poster-body"><div>'+
@@ -970,7 +982,7 @@ function renderProfile(id) {
     '<p>Current tournament record not available.</p>';
   return '<a class="back-link" href="#rikishi">← Rikishi directory</a>'+
     posterHero(w,{r,wins,losses,careerPercent})+
-    sectionNav(w.sourceId)+recentTenStrip(w)+
+    sectionNav(w.sourceId)+recentTenStrip(w)+didYouKnowMarkup(w)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
     '<div class="sumo-career-strip" aria-label="Career tournament and championship totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
@@ -1257,12 +1269,24 @@ function stageFacts(w) {
 }
 /* Fact engine (Phase 1): one scored, scoped fact per matchup and a short
  * rivalry panel on head-to-heads. Nothing shows when nothing clears the bar. */
-function factLineMarkup(f){
+/* A small face beside a fact, only where the page doesn't already show that
+ * wrestler. Uses the approved head crop, else the approved portrait; never a placeholder. */
+function factFace(id){
+  const w=wrestler(id);if(!w)return '';
+  const h=STATE.heads?.[String(w.sourceId)],photo=STATE.photoIndex?.[String(w.sourceId)];
+  if(h&&photo?.approved===true&&h.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/head\/[a-zA-Z0-9_-]+\.webp$/.test(String(h.path||'')))
+    return '<a class="sumo-fact-face" href="#profile/'+Number(w.sourceId)+'" aria-label="'+e(w.shikonaEn)+' profile"><img src="'+e(h.path)+'" alt="" width="96" height="96" loading="lazy" decoding="async"></a>';
+  if(photo?.approved===true&&/^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||'')))
+    return '<a class="sumo-fact-face is-portrait" href="#profile/'+Number(w.sourceId)+'" aria-label="'+e(w.shikonaEn)+' profile"><img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async"></a>';
+  return '';
+}
+function factLineMarkup(f,faceId=null){
   const t=factText(f,id=>wrestler(id)?.shikonaEn||null);
   if(!t)return '';
-  return '<div class="sumo-fact-line"><span class="sumo-fact-tag">'+e(t.tag)+'</span>'+
+  const face=faceId?factFace(faceId):'';
+  return '<div class="sumo-fact-line'+(face?' has-face':'')+'">'+face+'<div class="sumo-fact-body"><span class="sumo-fact-tag">'+e(t.tag)+'</span>'+
     '<p class="sumo-fact-text"><b>'+e(t.lead)+'</b>'+(t.rest?' '+e(t.rest):'')+
-    '<span class="sumo-fact-scope">'+e(t.scope)+'</span></p></div>';
+    '<span class="sumo-fact-scope">'+e(t.scope)+'</span></p></div></div>';
 }
 function matchupFactMarkup(match){
   if(!STATE.roster||!STATE.details)return '';
@@ -1276,6 +1300,34 @@ function rivalryPanelMarkup(a,b){
   return '<section class="sumo-fact-panel" aria-label="Story of the rivalry"><h2>Story of the rivalry</h2>'+
     '<p>Facts from BEFN’s stored bout records and listed roster data.</p>'+
     '<ul>'+facts.map(f=>'<li>'+factLineMarkup(f)+'</li>').join('')+'</ul></section>';
+}
+function didYouKnowMarkup(w){
+  if(!STATE.details||!w)return '';
+  const facts=profileFacts(STATE.details,w.sourceId);
+  if(!facts.length)return '';
+  return '<section class="sumo-fact-panel" aria-label="Did you know"><h2>Did you know?</h2>'+
+    '<p>From BEFN’s stored bout records.</p><ul>'+facts.map(f=>{
+      // The profile already shows this wrestler; show the opponent's face on pair facts.
+      const p=factPeople(f),me=String(w.sourceId);
+      return '<li>'+factLineMarkup(f,p.other?(p.main===me?p.other:p.main):null)+'</li>';
+    }).join('')+'</ul></section>';
+}
+function techniqueFactsMarkup(){
+  const term=new URLSearchParams(location.hash.split('?')[1]||'').get('term');
+  const item=term?KIMARITE.find(x=>x.slug===term):null;
+  if(!item||!STATE.details)return '';
+  const t=techniqueFacts(STATE.details,item.name.toLowerCase().replace(/[^a-z]/g,''));
+  if(!t)return '<section class="sumo-fact-panel"><h2>Who wins with this</h2><p>No '+e(item.name)+' wins in BEFN’s records since January 2021.</p></section>';
+  const leaders=t.top.filter(([id])=>wrestler(id));
+  const lead=t.t===1?'Just one '+item.name+' win in BEFN’s records since January 2021.':
+    t.t<=5?'Only '+t.t+' '+item.name+' wins in BEFN’s records since January 2021.':
+    number(t.t)+' '+item.name+' wins in BEFN’s records since January 2021.';
+  return '<section class="sumo-fact-panel" aria-label="Who wins with this"><h2>Who wins with this</h2>'+
+    '<div class="sumo-fact-line"><div class="sumo-fact-body"><span class="sumo-fact-tag">'+(t.t<=2?'Rare move':'Technique')+'</span><p class="sumo-fact-text"><b>'+e(lead)+'</b>'+
+    '<span class="sumo-fact-scope">BEFN bout records · bouts involving at least one tracked wrestler</span></p></div></div>'+
+    (leaders.length?'<h3 class="sumo-fact-subhead">Most wins by tracked wrestlers</h3><ol class="sumo-fact-leaders">'+leaders.map(([id,c])=>
+      '<li>'+factFace(id)+'<a href="#profile/'+Number(id)+'">'+e(wrestler(id).shikonaEn)+'</a><b>'+c+'</b></li>').join('')+'</ol>':'')+
+    '</section>';
 }
 function headlineBout(match,label) {
   const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
@@ -1458,7 +1510,7 @@ function renderBasho() {
     sourceFooter();
 }
 function renderKimarite() {
-  return renderKimariteGallery();
+  return renderKimariteGallery()+techniqueFactsMarkup();
 }
 
 function render() {
@@ -1721,6 +1773,8 @@ async function init(){
     // Optional cut-out derivatives; the page works without them.
     STATE.cutouts=(await loadJson('data/sumo/cutouts.json').catch(()=>null))?.bySourceId||null;
     STATE.heads=(await loadJson('data/sumo/heads.json').catch(()=>null))?.bySourceId||null;
+    // Optional landmark cut-outs (top-left of the profile hero); the page works without them.
+    STATE.landmarks=(await loadJson('data/sumo/landmarks.json').catch(()=>null))?.byCountry||null;
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');

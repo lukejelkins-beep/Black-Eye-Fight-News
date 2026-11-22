@@ -17,7 +17,9 @@
 export const FACT_INDEX_VERSION=1;
 export const TECHNIQUE_SINCE='202101';
 export const SURFACE_MIN={matchup:58,rivalry:40,person:55};
-const NOT_A_TECHNIQUE=new Set(['','fusen']);
+// Default wins, fouls and the five non-technique results the JSA lists separately
+// (isamiashi, koshikudake, tsukite, tsukihiza, fumidashi) are not winning techniques.
+const NOT_A_TECHNIQUE=new Set(['','fusen','hansoku','isamiashi','koshikudake','tsukite','tsukihiza','fumidashi']);
 const sid=v=>String(v??'');
 const validBasho=v=>/^(19|20)\d{2}(01|03|05|07|09|11)$/.test(sid(v));
 const pairKey=(a,b)=>{const x=Number(a),y=Number(b);return x<y?x+':'+y:y+':'+x;};
@@ -35,7 +37,7 @@ export function buildFactIndex({roster,details,history}={}){
  const add=(map,key,fact)=>{(map[key]||=[]).push(fact);};
  // Technique tallies since 2021 across every cached bout (any winner), so a
  // "rare move" is rare in the whole ledger, not only among tracked winners.
- const allMoves=new Map(),moveFirst=new Map(),moves=new Map(),met=new Set();
+ const allMoves=new Map(),moveFirst=new Map(),moves=new Map(),met=new Set(),dayLog=new Map();
  let longest=0;
  const series=[];
  for(const pair of Object.values(history.pairs)){
@@ -46,6 +48,11 @@ export function buildFactIndex({roster,details,history}={}){
    .map(x=>({basho:sid(x[0]),day:x[1],winner:sid(x[2]),move:String(x[3]||'').toLowerCase()}))
    .sort((x,y)=>x.basho.localeCompare(y.basho)||x.day-y.day);
   for(const bout of bouts){
+   for(const side of [a,b]){
+    if(!ids.has(side))continue;
+    const k=side+'|'+bout.basho,m=dayLog.get(k)||new Map();
+    m.set(bout.day,m.has(bout.day)?'conflict':bout.winner===side);dayLog.set(k,m);
+   }
    if(bout.basho<TECHNIQUE_SINCE||NOT_A_TECHNIQUE.has(bout.move))continue;
    allMoves.set(bout.move,(allMoves.get(bout.move)||0)+1);
    if(ids.has(bout.winner)){
@@ -94,6 +101,32 @@ export function buildFactIndex({roster,details,history}={}){
     add(pairs,key,{k:'finish',w,l,km:move,c:count,t:won.length,s:clamp(34+Math.min(count,8)*3+(count===won.length?6:0)+recency)});
   }
  }
+ // Final-day pressure and comebacks, from complete 15-day basho only
+ // (every day 1-15 recorded once). Phrased as the wrestler's own record.
+ const clutch=new Map(),comebacks=new Map();
+ for(const [k,m] of dayLog){
+  if(m.size!==15)continue;
+  const seq=[];for(let d=1;d<=15;d++){const v=m.get(d);if(typeof v!=='boolean'){seq.length=0;break;}seq.push(v);}
+  if(seq.length!==15)continue;
+  const [id,basho]=k.split('|'),wins=seq.filter(Boolean).length;
+  if(seq.slice(0,14).filter(Boolean).length===7){const c=clutch.get(id)||{w:0,l:0};seq[14]?c.w++:c.l++;clutch.set(id,c);}
+  if(seq.slice(0,4).every(v=>!v)&&wins>=8){const list=comebacks.get(id)||[];list.push({basho,w:wins,l:15-wins});comebacks.set(id,list);}
+ }
+ for(const [id,c] of clutch){
+  const n=c.w+c.l;
+  if(n>=4&&c.w/n>=0.75)add(people,id,{k:'clutch',id,won:c.w,lost:c.l,s:clamp(48+(c.w/n-0.75)*80+n)});
+ }
+ for(const [id,list] of comebacks){
+  list.sort((x,y)=>x.basho.localeCompare(y.basho));const last=list.at(-1);
+  add(people,id,{k:'comeback',id,c:list.length,basho:last.basho,won:last.w,lost:last.l,
+   s:clamp(52+6*(list.length-1)+(now-bashoIndex(last.basho)<=6?6:0))});
+ }
+ // Kimarite guide: total wins by each technique since 2021 and the leading tracked winners.
+ const techniques={};
+ for(const [move,total] of allMoves){
+  const top=[...moves].map(([id,m])=>[id,m.get(move)||0]).filter(x=>x[1]>0).sort((x,y)=>y[1]-x[1]).slice(0,3);
+  techniques[move]={t:total,top};
+ }
  // Repertoire: most distinct winning techniques since 2021 (top three).
  const repertoire=[...moves].map(([id,m])=>({id,n:m.size,wins:[...m.values()].reduce((x,y)=>x+y,0)}))
   .filter(x=>x.wins>=30).sort((x,y)=>y.n-x.n||y.wins-x.wins);
@@ -132,7 +165,7 @@ export function buildFactIndex({roster,details,history}={}){
  return {schemaVersion:FACT_INDEX_VERSION,bashoId:sid(details.bashoId),techniqueSince:TECHNIQUE_SINCE,
   source:'BEFN cached Sumo API regular-bout ledger (not independently JSA-certified) and listed roster data',
   scope:'Bouts in BEFN records involve at least one wrestler BEFN tracks; ledger playoffs excluded',
-  counts:{pairs:Object.keys(pairs).length,people:Object.keys(people).length},pairs,people};
+  counts:{pairs:Object.keys(pairs).length,people:Object.keys(people).length,techniques:Object.keys(techniques).length},pairs,people,techniques};
 }
 
 /* ------------------------------------------------------------------ browser */
@@ -194,6 +227,37 @@ export function rivalryFacts(details,roster,a,b,{limit=4}={}){
  return [...pair,...people].slice(0,limit);
 }
 
+/** Profile "Did you know": the wrestler's own facts plus pair facts he leads. */
+export function profileFacts(details,id,{limit=4,min=SURFACE_MIN.person}={}){
+ const idx=indexFor(details),me=sid(id);
+ if(!idx)return [];
+ const own=(idx.people?.[me]||[]);
+ const pairs=Object.entries(idx.pairs||{}).filter(([k])=>k.split(':').includes(me)).flatMap(([,list])=>list)
+  .filter(f=>f.k!=='first'&&(sid(f.w)===me||(f.k==='series'&&sid(f.a)===me&&f.wa>f.wb)));
+ // One fact per kind first, so a profile never shows three near-identical lines.
+ const ranked=[...own,...pairs].filter(f=>f.s>=min).sort((x,y)=>y.s-x.s),seen=new Set(),first=[],rest=[];
+ for(const f of ranked)(seen.has(f.k)?rest:(seen.add(f.k),first)).push(f);
+ return [...first,...rest].slice(0,limit);
+}
+/** Kimarite guide: {t,top:[[id,count]...]} for a technique, or null. */
+export function techniqueFacts(details,move){
+ const t=indexFor(details)?.techniques?.[String(move||'').toLowerCase()];
+ return t&&Number.isInteger(t.t)?t:null;
+}
+/** Stable page: the best facts about its tracked wrestlers, one per wrestler. */
+export function stableFacts(details,memberIds,{limit=4}={}){
+ return memberIds.map(id=>profileFacts(details,id,{limit:1})[0]).filter(Boolean).sort((x,y)=>y.s-x.s).slice(0,limit);
+}
+/** Who a fact is about: `main` is its subject, `other` the second wrestler (pair facts). */
+export function factPeople(f){
+ switch(f?.k){
+  case 'series':case 'first':return {main:sid(f.a),other:sid(f.b)};
+  case 'sweep':case 'streak':case 'finish':return {main:sid(f.w),other:sid(f.l)};
+  case 'size':return {main:sid(f.heavy),other:sid(f.light)};
+  case 'age':return {main:sid(f.older),other:sid(f.younger)};
+  default:return {main:sid(f?.id),other:null};
+ }
+}
 /** Plain-text wording: {tag, lead, rest, scope}. `name(id)` returns a shikona. */
 export function factText(f,name){
  const n=id=>name(id)||'This wrestler';
@@ -201,14 +265,15 @@ export function factText(f,name){
   case 'series':{
    const level=f.wa===f.wb;
    return {tag:'Rivalry',
-    lead:f.n+' meetings since '+bashoMonth(f.first)+(level?', and it’s level at '+f.wa+'–'+f.wb+'.':': '+n(f.a)+' leads '+f.wa+'–'+f.wb+'.'),
+    lead:level?n(f.a)+' and '+n(f.b)+' have met '+f.n+' times since '+bashoMonth(f.first)+', and it’s level at '+f.wa+'–'+f.wb+'.':
+     n(f.a)+' leads '+n(f.b)+' '+f.wa+'–'+f.wb+' across '+f.n+' meetings since '+bashoMonth(f.first)+'.',
     rest:f.top?'The longest series between two wrestlers BEFN tracks.':'',scope:'BEFN bout records'};
   }
   case 'first':return {tag:'First meeting',lead:'First time facing each other.',
    rest:'',scope:'BEFN bout records'};
-  case 'sweep':return {tag:'Clean sweep',lead:n(f.w)+' has won all '+f.n+' of their meetings.',
+  case 'sweep':return {tag:'Clean sweep',lead:n(f.w)+' has won all '+f.n+' meetings with '+n(f.l)+'.',
    rest:'The first was in '+bashoMonth(f.first)+'.',scope:'BEFN bout records'};
-  case 'streak':return {tag:'Streak',lead:n(f.w)+' has won their last '+f.n+' meetings.',
+  case 'streak':return {tag:'Streak',lead:n(f.w)+' has won the last '+f.n+' meetings with '+n(f.l)+'.',
    rest:f.wa+'–'+f.wb+' overall.'+(f.lastLoss?' '+n(f.l)+' last won in '+bashoMonth(f.lastLoss)+'.':''),scope:'BEFN bout records'};
   case 'finish':return {tag:'Finishing move',
    lead:(f.c===f.t?'All '+f.t:f.c+' of '+f.t)+' of '+n(f.w)+'’s wins over '+n(f.l)+' have come by '+f.km+'.',rest:'',scope:'BEFN bout records'};
@@ -219,6 +284,11 @@ export function factText(f,name){
   case 'rare':return {tag:'Rare move',
    lead:f.total===1?n(f.id)+' has the only '+f.km+' win in BEFN’s records since 2021.':n(f.id)+' has one of only '+f.total+' '+f.km+' wins in BEFN’s records since 2021.',
    rest:'It came on day '+f.day+' of the '+bashoMonth(f.basho)+' basho.',scope:'BEFN bout records · since January 2021'};
+  case 'clutch':return {tag:'Final-day nerve',lead:n(f.id)+' is '+f.won+'–'+f.lost+' on the final day when sitting at 7–7.',
+   rest:'Each of those day-15 bouts decided whether he finished with a winning record.',scope:'BEFN bout records · complete 15-day basho'};
+  case 'comeback':return {tag:'Comeback',
+   lead:f.c===1?n(f.id)+' once lost his first four bouts and still finished with a winning record.':n(f.id)+' has lost his first four bouts and still finished with a winning record '+(f.c===2?'twice':f.c+' times')+'.',
+   rest:(f.c===1?'That was ':'Most recently ')+bashoMonth(f.basho)+', finishing '+f.won+'–'+f.lost+'.',scope:'BEFN bout records · complete 15-day basho'};
   case 'size':return {tag:'Size gap',lead:'A '+f.gap+' kg weight difference.',
    rest:n(f.heavy)+' is listed at '+f.hw+' kg, '+n(f.light)+' at '+f.lw+' kg.',scope:'Listed weights'};
   case 'age':return {tag:'Age gap',lead:n(f.older)+' is '+f.years+' years older than '+n(f.younger)+'.',rest:'',scope:'Listed birth dates'};
