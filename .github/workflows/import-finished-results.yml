@@ -50,12 +50,12 @@ jobs:
             git fetch -q origin main
             git reset --hard -q origin/main
             python scripts/import-finished-results.py
-            git add data/results.json
+            git add data/results.json data/upcoming-cards.json
             if git diff --cached --quiet; then
               echo 'No finished cards to import'
               exit 0
             fi
-            git commit -m 'Import finished PFL, ONE, Cage Warriors and boxing results'
+            git commit -m 'Publish finished PFL, ONE, Cage Warriors and boxing results and clear those cards from Upcoming'
             if git push origin HEAD:main; then exit 0; fi
             echo 'Retrying after another writer updated main'
           done
