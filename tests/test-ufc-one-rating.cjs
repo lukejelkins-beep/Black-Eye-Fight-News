@@ -13,6 +13,7 @@ function load(fighters){
   addEventListener(){},dispatchEvent(){},location:{hash:""},
   BEFNUfcClassifier:{classify:s=>({label:s.category,score:null,eligible:false,version:2})}};
  const fetch=async url=>{const body=read(String(url).split("?")[0]);return {ok:body!==null,json:async()=>body};};
+ window.BEFNStatsProfile=require("../assets/fighter-stats-profile.js");
  vm.runInNewContext(fs.readFileSync("assets/fighter-insights.js","utf8"),
   {window,document,fetch,console,URL,CustomEvent:class{},setTimeout:()=>0,clearTimeout(){},requestAnimationFrame:()=>0});
  return window.BEFNFighterInsights;
@@ -43,4 +44,20 @@ test("profile rating and skills equal the stats build, with no credential points
   }
  }
  assert(credentialled>=5,"fighters with credentials are covered");
+});
+
+test("every fighter in the stats build has a profile with their own stats and rating",async()=>{
+ const index=read("data/ufc-stats/index.json").fighters,ui=load([]);
+ for(let i=0;i<20;i++)await tick();
+ for(const slug of Object.keys(index))ui.statsProfile("ufc--"+slug);
+ for(let i=0;i<30;i++)await tick();
+ for(const [slug,row] of Object.entries(index)){
+  const f=ui.statsProfile("ufc--"+slug);
+  assert(f,slug+" has no profile");
+  const html=ui.renderProfile(f),shown=/class="befn-v3-score">(\d+|Unrated|—)/.exec(html)?.[1];
+  const plain=n=>n.normalize("NFKD").replace(/[^a-z0-9]/gi,"").toLowerCase();
+  assert.equal(plain(f.name),plain(row.name),slug);
+  assert.equal(shown,row.rating[0]===null?"Unrated":String(row.rating[0]),slug+" headline");
+  assert(html.includes("data-bsp-stats"),slug+" has no statistics panel");
+ }
 });
