@@ -265,9 +265,9 @@ class RealData(unittest.TestCase):
         cov = self.index["divisionCoverage"]
         # The official roster (UFC.com ranks plus Cito's active list) covers most fighters;
         # the latest fight fills those it is missing from.
-        self.assertGreater(cov["officialRoster"], 700)
+        self.assertGreater(cov["officialRoster"], 600)
         self.assertGreater(cov["latestBout"], 100, "latest-bout divisions fill fighters missing from the rosters")
-        self.assertGreater(cov["withDivision"], 900)
+        self.assertGreater(cov["withDivision"], 800)
 
     def test_leaderboards_file(self):
         boards = json.loads((pathlib.Path(self.tmp.name) / "leaderboards.json").read_text())
@@ -436,6 +436,25 @@ class FreeResultsPath(unittest.TestCase):
         finally:
             m.DATA = kept
 
+
+class FeederScope(unittest.TestCase):
+    def test_feeder_series_are_out_but_ultimate_fighter_finales_stay(self):
+        for title in ("Dana White's Contender Series 80", "DWCS Week 3", "Road to UFC Season 4: Semifinals",
+                      "Road to UFC 3 Finals"):
+            self.assertTrue(m.is_feeder_event(title), title)
+        for title in ("UFC 300", "The Ultimate Fighter Finale: Tavares vs Adesanya",
+                      "The Ultimate Fighter: Team Joanna vs Team Cl\u00e1udia Finale", None, ""):
+            self.assertFalse(m.is_feeder_event(title), title)
+
+    def test_only_the_attested_showcase_survives_a_feeder_title(self):
+        feeder = {"id": "60900", "event": "Road to UFC Season 4: Semifinals"}
+        self.assertTrue(m.out_of_scope(feeder, set()))
+        self.assertFalse(m.out_of_scope(feeder, {"60900"}))
+        self.assertTrue(m.out_of_scope({**feeder, "id": "1"}, {"60900"}))
+        self.assertFalse(m.out_of_scope({"id": "2", "event": "UFC 300"}, set()))
+
+    def test_the_register_attests_the_one_showcase(self):
+        self.assertIn("60900", m.attested_showcase_ids())
 
 
 if __name__ == "__main__":
