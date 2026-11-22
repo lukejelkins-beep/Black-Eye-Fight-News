@@ -1,0 +1,245 @@
+/* Sumo area: main-site typography (owner request 23 Nov 2026).
+ * Applies the main-site fonts to Sumo with no change to Sumo layout, colour or content:
+ * headings and big numbers use Unbounded (--display, as in site-theme.css), small labels and
+ * body text use DM Sans. Unbounded is much wider than Barlow Condensed, so sizes are scaled
+ * down and headings are sentence case, matching site-theme.css. Generated from the Barlow
+ * Condensed rules in the sumo-*.css files; loaded last on sumo.html. */
+:root{--display:'Unbounded','Arial Black',system-ui,sans-serif}
+/* sumo.css:3 */
+.logo strong{font-family:var(--display);font-weight:800;font-size:22px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.footer-grid strong{font-family:var(--display);font-weight:800;font-size:23px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,5vw,77px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.section-head h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,2.8vw,34px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.stat .value{font-family:var(--display);font-weight:800;font-size:clamp(18px,2vw,28px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.panel-head h3{font-family:var(--display);font-weight:800;font-size:14px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.feature-info h3{font-family:var(--display);font-weight:800;font-size:clamp(16px,1.6vw,20px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.directory-upper h3{font-family:var(--display);font-weight:800;font-size:clamp(13px,1.3vw,18px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.profile-title h1{font-family:var(--display);font-weight:800;font-size:clamp(23px,3.2vw,41px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.profile-current .big-record{font-family:var(--display);font-weight:800;font-size:clamp(31px,3.3vw,51px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.tile strong{font-family:var(--display);font-weight:800;font-size:clamp(17px,1.7vw,26px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.basho-hero h1{font-family:var(--display);font-weight:800;font-size:clamp(29px,4vw,50px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.basho-day{font-family:var(--display);font-weight:800;font-size:32px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:3 */
+.term h3{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:69 */
+.sumo-match-name{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:87 */
+.sumo-rank-name{font-family:var(--display);font-weight:800;font-size:18px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:110 */
+.sumo-career-panel-head h3{font-family:var(--display);font-weight:800;font-size:clamp(17px,2vw,23px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:116 */
+.sumo-chart-number{font-family:var(--display);font-weight:800;font-size:11px;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:132 */
+.sumo-career-milestones strong{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:155 */
+.sumo-h2h-score>strong{font-family:var(--display);font-weight:800;font-size:clamp(17px,2vw,28px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:177 */
+.sumo-rival-name{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:178 */
+.sumo-rival strong{font-family:var(--display);font-weight:800;font-size:18px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo.css:186 */
+.sumo-api-quality strong{font-family:var(--display);font-weight:800;font-size:clamp(12px,1.7vw,16px);line-height:1.18;letter-spacing:-.02em;text-transform:none}
+/* sumo-poster.css:12 */
+.sumo-poster h1{font-family:var(--display);font-weight:800;font-size:clamp(37px,4.4vw,63px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-poster.css:20 */
+.sumo-poster-stats b{font-family:var(--display);font-weight:800;font-size:clamp(32px,3.3vw,42px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-poster.css:25 */
+.sumo-poster-bout strong{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:27 */
+.section-head h2{font-family:var(--display);font-weight:800;font-size:clamp(18px,1.6vw,21px);line-height:1.15;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:35 */
+.profile-hero h1{font-family:var(--display);font-weight:800;font-size:clamp(32px,2.7vw,37px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:58 */
+.sumo-summary-stat strong{font-family:var(--display);font-weight:800;font-size:clamp(15px,1.5vw,20px);line-height:1.15;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:112 */
+.sumo-career-panel-head h3{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.2;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:300 */
+.sumo-rank-name{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:355 */
+.sumo-standings-identity strong{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:451 */
+.sumo-h2h-kimarite h2{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:454 */
+.sumo-kimarite-panel h3{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.15;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:551 */
+.sumo-overview-lede h1{font-family:var(--display);font-weight:800;font-size:clamp(22px,2.6vw,33px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:584 */
+.sumo-rank-person a{font-family:var(--display);font-weight:800;font-size:14px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:598 */
+.sumo-recent-strip h2{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:710 */
+.sumo-page-head h1{font-family:var(--display);font-weight:800;font-size:clamp(22px,4vw,37px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:723 */
+.sumo-career-strip>div>strong{font-family:var(--display);font-weight:800;font-size:clamp(25px,2.6vw,36px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:728 */
+.sumo-rival .sumo-rival-record{font-family:var(--display);font-weight:800;font-size:clamp(11px,1.3vw,14px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:790 */
+.sumo-home-feature .feature-info h3{font-family:var(--display);font-weight:800;font-size:clamp(17px,1.9vw,24px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:825 */
+.sumo-home-leaders .sumo-standings-identity strong{font-family:var(--display);font-weight:800;font-size:clamp(15px,1.8vw,22px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:893 */
+.sumo-home-leaders .sumo-leader-details .sumo-standings-identity strong{font-family:var(--display);font-weight:800;font-size:clamp(16px,1.8vw,22px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:976 */
+.sumo-recent-strip .sumo-recent-header h2{font-family:var(--display);font-weight:800;font-size:clamp(17px,2.2vw,21px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1060 */
+#sumo-charts .sumo-career-panel-head h3{font-family:var(--display);font-weight:800;font-size:clamp(17px,2vw,22px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1261 */
+#sumo-opponents .sumo-rival-name{font-family:var(--display);font-weight:800;font-size:clamp(14px,1.6vw,19px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1366 */
+#sumo-career .sumo-career-detail-section>h3{font-family:var(--display);font-weight:800;font-size:clamp(15px,2vw,19px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1386 */
+#sumo-career .sumo-career-data-tile>strong{font-family:var(--display);font-weight:800;font-size:clamp(11px,1.4vw,16px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1411 */
+#sumo-career .sumo-basho-history-item span{font-family:var(--display);font-weight:800;font-size:clamp(12px,1.5vw,17px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1421 */
+#sumo-techniques .sumo-signature h3{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1479 */
+.sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-person{font-family:var(--display);font-weight:800;font-size:clamp(11px,0.9vw,12px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1598 */
+.sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-person{font-family:var(--display);font-weight:800;font-size:clamp(11px,1vw,15px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1610 */
+.sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-outcome{font-family:var(--display);font-weight:800;font-size:11px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1757 */
+.bout-name{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1775 */
+.bout-stats .is-basho b{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1823 */
+.profile-hero .sumo-current-record b{font-family:var(--display);font-weight:800;font-size:26px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1846 */
+@media (max-width:700px){.sumo-rank-card>.sumo-rank-person a{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}}
+/* sumo-editorial.css:1862 */
+.stage-name{font-family:var(--display);font-weight:800;font-size:clamp(15px,4.2vw,26px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-editorial.css:1879 */
+.stage-stats dt{font-family:'DM Sans',system-ui,sans-serif;font-weight:800}
+/* sumo-editorial.css:1893 */
+.hl-section{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-daily.css:6 */
+.sumo-daily-heading h1{font-family:var(--display);font-weight:800;font-size:clamp(22px,2.6vw,36px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-daily.css:26 */
+.sumo-daily-facts h2{font-family:var(--display);font-weight:800;font-size:clamp(15px,1.7vw,22px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-daily.css:34 */
+.sumo-daily-score-label{font-family:var(--display);font-weight:800;font-size:11px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-daily.css:35 */
+.sumo-daily-score strong{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,44px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-daily.css:48 */
+.sumo-daily-history-title{font-family:var(--display);font-weight:800;font-size:14px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-daily.css:107 */
+.sumo-daily-date strong{font-family:var(--display);font-weight:800;font-size:clamp(15px,2vw,20px);line-height:1.15;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:5 */
+.sumo-km-hero h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,5.3vw,55px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:9 */
+.sumo-km-hero-stats strong{font-family:var(--display);font-weight:800;font-size:18px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:22 */
+.sumo-km-group-head h2{font-family:var(--display);font-weight:800;font-size:clamp(17px,2.6vw,24px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:40 */
+.sumo-km-tile-meta h3{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:45 */
+.sumo-km-outcomes h2{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:48 */
+.sumo-km-detail-head h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,5.3vw,49px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:53 */
+.sumo-km-detail-aside h2{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:-.02em;text-transform:none}
+/* sumo-kimarite-gallery.css:84 */
+.sumo-km-modal-text h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,3.3vw,26px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:14 */
+.h2h-hero h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,2.9vw,34px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:19 */
+.h2h-hero-stats strong{font-family:var(--display);font-weight:800;font-size:22px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:37 */
+.h2h-rank{font-family:var(--display);font-weight:800;font-size:11px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:43 */
+.h2h-name{font-family:var(--display);font-weight:700;font-size:11px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:44 */
+.h2h-rec{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:47 */
+button.h2h-name{font-family:var(--display);font-weight:700;font-size:11px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:52 */
+button.h2h-rec{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:89 */
+.h2h-side strong{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:91 */
+.h2h-score{font-family:var(--display);font-weight:800;font-size:36px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-h2h-board.css:94 */
+.h2h-lead{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-modern.css:34 */
+.fo-info h2{font-family:var(--display);font-weight:800;font-size:clamp(22px,3vw,40px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-modern.css:41 */
+.fo-score strong{font-family:var(--display);font-weight:800;font-size:clamp(37px,4.6vw,63px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-fact-lines.css:6 */
+.sumo-fact-tag{font-family:'DM Sans',system-ui,sans-serif;font-weight:800}
+/* sumo-fact-lines.css:16 */
+.sumo-fact-panel h2{font-family:var(--display);font-weight:800;font-size:clamp(16px,2vw,21px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-fact-lines.css:20 */
+.sumo-fact-subhead{font-family:var(--display);font-weight:800;font-size:11px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-fact-lines.css:23 */
+.sumo-fact-leaders a:not(.sumo-fact-face){font-family:var(--display);font-weight:800;font-size:11px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-fact-lines.css:24 */
+.sumo-fact-leaders b{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:6 */
+.facts-top h1{font-family:var(--display);font-weight:800;font-size:clamp(33px,4.6vw,58px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:14 */
+.facts-statbar strong{font-family:var(--display);font-weight:800;font-size:clamp(18px,2.3vw,28px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:21 */
+.facts-cover-text h2{font-family:var(--display);font-weight:800;font-size:clamp(25px,2.6vw,39px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:23 */
+.facts-cover-text .facts-stat-accent{font-family:var(--display);font-weight:800;font-size:25px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:34 */
+.facts-side-body h3{font-family:var(--display);font-weight:800;font-size:18px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:43 */
+.facts-section-title h2{font-family:var(--display);font-weight:800;font-size:21px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:50 */
+.facts-tile-banner .facts-banner-metric{font-family:var(--display);font-weight:800;font-size:12px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:53 */
+.facts-tile-body h3{font-family:var(--display);font-weight:800;font-size:18px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:73 */
+.facts-rolling-head h2{font-family:var(--display);font-weight:800;font-size:clamp(20px,2.6vw,32px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:78 */
+.facts-rolling-division .facts-section-title h3{font-family:var(--display);font-weight:800;font-size:21px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:81 */
+.facts-rolling-place{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:86 */
+.facts-rolling-person a{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-facts.css:90 */
+.facts-rolling-pct{font-family:var(--display);font-weight:800;font-size:23px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:6 */
+.heya-top h1{font-family:var(--display);font-weight:800;font-size:clamp(29px,4vw,51px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:11 */
+.heya-stat strong{font-family:var(--display);font-weight:800;font-size:clamp(18px,2.3vw,26px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:29 */
+.heya-image-fallback{font-family:var(--display);font-weight:800;font-size:61px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:32 */
+.heya-card-body h2{font-family:var(--display);font-weight:800;font-size:20px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:45 */
+.heya-hero h1{font-family:var(--display);font-weight:800;font-size:clamp(29px,4vw,50px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:49 */
+.heya-hero-fig span{font-family:var(--display);font-weight:800;font-size:73px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:52 */
+.heya-detail-stats strong{font-family:var(--display);font-weight:800;font-size:20px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:56 */
+.heya-section-head h2{font-family:var(--display);font-weight:800;font-size:21px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stables.css:63 */
+.heya-member-name{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stories.css:6 */
+.st-tabs>button,.st-presets button,.st-all{font-family:'DM Sans',system-ui,sans-serif;font-weight:800}
+/* sumo-stories.css:15 */
+.st-bignum{font-family:var(--display);font-weight:800;font-size:clamp(42px,7.9vw,79px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stories.css:16 */
+.st-today h2{font-family:var(--display);font-weight:800;font-size:clamp(16px,2.2vw,24px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stories.css:24 */
+.st-rowhead h2{font-family:var(--display);font-weight:800;font-size:clamp(18px,2.6vw,25px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stories.css:31 */
+.st-metric{font-family:var(--display);font-weight:800;font-size:30px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
+/* sumo-stories.css:33 */
+.st-card h3{font-family:var(--display);font-weight:800;font-size:13px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
