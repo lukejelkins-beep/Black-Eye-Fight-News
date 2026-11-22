@@ -451,7 +451,19 @@ function topStoryCard(a){
 
 function newsPool(){return window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(articleMatchesSport);}
 function newsLeads(){return window.BEFNNewsPage.pickLeads(newsPool().filter(a=>Date.parse(a.publishedAt)<=Date.now()+30*60*1000),desk.leads);}
-const newsPageHelpers=()=>({esc,safeURL,meta:newsDisplayMeta,photo:topStoryPhoto});
+/* An owner-cleared photo of a fighter named in this text, from the local map
+   (assets/local-images.js, 750 fighters). Two or three capitalised words only, so a
+   headline's ordinary nouns cannot match, and the map itself decides who is known. */
+function localFighterPhoto(text,kind){
+ const api=window.BEFNLocalImages;
+ if(!api||!text)return null;
+ const names=String(text).match(/\b[A-Z\u00C0-\u00DE][a-z\u00DF-\u00FF'\u2019-]+(?:\s+[A-Z\u00C0-\u00DE][a-z\u00DF-\u00FF'\u2019-]+){1,2}\b/g)||[];
+ for(const name of names){
+  if(api.has(name)){const url=api.url(name,kind||'card');if(url)return {url,name};}
+ }
+ return null;
+}
+const newsPageHelpers=()=>({esc,safeURL,meta:newsDisplayMeta,photo:topStoryPhoto,localPhoto:localFighterPhoto});
 function newsFeedItems(){
  const promoted=new Set(newsLeads().map(l=>l.story.url));
  const seen=new Set(),now=Date.now();

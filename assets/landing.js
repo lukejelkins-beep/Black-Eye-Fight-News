@@ -50,6 +50,13 @@
     return hit ? { url: 'assets/img/ufc-cutouts/' + hit + '.webp', name: '' } : null;
   }
 
+  /* Last resort, so no slot is ever empty: the house weave in the sport's own colour.
+     It is a tile, not a photograph, and it never implies who or what a story is about. */
+  const tileHTML = (sport, cls) => '<span class="' + cls + ' lp-tile lp-tile-' + (SPORT[sport] ? sport : 'all') + '" aria-hidden="true"></span>';
+
+  /* An owner-cleared photo of a fighter this text names, where the page can supply one. */
+  const localPhoto = (h, text, kind) => (h.localPhoto ? h.localPhoto(text, kind) : null);
+
   /* The first story in a column that has a picture, so every column leads with one. */
   const firstPhoto = (stories, h) => {
     for (const a of stories) { const p = h.photo(a); if (p && p.url) return p; }
@@ -111,9 +118,13 @@
     const sport = String(e.sport).toLowerCase();
     const poster = posterFor(e, ctx && ctx.posters);
     const cut = poster ? null : cutoutFor(e, ctx && ctx.cutouts);
+    const named = poster || cut ? null : (e.bouts || []).reduce((found, b) =>
+      found || (Array.isArray(b && b.fighters) ? b.fighters.reduce((f, n) => f || localPhoto(h, n, 'portrait'), null) : null), null);
     const art = poster ? pictureHTML(poster, e.title, 'lp-fixture-art', h)
-      : cut ? pictureHTML(cut.url, cut.name, 'lp-fixture-art lp-fixture-cutout', h) : '';
-    return '<a class="lp-fixture lp-' + sport + (art ? ' has-art' : '') + '" href="#fights">' + art +
+      : cut ? pictureHTML(cut.url, cut.name, 'lp-fixture-art lp-fixture-cutout', h)
+      : named ? pictureHTML(named.url, named.name, 'lp-fixture-art', h)
+      : tileHTML(sport, 'lp-fixture-art');
+    return '<a class="lp-fixture lp-' + sport + ' has-art" href="#fights">' + art +
       '<span class="lp-date"><b>' + day + '</b><i>' + mon + '</i></span>' +
       '<span class="lp-fixture-copy"><span class="lp-fixture-title">' + h.esc(e.title) + '</span>' +
       '<span class="lp-meta">' + h.esc(SPORT[sport]) + (e.promotion ? ' · ' + h.esc(e.promotion) : '') + '</span></span></a>';
@@ -127,7 +138,8 @@
     const poster = photo && photo.url ? '' : posterFor(upcoming[0], opts && opts.posters);
     const img = photo && photo.url
       ? pictureHTML(photo.url, photo.alt, 'lp-col-photo', h)
-      : pictureHTML(poster, upcoming[0] && upcoming[0].title, 'lp-col-photo lp-col-poster', h);
+      : poster ? pictureHTML(poster, upcoming[0] && upcoming[0].title, 'lp-col-photo lp-col-poster', h)
+      : tileHTML(key, 'lp-col-photo');
     const foot = key === 'sumo'
       ? '<div class="lp-col-foot"><b>Tournament</b><a href="' + h.safeURL(opts.sumoHref) + '">Bouts, standings and head-to-heads ›</a></div>'
       : (upcoming.length ? '<div class="lp-col-foot"><b>Next up</b>' + upcoming.map(e => '<a href="#fights">' + h.esc(e.title) + ' · ' + Number(e.date.slice(8, 10)) + ' ' + MONTH[Number(e.date.slice(5, 7)) - 1] + '</a>').join('') + '</div>' : '');
@@ -159,8 +171,11 @@
       latest.map(a => {
         const photo = h.photo(a);
         const stand = photo && photo.url ? null : cutoutForTitle(a.title, ctx.cutouts);
-        const thumb = pictureHTML(photo && photo.url ? photo.url : stand && stand.url, photo && photo.alt, 'lp-latest-photo', h);
-        return '<a class="lp-latest-row' + (thumb ? ' has-art' : '') + '" href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener noreferrer">' + thumb +
+        const named = photo && photo.url || stand ? null : localPhoto(h, a.title, 'card');
+        const url = photo && photo.url ? photo.url : stand ? stand.url : named ? named.url : '';
+        const thumb = url ? pictureHTML(url, photo && photo.url ? photo.alt : named ? named.name : '', 'lp-latest-photo', h)
+          : tileHTML(a.sport, 'lp-latest-photo');
+        return '<a class="lp-latest-row has-art" href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener noreferrer">' + thumb +
           '<span class="lp-latest-copy"><span class="lp-tag">' + h.esc(SPORT[a.sport] || 'Combat sports') + '</span><span class="lp-latest-title">' + h.esc(a.title) + '</span><span class="lp-meta">' + h.meta(a) + '</span></span></a>';
       }).join('') +
       '</div></div><aside class="lp-talk"><div class="lp-kicker">Fight Talk</div><p>What fighters and promoters are posting, each with its source and date.</p><a class="lp-button" href="#social">Open Fight Talk ›</a></aside></section></div>';

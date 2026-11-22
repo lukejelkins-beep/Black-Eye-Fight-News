@@ -98,7 +98,20 @@
  -webkit-mask-image:linear-gradient(to right,#000 64%,transparent 100%);
  mask-image:linear-gradient(to right,#000 64%,transparent 100%)}
 #main .lp-fixture-art.is-cached,#main .lp-latest-photo.is-cached{border-radius:0;background:transparent}
+/* The lead picture is the one place where the slot is larger than the figure, so it
+   fills the slot and fades into the copy below it instead of leaving a gap beside it. */
+#main .lp-lead-photo.is-cached img{object-fit:cover;object-position:center 22%;
+ -webkit-mask-image:linear-gradient(to bottom,#000 76%,transparent 100%);
+ mask-image:linear-gradient(to bottom,#000 76%,transparent 100%)}
 #main .lp-fixture-cutout{width:88px}
+/* The house weave, tinted per sport, for a slot with no picture behind it. It is
+   plainly a tile: no face, no event, nothing a reader could take for a photograph. */
+#main .lp-tile{display:block;background:
+ repeating-linear-gradient(135deg,rgba(255,255,255,.55) 0 10px,rgba(255,255,255,0) 10px 20px),
+ linear-gradient(140deg,var(--lp-tile,#d9d2c5),#efeae0)}
+#main .lp-tile-boxing{--lp-tile:#edc3c6}
+#main .lp-tile-mma{--lp-tile:#f0d9a2}
+#main .lp-tile-sumo{--lp-tile:#bcc7e2}
 #main .lp-col-poster{height:150px}
 #main .lp-col-poster img{object-position:center 30%}
 #main .lp-cutout{-webkit-mask-image:linear-gradient(to bottom,#000 82%,transparent 100%);mask-image:linear-gradient(to bottom,#000 82%,transparent 100%)}

@@ -66,8 +66,10 @@ const withArt=L.build({stories:[
 // The poster wins where there is one, the cut-out fills in, and a card with neither stays text.
 assert(withArt.includes('assets/img/posters/kab-landscape.webp'));
 assert(withArt.includes('lp-fixture-cutout')&&withArt.includes('assets/img/ufc-cutouts/navajo-stirling.webp'));
-assert.strictEqual((withArt.match(/lp-fixture-art/g)||[]).length,2);
-assert.strictEqual((withArt.match(/class="lp-fixture lp-mma"/g)||[]).length,1);
+// Every card carries something: two pictures here, and the house tile on the third.
+assert.strictEqual((withArt.match(/lp-fixture-art/g)||[]).length,3);
+assert.strictEqual((withArt.match(/lp-tile lp-tile-mma/g)||[]).length,1);
+assert(!/class="lp-fixture lp-(?:mma|boxing)"/.test(withArt));
 // Latest-news rows carry the story's own picture.
 assert(withArt.includes('lp-latest-photo')&&withArt.includes('https://pub.test/row.jpg'));
 assert(withArt.includes('lp-latest-row has-art'));
@@ -87,7 +89,21 @@ assert.strictEqual(L.cutoutForTitle('Anything',null),null);
 // A column whose newest story has no picture still shows one from the next story.
 const boxCol=withArt.slice(withArt.indexOf('lp-col lp-boxing'),withArt.indexOf('lp-col lp-mma'));
 assert(boxCol.includes('lp-col-photo')&&boxCol.includes('https://pub.test/box.jpg'));
-// Still no image where there is no picture to show.
-const noArt=L.build({stories:[st(1,'mma','Lead'),st(2,'boxing','Box one')],events:[],now},h);
-assert(!noArt.includes('lp-latest-photo')&&!noArt.includes('lp-col-photo')&&!noArt.includes('lp-lead-photo'));
+// With nothing to show, slots carry the tile and no <img> is invented for them.
+const noArt=L.build({stories:[st(1,'mma','Lead'),st(2,'boxing','Box one'),st(3,'boxing','Two'),st(4,'boxing','Three'),st(5,'boxing','Four')],events:[],now},h);
+assert(!noArt.includes('lp-lead-photo'));
+assert(noArt.includes('lp-col-photo lp-tile lp-tile-boxing'));
+assert(noArt.includes('lp-latest-photo lp-tile'));
+assert(!/<img[^>]*lp-tile/.test(noArt));
+
+// A fighter the headline names, from the page's own local map, when nothing else fits.
+const withLocal=L.build({stories:[st(9,'mma','Lead'),st(8,'boxing','Box one'),st(7,'boxing','Box two'),
+  st(6,'boxing','Box three'),st(1,'boxing','Deontay Wilder returns in March')],
+ events:[],now},
+ Object.assign({},h,{localPhoto:(text,kind)=>/Deontay Wilder/.test(text)?{url:'assets/img/ufc/deontay-wilder-'+kind+'.webp',name:'Deontay Wilder'}:null}));
+assert(withLocal.includes('assets/img/ufc/deontay-wilder-card.webp'));
+assert(withLocal.includes('class="lp-latest-photo is-cached"'));
+// The map is asked only when there is nothing better, and a page without one still works.
+const noHelper=L.build({stories:[st(9,'mma','Lead'),st(8,'boxing','Box one'),st(7,'boxing','Box two'),st(6,'boxing','Box three'),st(1,'boxing','Deontay Wilder returns')],events:[],now},h);
+assert(noHelper.includes('lp-latest-photo lp-tile'));
 console.log('landing tests passed');
