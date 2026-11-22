@@ -129,6 +129,15 @@
   cache.set(stats.slug,stats);
   return '<div class="bsp-stats" data-bsp-stats="'+esc(stats.slug)+'">'+statsInner(stats)+'</div>';
  }
+ // Head, body and legs, like distance, clinch and ground, must add up to the
+ // strikes landed. Some archived rounds do not, so their shares would be false.
+ function breakdownsSound(stats){
+  const i=fieldIndex(stats),parts=[["headLanded","bodyLanded","legLanded"],["distanceLanded","clinchLanded","groundLanded"]];
+  return (stats.fights||[]).every(f=>(f.rounds||[]).every(r=>[r[2],r[3]].every(side=>parts.every(keys=>{
+   const v=keys.map(k=>side[i[k]]);
+   return !v.every(Number.isInteger)||v[0]+v[1]+v[2]===side[i.sigLanded];
+  }))));
+ }
  function statsInner(stats){
   const key=selected.get(stats.slug)||"last5";
   const w=stats.windows?.[key]||{};const r=w.rates||{};
@@ -155,8 +164,8 @@
    '<div class="befn-pro-tiles">'+tiles.map(([v,l,s])=>'<div><strong>'+esc(v)+'</strong><span>'+esc(l)+'</span>'+
     (s?'<small>'+esc(s)+'</small>':'')+'</div>').join("")+'</div>'+
    '<div class="bsp-split-grid">'+
-   bars("Where strikes land",r.target,[["head","Head"],["body","Body"],["leg","Legs"]])+
-   bars("Where strikes are thrown",r.position,[["distance","Distance"],["clinch","Clinch"],["ground","Ground"]])+
+   bars("Where strikes land",stats.hideBreakdowns?null:r.target,[["head","Head"],["body","Body"],["leg","Legs"]])+
+   bars("Where strikes are thrown",stats.hideBreakdowns?null:r.position,[["distance","Distance"],["clinch","Clinch"],["ground","Ground"]])+
    pace+'</div>';
  }
  if(typeof document!=="undefined")document.addEventListener("click",e=>{
@@ -196,7 +205,7 @@
    ' fighters with 3+ UFC fights in that time.</small></div>';
  }
 
- const api={glance,fightDetail,history,statsPanel,compare,findFight,methodText};
+ const api={breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
  scope.BEFNStatsProfile=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);
