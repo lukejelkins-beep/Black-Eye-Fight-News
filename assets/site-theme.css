@@ -126,18 +126,130 @@ em.sb-score,.result-score em{font-family:var(--display)!important;font-weight:80
 /* ---- Older page-specific heading rules use ID selectors with !important; match them here (this file loads last) ---- */
 html body #main .section-heading h1,html body #main .section-heading h2,html body #main .fighters-unified .section-heading h1,
 html body #main .calendar-photo-heading{
-  all:unset;display:block;font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  all:unset;display:block;font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;text-transform:none!important;
   letter-spacing:-.03em!important;font-size:clamp(22px,3.4vw,34px)!important;line-height:1.15!important;
   color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important;margin:0 0 12px!important;overflow-wrap:anywhere}
 html body #fights-active-content .upcoming-list-heading,html body #main #upcoming-cards-root .upcoming-list-heading,html body #upcoming-cards-root .upcoming-list-heading{
-  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;letter-spacing:-.03em!important;
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;text-transform:none!important;letter-spacing:-.03em!important;
   font-size:clamp(16px,2vw,20px)!important;line-height:1.25!important;color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important}
 
 /* Fights page: its own ID-based heading rule is more specific, so match it too. */
 html body #main .fights-unified .calendar-photo-heading h1,
 html body #main .fights-unified #upcoming-cards-root .upcoming-list-heading,
 html body #main .fights-unified .fights-result-group>h2{
-  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;letter-spacing:-.03em!important;
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;text-transform:none!important;letter-spacing:-.03em!important;
   line-height:1.2!important;color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important}
 html body #main .fights-unified .calendar-photo-heading h1{font-size:clamp(22px,3.4vw,34px)!important}
 html body #main .fights-unified #upcoming-cards-root .upcoming-list-heading,html body #main .fights-unified .fights-result-group>h2{font-size:clamp(16px,2vw,20px)!important}
+
+/* ====================================================================
+ * Second pass, 22 Nov 2026. Found by walking every page in a real browser
+ * at exactly 390 and 1280 px with Unbounded actually loaded. The rules above
+ * lose to older page CSS that uses ID selectors, `all:unset` or `!important`,
+ * so these repeat the original selectors exactly; this file loads last, so an
+ * equal-specificity rule with `!important` wins. Sizes are roughly 55-60% of
+ * the Barlow Condensed ones they replace, because Unbounded is far wider.
+ * ==================================================================== */
+
+/* ---- Fighter profile: the stats dialog was not converted at all ---- */
+#fighterDialog.befn-pro-dialog .befn-pro-id h2{
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(22px,3vw,34px)!important;line-height:1.15!important;overflow-wrap:anywhere}
+.befn-pro-card h3,#fighterDialog.befn-pro-dialog .befn-profile-block>h3,#fighterDialog.befn-pro-dialog .befn-v3-stat-panel>h3{
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;font-size:18px!important;line-height:1.25!important}
+#fighterDialog.befn-pro-dialog .befn-performance-highlights h3{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  letter-spacing:-.03em!important;font-size:16px!important;line-height:1.25!important}
+/* Big numbers and name-sized text inside the dialog. */
+.befn-pro-record strong,.befn-pro-score .befn-v3-score,.befn-pro-rating .befn-v3-hero .befn-v3-score,
+#fighterDialog.befn-pro-dialog .befn-reign span,.befn-pro-meter-head b,.befn-pro-tiles strong,
+#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li strong,.befn-pro-photo .befn-portrait-fallback strong,
+.bsp-big strong,.bsp-latest-stats b,.bsp-round b,.bsp-pace strong,
+#fighterDialog.befn-pro-dialog .befn-highlight-card.is-podium>strong{
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;letter-spacing:-.03em!important}
+.befn-pro-record strong{font-size:22px!important;line-height:1.1!important}
+.befn-pro-score .befn-v3-score{font-size:clamp(34px,4vw,46px)!important;line-height:1!important}
+.befn-pro-rating .befn-v3-hero .befn-v3-score{font-size:26px!important;line-height:1!important}
+#fighterDialog.befn-pro-dialog .befn-reign span{font-size:16px!important}
+.befn-pro-meter-head b{font-size:15px!important}
+.befn-pro-tiles strong{font-size:20px!important;line-height:1.1!important}
+#fighterDialog.befn-pro-dialog .befn-v3-rank-tiles li strong{font-size:15px!important}
+.befn-pro-photo .befn-portrait-fallback strong{font-size:30px!important;line-height:1!important}
+.bsp-big strong{font-size:clamp(22px,2.8vw,30px)!important;line-height:1.1!important}
+.bsp-latest-stats b{font-size:13px!important}
+.bsp-round b{font-size:12px!important}
+.bsp-pace strong{font-size:19px!important;line-height:1.1!important}
+#fighterDialog.befn-pro-dialog .befn-highlight-card.is-podium>strong{font-size:20px!important;line-height:1.1!important}
+/* Opponent and history names: sentence case, not condensed uppercase. */
+#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-opponent,.bsp-latest-main strong,.bsp-history-row strong{
+  font-family:var(--display)!important;font-weight:700!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.02em!important;line-height:1.25!important;overflow-wrap:anywhere}
+#fighterDialog.befn-pro-dialog .befn-pro-fight-main .befn-v3-opponent{font-size:14px!important}
+.bsp-latest-main strong{font-size:14px!important}
+.bsp-history-row strong{font-size:13px!important}
+
+/* ---- Fighters directory: its own ID rule uses `all:unset` and wins ---- */
+#main .fighters-unified #fighterGrid .fighter-body h3{
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(13px,1.4vw,15px)!important;line-height:1.2!important;overflow-wrap:anywhere}
+
+/* ---- UFC stats: the board title is the h3 inside the head, not the head ---- */
+.befn-board-result-head h3{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  letter-spacing:-.03em!important;font-size:clamp(16px,2vw,20px)!important;line-height:1.25!important}
+
+/* ---- Sumo Stables and Fun Facts: neither hero sits in .sumo-page-head ---- */
+.heya-top h1,.heya-hero h1,.facts-top h1{
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(22px,3.4vw,34px)!important;line-height:1.15!important;overflow-wrap:anywhere}
+.facts-top h1 em{font-style:normal!important}
+.heya-card-body h2,.heya-member-name{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  letter-spacing:-.03em!important;font-size:clamp(13px,1.4vw,15px)!important;line-height:1.2!important;overflow-wrap:anywhere}
+.facts-statbar strong{
+  font-family:var(--display)!important;font-weight:800!important;letter-spacing:-.03em!important;
+  font-size:clamp(18px,2.2vw,24px)!important;line-height:1.1!important}
+
+/* ---- The metallic skewed headings: a third typeface (Russo One) plus a bevel,
+ * both ruled out by DIRECTION.md. The .section-heading and upcoming-list cases are
+ * handled above; these are the ones left, Fight Talk's being the worst (light grey
+ * on a transparent fill, which the cream page made close to unreadable). ---- */
+html body #main .front-home-head h1,
+html body #main .front-follow-up-head h2,
+html body #main .film-section-head h2,
+html body #talk-results .talk-section-head h2{
+  all:unset;display:block;position:relative;
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(16px,2vw,20px)!important;line-height:1.25!important;
+  color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important;
+  margin:0 0 12px!important;overflow-wrap:anywhere}
+
+/* Section title inside the dark "Recent fight history" panel of a fight snapshot.
+ * The panel stays dark on purpose, so only the type changes, not the colour. */
+.befn-comparison-heading{
+  font-family:var(--display)!important;font-weight:700!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.02em!important;font-size:14px!important;line-height:1.25!important}
+
+/* The legacy .news-card component is still used by the grappling schedule on the
+ * Fights page, where its titles were the last condensed uppercase text left. */
+.news-card h3{
+  font-family:var(--display)!important;font-weight:700!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(14px,1.6vw,18px)!important;line-height:1.25!important;overflow-wrap:anywhere}
+
+/* Sumo results page: the "More bouts" expander heading. */
+.hl-section{
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(16px,2vw,20px)!important;line-height:1.25!important}
+
+/* Sumo Techniques gallery: the technique name on each tile. */
+.sumo-km-tile-meta h3{
+  font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;
+  text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(13px,1.4vw,15px)!important;line-height:1.2!important;overflow-wrap:anywhere}
