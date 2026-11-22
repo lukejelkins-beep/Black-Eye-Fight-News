@@ -163,10 +163,7 @@ class UpcomingCardTests(unittest.TestCase):
     def test_current_event_data_has_no_duplicate_fighters(self):
         import json
         payload = json.loads((ROOT / "data/upcoming-cards.json").read_text(encoding="utf-8"))
-        counts = {e["id"]: len(e["bouts"]) for e in payload["events"]}
-        self.assertEqual(counts["ufc-334-2026-11-14"], 13)
-        self.assertEqual(counts["pacheco-fulghum-2026-11-14"], 8)
-        self.assertEqual(counts["cage-warriors-213-2026-11-14"], 9)
+        self.assertTrue(payload["events"], "the file always holds announced cards")
         for e in payload["events"]:
             seen = set()
             for bout in e["bouts"]:
@@ -174,6 +171,24 @@ class UpcomingCardTests(unittest.TestCase):
                     key = upcoming.simplify(fighter)
                     self.assertNotIn(key, seen, f"Duplicated {fighter} at {e['id']}")
                     seen.add(key)
+
+    def test_a_card_with_a_published_result_is_not_still_upcoming(self):
+        """The importers retire a finished card; one left behind would be shown twice."""
+        import json
+        import re
+        import unicodedata
+
+        def key(text):
+            folded = unicodedata.normalize("NFKD", str(text or "")).encode("ascii", "ignore").decode()
+            return re.sub(r"[^a-z0-9]", "", folded.lower())
+
+        upcoming_cards = json.loads((ROOT / "data/upcoming-cards.json").read_text(encoding="utf-8"))["events"]
+        results = json.loads((ROOT / "data/results.json").read_text(encoding="utf-8"))["events"]
+        published = {e["id"] for e in results} | {(e.get("date"), key(e.get("name"))) for e in results}
+        for card in upcoming_cards:
+            self.assertNotIn(card["id"], published, f"{card['title']} already has a result")
+            self.assertNotIn((card.get("date"), key(card.get("title"))), published,
+                             f"{card['title']} already has a result under another id")
 
     def test_kabayel_report_not_added_to_another_event(self):
         before = len(self.event["bouts"])
