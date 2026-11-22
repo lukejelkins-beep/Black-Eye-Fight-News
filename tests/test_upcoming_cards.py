@@ -164,9 +164,15 @@ class UpcomingCardTests(unittest.TestCase):
         import json
         payload = json.loads((ROOT / "data/upcoming-cards.json").read_text(encoding="utf-8"))
         counts = {e["id"]: len(e["bouts"]) for e in payload["events"]}
-        self.assertEqual(counts["ufc-334-2026-11-14"], 13)
-        self.assertEqual(counts["pacheco-fulghum-2026-11-14"], 8)
-        self.assertEqual(counts["cage-warriors-213-2026-11-14"], 9)
+        self.assertTrue(counts, "upcoming-cards.json has no events")
+        # Bout counts that were wrong once, checked only while the card is still on the
+        # schedule: the results job clears a finished card out of Upcoming, so pinning an
+        # id here fails for everyone a few days later (it did, on 2026-11-22).
+        for event_id, expected in (("ufc-334-2026-11-14", 13),
+                                   ("pacheco-fulghum-2026-11-14", 8),
+                                   ("cage-warriors-213-2026-11-14", 9)):
+            if event_id in counts:
+                self.assertEqual(counts[event_id], expected, event_id)
         for e in payload["events"]:
             seen = set()
             for bout in e["bouts"]:
