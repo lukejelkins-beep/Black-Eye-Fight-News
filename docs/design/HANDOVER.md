@@ -1,13 +1,33 @@
-# Handover: where BEFN stands (21 Nov 2026)
+# Handover: where BEFN stands (22 Nov 2026)
 
-Written so a fresh chat or tool can continue without the old conversation. Read `AGENTS.md`, `CLAUDE.md` and `docs/design/README.md` first. `DECISIONS.md` has the reasoning for every change; `PHASE-1.md` and `PHASE-2.md` have the plans.
+Replaces the 21 Nov version. Written from the central audit chat, merging the design, Sumo and UFC/data chat handovers. Read `AGENTS.md`, `CLAUDE.md` and `docs/design/README.md` first. `DECISIONS.md` has the reasoning for every change. Where a claim here conflicts with `main`, a completed Actions run or the Render deploy, those win.
 
 ## Standing rules (from the owner)
 - Nothing merges to `main`, or to the Sumo preview branch, until the owner says "Merge N". Open a PR, state how it was verified and what was not, then wait.
 - Visual changes are checked in a real browser at 390 px and 1280 px, not only by tests.
 - Record decisions in `docs/design/DECISIONS.md` (newest first under the date heading).
-- Say plainly when something was not verified. A wrong claim earlier (a "preview" of PR #345 that did not exist, because PR previews are off) was corrected and the owner prefers that honesty.
-- Personal, non-commercial site. Sources are original public posts and publisher feeds, always with source link and date.
+- Say plainly when something was not verified. No "preview" or "live" claims without checking; PR previews are off.
+- Personal, non-commercial site. Images need a recorded source and rights status.
+- Where the owner's most recent design decision conflicts with a written rule, the recent decision wins and the rule is updated.
+
+## State at 22 Nov (from the chat handovers; verify against the repo)
+- **Merged:** Phase 1 look and nav; Phase 2 freshness, related news (#354); Phase 3 steps 1-4 (snapshots, scores on by default, kill switch `BEFN_FEATURES.snapshotScores`); UFC stats page stage 5; fighter profiles restyle (#362 and related); Sumo on `main` as a snapshot (#366); Sumo landmarks decision (#380).
+- **On the Sumo preview branch only:** landmark cut-outs (#379, hidden until `approved`), Sumo Stories hub (#385). The 30-minute basho refresh still commits to that branch.
+- **Open, waiting on "Merge N":** #382 home landing page (design D); #386 divisions fix; #377 fighter "Over time" chart. #378 is a draft mock-up, not the approved direction. Site-wide style branch `feat/site-style-20261122` is unfinished and not yet a PR. Other open PRs are UFC certification and research drafts.
+- **Design direction:** see `DIRECTION.md` (updated 22 Nov: cream, Unbounded, dark top bar). Unbounded is not on `main` yet.
+
+## Counts: where each one comes from
+Do not copy a count between files. Each has one source:
+- **Certification (783 cohort):** the latest completed, successful, full-cohort strict Stage 3 audit (`scripts/ufc-36-month-stage3-progress.mjs`). Figures in older docs and PRs (426, 429, 650, 747 certified) are dated snapshots, not current. A local 747 reached on 17-18 Nov was not CI-verified.
+- **Fighters with stats (about 1,111) and with a division (958):** `data/ufc-stats` build and `data/ufc-bout-weight-classes.json`.
+- **Fight Talk roster (215):** `data/fight-talk-roster.json`.
+Each page names which population it uses.
+
+## Owner decisions waiting
+- Confirm the direction in `DIRECTION.md` and that #378 is not it.
+- Sumo: when the full area moves from the preview branch to `main`, whether the refresh moves too, and when `noindex` comes off.
+- Image rights: sources, credit and licence for the four Sumo landmarks; the "owner-cleared" UFC images (750, mostly ESPN and ufc.com) have no licence record.
+- Pereira's division (official rankings say light heavyweight; UFC.com says heavyweight) and ranking UFC 335 against the contracted division.
 
 ## Where things live
 - Repo: `lukejelkins-beep/Black-Eye-Fight-News`.
@@ -16,7 +36,7 @@ Written so a fresh chat or tool can continue without the old conversation. Read 
 - Render workspace: `tea-dbnfkshsrm7s739a943g`.
 - Deploys of the main site: the service's auto-deploy trigger is `checksPass` and PR previews are off. Deploys in practice come from the GitHub workflow "BEFN conditional Render recovery" (deploy hook after "BEFN release readiness", and every 2 hours). If the `RENDER_DEPLOY_HOOK_URL` secret ever breaks, deploys stop; `trigger_deploy` in the Render tool is the manual fallback.
 
-## Done and merged
+## Done and merged (to 21 Nov; see State above for 22 Nov)
 **Phase 1 (shared look and navigation): complete.** Shared design tokens, header and nav, Fights page (#345, expanded fight cards #346), Fighters page (#347), News page tidy (#348, owner chose "keep it dark, tidy only"), Sumo country discs and head-to-head (#341, into the Sumo preview branch).
 
 **Phase 2 (live news and Fight Talk): partly done.**
@@ -46,10 +66,10 @@ The owner wants the Sumo country discs redone with their own transparent PNGs (l
 - Legacy CSS uses ID selectors and `!important`. New overrides need specificity like `#main #upcoming-cards-root ...` or `#main .fighters-unified #fighterGrid ...`, plus `-webkit-text-fill-color`, and sometimes a reset of old fixed sizes (for example `.fighter-tag`). `::before` and `::after` must be separate selector lists; they are invalid inside `:is()`.
 - Bump the `?v=` cache-bust on any changed asset in `index.html` (and `sumo.html` for Sumo); `sw.js` lists assets too.
 - Local testing: `python3 -m http.server 8767` (start with `setsid nohup ... &` or it dies), Playwright (Python) with `/usr/bin/google-chrome`. The Sumo branch can be served from a git worktree.
-- Node tests (`.cjs`/`.mjs`) run directly with `node tests/<file>`. Four old tests fail identically on `main` and are not caused by recent work: `test-upcoming-cards`, `test-results-ui`, `test-results-card-order`, `test-ufc334-research`.
+- Node tests (`.cjs`/`.mjs`) run directly with `node tests/<file>`. Four old tests were reported failing identically on `main` on 21 and 22 Nov (`test-upcoming-cards`, `test-results-ui`, `test-results-card-order`, `test-ufc334-research`); the Sumo preview branch reports four to seven more. Not re-run for this update; list the failures from a clean run before relying on this.
 - Data files: `data/fight-talk-live.json`, `data/fight-talk-sources.json` (Bluesky accounts and X accounts), `data/fight-talk-roster.json` (215 fighters), `data/news-live.json`, `data/bluesky-candidates.json`.
 - The Bluesky API cannot be reached from the Claude workspace (proxy 403), which is why the finder runs on GitHub.
-- Design tokens: red `#cf1824`, gold `#f3c332`, cream `#f8f4ed`, ink `#111013`, dark band `#151115`; Barlow Condensed headlines, DM Sans body.
+- Design tokens: see `DIRECTION.md`.
 
 ## Known loose ends
 - Four old failing tests (above).

@@ -1,14 +1,16 @@
 # Design direction
 
-Status: **approved by the owner on 2026-11-17.** Changes to this direction need the owner's agreement and a line in DECISIONS.md.
+Status: approved 2026-11-17, **updated 2026-11-22 to the owner's most recent choices** (landing page design D, Unbounded headings, light surfaces). Where an earlier rule and a newer owner decision disagree, the newer decision wins. The 22 Nov changes come from the design chat handovers and need the owner's confirmation in the PR. Changes to this direction need the owner's agreement and a line in DECISIONS.md.
+
+**Implemented on `main` today:** light profiles, Fights, Fighters and stats pages (cream, white cards, Barlow headings). **Not on `main` yet:** Unbounded, the cream landing page (#382) and the site-wide theme (branch `feat/site-style-20261122`). News is still dark on `main`; the owner has asked for the landing page's colour and font site-wide, so it moves to light with that change.
 
 ## The feel
-Modern, fast and confident, in the spirit of the official UFC site: dark editorial surfaces, big photography, uppercase condensed headlines, one accent colour, almost no decoration. A reader should find the thing they came for in one tap and understand it in one glance.
+Modern, fast and confident, in the spirit of the official UFC site: big photography, one accent colour, almost no decoration. Page surfaces are light (cream with white cards); the top bar, sport row, posters and photo leads stay dark. The owner does not want a very dark scheme. A reader should find the thing they came for in one tap and understand it in one glance.
 
 ## Principles
 1. **Photography leads.** Every important card has a clear, well-cropped, consistently framed image. No image is better than a bad one.
 2. **One idea per screen section.** No stacked banners, no explanatory paragraphs where a label will do.
-3. **Same pattern everywhere.** Every page opens with the same header (dark band, red edge, uppercase title, one context line). Same card shapes, same spacing, same buttons.
+3. **Same pattern everywhere.** Every page opens with the same header (title, one context line; dark top bar with a red edge above it). Same card shapes, same spacing, same buttons.
 4. **Scan, then dig.** Show result, score, record and status first. Detail sits one tap deeper.
 5. **Phone first.** Design the 375 px screen first. Tap targets at least 44 px. No horizontal scroll. Nothing under 12 px.
 6. **Reader content only.** Research queues, review priorities, verification notes and audit text are staff tools. They never lead a public page.
@@ -16,11 +18,13 @@ Modern, fast and confident, in the spirit of the official UFC site: dark editori
 
 ## Tokens (current, from the Sumo preview)
 - Red `#cf1824` (accent, active states) · Gold `#f3c332` (secondary highlight) · Cream `#f8f4ed` (page) · Ink `#111013` (text, dark bands) · Dark band `#151115`.
-- Headlines: **Barlow Condensed** 800–900, uppercase. Body and UI: **DM Sans**. Two families only.
+- Headlines and big numbers: **Unbounded** 700–900, sentence case (owner's choice from the options, 22 Nov). Body and UI: **DM Sans**. Two families only. **Barlow Condensed** is being phased out of headings: until the site-wide theme ships, existing pages keep it. Russo One is still imported in `index.html` and is probably unused; remove it once confirmed.
+- Sport colours: boxing red, MMA amber `#e0a400`, sumo blue `#2a4a8f`.
 - Radius 8–12 px. One shadow level. Spacing in multiples of 4.
 
 ## Patterns
-- **Page header:** dark band, 4 px red left edge, uppercase h1, one grey context line.
+- **Page header:** dark top bar and sport row with a red edge; below it a light page head with the h1 and one grey context line. (Earlier rule: dark band with a 4 px red left edge and uppercase h1; applies until the site-wide theme ships.)
+- **Home:** lead story, latest-result tile, this week and next, By sport columns (boxing, MMA, sumo), latest news, Fight Talk box (design D, #382; owner: "A structurally, B's font, C's sport columns", then "Love it").
 - **Navigation:** four to five primary items, same on phone and desktop, red underline on the active item. Sport filters are labelled text, never icon-only.
 - **Result / matchup row:** compact. Two names, two small portraits, result or time, one line of context. Target five or more rows per phone screen.
 - **Athlete profile:** dark hero band with photo faded into it, rank and status chips, uppercase name, record, three large stat numbers, "latest bout" panel, "full history" button.
@@ -28,10 +32,14 @@ Modern, fast and confident, in the spirit of the official UFC site: dark editori
 - **Stats:** bars and big numbers, not strings of small text.
 
 ## We will not
-- Add a third typeface, image-based headings, chrome or bevel effects, or emoji/icon-only navigation.
+- Add a third typeface beyond Unbounded and DM Sans, image-based headings, chrome or bevel effects, or emoji/icon-only navigation.
 - Show placeholder text to readers (for example "Start time TBC · venue date").
 - Put internal research on public pages.
 - Use an image without a recorded source and rights status (see IMAGE-GUIDE.md).
+
+## Open questions for the owner
+- #378 (charcoal and ivory hero, Unbounded) is a draft from another chat. Design D (#382) is the one the owner approved; confirm #378 is not the direction.
+- Whether Unbounded replaces Barlow everywhere or only on the pages the owner names. This file assumes everywhere.
 
 ## Where the new look is tried first
 The Sumo preview (`befn-sumo-preview`) is the pilot for this direction. Patterns proven there are ported to the main site one page at a time.
