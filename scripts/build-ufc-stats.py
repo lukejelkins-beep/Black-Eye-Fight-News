@@ -345,12 +345,42 @@ def windows_for(history: list[dict], as_of: dt.date) -> dict:
 
 
 def official_divisions(path: Path | None = None) -> dict[str, dict]:
-    """fighter slug -> {division, label, rank, champion} from data/ufc-divisions.json."""
+    """fighter slug -> {division, label, rank, champion} from data/ufc-divisions.json.
+
+    A division is *dormant* when the snapshot holds no champion and no ranked fighters for it: the UFC
+    keeps the roster page but runs no rankings there (women's featherweight, 2026-11 snapshot). Its
+    roster is then a historical list, not where those fighters compete, so:
+      * a fighter whose primary division is dormant is moved to another of their official divisions
+        that is live (they are unranked in a dormant division by definition, so no rank is lost), and
+      * with no live official division they are marked `dormant` and the caller falls back to the
+        division of their latest labelled bout.
+    If nothing parses as live the snapshot is trusted as it stands, so a parsing change cannot empty
+    every division."""
     path = path or DATA / "ufc-divisions.json"
     try:
-        return json.loads(path.read_text(encoding="utf-8")).get("fighters") or {}
+        payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return {}
+    fighters = payload.get("fighters") or {}
+    divisions = payload.get("divisions") or {}
+    live = {slug for slug, d in divisions.items()
+            if isinstance(d, dict) and (d.get("champion") or d.get("ranked"))}
+    if not live:
+        return fighters
+    labels = {slug: d.get("label") for slug, d in divisions.items() if isinstance(d, dict)}
+    out = {}
+    for slug, entry in fighters.items():
+        if not isinstance(entry, dict):
+            continue
+        primary = entry.get("division")
+        if not primary or primary in live:
+            out[slug] = entry
+            continue
+        instead = next((d for d in (entry.get("divisions") or []) if d in live), None)
+        out[slug] = ({**entry, "division": instead, "label": labels.get(instead) or entry.get("label"),
+                      "rank": None, "champion": False, "dormantDivision": primary}
+                     if instead else {**entry, "dormant": True})
+    return out
 
 
 def weight_class_divisions(path: Path | None = None) -> dict[str, dict]:
@@ -372,16 +402,20 @@ def division_slug(label: str | None) -> str | None:
 
 def resolve_division(slug: str, name: str, official: dict, weight: dict, reviewed: dict) -> dict:
     """Division for profiles, ratings and leaderboards, most authoritative first:
-    1. the official UFC division roster (data/ufc-divisions.json),
+    1. the official UFC division roster (data/ufc-divisions.json), unless that division is dormant,
     2. the division of the fighter's latest labelled UFC bout (free UFCStats export),
     3. a reviewed profile's division (label only).
+    One resolved division per fighter is the single source of truth: the card attribute scores read it
+    back from the files written here, so no second rule can disagree with this one.
     Nothing is guessed: catch weights and unknown wording are never divisions upstream."""
     listed = official.get(slug) or {}
-    if listed.get("division"):
+    if listed.get("division") and not listed.get("dormant"):
         return {"label": listed.get("label"), "slug": listed["division"], "source": "official-roster"}
     latest = (weight.get(slug) or {}).get("division")
     if latest:
         return {"label": latest, "slug": division_slug(latest), "source": "latest-bout"}
+    if listed.get("division"):   # dormant, and no labelled bout to fall back to
+        return {"label": listed.get("label"), "slug": listed["division"], "source": "official-roster"}
     label = reviewed.get(norm(name))
     return {"label": label, "slug": division_slug(label) if label else None, "source": "reviewed" if label else None}
 
