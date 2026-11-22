@@ -33,6 +33,79 @@ assert(html.includes('assets/img/ufc-cutouts/navajo-stirling.webp'));
 assert(!/tbc|placeholder|lorem/i.test(html));
 const bare=L.build({stories:[],events:[],now},h);
 assert(!bare.includes('lp-fixtures')&&!bare.includes('lp-cols')&&!bare.includes('lp-result'));
+
+// Pictures. Posters come from the BEFN copy, keyed by event id; landscape is preferred.
+const posters={'kab-2026-11-28':{landscape:{url:'assets/img/posters/kab-landscape.webp'},portrait:{url:'assets/img/posters/kab-portrait.webp'}},
+ 'pt-2026-12-01':{portrait:{url:'assets/img/posters/pt-portrait.webp'}}};
+assert.strictEqual(L.posterFor({id:'kab-2026-11-28'},posters),'assets/img/posters/kab-landscape.webp');
+assert.strictEqual(L.posterFor({id:'pt-2026-12-01'},posters),'assets/img/posters/pt-portrait.webp');
+assert.strictEqual(L.posterFor({id:'nope'},posters),'');
+assert.strictEqual(L.posterFor({},null),'');
+// A cut-out stands in for a missing poster, but only for a fighter who has one cleared.
+const boutEv=(id,names)=>({id,date:'2026-11-28',sport:'mma',title:'T',bouts:[{fighters:names}]});
+assert.deepStrictEqual(L.cutoutFor(boutEv('e',['Jiří Procházka','Navajo Stirling']),cut),
+ {url:'assets/img/ufc-cutouts/navajo-stirling.webp',name:'Navajo Stirling'});
+assert.strictEqual(L.cutoutFor(boutEv('e',['B C']),cut),null);
+assert.strictEqual(L.cutoutFor({id:'e'},cut),null);
+assert.strictEqual(L.cutoutFor(boutEv('e',['Navajo Stirling']),null),null);
+
+const withArt=L.build({stories:[
+  st(9,'mma','Lead',{image:{url:'https://pub.test/lead.jpg'}}),
+  st(8,'boxing','Box one'),
+  st(7,'boxing','Box two',{image:{url:'https://pub.test/box.jpg'}}),
+  st(6,'boxing','Box three'),
+  st(5,'boxing','Row one',{image:{url:'https://pub.test/row.jpg'}}),
+  st(4,'mma','MMA one',{image:{url:'https://pub.test/mma.jpg'}}),
+  st(3,'mma','MMA two'),
+  st(2,'mma','MMA three'),
+  st(1,'mma','Row two',{image:{url:'assets/img/ufc/row-two-card.webp'}})],
+ events:[{id:'kab-2026-11-28',date:'2026-11-28',sport:'boxing',title:'Kabayel',bouts:[{fighters:['Agit Kabayel','Nelson Hysa']}]},
+         {id:'cut-2026-11-29',date:'2026-11-29',sport:'mma',title:'Cutout card',bouts:[{fighters:['Navajo Stirling','X Y']}]},
+         {id:'none-2026-11-30',date:'2026-11-30',sport:'mma',title:'No art',bouts:[{fighters:['Nobody Here']}]}],
+ results,cutouts:cut,posters,sumo:[],now},h);
+// The poster wins where there is one, the cut-out fills in, and a card with neither stays text.
+assert(withArt.includes('assets/img/posters/kab-landscape.webp'));
+assert(withArt.includes('lp-fixture-cutout')&&withArt.includes('assets/img/ufc-cutouts/navajo-stirling.webp'));
+// Every card carries something: two pictures here, and the house tile on the third.
+assert.strictEqual((withArt.match(/lp-fixture-art/g)||[]).length,3);
+assert.strictEqual((withArt.match(/lp-tile lp-tile-mma/g)||[]).length,1);
+assert(!/class="lp-fixture lp-(?:mma|boxing)"/.test(withArt));
+// Latest-news rows carry the story's own picture.
+assert(withArt.includes('lp-latest-photo')&&withArt.includes('https://pub.test/row.jpg'));
+assert(withArt.includes('lp-latest-row has-art'));
+// A picture of a fighter that BEFN holds is marked for the borderless treatment.
+// Cached event artwork is a poster, and a publisher's photo is theirs: neither is.
+assert(withArt.includes('class="lp-fixture-art lp-fixture-cutout is-cached"'));
+assert(withArt.includes('class="lp-latest-photo is-cached"'));
+assert(withArt.includes('class="lp-fixture-art"'));
+assert(withArt.includes('class="lp-lead-photo"'));
+// A headline that names a cleared fighter lends its cut-out to a story with no picture.
+assert.deepStrictEqual(L.cutoutForTitle('Jiří Procházka loses to Navajo Stirling',{'navajo-stirling':{ok:true}}),
+ {url:'assets/img/ufc-cutouts/navajo-stirling.webp',name:''});
+assert.strictEqual(L.cutoutForTitle('Navajo Stirling wins',{'navajo-stirling':{ok:false}}),null);
+assert.strictEqual(L.cutoutForTitle('A story about nobody',{'navajo-stirling':{ok:true}}),null);
+assert.strictEqual(L.cutoutForTitle('Stirling wins again',{'stirling':{ok:true}}),null);
+assert.strictEqual(L.cutoutForTitle('Anything',null),null);
+// A column whose newest story has no picture still shows one from the next story.
+const boxCol=withArt.slice(withArt.indexOf('lp-col lp-boxing'),withArt.indexOf('lp-col lp-mma'));
+assert(boxCol.includes('lp-col-photo')&&boxCol.includes('https://pub.test/box.jpg'));
+// With nothing to show, slots carry the tile and no <img> is invented for them.
+const noArt=L.build({stories:[st(1,'mma','Lead'),st(2,'boxing','Box one'),st(3,'boxing','Two'),st(4,'boxing','Three'),st(5,'boxing','Four')],events:[],now},h);
+assert(!noArt.includes('lp-lead-photo'));
+assert(noArt.includes('lp-col-photo lp-tile lp-tile-boxing'));
+assert(noArt.includes('lp-latest-photo lp-tile'));
+assert(!/<img[^>]*lp-tile/.test(noArt));
+
+// A fighter the headline names, from the page's own local map, when nothing else fits.
+const withLocal=L.build({stories:[st(9,'mma','Lead'),st(8,'boxing','Box one'),st(7,'boxing','Box two'),
+  st(6,'boxing','Box three'),st(1,'boxing','Deontay Wilder returns in March')],
+ events:[],now},
+ Object.assign({},h,{localPhoto:(text,kind)=>/Deontay Wilder/.test(text)?{url:'assets/img/ufc/deontay-wilder-'+kind+'.webp',name:'Deontay Wilder'}:null}));
+assert(withLocal.includes('assets/img/ufc/deontay-wilder-card.webp'));
+assert(withLocal.includes('class="lp-latest-photo is-cached"'));
+// The map is asked only when there is nothing better, and a page without one still works.
+const noHelper=L.build({stories:[st(9,'mma','Lead'),st(8,'boxing','Box one'),st(7,'boxing','Box two'),st(6,'boxing','Box three'),st(1,'boxing','Deontay Wilder returns')],events:[],now},h);
+assert(noHelper.includes('lp-latest-photo lp-tile'));
 // Phone rules (docs/design/DIRECTION.md): nothing under 12 px, tap targets at least 44 px.
 // This checks the stylesheet, not the rendered boxes; the rendered sizes were checked in a browser at 390 and 1280 px.
 const css=require('fs').readFileSync(require('path').join(__dirname,'../assets/landing-page.css'),'utf8');

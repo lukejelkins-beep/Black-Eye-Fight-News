@@ -9,6 +9,60 @@
   const dayKey = ms => new Date(ms).toISOString().slice(0, 10);
   const slug = name => String(name || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
+  /* A picture BEFN holds itself (poster cache, fighter cutout, fighter portrait) is drawn
+     borderless: no frame, no plate, edges faded into the card. A publisher's press photo
+     keeps its own crop. `cached` decides which of the two an <img> gets. */
+  const ourFighter = url => /^assets\/img\/(?:ufc|ufc-cutouts)\//.test(String(url || ''));
+  const pictureHTML = (url, alt, cls, h, eager) => !url ? '' :
+    '<span class="' + cls + (ourFighter(url) ? ' is-cached' : '') + '">' +
+    '<img src="' + h.safeURL(url) + '" alt="' + h.esc(alt || '') + '" loading="' + (eager ? 'eager' : 'lazy') +
+    '" decoding="async" referrerpolicy="no-referrer"></span>';
+
+  /* The BEFN-hosted copy of an event poster, landscape first: it sits in a wide slot. */
+  function posterFor(event, posters) {
+    const art = posters && event && event.id ? posters[event.id] : null;
+    if (!art) return '';
+    const pick = art.landscape || art.portrait;
+    return pick && pick.url ? pick.url : '';
+  }
+
+  /* A cut-out of someone on the card, when one has been cleared for this fighter. */
+  function cutoutFor(event, cutouts) {
+    if (!cutouts || !event || !Array.isArray(event.bouts)) return null;
+    for (const bout of event.bouts) {
+      for (const name of (Array.isArray(bout && bout.fighters) ? bout.fighters : [])) {
+        const key = slug(name);
+        if (key && cutouts[key] && cutouts[key].ok === true) return { url: 'assets/img/ufc-cutouts/' + key + '.webp', name: name };
+      }
+    }
+    return null;
+  }
+
+  /* A cleared cut-out of a fighter the headline names, for a story with no picture of
+     its own. Slugging both sides keeps accents out of it ("Jiří Procházka" matches
+     "jiri-prochazka"); a one-word key is ignored, as it is too easy to hit by accident. */
+  function cutoutForTitle(title, cutouts) {
+    if (!cutouts || !title) return null;
+    const hay = '-' + slug(title) + '-';
+    const hit = Object.keys(cutouts)
+      .filter(k => cutouts[k] && cutouts[k].ok === true && k.indexOf('-') > 0 && hay.indexOf('-' + k + '-') >= 0)
+      .sort((a, b) => b.length - a.length)[0];
+    return hit ? { url: 'assets/img/ufc-cutouts/' + hit + '.webp', name: '' } : null;
+  }
+
+  /* Last resort, so no slot is ever empty: the house weave in the sport's own colour.
+     It is a tile, not a photograph, and it never implies who or what a story is about. */
+  const tileHTML = (sport, cls) => '<span class="' + cls + ' lp-tile lp-tile-' + (SPORT[sport] ? sport : 'all') + '" aria-hidden="true"></span>';
+
+  /* An owner-cleared photo of a fighter this text names, where the page can supply one. */
+  const localPhoto = (h, text, kind) => (h.localPhoto ? h.localPhoto(text, kind) : null);
+
+  /* The first story in a column that has a picture, so every column leads with one. */
+  const firstPhoto = (stories, h) => {
+    for (const a of stories) { const p = h.photo(a); if (p && p.url) return p; }
+    return null;
+  };
+
   /* Boxing and MMA cards from today to 14 days ahead, soonest first, at most six. */
   function fixtures(events, now) {
     const from = dayKey(now), to = dayKey(now + 14 * 86400000);
@@ -53,26 +107,39 @@
   function leadHTML(a, h) {
     if (!a) return '';
     const photo = h.photo(a);
-    const img = photo && photo.url
-      ? '<span class="lp-lead-photo"><img class="live-news-image" src="' + h.safeURL(photo.url) + '" alt="' + h.esc(photo.alt || '') + '" loading="eager" decoding="async" referrerpolicy="no-referrer"></span>'
-      : '';
+    const img = pictureHTML(photo && photo.url, photo && photo.alt, 'lp-lead-photo', h, true);
     return '<a class="lp-lead" href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener noreferrer" aria-label="Read ' + h.esc(a.title) + '">' + img +
       '<span class="lp-lead-copy"><span class="lp-chip">' + h.esc(SPORT[a.sport] || 'Combat sports') + ' · Lead story</span>' +
       '<span class="lp-lead-title">' + h.esc(a.title) + '</span><span class="lp-meta">' + h.meta(a) + '</span></span></a>';
   }
 
-  function fixtureHTML(e, h) {
+  function fixtureHTML(e, h, ctx) {
     const day = Number(e.date.slice(8, 10)), mon = MONTH[Number(e.date.slice(5, 7)) - 1] || '';
     const sport = String(e.sport).toLowerCase();
-    return '<a class="lp-fixture lp-' + sport + '" href="#fights"><span class="lp-date"><b>' + day + '</b><i>' + mon + '</i></span>' +
+    const poster = posterFor(e, ctx && ctx.posters);
+    const cut = poster ? null : cutoutFor(e, ctx && ctx.cutouts);
+    const named = poster || cut ? null : (e.bouts || []).reduce((found, b) =>
+      found || (Array.isArray(b && b.fighters) ? b.fighters.reduce((f, n) => f || localPhoto(h, n, 'portrait'), null) : null), null);
+    const art = poster ? pictureHTML(poster, e.title, 'lp-fixture-art', h)
+      : cut ? pictureHTML(cut.url, cut.name, 'lp-fixture-art lp-fixture-cutout', h)
+      : named ? pictureHTML(named.url, named.name, 'lp-fixture-art', h)
+      : tileHTML(sport, 'lp-fixture-art');
+    return '<a class="lp-fixture lp-' + sport + ' has-art" href="#fights">' + art +
+      '<span class="lp-date"><b>' + day + '</b><i>' + mon + '</i></span>' +
       '<span class="lp-fixture-copy"><span class="lp-fixture-title">' + h.esc(e.title) + '</span>' +
       '<span class="lp-meta">' + h.esc(SPORT[sport]) + (e.promotion ? ' · ' + h.esc(e.promotion) : '') + '</span></span></a>';
   }
 
   function columnHTML(key, stories, upcoming, h, opts) {
     if (!stories.length) return '';
-    const lead = stories[0], rest = stories.slice(1, 3), photo = h.photo(lead);
-    const img = photo && photo.url ? '<span class="lp-col-photo"><img src="' + h.safeURL(photo.url) + '" alt="' + h.esc(photo.alt || '') + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span>' : '';
+    const lead = stories[0], rest = stories.slice(1, 3), photo = firstPhoto([lead].concat(rest), h);
+    /* No picture in any of the three stories: show the cached poster of the next card
+       in this sport, which is the thing the column's "Next up" line points at. */
+    const poster = photo && photo.url ? '' : posterFor(upcoming[0], opts && opts.posters);
+    const img = photo && photo.url
+      ? pictureHTML(photo.url, photo.alt, 'lp-col-photo', h)
+      : poster ? pictureHTML(poster, upcoming[0] && upcoming[0].title, 'lp-col-photo lp-col-poster', h)
+      : tileHTML(key, 'lp-col-photo');
     const foot = key === 'sumo'
       ? '<div class="lp-col-foot"><b>Tournament</b><a href="' + h.safeURL(opts.sumoHref) + '">Bouts, standings and head-to-heads ›</a></div>'
       : (upcoming.length ? '<div class="lp-col-foot"><b>Next up</b>' + upcoming.map(e => '<a href="#fights">' + h.esc(e.title) + ' · ' + Number(e.date.slice(8, 10)) + ' ' + MONTH[Number(e.date.slice(5, 7)) - 1] + '</a>').join('') + '</div>' : '');
@@ -98,14 +165,23 @@
     const latest = others.filter(a => !inCols.has(a.url)).slice(0, 5);
     return '<div class="lp">' +
       '<section class="lp-top" aria-label="Lead story">' + leadHTML(lead, h) + '<div class="lp-side">' + resultTileHTML(latestResult(ctx.results, ctx.cutouts, now), h) + '</div></section>' +
-      (fx.length ? '<section class="lp-section" aria-label="This week and next"><div class="lp-head"><h2>This week and next</h2><a href="#fights">Full schedule ›</a></div><div class="lp-fixtures">' + fx.map(e => fixtureHTML(e, h)).join('') + '</div></section>' : '') +
+      (fx.length ? '<section class="lp-section" aria-label="This week and next"><div class="lp-head"><h2>This week and next</h2><a href="#fights">Full schedule ›</a></div><div class="lp-fixtures">' + fx.map(e => fixtureHTML(e, h, ctx)).join('') + '</div></section>' : '') +
       (cols.length ? '<section class="lp-section" aria-label="By sport"><div class="lp-head"><h2>By sport</h2></div><div class="lp-cols">' + cols.join('') + '</div></section>' : '') +
       '<section class="lp-section lp-bottom"><div><div class="lp-head"><h2>Latest news</h2><a href="#news">All stories ›</a></div><div class="lp-latest">' +
-      latest.map(a => '<a class="lp-latest-row" href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener noreferrer"><span class="lp-tag">' + h.esc(SPORT[a.sport] || 'Combat sports') + '</span><span class="lp-latest-title">' + h.esc(a.title) + '</span><span class="lp-meta">' + h.meta(a) + '</span></a>').join('') +
+      latest.map(a => {
+        const photo = h.photo(a);
+        const stand = photo && photo.url ? null : cutoutForTitle(a.title, ctx.cutouts);
+        const named = photo && photo.url || stand ? null : localPhoto(h, a.title, 'card');
+        const url = photo && photo.url ? photo.url : stand ? stand.url : named ? named.url : '';
+        const thumb = url ? pictureHTML(url, photo && photo.url ? photo.alt : named ? named.name : '', 'lp-latest-photo', h)
+          : tileHTML(a.sport, 'lp-latest-photo');
+        return '<a class="lp-latest-row has-art" href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener noreferrer">' + thumb +
+          '<span class="lp-latest-copy"><span class="lp-tag">' + h.esc(SPORT[a.sport] || 'Combat sports') + '</span><span class="lp-latest-title">' + h.esc(a.title) + '</span><span class="lp-meta">' + h.meta(a) + '</span></span></a>';
+      }).join('') +
       '</div></div><aside class="lp-talk"><div class="lp-kicker">Fight Talk</div><p>What fighters and promoters are posting, each with its source and date.</p><a class="lp-button" href="#social">Open Fight Talk ›</a></aside></section></div>';
   }
 
-  const api = { fixtures, latestResult, build, slug };
+  const api = { fixtures, latestResult, build, slug, posterFor, cutoutFor, cutoutForTitle };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.BEFNLanding = api;
 })(typeof window !== 'undefined' ? window : globalThis);

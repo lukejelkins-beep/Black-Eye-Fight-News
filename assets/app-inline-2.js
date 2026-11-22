@@ -451,7 +451,19 @@ function topStoryCard(a){
 
 function newsPool(){return window.BEFNNewsUnique(desk.articles).filter(headlineEligible).filter(articleMatchesSport);}
 function newsLeads(){return window.BEFNNewsPage.pickLeads(newsPool().filter(a=>Date.parse(a.publishedAt)<=Date.now()+30*60*1000),desk.leads);}
-const newsPageHelpers=()=>({esc,safeURL,meta:newsDisplayMeta,photo:topStoryPhoto});
+/* An owner-cleared photo of a fighter named in this text, from the local map
+   (assets/local-images.js, 750 fighters). Two or three capitalised words only, so a
+   headline's ordinary nouns cannot match, and the map itself decides who is known. */
+function localFighterPhoto(text,kind){
+ const api=window.BEFNLocalImages;
+ if(!api||!text)return null;
+ const names=String(text).match(/\b[A-Z\u00C0-\u00DE][a-z\u00DF-\u00FF'\u2019-]+(?:\s+[A-Z\u00C0-\u00DE][a-z\u00DF-\u00FF'\u2019-]+){1,2}\b/g)||[];
+ for(const name of names){
+  if(api.has(name)){const url=api.url(name,kind||'card');if(url)return {url,name};}
+ }
+ return null;
+}
+const newsPageHelpers=()=>({esc,safeURL,meta:newsDisplayMeta,photo:topStoryPhoto,localPhoto:localFighterPhoto});
 function newsFeedItems(){
  const promoted=new Set(newsLeads().map(l=>l.story.url));
  const seen=new Set(),now=Date.now();
@@ -474,7 +486,7 @@ function renderNewsFeed(){
   +controls+junkie+'<div class="np-rows">'+(shown.length?shown.map(a=>window.BEFNNewsPage.rowHTML(a,h)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
   +more+sourceHealth()+'</div>';
 }
-document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo');if(w)w.remove();}},true);
+document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo,.lp-fixture-art,.lp-latest-photo');if(w){const row=w.parentElement;w.remove();if(row&&row.classList)row.classList.remove('has-art');}}},true);
 const landing={results:null,cutouts:null,events:[],started:false};
 function loadLandingExtras(){
  if(landing.started)return;landing.started=true;
@@ -489,7 +501,7 @@ function renderLanding(skipLoad){
  const stories=newsFeedItems().concat(leads.map(l=>l.story)).sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
  if(!stories.length)return renderFrame('<div class="np"><header class="np-head"><h1>Home</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>');
  const sumo=['all','sumo'].includes(activeSport())?window.BEFNNewsPage.usableLanguageStories(desk.language,'sumo'):[];
- return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,now:Date.now()},h)+updatedLine());
+ return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,posters:window.BEFNLocalPosters||null,now:Date.now()},h)+updatedLine());
 }
 const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';const m=Math.max(0,Math.floor((Date.now()-t)/60000));return m<1?'just now':m<60?m+' min ago':m<48*60?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' days ago'};
 const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';
