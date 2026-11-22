@@ -263,7 +263,10 @@ class RealData(unittest.TestCase):
 
     def test_division_coverage_uses_free_weight_classes(self):
         cov = self.index["divisionCoverage"]
-        self.assertGreater(cov["latestBout"], 300, "latest-bout divisions fill fighters missing from the rosters")
+        # The official roster (UFC.com ranks plus Cito's active list) covers most fighters;
+        # the latest fight fills those it is missing from.
+        self.assertGreater(cov["officialRoster"], 700)
+        self.assertGreater(cov["latestBout"], 100, "latest-bout divisions fill fighters missing from the rosters")
         self.assertGreater(cov["withDivision"], 900)
 
     def test_leaderboards_file(self):

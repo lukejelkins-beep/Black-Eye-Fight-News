@@ -1,0 +1,52 @@
+name: Refresh UFC division rosters (monthly)
+# Adds active UFC fighters to division rosters from the Cito UFC API (free key,
+# secret UFC_STATS_API_CITO only). One full pass is 7 requests; limits are 9 per run
+# and 120 per rolling 30 days shared with the research archive (see
+# scripts/refresh-ufc-rosters.py). Runs on the 1st of each month and on demand.
+# On a pull request it only runs the offline tests and never calls Cito.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '41 6 1 * *'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-ufc-rosters.py'
+      - 'tests/test_ufc_rosters_refresh.py'
+      - '.github/workflows/refresh-ufc-rosters.yml'
+permissions:
+  contents: write
+concurrency:
+  group: befn-ufc-divisions-data-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  roster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test the roster refresh (no network)
+        run: python -m unittest discover -s tests -p 'test_ufc_rosters_refresh.py' -v
+      - name: Fetch Cito fighters and add active fighters to rosters
+        if: github.event_name != 'pull_request'
+        env:
+          UFC_STATS_API_CITO: ${{ secrets.UFC_STATS_API_CITO }}
+        run: python scripts/refresh-ufc-rosters.py
+      - name: Commit rosters and usage ledger
+        if: github.event_name != 'pull_request' && always()
+        shell: bash
+        run: |
+          set -uo pipefail
+          git config user.name 'BEFN roster refresh'
+          git config user.email 'befn-roster-refresh@users.noreply.github.com'
+          git add data/ufc-divisions.json data/cito-roster-ledger.json
+          if git diff --cached --quiet; then echo 'Nothing changed'; exit 0; fi
+          git commit -q -m 'Refresh UFC division rosters from Cito'
+          for attempt in 1 2 3; do
+            if git push -q origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            git pull -q --rebase origin "${GITHUB_REF_NAME}" || exit 1
+          done
+          exit 1

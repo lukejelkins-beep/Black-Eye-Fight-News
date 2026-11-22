@@ -34,6 +34,8 @@ on:
       - 'scripts/refresh-ufc-divisions.py'
       - 'scripts/refresh-ufc-rankings.py'
       - 'tests/test_ufc_rankings_refresh.py'
+      - 'scripts/refresh-ufc-rosters.py'
+      - 'tests/test_ufc_rosters_refresh.py'
       - 'scripts/ufc_ratings.py'
       - 'tests/test_ufc_ratings.py'
       - 'scripts/build-ufc-card-snapshots.py'
@@ -70,6 +72,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ufc_divisions.py' -v
       - name: Test official rankings refresh parser
         run: python -m unittest discover -s tests -p 'test_ufc_rankings_refresh.py' -v
+      - name: Test roster refresh
+        run: python -m unittest discover -s tests -p 'test_ufc_rosters_refresh.py' -v
       - name: Test ratings v2 (formulas, gates, percentiles, form, roster)
         run: python -m unittest discover -s tests -p 'test_ufc_ratings.py' -v
       - name: Test card snapshot build (tiles, coverage, nulls)
