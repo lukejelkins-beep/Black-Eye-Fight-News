@@ -19,7 +19,7 @@ Processing needs Pillow where it is available, and falls back to macOS `sips`, w
 crops centred rather than top-biased; rows made that way carry "centredCrop": true so
 a later Pillow pass can redo them.
 """
-import argparse, csv, hashlib, json, re, shutil, subprocess, sys, tempfile, unicodedata, urllib.error, urllib.request
+import argparse, csv, hashlib, json, re, shutil, subprocess, sys, tempfile, unicodedata, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
@@ -47,6 +47,11 @@ def slugify(name):
 
 
 def get(url, timeout=25):
+    # A promoter's filename can carry an accent; percent-encode the path so urllib can send it.
+    parts = urlparse(url)
+    if any(ord(c) > 127 for c in url):
+        url = parts._replace(path=urllib.parse.quote(parts.path, safe="/%"),
+                             query=urllib.parse.quote(parts.query, safe="=&%")).geturl()
     req = urllib.request.Request(url, headers={"User-Agent": AGENT, "Accept": "*/*"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read(), r.headers.get("Content-Type", "")
