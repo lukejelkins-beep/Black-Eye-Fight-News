@@ -490,8 +490,8 @@ document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){
 const landing={results:null,cutouts:null,events:[],videos:[],started:false};
 function loadLandingExtras(){
  if(landing.started)return;landing.started=true;
- Promise.all([deskJSON('data/upcoming-cards.json').catch(()=>null),deskJSON('data/results.json').catch(()=>null),fetch('data/ufc-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/fight-film.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([u,r,c,f])=>{
-  landing.events=u&&Array.isArray(u.events)?u.events:[];landing.results=r;landing.cutouts=c&&c.cutouts?c.cutouts:null;landing.videos=f&&Array.isArray(f.videos)?f.videos:[];
+ Promise.all([deskJSON('data/upcoming-cards.json').catch(()=>null),deskJSON('data/results.json').catch(()=>null),fetch('data/ufc-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/fight-film.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/boxing-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([u,r,c,f,bx])=>{
+  landing.events=u&&Array.isArray(u.events)?u.events:[];landing.results=r;landing.cutouts=window.BEFNLanding.mergeCutouts([['assets/img/ufc-cutouts/',c],['assets/img/boxing-cutouts/',bx]]);landing.videos=f&&Array.isArray(f.videos)?f.videos:[];
   const target=document.getElementById('main');if((!location.hash||location.hash==='#home')&&target)target.innerHTML=renderLanding(true);
  });
 }
