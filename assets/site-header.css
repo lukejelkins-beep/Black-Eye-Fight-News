@@ -15,6 +15,9 @@
 .sh-sports-group{display:flex;flex-wrap:wrap;gap:8px}
 .sh-sports button{min-height:44px;padding:0 18px;border:0;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;cursor:pointer}
 .sh-sports button[aria-pressed="true"]{background:#f3c332;color:#111013}
+.sh-sports .sh-sport-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;text-decoration:none}
+.sh-sports .sh-sport-link[aria-current="page"]{background:#f3c332;color:#111013}
+.sh-sports .sh-sport-link:focus-visible{outline:3px solid #f3c332;outline-offset:2px}
 
 /* Sub-links inside a section (Fighters: scout, champions, UFC stats; Fights: fight film). */
 .sh-sub{display:flex;flex-wrap:wrap;gap:8px;max-width:1540px;margin:0 auto;padding:16px max(16px,4.2vw) 0}
@@ -29,7 +32,7 @@
   .sh-sports{padding:10px 12px;gap:6px}
   .sh-sports-label,.sh-hide-small{display:none}
   .sh-sports-group{flex-wrap:nowrap;gap:6px;width:100%}
-  .sh-sports button{flex:1 1 0;padding:0 6px;font-size:13px}
+  .sh-sports button,.sh-sports .sh-sport-link{flex:1 1 0;padding:0 6px;font-size:13px}
 }
 
 /* Keep the five items together on the left; older rules stretched them across the bar. */
