@@ -8,6 +8,7 @@ Inputs
   data/ufcalendar-rich-progress.json   official results (winner, method, round, time)
   data/ufcalendar-judging-research.json judges' scorecards for decisions
   data/ufc-divisions.json              official division rosters, ranks, champions
+  data/ufc-bout-weight-classes.json    division of each fighter's latest labelled bout (free UFCStats)
   data/ufc-fighter-v3.json + data/ufc-*-profiles.json  fallback divisions
 
 Outputs (data/ufc-stats/)
@@ -352,6 +353,39 @@ def official_divisions(path: Path | None = None) -> dict[str, dict]:
         return {}
 
 
+def weight_class_divisions(path: Path | None = None) -> dict[str, dict]:
+    """fighter slug -> {division, ...} from data/ufc-bout-weight-classes.json (latest labelled bout)."""
+    path = path or DATA / "ufc-bout-weight-classes.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("fighters") or {}
+    except (OSError, ValueError):
+        return {}
+
+
+def division_slug(label: str | None) -> str | None:
+    """'Women's Strawweight' -> 'womens-strawweight', matching the official division slugs."""
+    if not label:
+        return None
+    text = re.sub(r"[^a-z0-9]+", "-", str(label).lower().replace("\u2019", "'").replace("'", ""))
+    return text.strip("-") or None
+
+
+def resolve_division(slug: str, name: str, official: dict, weight: dict, reviewed: dict) -> dict:
+    """Division for profiles, ratings and leaderboards, most authoritative first:
+    1. the official UFC division roster (data/ufc-divisions.json),
+    2. the division of the fighter's latest labelled UFC bout (free UFCStats export),
+    3. a reviewed profile's division (label only).
+    Nothing is guessed: catch weights and unknown wording are never divisions upstream."""
+    listed = official.get(slug) or {}
+    if listed.get("division"):
+        return {"label": listed.get("label"), "slug": listed["division"], "source": "official-roster"}
+    latest = (weight.get(slug) or {}).get("division")
+    if latest:
+        return {"label": latest, "slug": division_slug(latest), "source": "latest-bout"}
+    label = reviewed.get(norm(name))
+    return {"label": label, "slug": division_slug(label) if label else None, "source": "reviewed" if label else None}
+
+
 def known_divisions() -> dict[str, str]:
     """normalised name -> division label from reviewed profiles and the V3 snapshot (fallback)."""
     out = {}
@@ -379,6 +413,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
     judging = load("ufcalendar-judging-research.json").get("decisions", {})
     divisions = known_divisions()
     official = official_divisions()
+    weight = weight_class_divisions()
 
     fights, skipped = [], {"noResult": 0, "unaligned": 0}
     for record in archive.values():
@@ -418,11 +453,12 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         if not last or last < active_cutoff:
             continue
         listed = official.get(slug) or {}
+        division = resolve_division(slug, entry["name"], official, weight, divisions)
         computed[slug] = {"entry": entry, "history": history, "windows": windows_for(history, as_of),
-                          "listed": listed,
-                          "division": listed.get("label") or divisions.get(norm(entry["name"]))}
+                          "listed": listed, "division": division["label"],
+                          "divisionSlug": division["slug"], "divisionSource": division["source"]}
     ratings = ufc_ratings.rate_roster({slug: {"window": c["windows"]["weighted"], "history": c["history"],
-                                              "divisionSlug": c["listed"].get("division")}
+                                              "divisionSlug": c["divisionSlug"]}
                                        for slug, c in computed.items()})
 
     if parity_out:  # inputs + Python raw composites for tests/ufc-ratings-parity.cjs
@@ -440,7 +476,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         entry, history, windows, listed, division = c["entry"], c["history"], c["windows"], c["listed"], c["division"]
         rating = ratings.get(slug)
         profile = {"schema": SCHEMA, "asOf": as_of.isoformat(), "slug": slug, "name": entry["name"],
-                   "division": division, "divisionSlug": listed.get("division"),
+                   "division": division, "divisionSlug": c["divisionSlug"], "divisionSource": c["divisionSource"],
                    "officialRank": listed.get("rank"), "champion": bool(listed.get("champion")),
                    "lastFight": history[0]["date"], "roundFields": list(COUNTS),
                    "ratings": rating,
@@ -448,7 +484,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
                    "fights": [compact_fight(f) for f in history]}
         (fighter_dir / f"{slug}.json").write_text(json.dumps(profile, separators=(",", ":")), encoding="utf-8")
         index_rows[slug] = {
-            "name": entry["name"], "division": division, "divisionSlug": listed.get("division"),
+            "name": entry["name"], "division": division, "divisionSlug": c["divisionSlug"],
             "officialRank": listed.get("rank"), "champion": bool(listed.get("champion")),
             "lastFight": history[0]["date"],
             "ufc": [windows["career"]["W"], windows["career"]["L"], windows["career"]["D"], windows["career"]["NC"]],
@@ -476,8 +512,10 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         "ratingFields": ["overall", *ufc_ratings.SKILLS, "form"],
         "ratingRules": {"window": "weighted", "minStatFights": ufc_ratings.MIN_STAT_FIGHTS,
                         "minDivisionPeers": ufc_ratings.MIN_DIVISION_PEERS, "scale": "percentile"},
-        "divisionCoverage": {"withDivision": sum(1 for r in index_rows.values() if r["division"]),
-                             "official": sum(1 for r in index_rows.values() if r["divisionSlug"])},
+        "divisionCoverage": {"withDivision": sum(1 for r in index_rows.values() if r["divisionSlug"]),
+                             "officialRoster": sum(1 for c in computed.values() if c["divisionSource"] == "official-roster"),
+                             "latestBout": sum(1 for c in computed.values() if c["divisionSource"] == "latest-bout"),
+                             "reviewed": sum(1 for c in computed.values() if c["divisionSource"] == "reviewed")},
         "fighters": index_rows,
     }
     (out_dir / "index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
@@ -491,7 +529,90 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
                                                    separators=(",", ":"), sort_keys=True), encoding="utf-8")
     (out_dir / "divisions.json").write_text(json.dumps(division_averages(index_rows, as_of), separators=(",", ":")),
                                             encoding="utf-8")
+    (out_dir / "leaderboards.json").write_text(json.dumps(build_leaderboards(computed, ratings, as_of),
+                                                          separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
     return index
+
+
+# Leaderboards: one row per qualifying fighter per window, values in BOARD_STATS order.
+BOARD_MIN_FIGHTS = 3          # complete-stat UFC fights in the window
+BOARD_MIN_SECONDS = 15 * 60   # and at least 15 minutes of cage time, so a few quick finishes cannot top a rate board
+BOARD_STATS = (
+    # id, label, group, unit, lower is better, source
+    ("slpm", "Significant strikes landed per minute", "Striking", "rate", False, "rate"),
+    ("diffPm", "Strike differential per minute", "Striking", "signed", False, "rate"),
+    ("strAcc", "Significant strike accuracy", "Striking", "pct", False, "rate"),
+    ("kd15", "Knockdowns per 15 minutes", "Striking", "rate", False, "rate"),
+    ("td15", "Takedowns per 15 minutes", "Grappling", "rate", False, "rate"),
+    ("tdAcc", "Takedown accuracy", "Grappling", "pct", False, "rate"),
+    ("sub15", "Submission attempts per 15 minutes", "Grappling", "rate", False, "rate"),
+    ("ctrlShare", "Control time (share of fight time)", "Grappling", "pct", False, "rate"),
+    ("sapm", "Significant strikes absorbed per minute", "Defence", "rate", True, "rate"),
+    ("strDef", "Significant strike defence", "Defence", "pct", False, "rate"),
+    ("tdDef", "Takedown defence", "Defence", "pct", False, "rate"),
+    ("kdAbs15", "Knockdowns absorbed per 15 minutes", "Defence", "rate", True, "rate"),
+    ("ctrlAgainstShare", "Time controlled by opponents", "Defence", "pct", True, "rate"),
+    ("finishRate", "Wins by KO/TKO or submission", "Finishing", "pct", False, "window"),
+    ("roundWinRate", "Rounds won on the judges' cards", "Finishing", "pct", False, "judging"),
+    ("paceRetention", "Output after round 1 vs round 1", "Pace", "pct", False, "rate"),
+)
+BOARD_WINDOWS = ("last5", "l12", "l36", "career")
+
+
+def board_value(window: dict, source: str, stat: str):
+    if source == "rate":
+        value = (window.get("rates") or {}).get(stat)
+    elif source == "window":
+        value = window.get(stat) if (window.get("W") or 0) >= 3 else None   # finish share needs 3+ wins
+    else:
+        judging = window.get("judging") or {}
+        value = judging.get(stat) if (judging.get("roundsScored") or 0) >= 9 else None  # 3+ judged fights' worth
+    return round(value, 3) if isinstance(value, (int, float)) else None
+
+
+def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
+    """Compact leaderboard file: fighters once, then per-window rows of values (null = not measured)."""
+    slugs = sorted(computed)
+    position = {slug: i for i, slug in enumerate(slugs)}
+    fighters = []
+    for slug in slugs:
+        c = computed[slug]
+        fighters.append([slug, c["entry"]["name"], c["divisionSlug"], c["listed"].get("rank"),
+                         bool(c["listed"].get("champion"))])
+    windows = {}
+    for key in BOARD_WINDOWS:
+        rows = []
+        for slug in slugs:
+            w = computed[slug]["windows"][key]
+            if (w.get("statFights") or 0) < BOARD_MIN_FIGHTS or (w.get("cageSeconds") or 0) < BOARD_MIN_SECONDS:
+                continue
+            values = [board_value(w, source, stat) for stat, *_rest, source in BOARD_STATS]
+            if any(v is not None for v in values):
+                rows.append([position[slug], w["statFights"], *values])
+        windows[key] = rows
+    rated = []
+    for slug in slugs:
+        r = ratings.get(slug)
+        if r and r.get("eligible"):
+            rated.append([position[slug], r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
+                          r["form"]["score"], r["sample"]["statFights"]])
+    labels = {}
+    for c in computed.values():
+        if c["divisionSlug"] and c["division"]:
+            labels[c["divisionSlug"]] = c["division"]
+    return {
+        "schema": SCHEMA, "asOf": as_of.isoformat(),
+        "minFights": BOARD_MIN_FIGHTS, "minCageSeconds": BOARD_MIN_SECONDS,
+        "windows": {"last5": "Last 5 fights", "l12": "Last 12 months", "l36": "Last 36 months", "career": "UFC career"},
+        "stats": [{"id": i, "label": l, "group": g, "unit": u, "lowerIsBetter": lb} for i, l, g, u, lb, _ in BOARD_STATS],
+        "divisions": dict(sorted(labels.items())),
+        "fighterFields": ["slug", "name", "divisionSlug", "officialRank", "champion"],
+        "fighters": fighters,
+        "rowFields": ["fighter", "statFights", *[b[0] for b in BOARD_STATS]],
+        "rows": windows,
+        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "statFights"],
+        "ratings": rated,
+    }
 
 
 DIVISION_WINDOW = "l36"

@@ -337,13 +337,15 @@ try{
    const board=page.locator("[data-befn-v3-leaderboards]");
    await board.waitFor({state:"visible",timeout:12000});
    await page.waitForFunction(()=>document.querySelector("[data-befn-v3-leaderboards]")?.dataset.ready==="true",null,{timeout:12000});
+   // Stage 5 boards: 6 rating boards + 16 statistic boards, one picker.
    const options=await page.locator("#befn-board-metric option").count();
-   assert.equal(options,12,"UFC statistical categories incomplete");
+   assert.equal(options,22,"UFC leaderboard choices incomplete");
    const rows=await page.locator(".befn-board-list > li").count();
    assert(rows>=1&&rows<=30,"Expected 1–30 qualified leaderboard athletes");
+   // Default board is the BEFN rating, which needs 5 fights with full stats.
    const unqualified=await board.evaluate(el=>[...el.querySelectorAll(".befn-board-name small")]
-    .some(node=>!/\b[3-5] recorded UFC bouts\b/.test(node.textContent||"")));
-   assert(!unqualified,"A leaderboard row shows fewer than 3 measured UFC bouts");
+    .some(node=>{const m=(node.textContent||"").match(/\b(\d+) UFC fights with full stats\b/);return !m||Number(m[1])<5;}));
+   assert(!unqualified,"A rating leaderboard row shows fewer than 5 UFC fights with full stats");
    const overflowing=await board.evaluate(el=>el.scrollWidth>el.clientWidth+3);
    assert(!overflowing,"UFC leaderboard horizontally overflows "+screen);
    await page.screenshot({path:path.join(screenshots,"ufc-leaderboards-"+screen+".png"),animations:"disabled",timeout:12000});

@@ -1,0 +1,62 @@
+name: Refresh UFC official rankings (on demand)
+# Free source: the public ufc.com/rankings page, one request. Runs weekly on
+# Wednesday (UFC updates its rankings on Tuesday, US time; owner approved
+# 2026-11-22) and on demand (workflow_dispatch). Either commits fresh rankings to
+# the branch it ran on. On a pull request it only checks the parser against the
+# live page and uploads the result.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * 3'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-ufc-rankings.py'
+      - 'tests/test_ufc_rankings_refresh.py'
+      - '.github/workflows/refresh-ufc-rankings.yml'
+permissions:
+  contents: write
+concurrency:
+  group: befn-ufc-rankings-refresh-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test the rankings parser (saved HTML, no network)
+        run: python -m unittest discover -s tests -p 'test_ufc_rankings_refresh.py' -v
+      - name: Fetch ufc.com/rankings and rebuild division data
+        run: python scripts/refresh-ufc-rankings.py
+      - name: Summary of what changed
+        run: |
+          git --no-pager diff --stat -- data/ufc-divisions.json || true
+          python - <<'PY'
+          import json
+          d = json.load(open('data/ufc-divisions.json'))
+          print('source', d['source'], 'observedOn', d['observedOn'], 'divisions refreshed', d['fetchedDivisions'])
+          for slug, v in d['divisions'].items():
+              c = v['champion']['name'] if v.get('champion') else None
+              print(f"{slug:22} {v.get('rankingDate')}  champion={c}  ranked={len(v['ranked'])}  top3={[r['name'] for r in v['ranked'][1:4]]}")
+          print('kept previous:', d.get('diagnostics'))
+          PY
+      - name: Keep the refreshed file for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: ufc-divisions
+          path: data/ufc-divisions.json
+      - name: Commit refreshed rankings (scheduled and manual runs)
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'BEFN rankings refresh'
+          git config user.email 'befn-rankings-refresh@users.noreply.github.com'
+          git add data/ufc-divisions.json
+          if git diff --cached --quiet; then echo 'Rankings unchanged'; exit 0; fi
+          git commit -q -m 'Refresh UFC official rankings from ufc.com/rankings'
+          git push -q origin "HEAD:${GITHUB_REF_NAME}"

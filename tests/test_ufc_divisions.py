@@ -105,7 +105,7 @@ class StatsBuildUsesOfficialDivisions(unittest.TestCase):
         self.assertEqual((row["division"], row["divisionSlug"], row["officialRank"], row["champion"]),
                          ("Welterweight", "welterweight", 0, True))
         self.assertEqual(index["fighters"]["ian-machado-garry"]["officialRank"], 2)
-        self.assertGreaterEqual(index["divisionCoverage"]["official"], 2)
+        self.assertGreaterEqual(index["divisionCoverage"]["officialRoster"], 2)
 
 
 if __name__ == "__main__":
