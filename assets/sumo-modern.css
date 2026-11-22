@@ -1,0 +1,52 @@
+/* Country designs + head-to-head face-off. Loaded last.
+   Japan keeps the red sun. Every other country gets its own flag-colour disc. */
+:root{
+  --disc:#151115;
+}
+[data-country="JP"]{--disc:#cf1824}
+[data-country="MN"]{--disc:linear-gradient(90deg,#c4272f 0 33.4%,#015197 33.4% 66.6%,#c4272f 66.6%)}
+[data-country="UA"]{--disc:linear-gradient(180deg,#0057b7 0 50%,#ffd700 50%)}
+[data-country="RU"]{--disc:linear-gradient(180deg,#f4f1ea 0 33.4%,#0039a6 33.4% 66.6%,#d52b1e 66.6%)}
+[data-country="CN"]{--disc:radial-gradient(circle at 28% 30%,#ffde00 0 9%,transparent 9.5%),#de2910}
+[data-country="KZ"]{--disc:radial-gradient(circle at 50% 50%,#fec50c 0 22%,transparent 22.5%),#00afca}
+[data-country="GE"]{--disc:linear-gradient(90deg,transparent 43%,#e8112d 43% 57%,transparent 57%),linear-gradient(180deg,transparent 43%,#e8112d 43% 57%,transparent 57%),#f4f1ea}
+[data-country="BG"]{--disc:linear-gradient(180deg,#f4f1ea 0 33.4%,#00966e 33.4% 66.6%,#d62612 66.6%)}
+[data-country="EG"]{--disc:linear-gradient(180deg,#ce1126 0 33.4%,#f4f1ea 33.4% 66.6%,#111013 66.6%)}
+[data-country="BR"]{--disc:radial-gradient(circle at 50% 50%,#002776 0 18%,transparent 18.5%),conic-gradient(from 0deg at 50% 50%,#ffdf00 0 25%,#009c3b 0 50%,#ffdf00 0 75%,#009c3b 0)}
+[data-country="US"]{--disc:linear-gradient(180deg,#b22234 0 20%,#f4f1ea 20% 40%,#b22234 40% 60%,#f4f1ea 60% 80%,#b22234 80%)}
+.sumo-poster-stage:before{background:var(--disc)!important}
+.sumo-poster-stage[data-country="JP"]:before{background:#cf1824!important}
+
+/* Head-to-head face-off: dark band, figures fade into it (matches the profile hero). */
+.sumo-faceoff{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.5fr) minmax(0,1fr);align-items:end;margin:8px 0 28px;border-radius:16px;overflow:hidden;background:#151115;color:#fff;min-height:420px;isolation:isolate}
+.sumo-faceoff:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,17,21,0) 55%,#151115 100%);pointer-events:none;z-index:1}
+.fo-side{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-width:0;min-height:420px}
+.fo-stage{position:absolute;inset:0;z-index:0;overflow:hidden}
+.fo-disc{position:absolute;top:44%;width:min(78%,300px);aspect-ratio:1;border-radius:50%;background:var(--disc);opacity:.42;transform:translate(-50%,-50%);filter:saturate(1.1)}
+.fo-a .fo-disc{left:58%}.fo-b .fo-disc{left:42%}
+.fo-img{position:absolute;bottom:0;height:92%;max-width:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 12px 22px rgba(0,0,0,.5));-webkit-mask-image:linear-gradient(180deg,#000 68%,transparent 100%);mask-image:linear-gradient(180deg,#000 68%,transparent 100%)}
+.fo-a .fo-img{left:50%;transform:translateX(-50%)}.fo-b .fo-img{left:50%;transform:translateX(-50%)}
+.fo-img.is-photo{height:80%;width:min(70%,300px);border-radius:50%;object-fit:cover;object-position:50% 12%;top:6%;bottom:auto}
+.fo-info{position:relative;z-index:2;padding:0 22px 22px}
+.fo-b .fo-info{text-align:right}
+.fo-b .fo-meta{justify-content:flex-end}
+.fo-rank{display:inline-flex;align-items:center;min-height:26px;padding:0 11px;border-radius:999px;background:#cf1824;color:#fff;font:700 12px/1 'DM Sans',sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.fo-info h2{margin:10px 0 2px;font:900 clamp(34px,4.6vw,60px)/.9 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:#fff;overflow-wrap:anywhere}
+.fo-info h2 a,.fo-info h2 a:visited{color:#fff;text-decoration:none}
+.fo-info h2 a:hover{text-decoration:underline}
+.fo-jp{color:#cfc8cf;letter-spacing:.2em;font-size:14px}
+.fo-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#cfc8cf}
+.fo-score{position:relative;z-index:3;align-self:center;text-align:center;padding:0 6px 40px}
+.fo-score span{display:block;font:700 12px/1 'DM Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f3c332}
+.fo-score strong{display:block;margin:8px 0;font:900 clamp(56px,7vw,96px)/.85 'Barlow Condensed',Impact,sans-serif;color:#fff}
+.fo-score small{font-size:13px;color:#cfc8cf}
+@media(max-width:720px){
+  .sumo-faceoff{grid-template-columns:1fr 1fr;min-height:0}
+  .fo-score{grid-column:1/-1;grid-row:1;padding:18px 0 4px;z-index:3}
+  .fo-score strong{font-size:64px}
+  .fo-side{grid-row:2;min-height:340px}
+  .fo-info{padding:0 12px 16px}
+  .fo-info h2{font-size:24px;overflow-wrap:normal}
+  .fo-meta{font-size:11px}
+  .fo-img{height:88%}
+}

@@ -1,6 +1,6 @@
 {
-  "attemptedAt": "2026-11-22T01:53:50.410Z",
-  "checkedAt": "2026-11-22T01:53:50.410Z",
+  "attemptedAt": "2026-11-22T03:00:38.657Z",
+  "checkedAt": "2026-11-22T03:00:38.657Z",
   "updatedAt": "2026-11-22T01:08:40.095265Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 34,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 36,
+      "configured": 43,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 1,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,17 +55,16 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 4,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 36,
-      "X": 34,
+      "Instagram": 43,
       "Bluesky": 6,
-      "Threads": 7,
-      "Reddit": 1
+      "X": 27,
+      "Threads": 8
     },
     "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
@@ -165,6 +164,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2u22jerxx25",
+      "cid": "bafyreigy62izmtaqkrkwaw4jvkk27haycwyssrfv4mnts3e73kmwghvr3u",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Unbeaten Lightweight Bids for 45-0 After Landing World Ranking #boxing #boxingnews",
+      "postedAt": "2026-11-21T21:25:45Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2u22jerxx25",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -360,6 +383,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2twntayde27",
+      "cid": "bafyreidj6uyrejmiwjmqumc2o3vlpfprr6qgjlopkhevhxwsiniroviyju",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "I’m thinking that we see a Silva vs. Vallejos rematch for a vacant title if Volkanovski ends up fighting Gaethje.\n\nIf not, Silva probably gets the next shot due to him having beaten Vallejos.",
+      "postedAt": "2026-11-21T20:24:58.714Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2twntayde27",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2twdu63ro22",
+      "cid": "bafyreids5xgcwnvqaln2pxnbvjgtw6rer6yiu6jh6hrieidbswr4rhzv54",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "Kevin Vallejos wins a unanimous decision over Aljamain Sterling (30-27, 29-28, 30-27)\n\nHe hadn’t shown his grappling ability prior to this, but he answered those questions today",
+      "postedAt": "2026-11-21T20:19:24.123Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2twdu63ro22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2tv24qo2u2f",
       "cid": "bafyreiam2gekpmw3ekaquqght6yzskjzfjj74zwovfn6fwveuchylhtzfi",
       "platform": "Bluesky",
@@ -381,6 +452,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2tuxzhsgk2n",
+      "cid": "bafyreibgotyrvtp7maod4brlgcsnck47xkog4gxoqdzuvinawpg7vb5ajq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "Super excited for Vallejos vs. Sterling\n\nAwesome fight and I think Sterling should be in line for a title shot if he gets the win here",
+      "postedAt": "2026-11-21T19:54:53.289Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2tuxzhsgk2n",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -432,6 +527,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2ttquis6i2q",
+      "cid": "bafyreidrwlvqt6js6cirz4wvghycj52sbbxolyqyivf7igkdenyopkuy3a",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Aaron Bronsteter",
+      "handle": "@aaron.report",
+      "role": "media",
+      "quote": "20-18 Hooker after R2\n\nBetter round for Ortega, but Hooker was the busier fighter and landed bigger.",
+      "postedAt": "2026-11-21T19:32:59.457Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/aaron.report/post/3n2ttquis6i2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2tse5ot6g2w",
       "cid": "bafyreifpt7uh5wcdput6j47x4yxglfvz4u367knavgukl2635cst5m3slq",
       "platform": "Bluesky",
@@ -452,7 +571,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -476,7 +595,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -548,7 +667,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -644,7 +763,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -812,7 +931,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,7 +1075,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -980,7 +1099,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1004,7 +1123,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1028,7 +1147,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1052,7 +1171,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1076,7 +1195,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1100,7 +1219,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1124,7 +1243,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1148,7 +1267,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1172,7 +1291,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1196,7 +1315,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1220,31 +1339,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2mmpfxq2x22",
-      "cid": "bafyreif5hkwrcd55pmev4dgapg5xsnumbeac5gmau7w5e3vlvkcuo7f3cu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "The $100K Mid-Fight Bribe That Shook Heavyweight Boxing #boxing #boxingnews",
-      "postedAt": "2026-11-18T22:38:16Z",
-      "date": "19 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2mmpfxq2x22",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1268,7 +1363,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1292,7 +1387,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1340,7 +1435,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1364,7 +1459,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1388,7 +1483,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1412,7 +1507,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1436,7 +1531,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1460,7 +1555,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
+      "engagementCheckedAt": "2026-11-22T03:00:38.657Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1680,30 +1775,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2dcaxoocf27",
-      "cid": "bafyreihnmxyrb5xnzinvwgdsxzdoy66s23y5ul4w47bzthlumflcfd6k3e",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "I have it 30-27 Hokit entering the championship rounds\n\nThis fight is bonkers",
-      "postedAt": "2026-11-15T05:37:16.506Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3n2dcaxoocf27",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:unvcg6ib22cqfozxjrhn63ds/app.bsky.feed.post/3n2dannn2ls26",
       "cid": "bafyreig6tsdl5ty3anmptrlqprruvu7g7pb35jkwnokpq3p5tbya3qytia",
       "platform": "Bluesky",
@@ -1725,30 +1796,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-20T01:54:23.742Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2da74caig2n",
-      "cid": "bafyreibrlnd3axrgy4c3nxhwla4anqq4unavjk3wwdh5muziqcvkl2dhjy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "Unless a fight with Valentina Shevchenko present itself, I would not be surprised if that is the final time that we see Kayla Harrison compete as a bantamweight.\n\nShe’s not putting herself through that to fight Joselyne Edwards.",
-      "postedAt": "2026-11-15T05:00:26.722Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3n2da74caig2n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 5,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1776,30 +1823,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2d7vh75fk2c",
-      "cid": "bafyreicztyy54j3prbhag7stwhqfob7so2wbxxxgra4vu63tza4sh4cllq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "Harrison takes advantage of another Nunes error, snatches the neck and she is STILL the undisputed bantamweight champion.\n\nHarrison was an absolute beast tonight. She was the better fighter and showed incredible fight IQ and resolve.",
-      "postedAt": "2026-11-15T04:55:02.637Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3n2d7vh75fk2c",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 5,
-        "comments": 2,
-        "shares": 1
-      },
-      "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:xnqusxspoktnv66raetv2vl2/app.bsky.feed.post/3n2d7v4lfjn2b",
       "cid": "bafyreihxrirfdkd2j7zuw4p7si2e4i3mjpbbwqvzceit4yvg37hcrsv2ae",
       "platform": "Bluesky",
@@ -1821,30 +1844,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:hcmbgghovywmodgfcjdfc36s/app.bsky.feed.post/3n2d7dhov3h2c",
-      "cid": "bafyreich3nna6sx7vw2jdk3jbeets23wrplhw7sp5rnhlapxazd5tvm4c4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Aaron Bronsteter",
-      "handle": "@aaron.report",
-      "role": "media",
-      "quote": "20-18 Harrison\n\nThat’s twice that Nunes has fallen into Kayla’s trap. She needs to avoid clinching and grappling at all costs and strike at distance.",
-      "postedAt": "2026-11-15T04:44:59.174Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/aaron.report/post/3n2d7dhov3h2c",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:hcmbgghovywmodgfcjdfc36s/bafkreifdlzj7zr7wmzpxxg7nixtqccdja654tx5nsvbzb36qncgrwfi2kq",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:hcmbgghovywmodgfcjdfc36s",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T14:34:51.774Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
