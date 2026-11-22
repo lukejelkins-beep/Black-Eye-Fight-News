@@ -42,12 +42,49 @@ assert.strictEqual(L.posterFor({id:'pt-2026-12-01'},posters),'assets/img/posters
 assert.strictEqual(L.posterFor({id:'nope'},posters),'');
 assert.strictEqual(L.posterFor({},null),'');
 // A cut-out stands in for a missing poster, but only for a fighter who has one cleared.
-const boutEv=(id,names)=>({id,date:'2026-11-28',sport:'mma',title:'T',bouts:[{fighters:names}]});
+const boutEv=(id,names)=>({id,date:'2026-11-28',sport:'mma',title:names.join(' vs '),bouts:[{fighters:names}]});
 assert.deepStrictEqual(L.cutoutFor(boutEv('e',['Jiří Procházka','Navajo Stirling']),cut),
  {url:'assets/img/ufc-cutouts/navajo-stirling.webp',name:'Navajo Stirling'});
 assert.strictEqual(L.cutoutFor(boutEv('e',['B C']),cut),null);
 assert.strictEqual(L.cutoutFor({id:'e'},cut),null);
 assert.strictEqual(L.cutoutFor(boutEv('e',['Navajo Stirling']),null),null);
+
+// Cut-outs are read from the folder their own register names, so a boxer's file is not
+// looked for among the UFC ones. An entry with no dir still resolves to the UFC folder.
+const mixed={'navajo-stirling':{ok:true,dir:'assets/img/ufc-cutouts/'},'adam-azim':{ok:true,dir:'assets/img/boxing-cutouts/'},'old-entry':{ok:true}};
+assert.deepStrictEqual(L.cutoutFor(boutEv('b',['Adam Azim']),mixed),
+ {url:'assets/img/boxing-cutouts/adam-azim.webp',name:'Adam Azim'});
+assert.deepStrictEqual(L.cutoutFor(boutEv('u',['Navajo Stirling']),mixed),
+ {url:'assets/img/ufc-cutouts/navajo-stirling.webp',name:'Navajo Stirling'});
+assert.deepStrictEqual(L.cutoutFor(boutEv('o',['Old Entry']),mixed),
+ {url:'assets/img/ufc-cutouts/old-entry.webp',name:'Old Entry'});
+assert.strictEqual(L.cutoutForTitle('Adam Azim wins again',mixed).url,'assets/img/boxing-cutouts/adam-azim.webp');
+// Only a fighter the card is billed on may stand for it. Someone further down the bill
+// is not used, however many cut-outs they have: the tile reads as though the card is theirs.
+const bill={id:'c',date:'2026-11-28',sport:'boxing',title:'Navajo Stirling vs Alexis Rocha',
+ bouts:[{fighters:['Adam Azim','Someone Else']},{fighters:['Navajo Stirling','Alexis Rocha']}]};
+assert.strictEqual(L.cutoutFor(bill,mixed).name,'Navajo Stirling');
+assert.strictEqual(L.cutoutFor(Object.assign({},bill,{title:'Conah Walker vs Alexis Rocha'}),mixed),null);
+// A UFC title carries surnames only, and a surname still bills the fighter.
+assert.deepStrictEqual(L.billed({title:'UFC Fight Night: Prochazka vs Stirling',bouts:[{fighters:['Navajo Stirling','Jiri Prochazka','Nobody Else']}]}),
+ ['Navajo Stirling','Jiri Prochazka']);
+// A surname under four letters is ignored, so it cannot hit inside another word.
+assert.deepStrictEqual(L.billed({title:'Smith vs Jones',bouts:[{fighters:['Ann Li']}]}),[]);
+assert.deepStrictEqual(L.billed({}),[]);
+const boxResult={events:[{id:'e1',name:'Box',date:'2026-11-21',status:'completed',mainBoutId:'b1'}],
+ results:[{id:'b1',event:'Box',winner:0,method:'KO',round:3,fighters:[{name:'Adam Azim'},{name:'Someone Else'}]}]};
+assert.strictEqual(L.latestResult(boxResult,mixed,now).cutout,'assets/img/boxing-cutouts/adam-azim.webp');
+
+// mergeCutouts: each register's rows are tagged with its folder, a slug held in both
+// sports is dropped, and nothing at all gives null so callers keep their fallback.
+const merged=L.mergeCutouts([['assets/img/ufc-cutouts/',{cutouts:{'a-one':{ok:true},'both-ways':{ok:true}}}],
+ ['assets/img/boxing-cutouts/',{cutouts:{'b-two':{ok:true},'both-ways':{ok:true}}}]]);
+assert.strictEqual(merged['a-one'].dir,'assets/img/ufc-cutouts/');
+assert.strictEqual(merged['b-two'].dir,'assets/img/boxing-cutouts/');
+assert.strictEqual(merged['both-ways'].ok,false);
+assert.strictEqual(L.cutoutFor(boutEv('x',['Both Ways']),merged),null);
+assert.strictEqual(L.mergeCutouts([['assets/img/ufc-cutouts/',null]]),null);
+assert.strictEqual(L.mergeCutouts(null),null);
 
 const withArt=L.build({stories:[
   st(9,'mma','Lead',{image:{url:'https://pub.test/lead.jpg'}}),
@@ -60,7 +97,7 @@ const withArt=L.build({stories:[
   st(2,'mma','MMA three'),
   st(1,'mma','Row two',{image:{url:'assets/img/ufc/row-two-card.webp'}})],
  events:[{id:'kab-2026-11-28',date:'2026-11-28',sport:'boxing',title:'Kabayel',bouts:[{fighters:['Agit Kabayel','Nelson Hysa']}]},
-         {id:'cut-2026-11-29',date:'2026-11-29',sport:'mma',title:'Cutout card',bouts:[{fighters:['Navajo Stirling','X Y']}]},
+         {id:'cut-2026-11-29',date:'2026-11-29',sport:'mma',title:'Navajo Stirling vs X Y',bouts:[{fighters:['Navajo Stirling','X Y']}]},
          {id:'none-2026-11-30',date:'2026-11-30',sport:'mma',title:'No art',bouts:[{fighters:['Nobody Here']}]}],
  results,cutouts:cut,posters,sumo:[],now},h);
 // The poster wins where there is one, the cut-out fills in, and a card with neither stays text.
