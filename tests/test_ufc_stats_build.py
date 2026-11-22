@@ -380,6 +380,36 @@ class FreeResultsPath(unittest.TestCase):
         self.assertEqual(m.results_only_fights(rows, self.BOUTS, {}, dt.date(2026, 1, 10), skipped), [])
         self.assertEqual(skipped["unresolved"], 0, "not ours to resolve")
 
+    def test_the_free_export_supplies_rounds_the_archive_does_not_have(self):
+        rounds = [{"round": 1, "a": side(sigLanded=9), "b": side(sigLanded=4)},
+                  {"round": 2, "a": side(sigLanded=7), "b": side(sigLanded=3)}]
+        free = {"2026-02-07|alphaone|bravotwo": {"fighterA": "Alpha One", "fighterB": "Bravo Two", "rounds": rounds}}
+        kept = m.free_rounds
+        try:
+            m.free_rounds = lambda: free
+            fights = m.results_only_fights([self.row()], self.BOUTS, {}, dt.date(2026, 1, 10), {"unresolved": 0})
+        finally:
+            m.free_rounds = kept
+        self.assertTrue(fights[0]["statsComplete"])
+        self.assertEqual(len(fights[0]["rounds"]), 2)
+        self.assertEqual(fights[0]["rounds"][0]["a"]["sigLanded"], 9)
+
+    def test_the_archive_is_preferred_over_the_free_export(self):
+        archived = {"k": {"promotion": "UFC", "date": "2026-02-07", "fighterA": "Alpha One",
+                          "fighterB": "Bravo Two",
+                          "rounds": [{"round": 1, "a": side(sigLanded=1), "b": side(sigLanded=2)},
+                                     {"round": 2, "a": side(sigLanded=1), "b": side(sigLanded=2)}]}}
+        free = {"2026-02-07|alphaone|bravotwo": {"fighterA": "Alpha One", "fighterB": "Bravo Two",
+                                                 "rounds": [{"round": 1, "a": side(sigLanded=99), "b": side(sigLanded=99)},
+                                                            {"round": 2, "a": side(sigLanded=99), "b": side(sigLanded=99)}]}}
+        kept = m.free_rounds
+        try:
+            m.free_rounds = lambda: free
+            fights = m.results_only_fights([self.row()], self.BOUTS, archived, dt.date(2026, 1, 10), {"unresolved": 0})
+        finally:
+            m.free_rounds = kept
+        self.assertEqual(fights[0]["rounds"][0]["a"]["sigLanded"], 1, "the archive stays authoritative")
+
     def test_a_missing_or_broken_results_file_is_survivable(self):
         kept = m.DATA
         try:

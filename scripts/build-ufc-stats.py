@@ -9,6 +9,8 @@ Inputs
   data/results.json                    the free results importer's own cards, used
                                        only for fights after the last one the
                                        (retired) paid collector recorded
+  data/ufc-free-round-stats.json       per-round statistics from the free UFCStats
+                                       export for those same later fights
   data/ufcalendar-judging-research.json judges' scorecards for decisions
   data/ufc-divisions.json              official division rosters, ranks, champions
   data/ufc-bout-weight-classes.json    division of each fighter's latest labelled bout (free UFCStats)
@@ -24,8 +26,8 @@ Rules
     every round up to the finishing round was captured with valid numbers.
     Results (wins, methods) still count even when round stats are missing.
   * The paid collector that writes ufcalendar-rich-progress.json is switched
-    off, so cards that finish from now on arrive through data/results.json
-    instead. Such a fight is used only when both names resolve to exactly one
+    off, so cards that finish from now on arrive through data/results.json,
+    with their measured rounds from data/ufc-free-round-stats.json, instead. Such a fight is used only when both names resolve to exactly one
     native fighter id the collector already holds, and only for dates after the
     last fight the collector recorded, so no published number changes.
   * Rates use cage time from the official finishing round and clock.
@@ -255,14 +257,22 @@ def bout_from_result(row: dict, people: dict) -> dict | None:
     }
 
 
+def free_rounds() -> dict:
+    """Per-round statistics for fights the archive does not hold, keyed date|pair."""
+    try:
+        return load("ufc-free-round-stats.json").get("fights") or {}
+    except (OSError, ValueError):
+        return {}
+
+
 def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None, skipped: dict) -> list[dict]:
     """Fights the retired paid collector never recorded, taken from data/results.json.
 
     Only cards after the last fight the collector recorded are read, so nothing
     already published changes, and a bout is used only when both names resolve to
-    exactly one native fighter id the collector already holds. Round statistics
-    are used when the archive happens to hold the same fight; otherwise the fight
-    counts as a result with no measured rounds.
+    exactly one native fighter id the collector already holds. Measured rounds come
+    from the archive when it holds the same fight, otherwise from the free
+    UFCStats export; a fight with neither counts as a result with no rounds.
     """
     people = fighter_index(bouts)
     captured = {}
@@ -270,6 +280,7 @@ def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None,
         day = parse_date(record.get("date"))
         if day and str(record.get("promotion", "")).upper() == "UFC":
             captured.setdefault((day, pair_key(record.get("fighterA"), record.get("fighterB"))), record)
+    free = free_rounds()
     out, seen = [], set()
     for row in rows:
         day = parse_date(row.get("date"))
@@ -284,8 +295,9 @@ def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None,
         key = (day, pair_key(bout["a"]["name"], bout["b"]["name"]))
         if key in seen:
             continue
-        fight = build_fight(captured.get(key) or {"fighterA": bout["a"]["name"],
-                                                  "fighterB": bout["b"]["name"], "rounds": []}, bout, None)
+        measured = free.get(day.isoformat() + "|" + "|".join(key[1]))
+        fight = build_fight(captured.get(key) or measured or {"fighterA": bout["a"]["name"],
+                                                              "fighterB": bout["b"]["name"], "rounds": []}, bout, None)
         if fight is None:
             skipped["unresolved"] += 1
             continue
