@@ -36,7 +36,7 @@ window.FightFilm=(()=>{
   const thumbnail=`<img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${safe(v.thumbnail)}" ${v.fallbackThumbnail?`data-film-fallback="${safe(v.fallbackThumbnail)}"`:''} alt="${esc(v.thumbnailType==='portrait'?'Fighter portrait':'Photo from the event')} for ${esc((globalThis.BEFNEventTitle||(x=>x))(v.title))}" ${v.thumbnailType==='portrait'?'style="object-fit:contain;background:#14242c"':''}>`;
   const section=v.category==='boxing'?'Boxing':v.discipline||'MMA / Wrestling / BJJ';
   const kind=v.kind||(v.isFinish?'Finish':'Highlights');
-  return `<article class="film-card"><a class="film-card-link" href="${safe(v.url)}" target="_blank" rel="noopener noreferrer" aria-label="Watch ${esc((globalThis.BEFNEventTitle||(x=>x))(v.title))} with ${esc(v.publisher)}">
+  return `<article class="film-card"${v.isFinish===true?' data-kind-finish':''}><a class="film-card-link" href="${safe(v.url)}" target="_blank" rel="noopener noreferrer" aria-label="Watch ${esc((globalThis.BEFNEventTitle||(x=>x))(v.title))} with ${esc(v.publisher)}">
     <div class="film-thumbnail">${thumbnail}<span class="film-play" aria-hidden="true">▶</span><span class="film-kind">${esc(kind)}</span></div>
     <div class="film-copy"><div class="film-meta"><span>${esc(section)}</span><span>${esc(date(v.date))}</span></div><h3>${esc((globalThis.BEFNEventTitle||(x=>x))(v.title))}</h3><div class="film-publisher"><span>${esc(v.publisher||'Original publisher')}${v.sourceType==='publisher-video-page'?'<small class="film-access-note"> · Publisher clip · AU playback not verified</small>':''}</span><strong>${v.sourceType==='publisher-video-page'?'Watch on publisher ↗':'Watch video ↗'}</strong></div></div>
    </a></article>`;
