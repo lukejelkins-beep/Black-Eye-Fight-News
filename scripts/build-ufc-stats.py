@@ -58,6 +58,11 @@ WINDOWS = ("last5", "l12", "l36", "career", "weighted")
 
 # Per-round counting fields, in both corners. Attempt fields may be missing
 # on older fights; they are then treated as unavailable, never as zero.
+# What the rates and ratings are built from. A career rate is void as soon as
+# one measured round lacks its field, so a source must carry all of these.
+RATED_COUNTS = ("sigLanded", "sigAttempted", "totalLanded", "knockdowns", "takedowns",
+                "takedownAttempts", "subAttempts", "reversals", "controlSec")
+
 COUNTS = (
     "sigLanded", "sigAttempted", "totalLanded", "totalAttempted",
     "headLanded", "headAttempted", "bodyLanded", "bodyAttempted",
@@ -257,6 +262,15 @@ def bout_from_result(row: dict, people: dict) -> dict | None:
     }
 
 
+def fully_measured(record: dict | None, end_round) -> bool:
+    """Every field the ratings use, for both corners, in every round fought."""
+    if not record or not isinstance(end_round, int):
+        return False
+    rounds = {r.get("round"): r for r in record.get("rounds") or []}
+    return all(isinstance(((rounds.get(number) or {}).get(corner) or {}).get(field), int)
+               for number in range(1, end_round + 1) for corner in ("a", "b") for field in RATED_COUNTS)
+
+
 def free_rounds() -> dict:
     """Per-round statistics for fights the archive does not hold, keyed date|pair."""
     try:
@@ -271,8 +285,8 @@ def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None,
     Only cards after the last fight the collector recorded are read, so nothing
     already published changes, and a bout is used only when both names resolve to
     exactly one native fighter id the collector already holds. Measured rounds come
-    from the archive when it holds the same fight, otherwise from the free
-    UFCStats export; a fight with neither counts as a result with no rounds.
+    from the archive when it fully measures the same fight, otherwise from the
+    free UFCStats export; a fight with neither counts as a result with no rounds.
     """
     people = fighter_index(bouts)
     captured = {}
@@ -296,8 +310,10 @@ def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None,
         if key in seen:
             continue
         measured = free.get(day.isoformat() + "|" + "|".join(key[1]))
-        fight = build_fight(captured.get(key) or measured or {"fighterA": bout["a"]["name"],
-                                                              "fighterB": bout["b"]["name"], "rounds": []}, bout, None)
+        end_round = bout["result"]["round"]
+        record = next((r for r in (captured.get(key), measured) if fully_measured(r, end_round)), None)
+        fight = build_fight(record or {"fighterA": bout["a"]["name"],
+                                       "fighterB": bout["b"]["name"], "rounds": []}, bout, None)
         if fight is None:
             skipped["unresolved"] += 1
             continue
