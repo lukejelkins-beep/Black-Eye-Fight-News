@@ -1,8 +1,8 @@
 {
   "platform": "X",
-  "status": "connected",
+  "status": "unavailable",
   "type": "original-source-posts",
-  "attemptedAt": "2026-11-22T07:26:29.428Z",
+  "attemptedAt": "2026-11-22T08:35:20.331Z",
   "checkedAt": "2026-11-22T07:26:29.428Z",
   "updatedAt": "2026-11-22T07:26:29.428Z",
   "trackedAccounts": 141,
@@ -16,9 +16,9 @@
   "returnedCount": 7,
   "matchedOriginalPosts": 7,
   "postCount": 180,
-  "paidXApiCalls": 145,
+  "paidXApiCalls": 146,
   "budgetMonth": "2026-11",
-  "estimatedReservedUsd": 0.493,
+  "estimatedReservedUsd": 0.4964,
   "monthlyBudgetUsd": 2,
   "billingNote": "Pessimistic request reservations, not confirmed provider charges. Provider prepaid balance and disabled auto top-ups remain necessary.",
   "posts": [
@@ -4028,5 +4028,7 @@
       "verifiedHandle": "MatchroomBoxing",
       "sourceProvider": "twitterapi.io"
     }
-  ]
+  ],
+  "message": "X API temporarily unavailable; existing public posts retained.",
+  "lastErrorCode": "TwitterAPI.io returned HTTP 503"
 }
