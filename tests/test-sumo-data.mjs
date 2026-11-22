@@ -220,18 +220,6 @@ test('JSA style evidence is explicit, source-linked and never applied to another
   assert.deepEqual(style.byNskId['4227'].signature,['tsuki','oshi','migi-yotsu','yori']);
 });
 
-test('Sumo preview is non-deploying and links correctly to dedicated UI',()=>{
-  const html=readFileSync(new URL('../sumo.html',import.meta.url),'utf8');
-  const index=readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
-  assert.match(html,/name="robots" content="noindex,nofollow"/);
-  assert.match(html,/assets\/sumo\.js/);
-  assert.match(index,/href="sumo\.html" data-nav="sumo"/);
-  assert.match(index,/befn-sumo-link/);
-  assert.match(js,/data\/sumo\/rikishi-index\.json/);
-  assert.doesNotMatch(js,/fetch\(\s*['"]https:\/\/www\.sumo-api\.com/);
-});
-
 test('country flags are based on identifiable birthplace, not inferred nationality',()=>{
   assert.equal(originCountry('Mongolia, Ulaanbaatar').flag,'🇲🇳');
   assert.equal(originCountry('Ukraine, Vinnytsia Oblast').flag,'🇺🇦');

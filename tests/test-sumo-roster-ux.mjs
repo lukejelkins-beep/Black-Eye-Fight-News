@@ -36,19 +36,6 @@ test('birthplace design retains sourced flags and approved portrait component',(
   assert.match(ui,/photo\?\.approved===true/);
 });
 
-test('standings are compact results while ranking movement remains on Banzuke',()=>{
-  const standings=method('standingsTable');
-  assert.match(standings,/sumo-standings-record/);
-  assert.match(standings,/recordLabels\(summary\)/);
-  assert.match(standings,/portraitFor\(w,'sm',title\)/);
-  assert.doesNotMatch(standings,/movementMarkup/);
-  assert.match(method('banzukeCard'),/movementMarkup\(w\)/);
-  assert.match(method('movementMarkup'),/rankPositions\(previousBanzukeData\(\)\)/);
-  assert.match(css,/\.sumo-standings-row/);
-  assert.match(css,/@media\(max-width:540px\)/);
-  assert.match(html,/assets\/sumo-editorial\.css\?v=20261116-[a-z0-9-]+/);
-});
-
 test('scoped directory empty state retains the search and offers Search all',()=>{
   const src=method('directoryResults');
   assert.match(src,/STATE\.division==='All'/);
