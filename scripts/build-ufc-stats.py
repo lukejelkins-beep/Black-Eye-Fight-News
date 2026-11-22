@@ -86,6 +86,37 @@ METHODS = {
 }
 
 
+FEEDER_EVENT = re.compile(r"contender\s+series|\bdwcs\b|road\s+to\s+ufc", re.I)
+
+
+def is_feeder_event(title) -> bool:
+    """Dana White's Contender Series and Road to UFC are not UFC roster fights.
+
+    Same rule as isFeederUfcEvent in scripts/ufc-official-event-scope.mjs. The
+    title needs no "UFC" word, so The Ultimate Fighter finales still count.
+    """
+    return bool(FEEDER_EVENT.search(str(title or "")))
+
+
+def attested_showcase_ids() -> set[str]:
+    """Native bout ids the evidence register independently proves were official UFC showcases."""
+    try:
+        register = load("ufc-independent-full-career-verification.json")
+    except FileNotFoundError:
+        return set()
+    out = set()
+    for entry in (register.get("fighters") or {}).values():
+        for item in entry.get("officialShowcaseBouts") or []:
+            if (item.get("independentlyOfficial") is True and item.get("nativeBoutId")
+                    and str(item.get("officialUfcSourceUrl", "")).startswith("https://www.ufc.com/news/")):
+                out.add(str(item["nativeBoutId"]))
+    return out
+
+
+def out_of_scope(bout: dict, showcases: set[str]) -> bool:
+    return is_feeder_event(bout.get("event")) and str(bout.get("id")) not in showcases
+
+
 def result_method(text) -> str | None:
     """The provider's method code for the free text on a results.json row."""
     low = re.sub(r"\s+", " ", str(text or "")).strip().lower()
@@ -279,7 +310,8 @@ def free_rounds() -> dict:
         return {}
 
 
-def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None, skipped: dict) -> list[dict]:
+def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None, skipped: dict,
+                       showcases: set[str] = frozenset()) -> list[dict]:
     """Fights the retired paid collector never recorded, taken from data/results.json.
 
     Only cards after the last fight the collector recorded are read, so nothing
@@ -301,6 +333,9 @@ def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None,
         if (row.get("status") != "completed" or row.get("sport") != "MMA"
                 or not str(row.get("eventId", "")).startswith("ufc")
                 or not day or (after is not None and day <= after)):
+            continue
+        if is_feeder_event(row.get("event")):
+            skipped["feederSeries"] += 1
             continue
         bout = bout_from_result(row, people)
         if bout is None:
@@ -595,7 +630,8 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
     official = official_divisions()
     weight = weight_class_divisions()
 
-    fights, skipped = [], {"noResult": 0, "unaligned": 0, "unresolved": 0}
+    showcases = attested_showcase_ids()
+    fights, skipped = [], {"noResult": 0, "unaligned": 0, "unresolved": 0, "feederSeries": 0}
     for record in archive.values():
         if str(record.get("promotion", "")).upper() != "UFC":
             continue
@@ -603,13 +639,16 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         if not bout or bout.get("org") != "ufc":
             skipped["noResult"] += 1
             continue
+        if out_of_scope(bout, showcases):
+            skipped["feederSeries"] += 1
+            continue
         fight = build_fight(record, bout, judging.get(str(bout["id"])))
         if fight is None:
             skipped["unaligned"] += 1
             continue
         fights.append(fight)
     collected_to = max((d for d in (parse_date(f["date"]) for f in fights) if d), default=None)
-    fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped)
+    fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped, showcases)
 
     per_fighter: dict[str, dict] = {}
     for fight in fights:

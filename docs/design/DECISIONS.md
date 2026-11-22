@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-22 (o)
+- UFC stats now leave out Dana White's Contender Series and Road to UFC bouts, as AGENTS.md and `scripts/ufc-official-event-scope.mjs` already required. Same title rule as `isFeederUfcEvent`. The Ultimate Fighter finales stay (all 16 TUF events in the data are finales, no house bouts), and so does the one attested showcase in the evidence register (Bruna Brasil v Shi Ming, bout 60900). Before and after: 1,110 to 921 fighters (189 had only feeder bouts), 763 to 717 rated (46 lose a rating), 381 overall ratings change, 23 by five or more; 251 bouts skipped. These replace the earlier estimates (719, 445, 30). `tests/test-ufc-one-rating.cjs` now expects more than 800 fighters. — Claude (QA session) — branch fix/ufc-stats-official-scope-20261122.
+
 ## 2026-11-22 (n)
 - `tests/test-upcoming-poster-fit.cjs` stops pinning cards that have already happened. When the scheduled results job cleared UFC 334 and ten other finished events out of `data/upcoming-cards.json` at 07:55, every test naming `ufc-334-2026-11-14` went red; the one inside release readiness was fixed on `main` first and deploys resumed at 08:58. This is the Node test left over: 3 of its 5 pinned thumbnails had already rolled off. Each pinned id is now checked only while its card is still on the schedule, with a check that does not rot in its place — at least one event in the schedule has an approved thumbnail, since only 4 of 19 have one and the cache going empty is the real failure. `test-ufc334-research.cjs` and `test-upcoming-cards.cjs` name the same id but were already failing before the card rolled off, so they are a separate look. — Owner ("Yes, unblock deploys") — PR #406.
 
