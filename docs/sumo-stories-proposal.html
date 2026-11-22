@@ -1,0 +1,408 @@
+<title>Sumo Stories Rethink</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Layout: BEFN dark editorial bands over a cream page; proposal reads top to bottom, mock-ups sit in dark "site" frames so they look like the real thing. */
+:root{
+ --page:#f8f4ed; --ink:#111013; --muted:#5d5458; --line:#e2d9cf; --card:#ffffff;
+ --band:#151115; --band-ink:#f8f4ed; --band-muted:#b9aeb2;
+ --red:#cf1824; --gold:#f3c332; --ok:#2f7d4f; --warn:#b4560b;
+ --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+ --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --page:#141114; --ink:#f3ede6; --muted:#b3a8ac; --line:#352d31; --card:#1d181b;
+ --band:#0b090b; --band-ink:#f8f4ed; --band-muted:#a99ea2; --ok:#5cbf86; --warn:#f0a35a; color-scheme:dark}}
+:root[data-theme="dark"]{
+ --page:#141114; --ink:#f3ede6; --muted:#b3a8ac; --line:#352d31; --card:#1d181b;
+ --band:#0b090b; --band-ink:#f8f4ed; --band-muted:#a99ea2; --ok:#5cbf86; --warn:#f0a35a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font:16px/1.6 var(--body);margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,.disp{font-family:var(--display);text-transform:uppercase;letter-spacing:.01em;line-height:1;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,5vw,44px);font-weight:900}
+h3{font-size:22px;font-weight:800}
+p{margin:0}
+.prose{max-width:66ch;display:grid;gap:12px}
+.kicker{font:700 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.band .kicker{color:var(--gold)}
+section{padding-block:56px;border-top:1px solid var(--line)}
+section>.wrap{display:grid;gap:24px}
+.head{display:grid;gap:10px}
+.head p{color:var(--muted);max-width:66ch}
+small,.note{font-size:13px;color:var(--muted)}
+
+/* Hero */
+.hero{background:var(--band);color:var(--band-ink);border-left:6px solid var(--red)}
+.hero .wrap{padding-block:56px 48px;display:grid;gap:18px}
+.hero h1{font-size:clamp(48px,9vw,92px);font-weight:900}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{color:var(--band-muted);max-width:62ch;font-size:18px}
+.hero .meta{font-size:13px;color:var(--band-muted)}
+.verdict{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:8px}
+.verdict div{border-top:3px solid var(--gold);padding-top:10px;min-width:0}
+.verdict b{display:block;font:800 22px/1.05 var(--display);text-transform:uppercase;color:var(--band-ink);margin-bottom:6px}
+.verdict span{color:var(--band-muted);font-size:15px}
+
+/* Problems */
+.problems{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.problem{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:6px;min-width:0}
+.problem b{font:800 19px/1.1 var(--display);text-transform:uppercase}
+.problem p{color:var(--muted);font-size:15px}
+
+/* Engine diagram */
+.flow{display:grid;grid-template-columns:1fr auto 1.3fr auto 1fr;gap:12px;align-items:stretch}
+.col{display:grid;gap:8px;align-content:start;min-width:0}
+.col>.disp{font-size:15px;font-weight:800;color:var(--muted)}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:14px;line-height:1.35}
+.chip b{display:block;font-size:14px}
+.chip span{color:var(--muted);font-size:13px}
+.engine{background:var(--band);color:var(--band-ink);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start}
+.engine .disp{color:var(--gold);font-size:20px}
+.gate{border:1px solid #3a3035;border-radius:8px;padding:10px 12px;font-size:14px;color:var(--band-muted)}
+.gate b{color:var(--band-ink);display:block;font-size:15px}
+.arrow{align-self:center;font:900 28px var(--display);color:var(--red)}
+
+/* Site mock frames */
+.mockgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.site{background:var(--band);color:var(--band-ink);border-radius:12px;padding:16px;display:grid;gap:12px;min-width:0}
+.site-label{font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--band-muted)}
+.bout{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.ws{display:flex;align-items:center;gap:10px;min-width:0}
+.ws.r{flex-direction:row-reverse;text-align:right}
+.av{width:46px;height:46px;border-radius:50%;background:#2a2226;border:2px solid #3b3236;display:grid;place-items:center;font:800 18px var(--display);color:var(--gold);flex:none}
+.nm{min-width:0}
+.nm b{display:block;font:800 21px/1 var(--display);text-transform:uppercase}
+.nm small{color:var(--band-muted);font-size:12px}
+.vs{font:900 16px var(--display);color:var(--red)}
+.factline{display:flex;gap:10px;align-items:flex-start;background:#221b1f;border-left:3px solid var(--gold);border-radius:6px;padding:10px 12px}
+.factline .tag{font:800 12px/1.2 var(--display);letter-spacing:.06em;color:var(--ink);background:var(--gold);border-radius:4px;padding:3px 6px;flex:none;text-transform:uppercase}
+.factline p{font-size:14px;line-height:1.4}
+.factline p b{color:var(--gold)}
+.scope{font-size:11px;color:var(--band-muted)}
+.story{display:grid;gap:10px}
+.story .big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.story .big strong{font:900 64px/0.9 var(--display);color:var(--gold)}
+.story .big span{font:800 20px/1.1 var(--display);text-transform:uppercase}
+.bar{height:10px;border-radius:5px;background:#3a2f34;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.list{display:grid;gap:8px}
+.list div{display:flex;gap:10px;font-size:14px;line-height:1.4}
+.list div::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);margin-top:7px;flex:none}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font:800 13px/1 var(--display);letter-spacing:.05em;text-transform:uppercase;border:1px solid #4a3e43;border-radius:20px;padding:6px 10px;color:var(--band-ink)}
+.badge.hot{border-color:var(--gold);color:var(--gold)}
+
+/* Fact card gallery */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.fc .n{font:900 46px/0.9 var(--display);color:var(--red)}
+.fc .h{font:800 20px/1.08 var(--display);text-transform:uppercase}
+.fc p{font-size:14px;color:var(--muted);line-height:1.45}
+.fc .src{font-size:12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tier{font:700 11px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:4px 6px}
+.tA{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.tB{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.fam{font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* Tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:800 15px/1.1 var(--display);text-transform:uppercase;letter-spacing:.03em;background:color-mix(in srgb,var(--line) 45%,transparent)}
+tr:last-child td{border-bottom:0}
+td b{font-weight:700}
+
+/* Tiers */
+.tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tiercard{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:14px;display:grid;gap:8px;align-content:start;min-width:0}
+.tiercard .disp{font-size:24px;font-weight:900;color:var(--c)}
+.tiercard p{font-size:14px;color:var(--muted)}
+.tiercard ul{margin:0;padding-left:18px;font-size:14px;display:grid;gap:4px}
+.score{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.score div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0}
+.score b{display:block;font:800 18px/1.1 var(--display);text-transform:uppercase;margin-bottom:4px}
+.score span{font-size:13px;color:var(--muted)}
+
+/* Hub wireframe */
+.phone{max-width:390px;width:100%;background:var(--band);border-radius:22px;padding:14px;display:grid;gap:10px;color:var(--band-ink);justify-self:center}
+.hubgrid{display:grid;grid-template-columns:390px 1fr;gap:28px;align-items:start}
+.rail{display:flex;gap:8px;overflow:hidden}
+.rail div{flex:0 0 46%;background:#221b1f;border-radius:8px;padding:10px;font-size:13px;line-height:1.3;min-width:0}
+.rail div b{display:block;font:800 26px/1 var(--display);color:var(--gold)}
+.railhead{display:flex;justify-content:space-between;align-items:baseline}
+.railhead b{font:800 18px var(--display);text-transform:uppercase}
+.railhead span{font-size:12px;color:var(--band-muted)}
+.hubnotes{display:grid;gap:14px}
+.hubnotes div{display:grid;gap:4px}
+.hubnotes b{font:800 19px/1.1 var(--display);text-transform:uppercase}
+.hubnotes p{color:var(--muted);font-size:15px}
+
+/* Phases + decisions */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.phase{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:8px;align-content:start;min-width:0}
+.phase.rec{border:2px solid var(--red)}
+.phase .disp{font-size:15px;color:var(--red);font-weight:800}
+.phase h3{font-size:21px}
+.phase p{font-size:14px;color:var(--muted)}
+.decide{display:grid;gap:10px;counter-reset:d}
+.decide div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;counter-increment:d}
+.decide div::before{content:counter(d);grid-row:span 2;font:900 34px/1 var(--display);color:var(--red)}
+.decide b{font:800 19px/1.15 var(--display);text-transform:uppercase}
+.decide p{font-size:15px;color:var(--muted)}
+footer{padding-block:32px 48px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+
+@media (max-width:860px){
+ .flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}
+ .cards,.tiers,.phases{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .score{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mockgrid,.hubgrid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+ .verdict,.problems,.cards,.tiers,.phases,.score{grid-template-columns:1fr}
+ .nm b{font-size:17px}.av{width:38px;height:38px}
+ section{padding-block:40px}
+}
+</style>
+
+<header class="hero">
+ <div class="wrap">
+  <span class="kicker">BEFN Sumo · Proposal for the owner · 21 Nov 2026</span>
+  <h1>From a facts page to <em>facts everywhere</em></h1>
+  <p>A rethink of Sumo Fun Facts. One fact engine feeds short, surprising, sourced facts into every part of the sumo site: matchups, head-to-heads, profiles, stables and techniques. The Fun Facts page becomes the hub where they're all collected.</p>
+  <div class="verdict">
+   <div><b>Change the unit</b><span>Build single facts, each about specific wrestlers, a pair or a technique, instead of whole pages of cards.</span></div>
+   <div><b>Change the rules</b><span>Every fact passes two checks: is it true, and is it surprising enough to show?</span></div>
+   <div><b>Change the placement</b><span>Show a fact beside the bout a reader is already looking at.</span></div>
+  </div>
+  <span class="meta">Preview only. Nothing here is built or approved. Example numbers come from BEFN's stored Sumo API bout records and haven't been checked against the JSA yet, unless marked.</span>
+ </div>
+</header>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">Where we are</span><h2>Why the current page doesn't wow</h2>
+   <p>I reviewed the pilot as a fan would see it, on a 390 px phone and a 1280 px desktop. The data is mostly right now. The problem is what we choose to show and where we show it.</p></div>
+  <div class="problems">
+   <div class="problem"><b>It repeats the results table</b><p>"X is unbeaten", "X has won five straight", "X is one win from kachi-koshi". A fan watching the basho already knows these, and most of the page's 30 cards are this kind.</p></div>
+   <div class="problem"><b>Too long, too samey</b><p>About 10,200 px of scrolling on a phone, with the same card shape repeated. Four stat counters open the page ("190 tracked rikishi"), which is internal bookkeeping rather than a story.</p></div>
+   <div class="problem"><b>Cut off from the rest of the site</b><p>Facts only live on their own page. Fans spend their time on matchups, head-to-heads and profiles, which is exactly where a fact would land.</p></div>
+   <div class="problem"><b>The rules choose safe over interesting</b><p>Only Sumo API numbers or six hand-written stories can appear. There's no way to use outside sources at scale, and no way to say "this is surprising enough to show".</p></div>
+   <div class="problem"><b>Our best material goes unused</b><p>We store about 58,000 bouts with day, winner and technique. That holds rivalries, technique signatures and final-day pressure records. The page uses almost none of it.</p></div>
+   <div class="problem"><b>Win % sits in the wrong place</b><p>A 30-option leaderboard is a stats tool, not a story. It belongs in Leaderboards, with a few preset windows.</p></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">The idea</span><h2>One fact engine, many places to show facts</h2>
+   <p>Every fact is a small record: what it says, who it's about, where it can appear, its source and how strong that source is, how surprising it is, and when it expires. Pages ask the engine for "the best fact about these two wrestlers" and show the top one.</p></div>
+  <div class="flow">
+   <div class="col"><span class="disp">Sources</span>
+    <div class="chip"><b>Our bout records</b><span>58k bouts · day · technique · division</span></div>
+    <div class="chip"><b>Our rank and weight history</b><span>Each banzuke rank, dated measurements</span></div>
+    <div class="chip"><b>Live basho snapshot</b><span>Today's records and pairings</span></div>
+    <div class="chip"><b>JSA official pages</b><span>Titles, prizes, kinboshi, debut, origin</span></div>
+    <div class="chip"><b>Researched sources</b><span>Media, Wikipedia, Guinness, NHK</span></div>
+   </div>
+   <div class="arrow" aria-hidden="true">→</div>
+   <div class="engine"><span class="disp">Fact engine</span>
+    <div class="gate"><b>1 · Truth check</b>Is the source strong enough for this claim, as worded?</div>
+    <div class="gate"><b>2 · Wow score</b>Rarity, stakes, recency, specificity, freshness to the reader</div>
+    <div class="gate"><b>3 · Fit</b>Which places can show it, and its short and long wording</div>
+    <div class="gate"><b>4 · Expiry</b>Live facts update each refresh; researched facts get re-checked</div>
+   </div>
+   <div class="arrow" aria-hidden="true">→</div>
+   <div class="col"><span class="disp">Where facts show</span>
+    <div class="chip"><b>Today's matchups</b><span>One fact line per bout</span></div>
+    <div class="chip"><b>Head-to-head page</b><span>"Story of the rivalry" panel</span></div>
+    <div class="chip"><b>Rikishi profile</b><span>Did-you-know facts and badges</span></div>
+    <div class="chip"><b>Kimarite and Stables</b><span>"Who wins with this" and stable facts</span></div>
+    <div class="chip"><b>Sumo home and Stories hub</b><span>Fact of the day, themed rows</span></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">What it looks like</span><h2>Facts beside the bout</h2>
+   <p>Mock-ups in BEFN's own style, with real numbers from our data. Portraits are shown as placeholders here; the real build uses the approved photos.</p></div>
+  <div class="mockgrid">
+   <div class="site">
+    <span class="site-label">Today's matchups · Makuuchi</span>
+    <div class="bout">
+     <div class="ws"><div class="av">玉</div><div class="nm"><b>Tamawashi</b><small>M15e · 42 yrs</small></div></div>
+     <span class="vs">VS</span>
+     <div class="ws r"><div class="av">高</div><div class="nm"><b>Takayasu</b><small>M3e · Tagonoura</small></div></div>
+    </div>
+    <div class="factline"><span class="tag">Rivalry</span><p><b>42 meetings since 2012, and it's dead level at 21–21.</b> The longest series in BEFN's records between two current wrestlers.<br><span class="scope">BEFN bout records · tracked wrestlers</span></p></div>
+    <div class="bout">
+     <div class="ws"><div class="av">大</div><div class="nm"><b>Daieisho</b><small>M4w · Oitekaze</small></div></div>
+     <span class="vs">VS</span>
+     <div class="ws r"><div class="av">宇</div><div class="nm"><b>Ura</b><small>M2e · Kise</small></div></div>
+    </div>
+    <div class="factline"><span class="tag">Streak</span><p><b>Daieisho has won their last 11 meetings</b> (19–5 overall). Ura last beat him in September 2023.<br><span class="scope">BEFN bout records</span></p></div>
+   </div>
+
+   <div class="site">
+    <span class="site-label">Head-to-head page · Story of the rivalry</span>
+    <div class="story">
+     <div class="big"><strong>12–0</strong><span>Tomokaze over Shimanoumi</span></div>
+     <div class="bar" role="img" aria-label="Tomokaze 12 wins, Shimanoumi 0"><i style="width:100%;background:var(--gold)"></i></div>
+     <div class="list">
+      <div>Every one of their 12 meetings since November 2018 has gone Tomokaze's way.</div>
+      <div>First meeting won by hatakikomi; the most recent (May 2025) by oshidashi.</div>
+      <div>Next: the engine adds "biggest upset", "longest bout gap" and "signature finish against him" when they score well enough.</div>
+     </div>
+     <span class="scope">Each line links to the bout list behind it.</span>
+    </div>
+   </div>
+
+   <div class="site">
+    <span class="site-label">Rikishi profile · Hoshoryu</span>
+    <div class="badges"><span class="badge hot">Technique master</span><span class="badge">Final-day closer</span><span class="badge">Yokozuna</span></div>
+    <div class="factline"><span class="tag">Did you know</span><p><b>34 different winning techniques since 2021,</b> more than any other wrestler BEFN tracks.<br><span class="scope">BEFN bout records · since Jan 2021</span></p></div>
+    <div class="factline"><span class="tag">Pressure</span><p><b>6–1 when he's 7–7 going into the final day.</b> He almost always gets the eighth win.<br><span class="scope">BEFN bout records · complete 15-day basho only</span></p></div>
+   </div>
+
+   <div class="site">
+    <span class="site-label">Kimarite guide · gasshohineri</span>
+    <div class="story">
+     <div class="big"><strong>1</strong><span>win by this move since 2021 in our records</span></div>
+     <p style="font-size:14px;color:var(--band-muted)">It belongs to <b style="color:var(--gold)">Tamawashi</b>. Nine other techniques appear only once in the same period, and each one gets a "rare move" card that links to the wrestler.</p>
+     <span class="scope">Scope matters: "in BEFN's records", never "in sumo", because we only store bouts involving tracked wrestlers.</span>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">The fact library</span><h2>Ten kinds of fact we can produce</h2>
+   <p>Each card below is a real example. Green means checked against JSA pages this week. Amber means computed from our stored data and still to be checked before anything is published.</p></div>
+  <div class="cards">
+   <div class="fc"><span class="fam">Rivalry</span><span class="n">21–21</span><span class="h">Tamawashi v Takayasu</span><p>42 meetings since March 2012. Last meeting September 2025.</p><span class="src"><span class="tier tB">Computed</span><small>bout records</small></span></div>
+   <div class="fc"><span class="fam">Streak</span><span class="n">11</span><span class="h">Straight for Daieisho over Ura</span><p>19–5 overall across 24 meetings since 2016.</p><span class="src"><span class="tier tB">Computed</span><small>bout records</small></span></div>
+   <div class="fc"><span class="fam">Technique</span><span class="n">34</span><span class="h">Hoshoryu's winning techniques</span><p>Distinct kimarite in his wins since 2021 (default wins, fouls and non-technique results excluded), the most among tracked wrestlers.</p><span class="src"><span class="tier tB">Computed</span><small>bout records</small></span></div>
+   <div class="fc"><span class="fam">Signature</span><span class="n">64%</span><span class="h">Onokatsu wins by yorikiri</span><p>87 of 135 wins since 2021. The purest specialist among wrestlers with 40+ wins.</p><span class="src"><span class="tier tB">Computed</span><small>bout records</small></span></div>
+   <div class="fc"><span class="fam">Pressure</span><span class="n">9–2</span><span class="h">Nishikigi at 7–7 on the final day</span><p>The best record in BEFN's data with at least four such days. Across all tracked wrestlers the figure is 54% (192 of 355).</p><span class="src"><span class="tier tB">Computed</span><small>bout records</small></span></div>
+   <div class="fc"><span class="fam">Comeback</span><span class="n">0–4</span><span class="h">Asasuiryu's start, January 2026</span><p>Lost the first four days, then finished 10–5. One of 26 kachi-koshi from 0–4 in our records.</p><span class="src"><span class="tier tB">Computed</span><small>bout records</small></span></div>
+   <div class="fc"><span class="fam">Rise</span><span class="n">4</span><span class="h">Division titles in four basho</span><p>Asahifuji won the Jonokuchi, Jonidan, Sandanme and Makushita titles in a row, then reached Jūryō.</p><span class="src"><span class="tier tA">JSA checked</span><small>profile 4358</small></span></div>
+   <div class="fc"><span class="fam">Body</span><span class="n">95 kg</span><span class="h">Enho v Kazuma, the weight gap</span><p>107 kg against 202 kg, both in Jūryō. When two very different sizes are paired, the matchup card says so.</p><span class="src"><span class="tier tB">Computed</span><small>listed weights</small></span></div>
+   <div class="fc"><span class="fam">Age</span><span class="n">22 yrs</span><span class="h">Oldest to youngest sekitori</span><p>Tamawashi (born 1984) and Ryuho (born 2007) are both ranked in the top two divisions.</p><span class="src"><span class="tier tB">Computed</span><small>listed birthdates</small></span></div>
+   <div class="fc"><span class="fam">Giant-killer</span><span class="n">—</span><span class="h">Kinboshi and upsets</span><p>Our data only covers yokozuna we still track, so kinboshi counts must come from JSA profiles. That's an example of where outside sourcing gives a better answer.</p><span class="src"><span class="tier tA">Source: JSA</span><small>to collect</small></span></div>
+   <div class="fc"><span class="fam">Roots</span><span class="n">12</span><span class="h">Mongolian-born sekitori</span><p>The largest birthplace group among tracked sekitori. Prefecture facts ("Tokyo's six") go on the stable and profile pages.</p><span class="src"><span class="tier tB">Computed</span><small>listed birthplace</small></span></div>
+   <div class="fc"><span class="fam">Milestones</span><span class="n">next</span><span class="h">Round-number watch</span><p>"Two wins from his 500th career win". These need JSA career totals, then update live during the basho.</p><span class="src"><span class="tier tA">Source: JSA</span><small>to collect</small></span></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">Decision rules</span><h2>Two checks: true, then interesting</h2>
+   <p>The pilot's rules only asked "is this safe to show?". The new rules first ask "can we stand behind this exact wording?", then "is it worth a fan's attention here?". Outside sources are allowed, with the check scaled to the type of claim.</p></div>
+  <div class="tiers">
+   <div class="tiercard" style="--c:var(--ok)"><span class="disp">A · Official</span><p>JSA pages and official results.</p><ul><li>Publish automatically when read by a tested script</li><li>Allowed for titles, prizes, kinboshi, debut, origin, career totals</li></ul></div>
+   <div class="tiercard" style="--c:var(--warn)"><span class="disp">B · Our numbers</span><p>Calculated from BEFN's stored data.</p><ul><li>Publish automatically if the calculation is tested and the sample is complete</li><li>The scope must be in the wording ("in BEFN's records since 2021")</li><li>No unscoped "most ever" or "first ever"</li><li>New kinds of fact get a one-off check against JSA before they go live</li></ul></div>
+   <div class="tiercard" style="--c:#4f6bd8"><span class="disp">C · Researched</span><p>Media, Wikipedia, Guinness, NHK, interviews.</p><ul><li>Two independent sources, or one strong one plus owner approval</li><li>Saved with link, quoted line and date checked</li><li>Re-checked every 180 days (biography) or 90 days (records)</li></ul></div>
+   <div class="tiercard" style="--c:var(--red)"><span class="disp">D · Never</span><p>Doesn't run, whatever the source.</p><ul><li>Match-fixing hints or implied bias</li><li>Injury guesses, private life, rumours</li><li>A record claim wider than its source</li></ul></div>
+  </div>
+  <h3>Wow score: what decides whether a true fact gets shown</h3>
+  <div class="score">
+   <div><b>Rarity</b><span>How unusual compared with everyone else (top 5% or better scores high)</span></div>
+   <div><b>Stakes</b><span>Involves today's bout, the title race, a promotion or a sanyaku wrestler</span></div>
+   <div><b>Recency</b><span>Happening now or recently beats something from 2014</span></div>
+   <div><b>Specificity</b><span>A clear number and named people, said in one sentence</span></div>
+   <div><b>Freshness</b><span>Not shown to this reader recently, and not something the standings already show</span></div>
+  </div>
+  <p class="note">Each place on the site has its own bar. A matchup line needs a high score, because it's a single line; the hub can go deeper. If nothing scores high enough, nothing shows. Where facts tie, rotate them.</p>
+  <div class="tbl"><table>
+   <thead><tr><th>Rule</th><th>Pilot today</th><th>Proposed</th></tr></thead>
+   <tbody>
+    <tr><td><b>Sources</b></td><td>Sumo API plus six hand-written stories</td><td>Four levels of source (A–D), with outside research encouraged</td></tr>
+    <tr><td><b>Our own calculations</b></td><td>Current-basho form, win %</td><td>Rivalries, techniques, pressure, comebacks, rises, size, age, roots</td></tr>
+    <tr><td><b>Superlatives</b></td><td>Avoided</td><td>Allowed with a stated scope, or when a level-A source says it</td></tr>
+    <tr><td><b>Choosing what to show</b></td><td>Fixed thresholds per card type</td><td>A wow score, with a different bar for each place on the site</td></tr>
+    <tr><td><b>Where facts appear</b></td><td>Fun Facts page only</td><td>Matchups, head-to-head, profiles, kimarite, stables, home, hub</td></tr>
+    <tr><td><b>Stale data</b></td><td>Hide live facts after 48 h</td><td>Same, plus each fact has its own expiry</td></tr>
+    <tr><td><b>Missing data</b></td><td>Never read as 0–0</td><td>Unchanged. Incomplete basho are named, not hidden. Win % shows "missed basho" labels</td></tr>
+   </tbody>
+  </table></div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">The hub</span><h2>Fun Facts becomes "Sumo Stories"</h2>
+   <p>A short page you can scan, built around themes. The page you have now is about ten phone screens; this one is about three.</p></div>
+  <div class="hubgrid">
+   <div class="phone" aria-label="Phone wireframe of the Stories hub">
+    <span class="site-label">BEFN Sumo · Stories</span>
+    <div class="factline"><span class="tag">Fact of the day</span><p><b>Tamawashi and Takayasu: 42 meetings, 21–21.</b> They're both still ranked, so the series can go on.</p></div>
+    <div class="railhead"><b>Rivalries</b><span>See all</span></div>
+    <div class="rail"><div><b>12–0</b>Tomokaze over Shimanoumi</div><div><b>11</b>straight, Daieisho over Ura</div></div>
+    <div class="railhead"><b>Rising stars</b><span>See all</span></div>
+    <div class="rail"><div><b>4</b>titles in four basho, Asahifuji</div><div><b>4th</b>basho to Makushita, Hakugetsuro</div></div>
+    <div class="railhead"><b>Technique</b><span>See all</span></div>
+    <div class="rail"><div><b>34</b>winning moves, Hoshoryu</div><div><b>1</b>gasshohineri, Tamawashi</div></div>
+    <div class="railhead"><b>Families and roots</b><span>See all</span></div>
+    <div class="rail"><div><b>2</b>Onami brothers in the top two divisions</div><div><b>12</b>Mongolian-born sekitori</div></div>
+   </div>
+   <div class="hubnotes">
+    <div><b>Open with one fact</b><p>Lead with a single fact of the day in a large, two-wrestler layout. The counters go.</p></div>
+    <div><b>Themed rows, not one long feed</b><p>Rivalries, Rising stars, Technique, Pressure, Giant-killers, Families and roots, Records. Each row shows 4 to 6 cards and a "See all".</p></div>
+    <div><b>Search by wrestler or pair</b><p>Type a name, or two names, and get that wrestler's or that pair's best facts. This shares code with the head-to-head page.</p></div>
+    <div><b>Live form only during a basho</b><p>A small "This basho" row (title race, unbeaten, chasing 7–0) appears only during a tournament, so the page stays interesting between basho.</p></div>
+    <div><b>Win % moves to Leaderboards</b><p>Preset windows (this basho, last 3, last 6, last 12, two years). Wrestlers who missed a basho are shown with a "missed basho" label rather than hidden.</p></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">Keeping it fresh</span><h2>How new facts arrive</h2></div>
+  <div class="tbl"><table>
+   <thead><tr><th>Rhythm</th><th>What happens</th><th>Who approves</th></tr></thead>
+   <tbody>
+    <tr><td><b>Each refresh</b></td><td>Facts from our data (level B) are recalculated, re-scored and expired. No extra API calls: they reuse the bout and rank caches.</td><td>Tests on every change; nothing per fact</td></tr>
+    <tr><td><b>Daily</b></td><td>JSA profile facts (level A: titles, prizes, kinboshi, career totals) for the tracked roster, read with the existing portrait-intake approach and at the same polite rate.</td><td>Automatic once the reader is tested</td></tr>
+    <tr><td><b>Weekly</b></td><td>Claude researches 5 to 10 candidate level-C facts with sources and opens one PR listing them.</td><td>You, by merging the PR</td></tr>
+    <tr><td><b>Before each basho</b></td><td>A storyline pack: promotion chases, ozeki under pressure, returns, first-time sekitori, family firsts.</td><td>You, as one PR</td></tr>
+    <tr><td><b>Monthly</b></td><td>Audit: 20 random level-B facts checked against JSA pages, with the results noted in the PR log.</td><td>Reported to you</td></tr>
+   </tbody>
+  </table></div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">Plan</span><h2>Four phases, each a preview PR</h2></div>
+  <div class="phases">
+   <div class="phase rec"><span class="disp">Phase 1 · recommended start</span><h3>Engine and matchups</h3><p>The fact store, truth checks and wow score. Rivalry, streak, technique and size facts. One fact line on today's matchups and the head-to-head panel. This is where fans will notice most for the least work.</p></div>
+   <div class="phase"><span class="disp">Phase 2</span><h3>Profiles, kimarite, stables</h3><p>Did-you-know facts and badges on profiles, "who wins with this" in the kimarite guide, stable facts. Pressure and comeback facts after their audit.</p></div>
+   <div class="phase"><span class="disp">Phase 3</span><h3>Stories hub</h3><p>Rebuild Fun Facts as Sumo Stories with fact of the day, themed rows and pair search. Move win % to Leaderboards.</p></div>
+   <div class="phase"><span class="disp">Phase 4</span><h3>Outside research</h3><p>The JSA profile reader (titles, prizes, kinboshi, career totals), weekly research PRs and the pre-basho storyline pack.</p></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+  <div class="head"><span class="kicker">Your call</span><h2>Decisions I need from you</h2></div>
+  <div class="decide">
+   <div><b>The four source levels (A–D)</b><p>Especially: can level-B facts from our own data publish automatically, as long as the scope is in the wording?</p></div>
+   <div><b>Researched (level C) facts</b><p>Approve them in a weekly PR (my recommendation), or let two independent sources be enough without your sign-off?</p></div>
+   <div><b>Rename the page "Sumo Stories"</b><p>Rename, with Fun Facts kept as a redirect, and move win % to Leaderboards?</p></div>
+   <div><b>Start with Phase 1</b><p>The fact engine plus facts on matchups and head-to-heads, built on the preview branch for you to try before anything else.</p></div>
+  </div>
+ </div>
+</section>
+
+<footer>
+ <div class="wrap">Built from the Sumo preview branch as of 21 Nov 2026: 190 tracked rikishi and about 58,000 stored bouts. Example figures come from stored Sumo API data, not independently certified, unless marked "JSA checked". Nothing here goes to the production site without your "Merge N".</div>
+</footer>

@@ -51,12 +51,12 @@ jobs:
               exit 0
             fi
             python scripts/import-finished-ufc-results.py
-            git add data/results.json
+            git add data/results.json data/upcoming-cards.json
             if git diff --cached --quiet; then
               echo 'No finished UFC cards to import'
               exit 0
             fi
-            git commit -m 'Import finished UFC card results from UFCStats'
+            git commit -m 'Publish finished UFC card results and clear the card from Upcoming'
             if git push origin HEAD:main; then exit 0; fi
             echo 'Retrying after another writer updated main'
           done

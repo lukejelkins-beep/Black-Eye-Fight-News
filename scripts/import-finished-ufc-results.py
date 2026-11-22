@@ -20,6 +20,10 @@ Rules:
 - A card taken from Wikipedia is marked provisional and is replaced, once, by the
   UFCStats version when the export catches up. Any other existing result, and
   every highlight and summary already attached to a row, is never changed.
+- A UFC card that has a completed result leaves data/upcoming-cards.json, so a
+  finished card cannot sit in Upcoming reading "awaiting confirmation" while its
+  result is already on the Results page. The collector that used to maintain
+  those entries is switched off, and nothing else removes them.
 """
 import argparse, csv, datetime as dt, importlib.util, io, json, re, sys, unicodedata, urllib.parse, urllib.request
 from pathlib import Path
@@ -309,6 +313,18 @@ def replace_provisional(results, by_date):
     return report
 
 
+def retire_finished(results, upcoming, mine) -> list:
+    """Drop cards from Upcoming once a completed result exists for them."""
+    known = {e["id"] for e in results.get("events", [])}
+    named = {(e.get("date"), norm(e.get("name"))) for e in results.get("events", [])}
+    kept, retired = [], []
+    for card in upcoming.get("events", []):
+        finished = card.get("id") in known or (card.get("date"), norm(card.get("title"))) in named
+        (retired if mine(card) and finished else kept).append(card)
+    upcoming["events"] = kept
+    return [card["title"] for card in retired]
+
+
 def run(results, upcoming, fetch, today, wiki_fetch=None):
     known = {e['id'] for e in results['events']}
     known_names = {(e['date'], norm(e['name'])) for e in results['events']}
@@ -319,6 +335,8 @@ def run(results, upcoming, fetch, today, wiki_fetch=None):
     pending = any(e.get('provisional') for e in results['events'])
     report = []
     if not due and not pending:
+        for title in retire_finished(results, upcoming, lambda c: str(c.get('promotion', '')).upper() == 'UFC'):
+            report.append(f'retired: {title} (its result is published, so it leaves Upcoming)')
         return results, report
     by_date = load_source(fetch)
     report += replace_provisional(results, by_date)
@@ -350,6 +368,8 @@ def run(results, upcoming, fetch, today, wiki_fetch=None):
         results['events'].append(event)
         results['results'].extend(rows)
         report.append(f"provisional: {card['title']} ({len(rows)} bouts from Wikipedia)")
+    for title in retire_finished(results, upcoming, lambda c: str(c.get('promotion', '')).upper() == 'UFC'):
+        report.append(f'retired: {title} (its result is published, so it leaves Upcoming)')
     return results, report
 
 
@@ -381,5 +401,9 @@ if __name__ == '__main__':
     today = dt.datetime.now(dt.timezone.utc).date()
     updated, report = run(results, upcoming, http_fetch, today, wiki_fetch=http_get)
     print('\n'.join(report) or 'No finished UFC cards waiting for results')
-    if any(line.startswith(('imported', 'provisional', 'upgraded')) for line in report) and not args.dry_run:
+    if args.dry_run:
+        sys.exit(0)
+    if any(line.startswith(('imported', 'provisional', 'upgraded')) for line in report):
         RESULTS.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + '\n')
+    if any(line.startswith('retired') for line in report):
+        UPCOMING.write_text(json.dumps(upcoming, ensure_ascii=False, indent=2) + '\n')

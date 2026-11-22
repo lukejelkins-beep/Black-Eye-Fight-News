@@ -109,10 +109,31 @@ class ImportFinishedResultsTest(unittest.TestCase):
 
     def test_skips_known_cards_other_promotions_and_age_window(self):
         known = {'events': [{'id': PFL['id']}], 'results': []}
-        self.assertEqual(run(PFL, results=known)[1], [])
+        report = run(PFL, results=known)[1]
+        self.assertFalse([line for line in report if line.startswith('imported')], 'already in results')
+        self.assertTrue(report[0].startswith('retired:'), 'but it should not stay in Upcoming')
         self.assertEqual(run(dict(PFL, promotion='UFC'))[1], [])
         self.assertEqual(run(PFL, today=dt.date(2026, 11, 14))[1], [])
         self.assertEqual(run(PFL, today=dt.date(2026, 12, 20))[1], [])
+
+    def test_a_finished_card_leaves_upcoming_and_an_unfinished_one_stays(self):
+        later = card('PFL', 'pfl-later-2026-11-16', 'PFL 12', '2026-11-16', PFL['bouts'])
+        cards = {'events': [PFL, later]}
+        done = {'events': [{'id': 'pfl-later-2026-11-16', 'name': 'PFL 12', 'date': '2026-11-16'}], 'results': []}
+        _, report = importer.run(done, cards, fetch, TODAY)
+        self.assertIn('retired: PFL 12 (its result is published, so it leaves Upcoming)', report)
+        titles = [c['title'] for c in cards['events']]
+        self.assertNotIn('PFL 12', titles, 'its result is published')
+        self.assertNotIn(PFL['title'], titles, 'it was imported in this run')
+        self.assertEqual(cards['events'], [], 'both cards are finished')
+
+    def test_a_card_nobody_imports_is_left_alone(self):
+        ksw = card('KSW', 'ksw-123-2026-11-21', 'XTB KSW 123', '2026-11-21', PFL['bouts'])
+        done = {'events': [{'id': 'ksw-123-2026-11-21', 'name': 'XTB KSW 123', 'date': '2026-11-21'}], 'results': []}
+        cards = {'events': [ksw]}
+        _, report = importer.run(done, cards, fetch, TODAY)
+        self.assertEqual(report, [], 'no source handles KSW, so it is not this importer\'s card to retire')
+        self.assertEqual(len(cards['events']), 1)
 
     def test_name_key_ignores_order_hyphens_and_accents(self):
         self.assertEqual(importer.name_key('Kim Su-hyeon'), importer.name_key('Suhyeon Kim'))

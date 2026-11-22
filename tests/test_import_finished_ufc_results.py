@@ -100,8 +100,11 @@ def empty_csv(name):
 
 class ImporterTest(unittest.TestCase):
     def test_imports_a_finished_card_with_corners_mapped(self):
-        results, report = importer.run({'events': [], 'results': []}, upcoming(BOUTS), fetch, TODAY)
-        self.assertEqual(report, ['imported: UFC 334: Gane vs Hokit (3 bouts)'])
+        cards = upcoming(BOUTS)
+        results, report = importer.run({'events': [], 'results': []}, cards, fetch, TODAY)
+        self.assertEqual(report, ['imported: UFC 334: Gane vs Hokit (3 bouts)',
+                                  'retired: UFC 334: Gane vs Hokit (its result is published, so it leaves Upcoming)'])
+        self.assertEqual(cards['events'], [], 'a finished card does not stay in Upcoming')
         event, rows = results['events'][0], results['results']
         self.assertEqual(event['mainBoutId'], rows[0]['id'])
         self.assertFalse(event['partialCoverage'])
@@ -131,12 +134,28 @@ class ImporterTest(unittest.TestCase):
         self.assertEqual(results['events'], [])
         self.assertIn('only 1 of 4', report[0])
 
-    def test_never_touches_cards_already_in_results(self):
+    def test_never_touches_cards_already_in_results_but_does_clear_them_from_upcoming(self):
         existing = {'events': [{'id': 'ufc-334-2026-11-14', 'name': 'UFC 334: Gane vs Hokit', 'date': '2026-11-14'}], 'results': []}
         before = copy.deepcopy(existing)
-        results, report = importer.run(existing, upcoming(BOUTS), fetch, TODAY)
-        self.assertEqual(results, before)
-        self.assertEqual(report, [])
+        cards = upcoming(BOUTS)
+        results, report = importer.run(existing, cards, fetch, TODAY)
+        self.assertEqual(results, before, 'a published result is never rewritten')
+        self.assertEqual(report, ['retired: UFC 334: Gane vs Hokit (its result is published, so it leaves Upcoming)'])
+        self.assertEqual(cards['events'], [], 'the card left Upcoming even though nothing was imported')
+
+    def test_other_promotions_are_left_in_upcoming(self):
+        existing = {'events': [{'id': 'pfl-2026-11-14', 'name': 'PFL 11', 'date': '2026-11-14'}], 'results': []}
+        cards = {'events': [{'id': 'pfl-2026-11-14', 'date': '2026-11-14', 'promotion': 'PFL', 'title': 'PFL 11', 'bouts': []}]}
+        _, report = importer.run(existing, cards, fetch, TODAY)
+        self.assertEqual(report, [], 'the UFC importer does not tidy another promotion')
+        self.assertEqual(len(cards['events']), 1)
+
+    def test_a_card_whose_result_is_filed_under_another_id_still_leaves(self):
+        existing = {'events': [{'id': 'different-id', 'name': 'UFC 334: Gane vs Hokit', 'date': '2026-11-14'}], 'results': []}
+        cards = upcoming(BOUTS)
+        _, report = importer.run(existing, cards, fetch, TODAY)
+        self.assertIn('retired: UFC 334: Gane vs Hokit', report[0], 'matched on date and name')
+        self.assertEqual(cards['events'], [])
 
     def test_ignores_cards_from_other_promotions_and_too_old_or_future(self):
         card = upcoming(BOUTS)
@@ -156,9 +175,10 @@ class WikipediaFallbackTest(unittest.TestCase):
     """The site should not show a finished card as awaiting confirmation for a day."""
 
     def test_imports_from_wikipedia_when_the_export_has_not_caught_up(self):
-        results, report = importer.run({'events': [], 'results': []}, upcoming(BOUTS), empty_csv, TODAY,
-                                       wiki_fetch=wiki_fetch)
-        self.assertEqual(report, ['provisional: UFC 334: Gane vs Hokit (3 bouts from Wikipedia)'])
+        cards = upcoming(BOUTS)
+        results, report = importer.run({'events': [], 'results': []}, cards, empty_csv, TODAY, wiki_fetch=wiki_fetch)
+        self.assertEqual(report[0], 'provisional: UFC 334: Gane vs Hokit (3 bouts from Wikipedia)')
+        self.assertEqual(cards['events'], [], 'a provisional import still finishes the card')
         event, rows = results['events'][0], results['results']
         self.assertTrue(event['provisional'])
         self.assertEqual(event['sourceVerified'], 'Wikipedia (CC BY-SA)')
@@ -196,7 +216,7 @@ class WikipediaFallbackTest(unittest.TestCase):
         results['results'][0]['highlights'] = 'https://example.test/finish'
         results['results'][0]['summary'] = 'Written by hand after the import.'
         upgraded, report = importer.run(results, upcoming(BOUTS), fetch, TODAY, wiki_fetch=wiki_fetch)
-        self.assertEqual(report, ['upgraded: UFC 334: Gane vs Hokit to the UFCStats export (3 bouts)'])
+        self.assertEqual(report[0], 'upgraded: UFC 334: Gane vs Hokit to the UFCStats export (3 bouts)')
         event = upgraded['events'][0]
         self.assertNotIn('provisional', event)
         self.assertEqual(event['sourceVerified'], importer.SOURCE_LABEL)
@@ -209,7 +229,7 @@ class WikipediaFallbackTest(unittest.TestCase):
         self.assertEqual(main['highlights'], 'https://example.test/finish')
         self.assertEqual(main['summary'], 'Written by hand after the import.')
         self.assertEqual(main['fighters'][0]['record'], '14\u20133\u20130')  # records survive the swap
-        again, report = importer.run(upgraded, upcoming(BOUTS), fetch, TODAY, wiki_fetch=wiki_fetch)
+        again, report = importer.run(upgraded, {'events': []}, fetch, TODAY, wiki_fetch=wiki_fetch)
         self.assertEqual(report, [])  # nothing is rewritten a second time
 
 
