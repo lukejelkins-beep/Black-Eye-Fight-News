@@ -1,6 +1,6 @@
 # Boxing photo cache — scope
 
-Status: **proposal, 2026-11-22.** Nothing built. Asked for after the landing page (#397) had to fall back to a pattern tile on boxing rows. Needs the owner's decisions in "What I need from you" before any work starts.
+Status: **proposal, 2026-11-22.** Nothing built, nothing fetched. Asked for after the landing page (#397) had to fall back to a pattern tile on boxing rows. The owner has picked the source route — promoter press kits — so what is left is the attestation and the first batch size, under "Still open".
 
 ## Why
 
@@ -54,14 +54,35 @@ The first 30 are the visible win: every announced boxing card gets a face on the
 
 Roughly half a day of my time once the first batch of originals exists, and it does not grow much with batch size — step 2 onwards is the same work for 30 photos or 300. Repository size is the one thing to watch: the UFC library is 29 MB for 750 fighters, so 225 boxers would add about 9 MB.
 
-## What I need from you
+## Route chosen: promoter press kits (owner, 2026-11-22)
 
-1. **Which sources may we republish?** This is the open question `IMAGE-GUIDE.md` has carried since 17 November. Realistic options, and they can be combined:
-   - **Your own cleared stockpile**, as with the UFC library. Safest, slowest.
-   - **Promoter and broadcaster press kits** (Queensberry, Matchroom, BOXXER, Golden Boy, PBC, DAZN). Usually free to use for editorial coverage, often with a required credit. Needs your attestation per promoter, as with the JSA.
-   - **Wikimedia Commons**, CC BY or CC BY-SA, with the photographer credited in the register and shown in the page's credit line. `scripts/process-fighter-images.py` already knows the Wikimedia credit string.
-2. **Do you want me to fetch under an attested permission**, as Sumo does, or do you want to keep supplying originals by hand? If a promoter permission is attested I can write the intake the way `sumo-portrait-intake.py` works, with a rights record per photo.
-3. **How far down the list to go first** — my suggestion is the first 30.
+The owner picked promoter and broadcaster press kits over supplying originals by hand. That makes this the second attested-permission intake after the JSA one, so it needs the same care.
+
+**The promoters our own boxing cards name**, with the official sites those records already link to:
+
+| Promoter | Site we already link to |
+|---|---|
+| Matchroom (and Matchroom Boxing) | `www.matchroomboxing.com` |
+| Queensberry | `queensberry.co.uk` |
+| BOXXER | `www.boxxer.com` |
+| PBC | `www.premierboxingchampions.com` |
+| MVP (Most Valuable Promotions) | `www.mostvaluablepromotions.com` |
+| Salita / Universal Promotions | `www.salitapromotions.com` |
+| Top Rank, Zuffa Boxing | no card linked to their own site yet |
+
+**What an attested intake would do**, modelled on `scripts/cache-event-posters.py` and `sumo-portrait-intake.py`:
+- Fetch only from that allowlist, only pages for fighters and events we already track, and only when the site's `robots.txt` allows it. One fetch per photo, a checksum so it is never re-fetched, and a failure recorded rather than retried forever.
+- Record per photo: source page, image URL, promoter credit, `rights: promoter-press-kit`, the owner's attestation and its date, and the file hash — the shape `poster-register.json` already uses.
+- **Skip agency photographs.** A press kit often contains Getty, AP or Reuters frames whose licence does not transfer to us, so anything credited to an agency, or carrying an agency watermark, is left alone rather than guessed at.
+- Fail closed: no permission recorded for a promoter, or no robots allowance, means no fetch for that promoter.
+
+**Before I build it I need one thing from the owner**: confirmation that their permission covers republishing fighter photographs from those named promoters on BEFN, with the promoter credited — and any promoter to add or drop from the list. That sentence, dated, is what goes in `IMAGE-GUIDE.md` and in every register row, exactly as the JSA attestation does. Permission to republish a press-kit photo is not the same as permission to crawl a site, so the allowlist stays narrow and robots-respecting either way.
+
+## Still open
+
+1. **The attestation itself**, as above: that your permission covers republishing fighter photographs from the named promoters, with the promoter credited, and whether any promoter should be added or dropped.
+2. **How far down the list to go first** — my suggestion is the first 30, which puts a face on every announced boxing card.
+3. **Whether to add Wikimedia Commons as a second source** for boxers no press kit covers (CC BY / CC BY-SA, photographer credited; `process-fighter-images.py` already knows that credit string).
 
 ## Not in this scope
 
