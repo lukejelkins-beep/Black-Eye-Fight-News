@@ -33,4 +33,17 @@ assert(html.includes('assets/img/ufc-cutouts/navajo-stirling.webp'));
 assert(!/tbc|placeholder|lorem/i.test(html));
 const bare=L.build({stories:[],events:[],now},h);
 assert(!bare.includes('lp-fixtures')&&!bare.includes('lp-cols')&&!bare.includes('lp-result'));
+// Phone rules (docs/design/DIRECTION.md): nothing under 12 px, tap targets at least 44 px.
+// This checks the stylesheet, not the rendered boxes; the rendered sizes were checked in a browser at 390 and 1280 px.
+const css=require('fs').readFileSync(require('path').join(__dirname,'../assets/landing-page.css'),'utf8');
+const small=[...css.matchAll(/font-size:\s*(?:clamp\(\s*)?(\d+(?:\.\d+)?)px/g)].map(m=>Number(m[1])).filter(n=>n<12);
+assert.deepStrictEqual(small,[],'landing-page.css sets text under 12 px: '+small.join(', '));
+const line=sel=>css.split('\n').find(l=>l.startsWith(sel+'{'));
+for(const sel of ['#main .lp-button','#main .lp-col-item','#main .lp-col-foot a']){
+  assert(/min-height:44px/.test(line(sel)||''),sel+' must keep its 44 px tap target');
+}
+for(const sel of ['#main .lp-head a','#main .lp-col-head a']){
+  const r=line(sel)||'';
+  assert(/padding:14px 0/.test(r)&&/margin:-14px 0/.test(r),sel+' must keep its 44 px hit box (14 px padding, cancelled by a negative margin)');
+}
 console.log('landing tests passed');
