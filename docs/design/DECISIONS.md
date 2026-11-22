@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-22 (j)
+- `test-build-site` goes green. Two separate causes. The folder check treated any folder under `data/` as suspect unless it was listed in `DATA_DIRS`, but `data/sumo` exists because pages request files inside it and the build copies only those — 6 of its 20 files, including the research registers and the intake status, are correctly left off the site. The check now also allows a folder that referenced files live in, and a new assertion proves two known research files stay unpublished, so widening it cannot let one ride along. The 80 MB size line was written when the build was a fraction of today's and has been failing since the Sumo merge; the published site is 156 MB (assets 142 — kimarite clips 54, UFC and poster images 44, Sumo portraits 43 — and data 47), all owner-cleared media the site is meant to serve. The limit is now 200 MB with about 28% headroom, named and commented as a tripwire for unintended growth rather than a budget, and its failure message says to raise it deliberately. No build or publishing behaviour changed: this is the test catching up with the site. Suite goes from 159/13 to 161/12. — Owner ("raise limit") — PR for branch fix/build-size-limit-20261122.
+
 ## 2026-11-22 (i)
 - Attribute-scores note: when a bout is contracted at a division a fighter has just fought at, the note no longer names that division twice. Pereira vs Pavlovich read "Ranked against Heavyweight fighters, the division this bout is contracted at. Alex Pereira’s last bout was at Heavyweight."; the second sentence is dropped when its division is the one the note has already named. A last bout in any other division is still reported, and nothing else in the note changes. No replacement sentence naming Pereira’s own division (Light Heavyweight) was invented; say so if you want one. — Owner ("Yes, both") — PR for branch fix/snapshot-note-division-20261122.
 
