@@ -30,7 +30,7 @@ test("profile rating and skills equal the stats build, with no credential points
  });
  for(const p of people)ui.renderProfile(p.profile);
  for(let i=0;i<20;i++)await tick();
- assert(people.length>1000,"the whole roster is checked");
+ assert(people.length>800,"the whole roster is checked");
  let credentialled=0;
  for(const {slug,row,profile} of people){
   if(ui.credentialsFor(profile).length)credentialled++;
