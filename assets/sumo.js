@@ -900,6 +900,17 @@ function lastBoutFor(w){
   const done=currentProfileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss');
   return done.length?done[done.length-1]:null;
 }
+/** Landmark cut-out for the hero's top-left slot (RU, UA, MN, KZ). Shown to readers only when the
+ * record is approved; ?landmarks=preview shows unapproved ones for owner review. Else the kanji stays. */
+function landmarkHtml(w){
+  const cc=originCountry(w.birthplace)?.code,m=cc&&STATE.landmarks?.[cc];
+  if(!m||!/^assets\/sumo-landmarks\/[a-z]{2}\.webp$/.test(String(m.path||'')))return '';
+  const preview=typeof location!=='undefined'&&new URLSearchParams(location.search).get('landmarks')==='preview';
+  if(m.approved!==true&&!preview)return '';
+  const fade=(Array.isArray(m.fade)?m.fade:[]).filter(x=>x==='left'||x==='bottom').map(x=>' fade-'+x[0]).join('');
+  const wide=Number(m.width)/Number(m.height)>1.4?' style="--lm-scale:1.5"':'';
+  return '<div class="sumo-poster-landmark'+fade+'" data-country="'+e(cc)+'"'+wide+'><img src="'+e(m.path)+'" alt="'+e(m.alt||'')+'" width="'+Number(m.width)+'" height="'+Number(m.height)+'" decoding="async"></div>';
+}
 /** Poster hero figure: a clean full-body cut-out in front of the red disc, otherwise the
  * approved photo cropped into the disc. No photo: the disc alone. */
 function posterFigure(w){
@@ -934,7 +945,8 @@ function posterHero(w,{r,wins,losses,careerPercent}){
   }
   const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h],['Weight · undated',current.mass==='—'?null:current.mass]]
     .filter(([,v])=>v!==null&&v!==undefined).map(([k,v])=>'<span>'+e(k)+' <strong>'+e(v)+'</strong></span>').join('');
-  return '<section class="sumo-poster">'+
+  const landmark=landmarkHtml(w);
+  return '<section class="sumo-poster'+(landmark?' has-landmark':'')+'">'+landmark+
     (kanji?'<div class="sumo-poster-kanji" aria-hidden="true" style="--kanji-count:'+[...kanji].length+'">'+e(kanji)+'</div>':'')+
     posterFigure(w)+
     '<div class="sumo-poster-body"><div>'+
@@ -1761,6 +1773,8 @@ async function init(){
     // Optional cut-out derivatives; the page works without them.
     STATE.cutouts=(await loadJson('data/sumo/cutouts.json').catch(()=>null))?.bySourceId||null;
     STATE.heads=(await loadJson('data/sumo/heads.json').catch(()=>null))?.bySourceId||null;
+    // Optional landmark cut-outs (top-left of the profile hero); the page works without them.
+    STATE.landmarks=(await loadJson('data/sumo/landmarks.json').catch(()=>null))?.byCountry||null;
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
