@@ -6,6 +6,9 @@ Pure calculation over files already in data/; never calls a provider.
 Inputs
   data/ufc-research-archive.json       per-round stats for each archived UFC fight
   data/ufcalendar-rich-progress.json   official results (winner, method, round, time)
+  data/results.json                    the free results importer's own cards, used
+                                       only for fights after the last one the
+                                       (retired) paid collector recorded
   data/ufcalendar-judging-research.json judges' scorecards for decisions
   data/ufc-divisions.json              official division rosters, ranks, champions
   data/ufc-bout-weight-classes.json    division of each fighter's latest labelled bout (free UFCStats)
@@ -20,6 +23,11 @@ Rules
   * A fight contributes statistics only if its official result is known and
     every round up to the finishing round was captured with valid numbers.
     Results (wins, methods) still count even when round stats are missing.
+  * The paid collector that writes ufcalendar-rich-progress.json is switched
+    off, so cards that finish from now on arrive through data/results.json
+    instead. Such a fight is used only when both names resolve to exactly one
+    native fighter id the collector already holds, and only for dates after the
+    last fight the collector recorded, so no published number changes.
   * Rates use cage time from the official finishing round and clock.
   * Zero is evidence; missing is None. Nothing is estimated.
 """
@@ -71,6 +79,26 @@ METHODS = {
 }
 
 
+def result_method(text) -> str | None:
+    """The provider's method code for the free text on a results.json row."""
+    low = re.sub(r"\s+", " ", str(text or "")).strip().lower()
+    if not low:
+        return None
+    if "no contest" in low:
+        return "no_contest"
+    if "draw" in low:
+        return "draw"
+    if "disqualification" in low or re.match(r"dq\b", low):
+        return "dq"
+    if "submission" in low:
+        return "submission"
+    if "decision" in low:
+        return "decision"
+    if re.search(r"\bko\b|\btko\b", low):
+        return "ko_tko"
+    return None  # unreadable wording is never guessed at
+
+
 def norm(text: str) -> str:
     text = unicodedata.normalize("NFKD", str(text or ""))
     return re.sub(r"[^a-z0-9]", "", text.encode("ascii", "ignore").decode().lower())
@@ -78,6 +106,15 @@ def norm(text: str) -> str:
 
 def load(name: str):
     return json.loads((DATA / name).read_text(encoding="utf-8"))
+
+
+def results_rows() -> list:
+    """The site's own result rows, or nothing if the file is absent or unreadable."""
+    try:
+        rows = load("results.json").get("results")
+    except (OSError, ValueError):
+        return []
+    return rows if isinstance(rows, list) else []
 
 
 def parse_date(value) -> dt.date | None:
@@ -178,6 +215,86 @@ def build_fight(archive_fight: dict, bout: dict, scorecard: dict | None) -> dict
     return fight
 
 
+def pair_key(a, b) -> tuple:
+    return tuple(sorted((norm(a), norm(b))))
+
+
+def fighter_index(bouts: dict) -> dict:
+    """Name -> the collector's own slug and native id, only where it is unambiguous."""
+    seen: dict[str, set] = {}
+    for bout in bouts.values():
+        for corner in ("a", "b"):
+            side = bout.get(corner) or {}
+            name, slug, native = side.get("name"), side.get("slug"), side.get("id")
+            if name and slug and native is not None:
+                seen.setdefault(norm(name), set()).add((slug, str(native), name))
+    return {key: dict(zip(("slug", "id", "name"), next(iter(found))))
+            for key, found in seen.items() if len(found) == 1}
+
+
+def bout_from_result(row: dict, people: dict) -> dict | None:
+    """One completed results.json row in the shape of a collector bout record."""
+    method = result_method(row.get("method"))
+    fighters = row.get("fighters") or []
+    if method is None or len(fighters) != 2:
+        return None
+    sides = [people.get(norm(f.get("name"))) for f in fighters]
+    if not all(sides) or sides[0]["slug"] == sides[1]["slug"]:
+        return None  # an unknown or ambiguous name is never promoted to a fighter
+    winner = row.get("winner")
+    return {
+        "id": str(row.get("id")), "org": "ufc", "status": "completed",
+        "eventDate": row.get("date"), "event": row.get("event"),
+        "titleFight": False,  # a results row carries no title flag, so it is not inferred
+        "main": row.get("order") == 0,
+        "a": {"slug": sides[0]["slug"], "name": sides[0]["name"], "id": sides[0]["id"]},
+        "b": {"slug": sides[1]["slug"], "name": sides[1]["name"], "id": sides[1]["id"]},
+        "result": {"method": method, "round": row.get("round"), "time": row.get("time"),
+                   "winnerId": sides[winner]["id"] if winner in (0, 1) else None,
+                   "finishDetail": None},
+    }
+
+
+def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None, skipped: dict) -> list[dict]:
+    """Fights the retired paid collector never recorded, taken from data/results.json.
+
+    Only cards after the last fight the collector recorded are read, so nothing
+    already published changes, and a bout is used only when both names resolve to
+    exactly one native fighter id the collector already holds. Round statistics
+    are used when the archive happens to hold the same fight; otherwise the fight
+    counts as a result with no measured rounds.
+    """
+    people = fighter_index(bouts)
+    captured = {}
+    for record in archive.values():
+        day = parse_date(record.get("date"))
+        if day and str(record.get("promotion", "")).upper() == "UFC":
+            captured.setdefault((day, pair_key(record.get("fighterA"), record.get("fighterB"))), record)
+    out, seen = [], set()
+    for row in rows:
+        day = parse_date(row.get("date"))
+        if (row.get("status") != "completed" or row.get("sport") != "MMA"
+                or not str(row.get("eventId", "")).startswith("ufc")
+                or not day or (after is not None and day <= after)):
+            continue
+        bout = bout_from_result(row, people)
+        if bout is None:
+            skipped["unresolved"] += 1
+            continue
+        key = (day, pair_key(bout["a"]["name"], bout["b"]["name"]))
+        if key in seen:
+            continue
+        fight = build_fight(captured.get(key) or {"fighterA": bout["a"]["name"],
+                                                  "fighterB": bout["b"]["name"], "rounds": []}, bout, None)
+        if fight is None:
+            skipped["unresolved"] += 1
+            continue
+        fight["resultSource"] = "results"
+        seen.add(key)
+        out.append(fight)
+    return out
+
+
 def side_view(fight: dict, corner: str) -> dict:
     """The fight from one fighter's perspective: own, opp and outcome."""
     other = "b" if corner == "a" else "a"
@@ -190,6 +307,7 @@ def side_view(fight: dict, corner: str) -> dict:
         "endRound": fight["endRound"], "endTime": fight["endTime"], "seconds": fight["seconds"],
         "titleFight": fight["titleFight"], "mainEvent": fight["mainEvent"],
         "statsComplete": fight["statsComplete"],
+        "resultSource": fight.get("resultSource"),  # absent unless the free results file supplied it
         "rounds": [{"round": r["round"], "seconds": r["seconds"], "own": r[corner], "opp": r[other]}
                    for r in fight["rounds"]],
         "scorecards": None if not fight["scorecards"] else {
@@ -449,7 +567,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
     official = official_divisions()
     weight = weight_class_divisions()
 
-    fights, skipped = [], {"noResult": 0, "unaligned": 0}
+    fights, skipped = [], {"noResult": 0, "unaligned": 0, "unresolved": 0}
     for record in archive.values():
         if str(record.get("promotion", "")).upper() != "UFC":
             continue
@@ -462,6 +580,8 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
             skipped["unaligned"] += 1
             continue
         fights.append(fight)
+    collected_to = max((d for d in (parse_date(f["date"]) for f in fights) if d), default=None)
+    fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped)
 
     per_fighter: dict[str, dict] = {}
     for fight in fights:
@@ -687,6 +807,9 @@ def latest_event_date(today: dt.date | None = None) -> dt.date:
     today = today or dt.date.today()
     dates = [parse_date(b.get("eventDate")) for b in load("ufcalendar-rich-progress.json")["bouts"].values()
              if b.get("org") == "ufc" and b.get("status") == "completed"]
+    dates += [parse_date(r.get("date")) for r in results_rows()  # the free importer keeps filling this one
+              if r.get("status") == "completed" and r.get("sport") == "MMA"
+              and str(r.get("eventId", "")).startswith("ufc")]
     dates = [d for d in dates if d and d <= today]
     return max(dates) if dates else today
 
