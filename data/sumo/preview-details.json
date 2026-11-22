@@ -1492,14 +1492,14 @@
                 "kimarite": "yorikiri"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Hoshoryu",
                 "opponentShikonaJp": "豊昇龍",
                 "opponentID": 19,
-                "kimarite": ""
+                "kimarite": "oshidashi"
               }
             ],
-            "wins": 12,
+            "wins": 13,
             "losses": 2,
             "absences": 0
           },
@@ -1610,14 +1610,14 @@
                 "kimarite": "yoritaoshi"
               },
               {
-                "result": "",
+                "result": "win",
                 "opponentShikonaEn": "Kotozakura",
                 "opponentShikonaJp": "琴櫻",
                 "opponentID": 20,
-                "kimarite": ""
+                "kimarite": "kotenage"
               }
             ],
-            "wins": 6,
+            "wins": 7,
             "losses": 8,
             "absences": 0
           },
@@ -4090,15 +4090,15 @@
                 "kimarite": "sotogake"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Onosato",
                 "opponentShikonaJp": "大の里",
                 "opponentID": 8850,
-                "kimarite": ""
+                "kimarite": "oshidashi"
               }
             ],
             "wins": 9,
-            "losses": 5,
+            "losses": 6,
             "absences": 0
           },
           {
@@ -4208,15 +4208,15 @@
                 "kimarite": "sotogake"
               },
               {
-                "result": "",
+                "result": "loss",
                 "opponentShikonaEn": "Aonishiki",
                 "opponentShikonaJp": "安青錦",
                 "opponentID": 8854,
-                "kimarite": ""
+                "kimarite": "kotenage"
               }
             ],
             "wins": 8,
-            "losses": 6,
+            "losses": 7,
             "absences": 0
           },
           {
@@ -47516,9 +47516,9 @@
             "westId": 20,
             "westShikona": "Kotozakura",
             "westRank": "Ozeki 1 West",
-            "kimarite": "",
-            "winnerId": 0,
-            "winnerEn": "",
+            "kimarite": "kotenage",
+            "winnerId": 8854,
+            "winnerEn": "Aonishiki",
             "winnerJp": ""
           },
           {
@@ -47533,9 +47533,9 @@
             "westId": 19,
             "westShikona": "Hoshoryu",
             "westRank": "Yokozuna 1 West",
-            "kimarite": "",
-            "winnerId": 0,
-            "winnerEn": "",
+            "kimarite": "oshidashi",
+            "winnerId": 8850,
+            "winnerEn": "Onosato",
             "winnerJp": ""
           }
         ]
@@ -48089,7 +48089,7 @@
       }
     }
   },
-  "dailyCollectedAt": "2026-11-22T08:18:55.529Z",
+  "dailyCollectedAt": "2026-11-22T09:10:28.832Z",
   "dailyJstDay": 15,
   "dailyScheduleCount": 51,
   "dailySource": "https://www.sumo-api.com/api",
@@ -72250,7 +72250,7 @@
     },
     "source": "Sumo API complete cached regular-bout ledger plus dated rank history",
     "note": "Only full recorded 15-bout top-two-division or 7-bout lower-division bashos count. Incomplete periods including absences are withheld. Yusho playoffs are excluded. Current basho comes separately from the fresh banzuke.",
-    "generatedAt": "2026-11-22T08:18:56.908Z"
+    "generatedAt": "2026-11-22T09:10:30.239Z"
   },
   "factIndex": {
     "schemaVersion": 1,
@@ -72259,7 +72259,7 @@
     "source": "BEFN cached Sumo API regular-bout ledger (not independently JSA-certified) and listed roster data",
     "scope": "Bouts in BEFN records involve at least one wrestler BEFN tracks; ledger playoffs excluded",
     "counts": {
-      "pairs": 194,
+      "pairs": 193,
       "people": 44,
       "techniques": 70
     },
@@ -73006,18 +73006,6 @@
           "s": 52
         }
       ],
-      "19:8850": [
-        {
-          "k": "streak",
-          "w": "19",
-          "l": "8850",
-          "n": 6,
-          "wa": 9,
-          "wb": 2,
-          "lastLoss": "202409",
-          "s": 60
-        }
-      ],
       "2:15": [
         {
           "k": "streak",
@@ -73171,11 +73159,11 @@
           "k": "streak",
           "w": "8854",
           "l": "20",
-          "n": 7,
-          "wa": 7,
+          "n": 8,
+          "wa": 8,
           "wb": 1,
           "lastLoss": "202505",
-          "s": 64
+          "s": 68
         }
       ],
       "21:22": [
@@ -75329,7 +75317,7 @@
         ]
       },
       "oshidashi": {
-        "t": 8330,
+        "t": 8331,
         "top": [
           [
             "14",
@@ -75465,7 +75453,7 @@
         ]
       },
       "kotenage": {
-        "t": 585,
+        "t": 586,
         "top": [
           [
             "16",
@@ -76377,6 +76365,6 @@
         ]
       }
     },
-    "generatedAt": "2026-11-22T08:18:56.908Z"
+    "generatedAt": "2026-11-22T09:10:30.239Z"
   }
 }
