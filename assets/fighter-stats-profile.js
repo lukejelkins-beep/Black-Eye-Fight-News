@@ -41,8 +41,7 @@
  function glance(stats){
   const c=stats.windows?.career||{};
   const big=[
-   stats.feederBouts?[record(c),"Recorded bouts","Includes "+stats.feederBouts+" Contender Series or Road to UFC"]:
-    [record(c),"UFC record",c.fights?c.fights+" UFC fights":""],
+   [record(c),"UFC record",c.fights?c.fights+" UFC fights":""],
    [Number.isFinite(c.finishRate)?Math.round(c.finishRate*100)+"%":"—","Finish rate",c.W?"of "+c.W+" UFC wins":"No UFC wins yet"],
    c.judging?[Math.round(c.judging.roundWinRate*100)+"%","Rounds won on the cards",c.judging.roundsScored+" scored rounds"]:
     [num(c.rates?.diffPm),"Strike difference per min","Landed minus absorbed"]

@@ -308,7 +308,7 @@
    '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):v2Overall+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(v2Overall||0)+'%"></span></span>'+
    verifiedTag+
-   (pills?'<div class="befn-pro-form"><span>Last '+fights.length+(stats?.feederBouts?' recorded':' UFC')+' · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
+   (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC'+' · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>'+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
@@ -318,7 +318,7 @@
      ' rated UFC fighters, using the whole UFC career with recent fights counting most. Recent form is out of 100.</p>':
      stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
-   proSection('fights','Recent fights',stats?.feederBouts?'Includes feeder-series bouts':'Up to five recorded UFC fights',
+   proSection('fights','Recent fights','Up to five recorded UFC fights',
     (history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'<p class="befn-pro-note">Fight history awaiting verification</p>')+
     (SP&&stats?SP.history(stats,matched):''))+
    '</div>'+
@@ -518,9 +518,6 @@
  // page is made from that fighter's own stats file and nothing else. These are
  // not added to the Fighters directory, and certify nothing.
  const statsProfiles=new Map();
- // The same title test as scripts/ufc-official-event-scope.mjs. The stats build
- // still counts these bouts, so a profile must not call its totals a UFC record.
- const FEEDER=/contender\s+series|road\s+to\s+ufc|\bdwcs\b/i;
  const STATS_METHOD={ko:"KO/TKO",sub:"Submission",dec:"Decision",draw:"Draw",nc:"No contest",dq:"DQ"};
  function statsProfile(id,ready){
   const slug=/^ufc--([a-z0-9-]+)$/.exec(id||"")?.[1];
@@ -531,11 +528,9 @@
    if(!statsProfiles.has(slug)){
     const c=d.windows?.career||{},ranked=Number.isInteger(d.officialRank)&&d.officialRank>0;
     if(window.BEFNStatsProfile?.breakdownsSound?.(d)===false)d.hideBreakdowns=true;
-    const feeder=(d.fights||[]).filter(b=>FEEDER.test(b.event||"")).length,feederOnly=!!feeder&&feeder===d.fights.length;
-    if(feeder)d.feederBouts=feeder;
-    const f={id,statsSlug:slug,feederOnly,noPortrait:statsNames.get(norm(d.name))!==slug,name:d.name,sport:"MMA",organisation:"UFC",division:d.division||"",credentials:[],
-     category:d.champion?"Champion":ranked?"Ranked #"+d.officialRank:feederOnly?"Feeder series only":"UFC fighter",
-     recordLabel:feeder?"Incl. feeder series":"UFC record",
+    const f={id,statsSlug:slug,noPortrait:statsNames.get(norm(d.name))!==slug,name:d.name,sport:"MMA",organisation:"UFC",division:d.division||"",credentials:[],
+     category:d.champion?"Champion":ranked?"Ranked #"+d.officialRank:"UFC fighter",
+     recordLabel:"UFC record",
      record:c.fights?c.W+"–"+c.L+(c.D?"–"+c.D:"")+(c.NC?" ("+c.NC+" NC)":""):"",
      latest:(d.fights||[]).slice(0,5).map(b=>({date:b.date,opponent:b.opponent,outcome:b.outcome,method:STATS_METHOD[b.method]||""}))};
     statsProfiles.set(slug,f);byId.set(id,f);
