@@ -1788,7 +1788,7 @@ async function init(){
     setKimariteMediaManifest(kimariteMedia);
     render();
   } catch(error){
-    STATE.error=error.message || 'Unable to load the preview dataset';
+    STATE.error=error.message || 'Unable to load the sumo data';
     render();
   }
 }
