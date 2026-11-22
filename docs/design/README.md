@@ -9,5 +9,6 @@ Start here. These files are the shared memory for how Black Eye Fight News is de
 | [IMAGE-GUIDE.md](IMAGE-GUIDE.md) | Where images come from, how they are stored, sized and credited | The image pipeline or a rights decision changes |
 | [REVIEW-2026-11-17.md](REVIEW-2026-11-17.md) | Full review of the live site and the prioritised roadmap | A roadmap item ships (tick it) |
 | [DECISIONS.md](DECISIONS.md) | Dated log of decisions, newest first | Any decision is made, however small |
+| [BOXING-IMAGE-CACHE-SCOPE.md](BOXING-IMAGE-CACHE-SCOPE.md) | Proposal for a boxing photo library, with the priority list in `boxing-photo-priority.csv` | The owner answers its rights questions, or the library starts |
 
 Rules for these files: short, specific, dated. If a rule here conflicts with `AGENTS.md` on data, certification or release safety, `AGENTS.md` wins.
