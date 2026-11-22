@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-22T00:45:51.811Z",
-  "checkedAt": "2026-11-22T00:45:51.811Z",
+  "attemptedAt": "2026-11-22T01:55:45.739Z",
+  "checkedAt": "2026-11-22T01:55:45.739Z",
   "windowDays": 28,
-  "articlesChecked": 29,
+  "articlesChecked": 28,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 42,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 16,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 13,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,25 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-22T01:04:31+00:00",
+      "discoveredAt": "2026-11-22T01:55:45.739Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/522901/jiri-prochazka-releases-statement-following-ufc-qatar-loss",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/reel/DgBg7h7tEKg/"
+    },
     {
       "type": "post",
       "platform": "X",
@@ -2329,27 +2348,6 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2121836925241970832"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "mma",
-      "name": "UFC",
-      "role": "promoter",
-      "handle": "@ufc",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-15T05:21:20.923Z",
-      "sourceLinkedAt": "2026-11-15T05:53:58+00:00",
-      "discoveredAt": "2026-11-15T07:50:54.170Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/521385/ciryl-gane-vs-josh-hokit-full-fight-video-highlights-ufc-334",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 55,
-      "url": "https://x.com/ufc/status/2121835924753686907"
     }
   ],
   "seenOriginals": [
@@ -3368,6 +3366,10 @@
     {
       "url": "https://x.com/funkmasterMMA/status/2124245313242477023",
       "firstSeen": "2026-11-21T23:53:17.605Z"
+    },
+    {
+      "url": "https://www.instagram.com/reel/DgBg7h7tEKg/",
+      "firstSeen": "2026-11-22T01:55:45.739Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
