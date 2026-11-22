@@ -7,12 +7,12 @@ Replaces the 21 Nov version. Written from the central audit chat, merging the de
 - Visual changes are checked in a real browser at 390 px and 1280 px, not only by tests.
 - Record decisions in `docs/design/DECISIONS.md` (newest first under the date heading).
 - Say plainly when something was not verified. No "preview" or "live" claims without checking; PR previews are off.
-- Personal, non-commercial site. Images need a recorded source and rights status.
+- Personal, non-commercial site. Images need a recorded source and rights status; the owner stated on 2026-11-22 that every image the repository holds is approved and cleared (inventory in `IMAGE-GUIDE.md`).
 - Where the owner's most recent design decision conflicts with a written rule, the recent decision wins and the rule is updated.
 
 ## State at 22 Nov (from the chat handovers; verify against the repo)
 - **Merged:** Phase 1 look and nav; Phase 2 freshness, related news (#354); Phase 3 steps 1-4 (snapshots, scores on by default, kill switch `BEFN_FEATURES.snapshotScores`); UFC stats page stage 5; fighter profiles restyle (#362 and related); Sumo on `main` as a snapshot (#366); Sumo landmarks decision (#380).
-- **On the Sumo preview branch only:** landmark cut-outs (#379, hidden until `approved`), Sumo Stories hub (#385). The 30-minute basho refresh still commits to that branch.
+- **On the Sumo preview branch only:** landmark cut-outs (#379; all four approved by the owner on 2026-11-22, so they now show), Sumo Stories hub (#385). The 30-minute basho refresh still commits to that branch.
 - **Open, waiting on "Merge N":** #382 home landing page (design D); #386 divisions fix; #377 fighter "Over time" chart. #378 is a draft mock-up, not the approved direction. Site-wide style branch `feat/site-style-20261122` is unfinished and not yet a PR. Other open PRs are UFC certification and research drafts.
 - **Design direction:** see `DIRECTION.md` (updated 22 Nov: cream, Unbounded, dark top bar). Unbounded is not on `main` yet.
 
@@ -26,7 +26,6 @@ Each page names which population it uses.
 ## Owner decisions waiting
 - Confirm the direction in `DIRECTION.md` and that #378 is not it.
 - Sumo: when the full area moves from the preview branch to `main`, whether the refresh moves too, and when `noindex` comes off.
-- Image rights: sources, credit and licence for the four Sumo landmarks; the "owner-cleared" UFC images (750, mostly ESPN and ufc.com) have no licence record.
 - Pereira's division (official rankings say light heavyweight; UFC.com says heavyweight) and ranking UFC 335 against the contracted division.
 
 ## Where things live
@@ -58,7 +57,7 @@ Each page names which population it uses.
 Fighter snapshots on upcoming UFC cards: see `PHASE-3.md`. Awaiting the owner's answers to three open questions before step 1.
 
 ## Sumo design (waiting on the owner)
-**Update 22 Nov:** four photo cut-outs (RU, UA, MN, KZ) are built in PR #379 into the Sumo preview branch, hidden until the owner confirms rights (`data/sumo/landmarks.json`, `approved`). The note below is the original brief.
+**Update 22 Nov:** four photo cut-outs (RU, UA, MN, KZ) are built in PR #379 into the Sumo preview branch. All four are approved in `data/sumo/landmarks.json` (owner, 2026-11-22), so they show. The note below is the original brief.
 
 The owner wants the Sumo country discs redone with their own transparent PNGs (landmark or national symbol per country: Ukraine, Mongolia, Kazakhstan, China, Russia; Japan stays), one placed top-left of each disc. Decisions already made: keep the invisible fighter cutouts and make the discs larger. Open choices: the Russia option and Kazakhstan headwear. Work starts when the PNGs arrive; deliver as a PR into the Sumo preview branch and wait for "Merge N".
 
@@ -66,13 +65,16 @@ The owner wants the Sumo country discs redone with their own transparent PNGs (l
 - Legacy CSS uses ID selectors and `!important`. New overrides need specificity like `#main #upcoming-cards-root ...` or `#main .fighters-unified #fighterGrid ...`, plus `-webkit-text-fill-color`, and sometimes a reset of old fixed sizes (for example `.fighter-tag`). `::before` and `::after` must be separate selector lists; they are invalid inside `:is()`.
 - Bump the `?v=` cache-bust on any changed asset in `index.html` (and `sumo.html` for Sumo); `sw.js` lists assets too.
 - Local testing: `python3 -m http.server 8767` (start with `setsid nohup ... &` or it dies), Playwright (Python) with `/usr/bin/google-chrome`. The Sumo branch can be served from a git worktree.
-- Node tests (`.cjs`/`.mjs`) run directly with `node tests/<file>`. Four old tests were reported failing identically on `main` on 21 and 22 Nov (`test-upcoming-cards`, `test-results-ui`, `test-results-card-order`, `test-ufc334-research`); the Sumo preview branch reports four to seven more. Not re-run for this update; list the failures from a clean run before relying on this.
+- Node tests (`.cjs`/`.mjs`) run directly with `node tests/<file>`; there is no runner, so loop over `tests/*.cjs tests/*.mjs` yourself. macOS has no `timeout`, so give that loop its own watchdog or a hung test takes the run with it.
+- Test baseline on `main` at 7f5331cd (clean run of all 172 files, 22 Nov): **159 pass / 13 fail**. The failures are `test-upcoming-cards`, `test-results-ui`, `test-results-card-order`, `test-ufc334-research`, `ufc-ratings-parity`, `test-build-site`, `test-render-recovery-contract`, `test-ufc-36-month-independent-evidence`, `test-ufc-profile-visual` and the four Sumo UI files (`test-sumo-editorial`, `test-sumo-profile-refinements`, `test-sumo-roster-ux`, `test-sumo-ux-refinement`). The earlier "four old tests" note counted only the four that two sessions happened to run; it was never the whole suite. Compare a branch against this list rather than expecting green. Since `test-build-site` was fixed the same day, a clean run is **161 pass / 12 fail** (the file count moved with #395 and #396).
+- `test-build-site` was red for two reasons, both fixed on 2026-11-22: the folder check assumed every folder under `data/` comes from `DATA_DIRS`, when `data/sumo` exists because pages ask for files inside it (only those files are copied, so the research registers stay off the site); and the 80 MB size line predated the media the site now serves. The limit is 200 MB, a tripwire against an unintended folder, not a budget — the build is 156 MB.
+- The Python tests cannot run on this Mac: `pytest` is not installed for any python3 here, so they only run in CI.
 - Data files: `data/fight-talk-live.json`, `data/fight-talk-sources.json` (Bluesky accounts and X accounts), `data/fight-talk-roster.json` (215 fighters), `data/news-live.json`, `data/bluesky-candidates.json`.
 - The Bluesky API cannot be reached from the Claude workspace (proxy 403), which is why the finder runs on GitHub.
 - Design tokens: see `DIRECTION.md`.
 
 ## Known loose ends
-- Four old failing tests (above).
+- Twelve failing tests on `main` (above, minus `test-build-site`, fixed 2026-11-22).
 - Translation name quirks in Sumo; dead masthead CSS in `index.html`.
 - Instagram stays links and embeds only (owner decision 19 Nov); no Meta Business Discovery setup.
 - Guessed feed URLs earlier failed and nothing was changed; unreviewed feeds stay as they are until the one-week review.

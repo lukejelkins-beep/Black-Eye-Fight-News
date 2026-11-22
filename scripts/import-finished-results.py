@@ -14,6 +14,9 @@ Wikipedia text is CC BY-SA; every imported card links to its article as the sour
   boxerbook.com page. Only the bouts of cards already on BEFN are stored: one list
   request per run, no walking of boxers or bouts, no bulk copy.
 
+A card leaves data/upcoming-cards.json once a completed result exists for it,
+so a finished card cannot sit in Upcoming while its result is on the Results page.
+
 Rules (same as scripts/import-finished-ufc-results.py):
 - Cards that finished 1 to 21 days ago and are not already in results.
 - The source event must be within a day of the card's date and contain the
@@ -443,6 +446,22 @@ def build(card, event):
     return (result_event, rows), None
 
 
+def title_key(text):
+    return re.sub(r'[^a-z0-9]', '', fold(text))
+
+
+def retire_finished(results, upcoming, mine):
+    """Drop cards from Upcoming once a completed result exists for them."""
+    known = {e['id'] for e in results.get('events', [])}
+    named = {(e.get('date'), title_key(e.get('name'))) for e in results.get('events', [])}
+    kept, retired = [], []
+    for card in upcoming.get('events', []):
+        finished = card.get('id') in known or (card.get('date'), title_key(card.get('title'))) in named
+        (retired if mine(card) and finished else kept).append(card)
+    upcoming['events'] = kept
+    return [card['title'] for card in retired]
+
+
 def run(results, upcoming, fetch, today):
     known = {e['id'] for e in results['events']}
     def source_for(card):
@@ -492,6 +511,8 @@ def run(results, upcoming, fetch, today):
                    and not any(same_bout(b['fighters'], [f['name'] for f in r['fighters']]) for r in rows)]
         if missing:
             report.append('   announced but not in the source result: ' + '; '.join(missing))
+    for title in retire_finished(results, upcoming, lambda c: bool(source_for(c))):
+        report.append(f'retired: {title} (its result is published, so it leaves Upcoming)')
     return results, report
 
 
@@ -509,5 +530,8 @@ if __name__ == '__main__':
     upcoming = json.loads(UPCOMING.read_text())
     updated, report = run(results, upcoming, http_fetch, dt.datetime.now(dt.timezone.utc).date())
     print('\n'.join(report) or 'No finished PFL, ONE, Cage Warriors or boxing cards waiting for results')
-    if any(line.startswith('imported') for line in report) and not args.dry_run:
-        RESULTS.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + '\n')
+    if not args.dry_run:
+        if any(line.startswith('imported') for line in report):
+            RESULTS.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + '\n')
+        if any(line.startswith('retired') for line in report):
+            UPCOMING.write_text(json.dumps(upcoming, ensure_ascii=False, indent=2) + '\n')

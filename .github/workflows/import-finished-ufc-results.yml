@@ -1,8 +1,12 @@
 name: Import finished UFC cards into results
 on:
   schedule:
-    # Twice a day. UFCStats usually publishes within hours of a card ending.
-    - cron: '43 1,13 * * *'
+    # Three times a day. The UFCStats export is only refreshed weekly (Sundays,
+    # about 18:00 UTC), so these runs mostly reach the card through the
+    # Wikipedia fallback: 01:43 catches a card that ended in the Gulf or Europe,
+    # 07:43 one that ended overnight in the Americas, 13:43 and the next day's
+    # runs pick up the UFCStats version once the export carries it.
+    - cron: '43 1,7,13 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -30,7 +34,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -p 'test_import_finished_ufc_results.py'
-      - name: Import finished UFC cards (free UFCStats CSV export, no key)
+      - name: Import finished UFC cards (free UFCStats export, Wikipedia fallback; no key)
         if: github.event_name != 'push'
         shell: bash
         env:
@@ -47,12 +51,12 @@ jobs:
               exit 0
             fi
             python scripts/import-finished-ufc-results.py
-            git add data/results.json
+            git add data/results.json data/upcoming-cards.json
             if git diff --cached --quiet; then
               echo 'No finished UFC cards to import'
               exit 0
             fi
-            git commit -m 'Import finished UFC card results from UFCStats'
+            git commit -m 'Publish finished UFC card results and clear the card from Upcoming'
             if git push origin HEAD:main; then exit 0; fi
             echo 'Retrying after another writer updated main'
           done
