@@ -116,6 +116,14 @@ class ApplyTests(unittest.TestCase):
         self.assertEqual(doc["divisions"]["flyweight"]["rankingDate"], "2026-11-17")
         self.assertEqual(doc["divisions"]["flyweight"]["observedOn"], "2026-11-22")
 
+    def test_roster_fields_from_the_roster_refresh_survive(self):
+        prev = self.previous()
+        prev.update({"rosterSource": "cito", "rosterObservedOn": "2026-11-22", "rosterDiagnostics": {"added": 5}})
+        parsed = r.parse_rankings(page(division_html("Flyweight", "Joshua Van", ranked("Fly"))), LABELS)
+        doc, _ = r.apply(prev, parsed, TODAY, divisions)
+        self.assertEqual((doc["rosterSource"], doc["rosterObservedOn"], doc["rosterDiagnostics"]),
+                         ("cito", "2026-11-22", {"added": 5}))
+
     def test_unparsed_division_keeps_previous_data(self):
         parsed = r.parse_rankings(page(division_html("Flyweight", "Joshua Van", ranked("Fly"))), LABELS)
         doc, kept = r.apply(self.previous(), parsed, TODAY, divisions)

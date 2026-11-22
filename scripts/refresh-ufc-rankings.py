@@ -206,6 +206,10 @@ def apply(previous: dict, parsed: dict, today: dt.date, divisions_module) -> tup
     doc = {"schema": 1, "source": SOURCE, "observedOn": today.isoformat(), "fetchedDivisions": updated,
            "divisions": divisions, "fighters": divisions_module.fighter_index(divisions),
            "diagnostics": {slug: {"reason": reason} for slug, reason in kept.items()}}
+    # Roster details come from scripts/refresh-ufc-rosters.py; keep them.
+    for field in ("rosterSource", "rosterObservedOn", "rosterDiagnostics"):
+        if field in previous:
+            doc[field] = previous[field]
     return doc, kept
 
 

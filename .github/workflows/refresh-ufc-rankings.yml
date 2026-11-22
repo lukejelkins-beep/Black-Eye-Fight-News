@@ -17,7 +17,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: befn-ufc-rankings-refresh-${{ github.ref }}
+  group: befn-ufc-divisions-data-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   refresh:
