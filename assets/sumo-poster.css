@@ -38,3 +38,15 @@
   .sumo-poster-body{padding:12px 0 8px}
   .sumo-poster-stats b{font-size:48px}
 }
+
+/* Landmark cut-out, top-left slot of the hero (RU, UA, MN, KZ). Replaces the kanji where present;
+   the kanji stays in the grid (hidden) so the columns do not shift. Edges that were cropped in the
+   source photo are faded, never left as hard cuts. */
+.sumo-poster-landmark{position:absolute;z-index:1;left:0;top:24px;width:calc(clamp(104px,11vw,150px)*var(--lm-scale,1));pointer-events:none;--ml:linear-gradient(#000,#000);--mb:linear-gradient(#000,#000);-webkit-mask-image:var(--ml),var(--mb);mask-image:var(--ml),var(--mb);-webkit-mask-composite:source-in;mask-composite:intersect}
+.sumo-poster-landmark.fade-l{--ml:linear-gradient(90deg,transparent 0,#000 16%)}
+.sumo-poster-landmark.fade-b{--mb:linear-gradient(180deg,#000 58%,transparent 100%)}
+.sumo-poster-landmark img{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 9px rgba(17,16,19,.22))}
+.sumo-poster.has-landmark .sumo-poster-kanji{visibility:hidden}
+@media(max-width:900px){
+  .sumo-poster-landmark{top:8px;width:calc(104px*var(--lm-scale,1))}
+}
