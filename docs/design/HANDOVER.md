@@ -38,6 +38,8 @@ Written so a fresh chat or tool can continue without the old conversation. Read 
 Fighter snapshots on upcoming UFC cards: see `PHASE-3.md`. Awaiting the owner's answers to three open questions before step 1.
 
 ## Sumo design (waiting on the owner)
+**Update 22 Nov:** four photo cut-outs (RU, UA, MN, KZ) are built in PR #379 into the Sumo preview branch, hidden until the owner confirms rights (`data/sumo/landmarks.json`, `approved`). The note below is the original brief.
+
 The owner wants the Sumo country discs redone with their own transparent PNGs (landmark or national symbol per country: Ukraine, Mongolia, Kazakhstan, China, Russia; Japan stays), one placed top-left of each disc. Decisions already made: keep the invisible fighter cutouts and make the discs larger. Open choices: the Russia option and Kazakhstan headwear. Work starts when the PNGs arrive; deliver as a PR into the Sumo preview branch and wait for "Merge N".
 
 ## Technical notes that save time
