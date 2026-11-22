@@ -139,6 +139,63 @@ NOT_FETCHED = {
 }
 
 
+# --- Wikimedia Commons: the second source, for boxers no press kit reaches ----------
+# Owner approved it on 2026-11-22. Only freely licensed files, only where the English
+# Wikipedia article says the subject is a boxer, and every photographer is credited on
+# photo-credits.html, which is what CC BY and CC BY-SA ask for in return.
+# Commons lead photographs vary: some are studio portraits, some are a moment at
+# ringside. These were looked at and rejected, so a later run does not take them back.
+# A boxer listed here keeps the tile until a usable photograph exists.
+REVIEWED_OUT = {
+    "keith-thurman": "the lead photograph is two fighters mid-exchange; which one he is cannot be told from a thumbnail",
+    "ramla-ali": "the lead photograph is a ringside moment in black and white with her face turned away",
+    "erislandy-lara": "the lead photograph is mid-fight, side-on, and the face is small at thumbnail size",
+    "carlos-adames": "the lead photograph is a training shot with his hand across his face",
+}
+
+FREE_LICENCE = re.compile(r"^(cc[ -]?by([ -]?sa)?([ -]?\d(\.\d)?)?|cc0|public domain|pd[- ])", re.I)
+WIKI_UA = {"User-Agent": AGENT}
+
+
+def wiki_api(host, params):
+    url = f"https://{host}/w/api.php?" + urllib.parse.urlencode({**params, "format": "json"})
+    req = urllib.request.Request(url, headers=WIKI_UA)
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return json.loads(r.read())
+
+
+def commons_photo(name):
+    """A free Commons photograph of this boxer, with its licence and photographer."""
+    page = list(wiki_api("en.wikipedia.org", {
+        "action": "query", "titles": name, "prop": "pageimages|extracts", "piprop": "original",
+        "exintro": 1, "explaintext": 1, "exsentences": 2, "redirects": 1}).get("query", {}).get("pages", {}).values())[0]
+    intro = page.get("extract") or ""
+    if not re.search(r"\bbox(er|ing)\b", intro, re.I):
+        return None, "no English Wikipedia article calling them a boxer"
+    source = (page.get("original") or {}).get("source", "")
+    if not source:
+        return None, "the article carries no free lead photograph"
+    filename = urllib.parse.unquote(urllib.parse.urlparse(source).path.split("/")[-1])
+    info = list(wiki_api("commons.wikimedia.org", {
+        "action": "query", "titles": "File:" + filename, "prop": "imageinfo",
+        "iiprop": "url|extmetadata|size"}).get("query", {}).get("pages", {}).values())[0]
+    if "missing" in info or not info.get("imageinfo"):
+        return None, "the lead photograph is not on Commons (so not freely licensed)"
+    ii = info["imageinfo"][0]
+    meta = ii.get("extmetadata", {})
+    licence = (meta.get("LicenseShortName", {}).get("value") or "").strip()
+    if not FREE_LICENCE.match(licence):
+        return None, f"licence is not a free one: {licence or 'unstated'}"
+    if (ii.get("width") or 0) < 400:
+        return None, f"only {ii.get('width')}px wide"
+    artist = re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value") or "").strip() or "Unknown photographer"
+    artist = re.sub(r"\s+", " ", artist)[:120]
+    return {"url": ii["url"], "artist": artist, "licence": licence,
+            "licenceUrl": (meta.get("LicenseUrl", {}).get("value") or "").strip(),
+            "filePage": ii.get("descriptionurl", ""),
+            "credit": f"{artist} · {licence} via Wikimedia Commons"}, ""
+
+
 def wanted_names(limit, only):
     if only:
         return [n.strip() for n in only.split(",") if n.strip()]
@@ -200,11 +257,12 @@ def main():
     ap.add_argument("--limit", type=int, default=30, help="how far down the priority list to go")
     ap.add_argument("--names", default="", help="comma-separated names instead of the list")
     ap.add_argument("--dry-run", action="store_true", help="say what would be fetched, write nothing")
+    ap.add_argument("--no-wikimedia", action="store_true", help="press kits only; skip the Commons fallback")
     args = ap.parse_args()
 
     register = json.loads(REGISTER.read_text(encoding="utf-8")) if REGISTER.exists() else {
         "version": 1, "sport": "boxing", "basePath": "assets/img/boxing/",
-        "rights": "promoter-press-kit", "rightsNote": ATTESTATION, "images": [], "skipped": []}
+        "rights": "promoter-press-kit, wikimedia-cc", "rightsNote": ATTESTATION, "images": [], "skipped": []}
     have = {r["id"] for r in register["images"]}
     want = wanted_names(args.limit, args.names)
     want_keys = {norm(n): n for n in want}
@@ -267,6 +325,56 @@ def main():
             except Exception as e:
                 skipped.append({"name": name, "promoter": src["promoter"], "reason": f"fetch failed: {e}"})
             want_keys.pop(key, None)
+
+    # Second source: Commons, for the boxers no press kit we can reach carries.
+    taken_from_commons = 0
+    for key, name in list(want_keys.items()):
+        slug = slugify(name)
+        if slug in have or args.no_wikimedia:
+            continue
+        if slug in REVIEWED_OUT:
+            skipped.append({"name": name, "reason": "Commons photograph reviewed and not used: " + REVIEWED_OUT[slug]})
+            want_keys.pop(key, None)
+            continue
+        try:
+            found, why = commons_photo(name)
+        except Exception as e:
+            found, why = None, f"Commons lookup failed: {e}"
+        if not found:
+            skipped.append({"name": name, "reason": f"no press kit, and Commons: {why}"})
+            want_keys.pop(key, None)
+            continue
+        if args.dry_run:
+            report.append(f"  would fetch {name} from Commons <- {found['credit']}")
+            want_keys.pop(key, None)
+            continue
+        try:
+            data, ctype = get(found["url"])
+            if not ctype.lower().startswith("image/"):
+                raise RuntimeError(f"not an image: {ctype}")
+            with tempfile.TemporaryDirectory() as tmp:
+                raw = Path(tmp) / "original"
+                raw.write_bytes(data)
+                files, centred, size = process(raw, slug, report)
+            row = {"id": slug, "name": name, "files": files, "credit": found["credit"],
+                   "photographer": found["artist"], "licence": found["licence"],
+                   "licenceUrl": found["licenceUrl"], "sourceUrl": found["url"],
+                   "sourcePage": found["filePage"], "rights": "wikimedia-cc",
+                   "changes": "Cropped to BEFN's portrait, card and thumbnail shapes and converted to WebP.",
+                   "sha256": hashlib.sha256(data).hexdigest(),
+                   "originalSize": f"{size[0]}x{size[1]}",
+                   "fetchedAt": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+            if centred:
+                row["centredCrop"] = True
+            register["images"].append(row)
+            have.add(slug)
+            added.append(name + " (Commons)")
+            taken_from_commons += 1
+        except Exception as e:
+            skipped.append({"name": name, "reason": f"Commons fetch failed: {e}"})
+        want_keys.pop(key, None)
+    if not args.no_wikimedia:
+        report.append(f"wikimedia commons: {taken_from_commons} taken")
 
     for key, name in want_keys.items():
         skipped.append({"name": name, "reason": "not on any allowlisted promoter roster"})
