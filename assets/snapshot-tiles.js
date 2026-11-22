@@ -69,7 +69,8 @@
 
   /* ---- Attribute scores (Phase 3 step 3). OFF unless the page opts in; the owner's release approval is separate. ----
    * Scores are 1-99 percentiles of the last five fights, ranked against the fighter's division when both fighters
-   * share one (else against all UFC fighters). Numbers come from data/ufc-card-scores.json; nothing is calculated here. */
+   * share one; otherwise against the division the bout is contracted at, when that is known; otherwise against all
+   * UFC fighters. Numbers come from data/ufc-card-scores.json; nothing is calculated here. */
   const SCORE_MAIN = [['power', 'Power'], ['defence', 'Defence'], ['wrestling', 'Wrestling'], ['durability', 'Durability']];
   const SCORE_MORE = [['striking', 'Striking'], ['grappling', 'Grappling']];
 
@@ -111,10 +112,20 @@
     };
     const main = SCORE_MAIN.map(row).join(''), more = SCORE_MORE.map(row).join('');
     const bases = Object.values(entry.basis || {});
-    const division = entry.division && bases.length && bases.every(x => x === 'division');
-    const rank = division ? 'Ranked against ' + entry.division + ' fighters.' : 'Ranked against all UFC fighters.';
-    const moved = entry.info.map((f, i) => f && f.newToDivision && f.previousDivision
-      ? names[i] + ' is new to ' + f.division + ' (was ' + f.previousDivision + ').' : '').filter(Boolean);
+    const ownDivision = entry.division && bases.length && bases.every(x => x === 'division');
+    const contracted = entry.division && bases.length && bases.every(x => x === 'contracted');
+    const rank = ownDivision ? 'Ranked against ' + entry.division + ' fighters.'
+      : contracted ? 'Ranked against ' + entry.division + ' fighters, the division this bout is contracted at.'
+      : 'Ranked against all UFC fighters.';
+    const moved = entry.info.map((f, i) => {
+      if (!f) return '';
+      // Ranked in one division, last fought in another: say where, rather than call them new to their own division.
+      if (f.latestBoutDivision && f.division && f.latestBoutDivision !== f.division) {
+        return names[i] + '’s last bout was at ' + f.latestBoutDivision + '.';
+      }
+      return f.newToDivision && f.previousDivision
+        ? names[i] + ' is new to ' + f.division + ' (was ' + f.previousDivision + ').' : '';
+    }).filter(Boolean);
     return '<section class="st-scores" aria-label="Attribute scores">' +
       '<h3 class="st-title">Attribute scores</h3>' +
       '<div class="st-rows">' + main + '</div>' +

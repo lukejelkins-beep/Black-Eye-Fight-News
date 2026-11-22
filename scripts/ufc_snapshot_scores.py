@@ -13,6 +13,8 @@ Rules
 """
 from __future__ import annotations
 
+import re
+
 import ufc_ratings as ur
 
 ATTRIBUTES = ("striking", "power", "defence", "wrestling", "grappling", "durability")
@@ -21,6 +23,16 @@ MIN_ROSTER = ur.MIN_ROSTER
 MIN_DIVISION_PEERS = ur.MIN_DIVISION_PEERS
 SHRINK_K = {"striking": 4, "defence": 4, "wrestling": 4, "grappling": 4, "power": 8, "durability": 8}
 BANDS = ((75, "green"), (55, "gold"), (35, "orange"), (0, "red"))   # same cut points as the profile engine
+
+
+def division_slug(label: str | None) -> str | None:
+    """'Women's Strawweight' -> 'womens-strawweight', matching the official division slugs.
+    Single source of truth: scripts/build-ufc-stats.py imports this rather than slugging labels itself, so a
+    division compared here and a division compared there cannot disagree over an apostrophe or a case."""
+    if not label:
+        return None
+    text = re.sub(r"[^a-z0-9]+", "-", str(label).lower().replace("’", "'").replace("'", ""))
+    return text.strip("-") or None
 
 
 def band(score):
@@ -66,7 +78,17 @@ def eligible(window) -> bool:
 def score_population(windows: dict, divisions: dict) -> dict:
     """windows: slug -> last-five window; divisions: slug -> division name or None.
     Returns slug -> {attribute: {"roster": int|None, "division": int|None}} for every eligible fighter,
-    plus the population sizes under the key "_peers" -> {attribute: {"roster": n, "divisions": {name: n}}}."""
+    plus the population sizes under the key "_peers" -> {attribute: {"roster": n, "divisions": {name: n}}}.
+    Unchanged shape (only "_peers" is a non-slug key); callers that also need the shrunk values and division
+    pools (to rank a bout against a division neither fighter is in) use population_with_pools instead."""
+    out, _, _ = population_with_pools(windows, divisions)
+    return out
+
+
+def population_with_pools(windows: dict, divisions: dict) -> tuple[dict, dict, dict]:
+    """As score_population, but also returns (shrunk, by_div): shrunk is slug -> {attribute: shrunk value},
+    by_div is division slug -> set of fighter slugs in it. Use contracted_division_percentile with these to
+    rank a fighter against a division that is not their own resolved one."""
     raw, n = {}, {}
     for slug, w in windows.items():
         if eligible(w):
@@ -102,4 +124,19 @@ def score_population(windows: dict, divisions: dict) -> dict:
             out[s][a] = {"roster": ur.percentile(v[a], roster[a]),
                          "division": ur.percentile(v[a], pool) if len(pool) >= MIN_DIVISION_PEERS else None}
     out["_peers"] = peers
-    return out
+    return out, shrunk, by_div
+
+
+def contracted_division_percentile(slug: str, division: str, shrunk: dict, by_div: dict, attribute: str):
+    """Percentile of `slug`'s shrunk value for `attribute` among the peers of `division` (a division slug), even
+    when `slug`'s own resolved division differs. For a bout contracted outside either fighter's ranked division
+    (Alex Pereira, ranked at light heavyweight, fighting at heavyweight): both fighters are read into the
+    division the bout is actually fought at, so the two sides stay comparable. None if `slug` has no shrunk
+    value for the attribute, or the division has under MIN_DIVISION_PEERS rated members."""
+    value = (shrunk.get(slug) or {}).get(attribute)
+    if value is None:
+        return None
+    pool = sorted(shrunk[m][attribute] for m in by_div.get(division, ()) if attribute in shrunk[m])
+    if len(pool) < MIN_DIVISION_PEERS:
+        return None
+    return ur.percentile(value, pool)

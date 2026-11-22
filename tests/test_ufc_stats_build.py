@@ -173,6 +173,67 @@ class Divisions(unittest.TestCase):
         self.assertEqual((c["slug"], c["source"]), ("flyweight", "reviewed"))
         self.assertEqual(m.resolve_division("d", "Nobody", official, weight, reviewed)["slug"], None)
 
+    def test_dormant_official_division_yields_to_the_latest_bout(self):
+        official = {"a": {"division": "womens-featherweight", "label": "Women's Featherweight", "dormant": True}}
+        weight = {"a": {"division": "Women's Bantamweight"}}
+        a = m.resolve_division("a", "A", official, weight, {})
+        self.assertEqual((a["slug"], a["source"]), ("womens-bantamweight", "latest-bout"))
+        self.assertEqual(m.resolve_division("a", "A", official, {}, {})["slug"], "womens-featherweight",
+                         "with no labelled bout the dormant division is still better than nothing")
+
+
+class OfficialDivisionSnapshot(unittest.TestCase):
+    """A division with no champion and no ranked fighters is a historical roster, not a live division."""
+
+    SNAPSHOT = {
+        "divisions": {
+            "womens-featherweight": {"label": "Women's Featherweight", "champion": None, "ranked": [],
+                                     "roster": ["both", "only-dormant"]},
+            "womens-bantamweight": {"label": "Women's Bantamweight", "champion": {"slug": "queen"},
+                                    "ranked": [{"rank": 0, "slug": "queen"}], "roster": ["queen", "both"]},
+        },
+        "fighters": {
+            "queen": {"divisions": ["womens-bantamweight"], "division": "womens-bantamweight",
+                      "label": "Women's Bantamweight", "rank": 0, "champion": True},
+            "both": {"divisions": ["womens-featherweight", "womens-bantamweight"],
+                     "division": "womens-featherweight", "label": "Women's Featherweight", "rank": None,
+                     "champion": False},
+            "only-dormant": {"divisions": ["womens-featherweight"], "division": "womens-featherweight",
+                             "label": "Women's Featherweight", "rank": None, "champion": False},
+        },
+    }
+
+    def official(self, snapshot):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "ufc-divisions.json"
+            path.write_text(json.dumps(snapshot))
+            return m.official_divisions(path)
+
+    def test_live_division_is_untouched(self):
+        out = self.official(self.SNAPSHOT)
+        self.assertEqual((out["queen"]["division"], out["queen"]["rank"], out["queen"]["champion"]),
+                         ("womens-bantamweight", 0, True))
+        self.assertNotIn("dormant", out["queen"])
+
+    def test_second_live_division_replaces_a_dormant_one(self):
+        out = self.official(self.SNAPSHOT)["both"]
+        self.assertEqual((out["division"], out["label"]), ("womens-bantamweight", "Women's Bantamweight"))
+        self.assertEqual(out["dormantDivision"], "womens-featherweight")
+        self.assertFalse(out.get("dormant"), "it has a live division, so the caller keeps using the roster")
+
+    def test_only_a_dormant_division_is_marked_for_the_caller(self):
+        self.assertTrue(self.official(self.SNAPSHOT)["only-dormant"]["dormant"])
+
+    def test_nothing_live_trusts_the_snapshot_as_it_stands(self):
+        snapshot = {"divisions": {k: {**v, "champion": None, "ranked": []}
+                                 for k, v in self.SNAPSHOT["divisions"].items()},
+                    "fighters": self.SNAPSHOT["fighters"]}
+        out = self.official(snapshot)
+        self.assertEqual(out, self.SNAPSHOT["fighters"], "a parsing change must not empty every division")
+
+    def test_missing_file_is_empty(self):
+        self.assertEqual(m.official_divisions(pathlib.Path("/nonexistent/ufc-divisions.json")), {})
+
 
 class RealData(unittest.TestCase):
     """Smoke test over the committed evidence files."""
@@ -202,7 +263,10 @@ class RealData(unittest.TestCase):
 
     def test_division_coverage_uses_free_weight_classes(self):
         cov = self.index["divisionCoverage"]
-        self.assertGreater(cov["latestBout"], 300, "latest-bout divisions fill fighters missing from the rosters")
+        # The official roster (UFC.com ranks plus Cito's active list) covers most fighters;
+        # the latest fight fills those it is missing from.
+        self.assertGreater(cov["officialRoster"], 700)
+        self.assertGreater(cov["latestBout"], 100, "latest-bout divisions fill fighters missing from the rosters")
         self.assertGreater(cov["withDivision"], 900)
 
     def test_leaderboards_file(self):
