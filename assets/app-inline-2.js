@@ -474,7 +474,7 @@ function renderNewsFeed(){
   +controls+junkie+'<div class="np-rows">'+(shown.length?shown.map(a=>window.BEFNNewsPage.rowHTML(a,h)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
   +more+sourceHealth()+'</div>';
 }
-document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo');if(w)w.remove();}},true);
+document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo,.lp-fixture-art,.lp-latest-photo');if(w){const row=w.parentElement;w.remove();if(row&&row.classList)row.classList.remove('has-art');}}},true);
 const landing={results:null,cutouts:null,events:[],started:false};
 function loadLandingExtras(){
  if(landing.started)return;landing.started=true;
@@ -489,7 +489,7 @@ function renderLanding(skipLoad){
  const stories=newsFeedItems().concat(leads.map(l=>l.story)).sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
  if(!stories.length)return renderFrame('<div class="np"><header class="np-head"><h1>Home</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>');
  const sumo=['all','sumo'].includes(activeSport())?window.BEFNNewsPage.usableLanguageStories(desk.language,'sumo'):[];
- return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,now:Date.now()},h)+updatedLine());
+ return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,posters:window.BEFNLocalPosters||null,now:Date.now()},h)+updatedLine());
 }
 const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';const m=Math.max(0,Math.floor((Date.now()-t)/60000));return m<1?'just now':m<60?m+' min ago':m<48*60?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' days ago'};
 const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';
