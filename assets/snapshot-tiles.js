@@ -117,11 +117,14 @@
     const rank = ownDivision ? 'Ranked against ' + entry.division + ' fighters.'
       : contracted ? 'Ranked against ' + entry.division + ' fighters, the division this bout is contracted at.'
       : 'Ranked against all UFC fighters.';
+    // The division the note above has already named, if it named one.
+    const named = (ownDivision || contracted) ? entry.division : null;
     const moved = entry.info.map((f, i) => {
       if (!f) return '';
       // Ranked in one division, last fought in another: say where, rather than call them new to their own division.
+      // Nothing to add when that is the division the note has just named (a bout contracted at it, say).
       if (f.latestBoutDivision && f.division && f.latestBoutDivision !== f.division) {
-        return names[i] + '’s last bout was at ' + f.latestBoutDivision + '.';
+        return f.latestBoutDivision === named ? '' : names[i] + '’s last bout was at ' + f.latestBoutDivision + '.';
       }
       return f.newToDivision && f.previousDivision
         ? names[i] + ' is new to ' + f.division + ' (was ' + f.previousDivision + ').' : '';

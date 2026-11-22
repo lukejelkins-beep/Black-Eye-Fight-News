@@ -116,6 +116,20 @@ const settled = JSON.parse(JSON.stringify(scoreData));
 settled.fighters.aabb = { name: 'Aa Bb', division: 'Welterweight', latestBoutDivision: 'Welterweight', newToDivision: true, previousDivision: 'Lightweight' };
 assert.ok(T.scoresHTML(T.lookupScores(settled, 'e1', sCardNames), sCardNames, { esc })
   .includes('Aa Bb is new to Welterweight (was Lightweight).'), 'agreeing divisions keep the move note');
+// a bout contracted at a division the fighter has just fought at: say it once, not twice (Pereira vs Pavlovich)
+const contracted = JSON.parse(JSON.stringify(scoreData));
+contracted.events[0].bouts[0].basis = { power: 'contracted', defence: 'contracted', wrestling: 'contracted', durability: 'contracted', striking: 'contracted', grappling: 'contracted' };
+contracted.events[0].bouts[0].division = 'Heavyweight';
+contracted.fighters.aabb = { name: 'Aa Bb', division: 'Light Heavyweight', latestBoutDivision: 'Heavyweight', newToDivision: false, previousDivision: null };
+const sContracted = T.scoresHTML(T.lookupScores(contracted, 'e1', sCardNames), sCardNames, { esc });
+assert.ok(sContracted.includes('Ranked against Heavyweight fighters, the division this bout is contracted at.'));
+assert.ok(!sContracted.includes('last bout was at Heavyweight'), 'the division the note just named is not repeated');
+assert.strictEqual((sContracted.match(/Heavyweight/g) || []).length, 1, 'Heavyweight is named once');
+// a last bout somewhere else is still reported
+const otherDiv = JSON.parse(JSON.stringify(contracted));
+otherDiv.fighters.aabb.latestBoutDivision = 'Middleweight';
+assert.ok(T.scoresHTML(T.lookupScores(otherDiv, 'e1', sCardNames), sCardNames, { esc })
+  .includes('Aa Bb\u2019s last bout was at Middleweight.'), 'a different division is still named');
 assert.ok(sOut.includes('not predictions'));
 assert.ok(/Durability[^]*?<span class="st-num">—<\/span>/.test(sOut) || sOut.includes('>—<'), 'a missing score is a dash');
 assert.ok(sOut.includes('More scores') && sOut.includes('Striking') && sOut.includes('Grappling'));
