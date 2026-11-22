@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-22T19:21:21.835Z",
-  "checkedAt": "2026-11-22T19:21:21.835Z",
+  "attemptedAt": "2026-11-22T20:15:38.073Z",
+  "checkedAt": "2026-11-22T20:15:38.073Z",
   "windowDays": 28,
-  "articlesChecked": 29,
+  "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 42,
   "publisherSourcesConfigured": 32,
-  "linksFound": 17,
-  "newEmbedsVerified": 3,
+  "linksFound": 13,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -936,6 +936,27 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ONEChampionship/status/2123045530087395371"
+    },
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "mma",
+      "name": "Fighters Only",
+      "role": "media",
+      "handle": "@FightersOnly",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-19T09:39:01.188Z",
+      "sourceLinkedAt": "2026-11-19T19:30:36+00:00",
+      "discoveredAt": "2026-11-22T20:15:38.073Z",
+      "sourcePublisher": "Sherdog",
+      "evidenceUrl": "https://www.sherdog.com/news/news/Amanda-Nunes-warns-Kayla-Harrison-This-is-not-PFL-baby-203695",
+      "summary": "Original social post linked in Sherdog coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://x.com/FightersOnly/status/2123350321267380725"
     },
     {
       "type": "post",
@@ -2316,27 +2337,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DfwQP1Omxft/"
-    },
-    {
-      "type": "post",
-      "platform": "X",
-      "sport": "boxing",
-      "name": "DAZN Boxing",
-      "role": "media",
-      "handle": "@DAZNBoxing",
-      "nativeEmbed": true,
-      "originalDateUnverified": false,
-      "postedAt": "2026-11-15T18:30:00.293Z",
-      "sourceLinkedAt": "2026-11-16T15:36:15.000Z",
-      "discoveredAt": "2026-11-16T18:27:22.576Z",
-      "sourcePublisher": "Boxing News",
-      "evidenceUrl": "https://boxingnewsonline.net/news/benavidez-new-p4p-top-five/",
-      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://x.com/DAZNBoxing/status/2122034396576555493"
     }
   ],
   "seenOriginals": [
@@ -3383,6 +3383,10 @@
     {
       "url": "https://www.instagram.com/reel/DgC9xAaIEJZ/",
       "firstSeen": "2026-11-22T19:21:21.835Z"
+    },
+    {
+      "url": "https://x.com/FightersOnly/status/2123350321267380725",
+      "firstSeen": "2026-11-22T20:15:38.073Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
