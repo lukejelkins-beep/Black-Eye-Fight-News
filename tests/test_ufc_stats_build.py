@@ -291,5 +291,104 @@ class RealData(unittest.TestCase):
         self.assertLess(biggest, 80_000)
 
 
+class FreeResultsPath(unittest.TestCase):
+    """The paid collector is switched off, so finished cards arrive in results.json."""
+
+    BOUTS = {
+        "1": {"id": "1", "org": "ufc", "status": "completed", "eventDate": "2026-01-10", "event": "UFC Test",
+              "a": {"id": "11", "name": "Alpha One", "slug": "alpha-one"},
+              "b": {"id": "22", "name": "Bravo Two", "slug": "bravo-two"}},
+        "2": {"id": "2", "org": "ufc", "status": "completed", "eventDate": "2026-01-10", "event": "UFC Test",
+              "a": {"id": "33", "name": "Carla Three", "slug": "carla-three"},
+              "b": {"id": "44", "name": "Dana Four", "slug": "dana-four"}},
+    }
+
+    def row(self, **over):
+        row = {"id": "ufc-later-2026-02-07-alphaone", "eventId": "ufc-later-2026-02-07", "sport": "MMA",
+               "status": "completed", "date": "2026-02-07", "event": "UFC Later", "order": 0,
+               "fighters": [{"name": "Alpha One"}, {"name": "Bravo Two"}], "winner": 0,
+               "method": "KO/TKO (punches)", "round": 2, "time": "3:12"}
+        row.update(over)
+        return row
+
+    def test_method_wording_is_read_not_guessed(self):
+        for text, code in [("KO/TKO (punch to head at distance)", "ko_tko"), ("TKO (doctor stoppage)", "ko_tko"),
+                           ("KO (right hand)", "ko_tko"), ("Submission (rear naked choke)", "submission"),
+                           ("unanimous decision", "decision"), ("Decision", "decision"),
+                           ("split draw", "draw"), ("no contest", "no_contest"),
+                           ("Disqualification (illegal knee)", "dq")]:
+            self.assertEqual(m.result_method(text), code, text)
+        for unreadable in ("", None, "result unclear", "stopped"):
+            self.assertIsNone(m.result_method(unreadable))
+
+    def test_a_name_that_is_not_unambiguous_is_never_promoted(self):
+        bouts = dict(self.BOUTS)
+        bouts["3"] = {"id": "3", "org": "ufc", "status": "completed", "eventDate": "2026-01-11",
+                      "a": {"id": "99", "name": "Alpha One", "slug": "alpha-one-2"},
+                      "b": {"id": "22", "name": "Bravo Two", "slug": "bravo-two"}}
+        people = m.fighter_index(bouts)
+        self.assertNotIn(m.norm("Alpha One"), people, "two native ids for one name")
+        self.assertIn(m.norm("Bravo Two"), people)
+        self.assertIsNone(m.bout_from_result(self.row(), people))
+        self.assertIsNone(m.bout_from_result(self.row(fighters=[{"name": "Nobody Known"}, {"name": "Bravo Two"}]),
+                                             m.fighter_index(self.BOUTS)))
+
+    def test_the_bout_keeps_the_native_ids_the_collector_holds(self):
+        bout = m.bout_from_result(self.row(), m.fighter_index(self.BOUTS))
+        self.assertEqual((bout["a"]["id"], bout["b"]["id"]), ("11", "22"))
+        self.assertEqual((bout["a"]["slug"], bout["b"]["slug"]), ("alpha-one", "bravo-two"))
+        self.assertEqual(bout["result"]["winnerId"], "11")
+        self.assertFalse(bout["titleFight"], "a results row carries no title flag")
+        draw = m.bout_from_result(self.row(method="split draw", winner=None), m.fighter_index(self.BOUTS))
+        self.assertIsNone(draw["result"]["winnerId"])
+
+    def test_only_cards_after_the_collector_stopped_are_read(self):
+        skipped = {"unresolved": 0}
+        rows = [self.row(date="2026-01-10", id="old"), self.row()]
+        fights = m.results_only_fights(rows, self.BOUTS, {}, dt.date(2026, 1, 10), skipped)
+        self.assertEqual([f["date"] for f in fights], ["2026-02-07"])
+        self.assertEqual(fights[0]["resultSource"], "results")
+        self.assertEqual(fights[0]["method"], "ko")
+        self.assertEqual(fights[0]["winner"], "a")
+        self.assertEqual(fights[0]["rounds"], [], "no measured rounds without the archive")
+        self.assertFalse(fights[0]["statsComplete"])
+        self.assertEqual(fights[0]["seconds"], 492, "one full round plus 3:12")
+
+    def test_round_statistics_are_used_when_the_archive_has_the_fight(self):
+        rounds = [{"round": 1, "a": side(sigLanded=10), "b": side(sigLanded=4)},
+                  {"round": 2, "a": side(sigLanded=6), "b": side(sigLanded=2)}]
+        captured = {"k": {"promotion": "UFC", "date": "2026-02-07", "fighterA": "Bravo Two",
+                          "fighterB": "Alpha One", "rounds": [{"round": r["round"], "a": r["b"], "b": r["a"]}
+                                                              for r in rounds]}}
+        fights = m.results_only_fights([self.row()], self.BOUTS, captured, dt.date(2026, 1, 10), {"unresolved": 0})
+        self.assertTrue(fights[0]["statsComplete"])
+        self.assertEqual(len(fights[0]["rounds"]), 2)
+        self.assertEqual(fights[0]["rounds"][0]["a"]["sigLanded"], 10, "corners follow the result, not the archive")
+
+    def test_unreadable_rows_are_counted_not_guessed_and_pairs_are_not_doubled(self):
+        skipped = {"unresolved": 0}
+        rows = [self.row(method="result unclear"), self.row(fighters=[{"name": "Ghost"}, {"name": "Bravo Two"}]),
+                self.row(), self.row(id="same-bout-again")]
+        fights = m.results_only_fights(rows, self.BOUTS, {}, dt.date(2026, 1, 10), skipped)
+        self.assertEqual(len(fights), 1)
+        self.assertEqual(skipped["unresolved"], 2)
+
+    def test_other_sports_promotions_and_unfinished_cards_are_ignored(self):
+        skipped = {"unresolved": 0}
+        rows = [self.row(sport="Boxing"), self.row(eventId="pfl-2026-02-07"), self.row(status="scheduled"),
+                self.row(date=None)]
+        self.assertEqual(m.results_only_fights(rows, self.BOUTS, {}, dt.date(2026, 1, 10), skipped), [])
+        self.assertEqual(skipped["unresolved"], 0, "not ours to resolve")
+
+    def test_a_missing_or_broken_results_file_is_survivable(self):
+        kept = m.DATA
+        try:
+            m.DATA = pathlib.Path(tempfile.mkdtemp())
+            self.assertEqual(m.results_rows(), [])
+        finally:
+            m.DATA = kept
+
+
+
 if __name__ == "__main__":
     unittest.main()

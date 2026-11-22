@@ -65,13 +65,16 @@ The owner wants the Sumo country discs redone with their own transparent PNGs (l
 - Legacy CSS uses ID selectors and `!important`. New overrides need specificity like `#main #upcoming-cards-root ...` or `#main .fighters-unified #fighterGrid ...`, plus `-webkit-text-fill-color`, and sometimes a reset of old fixed sizes (for example `.fighter-tag`). `::before` and `::after` must be separate selector lists; they are invalid inside `:is()`.
 - Bump the `?v=` cache-bust on any changed asset in `index.html` (and `sumo.html` for Sumo); `sw.js` lists assets too.
 - Local testing: `python3 -m http.server 8767` (start with `setsid nohup ... &` or it dies), Playwright (Python) with `/usr/bin/google-chrome`. The Sumo branch can be served from a git worktree.
-- Node tests (`.cjs`/`.mjs`) run directly with `node tests/<file>`. Four old tests were reported failing identically on `main` on 21 and 22 Nov (`test-upcoming-cards`, `test-results-ui`, `test-results-card-order`, `test-ufc334-research`); the Sumo preview branch reports four to seven more. Not re-run for this update; list the failures from a clean run before relying on this.
+- Node tests (`.cjs`/`.mjs`) run directly with `node tests/<file>`; there is no runner, so loop over `tests/*.cjs tests/*.mjs` yourself. macOS has no `timeout`, so give that loop its own watchdog or a hung test takes the run with it.
+- Test baseline on `main` at 7f5331cd (clean run of all 172 files, 22 Nov): **159 pass / 13 fail**. The failures are `test-upcoming-cards`, `test-results-ui`, `test-results-card-order`, `test-ufc334-research`, `ufc-ratings-parity`, `test-build-site`, `test-render-recovery-contract`, `test-ufc-36-month-independent-evidence`, `test-ufc-profile-visual` and the four Sumo UI files (`test-sumo-editorial`, `test-sumo-profile-refinements`, `test-sumo-roster-ux`, `test-sumo-ux-refinement`). The earlier "four old tests" note counted only the four that two sessions happened to run; it was never the whole suite. Compare a branch against this list rather than expecting green.
+- `test-build-site` is red for two reasons worth fixing separately: `data/sumo` is published but missing from `DATA_DIRS`, and the build is 156 MB against the test's 80 MB limit.
+- The Python tests cannot run on this Mac: `pytest` is not installed for any python3 here, so they only run in CI.
 - Data files: `data/fight-talk-live.json`, `data/fight-talk-sources.json` (Bluesky accounts and X accounts), `data/fight-talk-roster.json` (215 fighters), `data/news-live.json`, `data/bluesky-candidates.json`.
 - The Bluesky API cannot be reached from the Claude workspace (proxy 403), which is why the finder runs on GitHub.
 - Design tokens: see `DIRECTION.md`.
 
 ## Known loose ends
-- Four old failing tests (above).
+- Thirteen failing tests on `main` (above), including `test-build-site`'s `DATA_DIRS` gap and size limit.
 - Translation name quirks in Sumo; dead masthead CSS in `index.html`.
 - Instagram stays links and embeds only (owner decision 19 Nov); no Meta Business Discovery setup.
 - Guessed feed URLs earlier failed and nothing was changed; unreviewed feeds stay as they are until the one-week review.

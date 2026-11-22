@@ -1,6 +1,6 @@
 # Design direction
 
-Status: approved 2026-11-17, **updated 2026-11-22 to the owner's most recent choices** (landing page design D, Unbounded headings, light surfaces). Where an earlier rule and a newer owner decision disagree, the newer decision wins. The 22 Nov changes come from the design chat handovers and need the owner's confirmation in the PR. Changes to this direction need the owner's agreement and a line in DECISIONS.md.
+Status: approved 2026-11-17, updated 2026-11-22 to the owner's most recent choices (landing page design D, Unbounded headings, light surfaces), and **confirmed by the owner on 2026-11-22**: shown design D and #378's charcoal preview side by side at 390 px, the owner answered "Design D". Where an earlier rule and a newer owner decision disagree, the newer decision wins. Changes to this direction need the owner's agreement and a line in DECISIONS.md.
 
 **Implemented on `main` today:** light profiles, Fights, Fighters and stats pages (cream, white cards, Barlow headings). **Not on `main` yet:** Unbounded, the cream landing page (#382) and the site-wide theme (branch `feat/site-style-20261122`). News is still dark on `main`; the owner has asked for the landing page's colour and font site-wide, so it moves to light with that change.
 
@@ -38,8 +38,8 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 - Use an image without a recorded source and rights status (see IMAGE-GUIDE.md).
 
 ## Open questions for the owner
-- #378 (charcoal and ivory hero, Unbounded) is a draft from another chat. Design D (#382) is the one the owner approved; confirm #378 is not the direction.
-- Whether Unbounded replaces Barlow everywhere or only on the pages the owner names. This file assumes everywhere.
+- ~~#378 (charcoal and ivory hero, Unbounded) is a draft from another chat; confirm it is not the direction.~~ **Settled 2026-11-22: it is not.** Design D is the direction; #378 stays a preview and ships nothing. Its dark charcoal palette can be revisited as a separate proposal if the owner wants it.
+- Whether Unbounded replaces Barlow everywhere or only on the pages the owner names. This file assumes everywhere. The phone masthead is still Barlow Condensed (it sits in the dark top bar, which the site-wide theme does not restyle).
 
 ## Where the new look is tried first
 The Sumo preview (`befn-sumo-preview`) is the pilot for this direction. Patterns proven there are ported to the main site one page at a time.
