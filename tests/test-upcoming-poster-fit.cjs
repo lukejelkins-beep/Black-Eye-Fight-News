@@ -5,12 +5,18 @@ const styles=fs.readFileSync('assets/upcoming-cards.css','utf8');
 
 const schedule=JSON.parse(fs.readFileSync('data/upcoming-cards.json','utf8'));
 const scheduleById=new Map(schedule.events.map(e=>[e.id,e]));
+// Cards whose thumbnail went missing once. A finished card is cleared out of Upcoming by
+// the results job, so each is checked only while it is still on the schedule; pinning an id
+// outright fails for everyone once the card has happened (it did, on 2026-11-22).
+const poster=e=>e&&(e.posterPortrait?.url||e.posterList?.url);
 const preferredIds=['ufc-334-2026-11-14','ufc-qatar-2026-11-21','ufc-335-2026-12-12',
  'pfl-dubai-2026-11-14','kabayel-hysa-2026-11-28'];
 for(const id of preferredIds){
  const e=scheduleById.get(id);
- assert(e&&(e.posterPortrait?.url||e.posterList?.url),'Missing approved event thumbnail '+id);
+ if(e) assert(poster(e),'Missing approved event thumbnail '+id);
 }
+// Not every card has a poster we may use, but the cache going empty is a real failure.
+assert(schedule.events.some(poster),'No event in the schedule has an approved thumbnail');
 assert(!JSON.stringify(schedule).includes('s.yimg.com/lo/mysterio/api/'),
  'Rate-limited image transformation URLs must not be preferred poster sources');
 
