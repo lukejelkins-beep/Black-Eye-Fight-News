@@ -179,6 +179,12 @@
  ];
  const TREND_MIN=4;          // fewer fights than this is a list, not a trend
  const ROLL=5;
+ // A phone gets a taller, narrower drawing. The chart is one SVG scaled to the
+ // column width, so the wide 600x170 box becomes about 100px tall on a 390px
+ // screen; this box keeps it readable. Matches the CSS breakpoint.
+ const NARROW="(max-width:420px)";
+ const isNarrow=()=>typeof window!=="undefined"&&typeof window.matchMedia==="function"?
+  window.matchMedia(NARROW).matches:false;
  const trendMeasure=new Map();   // slug -> chosen measure
  const divisionCache=new Map();  // slug -> divisions file, for the re-render
  function fightValue(stats,fight,key){
@@ -204,8 +210,9 @@
   const power=Math.pow(10,Math.floor(Math.log10(value)));
   return (([1,1.5,2,2.5,3,4,5,7.5,10].find(step=>value<=step*power))||10)*power;
  }
- function trendChart(points,key,unit,divisionAvg,divisionLabel){
-  const W=600,H=170,L=38,R=10,T=14,B=26;
+ function trendChart(points,key,unit,divisionAvg,divisionLabel,small){
+  const W=small?360:600,H=small?250:170,L=small?52:38,R=small?12:10,
+   T=small?16:14,B=small?30:26;
   const values=points.map(p=>p.value);
   const top=unit==="pct"?Math.min(1,niceTop(Math.max(...values,divisionAvg||0))):
    niceTop(Math.max(...values,divisionAvg||0));
@@ -259,16 +266,24 @@
    '<p class="bsp-trend-read">Last '+recent.length+': <b>'+esc(show(recentMean))+'</b> · first '+early.length+
     ': <b>'+esc(show(earlyMean))+'</b></p>':"";
   const careerMean=values.reduce((a,b)=>a+b,0)/values.length;
+  // The key names only what the chart draws. An outcome colour this fighter has
+  // never had, or a line too short to exist, would be a label pointing at nothing.
+  const OUTCOMES=[["is-win","Won","green won",p=>p.fight.outcome==="W"],
+   ["is-loss","Lost","red lost",p=>p.fight.outcome==="L"],
+   ["is-draw","Draw or no contest","grey a draw or no contest",
+    p=>p.fight.outcome!=="W"&&p.fight.outcome!=="L"]];
+  const outcomes=OUTCOMES.filter(([,,,has])=>points.some(has));
   const legend='<div class="bsp-trend-key">'+
-   '<span class="is-win">Won</span><span class="is-loss">Lost</span>'+
-   '<span class="is-roll">Five-fight average</span>'+
+   outcomes.map(([cls,label])=>'<span class="'+cls+'">'+label+'</span>').join("")+
+   (points.length>=ROLL?'<span class="is-roll">Five-fight average</span>':'')+
    '<span class="is-mean">Career avg ' + esc(show(careerMean)) + '</span>'+
    (Number.isFinite(divisionAvg)?'<span class="is-div">'+esc(div.label+" avg "+show(divisionAvg))+'</span>':'')+
    '</div>';
   return '<div class="bsp-trend-pick" role="group" aria-label="Measure">'+available.map(([k,l])=>
    '<button type="button" data-bsp-trend-key="'+esc(k)+'" aria-pressed="'+(k===key)+'">'+esc(l)+'</button>').join("")+'</div>'+
-   legend+trendChart(points,key,unit,Number.isFinite(divisionAvg)?divisionAvg:null,div?div.label:"")+moved+
-   '<small class="bsp-note">One dot per UFC fight with full statistics, oldest first; green won, red lost. '+
+   legend+trendChart(points,key,unit,Number.isFinite(divisionAvg)?divisionAvg:null,div?div.label:"",isNarrow())+moved+
+   '<small class="bsp-note">One dot per UFC fight with full statistics, oldest first; '+
+   outcomes.map(([,,phrase])=>phrase).join(", ")+'. '+
    (points.length>=ROLL?'The line is a five-fight rolling average. ':'')+
    'Measured numbers only — not a forecast.</small>';
  }
@@ -289,6 +304,20 @@
   box.innerHTML=trendsInner(stats,divisionCache.get(stats.slug));
   box.querySelector('[data-bsp-trend-key="'+btn.dataset.bspTrendKey+'"]')?.focus({preventScroll:true});
  });
+
+ // The drawing differs between phone and desktop, so redraw an open chart when
+ // the viewport crosses the breakpoint (rotation, or a resized window).
+ if(typeof window!=="undefined"&&typeof window.matchMedia==="function"){
+  const mq=window.matchMedia(NARROW);
+  const redraw=()=>{
+   document.querySelectorAll("[data-bsp-trend]").forEach(box=>{
+    const stats=cache.get(box.dataset.bspTrend);
+    if(stats)box.innerHTML=trendsInner(stats,divisionCache.get(stats.slug));
+   });
+  };
+  if(mq.addEventListener)mq.addEventListener("change",redraw);
+  else if(mq.addListener)mq.addListener(redraw);
+ }
 
  // ---- Compare with the division average (last 36 months) ----
  const COMPARE=[["slpm","Sig. strikes landed/min","rate",false],["sapm","Sig. strikes absorbed/min","rate",true],

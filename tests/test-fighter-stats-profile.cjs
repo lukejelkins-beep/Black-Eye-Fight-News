@@ -74,6 +74,28 @@ assert.match(trend,/Takedowns\/15 min/,"other measures are offered");
 assert.match(trend,/not a forecast/);
 assert.doesNotMatch(trend,/NaN|Infinity|undefined/,"no arithmetic leaks into the page");
 
+// The key names only what is actually drawn.
+assert.match(trend,/is-roll">Five-fight average/,"six fights carry a rolling average");
+assert.match(trend,/class="bsp-trend-roll"/);
+assert.doesNotMatch(trend,/Draw or no contest/,"no neutral result, no neutral key entry");
+const four=sp.trends({...timeline,fights:timeline.fights.slice(0,4)},divisions);
+assert.equal((four.match(/class="bsp-trend-dot/g)||[]).length,4,"four fights still draw");
+assert.doesNotMatch(four,/class="bsp-trend-roll"/,"four fights draw no five-fight average");
+assert.doesNotMatch(four,/Five-fight average/,"and the key does not name a line that is not there");
+assert.match(four,/Career avg/,"the career average is still named");
+
+// An outcome the fighter has never had is not in the key either.
+const unbeaten=sp.trends({...timeline,fights:timeline.fights.map(f=>({...f,outcome:"W"}))},divisions);
+assert.match(unbeaten,/is-win">Won/,"wins are named");
+assert.doesNotMatch(unbeaten,/is-loss">Lost/,"an unbeaten fighter has no red dot to explain");
+assert.match(unbeaten,/oldest first; green won\./,"and the note matches the key");
+
+// A no contest is neither a win nor a loss: grey, and said so.
+const nc=sp.trends({...timeline,fights:timeline.fights.map((f,i)=>i===0?{...f,outcome:"NC",method:"nc"}:f)},divisions);
+assert.match(nc,/bsp-trend-dot is-draw/,"a no contest is drawn grey");
+assert.match(nc,/is-draw">Draw or no contest/,"and the key explains the grey dot");
+assert.match(nc,/grey a draw or no contest/,"as does the note under the chart");
+
 // Too few fights is a list, not a trend.
 assert.equal(sp.trends(stats,divisions),"","two fights draw nothing");
 assert.equal(sp.trends({...timeline,fights:timeline.fights.slice(0,3)},divisions),"","three fights draw nothing");
