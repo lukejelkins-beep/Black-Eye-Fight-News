@@ -1,0 +1,143 @@
+/* Site theme (owner request 22 Nov 2026: "apply this colour and font across all areas of the site").
+ * The landing page is the style guide: cream page, white cards, ink text, red/gold accents,
+ * sport colours (boxing red, MMA amber, sumo blue), Unbounded for headings and big numbers,
+ * DM Sans for everything else. Loaded last on every page so it wins over older rules.
+ * Unbounded is much wider than Barlow Condensed, so sizes here are smaller than the old ones
+ * and headings are sentence case. Posters, photos and the top bar stay dark on purpose. */
+:root{
+  --display:'Unbounded','Arial Black',system-ui,sans-serif;
+  --t-ink:#111013;--t-red:#cf1824;--t-gold:#f3c332;--t-cream:#f8f4ed;--t-card:#fff;--t-mute:#5b565d;--t-line:#e5e1d8;
+  --sport-boxing:#cf1824;--sport-mma:#e0a400;--sport-sumo:#2a4a8f;
+}
+
+/* ---- Headings: page titles ---- */
+#main h1,.np-head h1,.sumo-page-head h1,header.section-heading h1{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  letter-spacing:-.03em!important;font-size:clamp(22px,3.4vw,34px)!important;line-height:1.15!important;overflow-wrap:anywhere}
+
+/* ---- Headings: section titles ---- */
+.np-section-head h2,.np-list-head h2,.upcoming-list-heading,.befn-board-result-head,
+.sb-title,.st-title,h3.sb-title,h3.st-title,.facts-section-title,.facts-cover-text h2,
+.sumo-page-head+* h2,main h2{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  letter-spacing:-.03em!important;font-size:clamp(16px,2vw,20px)!important;line-height:1.25!important}
+
+/* ---- Card titles ---- */
+.np-lead-title,.upcoming-hero-title,.facts-tile-body h3,.facts-side-body h3,
+.fighter-body h3,.sumo-directory-identity h3,.stage-name{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  letter-spacing:-.03em!important;line-height:1.2!important;overflow-wrap:anywhere}
+.np-lead-title{font-size:clamp(18px,2.2vw,26px)!important}
+.upcoming-hero-title{font-size:clamp(15px,2vw,22px)!important}
+.facts-tile-body h3,.facts-side-body h3{font-size:clamp(14px,1.5vw,16px)!important}
+.fighter-body h3,.sumo-directory-identity h3{font-size:clamp(13px,1.4vw,15px)!important}
+.stage-name{font-size:clamp(14px,2.6vw,22px)!important}
+.np-row-title,.np-intl-title{
+  font-family:var(--display)!important;font-weight:700!important;text-transform:none!important;
+  letter-spacing:-.03em!important;line-height:1.25!important;overflow-wrap:anywhere}
+.np-row-title{font-size:clamp(14px,1.6vw,18px)!important}
+.np-intl-title{font-size:clamp(14px,1.5vw,16px)!important}
+/* Fighter names inside those titles follow the title, not their own old font. */
+.fighter-mention{font-family:inherit!important;text-transform:inherit!important;letter-spacing:inherit!important;font-size:inherit!important;font-weight:inherit!important}
+.befn-board-name .fighter-mention,.befn-board-name,a.bout-name{font-family:var(--display)!important;text-transform:none!important;letter-spacing:-.02em!important;font-weight:700!important}
+.befn-board-name{font-size:clamp(12px,1.3vw,14px)!important}
+a.bout-name{font-size:clamp(13px,1.5vw,16px)!important}
+
+/* ---- Big numbers ---- */
+.st-num,.sb-record,.befn-board-value,.befn-board-place,.befn-snapshot-metric b,
+.facts-banner-metric,.heya-stat strong,dd b,.facts-stat-accent{
+  font-family:var(--display)!important;font-weight:800!important;letter-spacing:-.03em!important}
+.st-num{font-size:15px!important}
+.sb-record{font-size:clamp(18px,2.2vw,22px)!important}
+.befn-board-value{font-size:clamp(16px,1.8vw,19px)!important}
+.befn-board-place{font-size:clamp(14px,1.5vw,16px)!important}
+.befn-snapshot-metric b{font-size:13px!important}
+.facts-banner-metric{font-size:12px!important}
+.heya-stat strong{font-size:clamp(18px,2.2vw,24px)!important}
+dd b{font-size:clamp(15px,1.8vw,18px)!important}
+em.sb-score,.result-score em{font-family:var(--display)!important;font-weight:800!important;font-size:clamp(18px,2.2vw,22px)!important;font-style:normal}
+/* Watermarks and initials stand-ins. */
+.result-matchup-vs-watermark{font-family:var(--display)!important;font-weight:900!important;font-size:clamp(28px,4vw,40px)!important}
+.befn-portrait-fallback strong,.upcoming-hero-fighter-initials,.sb-fig b,.sb-disc,.befn-pro-opp-photo b,.heya-image-fallback{
+  font-family:var(--display)!important;font-weight:800!important;letter-spacing:-.04em!important}
+.befn-portrait-fallback strong{font-size:clamp(24px,3vw,34px)!important}
+.upcoming-hero-fighter-initials{font-size:20px!important}
+.sb-fig b,.sb-disc{font-size:22px!important}
+.heya-image-fallback{font-size:clamp(40px,6vw,56px)!important}
+/* Small bar titles that were condensed uppercase. */
+.upcoming-card-bar strong,.rn-head strong{font-family:var(--display)!important;font-weight:700!important;text-transform:none!important;letter-spacing:-.02em!important;font-size:12px!important}
+
+/* ---- Colour: News, Fight Talk and Analysis were a dark panel; now cream page, white cards ---- */
+.np{background:transparent;color:var(--t-ink);padding:clamp(4px,1vw,12px) 0 24px}
+.np a:focus-visible{outline-color:var(--t-red)}
+.np-head{border-left:4px solid var(--t-red)}
+.np-head p,.np-note,.np-updated,.np-intl-original{color:var(--t-mute)}
+.np-updated span,.np-coverage{color:var(--t-red)}
+.np-chip{background:#ece7dc;color:var(--t-ink)}
+.np-chip-role{background:var(--t-gold);color:var(--t-ink)}
+.np-chip-lang{background:var(--t-red);color:#fff}
+.np-tag{color:var(--t-red)}
+.np-lead-meta,.np-row-meta{color:var(--t-mute)}
+.np-row{border-top-color:var(--t-line)}
+.np-intl-card a{background:var(--t-card);box-shadow:0 1px 0 rgba(17,16,19,.06)}
+.np-photo{background:repeating-linear-gradient(135deg,#d9d2c5 0 12px,#e6e0d4 12px 24px)}
+/* A lead with a photo keeps its photo overlay (white text on the picture). A lead without one is a white card. */
+.np-lead{color:#fff}
+.np-lead .np-lead-meta{color:#e6dfe2}
+.np-lead .np-chip{background:rgba(17,16,19,.72);color:#fff}
+.np-lead .np-chip-role{background:var(--t-gold);color:var(--t-ink)}
+.np-lead .np-coverage{color:var(--t-gold)}
+.np-lead:has(.np-photo-empty){background:var(--t-card);color:var(--t-ink)}
+.np-lead:has(.np-photo-empty) .np-lead-link::after{display:none}
+.np-lead:has(.np-photo-empty) .np-lead-title,.np-lead:has(.np-photo-empty) .np-lead-meta{color:var(--t-ink)}
+.np-lead:has(.np-photo-empty) .np-lead-meta{color:var(--t-mute)}
+.np-lead:has(.np-photo-empty) .np-chip{background:#ece7dc;color:var(--t-ink)}
+.np-lead:has(.np-photo-empty) .np-chip-role{background:var(--t-gold)}
+.np-lead:has(.np-photo-empty) .np-coverage{color:var(--t-red)}
+.np-lead:has(.np-photo-empty) .np-lead-copy{top:auto}
+
+/* Sport colour on the left edge of news rows and cards where a sport is known. */
+.np-lead:has([data-sport=mma]),.np-row:has([data-sport=mma]){--sport:var(--sport-mma)}
+.np-lead:has([data-sport=sumo]),.np-row:has([data-sport=sumo]){--sport:var(--sport-sumo)}
+
+/* ---- Colour: promotion coverage and verified results panels ---- */
+.befn-coverage-directory,.befn-verified-results{background:var(--t-card)!important;color:var(--t-ink)!important;border-color:var(--t-line)!important}
+.befn-coverage-directory>summary{color:var(--t-ink)!important}
+.befn-coverage-directory>p{color:var(--t-mute)!important}
+
+/* ---- Colour: fight snapshot panels ---- */
+.befn-tale{background:var(--t-card)!important;border-color:var(--t-line)!important}
+.befn-tale>summary{color:var(--t-ink)!important}
+.befn-tale>summary span{color:var(--t-mute)!important}
+.befn-tale .befn-history-stats-head{border-top-color:var(--t-line)!important}
+
+/* ---- Colour: event title bar under a poster ---- */
+#upcoming-cards-root details.upcoming-event>summary.upcoming-hero{background:var(--t-card)!important;color:var(--t-ink)!important}
+#upcoming-cards-root details.upcoming-event>summary.upcoming-hero .upcoming-hero-title,
+#upcoming-cards-root details.upcoming-event>summary.upcoming-hero .upcoming-hero-title .fighter-mention{color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important}
+
+/* ---- Sumo: page heads and feature panels ---- */
+.sumo-page-head{background:var(--t-card)!important;color:var(--t-ink)!important;border-left-color:var(--sport-sumo)!important}
+.sumo-page-head h1{color:var(--t-ink)!important}
+.sumo-page-head p{color:var(--t-mute)!important}
+.facts-feature-main{background:var(--sport-sumo)!important}
+.directory-card .directory-upper{background:#ece7dc!important}
+
+/* ---- Older page-specific heading rules use ID selectors with !important; match them here (this file loads last) ---- */
+html body #main .section-heading h1,html body #main .section-heading h2,html body #main .fighters-unified .section-heading h1,
+html body #main .calendar-photo-heading{
+  all:unset;display:block;font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;
+  letter-spacing:-.03em!important;font-size:clamp(22px,3.4vw,34px)!important;line-height:1.15!important;
+  color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important;margin:0 0 12px!important;overflow-wrap:anywhere}
+html body #fights-active-content .upcoming-list-heading,html body #main #upcoming-cards-root .upcoming-list-heading,html body #upcoming-cards-root .upcoming-list-heading{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;letter-spacing:-.03em!important;
+  font-size:clamp(16px,2vw,20px)!important;line-height:1.25!important;color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important}
+
+/* Fights page: its own ID-based heading rule is more specific, so match it too. */
+html body #main .fights-unified .calendar-photo-heading h1,
+html body #main .fights-unified #upcoming-cards-root .upcoming-list-heading,
+html body #main .fights-unified .fights-result-group>h2{
+  font-family:var(--display)!important;font-weight:800!important;text-transform:none!important;letter-spacing:-.03em!important;
+  line-height:1.2!important;color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important}
+html body #main .fights-unified .calendar-photo-heading h1{font-size:clamp(22px,3.4vw,34px)!important}
+html body #main .fights-unified #upcoming-cards-root .upcoming-list-heading,html body #main .fights-unified .fights-result-group>h2{font-size:clamp(16px,2vw,20px)!important}
