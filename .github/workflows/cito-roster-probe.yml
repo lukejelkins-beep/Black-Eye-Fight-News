@@ -19,7 +19,7 @@ jobs:
     env:
       UFC_STATS_API_CITO: ${{ secrets.UFC_STATS_API_CITO }}
     steps:
-      - name: Probe fighters list and rankings (max 3 requests)
+      - name: Probe fighters list and rankings (max 7 requests)
         run: |
           python - <<'PY'
           import json, os, urllib.request, urllib.error
@@ -31,7 +31,7 @@ jobs:
           def get(path):
               global calls
               calls += 1
-              assert calls <= 3
+              assert calls <= 7
               req = urllib.request.Request(base + path, headers={"x-api-key": key, "Accept": "application/json", "User-Agent": "BEFN-roster-probe/1.0"})
               try:
                   with urllib.request.urlopen(req, timeout=25) as r:
@@ -44,22 +44,28 @@ jobs:
               if isinstance(o, list):
                   return [len(o), shape(o[0], depth + 1) if o else None]
               return o if isinstance(o, (int, float, bool)) or o is None else (o[:40] if isinstance(o, str) else type(o).__name__)
-          stop = False
-          from collections import Counter
-          for path in ("ufc/fighters?isActive=true&limit=100", "ufc/fighters?status=Active&limit=100", "ufc/fighters?limit=500"):
-              if stop:
+          import base64, gzip
+          out, total, pages = [], None, 0
+          page = 1
+          while page <= 7:
+              status, headers, body = get("ufc/fighters?limit=500&page=%d" % page)
+              print("page", page, "HTTP", status, "remaining", headers.get("X-RateLimit-Monthly-Remaining"))
+              if status in (401, 403, 429) or not isinstance(body, dict):
+                  print("stopping:", status); break
+              rows = body.get("data") or []
+              meta = body.get("meta") or {}
+              total = meta.get("total")
+              for r in rows:
+                  out.append([r.get("slug"), r.get("name"), r.get("division"), r.get("status"), r.get("isActive"), r.get("championStatus")])
+              pages += 1
+              if not meta.get("hasNextPage"):
                   break
-              status, headers, body = get(path)
-              print("==", path, "HTTP", status, "remaining", headers.get("X-RateLimit-Monthly-Remaining"))
-              if status in (401, 403, 429):
-                  print("stopping:", status); stop = True; continue
-              meta = body.get("meta") if isinstance(body, dict) else None
-              rows = body.get("data") if isinstance(body, dict) else None
-              print("meta:", json.dumps(meta)[:300])
-              if isinstance(rows, list):
-                  print("rows:", len(rows), "first names:", [r.get("name") for r in rows[:4]])
-                  print("isActive:", dict(Counter(str(r.get("isActive")) for r in rows)))
-                  print("status:", dict(Counter(str(r.get("status")) for r in rows)))
-                  print("division:", dict(Counter(str(r.get("division")) for r in rows).most_common(14)))
+              page += 1
+          print("pages", pages, "rows", len(out), "total", total)
+          active = [r for r in out if r[4] is True]
+          print("active", len(active), "with division", len([r for r in active if r[2]]))
+          blob = base64.b64encode(gzip.compress(json.dumps(active, separators=(",", ":")).encode(), 9)).decode()
+          for i in range(0, len(blob), 3000):
+              print("B64 " + blob[i:i + 3000])
           print("requests made:", calls)
           PY
