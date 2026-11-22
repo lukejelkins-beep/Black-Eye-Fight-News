@@ -45,25 +45,21 @@ jobs:
                   return [len(o), shape(o[0], depth + 1) if o else None]
               return o if isinstance(o, (int, float, bool)) or o is None else (o[:40] if isinstance(o, str) else type(o).__name__)
           stop = False
-          for path in ("ufc/fighters?limit=100", "ufc/fighters?limit=2&weightClass=flyweight", "ufc/rankings"):
+          from collections import Counter
+          for path in ("ufc/fighters?isActive=true&limit=100", "ufc/fighters?status=Active&limit=100", "ufc/fighters?limit=500"):
               if stop:
                   break
               status, headers, body = get(path)
-              print("==", path, "HTTP", status, "remaining", headers.get("X-RateLimit-Monthly-Remaining"), "limit", headers.get("X-RateLimit-Monthly-Limit"))
+              print("==", path, "HTTP", status, "remaining", headers.get("X-RateLimit-Monthly-Remaining"))
               if status in (401, 403, 429):
                   print("stopping:", status); stop = True; continue
-              print("top-level keys:", list(body.keys()) if isinstance(body, dict) else type(body).__name__)
-              print("meta:", json.dumps(body.get("meta"))[:400] if isinstance(body, dict) else None)
-              data = body.get("data") if isinstance(body, dict) else None
-              print("data shape:", json.dumps(shape(data))[:1500])
-              rows = data if isinstance(data, list) else (data.get("fighters") or data.get("items") or data.get("divisions") if isinstance(data, dict) else None)
+              meta = body.get("meta") if isinstance(body, dict) else None
+              rows = body.get("data") if isinstance(body, dict) else None
+              print("meta:", json.dumps(meta)[:300])
               if isinstance(rows, list):
-                  print("rows:", len(rows))
-                  print("sample:", json.dumps(rows[:2])[:1200])
-                  if path.startswith("ufc/fighters?limit=100"):
-                      from collections import Counter
-                      for field in ("weightClass", "weight_class", "division", "status", "active", "isActive"):
-                          vals = Counter(str(r.get(field)) for r in rows if isinstance(r, dict) and field in r)
-                          if vals: print("values of", field, dict(vals.most_common(15)))
+                  print("rows:", len(rows), "first names:", [r.get("name") for r in rows[:4]])
+                  print("isActive:", dict(Counter(str(r.get("isActive")) for r in rows)))
+                  print("status:", dict(Counter(str(r.get("status")) for r in rows)))
+                  print("division:", dict(Counter(str(r.get("division")) for r in rows).most_common(14)))
           print("requests made:", calls)
           PY
