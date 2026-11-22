@@ -140,7 +140,7 @@ async function loadDesk(background=false){
   const [n,e]=await Promise.all([deskJSON('data/news-live.json'),deskJSON('data/grappling-events.json')]);
   if(!Array.isArray(n.articles)||!Array.isArray(e.events))throw Error('Invalid feed');
   const lang=await deskJSON('data/news-language-live.json').catch(()=>null);if(lang&&Array.isArray(lang.stories))desk.language=lang;
-  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=renderHome();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
+  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'||location.hash==='#news'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=location.hash==='#news'?renderHome():renderLanding();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
   Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});
  }catch{desk.error='Current feed unavailable. Previously loaded items remain visible.';}
  if(['','#home','#news','#calendar','#results'].includes(location.hash))navigate();
@@ -473,6 +473,23 @@ function renderNewsFeed(){
  return '<div class="np-list"><div class="np-list-head"><h2>Latest news</h2><span class="np-note unified-news-count">'+all.length+' stories</span></div>'
   +controls+junkie+'<div class="np-rows">'+(shown.length?shown.map(a=>window.BEFNNewsPage.rowHTML(a,h)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
   +more+sourceHealth()+'</div>';
+}
+document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo');if(w)w.remove();}},true);
+const landing={results:null,cutouts:null,events:[],started:false};
+function loadLandingExtras(){
+ if(landing.started)return;landing.started=true;
+ Promise.all([deskJSON('data/upcoming-cards.json').catch(()=>null),deskJSON('data/results.json').catch(()=>null),fetch('data/ufc-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([u,r,c])=>{
+  landing.events=u&&Array.isArray(u.events)?u.events:[];landing.results=r;landing.cutouts=c&&c.cutouts?c.cutouts:null;
+  const target=document.getElementById('main');if((!location.hash||location.hash==='#home')&&target)target.innerHTML=renderLanding(true);
+ });
+}
+function renderLanding(skipLoad){
+ if(!skipLoad)loadLandingExtras();
+ const leads=newsLeads(),h=newsPageHelpers();
+ const stories=newsFeedItems().concat(leads.map(l=>l.story)).sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
+ if(!stories.length)return renderFrame('<div class="np"><header class="np-head"><h1>Home</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>');
+ const sumo=['all','sumo'].includes(activeSport())?window.BEFNNewsPage.usableLanguageStories(desk.language,'sumo'):[];
+ return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,now:Date.now()},h)+updatedLine());
 }
 const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';const m=Math.max(0,Math.floor((Date.now()-t)/60000));return m<1?'just now':m<60?m+' min ago':m<48*60?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' days ago'};
 const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';
@@ -1141,7 +1158,7 @@ function openFighter(id){const f=D.fighters.find(x=>x.id===id);if(!f)return;cons
  syncFighterPortraits(dialog);
  if(dialog.showModal&&!dialog.open)dialog.showModal();else dialog.setAttribute('open','');
  dialog.scrollTop=0;}
-function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='news')key='home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','champions','fighters','leaderboards','social','fights','highlights','analysis'];if(!all.includes(key))key='home';const pages={home:renderHome,champions:renderChampions,fighters:renderFighters,leaderboards:renderLeaderboards,social:renderSocial,fights:renderFights,highlights:renderHighlights,analysis:renderAnalysis};const sub=document.getElementById('sh-sub');if(sub)sub.innerHTML=subNavHTML(key);main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===(navGroup[key]||key);x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
+function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','news','champions','fighters','leaderboards','social','fights','highlights','analysis'];if(!all.includes(key))key='home';const pages={home:renderLanding,news:renderHome,champions:renderChampions,fighters:renderFighters,leaderboards:renderLeaderboards,social:renderSocial,fights:renderFights,highlights:renderHighlights,analysis:renderAnalysis};const sub=document.getElementById('sh-sub');if(sub)sub.innerHTML=subNavHTML(key);main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===(navGroup[key]||key);x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
 document.addEventListener('click',e=>{
  const fightButton=e.target.closest('button[data-fights-view],button[data-fights-promotion]');
  if(fightButton){

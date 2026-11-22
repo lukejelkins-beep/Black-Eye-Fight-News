@@ -13,7 +13,7 @@
    social:'<path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5A9 9 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3a8.4 8.4 0 0 1 8.5 8.5Z"/>'
  };
  const glyph=k=>'<svg aria-hidden="true" viewBox="0 0 24 24">'+icon[k]+'</svg>';
- const items=[['home','News','news'],['fights','Fights','fights'],['fighters','Fighters','fighters'],['analysis','Analysis','analysis'],['social','Fight Talk','social']];
+ const items=[['home','Home','news'],['fights','Fights','fights'],['fighters','Fighters','fighters'],['analysis','Analysis','analysis'],['social','Fight Talk','social']];
  const groupOf={calendar:'fights',results:'fights',highlights:'fights',champions:'fighters',leaderboards:'fighters'};
  let sheet=null, opener=null;
  function active(){
