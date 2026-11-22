@@ -1,0 +1,246 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "tom-aspinall",
+ "name": "Tom Aspinall",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page opened 2026-11-22: Tom Aspinall, heavyweight, Salford, England, age 33, 15-3-0, Team Kaobon. Boxing sources name the same Salford/Manchester heavyweight; Boxerbook entry Tom Aspinall, GB, born 1993, 196 cm matches."
+ },
+ "researched": {
+  "date": "2026-11-22",
+  "pass": 2
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/tom-aspinall"
+    },
+    {
+     "name": "Vavel bio",
+     "checked": "2026-11-22",
+     "url": "https://www.vavel.com/en/data/tom-aspinall/bio/"
+    },
+    {
+     "name": "Verdict MMA fighter spotlight",
+     "checked": "2026-11-22",
+     "url": "https://verdictmma.com/news/fighter-spotlight-tom-aspinall/1207"
+    }
+   ],
+   "note": "Vavel and Wikipedia say he did catch wrestling as a boy and Verdict MMA says he trained wrestling, but that is training only, with no competition record. UWW and other wrestling databases were not searched."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Web search for ADCC/Polaris/submission-only results",
+     "checked": "2026-11-22"
+    }
+   ],
+   "note": "A web search found no ADCC, Polaris or submission-only results. The ADCC and IBJJF databases were not opened, so none_found is not justified."
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "JudoInside (fetch failed)",
+     "checked": "2026-11-22",
+     "url": "https://www.judoinside.com/search?q=Aspinall"
+    }
+   ],
+   "note": "JudoInside search failed with a redirect loop, so judo could not be checked. His childhood training was at a ju-jitsu club in Leigh, which is not judo."
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [],
+   "note": "No kickboxing authority (WAKO etc.) was searched, and no source read mentions kickboxing."
+  },
+  "boxing": {
+   "status": "verified",
+   "levels": [
+    "pro"
+   ],
+   "claims": [
+    {
+     "text": "Fought once as a professional boxer in 2017 and won by first-round stoppage over a veteran opponent.",
+     "source_url": "https://www.ringmagazine.com/news/ufc-champ-aspinall-doubts-he-d-beat-top-boxers-just-not-happening-idjmHPVnU4l1XtyhLIBW2",
+     "source_name": "Ring Magazine",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2017,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "His single professional boxing bout took place on 24 June 2017 and ended in a first-round knockout win.",
+     "source_url": "https://www.vavel.com/en/data/tom-aspinall/bio/",
+     "source_name": "Vavel",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2017,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "The pro boxing win came against Tamas Bajzath at the Wythenshawe Forum in Manchester, stopped at 1:24 of round one.",
+     "source_url": "https://en.wikipedia.org/wiki/Tom_Aspinall",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-22",
+     "year": 2017,
+     "level": "pro",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "BoxRec (403, unreadable)",
+     "checked": "2026-11-22",
+     "url": "https://boxrec.com/en/box-pro/801590"
+    },
+    {
+     "name": "Boxerbook",
+     "checked": "2026-11-22",
+     "url": "https://boxerbook.com/boxers/tom-aspinall-q105612429"
+    },
+    {
+     "name": "Ring Magazine",
+     "checked": "2026-11-22",
+     "url": "https://www.ringmagazine.com/news/ufc-champ-aspinall-doubts-he-d-beat-top-boxers-just-not-happening-idjmHPVnU4l1XtyhLIBW2"
+    },
+    {
+     "name": "Vavel bio",
+     "checked": "2026-11-22",
+     "url": "https://www.vavel.com/en/data/tom-aspinall/bio/"
+    },
+    {
+     "name": "SecondsOut debut preview",
+     "checked": "2026-11-22",
+     "url": "https://www.secondsout.com/news/debut-watch-tom-aspinall"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Tom_Aspinall"
+    }
+   ],
+   "note": "Two independent Tier B sources confirm one pro bout in 2017, won in round 1. BoxRec (Human:801590) returned 403 and could not be read. Boxerbook lists him with no record. Wikipedia's table (Tier C) gives 24 June 2017, Wythenshawe Forum, vs Tamas Bajzath, 1:24 of round 1. A SecondsOut preview dated 2"
+  },
+  "bjj": {
+   "status": "claimed",
+   "levels": [
+    "national_champion",
+    "belt_black"
+   ],
+   "claims": [
+    {
+     "text": "The UFC lists him as a Brazilian jiu-jitsu black belt.",
+     "source_url": "https://www.ufc.com/athlete/tom-aspinall",
+     "source_name": "UFC",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "belt_black",
+     "display": "sourced"
+    },
+    {
+     "text": "Sherdog reported in September 2021 that he holds a BJJ black belt.",
+     "source_url": "https://www.sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Tom-Aspinall-181413",
+     "source_name": "Sherdog",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2021,
+     "level": "belt_black",
+     "display": "sourced"
+    },
+    {
+     "text": "Reported to have won the British Open in BJJ at every belt level below black. Years and organiser are not given.",
+     "source_url": "https://verdictmma.com/news/fighter-spotlight-tom-aspinall/1207",
+     "source_name": "Verdict MMA",
+     "tier": "C",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "national_champion",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/tom-aspinall"
+    },
+    {
+     "name": "Sherdog",
+     "checked": "2026-11-22",
+     "url": "https://www.sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Tom-Aspinall-181413"
+    },
+    {
+     "name": "Aspinall BJJ academy site (404)",
+     "checked": "2026-11-22",
+     "url": "https://www.aspinallbjj.com/"
+    },
+    {
+     "name": "BJJ Heroes (403)",
+     "checked": "2026-11-22",
+     "url": "https://www.bjjheroes.com/?s=aspinall"
+    },
+    {
+     "name": "Verdict MMA",
+     "checked": "2026-11-22",
+     "url": "https://verdictmma.com/news/fighter-spotlight-tom-aspinall/1207"
+    }
+   ],
+   "note": "His black belt is stated by UFC and Sherdog, but no federation or lineage record was found. Under the rules a BJJ belt stays claimed without one. The Aspinall BJJ academy site returned 404 and BJJ Heroes returned 403. No promoting instructor or date was found. The British Open wins below black belt"
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [],
+   "note": "FIAS and other sambo records were not searched, and no source read mentions sambo."
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-22T10:07:57.812Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-22T10:13:19.328Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

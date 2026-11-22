@@ -166,7 +166,8 @@ export function validateRecord(raw, {today = new Date().toISOString().slice(0, 1
     const cap = supportedStatus(claims, identityUnclear);
     if (claims.length === 0) {
       if (status === 'claimed' || status === 'verified') { notes.push('status_lowered_no_valid_claims'); status = 'unknown'; }
-      if (status === 'none_found' && !sources_checked.length) { notes.push('none_found_without_sources_checked_set_unknown'); status = 'unknown'; }
+      // "not found" only means something if a governing body or database was actually searched (pilot: 45 of 46 were not)
+      if (status === 'none_found' && !sources_checked.some(s => s.url && hostIn(hostOf(s.url) || '', TIER_A_HOSTS))) { notes.push('none_found_without_authority_search_set_unknown'); status = 'unknown'; }
     } else {
       if (status === 'none_found') { notes.push('none_found_contradicted_by_claims'); flags.add('conflict'); status = cap; }
       else if (status === 'unknown') status = cap === 'verified' ? 'claimed' : cap; // claims exist; never above claimed on the model's own doubt
@@ -179,7 +180,7 @@ export function validateRecord(raw, {today = new Date().toISOString().slice(0, 1
     const levels = [...new Set(claims.map(c => c.level))].sort((a, b) => LEVELS.indexOf(a) - LEVELS.indexOf(b));
     disciplines[d] = {status, levels, claims, sources_checked};
     const note = str(rd.note);
-    if (note) disciplines[d].note = note.slice(0, 300);
+    if (note) disciplines[d].note = note.slice(0, 300).trim();
     for (const n of notes) adjustments.push(`${d}:${n}`);
   }
 
@@ -191,7 +192,7 @@ export function validateRecord(raw, {today = new Date().toISOString().slice(0, 1
     flags: FLAGS.filter(f => flags.has(f)),
     disciplines,
   };
-  if (raw.identity?.note) out.identity.note = str(raw.identity.note).slice(0, 300);
+  if (raw.identity?.note) out.identity.note = str(raw.identity.note).slice(0, 300).trim();
   if (Array.isArray(raw.history)) out.history = raw.history;
   if (isPlain(raw.audit)) out.audit = raw.audit;
   if (Array.isArray(raw.rejected_claims)) out.rejected_claims = raw.rejected_claims;

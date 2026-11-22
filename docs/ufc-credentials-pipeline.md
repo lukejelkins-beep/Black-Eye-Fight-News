@@ -38,6 +38,11 @@ Add `--resume` with the same `--run-id` to continue after an interruption. Crede
 
 Guards: `--max-calls` is mandatory and counts every HTTP request including `pause_turn` continuations; more than 25 fighters is refused unless `BEFN_CREDENTIALS_APPROVED_CALLS` (the owner's approved budget) is at least `--max-calls`; there is no all-roster mode; slugs must be in the approved 783; duplicate-identity slugs are skipped.
 
+## Running without the API (plan-only)
+`--emit-prompts DIR` writes one prompt file per fighter for the chosen pass and makes no call. A person or Claude Code subagents answer each prompt with the JSON object into `DIR2/<slug>.json`, then `--from-dir DIR2` ingests them through the same validator, checkpoints and run log (no tokens or cost are recorded). The 22 Nov pilot ran this way; see `ufc-credentials-pilot-report-20261122.md`.
+
+`none_found` requires a dated `sources_checked` entry with a URL on a governing-body or database host (the Tier A list); a UFC page, Wikipedia or Boxerbook alone gives `unknown`.
+
 ## Not verified yet
 - The live request shape (`web_search_20260209` and `web_fetch_20260209` tools, `output_config.effort`, server-side fallbacks beta) has not been exercised: no API credentials were available in the session that built this. Tests use a fake model. `--no-fallbacks` drops the fallbacks beta if the API rejects it.
 - Prices in `PRICES` are from the cached Anthropic price list; the web-search price per query is an assumption. Costs are estimates until compared with the console.

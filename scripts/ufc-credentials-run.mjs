@@ -353,7 +353,25 @@ export async function main(argv = process.argv.slice(2)) {
   console.log(JSON.stringify({pass, model: PASSES[pass].model, effort: PASSES[pass].effort, fighters: selection.length, skippedDuplicateIdentity: skipped, maxCalls, runDir: path.relative(root, runDir), dryRun: !!a['dry-run']}));
   if (a['dry-run']) return;
   fs.mkdirSync(out, {recursive: true});
-  const call = await createLiveCall({fallbacks: !a['no-fallbacks']});
+  if (a['emit-prompts']) { // write one prompt file per fighter for a human-driven (Claude Code subagent) run; no model call
+    const dir = path.resolve(a['emit-prompts']); fs.mkdirSync(dir, {recursive: true});
+    for (const slug of selection) {
+      const info = roster.names.get(slug) || {name: slug}, rec = loadRecord(out, slug);
+      if (pass === 2 && !(rec && rec.flags.length)) continue;
+      let user;
+      if (pass === 1) user = pass1User({slug, name: info.name, lastUfcFight: info.lastUfcFight, today});
+      else if (pass === 2) user = pass2User({slug, name: info.name, today, record: rec});
+      else { const s = selectPass3(selection.map(x => loadRecord(out, x)).filter(Boolean), {rate: a.sample ? Number(a.sample) : 0.075, seed: a.seed || 'befn-credentials'}).find(x => x.slug === slug); if (!s) continue; user = pass3User({slug, name: info.name, items: claimItems(rec, {allClaims: s.sampled}), today}); }
+      fs.writeFileSync(path.join(dir, slug + '.txt'), (pass === 3 ? pass3System() : systemPrompt(pass)) + '\n\n---\n\n' + user + '\n');
+    }
+    console.log('prompts written: ' + fs.readdirSync(dir).length); return;
+  }
+  // --from-dir: ingest replies a person or Claude Code subagents saved as <slug>.json; no API, no key, tokens unknown
+  const call = a['from-dir'] ? async ({user, budget}) => {
+    const slug = /roster slug ([a-z0-9-]+)/.exec(user)[1], f = path.join(path.resolve(a['from-dir']), slug + '.json');
+    if (!fs.existsSync(f)) throw Object.assign(Error('no reply file'), {code: 'error'});
+    budget.take(); return {text: fs.readFileSync(f, 'utf8'), usage: {requests: 0, input: 0, output: 0, searches: 0}, stop: 'end_turn'};
+  } : await createLiveCall({fallbacks: !a['no-fallbacks']});
   const log = new RunLog(runDir, {runId, dataset: SCOPE});
   const onStop = () => { log.save({interrupted: true}); process.exit(130); };
   process.on('SIGINT', onStop); process.on('SIGTERM', onStop);

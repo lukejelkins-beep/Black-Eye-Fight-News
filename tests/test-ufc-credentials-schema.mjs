@@ -79,17 +79,21 @@ test('claimed or verified with no valid claim falls back to unknown', () => {
   assert.equal(r.dropped.length, 1);
 });
 
-test('none_found needs the sources that were checked, otherwise unknown', () => {
+test('none_found needs a dated search of a governing body or database, otherwise unknown', () => {
   const bare = v(rec({sambo: {status: 'none_found', claims: []}}));
   assert.equal(bare.record.disciplines.sambo.status, 'unknown');
-  const sourced = v(rec({sambo: {status: 'none_found', claims: [], sources_checked: [{name: 'FIAS results', checked: today}]}}));
+  const sourced = v(rec({sambo: {status: 'none_found', claims: [], sources_checked: [{name: 'FIAS results', url: 'https://sambo.sport/results', checked: today}]}}));
   assert.equal(sourced.record.disciplines.sambo.status, 'none_found');
+  const nameOnly = v(rec({sambo: {status: 'none_found', claims: [], sources_checked: [{name: 'FIAS results', checked: today}]}}));
+  assert.equal(nameOnly.record.disciplines.sambo.status, 'unknown');
+  const wikiOnly = v(rec({sambo: {status: 'none_found', claims: [], sources_checked: [{name: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/X', checked: today}, {name: 'UFC page', url: 'https://www.ufc.com/athlete/x', checked: today}]}}));
+  assert.equal(wikiOnly.record.disciplines.sambo.status, 'unknown');
   const badEntry = v(rec({sambo: {status: 'none_found', claims: [], sources_checked: [{name: 'FIAS results'}]}}));
   assert.equal(badEntry.record.disciplines.sambo.status, 'unknown');
 });
 
 test('none_found contradicted by a claim is a conflict', () => {
-  const r = v(rec({bjj: {status: 'none_found', sources_checked: [{name: 'IBJJF', checked: today}], claims: [claim({level: 'belt_black'})]}}));
+  const r = v(rec({bjj: {status: 'none_found', sources_checked: [{name: 'IBJJF', url: 'https://ibjjf.com/x', checked: today}], claims: [claim({level: 'belt_black'})]}}));
   assert.ok(r.record.flags.includes('conflict'));
   assert.notEqual(r.record.disciplines.bjj.status, 'none_found');
 });
@@ -133,6 +137,16 @@ test('validation is idempotent: a normalised record revalidates unchanged', () =
   const second = v(first.record);
   assert.deepEqual(second.record.disciplines, first.record.disciplines);
   assert.deepEqual(second.record.flags, first.record.flags);
+});
+
+test('a long note cut at 300 characters does not end in a space (idempotence found in the pilot)', () => {
+  const note = 'x'.repeat(299) + ' tail';
+  const first = v(rec({judo: {status: 'unknown', note, claims: []}, }, {identity: {status: 'unclear', note}}));
+  assert.equal(first.record.disciplines.judo.note.length, 299);
+  assert.equal(first.record.identity.note.length, 299);
+  const second = v(first.record);
+  assert.deepEqual(second.record.disciplines, first.record.disciplines);
+  assert.deepEqual(second.record.identity, first.record.identity);
 });
 
 test('summarise counts statuses, tiers and flags', () => {

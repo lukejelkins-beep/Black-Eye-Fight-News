@@ -1,0 +1,184 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "sean-strickland",
+ "name": "Sean Strickland",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page: middleweight, United States (CA), age 35, 31-7-0, Millennia MMA; matches Wikipedia (Corona, California upbringing, pro debut 2008 in King of the Cage)."
+ },
+ "researched": {
+  "date": "2026-11-22",
+  "pass": 2
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Sean_Strickland"
+    },
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/sean-strickland"
+    }
+   ],
+   "note": "No school, NCAA or UWW record found; Wikipedia says he was expelled in ninth grade and went into MMA, and no outlet describes any competitive wrestling. No relevant authority could be searched for high school results."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Sean_Strickland"
+    },
+    {
+     "name": "BJJ Heroes (HTTP 403, not readable)",
+     "checked": "2026-11-22",
+     "url": "https://www.bjjheroes.com/bjj-fighters/sean-strickland"
+    }
+   ],
+   "note": "No submission-grappling results seen in Wikipedia or UFC page; BJJ Heroes returned 403 and ADCC/IBJJF results were not searched."
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "none_found",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Boxerbook boxer search",
+     "checked": "2026-11-22",
+     "url": "https://boxerbook.com/search?q=Sean%20Strickland"
+    },
+    {
+     "name": "BoxRec search (HTTP 403, not readable)",
+     "checked": "2026-11-22",
+     "url": "https://boxrec.com/en/search?p%5Bfirst_name%5D=sean&p%5Blast_name%5D=strickland"
+    }
+   ],
+   "note": "No pro boxing record found. BoxRec search returned HTTP 403, so only Boxerbook could be checked; his boxing-based MMA style is not a boxing credential."
+  },
+  "bjj": {
+   "status": "claimed",
+   "levels": [
+    "belt_black"
+   ],
+   "claims": [
+    {
+     "text": "His UFC athlete profile lists him as a Brazilian jiu-jitsu black belt, without naming who awarded it.",
+     "source_url": "https://www.ufc.com/athlete/sean-strickland",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2026,
+     "level": "belt_black",
+     "display": "sourced"
+    },
+    {
+     "text": "In December 2023 he posted a clip of himself throwing his jiu-jitsu black belt in the trash, saying he had chased it for more than ten years.",
+     "source_url": "https://sherdog.com/news/news/Dricus-Du-Plessis-Coach-Weighs-in-on-Sean-Strickland-Trashing-His-JiuJitsu-Black-Belt-192166",
+     "source_name": "Sherdog",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2023,
+     "level": "belt_black",
+     "display": "sourced"
+    },
+    {
+     "text": "Low Kick MMA separately reported the December 2023 video of him discarding his BJJ black belt after more than a decade of training.",
+     "source_url": "https://lowkickmma.com/sean-strickland-jiu-jitsu-belt-garbage-bin-ufc",
+     "source_name": "Low Kick MMA",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2023,
+     "level": "belt_black",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/sean-strickland"
+    },
+    {
+     "name": "Sherdog",
+     "checked": "2026-11-22",
+     "url": "https://sherdog.com/news/news/Dricus-Du-Plessis-Coach-Weighs-in-on-Sean-Strickland-Trashing-His-JiuJitsu-Black-Belt-192166"
+    },
+    {
+     "name": "Low Kick MMA",
+     "checked": "2026-11-22",
+     "url": "https://lowkickmma.com/sean-strickland-jiu-jitsu-belt-garbage-bin-ufc"
+    },
+    {
+     "name": "BJJ Eh!",
+     "checked": "2026-11-22",
+     "url": "https://www.bjjee.com/bjj-news/sean-strickland-shares-why-he-stopped-gi-bjj-training-im-never-wearing-that-thing-again/"
+    },
+    {
+     "name": "BJJ Heroes (HTTP 403, not readable)",
+     "checked": "2026-11-22",
+     "url": "https://www.bjjheroes.com/bjj-fighters/sean-strickland"
+    }
+   ],
+   "note": "Black belt is reported consistently by UFC and several outlets, but no promoting coach, academy, lineage or federation record was found; BJJ Heroes was blocked (403). Not verified under the lineage rule."
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-22T10:07:57.818Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-22T10:13:19.328Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

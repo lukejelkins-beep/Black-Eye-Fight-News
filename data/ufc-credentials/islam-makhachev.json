@@ -1,0 +1,262 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "islam-makhachev",
+ "name": "Islam Makhachev",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page: Islam Makhachev, Russia (Dagestan), age 34, 29-1-0; FIAS lists Makhachov Islam (RUS) at 74 kg combat sambo."
+ },
+ "researched": {
+  "date": "2026-11-22",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "youth"
+   ],
+   "claims": [
+    {
+     "text": "Reportedly trained freestyle wrestling for about a year in his youth before moving to MMA; no results are documented.",
+     "source_url": "https://en.wikipedia.org/wiki/Islam_Makhachev",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "youth",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Islam_Makhachev"
+    },
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/islam-makhachev"
+    },
+    {
+     "name": "UWW database (no record seen in search)",
+     "checked": "2026-11-22"
+    }
+   ],
+   "note": "Only a year of youth freestyle wrestling reported, no results. Wikipedia infobox grappling entry for a regional title is uncited and not used."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Islam_Makhachev"
+    },
+    {
+     "name": "ADCC (web search, no record seen)",
+     "checked": "2026-11-22"
+    }
+   ],
+   "note": "No ADCC or similar submission grappling record found."
+  },
+  "judo": {
+   "status": "claimed",
+   "levels": [
+    "belt_black"
+   ],
+   "claims": [
+    {
+     "text": "Wikipedia's infobox lists a judo black belt, with no grade date, federation record or competition results.",
+     "source_url": "https://en.wikipedia.org/wiki/Islam_Makhachev",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "belt_black",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Islam_Makhachev"
+    },
+    {
+     "name": "JudoInside (search surfaced only a combat sambo listing for Makhachov)",
+     "checked": "2026-11-22",
+     "url": "https://judoinsite.com/judoka/137004/Islam_Makhachov"
+    }
+   ],
+   "note": "Black belt claim rests on a weak preview article cited by Wikipedia; no federation record or results found."
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Islam_Makhachev"
+    },
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/islam-makhachev"
+    }
+   ],
+   "note": "Wikipedia mentions a switch to sanda at school with no results; not counted as kickboxing."
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Islam_Makhachev"
+    },
+    {
+     "name": "BoxRec/Boxerbook (not found in searches)",
+     "checked": "2026-11-22"
+    }
+   ],
+   "note": "No amateur or pro boxing record found."
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Islam_Makhachev"
+    },
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/islam-makhachev"
+    }
+   ],
+   "note": "No IBJJF or lineage belt record found."
+  },
+  "sambo": {
+   "status": "verified",
+   "levels": [
+    "world_medal",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Won the 74 kg combat sambo title at the FIAS World Sambo Championships in Sofia in November 2016.",
+     "source_url": "https://sambo.sport/en/news/pobediteli-i-prizery-1-dnya-chempionata-mira-po-sambo-2016-v-sofii/",
+     "source_name": "FIAS (sambo.sport)",
+     "tier": "A",
+     "retrieved": "2026-11-22",
+     "year": 2016,
+     "level": "world_medal",
+     "audit": "confirmed",
+     "display": "sourced"
+    },
+    {
+     "text": "FIAS describes him as a combat sambo world champion and says he was awarded the Russian title Honored Master of Sport in sambo.",
+     "source_url": "https://sambo.sport/en/news/islam-makhachev-stal-zasluzhennym-masterom-sporta-rossii/",
+     "source_name": "FIAS (sambo.sport)",
+     "tier": "A",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "other",
+     "level_note": "Honored Master of Sport of Russia (sambo)",
+     "audit": "confirmed",
+     "display": "sourced"
+    },
+    {
+     "text": "The UFC athlete page lists him as a combat sambo world and European champion and an International Master of Sport; the European title was not confirmed elsewhere.",
+     "source_url": "https://www.ufc.com/athlete/islam-makhachev",
+     "source_name": "UFC",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "other",
+     "level_note": "International Master of Sport, combat sambo",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "FIAS (sambo.sport) 2016 World Championships report",
+     "checked": "2026-11-22",
+     "url": "https://sambo.sport/en/news/pobediteli-i-prizery-1-dnya-chempionata-mira-po-sambo-2016-v-sofii/"
+    },
+    {
+     "name": "FIAS news on Honored Master of Sport",
+     "checked": "2026-11-22",
+     "url": "https://sambo.sport/en/news/islam-makhachev-stal-zasluzhennym-masterom-sporta-rossii/"
+    },
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/islam-makhachev"
+    },
+    {
+     "name": "JudoInside",
+     "checked": "2026-11-22",
+     "url": "https://judoinsite.com/judoka/137004/Islam_Makhachov"
+    }
+   ],
+   "note": "2016 world title confirmed by FIAS (Tier A) plus a second source. Russian national titles (2014, 2016) are cited on Wikipedia to sambo.ru event pages that I did not open, so they are not listed as claims."
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-22T10:07:57.814Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 3,
+   "model": "claude-opus-5-5",
+   "at": "2026-11-22T10:16:27.149Z"
+  }
+ ],
+ "audit": {
+  "pass": 3,
+  "model": "claude-opus-5-5",
+  "at": "2026-11-22T10:16:27.149Z",
+  "date": "2026-11-22",
+  "sampled": false,
+  "hasTierA": true,
+  "confirmed": 2,
+  "partial": 0,
+  "refuted": 0,
+  "unreachable": 0,
+  "audited": 2
+ },
+ "rejected_claims": [],
+ "validation": {
+  "dropped": [],
+  "adjustments": [
+   "grappling:none_found_without_authority_search_set_unknown",
+   "kickboxing:none_found_without_authority_search_set_unknown",
+   "boxing:none_found_without_authority_search_set_unknown",
+   "bjj:none_found_without_authority_search_set_unknown"
+  ]
+ }
+}
