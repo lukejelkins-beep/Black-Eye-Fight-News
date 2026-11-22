@@ -12,8 +12,10 @@ that finishes now arrives with its result but no measured rounds. This fills
 that gap from a free source, leaving the archive untouched and authoritative.
 
 Rules
-  * Only fights after the newest fight the archive holds, so no published
-    number changes and the file stays small.
+  * Only fights after the newest fight the retired UFCalendar collector put in
+    the archive, so no published number changes and the file stays small. Cito
+    records neither move that date nor hide a fight: Cito publishes no
+    reversals, so its rounds cannot stand in for these.
   * A fight is kept only when its event has a date in the export and the bout
     names a pair of fighters. Corners follow the export's own bout order.
   * Counts are read exactly ("41 of 65" -> 41 landed, 65 attempted; "0:03" ->
@@ -129,14 +131,14 @@ def fetch(name: str) -> str:
 
 
 def archive_state(path: Path):
-    """Fights the archive already holds, and the date of its newest one."""
+    """Fights the retired collector recorded, and the date of its newest one."""
     try:
         fights = json.loads(path.read_text(encoding="utf-8"))["fights"]
     except (OSError, ValueError, KeyError):
         return set(), None
     held, latest = set(), None
     for record in fights.values():
-        if str(record.get("promotion", "")).upper() != "UFC":
+        if str(record.get("promotion", "")).upper() != "UFC" or "ufcalendar" not in (record.get("sources") or {}):
             continue
         day = parse_date(record.get("date"))
         if not day:
