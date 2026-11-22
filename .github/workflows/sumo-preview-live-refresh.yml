@@ -1,8 +1,7 @@
-name: Sumo preview live refresh (every basho)
+name: Sumo live refresh (every basho)
 
-# Scheduled workflows only run from the default branch, so this lives on main.
-# It touches ONLY the Sumo preview branch (never main, never the production
-# site). All logic lives in that branch's scripts:
+# Sumo now lives on main (PR #414), so this refreshes and publishes the Sumo data on main;
+# Render deploys main through the existing release pipeline. Logic lives in these scripts:
 #   scripts/sumo-basho-calendar.mjs  which basho is it, and is it live
 #   scripts/sumo-refresh-daily.mjs   results + next-day torikumi, both from the Sumo API
 #   scripts/sumo-build-preview.mjs   roster, rankings and basho details
@@ -26,7 +25,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sumo-preview-single-writer
+  group: publish-live-data
   cancel-in-progress: false
 
 jobs:
@@ -36,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feat/sumo-section-test-20261114
+          ref: main
           persist-credentials: true
       - uses: actions/setup-node@v4
         with:
@@ -54,7 +53,7 @@ jobs:
           else MODE=skip; fi
           echo "basho=$BASHO phase=$PHASE have=$HAVE mode=$MODE"
           echo "mode=$MODE" >> "$GITHUB_OUTPUT"
-      - name: Run the update (steps are defined on the preview branch)
+      - name: Run the update
         if: steps.plan.outputs.mode != 'skip'
         shell: bash
         run: |
@@ -69,7 +68,7 @@ jobs:
             node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
             node scripts/sumo-refresh-daily.mjs
           fi
-      - name: Commit only the preview data files
+      - name: Commit only the Sumo data files
         id: commit
         if: steps.plan.outputs.mode != 'skip'
         shell: bash
@@ -86,30 +85,18 @@ jobs:
             echo "No data change"
             exit 0
           fi
-          git commit -m "Refresh verified-source Sumo preview data (${{ steps.plan.outputs.mode }})"
+          git commit -m "Refresh verified-source Sumo data (${{ steps.plan.outputs.mode }})"
           for attempt in 1 2 3; do
-            git fetch origin feat/sumo-section-test-20261114
-            if ! git rebase origin/feat/sumo-section-test-20261114; then
+            git fetch origin main
+            if ! git rebase origin/main; then
               git rebase --abort || true
-              echo "Concurrent change conflict; leaving preview branch unchanged" >&2
+              echo "Concurrent change conflict; leaving main unchanged" >&2
               exit 1
             fi
-            if git push origin HEAD:feat/sumo-section-test-20261114; then
+            if git push origin HEAD:main; then
               echo "pushed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             sleep 2
           done
           exit 1
-      - name: Redeploy the Sumo preview on Render
-        if: steps.commit.outputs.pushed == 'true'
-        env:
-          HOOK: ${{ secrets.SUMO_PREVIEW_DEPLOY_HOOK_URL }}
-        shell: bash
-        run: |
-          if [ -z "${HOOK:-}" ]; then
-            echo "SUMO_PREVIEW_DEPLOY_HOOK_URL is not set; preview not redeployed" >&2
-            exit 1
-          fi
-          curl -fsS --max-time 30 -X POST "$HOOK" > /dev/null
-          echo "Render preview deploy requested"

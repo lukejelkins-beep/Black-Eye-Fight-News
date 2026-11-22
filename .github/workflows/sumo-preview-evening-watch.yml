@@ -1,12 +1,11 @@
-name: Sumo preview evening watch (every basho day)
+name: Sumo evening watch (every basho day)
 
 # GitHub runs the "every 10 minutes" refresh schedule only about once an hour, so
 # results and the next day's matchups could appear up to an hour late. This job
 # starts once in the afternoon and keeps going itself: it refreshes every 5 minutes
 # until the Sumo API has published the next day's torikumi for all three tracked
-# divisions, then stops. It touches ONLY the Sumo preview branch, using that
-# branch's own scripts (scripts/sumo-run-update.mjs refresh), the same as the
-# regular refresh. The repository is public, so runner minutes cost nothing.
+# divisions, then stops. It now publishes to main (Sumo moved there in PR #414), using
+# scripts/sumo-run-update.mjs refresh, the same as the regular refresh. The repository is public, so runner minutes cost nothing.
 on:
   schedule:
     # 15:00 JST. Bouts finish about 18:00 JST and the API posts the next day soon
@@ -22,7 +21,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sumo-preview-single-writer
+  group: publish-live-data
   cancel-in-progress: false
 
 jobs:
@@ -32,19 +31,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feat/sumo-section-test-20261114
+          ref: main
           persist-credentials: true
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Refresh every 5 minutes until tomorrow's matchups are in
         env:
-          HOOK: ${{ secrets.SUMO_PREVIEW_DEPLOY_HOOK_URL }}
           MAX_MINUTES: ${{ github.event.inputs.max_minutes || '200' }}
         shell: bash
         run: |
           set -euo pipefail
-          BR=feat/sumo-section-test-20261114
+          BR=main
           git config user.name "BEFN Sumo daily preview"
           git config user.email "sumo-preview@users.noreply.github.com"
           read -r BASHO PHASE < <(node scripts/sumo-basho-calendar.mjs)
@@ -67,7 +65,7 @@ jobs:
                 process.exit(strip(before)===strip(fs.readFileSync('data/sumo/preview-details.json','utf8'))?0:1);"; then
               echo "Only timestamps changed; not publishing"; git reset -q --hard HEAD; return 0
             fi
-            git commit -q -m "Refresh verified-source Sumo preview data (evening watch)"
+            git commit -q -m "Refresh verified-source Sumo data (evening watch)"
             for attempt in 1 2 3; do
               git fetch -q origin "$BR"
               if ! git rebase -q "origin/$BR"; then
@@ -76,11 +74,7 @@ jobs:
                 git reset -q --hard "origin/$BR"; return 0
               fi
               if git push -q origin "HEAD:$BR"; then
-                if [ -n "${HOOK:-}" ]; then
-                  curl -fsS --max-time 30 -X POST "$HOOK" > /dev/null && echo "Pushed; Render preview deploy requested"
-                else
-                  echo "SUMO_PREVIEW_DEPLOY_HOOK_URL is not set; preview not redeployed" >&2
-                fi
+                echo "Pushed to main; the release pipeline deploys it"
                 return 0
               fi
               sleep 2
