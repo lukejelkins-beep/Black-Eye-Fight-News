@@ -17,10 +17,16 @@ def window(i, n=30, stat=5):
                       "td15": i / 10, "tdAcc": .4, "tdDef": .7, "sub15": .2, "rev15": .1, "ctrlShare": .1, "ctrlAgainstShare": .1, "diffPm": 1}}
 
 
+def division(label, **extra):
+    """What scripts/build-ufc-card-scores.py reads back from a per-fighter stats file."""
+    return {"division": label, "divisionSlug": label.lower().replace(" ", "-"), "divisionSource": "official-roster",
+            "latestBoutDivision": label, "newToDivision": False, "previousDivision": None, **extra}
+
+
 def world():
     windows = {f"s{i}": window(i) for i in range(30)}
-    divisions = {f"s{i}": {"division": "Lightweight", "newToDivision": False, "previousDivision": None} for i in range(30)}
-    divisions["s2"] = {"division": "Welterweight", "newToDivision": True, "previousDivision": "Lightweight"}
+    divisions = {f"s{i}": division("Lightweight") for i in range(30)}
+    divisions["s2"] = division("Welterweight", newToDivision=True, previousDivision="Lightweight")
     names = {f"f{i}": f"s{i}" for i in range(30)}
     names["thin"] = "thin-slug"
     windows["thin-slug"] = window(3, stat=2)
@@ -58,6 +64,16 @@ class Build(unittest.TestCase):
     def test_division_flags_come_from_the_weight_class_file(self):
         f = self.out["fighters"]["f2"]
         self.assertEqual((f["division"], f["newToDivision"], f["previousDivision"]), ("Welterweight", True, "Lightweight"))
+        self.assertEqual((f["divisionSlug"], f["divisionSource"]), ("welterweight", "official-roster"))
+
+    def test_division_grouping_uses_the_slug_not_the_label(self):
+        """One division must not split into two pools over an apostrophe between two sources."""
+        snaps, names, windows, divisions = world()
+        for i, label in enumerate(("Women’s Bantamweight", "Women's Bantamweight")):
+            divisions[f"s{i}"] = division(label, divisionSlug="womens-bantamweight")
+        out = cs.build(snaps, names, windows, divisions)
+        both = [f for f in out["fighters"].values() if f["slug"] in ("s0", "s1")]
+        self.assertEqual({f["divisionSlug"] for f in both}, {"womens-bantamweight"})
 
     def test_scores_are_percentiles_with_bands_never_zero_or_100(self):
         for b in self.bouts.values():
@@ -74,6 +90,32 @@ class Build(unittest.TestCase):
     def test_empty_snapshot_file(self):
         out = cs.build({"fighters": {}, "events": []}, {}, {}, {})
         self.assertEqual((out["events"], out["fighters"]), ([], {}))
+
+
+class DivisionFromTheStatsFile(unittest.TestCase):
+    """The resolved division comes from the stats build; only the move note comes from the weight-class file."""
+
+    STATS = {"slug": "x", "division": "Light Heavyweight", "divisionSlug": "light-heavyweight",
+             "divisionSource": "official-roster"}
+
+    def test_latest_bout_in_the_same_division_keeps_the_move_note(self):
+        out = cs.fighter_division(self.STATS, {"division": "Light Heavyweight", "newToDivision": True,
+                                               "previousDivision": "Middleweight"})
+        self.assertEqual((out["division"], out["divisionSource"]), ("Light Heavyweight", "official-roster"))
+        self.assertEqual((out["newToDivision"], out["previousDivision"]), (True, "Middleweight"))
+
+    def test_latest_bout_elsewhere_reports_the_bout_instead_of_a_move(self):
+        out = cs.fighter_division(self.STATS, {"division": "Heavyweight", "newToDivision": True,
+                                               "previousDivision": "Light Heavyweight"})
+        self.assertEqual(out["division"], "Light Heavyweight", "the ranked division still wins")
+        self.assertEqual(out["latestBoutDivision"], "Heavyweight")
+        self.assertEqual((out["newToDivision"], out["previousDivision"]), (False, None),
+                         "not new to a division they are already ranked in")
+
+    def test_no_weight_class_entry(self):
+        out = cs.fighter_division(self.STATS, {})
+        self.assertEqual((out["latestBoutDivision"], out["newToDivision"], out["previousDivision"]),
+                         (None, False, None))
 
 
 if __name__ == "__main__":

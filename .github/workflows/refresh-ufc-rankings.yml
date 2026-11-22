@@ -1,4 +1,4 @@
-name: Refresh UFC official rankings (on demand)
+name: Refresh UFC official rankings (weekly)
 # Free source: the public ufc.com/rankings page, one request. Runs weekly on
 # Wednesday (UFC updates its rankings on Tuesday, US time; owner approved
 # 2026-11-22) and on demand (workflow_dispatch). Either commits fresh rankings to
@@ -17,7 +17,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: befn-ufc-rankings-refresh-${{ github.ref }}
+  group: befn-ufc-divisions-data-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   refresh:
