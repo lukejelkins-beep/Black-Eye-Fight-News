@@ -36,6 +36,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ufc_ratings  # noqa: E402  (same folder; the build script name has hyphens)
+import ufc_snapshot_scores as sc  # noqa: E402  (shared division_slug; single source of truth)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -393,11 +394,10 @@ def weight_class_divisions(path: Path | None = None) -> dict[str, dict]:
 
 
 def division_slug(label: str | None) -> str | None:
-    """'Women's Strawweight' -> 'womens-strawweight', matching the official division slugs."""
-    if not label:
-        return None
-    text = re.sub(r"[^a-z0-9]+", "-", str(label).lower().replace("\u2019", "'").replace("'", ""))
-    return text.strip("-") or None
+    """'Women's Strawweight' -> 'womens-strawweight', matching the official division slugs.
+    Moved to scripts/ufc_snapshot_scores.py (22 Nov) so the card scores build reads the same slugging; this name
+    stays as a thin alias so nothing else in this file has to change."""
+    return sc.division_slug(label)
 
 
 def resolve_division(slug: str, name: str, official: dict, weight: dict, reviewed: dict) -> dict:

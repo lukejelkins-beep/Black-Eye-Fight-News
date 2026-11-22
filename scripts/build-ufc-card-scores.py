@@ -15,8 +15,14 @@ fighter's latest labelled bout), read back from the per-fighter files rather tha
 and the rest of the site cannot place a fighter in two different divisions.
 
 Rule for a bout: when both fighters are in the same division and both have a division percentile for an attribute,
-the bout is ranked against that division; otherwise against the whole roster (a division percentile for one fighter
-against a roster percentile for the other would not be comparable). The basis is stored per bout and shown to readers.
+the bout is ranked against that division. Otherwise, when the card snapshot names the division the bout is actually
+contracted at (data/ufc-card-snapshots.json bout "division"), both fighters are read into that division's peer
+pool instead, so a fighter ranked in one division but fighting in another (Alex Pereira: ranked light heavyweight,
+fighting heavyweight) is still compared against the division the fight is at, not left on the whole roster.
+Failing that, the bout falls back to the whole roster (a division percentile for one fighter against a roster
+percentile for the other would not be comparable). The basis is stored per bout and shown to readers: "division"
+(both fighters' own resolved division), "contracted" (the bout's own division, used for one or both sides), or
+"roster".
 """
 from __future__ import annotations
 
@@ -52,7 +58,7 @@ def build(snapshots: dict, names: dict, windows: dict, divisions: dict, stats_as
     """snapshots: data/ufc-card-snapshots.json; names: name key -> slug; windows: slug -> last-five window;
     divisions: slug -> {"division", "divisionSlug", "divisionSource", "latestBoutDivision", "newToDivision",
     "previousDivision"}: the division the stats build resolved, plus the step 1b move flags."""
-    pop = sc.score_population(windows, {s: (divisions.get(s) or {}).get("divisionSlug") for s in windows})
+    pop, shrunk, by_div = sc.population_with_pools(windows, {s: (divisions.get(s) or {}).get("divisionSlug") for s in windows})
     peers = pop.pop("_peers")
     fighters = {}
     for key, f in snapshots.get("fighters", {}).items():
@@ -75,16 +81,42 @@ def build(snapshots: dict, names: dict, windows: dict, divisions: dict, stats_as
             # Compared by slug, not label: one division must never split into two pools over an apostrophe.
             same = (all(s and s.get("divisionSlug") for s in sides)
                     and sides[0]["divisionSlug"] == sides[1]["divisionSlug"])
+            # The division the bout is actually fought at (from the card snapshot), for when the two fighters'
+            # own resolved divisions differ or either is unresolved (Alex Pereira: ranked light heavyweight,
+            # fighting heavyweight). Both sides are read into this division's peer pool rather than falling
+            # straight back to the whole roster.
+            contracted_label = b.get("division") or None
+            contracted_slug = sc.division_slug(contracted_label)
             entry = {"id": b.get("id"), "fighters": b["fighters"], "division": sides[0]["division"] if same else None, "scores": []}
             for slug in slugs:
                 entry["scores"].append({a: (pop.get(slug, {}).get(a) if slug else None) for a in sc.ATTRIBUTES})
+            used_contracted = False
             for a in sc.ATTRIBUTES:
                 both_division = same and all(r[a] and r[a]["division"] is not None for r in entry["scores"])
-                basis = "division" if both_division else "roster"
-                for r in entry["scores"]:
-                    v = r[a]["division" if both_division else "roster"] if r[a] else None
+                contracted_values = None
+                if not both_division and contracted_slug:
+                    contracted_values = [sc.contracted_division_percentile(slug, contracted_slug, shrunk, by_div, a)
+                                         if slug else None for slug in slugs]
+                    if any(v is None for v in contracted_values):
+                        contracted_values = None
+                if both_division:
+                    basis = "division"
+                elif contracted_values is not None:
+                    basis = "contracted"
+                    used_contracted = True
+                else:
+                    basis = "roster"
+                for i, r in enumerate(entry["scores"]):
+                    if basis == "division":
+                        v = r[a]["division"] if r[a] else None
+                    elif basis == "contracted":
+                        v = contracted_values[i]
+                    else:
+                        v = r[a]["roster"] if r[a] else None
                     r[a] = {"score": v, "band": sc.band(v)} if v is not None else None
                 entry.setdefault("basis", {})[a] = basis
+            if not same and used_contracted:
+                entry["division"] = contracted_label
             bouts.append(entry)
         events.append({"id": e["id"], "bouts": bouts})
     return {"schema": 1, "window": "last5", "method": "docs/design/SNAPSHOT-METHOD.md", "statsAsOf": stats_as_of,

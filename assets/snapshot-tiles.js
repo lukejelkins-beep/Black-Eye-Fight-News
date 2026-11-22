@@ -69,7 +69,8 @@
 
   /* ---- Attribute scores (Phase 3 step 3). OFF unless the page opts in; the owner's release approval is separate. ----
    * Scores are 1-99 percentiles of the last five fights, ranked against the fighter's division when both fighters
-   * share one (else against all UFC fighters). Numbers come from data/ufc-card-scores.json; nothing is calculated here. */
+   * share one; otherwise against the division the bout is contracted at, when that is known; otherwise against all
+   * UFC fighters. Numbers come from data/ufc-card-scores.json; nothing is calculated here. */
   const SCORE_MAIN = [['power', 'Power'], ['defence', 'Defence'], ['wrestling', 'Wrestling'], ['durability', 'Durability']];
   const SCORE_MORE = [['striking', 'Striking'], ['grappling', 'Grappling']];
 
@@ -111,8 +112,11 @@
     };
     const main = SCORE_MAIN.map(row).join(''), more = SCORE_MORE.map(row).join('');
     const bases = Object.values(entry.basis || {});
-    const division = entry.division && bases.length && bases.every(x => x === 'division');
-    const rank = division ? 'Ranked against ' + entry.division + ' fighters.' : 'Ranked against all UFC fighters.';
+    const ownDivision = entry.division && bases.length && bases.every(x => x === 'division');
+    const contracted = entry.division && bases.length && bases.every(x => x === 'contracted');
+    const rank = ownDivision ? 'Ranked against ' + entry.division + ' fighters.'
+      : contracted ? 'Ranked against ' + entry.division + ' fighters, the division this bout is contracted at.'
+      : 'Ranked against all UFC fighters.';
     const moved = entry.info.map((f, i) => {
       if (!f) return '';
       // Ranked in one division, last fought in another: say where, rather than call them new to their own division.
