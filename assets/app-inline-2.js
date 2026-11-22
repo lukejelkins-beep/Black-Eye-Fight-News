@@ -487,11 +487,11 @@ function renderNewsFeed(){
   +more+sourceHealth()+'</div>';
 }
 document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo,.lp-fixture-art,.lp-latest-photo');if(w){const row=w.parentElement;w.remove();if(row&&row.classList)row.classList.remove('has-art');}}},true);
-const landing={results:null,cutouts:null,events:[],started:false};
+const landing={results:null,cutouts:null,events:[],videos:[],started:false};
 function loadLandingExtras(){
  if(landing.started)return;landing.started=true;
- Promise.all([deskJSON('data/upcoming-cards.json').catch(()=>null),deskJSON('data/results.json').catch(()=>null),fetch('data/ufc-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/boxing-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([u,r,c,bx])=>{
-  landing.events=u&&Array.isArray(u.events)?u.events:[];landing.results=r;landing.cutouts=window.BEFNLanding.mergeCutouts([['assets/img/ufc-cutouts/',c],['assets/img/boxing-cutouts/',bx]]);
+ Promise.all([deskJSON('data/upcoming-cards.json').catch(()=>null),deskJSON('data/results.json').catch(()=>null),fetch('data/ufc-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/fight-film.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/boxing-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([u,r,c,f,bx])=>{
+  landing.events=u&&Array.isArray(u.events)?u.events:[];landing.results=r;landing.cutouts=window.BEFNLanding.mergeCutouts([['assets/img/ufc-cutouts/',c],['assets/img/boxing-cutouts/',bx]]);landing.videos=f&&Array.isArray(f.videos)?f.videos:[];
   const target=document.getElementById('main');if((!location.hash||location.hash==='#home')&&target)target.innerHTML=renderLanding(true);
  });
 }
@@ -501,7 +501,7 @@ function renderLanding(skipLoad){
  const stories=newsFeedItems().concat(leads.map(l=>l.story)).sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
  if(!stories.length)return renderFrame('<div class="np"><header class="np-head"><h1>Home</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>');
  const sumo=['all','sumo'].includes(activeSport())?window.BEFNNewsPage.usableLanguageStories(desk.language,'sumo'):[];
- return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,posters:window.BEFNLocalPosters||null,now:Date.now()},h)+updatedLine());
+ return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,posters:window.BEFNLocalPosters||null,videos:landing.videos,now:Date.now()},h)+updatedLine());
 }
 const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';const m=Math.max(0,Math.floor((Date.now()-t)/60000));return m<1?'just now':m<60?m+' min ago':m<48*60?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' days ago'};
 const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';

@@ -147,6 +147,31 @@
       (r.cutout ? '<img class="lp-cutout" src="' + h.safeURL(r.cutout) + '" alt="' + h.esc(r.winner) + '" loading="lazy" decoding="async">' : '') + '</div>';
   }
 
+  /* Film from the card the latest result came from: a video whose title names one of
+     the two fighters, finishes first, newest first. Nothing is matched on the event name
+     because the film feed rarely carries one. At most three, and none if none match. */
+  function cardFilm(result, videos, h) {
+    if (!result || !Array.isArray(videos) || !videos.length) return '';
+    const names = [result.winner, result.loser].map(n => slug(n)).filter(Boolean);
+    const last = n => n.split('-').slice(-1)[0];
+    const hit = v => {
+      const title = '-' + slug(v.title) + '-';
+      return names.some(n => title.includes('-' + n + '-') || (last(n).length > 4 && title.includes('-' + last(n) + '-')));
+    };
+    const picked = videos
+      .filter(v => v && v.url && v.title && v.thumbnail && v.verified === true && hit(v))
+      .sort((a, b) => (b.isFinish === true) - (a.isFinish === true) || String(b.date || '').localeCompare(String(a.date || '')))
+      .slice(0, 3);
+    if (!picked.length) return '';
+    const row = v => '<a class="lp-film-row" href="' + h.safeURL(v.url) + '" target="_blank" rel="noopener noreferrer">' +
+      '<span class="lp-film-thumb"><img src="' + h.safeURL(v.thumbnail) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="lp-film-play" aria-hidden="true">▶</span></span>' +
+      '<span class="lp-film-copy"><span class="lp-film-title">' + h.esc(v.title) + '</span>' +
+      '<span class="lp-meta">' + h.esc(v.kind || (v.isFinish ? 'Finish' : 'Highlights')) + ' · ' + h.esc(v.publisher || 'Publisher') + '</span></span></a>';
+    return '<section class="lp-film" aria-label="Film from this card"><div class="lp-kicker">Film from this card</div>' +
+      picked.map(row).join('') +
+      '<a class="lp-film-all" href="#highlights">All fight film ›</a></section>';
+  }
+
   function leadHTML(a, h) {
     if (!a) return '';
     const photo = h.photo(a);
@@ -206,7 +231,9 @@
     ['boxing', 'mma'].forEach(k => others.filter(a => a.sport === k).sort((a, b) => time(b) - time(a)).slice(0, 3).forEach(a => inCols.add(a.url)));
     const latest = others.filter(a => !inCols.has(a.url)).slice(0, 5);
     return '<div class="lp">' +
-      '<section class="lp-top" aria-label="Lead story">' + leadHTML(lead, h) + '<div class="lp-side">' + resultTileHTML(latestResult(ctx.results, ctx.cutouts, now), h) + '</div></section>' +
+      (() => { const result = latestResult(ctx.results, ctx.cutouts, now);
+        return '<section class="lp-top" aria-label="Lead story">' + leadHTML(lead, h) + '<div class="lp-side">' +
+          resultTileHTML(result, h) + cardFilm(result, ctx.videos, h) + '</div></section>'; })() +
       (fx.length ? '<section class="lp-section" aria-label="This week and next"><div class="lp-head"><h2>This week and next</h2><a href="#fights">Full schedule ›</a></div><div class="lp-fixtures">' + fx.map(e => fixtureHTML(e, h, ctx)).join('') + '</div></section>' : '') +
       (cols.length ? '<section class="lp-section" aria-label="By sport"><div class="lp-head"><h2>By sport</h2></div><div class="lp-cols">' + cols.join('') + '</div></section>' : '') +
       '<section class="lp-section lp-bottom"><div><div class="lp-head"><h2>Latest news</h2><a href="#news">All stories ›</a></div><div class="lp-latest">' +
@@ -223,7 +250,7 @@
       '</div></div><aside class="lp-talk"><div class="lp-kicker">Fight Talk</div><p>What fighters and promoters are posting, each with its source and date.</p><a class="lp-button" href="#social">Open Fight Talk ›</a></aside></section></div>';
   }
 
-  const api = { fixtures, latestResult, build, slug, posterFor, cutoutFor, cutoutForTitle, mergeCutouts, billed };
+  const api = { fixtures, latestResult, build, slug, posterFor, cutoutFor, cutoutForTitle, cardFilm, mergeCutouts, billed };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.BEFNLanding = api;
 })(typeof window !== 'undefined' ? window : globalThis);
