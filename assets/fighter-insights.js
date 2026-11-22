@@ -286,13 +286,14 @@
   // UFC fighters outside the old V3 snapshot use the stats build directly when
   // their file exists: v2 ratings (if eligible) and the stats sections.
   const stats=statsFor(f),SP=window.BEFNStatsProfile,v2=stats?.ratings?.eligible?stats.ratings:null;
-  const bonus=v2?engine.credentialBonuses({credentials:credentialsFor(f)}):null;
+  // The stats build's own numbers, unaltered: the UFC stats page shows the same
+  // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
    const base=v2.skills?.[id]?.roster;
-   return Number.isFinite(base)?Math.min(99,base+Math.max(0,bonus?.[id]?.points||0)):null;
+   return Number.isFinite(base)?base:null;
   };
-  const v2Overall=v2?engine.overall(['striking','grappling','wrestling','defence','form'].map(id=>({id,score:v2Score(id)}))):null;
+  const v2Overall=Number.isFinite(v2?.overall)?v2.overall:null;
   const v2Meters=v2?[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']].map(([id,label])=>{
    const sc=v2Score(id),d=id==='form'?null:v2.skills?.[id]?.division;
    const hint=id==='form'?'Weighted to recent fights and opponent strength':
@@ -304,7 +305,7 @@
   const tier=scoreTier(v2Overall);
   return '<section class="befn-profile-insights befn-pro-insights'+(v2?'':' befn-v3-pending')+'" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating</span>'+
-   '<strong class="befn-v3-score">'+(v2Overall===null?'Unrated':v2Overall+'<small>/100</small>')+'</strong>'+
+   '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):v2Overall+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(v2Overall||0)+'%"></span></span>'+
    verifiedTag+
    (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
@@ -312,7 +313,7 @@
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
    proSection('ratings','Ratings',v2?'Percentile vs. UFC roster':'UFC statistics pending','<div class="befn-pro-meters">'+
-    (v2?v2Meters:known.map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
+    (v2?v2Meters:(ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
     (v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
      ' rated UFC fighters, using the whole UFC career with recent fights counting most. Recent form is out of 100.</p>':''))+
    proSection('fights','Recent fights','Up to five recorded UFC fights',
@@ -494,6 +495,10 @@
   for(const [k,v] of Object.entries(d.names))statsNames.set(k,v);
   update();
  }).catch(()=>{});
+ // A fighter the stats build holds takes a rating from that build or from
+ // nowhere; until names.json has loaded we do not yet know, so show no number.
+ const ratedByBuild=f=>!statsMeta||statsNames.has(norm(f?.name));
+ const noScore=stats=>stats?'Unrated':'—';
  function statsFor(f){
   const slug=statsNames.get(norm(f?.name));
   if(!slug)return null;
@@ -522,7 +527,7 @@
   // The V3 build ships metrics only; ratings come from the shared engine
   // unless a reviewed score has been stored in the data file.
   const ctx=v3Context();
-  const computed=engine.evaluateV3(v3,{asOf:ufcV3?.asOf,credentials:credentialsFor(f),
+  const computed=engine.evaluateV3(v3,{asOf:ufcV3?.asOf,credentials:[],
    population:ctx.population,opponents:ctx.opponents});
   const computedById=Object.fromEntries(computed.ratings.map(r=>[r.id,r]));
   const stored=id=>Number.isFinite(v3.technical?.[id]?.score);
@@ -533,17 +538,18 @@
   // replace the last-five V3 ratings as soon as the fighter's stats file loads.
   const stats=statsFor(f),v2=stats?.ratings?.eligible?stats.ratings:null;
   const SP=window.BEFNStatsProfile;
-  const bonus=v2?engine.credentialBonuses({credentials:credentialsFor(f)}):null;
+  // The stats build's own numbers, unaltered: the UFC stats page shows the same
+  // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
    const base=v2.skills?.[id]?.roster;
-   return Number.isFinite(base)?Math.min(99,base+Math.max(0,bonus?.[id]?.points||0)):null;
+   return Number.isFinite(base)?base:null;
   };
   const technicalScoreV1=technicalScore;
-  const ratingScore=id=>v2?v2Score(id):technicalScoreV1(id);
-  const isPercentile=id=>v2?id!=='form':isPercentileV1(id);
-  const score=Number.isFinite(v3.power)?v3.power:v2?
-   engine.overall(['striking','grappling','wrestling','defence','form'].map(id=>({id,score:v2Score(id)}))):computed.overall;
+  const built=ratedByBuild(f);
+  const ratingScore=id=>v2?v2Score(id):built?null:technicalScoreV1(id);
+  const isPercentile=id=>v2?id!=='form':!built&&isPercentileV1(id);
+  const score=v2?(Number.isFinite(v2.overall)?v2.overall:null):built?null:Number.isFinite(v3.power)?v3.power:computed.overall;
   const tier=scoreTier(score);
   const ratings=[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
   const readableLabels={
@@ -604,7 +610,7 @@
   const pills=v3.recent.map(b=>{const [s,k]=resultSymbol(b.outcome);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
   const scorePanel='<aside class="befn-pro-score is-'+tier+'" aria-label="Overall fighter rating">'+
    '<span class="befn-pro-tag">BEFN rating</span>'+
-   '<strong class="befn-v3-score">'+(score===null?'Unrated':score+'<small>/100</small>')+'</strong>'+
+   '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):score+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
    '<div class="befn-v3-status befn-scout-classification">'+
    (v3.category!=='Champion'?'<span>'+escapeHTML(v3.category)+'</span>':'')+
@@ -624,6 +630,8 @@
    (v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
     ' rated UFC fighters, using the whole UFC career with recent fights counting most. A rating needs at least '+
     (v2.sample?.minimum||3)+' fights with full round statistics. Recent form is out of 100.</p>':
+   built?(stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
+    ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''):
    computed.scale==="percentile"?'<p class="befn-pro-note">Skill ratings are percentiles against '+
     (rosterSize||'all rated')+' UFC fighters, from their last five recorded UFC fights. Recent form is out of 100.</p>':'');
   const fightCards='<ul class="befn-v3-fights befn-pro-fight-list">'+v3.recent.map(b=>{

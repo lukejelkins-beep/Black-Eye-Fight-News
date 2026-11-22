@@ -64,6 +64,8 @@ jobs:
           node tests/test-fighter-photo-close.cjs
       - name: Validate all UFC profile cards and source data
         run: node tests/test-ufc-profile-card-qa.cjs
+      - name: One BEFN rating on profiles and the stats page
+        run: node --test tests/test-ufc-one-rating.cjs
       - name: Verify champion cohort and evidence gates
         run: |
           node tests/test-ufc-title-match.cjs
