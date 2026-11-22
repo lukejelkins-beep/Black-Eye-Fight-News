@@ -410,6 +410,24 @@ class FreeResultsPath(unittest.TestCase):
             m.free_rounds = kept
         self.assertEqual(fights[0]["rounds"][0]["a"]["sigLanded"], 1, "the archive stays authoritative")
 
+    def test_partly_measured_rounds_never_void_a_career_rate(self):
+        def rounds(**over):
+            return [{"round": n, "a": side(sigLanded=5, **over), "b": side(sigLanded=3, **over)} for n in (1, 2)]
+        cito = {"k": {"promotion": "UFC", "date": "2026-02-07", "fighterA": "Alpha One",
+                      "fighterB": "Bravo Two", "rounds": rounds(reversals=None)}}
+        free = {"2026-02-07|alphaone|bravotwo": {"fighterA": "Alpha One", "fighterB": "Bravo Two", "rounds": rounds()}}
+        kept = m.free_rounds
+        try:
+            m.free_rounds = lambda: {}
+            alone = m.results_only_fights([self.row()], self.BOUTS, cito, dt.date(2026, 1, 10), {"unresolved": 0})[0]
+            m.free_rounds = lambda: free
+            filled = m.results_only_fights([self.row()], self.BOUTS, cito, dt.date(2026, 1, 10), {"unresolved": 0})[0]
+        finally:
+            m.free_rounds = kept
+        self.assertFalse(alone["statsComplete"], "a result with no rounds until a complete source has it")
+        self.assertTrue(filled["statsComplete"], "the complete export beats the partial archive")
+        self.assertEqual(filled["rounds"][0]["a"]["reversals"], 0)
+
     def test_a_missing_or_broken_results_file_is_survivable(self):
         kept = m.DATA
         try:

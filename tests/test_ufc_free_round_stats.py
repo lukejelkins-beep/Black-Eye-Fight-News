@@ -35,7 +35,7 @@ def build(stats, archive_fights=None, archive_date="2026-10-31"):
     with tempfile.TemporaryDirectory() as folder:
         path = pathlib.Path(folder, "archive.json")
         fights = {f"k{i}": f for i, f in enumerate(held)}
-        fights.setdefault("anchor", {"promotion": "UFC", "date": archive_date,
+        fights.setdefault("anchor", {"promotion": "UFC", "date": archive_date, "sources": {"ufcalendar": {}},
                                      "fighterA": "Anchor One", "fighterB": "Anchor Two", "rounds": []})
         path.write_text(json.dumps({"fights": fights}))
         return m.build(get={"ufc_event_details": EVENTS, "ufc_fight_stats": HEADER + stats}.get, archive=path)
@@ -61,8 +61,17 @@ class FreeRoundStats(unittest.TestCase):
 
     def test_the_archive_keeps_what_it_already_holds(self):
         held = [{"promotion": "UFC", "date": "2026-11-21", "fighterA": "Bravo Two", "fighterB": "Alpha One",
-                 "rounds": []}]
+                 "sources": {"ufcalendar": {}}, "rounds": []}]
         self.assertEqual(build(both(), archive_fights=held)["fights"], {}, "corner order does not matter")
+
+    def test_a_cito_record_neither_hides_its_fight_nor_the_rest_of_the_card(self):
+        held = [{"promotion": "UFC", "date": "2026-11-21", "fighterA": "Alpha One", "fighterB": "Bravo Two",
+                 "sources": {"cito": {}}, "rounds": []}]
+        card = both() + (row("Carla Three", bout="Carla Three vs. Dana Four")
+                         + row("Dana Four", bout="Carla Three vs. Dana Four"))
+        built = build(card, archive_fights=held)
+        self.assertEqual(built["after"], "2026-10-31")
+        self.assertEqual(len(built["fights"]), 2)
 
     def test_nothing_before_the_archive_cutoff_is_read(self):
         old = both(event="UFC 499: Old vs Card", bout="Carla Three vs. Dana Four")
