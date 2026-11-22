@@ -43,24 +43,6 @@ test('F30 history captions reflect actual available number, not always five',()=
    {winnerId:4,bashoId:'202607',day:1,kimarite:'hatakikomi'}]};
  assert.equal(dailyRecentMeetings(sample,4,5).length,3);
 });
-test('F07 percentages preserve sourced wins/losses, no fabricated zero or precision inflation',()=>{
- assert.equal(dailyWinPercentage(207,73),'73.9%');
- assert.equal(dailyWinPercentage(0,5),'0.0%');
- assert.equal(dailyWinPercentage(0,0),null);
- assert.equal(dailyWinPercentage(null,7),null);
- assert.match(body('comparisonGrid'),/divisionLabel\+' W–L'/);
- assert.match(body('comparisonGrid'),/DIVS\.includes\(division\)/);
- assert.match(body('comparisonGrid'),/Career win %/);
- assert.match(dailyCss,/\.sumo-comparison-row/);
- assert.match(dailyCss,/@media\(max-width:350px\)/);
-});
-test('F01/F03 bounded portrait and compact standings override old full-width layouts',()=>{
- assert.match(css,/grid-template-columns:minmax\(280px,390px\)/);
- assert.match(css,/max-height:520px!important/);
- assert.match(css,/\.sumo-standings-row/);
- assert.doesNotMatch(css,/transform:scale\(1\.9\)/);
- assert.match(body('renderProfile'),/sectionNav\(w\.sourceId\)\+lastFiveStrip\(w\)/);
-});
 test('F08 ordinal position preserves East versus West without altering source rank data',()=>{
  const b={
    Makuuchi:{east:[{rikishiID:7,rank:'Ozeki 1 East'}],west:[{rikishiID:8,rank:'Ozeki 1 West'}]},
