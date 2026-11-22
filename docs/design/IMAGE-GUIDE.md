@@ -26,8 +26,24 @@ There is no existing stockpile. The owner keeps a local `befn-images/` folder on
 - Claude does not fetch photos of public figures from the web. The owner downloads what they are permitted to use and drops it into `originals/`.
 - **Exception, Sumo (owner approved 2026-11-19):** official JSA rikishi portraits are fetched automatically by `scripts/sumo-portrait-intake.py` on the Sumo preview branch, under the owner's attested JSA permission (2026-11-16). Each one is matched to the roster by JSA id, ring name and stable, recorded in `data/sumo/approved-photos.json` with source, credit, licence and hash, and turned into a display cut-out when it is a clean full-body photo. Runs daily from `.github/workflows/sumo-portrait-intake.yml`. No other sport or source is covered by this exception.
 
-## Open question for the owner
-Which sources are you permitted to republish (promoter press kits, licences, Wikimedia)? List them here once known.
+## Rights status (owner statement, 2026-11-22)
+The owner stated on 2026-11-22 that **every image held in this repository is approved and cleared for use on BEFN**. That statement is the rights basis for the sets below; it is recorded, not inferred, and no licence has been invented for any of them. Source URLs, credits and each source's original wording are kept as provenance, so a register entry may still show what a source said before the owner cleared it — the effective status is the `rights` field, not the `originalRightsNote`.
+
+| Set | Files | Where | Record | Status |
+| --- | --- | --- | --- | --- |
+| UFC fighter photos | 2,250 (750 fighters × 3 crops) | `assets/img/ufc/` | `data/ufc-image-register.json` | `owner-cleared` |
+| UFC cutouts | 52 | `assets/img/ufc-cutouts/` | `data/ufc-cutout-register.json` | derivative of the cleared portraits, same status |
+| Event posters | 88 | `assets/img/posters/` | `data/poster-register.json` | `owner-cleared`, official promotional posters |
+| Sumo JSA portraits, heads and cutouts | 478 (190 rikishi) | `assets/sumo-photos/` | `data/sumo/approved-photos.json` | `approved: true`, owner's attested JSA permission (2026-11-16) |
+| Sumo kimarite clips and posters | 31 | `assets/sumo-kimarite/` | `data/sumo/kimarite-media.json` (`clips`) | NHK permission confirmed by the owner |
+| JSA kimarite stills | 82 | `assets/sumo-kimarite/jsa/` | `data/sumo/kimarite-media.json` (`jsaPhotos`) | `owner-cleared` (added 2026-11-22; had no record before) |
+| Sumo country landmarks | 4 | `assets/sumo-landmarks/` (Sumo preview branch) | `data/sumo/landmarks.json` | `approved: true`, owner 2026-11-22 |
+| Country flags | 28 | `assets/img/flags/` | licence file kept beside them | flag-icons 7.6.0, MIT |
+| Anthony Joshua portrait | 1 | `assets/fighter-portraits/` | `assets/portrait-sources.json`, `assets/PHOTO_CREDITS.md` | CC BY 3.0, attribution retained |
+| Site artwork, icons and brush marks | 10 | `assets/` | this table | BEFN's own artwork |
+| Documentation screenshots | 14 | `docs/design/screenshots/` | this table | BEFN's own screenshots of its own pages |
+
+The owner extended the same statement to the hotlinked portraits on 2026-11-22, so the 226 entries in `assets/fighter-portrait-registry.json` that hold a photo link now read `owner-cleared` instead of `external-hotlink-license-not-cleared` (the copy inlined in `index.html` is kept identical). Those files live on 74 other sites and BEFN does not hold them: the status records the owner's permission to use them, not a licence from the source, and nothing copies them locally — `cache-licensed-portraits.yml` caches only the Wikimedia Commons CC entries in `assets/portrait-sources.json`. The other 643 names have no photo at all, so they keep their lookup status (`portrait-not-yet-verified`), which is about whether a portrait has been found, not about rights. Publisher thumbnails in news and results data are still other people's files, served from their own servers, and are not part of this record.
 
 ## UFC library (added 2026-11-17)
 750 of the 783 approved UFC fighters have processed images in `assets/img/ufc/<slug>-{portrait,card,thumb}.webp`, listed in `data/ufc-image-register.json` (rights: `owner-cleared`, per owner statement). `scripts/process-fighter-images.py` makes them from the owner's local folder; crops are top-biased with no face detection, and 293 sources are under 480 px wide (`lowRes: true` in the register), so they will look soft if shown large. 33 fighters are listed under `missing`.
