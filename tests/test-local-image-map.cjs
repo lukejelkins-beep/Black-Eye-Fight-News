@@ -47,13 +47,37 @@ for (const r of [...ufc.images, ...boxing.images]) {
 }
 assert(checked > 100, 'expected the UFC library to be mapped too, got ' + checked);
 
-// Boxing rows carry the rights record the attestation requires.
-assert.strictEqual(boxing.rights, 'promoter-press-kit');
+// Boxing rows carry the rights record their source requires.
+assert(/promoter-press-kit/.test(boxing.rights));
 assert(/attested/i.test(boxing.rightsNote));
 for (const r of boxing.images) {
-  assert(r.promoter && r.credit, 'no promoter credit for ' + r.name);
   assert(/^https:\/\//.test(r.sourceUrl) && /^https:\/\//.test(r.sourcePage), 'no source recorded for ' + r.name);
   assert(/^[a-f0-9]{64}$/.test(r.sha256), 'no checksum for ' + r.name);
-  assert(r.attestation && r.attestation === boxing.rightsNote, 'row attestation must match the register');
+  if (r.rights === 'promoter-press-kit') {
+    assert(r.promoter && r.credit, 'no promoter credit for ' + r.name);
+    assert(r.attestation && r.attestation === boxing.rightsNote, 'row attestation must match the register');
+  } else {
+    // A Creative Commons photograph is only usable with its photographer and licence named.
+    assert.strictEqual(r.rights, 'wikimedia-cc', 'unknown rights for ' + r.name + ': ' + r.rights);
+    assert(r.photographer, 'no photographer for ' + r.name);
+    assert(/^(cc|public domain|pd)/i.test(r.licence || ''), 'not a free licence for ' + r.name + ': ' + r.licence);
+    assert(/commons\.wikimedia\.org/.test(r.sourcePage), 'no Commons file page for ' + r.name);
+    assert(r.changes, 'no record of what was changed for ' + r.name);
+  }
 }
+
+// Every photograph is accounted for on the credits page, which is what the licences ask for.
+const creditsPath = path.join(root, 'boxing-photo-credits.html');
+assert(fs.existsSync(creditsPath), 'boxing-photo-credits.html is missing: run scripts/build-photo-credits.py');
+const credits = fs.readFileSync(creditsPath, 'utf8');
+for (const r of boxing.images) {
+  assert(credits.includes(r.name), 'no credit line for ' + r.name);
+  if (r.rights === 'wikimedia-cc') {
+    assert(credits.includes(r.photographer), 'photographer not credited for ' + r.name);
+    assert(credits.includes(r.licence), 'licence not named for ' + r.name);
+  }
+}
+// And the page is linked where a reader can reach it.
+assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('boxing-photo-credits.html'),
+  'index.html must link the credits page');
 console.log('local image map tests passed (' + checked + ' files checked)');
