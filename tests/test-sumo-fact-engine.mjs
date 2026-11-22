@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {buildFactIndex,bestMatchupFact,rivalryFacts,factText,liveMatchupFacts,pairFacts,SURFACE_MIN} from '../assets/sumo-fact-engine.mjs';
+import {buildFactIndex,bestMatchupFact,rivalryFacts,factText,liveMatchupFacts,pairFacts,SURFACE_MIN,profileFacts,techniqueFacts,stableFacts,factPeople} from '../assets/sumo-fact-engine.mjs';
 
 const W=(id,name,rank,extra={})=>({sourceId:id,shikonaEn:name,currentRank:rank,...extra});
 const roster={rikishi:[
@@ -33,13 +33,13 @@ test('level 42-meeting series is the top rivalry, worded with its scope',()=>{
  const f=facts(1,2).find(x=>x.k==='series');
  assert.equal(f.n,42);assert.equal(f.wa,21);assert.equal(f.top,1);
  const t=factText(f,name);
- assert.equal(t.lead,'42 meetings since January 2022, and it’s level at 21–21.');
+ assert.equal(t.lead,'Level and Even have met 42 times since January 2022, and it’s level at 21–21.');
  assert.match(t.rest,/longest series between two wrestlers BEFN tracks/);
  assert.equal(t.scope,'BEFN bout records');
 });
 test('clean sweep and a finishing move, but fusen is never a technique',()=>{
  const sweep=facts(3,4).find(x=>x.k==='sweep');
- assert.equal(factText(sweep,name).lead,'Sweeper has won all 6 of their meetings.');
+ assert.equal(factText(sweep,name).lead,'Sweeper has won all 6 meetings with Swept.');
  assert.equal(factText(facts(3,4).find(x=>x.k==='finish'),name).lead,'All 6 of Sweeper’s wins over Swept have come by yorikiri.');
  const streak=facts(5,6).find(x=>x.k==='streak');
  assert.equal(streak.n,6);assert.equal(streak.lastLoss,'202303');
@@ -94,4 +94,67 @@ test('sumo.js shows facts on headline bouts, matchup rows and the head-to-head p
  assert.match(app,/photo\(b,right,'right',winR,winL\)\+'<\/div>'\+matchupFactMarkup\(match\)/);
  assert.match(app,/boutRowMarkup\(match\)\+matchupFactMarkup\(match\)/);
  assert.match(app,/rivalryPanelMarkup\(a,b\)/);
+});
+
+// ---- Phase 2: final-day nerve, comebacks, profiles, kimarite guide, stables ----
+function phase2(){
+ const people=[...roster.rikishi,W(13,'Clutch','Maegashira 5 East',{heya:'Alpha'}),W(14,'Phoenix','Maegashira 6 East',{heya:'Alpha'})];
+ const pairs={...history.pairs};
+ let opp=500;
+ const fifteen=(id,basho,seq,move='yorikiri')=>seq.forEach((won,i)=>{
+  const o=opp++;pairs[id+':'+o]={a:id,b:o,regular:[[basho,i+1,won?id:o,won?move:'oshidashi','Makuuchi',1,'regular']],special:[]};
+ });
+ const sevenSeven=[1,0,1,0,1,0,1,0,1,0,1,0,1,0].map(Boolean);
+ ['202301','202303','202305','202307','202309'].forEach(b=>fifteen(13,b,[...sevenSeven,true]));
+ fifteen(14,'202501',[0,0,0,0,1,1,1,1,1,1,1,1,1,1,1].map(Boolean),'isamiashi');
+ const r={rikishi:people};
+ return {r,d:{...details,factIndex:buildFactIndex({roster:r,details,history:{pairs}})},nm:id=>people.find(w=>String(w.sourceId)===String(id))?.shikonaEn};
+}
+test('final-day nerve and comebacks come from complete 15-day basho only',()=>{
+ const {d,nm}=phase2();
+ const clutch=d.factIndex.people['13'].find(f=>f.k==='clutch');
+ assert.equal(clutch.won,5);assert.equal(clutch.lost,0);
+ assert.equal(factText(clutch,nm).lead,'Clutch is 5–0 on the final day when sitting at 7–7.');
+ const back=d.factIndex.people['14'].find(f=>f.k==='comeback');
+ assert.equal(factText(back,nm).lead,'Phoenix once lost his first four bouts and still finished with a winning record.');
+ assert.match(factText(back,nm).rest,/January 2025, finishing 11–4/);
+});
+test('non-technique results never count as techniques',()=>{
+ const {d}=phase2();
+ assert.equal(techniqueFacts(d,'isamiashi'),null);
+ assert.equal(techniqueFacts(d,'yorikiri').top[0][0],'13');
+ assert.ok(!Object.values(d.factIndex.people).flat().some(f=>['isamiashi','fusen','hansoku'].includes(f.km)));
+});
+test('profiles name the opponent, lead with distinct kinds, and skip facts he is on the wrong end of',()=>{
+ const {d,nm}=phase2();
+ const sweeper=profileFacts(d,3,{min:0});
+ assert.ok(sweeper.some(f=>f.k==='sweep'));
+ assert.equal(new Set(sweeper.slice(0,2).map(f=>f.k)).size,2,'first facts are different kinds');
+ assert.match(factText(sweeper.find(f=>f.k==='sweep'),nm).lead,/with Swept\.$/);
+ assert.equal(profileFacts(d,4,{min:0}).some(f=>f.k==='sweep'),false,'the swept wrestler’s profile does not show it');
+ const stable=stableFacts(d,[13,14]);
+ assert.deepEqual(stable.map(f=>f.id).sort(),['13','14']);
+});
+test('profile, kimarite and stable pages are wired to the engine',()=>{
+ const app=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+ assert.match(app,/recentTenStrip\(w\)\+didYouKnowMarkup\(w\)/);
+ assert.match(app,/renderKimariteGallery\(\)\+techniqueFactsMarkup\(\)/);
+ const stables=readFileSync(new URL('../assets/sumo-stables.mjs',import.meta.url),'utf8');
+ assert.match(stables,/stableFactsMarkup\(stable\)\+disclaimer\(\)/);
+});
+
+test('faces: who each fact is about, and faces only where the page lacks that wrestler',()=>{
+ assert.deepEqual(factPeople({k:'sweep',w:3,l:4}),{main:'3',other:'4'});
+ assert.deepEqual(factPeople({k:'clutch',id:13}),{main:'13',other:null});
+ const app=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
+ // Profile: the opponent's face on pair facts; the wrestler himself is already in the hero.
+ assert.match(app,/factLineMarkup\(f,p\.other\?\(p\.main===me\?p\.other:p\.main\):null\)/);
+ // Matchups and head-to-heads already show both wrestlers: no face argument.
+ assert.match(app,/return f\?factLineMarkup\(f\):'';/);
+ assert.match(app,/facts\.map\(f=>'<li>'\+factLineMarkup\(f\)\+'<\/li>'\)/);
+ // Kimarite leaders get faces; only approved photos are used, never a placeholder.
+ assert.match(app,/'<li>'\+factFace\(id\)\+/);
+ assert.match(app,/function factFace\(id\)[\s\S]*?photo\?\.approved===true[\s\S]*?return '';/);
+ const stables=readFileSync(new URL('../assets/sumo-stables.mjs',import.meta.url),'utf8');
+ assert.match(stables,/factFace\(factPeople\(f\)\.main\)/);
 });

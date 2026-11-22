@@ -11,7 +11,9 @@ const photos = JSON.parse(read('data/sumo/approved-photos.json'));
 const names = [...(script.match(/const OFFICIAL_STABLES = \[([\s\S]*?)\];/)?.[1] || '').matchAll(/'([^']+)'/g)].map(x => x[1]);
 
 test('the independent stable directory ships with valid JS and links from Sumo', () => {
-  assert.doesNotThrow(() => new Function(script));
+  // The page loads this as a module; strip its static imports for the syntax check.
+  assert.doesNotThrow(() => new Function(script.replace(/^import .*$/gm, '')));
+  assert.match(html, /<script type="module" src="assets\/sumo-stables\.mjs/);
   assert.match(html, /assets\/sumo-stables\.mjs/);
   assert.match(html, /assets\/sumo-stables\.css/);
   assert.match(html, /noindex,nofollow/);
