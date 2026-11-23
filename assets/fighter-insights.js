@@ -565,7 +565,6 @@
    if(known&&isUfcProfile(known)&&statsNames.get(norm(d.name))===slug)return known;
    if(!statsProfiles.has(slug)){
     const c=d.windows?.career||{},ranked=Number.isInteger(d.officialRank)&&d.officialRank>0;
-    if(window.BEFNStatsProfile?.breakdownsSound?.(d)===false)d.hideBreakdowns=true;
     const f={id,statsSlug:slug,noPortrait:statsNames.get(norm(d.name))!==slug,name:d.name,sport:"MMA",organisation:"UFC",division:d.division||"",credentials:[],
      category:d.champion?"Champion":ranked?"Ranked #"+d.officialRank:"UFC fighter",
      recordLabel:overallRecords.has(slug)?"Overall record":"UFC record",

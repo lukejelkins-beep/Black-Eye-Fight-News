@@ -418,6 +418,7 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     own, opp, seconds, stat_fights = {}, {}, 0.0, 0
     pace = {"r1": [0.0, 0.0], "later": [0.0, 0.0]}  # [sig attempts, minutes]
     rounds_scored = rounds_won = rounds_10_8 = 0
+    unsound = set()  # "target" / "position": a round whose parts do not add up to the strikes landed
     w_fights, w_wins = 0.0, {"ko": 0.0, "sub": 0.0}
     for fight, w in zip(fights, weights):
         if fight["outcome"] != "NC":
@@ -433,6 +434,12 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
         if fight["statsComplete"] and fight["rounds"]:
             stat_fights += 1
             for r in fight["rounds"]:
+                for name, parts in (("target", ("head", "body", "leg")), ("position", ("distance", "clinch", "ground"))):
+                    landed_parts = [r["own"].get(k + "Landed") for k in parts]
+                    total = r["own"].get("sigLanded")
+                    if (None in landed_parts and total is not None) or total is None or \
+                            (None not in landed_parts and sum(landed_parts) != total):
+                        unsound.add(name)
                 seconds += r["seconds"] * w
                 for key in COUNTS:
                     _add(own, key, r["own"][key], w)
@@ -490,10 +497,12 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
                        if known(own, "sigLanded") and known(opp, "sigLanded") else None),
         }
         landed = [own.get(k + "Landed") if known(own, k + "Landed") else None for k in ("head", "body", "leg")]
-        if None not in landed and sum(landed):
+        # Head, body and legs (and distance, clinch and ground) must add up to the strikes landed in every round
+        # of the window. Some archived rounds do not, so their shares would be false: leave them out, never repair.
+        if None not in landed and sum(landed) and "target" not in unsound:
             rates["target"] = {k: round(v / sum(landed), 3) for k, v in zip(("head", "body", "leg"), landed)}
         spots = [own.get(k + "Landed") if known(own, k + "Landed") else None for k in ("distance", "clinch", "ground")]
-        if None not in spots and sum(spots):
+        if None not in spots and sum(spots) and "position" not in unsound:
             rates["position"] = {k: round(v / sum(spots), 3) for k, v in zip(("distance", "clinch", "ground"), spots)}
         r1, later = pace["r1"], pace["later"]
         if r1[1] >= 10 and later[1] >= 10 and r1[0]:

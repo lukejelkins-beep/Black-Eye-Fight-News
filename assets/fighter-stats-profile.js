@@ -211,8 +211,8 @@
    '<div class="befn-pro-tiles">'+tiles.map(([v,l,s])=>'<div><strong>'+esc(v)+'</strong><span>'+esc(l)+'</span>'+
     (s?'<small>'+esc(s)+'</small>':'')+'</div>').join("")+'</div>'+
    '<div class="bsp-split-grid">'+
-   bars("Where strikes land",stats.hideBreakdowns?null:r.target,[["head","Head"],["body","Body"],["leg","Legs"]])+
-   bars("Where strikes are thrown",stats.hideBreakdowns?null:r.position,[["distance","Distance"],["clinch","Clinch"],["ground","Ground"]])+
+   bars("Where strikes land",r.target,[["head","Head"],["body","Body"],["leg","Legs"]])+
+   bars("Where strikes are thrown",r.position,[["distance","Distance"],["clinch","Clinch"],["ground","Ground"]])+
    pace+'</div>';
  }
  if(typeof document!=="undefined")document.addEventListener("click",e=>{

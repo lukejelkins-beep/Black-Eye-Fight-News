@@ -518,5 +518,45 @@ class CertifiedNoContests(unittest.TestCase):
         self.assertEqual(m.certified_no_contests([], {}), [])
 
 
+class StrikeBreakdowns(unittest.TestCase):
+    """Head/body/leg and distance/clinch/ground shares only where every round adds up to the strikes landed."""
+
+    def fight(self, own_rounds):
+        rounds = [{"round": i + 1, "seconds": 300, "own": o, "opp": side()} for i, o in enumerate(own_rounds)]
+        return {"outcome": "W", "method": "dec", "titleFight": False, "statsComplete": True, "rounds": rounds,
+                "scorecards": None}
+
+    def good(self):
+        return side(sigLanded=10, sigAttempted=20, headLanded=6, bodyLanded=3, legLanded=1,
+                    distanceLanded=7, clinchLanded=2, groundLanded=1)
+
+    def test_a_window_where_every_round_adds_up_keeps_its_shares(self):
+        rates = m.aggregate([self.fight([self.good(), self.good()])])["rates"]
+        self.assertEqual(rates["target"], {"head": 0.6, "body": 0.3, "leg": 0.1})
+        self.assertEqual(rates["position"], {"distance": 0.7, "clinch": 0.2, "ground": 0.1})
+
+    def test_one_round_that_does_not_add_up_removes_both_shares_for_the_window(self):
+        bad = self.good()
+        bad["headLanded"] = 22  # more head strikes than strikes landed
+        rates = m.aggregate([self.fight([self.good(), bad])])["rates"]
+        self.assertNotIn("target", rates)
+        self.assertIn("position", rates, "the other breakdown still adds up")
+        self.assertIsNotNone(rates["slpm"], "the headline rates are not touched")
+
+    def test_each_breakdown_is_judged_on_its_own_parts(self):
+        bad = self.good()
+        bad["groundLanded"] = 9
+        rates = m.aggregate([self.fight([bad])])["rates"]
+        self.assertIn("target", rates)
+        self.assertNotIn("position", rates)
+
+    def test_an_unverifiable_round_is_left_out_not_trusted(self):
+        r = self.good()
+        r["sigLanded"] = None
+        rates = m.aggregate([self.fight([r])])["rates"]
+        self.assertNotIn("target", rates)
+        self.assertNotIn("position", rates)
+
+
 if __name__ == "__main__":
     unittest.main()
