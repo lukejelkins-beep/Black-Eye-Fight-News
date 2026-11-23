@@ -46,8 +46,18 @@
    const x=document.createElement('button');x.type='button';x.textContent='Close';x.addEventListener('click',close);
    heading.append(h2,x);
    const grid=document.createElement('div');grid.className='befn-mobile-sheet-grid';
+   const area=window.BEFNSport?.get?.()||'all';
+   const areaName=window.BEFNSport?.name?.()||'All sports';
+   const sports=document.createElement('div');sports.className='befn-mobile-sheet-grid';
+   [['#home','All sports (front page)','all'],['#home','Boxing','boxing'],['#home','MMA','mma'],['sumo.html','Sumo','']].forEach(([href,label,key])=>{
+     const a=document.createElement('a');a.href=href;a.textContent=label;if(key)a.dataset.area=key;
+     if(key===area)a.setAttribute('aria-current','true');
+     a.addEventListener('click',close);sports.append(a);
+   });
+   const sportsHead=document.createElement('h3');sportsHead.className='befn-mobile-sheet-sub';sportsHead.textContent='Sports';
+   const sectionsHead=document.createElement('h3');sectionsHead.className='befn-mobile-sheet-sub';sectionsHead.textContent=areaName;
    const sections=[
-     ['#home','News'],
+     ['#home',area==='all'?'Front page':'Overview'],
      ['#fights','Upcoming fights'],['#results','Results'],['#highlights','Fight film'],
      ['#fighters','Fighter scout'],['#champions','Champions'],['#leaderboards','UFC stats'],
      ['#analysis','Analysis'],['#social','Fight Talk']
@@ -56,7 +66,7 @@
    const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Notification preferences';
    alerts.addEventListener('click',()=>{close();window.BEFNAlerts?.open?.();});
    grid.append(alerts);
-   panel.append(heading,grid);cover.append(panel);
+   panel.append(heading,sportsHead,sports,sectionsHead,grid);cover.append(panel);
    cover.addEventListener('click',e=>{if(e.target===cover)close();});
    document.body.append(cover);sheet=cover;window.addEventListener('keydown',esc);x.focus();
  }
@@ -64,7 +74,9 @@
    if(document.querySelector('.befn-mobile-tabs'))return;
    const rail=$('.navrail');if(!rail)return;
    const bar=document.createElement('div');bar.className='befn-mobile-topbar';
-   const name=document.createElement('strong');name.className='befn-mobile-title';
+   /* The masthead is the way back to the all-sports front page, like the desktop logo. */
+   const name=document.createElement('a');name.className='befn-mobile-title';name.href='#home';name.dataset.area='all';
+   name.setAttribute('aria-label','Black Eye Fight News home, all sports');
    /* Two lines, same words, so the masthead never runs under the action buttons. */
    name.append('BLACK EYE ',document.createElement('br'),'FIGHT NEWS');
    const actions=document.createElement('div');actions.className='befn-mobile-actions';
@@ -80,6 +92,8 @@
    });
    document.body.append(dock);
    active();window.addEventListener('hashchange',active);
+   const homeLabel=()=>{const span=dock.querySelector('a[data-key="home"] span');if(span)span.textContent=(window.BEFNSport?.get?.()||'all')==='all'?'Home':'Overview';};
+   homeLabel();document.addEventListener('befn:sport-change',()=>{homeLabel();active();});
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
  else init();
