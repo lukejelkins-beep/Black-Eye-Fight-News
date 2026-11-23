@@ -31,7 +31,7 @@ The owner stated on 2026-11-22 that **every image held in this repository is app
 
 | Set | Files | Where | Record | Status |
 | --- | --- | --- | --- | --- |
-| UFC fighter photos | 2,250 (750 fighters × 3 crops) | `assets/img/ufc/` | `data/ufc-image-register.json` | `owner-cleared` |
+| UFC fighter photos | 2,703 (901 fighters × 3 crops) | `assets/img/ufc/` | `data/ufc-image-register.json` | `owner-cleared` |
 | UFC cutouts | 52 | `assets/img/ufc-cutouts/` | `data/ufc-cutout-register.json` | derivative of the cleared portraits, same status |
 | Event posters | 88 | `assets/img/posters/` | `data/poster-register.json` | `owner-cleared`, official promotional posters |
 | Sumo JSA portraits, heads and cutouts | 478 (190 rikishi) | `assets/sumo-photos/` | `data/sumo/approved-photos.json` | `approved: true`, owner's attested JSA permission (2026-11-16) |
