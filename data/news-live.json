@@ -1,13 +1,14 @@
 {
-  "attemptedAt": "2026-11-23T12:24:14.113140+00:00",
-  "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00",
+  "attemptedAt": "2026-11-23T13:58:51.911590+00:00",
+  "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-23T11:22:14.104410+00:00",
-      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.worldboxingnews.net/feed/",
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -15,7 +16,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -23,7 +24,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "Sherdog",
@@ -31,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "UFC",
@@ -39,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "ONE MMA",
@@ -47,7 +48,7 @@
       "ok": true,
       "items": 8,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "ONE Submission Grappling",
@@ -55,23 +56,21 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "Cage Warriors",
       "sport": "mma",
-      "ok": true,
-      "items": 2,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00",
+      "error": "cagewarriors.com: HTTP Error 403: Forbidden | www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
-      "ok": true,
-      "items": 3,
-      "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "ok": false,
+      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00",
+      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
     },
     {
       "name": "KSW",
@@ -79,14 +78,14 @@
       "ok": true,
       "items": 5,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Akswmma.com%2Fen&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "ADCC",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -94,7 +93,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.ncaa.com/news/wrestling-men/d1/rss.xml",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "NCAA Division II Wrestling",
@@ -130,7 +129,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -152,7 +151,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "Bloody Elbow",
@@ -160,7 +159,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bloodyelbow.com/feed",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "MMA Weekly",
@@ -168,7 +167,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmaweekly.com/feed",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "GracieMag",
@@ -176,14 +175,15 @@
       "ok": true,
       "items": 9,
       "feedUrl": "https://www.graciemag.com/feed/",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "D3 Wrestle",
       "sport": "grappling",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-23T11:22:14.104410+00:00",
-      "error": "d3wrestle.com: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://d3wrestle.com/feed",
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "BoxingScene",
@@ -191,7 +191,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingscene.com/feed",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "BBC Sport Boxing",
@@ -199,7 +199,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://feeds.bbci.co.uk/sport/boxing/rss.xml",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "Boxing News 24",
@@ -207,14 +207,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingnews24.com/feed/",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "Boxing Insider",
       "sport": "boxing",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-23T09:00:49.264385+00:00",
-      "error": "www.boxinginsider.com: No recent, source-verified articles"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.boxinginsider.com/feed/",
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "The Guardian Boxing",
@@ -222,7 +223,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.theguardian.com/sport/boxing/rss",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "BBC Sport MMA",
@@ -230,7 +231,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bbc.co.uk/sport/mixed-martial-arts/rss.xml",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "MMA News",
@@ -238,7 +239,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmanews.com/feed",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     },
     {
       "name": "Cageside Press",
@@ -246,10 +247,105 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.cagesidepress.com/feed/",
-      "lastSuccessfulAt": "2026-11-23T12:24:14.113140+00:00"
+      "lastSuccessfulAt": "2026-11-23T13:58:51.911590+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "0f124b2ce45451e78a4f",
+      "title": "‘I Can Climb Back’ – Jarred Brooks Praises Pacio, Plots Return To Strawweight Gold",
+      "url": "https://www.onefc.com/news/i-can-climb-back-jarred-brooks-praises-pacio-plots-return-to-strawweight-gold/",
+      "source": "ONE MMA",
+      "sport": "mma",
+      "publishedAt": "2026-11-23T13:14:46+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://cdn.onefc.com/wp-content/uploads/2026/11/Jarred-Brooks-Tatsumitsu-Wada-ONE-SAMURAI-5-6-1200x800.jpg",
+        "alt": "Jarred Brooks and Tatsumitsu Wada showcase sportsmanship at ONE SAMURAI 5",
+        "credit": "",
+        "sourceUrl": "https://www.onefc.com/news/i-can-climb-back-jarred-brooks-praises-pacio-plots-return-to-strawweight-gold/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-23T13:58:51.911590+00:00"
+      },
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Back in the win column, \"The Monkey God\" targets a fourth meeting with the divisional king.",
+        "Jarred “The Monkey God” Brooks is back in the win column, and he is already setting his sights on another run at ONE Strawweight MMA World Title gold.",
+        "The triumph snapped a three-fight skid, pushing the 33-year-old American to 22-6 overall and marking his sixth victory under the ONE Championship banner."
+      ],
+      "firstSeenAt": "2026-11-23T13:58:51.911590+00:00",
+      "coverage": 1
+    },
+    {
+      "id": "6711229c03f73edd139b",
+      "title": "Is the boxing pay-per-view party dying?",
+      "url": "https://www.boxingscene.com/articles/is-the-boxing-pay-per-view-party-dying",
+      "source": "BoxingScene",
+      "sport": "boxing",
+      "publishedAt": "2026-11-23T13:01:13+00:00",
+      "score": 1,
+      "image": null,
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Streaming subscriptions, Netflix fights and a shrinking fan base are changing how fans watch boxing.",
+        "Is the classic PPV watch party fading out?"
+      ],
+      "firstSeenAt": "2026-11-23T13:58:51.911590+00:00",
+      "coverage": 1
+    },
+    {
+      "id": "38964c8c56e96a27fd0e",
+      "title": "Morning Report | Josh Hokit claims his vision is still blurry after UFC 334, promises ‘consequences’ for Ciryl Gane next time",
+      "url": "https://www.mmafighting.com/ufc/522254/morning-report-josh-hokit-claims-his-vision-is-still-blurry-after-ufc-334-promises-consequences-for-ciryl-gane-next-time",
+      "source": "MMA Fighting",
+      "sport": "mma",
+      "publishedAt": "2026-11-23T13:00:00+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2305177257.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "alt": "Josh Hokit",
+        "credit": "Jeff Bottari/Zuffa LLC",
+        "sourceUrl": "https://www.mmafighting.com/ufc/522254/morning-report-josh-hokit-claims-his-vision-is-still-blurry-after-ufc-334-promises-consequences-for-ciryl-gane-next-time",
+        "kind": "publisher",
+        "checkedAt": "2026-11-23T13:58:51.911590+00:00"
+      },
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Josh Hokit’s only regret is that he didn’t cheat.",
+        "At UFC 334, Hokit challenged Ciryl Gane for the heavyweight title, and though the up-and-comer acquitted himself admirably, “The Incredible Hok” lost a unanimous decision.",
+        "However, as has become routine with Gane’s fights lately, the loss had some controversy when, less than a minute into the bout, Gane poked Hokit in the eyes during an exchange."
+      ],
+      "firstSeenAt": "2026-11-23T13:58:51.911590+00:00",
+      "coverage": 1
+    },
+    {
+      "id": "475e4c610f249065cf12",
+      "title": "Magomed Ankalaev responds to Navajo Stirling callout after stunning Jiri Prochazka KO at UFC Qatar",
+      "url": "https://bloodyelbow.com/2026/11/23/magomed-ankalaev-responds-to-navajo-stirling-callout-after-stunning-jiri-prochazka-ko-at-ufc-qatar/",
+      "source": "Bloody Elbow",
+      "sport": "mma",
+      "publishedAt": "2026-11-23T13:00:00+00:00",
+      "score": 1,
+      "image": null,
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Magomed Ankalaev is down to fight Navajo Stirling whenever, wherever, following UFC Qatar.",
+        "Carlos Ulberg ‘s sparring partner brutally knocked out ex-champion Jiri Prochazka on Saturday night.",
+        "Rather than call for a shot at his light heavyweight champion teammate, Stirling mentioned Magomed Ankalaev as a potential opponent during his post-fight press conference."
+      ],
+      "firstSeenAt": "2026-11-23T13:58:51.911590+00:00",
+      "coverage": 1,
+      "fighterImage": {
+        "url": "assets/img/ufc/magomed-ankalaev-card.webp",
+        "name": "Magomed Ankalaev",
+        "kind": "cached-fighter",
+        "credit": "File photo of Magomed Ankalaev (owner-cleared)"
+      }
+    },
     {
       "id": "549c4820231289ddb328",
       "title": "‘I Enjoyed It’ – Ubaid Hussain Relishes Quarterfinal Win, Prepares For Showdown With Asadula Imangazaliev",
@@ -266,13 +362,13 @@
         "kind": "publisher",
         "checkedAt": "2026-11-23T12:24:14.113140+00:00"
       },
-      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "The Leeds striker improved to 18-0 and reached the Grand Prix final four at The Inner Circle 39.",
         "Every step up asks a bigger question of Ubaid “Bad” Hussain , and every time, he delivers an answer.",
         "This time he defeated Black Panther to earn a shot at the ONE Flyweight Muay Thai World Title."
       ],
+      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-23T12:24:14.113140+00:00",
       "coverage": 1
     },
@@ -285,11 +381,11 @@
       "publishedAt": "2026-11-23T12:16:02+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Joe Joyce admits he cannot afford to retire despite losing five of his last six fights, raising further concerns about the 41-year-old heavyweight's future"
       ],
+      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-23T12:24:14.113140+00:00",
       "coverage": 1
     },
@@ -302,13 +398,13 @@
       "publishedAt": "2026-11-23T12:00:00+00:00",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Tai Tuivasa could make an unwanted piece of UFC history on February 7, 2027.",
         "The Australian heavyweight is currently on an eight-fight losing streak , which is the joint-longest in UFC history.",
         "According to reports, ‘Bam Bam’ could get the chance to snap his historic skid at UFC Sydney."
       ],
+      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-23T12:24:14.113140+00:00",
       "coverage": 1,
       "fighterImage": {
@@ -327,12 +423,38 @@
       "publishedAt": "2026-11-23T11:34:35+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "David Morrell rebounds from his shock defeat to Zak Chelli with a first-round stoppage of Julio de Jesus Rodriguez in the Dominican Republic"
       ],
+      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-23T12:24:14.113140+00:00",
+      "coverage": 1
+    },
+    {
+      "id": "cd01b498c0e5630032aa",
+      "title": "Mike Tyson Refuses to Hand Tank Davis His Boxing Crown",
+      "url": "https://www.worldboxingnews.com/mike-tyson-tank-davis-boxing-crown/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-23T11:34:22+00:00",
+      "score": 1,
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/mike-tyson-tank-davis.jpg",
+        "alt": "Mike Tyson Refuses to Hand Tank Davis His Boxing Crown",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/mike-tyson-tank-davis-boxing-crown/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-23T13:58:51.911590+00:00"
+      },
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Mike Tyson has refused to crown a successor to his boxing legacy, insisting that even Gervonta ‘Tank’ Davis must face greater challenges before earning a place among the sport’s all-time greats.",
+        "The former undisputed heavyweight champion believes boxing has plenty of talented fighters, but none has earned the right to be compared to him.",
+        "Mike Tyson refuses to name Tank Davis as his boxing successor, insisting he must fight more elite opponents, including Shakur Stevenson."
+      ],
+      "firstSeenAt": "2026-11-23T13:58:51.911590+00:00",
       "coverage": 1
     },
     {
@@ -445,6 +567,31 @@
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-23T05:52:37.630265+00:00",
       "coverage": 1
+    },
+    {
+      "id": "e39b1c9556e9e50f0dac",
+      "title": "UFC 335: Alex Pereira, Sergei Pavlovich full fight marathon",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/23/ufc-335-alex-pereira-sergei-pavlovich-full-fight-video-marathon-knockouts/92916180007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-23T05:01:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Check out nearly an hour's worth of some of the best finishes from the UFC 335 heavyweight co-headliners: Alex Pereira and Sergei Pavlovich."
+      ],
+      "firstSeenAt": "2026-11-23T13:58:51.911590+00:00",
+      "coverage": 1,
+      "fighterImage": {
+        "url": "assets/img/ufc/alex-pereira-card.webp",
+        "name": "Alex Pereira",
+        "kind": "cached-fighter",
+        "credit": "File photo of Alex Pereira (owner-cleared)"
+      }
     },
     {
       "id": "a76160c55d664cf443b9",
@@ -569,12 +716,12 @@
       "publishedAt": "2026-11-23T00:41:54+00:00",
       "score": 1,
       "image": null,
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Jermell Charlo will not replace Keith Thurman against Vergil Ortiz Jr. on December 5, according to Mike Coppinger.",
         "Bringing a 36-year-old fighter out of Jermell Charlo Out Of December 5 Vergil Ortiz Fight @ Boxing News 24"
       ],
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-23T01:18:15.783037+00:00",
       "coverage": 1
     },
@@ -1906,7 +2053,7 @@
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/moses-itauma-2027-comeback-hrgovic-ko/",
         "kind": "publisher",
-        "checkedAt": "2026-11-22T12:21:58.307866+00:00"
+        "checkedAt": "2026-11-23T13:58:51.911590+00:00"
       },
       "summaryPoints": [
         "Moses Itauma, once billed as the next Mike Tyson, is preparing to return in early 2027 after his world heavyweight title dream ended in a shocking knockout defeat to Filip Hrgovic.",
@@ -2311,7 +2458,7 @@
       "publishedAt": "2026-11-22T00:08:18+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-22T00:14:49.359864+00:00",
       "coverage": 1
@@ -2344,7 +2491,7 @@
       "publishedAt": "2026-11-21T23:36:35+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-22T00:14:49.359864+00:00",
       "coverage": 1,
@@ -2369,12 +2516,12 @@
         "kind": "publisher",
         "checkedAt": "2026-11-22T23:21:59.452261+00:00"
       },
-      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Four UFC Qatar fighters will leave the country with an extra $100,000 each.",
         "Not worried about just being the hammer 🔨 [ #UFCQatar | LIVE on @paramountplus ] https://t.co/wyO5p1Yy5S"
       ],
+      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-21T22:44:05.112468+00:00",
       "coverage": 1
     },
@@ -2394,12 +2541,12 @@
         "kind": "publisher",
         "checkedAt": "2026-11-22T23:21:59.452261+00:00"
       },
-      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Navajo Stirling is making it a habit of knocking out former champions.",
         "KIWI KEEPS HIS WIN STREAK GOING 😤 Navajo Stirling uncorks a right hand to get the knockout! [ #UFCQatar | LIVE on @paramountplus ] https://t.co/LzpugGcsRb"
       ],
+      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-21T22:44:05.112468+00:00",
       "coverage": 2,
       "alsoCoveredBy": [
@@ -2460,7 +2607,7 @@
       "publishedAt": "2026-11-21T22:57:21+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-21T23:25:12.396788+00:00",
       "coverage": 1,
@@ -3349,12 +3496,12 @@
       "publishedAt": "2026-11-21T15:54:59+00:00",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Navajo Stirling stayed unbeaten with a brutal second-round knockout of former champion Jiri Prochazka at UFC Qatar.",
         "Is a light heavyweight title shot next?"
       ],
+      "summaryCheckedAt": "2026-11-23T12:24:14.113140+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-21T22:44:05.112468+00:00",
       "coverage": 1,
       "fighterImage": {
@@ -3442,7 +3589,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-22T00:14:49.359864+00:00",
       "coverage": 1,
@@ -3896,7 +4043,7 @@
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/ryan-garcia-powerball-monday-floyd-teofimo/",
         "kind": "publisher",
-        "checkedAt": "2026-11-22T13:27:02.644771+00:00"
+        "checkedAt": "2026-11-23T13:58:51.911590+00:00"
       },
       "summaryPoints": [
         "Ryan Garcia has promised to announce his next opponent on Monday as Floyd Mayweather and Teofimo Lopez remain the two options, with a welterweight unification reportedly close.",
@@ -5599,7 +5746,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T23:25:28.333712+00:00",
       "coverage": 1,
@@ -5911,7 +6058,7 @@
       "publishedAt": "2026-11-20T10:19:45+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T10:25:40.731301+00:00",
       "coverage": 1,
@@ -5929,11 +6076,11 @@
       "publishedAt": "2026-11-20T10:18:35+00:00",
       "score": 4,
       "image": null,
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Highly ranked UFC flyweight Manon Fiorot is banned for three months for violating the promotion's anti-doping policy."
       ],
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T10:25:40.731301+00:00",
       "coverage": 1
     },
@@ -6083,7 +6230,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-23T01:18:15.783037+00:00",
+      "summaryCheckedAt": "2026-11-23T13:58:51.911590+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-20T22:25:29.428970+00:00",
       "updatedAt": "2026-11-20T23:25:28.333712+00:00",
@@ -6415,145 +6562,6 @@
         "name": "Josh Hokit",
         "kind": "cached-fighter",
         "credit": "File photo of Josh Hokit (owner-cleared)"
-      }
-    },
-    {
-      "id": "8ac3ac79ce02a9e7a715",
-      "title": "Andy Hiraoka Signs With Zuffa, Moves to Welterweight",
-      "url": "https://www.boxingnews24.com/2026/11/andy-hiraoka-signs-with-zuffa-moves-to-welterweight/",
-      "source": "Boxing News 24",
-      "sport": "boxing",
-      "publishedAt": "2026-11-20T00:42:50+00:00",
-      "score": 0,
-      "image": null,
-      "summaryCheckedAt": "2026-11-23T04:50:00.449105+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-20T01:39:02.781980+00:00",
-      "coverage": 1,
-      "summaryPoints": [
-        "Andy Hiraoka has signed a multi-fight deal with Zuffa Boxing and will move up to welterweight, the promotion announced.",
-        "The Japanese southpaw enters the 147-pound Andy Hiraoka Signs With Zuffa, Moves to Welterweight @ Boxing News 24"
-      ]
-    },
-    {
-      "id": "bae6c77028feadb1c153",
-      "title": "New UFC Dallas fights include former title challenger, return of ‘Chanco’",
-      "url": "https://www.mmafighting.com/ufc/522430/new-ufc-dallas-fights-include-former-title-challenger-return-of-chanco",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-20T00:00:00+00:00",
-      "score": 4,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2240320241.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Karolina Kowalkiewicz",
-        "credit": "Ed Mulholland, Zuffa LLC",
-        "sourceUrl": "https://www.mmafighting.com/ufc/522430/new-ufc-dallas-fights-include-former-title-challenger-return-of-chanco",
-        "kind": "publisher",
-        "checkedAt": "2026-11-20T00:21:29.142375+00:00"
-      },
-      "summaryPoints": [
-        "UFC Dallas is loading up with some notable names officially announced for the lineup.",
-        "On Thursday, several new UFC Dallas bouts were announced via press release, including a strawweight contest between one-time UFC title challenger Karolina Kowalkiewicz (16-10) and Sam Hughes (11-7).",
-        "When Kowalkiewicz makes the walk to the octagon, it will be her 20th appearance for the promotion."
-      ],
-      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-20T00:21:29.142375+00:00",
-      "coverage": 1
-    },
-    {
-      "id": "5390deb5e9f820598875",
-      "title": "Usman Nurmagomedov’s manager responds after Ariel Helwani condemned recent hotel attack",
-      "url": "https://bloodyelbow.com/2026/11/19/usman-nurmagomedovs-manager-responds-after-ariel-helwani-condemned-recent-hotel-attack/",
-      "source": "Bloody Elbow",
-      "sport": "mma",
-      "publishedAt": "2026-11-20T00:00:00+00:00",
-      "score": 0,
-      "image": null,
-      "summaryPoints": [
-        "Usman Nurmagomedov’s manager has hit back at Ariel Helwani after the journalist criticized the undefeated star’s recent hotel brawl with Merab Dvalishvili.",
-        "This past week, Usman Nurmagomedov was involved in a huge brawl with Merab Dvalishvili , which resulted in the undefeated Russian and several members of his team being arrested.",
-        "Initially, Nurmagomedov was sentenced to six-months in jail , but then a few days later, the 28-year-old was released from prison and handed a reduced fine."
-      ],
-      "summaryCheckedAt": "2026-11-20T00:21:29.142375+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-20T00:21:29.142375+00:00",
-      "coverage": 1
-    },
-    {
-      "id": "1f56bf48fd1a424004c9",
-      "title": "UFC Qatar: Kyoji Horiguchi Doesn’t Care Who Wins Van-Kape, Will Be There",
-      "url": "https://cagesidepress.com/2026/11/19/ufc-qatar-kyoji-horiguchi-van-kape/",
-      "source": "Cageside Press",
-      "sport": "mma",
-      "publishedAt": "2026-11-19T23:09:27+00:00",
-      "score": 5,
-      "image": null,
-      "summaryPoints": [
-        "Despite coming off his first loss in years, Japanese flyweight Kyoji Horiguchi isn’t focused on what happened last time out.",
-        "Instead, it’s Kape who will face champ Joshua Van at UFC 336 in Toronto this January.",
-        "Asked about who he sees as the winner in that fight, “I’m not sure."
-      ],
-      "summaryCheckedAt": "2026-11-19T23:22:36.607390+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-19T23:22:36.607390+00:00",
-      "coverage": 1,
-      "fighterImage": {
-        "url": "assets/img/ufc/kyoji-horiguchi-card.webp",
-        "name": "Kyoji Horiguchi",
-        "kind": "cached-fighter",
-        "credit": "File photo of Kyoji Horiguchi (owner-cleared)"
-      }
-    },
-    {
-      "id": "f0ea71366891f51bc1af",
-      "title": "Former UFC title challenger Manon Fiorot suspended 3 months for anti-doping violation",
-      "url": "https://www.mmafighting.com/ufc/522477/former-ufc-title-challenger-manon-fiorot-suspended-3-months-for-anti-doping-violation",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-19T23:00:00+00:00",
-      "score": 4,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2294950446.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Article image: Former UFC title challenger Manon Fiorot suspended 3 months for anti-doping violation",
-        "credit": "",
-        "sourceUrl": "https://www.mmafighting.com/ufc/522477/former-ufc-title-challenger-manon-fiorot-suspended-3-months-for-anti-doping-violation",
-        "kind": "publisher",
-        "checkedAt": "2026-11-19T23:22:36.607390+00:00"
-      },
-      "summaryPoints": [
-        "One-time UFC title challenger Manon Fiorot has been handed a three month suspension for violating the promotion’s anti-doping policy.",
-        "UFC officials announced the suspension on Thursday.",
-        "“Ostarine was detected in an in-competition sample collected on September 12, 2026, at UFC Noche, where Fiorot competed against Alexa Grasso."
-      ],
-      "summaryCheckedAt": "2026-11-19T23:22:36.607390+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-19T23:22:36.607390+00:00",
-      "coverage": 1
-    },
-    {
-      "id": "49f66e2e904c00f85c60",
-      "title": "Justin Gaethje told to retire by former title challenger who makes 155lb debut at UFC Qatar",
-      "url": "https://bloodyelbow.com/2026/11/19/justin-gaethje-told-to-retire-by-former-title-challenger-who-makes-155lb-debut-at-ufc-qatar/",
-      "source": "Bloody Elbow",
-      "sport": "mma",
-      "publishedAt": "2026-11-19T23:00:00+00:00",
-      "score": 4,
-      "image": null,
-      "summaryPoints": [
-        "According to the new lightweight contender, Justin Gaethje doesn’t have anything else left to prove and should hang up his gloves.",
-        "Justin Gaethje hasn’t fought since this past June when he handed Ilia Topuria his first-ever loss , finally becoming the undisputed lightweight champion.",
-        "‘The Highlight’ has been open with the fact that he may retire instead of fighting again, leaving his future in the sport in doubt."
-      ],
-      "summaryCheckedAt": "2026-11-19T23:22:36.607390+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-19T23:22:36.607390+00:00",
-      "coverage": 1,
-      "fighterImage": {
-        "url": "assets/img/ufc/justin-gaethje-card.webp",
-        "name": "Justin Gaethje",
-        "kind": "cached-fighter",
-        "credit": "File photo of Justin Gaethje (owner-cleared)"
       }
     }
   ],
@@ -7931,11 +7939,11 @@
     }
   ],
   "leads": {
-    "newest": "https://www.onefc.com/news/i-enjoyed-it-ubaid-hussain-relishes-quarterfinal-win-prepares-for-showdown-with-asadula-imangazaliev/",
+    "newest": "https://www.onefc.com/news/i-can-climb-back-jarred-brooks-praises-pacio-plots-return-to-strawweight-gold/",
     "mostCovered": "https://www.sherdog.com/news/news/Navajo-Stirling-knocks-out-Jiri-Prochazka-in-UFC-Qatar-main-event-203710"
   },
   "deduplication": {
-    "checkedAt": "2026-11-23T12:24:14.113140+00:00",
+    "checkedAt": "2026-11-23T13:58:51.911590+00:00",
     "removedArticles": 6,
     "removedResultReports": 1,
     "examples": [
