@@ -1,8 +1,8 @@
 {
   "platform": "X",
-  "status": "connected",
+  "status": "unavailable",
   "type": "original-source-posts",
-  "attemptedAt": "2026-11-23T07:50:07.643Z",
+  "attemptedAt": "2026-11-23T09:04:07.148Z",
   "checkedAt": "2026-11-23T07:50:07.643Z",
   "updatedAt": "2026-11-23T07:50:07.643Z",
   "trackedAccounts": 141,
@@ -16,9 +16,9 @@
   "returnedCount": 5,
   "matchedOriginalPosts": 5,
   "postCount": 180,
-  "paidXApiCalls": 161,
+  "paidXApiCalls": 162,
   "budgetMonth": "2026-11",
-  "estimatedReservedUsd": 0.5474,
+  "estimatedReservedUsd": 0.5508,
   "monthlyBudgetUsd": 2,
   "billingNote": "Pessimistic request reservations, not confirmed provider charges. Provider prepaid balance and disabled auto top-ups remain necessary.",
   "posts": [
@@ -4035,5 +4035,7 @@
       "verifiedHandle": "Zuffa_Boxing",
       "sourceProvider": "twitterapi.io"
     }
-  ]
+  ],
+  "message": "X API temporarily unavailable; existing public posts retained.",
+  "lastErrorCode": "TwitterAPI.io returned HTTP 503"
 }
