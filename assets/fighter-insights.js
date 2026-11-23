@@ -307,6 +307,7 @@
    '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):v2Overall+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(v2Overall||0)+'%"></span></span>'+
+   (v2Overall===null?'':'<p class="befn-pro-hint">'+RATING_HINT+'</p>')+
    verifiedTag+
    (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC'+' · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>'+
@@ -787,6 +788,7 @@
  const boardState={metric:"overall",window:"l36",division:"all",query:""};
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
+ const RATING_HINT="Weighted average of four skill percentiles and recent form, 0–100.";
  const BOARD_RATINGS=[["overall","BEFN rating","score"],["striking","Striking rating","pct"],["grappling","Grappling rating","pct"],
   ["wrestling","Wrestling rating","pct"],["defence","Defence rating","pct"],["form","Recent form","score"]];
  function boardValue(v,unit){
@@ -864,7 +866,8 @@
   const when=view.isRating?"Whole UFC career, recent fights count most":boardData.windows[boardState.window];
   const display=view.rows.slice(0,30);
   results.innerHTML='<div class="befn-board-result-head"><h3>'+escapeHTML(view.label)+'</h3><p>'+
-   escapeHTML(scope)+' · '+escapeHTML(when)+' · '+view.total+' qualifying fighters'+(view.lower?' · Lower is better':'')+'</p></div>'+
+   escapeHTML(scope)+' · '+escapeHTML(when)+' · '+view.total+' qualifying fighters'+(view.lower?' · Lower is better':'')+'</p>'+
+   (boardState.metric==="overall"?'<p>'+RATING_HINT+'</p>':'')+'</div>'+
    (display.length?'<ol class="befn-board-list">'+display.map(r=>boardRowHTML(r,view.unit)).join("")+'</ol>':
     '<p class="befn-board-placeholder">No fighters qualify for this board yet.</p>')+
    '<p class="befn-board-rule">A fighter needs '+view.minimum+' UFC fights with full round-by-round statistics'+
