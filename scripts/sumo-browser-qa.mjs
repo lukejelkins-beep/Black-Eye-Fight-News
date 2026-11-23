@@ -407,7 +407,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.evaluate(()=>scrollTo(0,0));
   await snap(page,label+'-profile',{fullPage:false});
   // Full pair-specific history is distinct from a single basho's opponent record.
-  await open(page,'headtohead/8850/8857','.sumo-h2h-hero');
+  await open(page,'headtohead/8850/8857','.sumo-h2h-comparison');
   await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===6,null,{timeout:30000});
   const history=await page.locator('#sumo-main').innerText();
   assertContains(history,'Career head-to-head','dedicated H2H view');
@@ -422,7 +422,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 
   // Career H2H is a comparison of each wrestler's highest sourced division,
   // not the default Makushita record in the earlier preview.
-  await open(page,'headtohead/19/7','.sumo-h2h-hero');
+  await open(page,'headtohead/19/7','.sumo-h2h-comparison');
   const careerLabels=await page.locator('.sumo-h2h-comparison .sumo-comparison-row>span').allInnerTexts();
   assert.ok(careerLabels.includes('Makuuchi W–L')&&careerLabels.includes('Makuuchi win %'),
     'Hoshoryu versus Kirishima shows top-division Makuuchi records in both rows: '+JSON.stringify(careerLabels));
@@ -437,7 +437,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 
   // All tracked rikishi should expose current banzuke opponent histories even
   // without individually fetched lifetime stats or 18-bout enrichment.
-  await open(page,'profile/2','.profile-hero');
+  await open(page,'profile/2','.sumo-poster');
   const unfeatured=await page.locator('#sumo-main').innerText();
   assertContains(unfeatured,'Career','career section exists for all tracked profiles');
   assertContains(unfeatured,'Opponents and head-to-head','opponent directory section');
@@ -445,11 +445,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>0,'Unfeatured rikishi has complete opponent library');
   assert.equal(await page.locator('.sumo-signature h3').count(),0,'No speculative signature manoeuvres on unsourced profiles');
-  await open(page,'profile/82','.profile-hero');
+  await open(page,'profile/82','.sumo-poster');
   assertContains(await page.locator('#sumo-main').innerText(),'206–131','Fujiseiun career W–L preserved');
-  await open(page,'profile/16','.profile-hero');
+  await open(page,'profile/16','.sumo-poster');
   assertContains(await page.locator('#sumo-main').innerText(),'677–716','Nishikigi career W–L preserved');
-  await open(page,'profile/75','.profile-hero');
+  await open(page,'profile/75','.sumo-poster');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
   assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
 
@@ -616,13 +616,13 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   const cardLink=page.locator('.sumo-daily-card .sumo-daily-score a').first();
   assert.ok(await cardLink.count()>0,'Completed Day 7 card provides full H2H');
   await cardLink.click();
-  await page.waitForSelector('.sumo-h2h-hero');
+  await page.waitForSelector('.sumo-h2h-comparison');
   assertContains(await page.locator('.back-link').innerText(),'Day 7','Context-aware H2H return label');
   await page.locator('.back-link').click();
   await page.waitForSelector('#sumo-matchup-day');
   assert.ok(page.url().includes('#matchups'),'H2H returns to originating daily route');
   assert.equal(await page.locator('#sumo-matchup-day').inputValue(),'7','Return retains original tournament day');
-  await open(page,'headtohead/8850/71','.sumo-h2h-hero');
+  await open(page,'headtohead/8850/71','.sumo-h2h-comparison');
   await page.waitForFunction(()=>document.querySelector('.sumo-h2h-score')?.textContent.includes('5–0'),null,{timeout:25000});
   assertContains(await page.locator('#sumo-main').innerText(),'No recorded losses against Churanoumi',
     'True zero losses are not described as missing technique data');
@@ -694,7 +694,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(checkedIds.size,fullCohort?roster.count:5,'Expected cohort/sample reached working profile routes');
 
   // Exact redesign stress cases — recorded date ratios, 5 profiles, and H2H chronology.
-  await open(page,'profile/28','.profile-hero');
+  await open(page,'profile/28','.sumo-poster');
   const weightPoints=await page.locator('.sumo-weight-point').evaluateAll(ns=>ns.map(n=>({
     month:n.getAttribute('data-weight-month'),x:Number(n.getAttribute('data-weight-x'))
   })));
@@ -704,7 +704,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   }
   assert.ok(await page.locator('.sumo-data-table summary').count()>=2,'Rank and weight tables offered to keyboard/touch users');
   await snap(page,label+'-ura',{fullPage:false});
-  await open(page,'headtohead/8850/28','.sumo-h2h-hero');
+  await open(page,'headtohead/8850/28','.sumo-h2h-comparison');
   await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===8,null,{timeout:30000});
   const newest=await page.locator('.sumo-h2h-order+ol li').allInnerTexts();
   await page.locator('[data-h2h-order="oldest"]').click();
@@ -725,7 +725,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   }
 
   // Exercise the redesigned controls, including native keyboard disclosures.
-  await open(page,'profile/28','.profile-hero');
+  await open(page,'profile/28','.sumo-poster');
   if(isMobile){
     await page.locator('.sumo-mobile-more summary').press('Enter');
     assert.equal(await page.locator('.sumo-mobile-more-links a').count(),2,
@@ -813,7 +813,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('[data-h2h-fewer]').click();
   assert.equal(await page.locator('.sumo-rival').count(),initialOpponents);
   await page.locator('.sumo-rival').first().click();
-  await page.waitForSelector('.sumo-h2h-hero');
+  await page.waitForSelector('.sumo-h2h-comparison');
   await page.getByRole('link',{name:'Back to originating profile'}).click();
   await page.waitForSelector('.profile-hero h1');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
