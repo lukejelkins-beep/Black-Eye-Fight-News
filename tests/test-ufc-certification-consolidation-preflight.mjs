@@ -96,3 +96,32 @@ test('official semantic proof rejects duplicates, missing identity, and changing
   {...p,bouts:[{date:'2026-01-10',opponent:'Opponent X',result:'invalid'}]}
  ])assert.throws(()=>preflight(register({'fighter-0':corrupt}),approved),/unverified UFCalendar|missing official UFC chronology/);
 });
+
+// UFCStats-sourced proofs have no numeric native IDs; they are keyed by fight-details URL.
+const ufcstatsProof = (url = 'https://ufcstats.com/fight-details/1234567890abcdef', result = 'win') => ({
+  sourceCoverageAttested: true,
+  scope: 'complete_official_ufc_career',
+  fighterName: 'Test Fighter',
+  fighterUrl: 'https://ufcstats.com/fighter-details/1234567890abcdef',
+  bouts: [{ date: '2024-01-01', opponent: 'Some Opponent', result, fightUrl: url }]
+});
+
+test('UFCStats-sourced proof without native IDs is accepted and conflicts are still detected', () => {
+  const c = register({ 'fighter-0': ufcstatsProof() });
+  const same = preflight(c, approved, [{ label: 'b', document: register({ 'fighter-0': ufcstatsProof() }) }]);
+  assert.equal(same.counts.alreadyCertifiedNoops, 1);
+  const diff = preflight(c, approved, [{ label: 'b', document: register({ 'fighter-0': ufcstatsProof(undefined, 'loss') }) }]);
+  assert.equal(diff.counts.conflicts, 1);
+});
+
+test('UFCStats-sourced proof rejects bad fight URL, missing fields and duplicate bouts', () => {
+  const bad = u => register({ 'fighter-0': ufcstatsProof(u) });
+  assert.throws(() => preflight(bad('https://example.com/x'), approved), /UFCStats bout identity/);
+  assert.throws(() => preflight(bad(''), approved), /UFCStats bout identity/);
+  const noDate = ufcstatsProof(); delete noDate.bouts[0].date;
+  assert.throws(() => preflight(register({ 'fighter-0': noDate }), approved), /UFCStats bout identity/);
+  const dup = ufcstatsProof(); dup.bouts.push({ ...dup.bouts[0] });
+  assert.throws(() => preflight(register({ 'fighter-0': dup }), approved), /duplicated UFCStats bout/);
+  const noFighterUrl = ufcstatsProof(); delete noFighterUrl.fighterUrl;
+  assert.throws(() => preflight(register({ 'fighter-0': noFighterUrl }), approved), /native\/source bout identity/);
+});
