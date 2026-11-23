@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-23T00:27:48.638Z",
-  "checkedAt": "2026-11-22T19:35:18.705Z",
-  "updatedAt": "2026-11-22T18:04:54Z",
+  "attemptedAt": "2026-11-23T02:00:11.262Z",
+  "checkedAt": "2026-11-23T02:00:11.262Z",
+  "updatedAt": "2026-11-22T21:02:19Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 6,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 9,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 17,
+      "configured": 43,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -54,21 +54,70 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 449,
-    "scheduledEntries": 29,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 17,
-      "X": 9,
-      "Threads": 3
+      "Instagram": 43,
+      "Bluesky": 6,
+      "X": 27,
+      "Threads": 8
     },
-    "directlyChecked": 0,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2wj7jpsru2u",
+      "cid": "bafyreigpf22pqbwjl5y5wn5dvla3t7zjeyuqtnwpsd7afw46lzqvll3rxm",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Tank Davis, Haney ‘Fought to the Death’ as Floyd, Broner Watched #boxing #boxingnews",
+      "postedAt": "2026-11-22T21:02:19Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2wj7jpsru2u",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2w7ccletm2l",
+      "cid": "bafyreiabguzvih74su3xxaceow7rfglhyyhjxvhlzglyfkxjxi5g4xwhoq",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Muhammad Ali’s Grandson Trashed for Celebrating Boxing Bill Pass #boxing #boxingnews",
+      "postedAt": "2026-11-22T18:04:55Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2w7ccletm2l",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2w7ccbpio2h",
       "cid": "bafyreia6ssyrb5slwdmxeeasszliknk5ck4pt7fdjwvjmq4226fcypzevi",
@@ -307,6 +356,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-22T18:23:25.424Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2vlja3pdv2x",
+      "cid": "bafyreidounqjaq42wolcvbyzcou6y7pag5hysrwcbdvzg2pynexqpfgema",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "‘New Mike Tyson’ Refuels for Return at 21 After World Title KO #boxing #boxingnews",
+      "postedAt": "2026-11-22T12:10:52Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2vlja3pdv2x",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -618,7 +691,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -738,7 +811,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -762,7 +835,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -786,7 +859,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -858,7 +931,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -882,7 +955,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -906,7 +979,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -954,7 +1027,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -978,7 +1051,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1050,7 +1123,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1074,7 +1147,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1098,7 +1171,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1122,7 +1195,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1146,7 +1219,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1170,31 +1243,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2p3s5qolf2y",
-      "cid": "bafyreib7ys5id5aypwx5s6pvnaenplffvwkvxiyhg53dftltggjnhexhda",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "KO’d by Mike Tyson in One, Murdered 3 People 3 Months Later #boxing #boxingnews",
-      "postedAt": "2026-11-19T22:13:33Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2p3s5qolf2y",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1218,7 +1267,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1242,7 +1291,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1266,55 +1315,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2ohzantkp2b",
-      "cid": "bafyreie5egbloq2x4njuiszhjagcgb4m3nyb7vkdlp3phbmr6ryoz7qbfu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Deontay Wilder’s Grim Threat as Jarrell Miller Eyes Dec 11 #boxing #boxingnews",
-      "postedAt": "2026-11-19T16:19:36Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2ohzantkp2b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2o64s2puh2a",
-      "cid": "bafyreiglagdcdsyyqvotoynxohxecyti52xqg7y73du373ihugjjmppjkm",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Gervonta Davis March Comeback Faces Threat of Prison Time #boxing #boxingnews",
-      "postedAt": "2026-11-19T13:22:38Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2o64s2puh2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1338,7 +1339,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1362,7 +1363,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1434,7 +1435,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1458,7 +1459,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1482,7 +1483,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1506,7 +1507,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1530,7 +1531,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1554,7 +1555,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
