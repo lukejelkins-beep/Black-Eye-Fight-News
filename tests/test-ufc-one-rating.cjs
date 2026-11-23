@@ -85,3 +85,19 @@ test("a provisional rating is tagged and stays out of the index",()=>{
  }
  assert(n>=100,"provisional fighters are covered");
 });
+
+test("last five fights come from the stats file, not a reviewed profile checked earlier",async()=>{
+ const stats=read("data/ufc-stats/fighters/ciryl-gane.json");
+ const newest=stats.fights[0];
+ const reviewed=read("data/ufc-champion-profiles.json").fighters["ciryl-gane"];
+ assert(!reviewed.latest.some(b=>b.date===newest.date),"the saved reviewed list lacks the newest fight (the fault this guards)");
+ const ui=load([{...reviewed,id:"mma-champion--ciryl-gane"}]);
+ for(let i=0;i<20;i++)await tick();
+ const profile=ui.profileFor("Ciryl Gane");
+ ui.renderProfile(profile);
+ for(let i=0;i<20;i++)await tick();
+ const html=ui.renderProfile(profile);
+ assert(html.includes(newest.opponent),"the newest fight ("+newest.opponent+") is listed");
+ const w=stats.fights.slice(0,5).filter(b=>b.outcome==="W").length,l=stats.fights.slice(0,5).filter(b=>b.outcome==="L").length;
+ assert(html.includes("Last 5 UFC · "+w+"–"+l),"the last-five record is from the stats file");
+});
