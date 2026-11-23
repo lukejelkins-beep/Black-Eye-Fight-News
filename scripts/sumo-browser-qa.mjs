@@ -410,7 +410,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await open(page,'headtohead/8850/8857','.sumo-h2h-comparison');
   await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===6,null,{timeout:30000});
   const history=await page.locator('#sumo-main').innerText();
-  assertContains(history,'Career head-to-head','dedicated H2H view');
+  assertContains(history,'Head-to-head','dedicated H2H view');
+  assertContains(history,'Career series','career series shown on the H2H view');
   assertContains(history,'1–5','source-confirmed all-time series');
   assert.equal(await page.locator('.section-head').filter({hasText:'Every historical meeting'}).count(),1,'Head-to-head history heading shown after kimarite charts');
   assert.equal(await page.locator('.sumo-h2h-order+ol li').count(),6,'Every source-confirmed bout is shown');
@@ -445,10 +446,18 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>0,'Unfeatured rikishi has complete opponent library');
   assert.equal(await page.locator('.sumo-signature h3').count(),0,'No speculative signature manoeuvres on unsourced profiles');
+  // The profile poster shows career wins and a win percentage (not a W–L pair). Career wins only grow, so
+  // check the totals recorded when these checks were written (206 and 677) as floors, not fixed values.
+  const posterCareerWins=async()=>{
+    const stats=await page.locator('.sumo-poster-stats').innerText();
+    const m=stats.replace(/\s+/g,' ').match(/(\d+) CAREER WINS · (\d+(?:\.\d+)?)%/i);
+    assert.ok(m,'Poster shows career wins and a win percentage: '+stats);
+    return Number(m[1]);
+  };
   await open(page,'profile/82','.sumo-poster');
-  assertContains(await page.locator('#sumo-main').innerText(),'206–131','Fujiseiun career W–L preserved');
+  assert.ok(await posterCareerWins()>=206,'Fujiseiun career wins preserved (at least 206)');
   await open(page,'profile/16','.sumo-poster');
-  assertContains(await page.locator('#sumo-main').innerText(),'677–716','Nishikigi career W–L preserved');
+  assert.ok(await posterCareerWins()>=677,'Nishikigi career wins preserved (at least 677)');
   await open(page,'profile/75','.sumo-poster');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
   assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
