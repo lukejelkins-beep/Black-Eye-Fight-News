@@ -20,7 +20,7 @@ The R4 checklist asks for a frozen algorithm, an independent hold-out calibratio
 - **One slope, no intercept, no home or corner effect.** A richer model was not tried.
 
 ## What is still open for R4
-The owner has decided what claim the rating makes: descriptive only, a percentile among rated UFC fighters, never a forecast (#432). Still open: a larger or de-biased test set (include fighters who left) and the design review in the release checklist. Neither is started.
+The owner has decided what claim the rating makes: descriptive only, never a forecast (#432); the four skill ratings are percentiles among rated UFC fighters, and the headline rating is a weighted average of those four percentiles and a recent-form score, 0 to 100 (not itself a percentile). Still open: a larger or de-biased test set (include fighters who left) and the design review in the release checklist. Neither is started.
 
 ---
 
