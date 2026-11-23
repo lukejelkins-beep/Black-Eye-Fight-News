@@ -109,73 +109,34 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('.directory-grid.is-list').count(),0,'Return to image-card presentation');
   await snap(page,label+'-directory',{fullPage:false});
 
-  await open(page,'profile/8850','.profile-hero');
+  // The profile hero is the poster design (.sumo-poster); the old .profile-hero layout is gone.
+  await open(page,'profile/8850','.sumo-poster');
   let profile=await page.locator('#sumo-main').innerText();
   assertContains(profile,'Onosato','Onosato name');
   assert.equal(await page.locator('.sumo-quick-results').count(),0,'Redundant Jump to results hero button removed');
   assert.equal(await page.locator('.sumo-full-photo').count(),0,'Redundant View full photo hero button removed');
-  const heroMeasurements=await page.evaluate(()=>{
-    const box=document.querySelector('.profile-hero').getBoundingClientRect();
-    const image=document.querySelector('.profile-hero>.sumo-photo').getBoundingClientRect();
-    const heading=document.querySelector('.profile-hero h1').getBoundingClientRect();
-    return {top:box.top,headingTop:heading.top,imageHeight:image.height,viewport:window.innerHeight};
+  const poster=await page.locator('.sumo-poster').evaluate(P=>{
+    const rect=e=>{const b=e?.getBoundingClientRect();return b&&{top:b.top,left:b.left,right:b.right,width:b.width,height:b.height}};
+    const photo=P.querySelector('.sumo-photo,img');
+    const facts=[...P.querySelectorAll('.sumo-poster-facts>*')].map(el=>el.textContent.replace(/\s+/g,' ').trim());
+    return {h1:rect(P.querySelector('h1')),name:P.querySelector('h1')?.textContent.trim(),
+      poster:rect(P),photo:rect(photo),
+      chips:[...P.querySelectorAll('.sumo-poster-chip')].map(el=>el.textContent.replace(/\s+/g,' ').trim()),
+      country:P.querySelector('.sumo-poster-chip.country')?.textContent.trim(),
+      emojiInChips:!!P.querySelector('.sumo-poster-chip .sumo-country-emoji'),
+      facts,stats:P.querySelector('.sumo-poster-stats')?.innerText.replace(/\s+/g,' ').trim(),
+      viewport:{w:document.documentElement.clientWidth,h:window.innerHeight}};
   });
-  if(viewport.width<=650){
-    const imageFirst=await page.evaluate(()=>{
-      const hero=document.querySelector('.profile-hero');
-      const photo=hero.querySelector(':scope>.profile-icon.sumo-photo.xl');
-      const heading=hero.querySelector(':scope>.profile-title');
-      const photoRect=photo.getBoundingClientRect(),titleRect=heading.getBoundingClientRect(),heroRect=hero.getBoundingClientRect();
-      const img=photo.querySelector('img');
-      return {photoTop:photoRect.top,titleTop:titleRect.top,
-        photoWidth:photoRect.width,heroWidth:heroRect.width,
-        photoHeight:photoRect.height,objectPosition:img?getComputedStyle(img).objectPosition:null};
-    });
-    assert.ok(imageFirst.photoTop<imageFirst.titleTop,'Photo precedes name on mobile: '+JSON.stringify(imageFirst));
-    assert.ok(imageFirst.photoWidth>=imageFirst.heroWidth-3,'Photo fills mobile hero width: '+JSON.stringify(imageFirst));
-    assert.ok(imageFirst.photoHeight<=306,'Portrait bounded and not excessively tall: '+JSON.stringify(imageFirst));
-    assert.ok(!imageFirst.objectPosition||/\\btop\\b|0%$/.test(imageFirst.objectPosition),'Portrait preserves top of head: '+JSON.stringify(imageFirst));
-  }else{
-    assert.ok(heroMeasurements.headingTop<heroMeasurements.viewport/2,
-      'Desktop/tablet profile name appears high in first screen: '+JSON.stringify(heroMeasurements));
-  }
-  assert.ok(heroMeasurements.imageHeight<=(isMobile?321:521),
-    'Approved portrait is bounded rather than full-page: '+JSON.stringify(heroMeasurements));
-  const heroInfoCheck=await page.locator('.profile-hero').evaluate(hero=>{
-    const photo=hero.querySelector(':scope>.profile-icon.sumo-photo.xl');
-    const overlay=hero.querySelector(':scope>.sumo-hero-flag');
-    const title=hero.querySelector(':scope>.profile-title');
-    const rank=hero.querySelector('.sumo-hero-rank');
-    const country=hero.querySelector('.sumo-hero-country');
-    const height=[...hero.querySelectorAll('.profile-facts>div')]
-      .find(el=>el.querySelector('span')?.textContent==='Height');
-    const image=photo?.getBoundingClientRect(),flag=overlay?.getBoundingClientRect();
-    const intersect=flag&&image?Math.max(0,Math.min(flag.right,image.right)-Math.max(flag.left,image.left))*
-      Math.max(0,Math.min(flag.bottom,image.bottom)-Math.max(flag.top,image.top)):Infinity;
-    return {
-      height:height?.querySelector('strong')?.textContent,
-      rankText:rank?.textContent,
-      emojiInRank:!!rank?.querySelector('.sumo-country-emoji'),
-      country:country?.textContent,
-      flagExists:!!overlay,
-      flagUrl:overlay?getComputedStyle(overlay,'::before').backgroundImage:null,
-      flagOpacity:overlay?Number(getComputedStyle(overlay).opacity):null,
-      flagFontSize:overlay?getComputedStyle(overlay).fontSize:null,
-      photoOverlapArea:intersect,
-      titleAboveFlag:!!(overlay&&title&&Number(getComputedStyle(title).zIndex)>Number(getComputedStyle(overlay).zIndex)),
-      viewport:document.documentElement.clientWidth
-    };
-  });
-  assert.equal(heroInfoCheck.height,'190 cm · 6′3″',
-    'Profile hero shows source centimetres and nearest feet/inches');
-  assert.equal(heroInfoCheck.emojiInRank,false,'Hero flag emoji removed from rank line');
-  assert.equal(heroInfoCheck.country,'Japan','Country remains readable as plain text');
-  assert.ok(heroInfoCheck.flagExists&&heroInfoCheck.flagUrl!=='none'&&
-    heroInfoCheck.flagOpacity>0&&heroInfoCheck.flagOpacity<=.25&&heroInfoCheck.flagFontSize==='0px',
-    'Country flag is a subtle decorative image without visible emoji: '+JSON.stringify(heroInfoCheck));
-  assert.ok(heroInfoCheck.photoOverlapArea<=3,
-    'Hero flag does not overlap the wrestler photograph: '+JSON.stringify(heroInfoCheck));
-  assert.ok(heroInfoCheck.titleAboveFlag,'Hero text stays above faded flag image');
+  assert.equal(poster.name,'Onosato','Poster heading is the wrestler name');
+  assert.ok(poster.h1.top<poster.viewport.h,'Profile name appears within the first screen: '+JSON.stringify({h1:poster.h1,viewport:poster.viewport}));
+  assert.ok(poster.photo&&poster.photo.width>40&&poster.photo.height>40,'Poster shows a wrestler photograph: '+JSON.stringify(poster.photo));
+  assert.ok(poster.photo.left>=poster.poster.left-2&&poster.photo.right<=poster.poster.right+2,'Photograph stays inside the poster: '+JSON.stringify({photo:poster.photo,poster:poster.poster}));
+  assert.ok(poster.poster.right<=poster.viewport.w+2,'Poster fits the viewport width: '+JSON.stringify({poster:poster.poster,viewport:poster.viewport}));
+  assert.ok(poster.chips.some(c=>/Yokozuna/.test(c)),'Rank chip shows Yokozuna: '+JSON.stringify(poster.chips));
+  assert.equal(poster.country,'Japan','Country is readable plain text');
+  assert.equal(poster.emojiInChips,false,'No flag emoji in the poster chips');
+  assert.ok(poster.facts.some(f=>/Height\s*190 cm/.test(f)),'Poster shows source centimetres: '+JSON.stringify(poster.facts));
+  assert.ok(/\d+–\d+/.test(poster.stats)&&/CAREER WINS/i.test(poster.stats),'Poster shows a basho record and career wins: '+poster.stats);
   assertContains(profile,'Yokozuna','rank');
   assertContains(profile,'Winning techniques','techniques');
   assertContains(profile,'Results','canonical results');
