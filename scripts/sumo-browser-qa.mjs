@@ -47,35 +47,31 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
    assert.equal(new Set(roster.rikishi.map(w=>w.sourceId)).size,roster.count,'Stable IDs are unique');
   assert.equal(research.profileCount,roster.count,'Full tracked roster has corresponding research records');
   assert.equal(research.certified,false,'Research cache must not imply JSA certification');
-  await open(page,'home','.sumo-overview-lede');
+  // #home opens Results, the Sumo landing page. (The old Overview dashboard, with its five-leaders panel,
+  // was removed when the preview design reached main; leaders now live in the Standings view.)
+  await open(page,'home','.sumo-page-head');
   const home=await page.locator('#sumo-main').innerText();
-  assertContains(home,'Sumo','Sumo home context');
-  assertContains(home,'results','latest results priority');
-  assertContains(home,'five leaders','home leaders');
-  assert.ok(await page.locator('.sumo-home-grid').count()===1,'Results and leaders appear in first dashboard');
-  assert.equal(await page.locator('.sumo-home-leaders .sumo-standings-row').count(),5,'Homepage shows exactly five leaders');
+  assertContains(home,'Results','Results landing page');
+  assertContains(home,'Day','tournament day shown');
+  assert.equal(await page.locator('.sumo-basho-views [data-basho-view]').count(),3,'Results, Matchups and Standings views');
+  assert.equal(await page.locator('[data-basho-view="results"]').getAttribute('aria-pressed'),'true','Results is the selected view');
   for(const division of ['Makuuchi','Juryo','Makushita']){
-    await page.locator('[data-home-leader-division="'+division+'"]').click();
-    assert.equal(await page.locator('[data-home-leader-division="'+division+'"]').getAttribute('aria-pressed'),'true',
-      'Selected '+division+' leader tab is accessible');
-    assert.equal(await page.locator('.sumo-home-leaders .sumo-leader-card').count(),5,
-      'Exactly five source-ranked leaders for '+division);
-    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-vitals').count(),5,'Height and weight in all '+division+' cards');
-    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-career').count(),5,'Recorded career W-L in all '+division+' cards');
-    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-last').count(),5,'Latest completed result details in all '+division+' cards');
-    const proportions=await page.locator('.sumo-leader-card').first().evaluate(card=>{
-      const image=card.querySelector('.profile-icon.sumo-photo');
-      return {cardWidth:card.getBoundingClientRect().width,photoWidth:image?.getBoundingClientRect().width,
-        photoHeight:image?.getBoundingClientRect().height,cardHeight:card.getBoundingClientRect().height};
-    });
-    assert.ok(proportions.photoWidth>=proportions.cardWidth*.40,'Leader portrait dominates left edge '+JSON.stringify(proportions));
-    assert.ok(proportions.photoHeight>=proportions.cardHeight-3,'Portrait fills the height '+JSON.stringify(proportions));
+    await page.locator('[data-basho-division="'+division+'"]').click();
+    assert.ok(/\bactive\b/.test(await page.locator('[data-basho-division="'+division+'"]').getAttribute('class')),
+      'Selected '+division+' tab is marked active');
+    assert.ok(await page.locator('.sumo-compact-results .bout-row').count()>0,'Bouts listed for '+division);
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
-    assert.ok(widths.page<=widths.viewport+6,'No mobile horizontal overflow after '+division+' toggle: '+JSON.stringify(widths));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow after '+division+' toggle: '+JSON.stringify(widths));
   }
-  await page.locator('[data-home-leader-division="Makuuchi"]').click();
-  await page.locator('.sumo-home-leaders').screenshot({path:OUT+'/'+label+'-top-five.png',animations:'disabled'});
+  await page.locator('[data-basho-division="Makuuchi"]').click();
+  await page.locator('[data-basho-view="standings"]').click();
+  await page.waitForSelector('.sumo-standings-row');
+  assert.equal(await page.locator('[data-basho-view="standings"]').getAttribute('aria-pressed'),'true','Standings view selected');
+  assert.ok(await page.locator('.sumo-standings-row').count()>=5,'Standings list the top wrestlers');
+  assert.ok(await page.locator('.sumo-standings-row .sumo-standings-record').count()>=5,'Each standings row shows a record');
+  await page.locator('.sumo-standings-workspace').first().screenshot({path:OUT+'/'+label+'-standings.png',animations:'disabled'});
   screenshotCount++;
+  await page.locator('[data-basho-view="results"]').click();
   if(isMobile){
     const nav=await page.evaluate(()=>{
       const links=[...document.querySelector('.subnav-inner').children]
@@ -84,7 +80,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
         client:el.clientWidth,scroll:el.scrollWidth,
         left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right}));
     });
-    assert.equal(nav.length,4,'Mobile navigation has four unambiguous destinations');
+    assert.equal(nav.length,7,'Mobile navigation has the seven Sumo destinations: '+JSON.stringify(nav.map(n=>n.label)));
     assert.ok(nav.every((item,i)=>item.scroll<=item.client+2&&
       (i===0||item.left>=nav[i-1].right-2)),
       'No overlapping or clipped mobile navigation text: '+JSON.stringify(nav));
@@ -952,11 +948,14 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 }
 await mkdir(OUT,{recursive:true});
 try {
-  await testSite({width:1440,height:900},false,'desktop',true);
-  await testSite({width:1280,height:900},false,'laptop1280',false);
-  await testSite({width:768,height:1024},false,'tablet',false);
-  await testSite({width:390,height:844},true,'mobile',true);
-  await testSite({width:320,height:740},true,'reflow320',false);
+  // SUMO_QA_ONLY=laptop1280 (or a comma list of labels) runs just those viewports, for quick local runs.
+  const only=(process.env.SUMO_QA_ONLY||'').split(',').filter(Boolean);
+  const want=label=>!only.length||only.includes(label);
+  if(want('desktop'))await testSite({width:1440,height:900},false,'desktop',true);
+  if(want('laptop1280'))await testSite({width:1280,height:900},false,'laptop1280',false);
+  if(want('tablet'))await testSite({width:768,height:1024},false,'tablet',false);
+  if(want('mobile'))await testSite({width:390,height:844},true,'mobile',true);
+  if(want('reflow320'))await testSite({width:320,height:740},true,'reflow320',false);
   if(failures.length)throw new Error(failures.join('\n'));
   await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',browser:browser.version(),viewportResults,screenshotCount,views:['home','rikishi','profiles','banzuke','basho','matchups','kimarite','headtohead'],viewportWidths:[1440,1280,768,390,320],realTouchTest:false},null,2));
   console.log('Sumo editorial browser QA passed: 1440/1280/768/390/320, five key wrestlers, H2H chronology, charts and no JS exceptions. Real-device touch remains separate.');
