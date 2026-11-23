@@ -20,22 +20,25 @@ const expected={
  'rani-yahya':[['2014-04-11','Johnny Bedford','ceac6997d22f2f3b']],
  'curtis-blaydes':[['2017-02-04','Adam Milstead','74256b4e8d0b1de6']],
  'alex-morono':[['2017-02-04','Niko Price','48e51d4e7172048e']],
- 'jon-jones':[['2017-07-29','Daniel Cormier','5ab286735ccee803']],
  'andre-fili':[['2021-06-26','Daniel Pineda','4622ec182e7fed6b']],
  'drew-dober':[['2015-03-21','Leandro Silva','b068a4ee6d842606']],
  'alex-caceres':[['2013-03-02','Kyung Ho Kang','be70a2f68f6ad3e7']],
  'tim-means':[['2016-12-30','Alex Oliveira','9d4b2767f6630fc9']],
- 'dustin-poirier':[['2017-05-13','Eddie Alvarez','6fe9729cee57c680']],
  'king-green':[['2023-04-22','Jared Gordon','640d52630f4f8a61']],
- 'jeremy-stephens':[['2019-09-21','Yair Rodriguez','62acea88e628c3ca']],
- 'charles-oliveira':[['2011-06-26','Nik Lentz','91daeeeea0a83e49']],
- 'jim-miller':[['2013-04-27','Pat Healy','bb59b82bddc96cca']]
+ 'jeremy-stephens':[['2019-09-21','Yair Rodriguez','62acea88e628c3ca']]
 };
+// Certified by the pilot register entries (owner-approved savedHistoryGap rule, 17 Nov): no longer pinned here.
+const certifiedPilot=['jon-jones','charles-oliveira','dustin-poirier','jim-miller'];
 const keys=Object.keys(expected);
-test('nineteen 783-roster fighters have twenty pinned original no-contests, zero premature certificates',()=>{
+test('fifteen 783-roster fighters have sixteen pinned original no-contests, zero premature certificates; four pilot fighters are certified',()=>{
  assert.equal(approval.approvedFighters.length,783);
- assert.equal(keys.length,19);
- assert.equal(Object.values(expected).reduce((n,v)=>n+v.length,0),20);
+ assert.equal(keys.length,15);
+ assert.equal(Object.values(expected).reduce((n,v)=>n+v.length,0),16);
+ for(const slug of certifiedPilot){
+  assert.ok(approval.approvedFighters.includes(slug),slug);
+  assert.ok(independent[slug],'pilot fighter has a certified register entry '+slug);
+  assert.equal(inventory.fighters[slug],undefined,'pilot fighter removed from missing-NC inventory '+slug);
+ }
  for(const slug of keys){
   assert.ok(approval.approvedFighters.includes(slug),slug);
   assert.equal(independent[slug],undefined,'no incomplete independent full-career certificate '+slug);
@@ -75,13 +78,13 @@ test('paired fighter source results are one original NC identity each, not two s
  assert.equal(inventory.fighters['jeremy-stephens'].bouts[0].independentUfcStatsFightUrl,
   inventory.fighters['yair-rodriguez'].bouts[0].independentUfcStatsFightUrl);
  const rows=keys.flatMap(k=>inventory.fighters[k].bouts);
- assert.equal(new Set(rows.map(r=>r.independentUfcStatsFightUrl)).size,17);
+ assert.equal(new Set(rows.map(r=>r.independentUfcStatsFightUrl)).size,13);
 });
-test('official NC source inventory records 20 missing identities, never supplies a substitute numeric cache ID',()=>{
+test('official NC source inventory records 16 missing identities, never supplies a substitute numeric cache ID',()=>{
  const subset={...inventory,fighters:Object.fromEntries(keys.map(k=>[k,inventory.fighters[k]]))};
  const out=auditOfficialCareerInventory(subset,keys,{asOf:'2026-11-14',fighters:[]},{},native.bouts);
- assert.equal(out.totalSourceBouts,20);
- assert.equal(out.sourceMissingSaved,20);
+ assert.equal(out.totalSourceBouts,16);
+ assert.equal(out.sourceMissingSaved,16);
  assert.equal(out.matchedSaved,0);
  assert.equal(out.conflicts.length,0);
  assert.ok(out.cases.every(x=>x.officialOutcome==='no_contest'));
