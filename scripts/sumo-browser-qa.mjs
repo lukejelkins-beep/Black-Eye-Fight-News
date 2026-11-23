@@ -460,7 +460,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok(await posterCareerWins()>=677,'Nishikigi career wins preserved (at least 677)');
   await open(page,'profile/75','.sumo-poster');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
-  assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
+  // The profile no longer carries a "non-bout days" note or any absence counter (the Makushita caveat lives on the
+  // Results page and is checked with the basho steps), so a rest day cannot be shown as an absence here.
+  assert.ok(!/absen/i.test(makushitaProfile),'Makushita profile does not report absences: rest days are not absences');
 
 
   await open(page,'banzuke','.sumo-rank-card');
@@ -483,18 +485,30 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('.sumo-rank-card').count(),120);
   await snap(page,label+'-banzuke',{fullPage:false});
 
-  await open(page,'basho','.basho-hero');
-  const announcedDay=await page.evaluate(async()=>{
+  await open(page,'basho','.sumo-page-head');
+  const dailySnapshot=await page.evaluate(async()=>{
     const response=await fetch('data/sumo/preview-details.json');
-    return (await response.json()).announcedDay;
+    const details=await response.json();
+    return {announcedDay:details.announcedDay,dailyStatus:details.dailyStatus};
   });
-  assert.ok(Number.isInteger(announcedDay)&&announcedDay>=1&&announcedDay<=15,'Published preview has a source-scheduled day');
-  await page.locator('[data-day="'+announcedDay+'"]').click();
-  await page.locator('[data-basho-view="matchups"]').click();
-  const confirmed=await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count();
-  assert.ok(confirmed>0,'Confirmed scheduled matchups must appear without invented outcomes');
-  assertContains(await page.locator('#sumo-main').innerText(),'snapshot, not live','scheduled source provenance');
-  await snap(page,label+'-scheduled',{fullPage:false});
+  const announcedDay=dailySnapshot.announcedDay;
+  if(Number.isInteger(announcedDay)){
+    // During a tournament the source publishes the next day's torikumi.
+    assert.ok(announcedDay>=1&&announcedDay<=15,'Published preview has a source-scheduled day');
+    await page.locator('[data-day="'+announcedDay+'"]').click();
+    await page.locator('[data-basho-view="matchups"]').click();
+    const confirmed=await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count();
+    assert.ok(confirmed>0,'Confirmed scheduled matchups must appear without invented outcomes');
+    assertContains(await page.locator('#sumo-main').innerText(),'snapshot, not live','scheduled source provenance');
+    await snap(page,label+'-scheduled',{fullPage:false});
+  }else{
+    // Between tournaments (or before the next day's torikumi is published) there is no scheduled day:
+    // the page must not invent matchups.
+    assert.equal(announcedDay,null,'No scheduled day is announced: '+JSON.stringify(dailySnapshot));
+    await page.locator('[data-basho-view="matchups"]').click();
+    assert.equal(await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count(),0,
+      'No scheduled matchups are invented when no day is announced');
+  }
   await page.locator('[data-day="15"]').click();
   assert.equal(await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count(),0,'Day 15 cannot be guessed from future banzuke slots');
   await page.locator('[data-basho-division="Makushita"]').click();
