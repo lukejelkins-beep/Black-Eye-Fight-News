@@ -81,7 +81,7 @@ test('UFCStats batch: omitted, duplicated, reversed, substituted and unattested 
 // Owner-approved 2026-11-17: a proof may list a no-contest or draw that UFCStats shows but saved
 // UFCalendar history lacks. The bout must be flagged savedHistoryGap, be a no_contest/draw, cite
 // UFCStats, and have no saved counterpart. Wins and losses are never accepted as gaps.
-const GAPS=['kyle-daukaus','chris-curtis','miles-johns','magomed-ankalaev','johnny-walker','matt-schnell','michal-oleksiejczuk','marc-andre-barriault','leon-edwards','belal-muhammad','niko-price','kelvin-gastelum','kevin-holland','sean-o-malley'];
+const GAPS=['kyle-daukaus','chris-curtis','miles-johns','magomed-ankalaev','johnny-walker','matt-schnell','michal-oleksiejczuk','marc-andre-barriault','leon-edwards','belal-muhammad','niko-price','kelvin-gastelum','kevin-holland','sean-o-malley','mayra-bueno-silva','khalil-rountree-jr'];
 test('saved-history gap rule: proofs with no-contest/draw gaps certify',()=>{
  for(const slug of GAPS){
   const p=proofs[slug],gaps=p.bouts.filter(b=>b.savedHistoryGap);
