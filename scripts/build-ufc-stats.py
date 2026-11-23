@@ -724,7 +724,8 @@ def certified_no_contests(fights: list, skipped: dict) -> list:
 
 
 
-def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs: bool = True) -> dict:
+def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs: bool = True,
+          before: dt.date | None = None) -> dict:
     archive = load("ufc-research-archive.json")["fights"]
     bouts = load("ufcalendar-rich-progress.json")["bouts"]
     judging = load("ufcalendar-judging-research.json").get("decisions", {})
@@ -753,6 +754,8 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
     fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped, showcases)
     fights += certified_no_contests(fights, skipped)
     skipped["breakdownRoundsRepaired"] = apply_breakdown_repairs(fights, load_repairs()) if repairs else 0
+    if before is not None:   # research only (R4 calibration): the stats as they stood on this day, fights from it on left out
+        fights = [f for f in fights if (parse_date(f["date"]) or before) < before]
 
     per_fighter: dict[str, dict] = {}
     for fight in fights:
