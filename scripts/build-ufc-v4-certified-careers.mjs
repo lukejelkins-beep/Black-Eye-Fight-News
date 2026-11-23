@@ -6,7 +6,8 @@
  * then this script. `--check` rebuilds in memory and fails if the committed file differs (use in review).
  *
  * The file lists ONLY fighters in the queue's `certified` lane (independently verified full UFC career), with the
- * number of official UFC bouts that certificate covers. A fighter in `fastLane` or `exceptions` is never listed.
+ * number of official UFC bouts that certificate covers up to `certifiedThrough` (the evidence cutoff). A fight dated
+ * after that day is not covered and is shown as newer. A fighter in `fastLane` or `exceptions` is never listed.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,8 +15,10 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const OUT=path.join(root,'data/ufc-v4-certified-careers.json');
 const read=f=>JSON.parse(fs.readFileSync(path.join(root,f),'utf8'));
-export function buildCertifiedCareers(queue,approval){
+export function buildCertifiedCareers(queue,approval,progress){
  const lanes=queue?.lanes||{};
+ const through=progress?.summary?.certificationEvidenceCutoff;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(through||''))throw new Error('no certification evidence cutoff in the Stage 3 report');
  const certified=Array.isArray(lanes.certified)?lanes.certified:[];
  const total=(lanes.certified?.length||0)+(lanes.fastLane?.length||0)+(lanes.exceptions?.length||0);
  if(queue?.schema!==1||queue?.scope!=='ufc-v4-certification-attempt-and-exception-queue')throw new Error('not a certification queue');
@@ -32,12 +35,12 @@ export function buildCertifiedCareers(queue,approval){
   schema:1,scope:'ufc-v4-certified-careers',
   note:'Fighters whose full UFC career is independently verified (Stage 3 certified lane), with the number of official UFC bouts certified. Feeds the R2 verified career view, which is OFF by default (data/ufc-v4-flags.json). Rebuild with scripts/build-ufc-v4-certified-careers.mjs.',
   approvalHash:approval?.approvedRosterSha256,approved:783,certifiedCount:Object.keys(careers).length,
-  queueAsOf:queue.asOf,
+  queueAsOf:queue.asOf,certifiedThrough:through,
   certified:Object.fromEntries(Object.entries(careers).sort(([a],[b])=>a<b?-1:a>b?1:0))
  };
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const out=buildCertifiedCareers(read('qa/ufc-v4-certification-queue.json'),read('data/ufc-36-month-roster-approval.json'));
+ const out=buildCertifiedCareers(read('qa/ufc-v4-certification-queue.json'),read('data/ufc-36-month-roster-approval.json'),read('qa/ufc-36-month-stage3-progress.json'));
  const text=JSON.stringify(out,null,1)+'\n';
  if(process.argv.includes('--check')){
   if(!fs.existsSync(OUT)||fs.readFileSync(OUT,'utf8')!==text){console.error('data/ufc-v4-certified-careers.json is out of date');process.exit(1);}
