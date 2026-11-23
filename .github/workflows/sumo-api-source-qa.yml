@@ -1,8 +1,7 @@
 name: Sumo API source connection QA
 on:
-  push:
-    branches:
-      - feat/sumo-api-source-20261114
+  pull_request:
+    branches: [main]
     paths:
       - scripts/sumo-api-source.mjs
       - tests/test-sumo-api-source.mjs

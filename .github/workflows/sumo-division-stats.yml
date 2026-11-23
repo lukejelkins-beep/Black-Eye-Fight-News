@@ -1,7 +1,7 @@
-name: Cache isolated Sumo source division statistics
+name: Cache Sumo source division statistics
 on:
   push:
-    branches: [feat/sumo-section-test-20261114]
+    branches: [main]
     paths:
       - scripts/sumo-cache-division-stats.mjs
       - .github/workflows/sumo-division-stats.yml
@@ -9,17 +9,17 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: sumo-preview-single-writer
+  group: publish-live-data
   cancel-in-progress: false
 jobs:
   division-stats:
-    if: github.ref == 'refs/heads/feat/sumo-section-test-20261114'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 14
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feat/sumo-section-test-20261114
+          ref: main
           persist-credentials: true
       - uses: actions/setup-node@v4
         with:
@@ -28,7 +28,7 @@ jobs:
         run: node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
       - name: Cache full approved 190-rikishi division records responsibly
         run: node scripts/sumo-cache-division-stats.mjs
-      - name: Commit data only to isolated Sumo test branch
+      - name: Commit data to main
         shell: bash
         run: |
           set -euo pipefail
@@ -41,13 +41,13 @@ jobs:
           fi
           git commit -m "Cache per-division Sumo API W-L records for approved test roster"
           for attempt in 1 2 3; do
-            git fetch origin feat/sumo-section-test-20261114
-            if ! git rebase origin/feat/sumo-section-test-20261114; then
+            git fetch origin main
+            if ! git rebase origin/main; then
               git rebase --abort || true
-              echo "Concurrent Sumo snapshot conflict, leaving remote branch unchanged" >&2
+              echo "Concurrent Sumo snapshot conflict, leaving main unchanged" >&2
               exit 1
             fi
-            if git push origin HEAD:feat/sumo-section-test-20261114; then
+            if git push origin HEAD:main; then
               exit 0
             fi
             sleep 2

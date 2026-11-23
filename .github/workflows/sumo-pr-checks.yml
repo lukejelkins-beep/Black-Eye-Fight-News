@@ -1,10 +1,19 @@
-name: Sumo preview PR checks
+name: Sumo PR checks
 
-# Runs on pull requests into the Sumo preview branch. Read-only: runs the Sumo
+# Runs on pull requests into main that touch Sumo files. Read-only: runs the Sumo
 # tests and a dry run of the daily refresh against the Sumo API, commits nothing.
 on:
   pull_request:
-    branches: [feat/sumo-section-test-20261114]
+    branches: [main]
+    paths:
+      - 'sumo*.html'
+      - 'assets/sumo*'
+      - 'data/sumo/**'
+      - 'scripts/sumo-*'
+      - 'scripts/fetch-jsa-kimarite-photos.py'
+      - 'tests/test-sumo*'
+      - 'tests/test_sumo*'
+      - '.github/workflows/sumo-*.yml'
   workflow_dispatch:
 
 permissions:
@@ -23,10 +32,10 @@ jobs:
         shell: bash
         run: |
           set -uo pipefail
-          # Pre-existing UI-test failures (present before 2026-11-19, tracked
-          # separately). Any OTHER failing Sumo test now fails this step; a
-          # listed file that starts passing is reported so it can be removed.
-          known=" tests/test-sumo-editorial.mjs tests/test-sumo-profile-refinements.mjs tests/test-sumo-roster-ux.mjs tests/test-sumo-ux-refinement.mjs "
+          # No Sumo test is allowed to fail. (The four UI tests that failed on the old
+          # preview branch pass on main since 2026-11-23, so the known-failure list is empty.)
+          # Add a file to the list below only for a failure tracked separately.
+          known=" "
           fail=0
           for f in tests/test-sumo-*.mjs; do
             if node --test "$f" > /tmp/out.txt 2>&1; then

@@ -16,7 +16,7 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 6. **Reader content only.** Research queues, review priorities, verification notes and audit text are staff tools. They never lead a public page.
 7. **Fast.** Images sized to their slot and lazy-loaded. No page loads data it does not show.
 
-## Tokens (current, from the Sumo preview)
+## Tokens (current)
 - Red `#cf1824` (accent, active states) · Gold `#f3c332` (secondary highlight) · Cream `#f8f4ed` (page) · Ink `#111013` (text, dark bands) · Dark band `#151115`.
 - Headlines and big numbers: **Unbounded** 700–900, sentence case (owner's choice from the options, 22 Nov). Body and UI: **DM Sans**. Two families only. **Barlow Condensed** is being phased out of headings: until the site-wide theme ships, existing pages keep it. Russo One is still imported in `index.html` and is probably unused; remove it once confirmed.
 - Sport colours: boxing red, MMA amber `#e0a400`, sumo blue `#2a4a8f`.
@@ -42,4 +42,4 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 - Whether Unbounded replaces Barlow everywhere or only on the pages the owner names. This file assumes everywhere. The phone masthead is still Barlow Condensed (it sits in the dark top bar, which the site-wide theme does not restyle).
 
 ## Where the new look is tried first
-The Sumo preview (`befn-sumo-preview`) is the pilot for this direction. Patterns proven there are ported to the main site one page at a time.
+Sumo, formerly the preview pilot for this direction, is live on `main` and is built and deployed there like every other sport (the separate preview site is retired, 23 Nov 2026). Patterns proven on Sumo are ported to the other pages one at a time.

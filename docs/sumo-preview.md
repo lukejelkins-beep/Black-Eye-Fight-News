@@ -1,11 +1,10 @@
 # BEFN Sumo — three-division test implementation
 
-**Status:** Draft PR #196, testing only, not merged or deployed.  
+**Status (updated 23 November 2026):** Sumo is live on `main` (#366, #414 to #418). All Sumo design, decisions and changes now go through `main` and are deployed with the main site; the separate Sumo preview branch (`feat/sumo-section-test-20261114`) and preview site are retired. Sumo checks run on pull requests into `main` (`sumo-pr-checks`, `sumo-section-qa`, `sumo-browser-qa`). The text below is the original 14 November implementation note, kept as a record.  
 **Date:** 14 November 2026.  
-**Development branch:** feat/sumo-section-test-20261114  
-**Base:** feat/sumo-api-source-20261114 (API adapter draft PR #194).  
-**Entry:** sumo.html.  
-**Production:** main, Render and blackeyefightnews.com.au remain unchanged by this workstream.
+**Original development branch:** feat/sumo-section-test-20261114  
+**Original base:** feat/sumo-api-source-20261114 (API adapter draft PR #194).  
+**Entry:** sumo.html.
 
 ## Current tracked roster
 
