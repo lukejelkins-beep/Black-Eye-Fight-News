@@ -42,6 +42,67 @@ export const isAttestedOfficialUfcShowcase=(entry,row)=>{
    (!row.fightUrl||row.fightUrl===x.fightUrl));
 };
 
+/** Independently attested official UFC career, using semantic bout identity.
+ * The approved UFCalendar-first standard does not require original numeric
+ * UFC bout/corner IDs, fight-detail URLs or non-missing per-round metrics.
+ */
+
+/** Owner-approved 2026-11-17: a proof may list a no-contest or draw that official
+ * sources show but saved UFCalendar history lacks. Only when it is explicitly flagged,
+ * is a no_contest/draw, cites ufc.com or UFCStats, and truly has no saved counterpart.
+ * Wins and losses missing from saved history are never accepted here. */
+const isApprovedSavedGap=(bout,saved)=>
+  bout?.savedHistoryGap===true&&
+  ['no_contest','draw'].includes(normalizedOutcome(bout?.result))&&
+  /^https:\/\/(www\.ufc\.com|ufcstats\.com)\//i.test(String(bout?.officialUfcSourceUrl||bout?.fightUrl||''))&&
+  date(bout?.date)&&tokens(bout?.opponent)&&
+  !arr(saved).some(row=>date(row?.date)&&nearSourceDay(date(bout.date),date(row.date))&&
+    sameAthleteName(bout.opponent,row.opponent));
+
+export function matchesRevisedOfficialCareer(profile,history,evidence,asOf,cutoff){
+ const saved=arr(history),allOfficial=arr(evidence?.bouts);
+ const gaps=allOfficial.filter(b=>isApprovedSavedGap(b,saved));
+ if(allOfficial.some(b=>b?.savedHistoryGap===true&&!gaps.includes(b)))return false;
+ const official=allOfficial.filter(b=>!gaps.includes(b));
+ const url=String(evidence?.officialFighterUrl||evidence?.fighterUrl||'');
+ if(evidence?.sourceCoverageAttested!==true||
+    evidence?.verificationMethod!=='full_official_ufc_fight_listing_crosscheck'||
+    !date(asOf)||!date(cutoff)||cutoff>asOf||
+    !date(evidence?.verifiedAt)||evidence.verifiedAt<cutoff||
+    !/^https:\/\/www\.ufc\.com\/athlete\/[a-z0-9-]+\/?$/i.test(url)||
+    !sameAthleteName(profile?.name,evidence?.fighterName)||
+    !saved.length||saved.length!==official.length)return false;
+ const used=new Set(),seen=new Set();
+ for(const item of official){
+   const when=date(item?.date),who=tokens(item?.opponent),
+     result=normalizedOutcome(item?.result),fingerprint=when+'|'+who;
+   // The approved roster is frozen at cutoff (not the later verification
+   // date): post-cutoff contests cannot silently expand the cohort proof.
+   if(!when||when>cutoff||!who||!result||seen.has(fingerprint)||
+      (item.officialUfcSourceUrl&&
+       !/^https:\/\/www\.ufc\.com\//i.test(String(item.officialUfcSourceUrl))))return false;
+   seen.add(fingerprint);
+   const index=saved.findIndex((row,i)=>!used.has(i)&&
+     date(row?.date)&&nearSourceDay(when,date(row.date))&&
+     normalizedOutcome(row.result)===result&&
+     (sameAthleteName(item.opponent,row.opponent)||
+      arr(item.sourceVerifiedNativeOpponentAliases).some(alias=>
+       sameAthleteName(alias,row.opponent)))&&
+     (!item.event||!row.event||tokens(item.event)===tokens(row.event)));
+   if(index<0)return false;
+   const matched=saved[index];
+   // An attested official chronology cannot silently certify feeder,
+   // cancelled or non-UFC provider rows as UFC contests.
+   const feeder=isFeederTitle(matched.event)||isFeederTitle(item.event);
+   const explicitlyOfficialShowcase=item.independentlyOfficial===true&&
+     /^https:\/\/www\.ufc\.com\//i.test(String(item.officialUfcSourceUrl||''));
+   if(!isUfc(matched)||(feeder&&!explicitlyOfficialShowcase)||
+      /cancelled|canceled|scheduled|upcoming/i.test(String(matched.status||'')))return false;
+   used.add(index);
+ }
+ return used.size===saved.length;
+}
+
 /** Full-career proof must be independently grounded, not inferred from index coverage. */
 export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,independentEntry,indexedBouts=null,independentAsOf=asOf){
  const timeline=profile?.ufcTimeline||{};
@@ -82,7 +143,8 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  // A manually checked independent UFCStats fighter-history listing must
  // cover exactly the same complete bout identities, not a partial sample.
  const ext=independentEntry||{};
- const given=arr(ext.bouts);
+ const savedGaps=arr(ext.bouts).filter(b=>isApprovedSavedGap(b,rows));
+ const given=arr(ext.bouts).filter(b=>!savedGaps.includes(b));
  const savedKeys=rows.map(r=>[date(r.date),normal(r.opponent),
    normalizedOutcome(r.result)].join('|'));
  const givenKeys=given.map(r=>[date(r.date),normal(r.opponent),
@@ -198,8 +260,17 @@ export function evaluateCareerEvidence(profile,history,rosterLatest,asOf,indepen
  // A separately reconciled, exact full UFCStats chronology can certify even
  // after richer cached UFC evidence invalidated the provider's old response.
  // Native identity collisions remain a hard block for both pathways.
- const independentlyVerified=Boolean(checked&&rosterLatestPresent&&
-   !unresolvedIdentityConflicts);
+ // Existing numeric source proofs are retained. A separately attested
+ // official UFC athlete chronology may also pass without native identity
+ // crosswalks, third-party URL matches, or optional round measurements.
+ // Preserve older original-native attestations and their mutation defenses.
+ // Newly attested UFCalendar-first careers opt in explicitly, or have no
+ // complete native mapping in their source proof.
+ const semanticCertified=(!nativeMapped||
+   ext.certificationStandard==='ufcalendar_first')&&
+   matchesRevisedOfficialCareer(profile,rows,ext,snapshot,evidenceCutoff);
+ const independentlyVerified=Boolean(rosterLatestPresent&&
+   !unresolvedIdentityConflicts&&(checked||semanticCertified));
  return {providerCertified,independentlyVerified,legacyClaim,
    explicitUntruncated:providerFlag,providerDiscrepancy,
    unresolvedIdentityConflicts,rosterLatestPresent,
@@ -214,6 +285,22 @@ const tokens=value=>String(value??'').replace(/([a-z])([A-Z])/g,'$1 $2')
 const sameAthleteName=(a,b)=>normal(a)===normal(b)||Boolean(tokens(a)&&tokens(a)===tokens(b));
 const nearSourceDay=(a,b)=>date(a)&&date(b)&&
  Math.abs(Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))<=86400000;
+
+/** Flag all frozen identities sharing a single official UFC athlete URL. */
+export function sharedOfficialUfcIdentitySlugs(approved,registry){
+ const officialUrlOwners=new Map(),conflicts=new Set();
+ for(const slug of approved){
+   const row=registry?.[slug];
+   const url=String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
+     .trim().toLowerCase().replace(/\/$/,'');
+   if(!/^https:\/\/www\.ufc\.com\/athlete\//.test(url))continue;
+   if(!officialUrlOwners.has(url))officialUrlOwners.set(url,[]);
+   officialUrlOwners.get(url).push(slug);
+ }
+ for(const owners of officialUrlOwners.values())
+   if(owners.length>1)owners.forEach(slug=>conflicts.add(slug));
+ return conflicts;
+}
 
 /** Independent UFC source inventory is a depth-gap detector, never a certificate. */
 export function auditOfficialCareerInventory(inventory,approved,census,profiles,bouts){
@@ -366,8 +453,16 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     f?.eligibilityStatus==='latest_observed_mma_ufc').map(f=>f.slug));
   const bouts=progress?.bouts||{},roundDone=progress?.roundDone||{},
     fights=archive?.fights||{},profiles=research?.profiles||{};
+  // The source inventory is pinned to the immutable approved cohort date.
+  // The rolling 36-month census may advance after that day; using its date
+  // would silently discard ALL approved official missing-bout evidence.
+  // Preserve the fully validated frozen snapshot identities and dates; the
+  // ordinary current census and strict full-career certificate gate stay intact.
+  const sourceCensus={...census,asOf:approval.rosterAsOf,
+    fighters:approvedSnapshot?.schema===1
+      ? Object.values(approvedSnapshot.fighters) : census.fighters};
   const officialSourceInventory=auditOfficialCareerInventory(
-    officialInventory,approved,census,profiles,bouts);
+    officialInventory,approved,sourceCensus,profiles,bouts);
   const officialSourceWinnerLedger=progress?.ufcOfficialSourceDateChecks||{};
   const officialSourceWinnerPages=progress?.ufcOfficialSourceDatePages||{};
   const officialSourceNonWinnerLedger=progress?.ufcOfficialSourceNonWinnerChecks||{};
@@ -452,6 +547,11 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     independentEvidence?.scope==='ufc-independent-full-career-verification'&&
     independentEvidence?.rosterAsOf===approval.rosterAsOf?
       independentEvidence?.fighters||{}:{};
+
+  // Distinct frozen roster entries cannot both inherit the same official UFC
+  // athlete page. Preserve all roster entries and source proofs for review,
+  // but fail closed on certification until their identities are disambiguated.
+  const sharedOfficialIdentity=sharedOfficialUfcIdentitySlugs(approved,independentRegistry);
 
   // One offline pass through indexed official UFC fights, keyed by stable
   // numeric fighter ID. This can expose older bouts omitted by shortened
@@ -595,8 +695,21 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     // still block any new saved UFC fights not covered by the independent proof.
     const proof=evaluateCareerEvidence(profile,history,
       current.get(slug)?.lastUfcFight,census.asOf,independentRegistry[slug],bouts,approval.rosterAsOf);
-    const independentFullCareer=knownMeasured&&proof.independentlyVerified;
-    const providerFullCareer=knownMeasured&&proof.providerCertified;
+    // Round statistics affect metric completeness but never full-career status.
+    // Reject duplicate dates/opponents and malformed official history instead.
+    const uniqueRows=new Set();
+    const malformedHistory=history.some(row=>{
+      const fingerprint=date(row.date)+'|'+tokens(row.opponent);
+      if(!date(row.date)||!tokens(row.opponent)||
+         !normalizedOutcome(row.result)||uniqueRows.has(fingerprint))return true;
+      uniqueRows.add(fingerprint);return false;
+    });
+    const officialInventoryDispute=officialSourceInventory.cases.some(r=>r.slug===slug)||
+      officialSourceInventory.conflicts.some(r=>r.slug===slug);
+    const independentFullCareer=!sharedOfficialIdentity.has(slug)&&
+      !malformedHistory&&!officialInventoryDispute&&proof.independentlyVerified;
+    const providerFullCareer=!sharedOfficialIdentity.has(slug)&&
+      !malformedHistory&&!officialInventoryDispute&&proof.providerCertified;
     const providerHistoryDiscrepancy=proof.providerDiscrepancy||!proof.rosterLatestPresent;
     const independentRow=independentRegistry[slug]||{};
     const minVerified=independentRow.scope==='minimum_count_evidence_only'&&
@@ -639,10 +752,11 @@ export function auditApprovedStage3(approval,census,progress,research,archive={}
     }
     if(independentFullCareer)independentCertified++;
     if(providerFullCareer){fullyCertified++;certifiedAndIndexed++;certified.push(slug);}
-    const completenessStatus=!knownMeasured?'known_fight_coverage_gap':
-      confirmedMissing>0?'official_source_confirms_missing_historical_bouts':
+    const completenessStatus=(confirmedMissing>0||officialInventoryDispute)?
+      'official_source_confirms_missing_historical_bouts':
       independentFullCareer?'independently_verified_full_career':
       providerFullCareer?'provider_certified_full_career':
+      malformedHistory||!knownIndexed?'known_fight_coverage_gap':
       providerHistoryDiscrepancy?'provider_history_discrepancy':
       proof.legacyClaim?'legacy_completeness_flag_unsubstantiated':
       'all_known_fights_complete_historical_unverified';

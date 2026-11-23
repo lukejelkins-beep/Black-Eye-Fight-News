@@ -32,7 +32,17 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  const pending=next.careerVerificationDecisions.filter(d=>
   independentlyVerified.fighters[d.slug]&&!d.independentlyVerifiedFullCareer);
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines+pending.length,evidenceEntries);
- for(const decision of pending){
+ // Two approved slugs that point at one real athlete (same UFCStats page) must
+ // stay uncertified until the owner resolves canonical identity. That is a
+ // different reason from a newer unproven bout, so assert it explicitly.
+ const documentedDuplicateIdentity=new Set(['carlos-hernandez','carlos-hernandez-7']);
+ const urls=new Set(['carlos-hernandez','carlos-hernandez-7'].map(s=>independentlyVerified.fighters[s]?.fighterUrl));
+ assert.equal(urls.size,1,'duplicate-identity pair still shares one source athlete');
+ for(const slug of documentedDuplicateIdentity){
+  assert.ok(approval.approvedFighters.includes(slug));
+  assert.equal(next.careerVerificationDecisions.find(d=>d.slug===slug)?.independentlyVerifiedFullCareer,false,slug+' must not certify while identity is unresolved');
+ }
+ for(const decision of pending.filter(d=>!documentedDuplicateIdentity.has(d.slug))){
   const proof=independentlyVerified.fighters[decision.slug];
   const latestProvenBout=proof.bouts.map(b=>b.date).sort().at(-1);
   assert.ok(decision.newestSavedUfcFight>latestProvenBout,
@@ -45,14 +55,24 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  assert.ok(Object.values(independentlyVerified.fighters).some(p=>p.verifiedAt==='2026-11-14'),'original completed proof timestamps must not be rewritten');
 });
 
-test('new saved UFC bouts keep eight formerly complete research careers uncertified',()=>{
+test('fresh independent UFC 334 evidence restores seven careers and separately reviewed Heili',()=>{
  const decisions=new Map(audit(census.asOf).careerVerificationDecisions.map(d=>[d.slug,d]));
- for(const slug of ['bia-mesquita','cesar-almeida','chris-duncan','donte-johnson',
-  'evan-elder','heili-alateng','juan-diaz','melquizael-costa']){
+ const refreshed=['bia-mesquita','cesar-almeida','chris-duncan','donte-johnson',
+  'evan-elder','juan-diaz','melquizael-costa'];
+ for(const slug of refreshed){
   const proof=independentlyVerified.fighters[slug];
-  const latestProvenBout=proof.bouts.map(b=>b.date).sort().at(-1);
   const decision=decisions.get(slug);
-  assert.ok(decision.newestSavedUfcFight>latestProvenBout,slug);
-  assert.equal(decision.independentlyVerifiedFullCareer,false,slug);
+  assert.equal(proof.sourceSnapshot.sourceCommit,'96adace863c0a793579cc06d27d468797545607f',slug);
+  assert.equal(proof.bouts.filter(b=>b.date==='2026-11-14').length,1,slug);
+  assert.equal(decision.newestSavedUfcFight,'2026-11-14',slug);
+  assert.equal(decision.independentlyVerifiedFullCareer,true,slug);
  }
+ const heili=independentlyVerified.fighters['heili-alateng'];
+ const latest=heili.bouts.map(b=>b.date).sort().at(-1);
+ assert.equal(latest,'2026-11-14');
+ assert.equal(heili.sourceSnapshot.sourceCommit,'96adace863c0a793579cc06d27d468797545607f');
+ assert.equal(heili.bouts.length,11);
+ assert.deepEqual(heili.sourceVerifiedNativeNameAliases,['Heili Alateng']);
+ assert.equal(decisions.get('heili-alateng').newestSavedUfcFight,latest);
+ assert.equal(decisions.get('heili-alateng').independentlyVerifiedFullCareer,true);
 });

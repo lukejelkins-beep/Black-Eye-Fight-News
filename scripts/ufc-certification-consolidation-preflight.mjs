@@ -20,6 +20,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = p => JSON.parse(fs.readFileSync(path.resolve(root, p), 'utf8'));
 const canonicalPath = 'data/ufc-independent-full-career-verification.json';
 
+const UFCSTATS_FIGHT = /^https:\/\/ufcstats\.com\/fight-details\/[0-9a-f]{16}$/;
+const UFCSTATS_FIGHTER = /^https:\/\/ufcstats\.com\/fighter-details\/[0-9a-f]{16}$/;
+function isUfcStatsProof(proof) {
+  return !proof.certificationStandard && UFCSTATS_FIGHTER.test(String(proof.fighterUrl || '')) &&
+    proof.bouts.every(b => !b?.nativeBoutId && !b?.nativeFighterId);
+}
+
 function validEntries(document, label, approved) {
   if (!document || !document.fighters || typeof document.fighters !== 'object' ||
       Array.isArray(document.fighters)) throw Error(label + ': invalid fighter register');
@@ -31,12 +38,42 @@ function validEntries(document, label, approved) {
         !Array.isArray(proof?.bouts) || !proof.bouts.length)
       throw Error(label + ': incomplete source evidence for ' + slug);
     const ids = new Set();
+    const semantic = proof.certificationStandard === 'ufcalendar_first';
+    // UFCStats-sourced proofs carry no numeric native IDs; they are identified by the fighter-details
+    // page and one fight-details URL per bout instead.
+    const ufcstats = !semantic && isUfcStatsProof(proof);
+    if (semantic && (
+        proof.verificationMethod !== 'full_official_ufc_fight_listing_crosscheck' ||
+        !/^https:\/\/www\.ufc\.com\/athlete\/[a-z0-9-]+\/?$/i.test(String(proof.officialFighterUrl||'')) ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(String(proof.verifiedAt||'')) ||
+        !String(proof.fighterName||'').trim()))
+      throw Error(label + ': unverified UFCalendar-first official identity for ' + slug);
     for (const bout of proof.bouts) {
       const id = String(bout?.nativeBoutId || '');
-      if (!id || !bout?.fightUrl || !bout?.nativeFighterId || !bout?.result)
-        throw Error(label + ': missing native/source bout identity for ' + slug);
-      if (ids.has(id)) throw Error(label + ': duplicated native bout ' + slug + '/' + id);
-      ids.add(id);
+      if (semantic) {
+        const date=String(bout?.date||''),opponent=String(bout?.opponent||'')
+          .normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+          .replace(/[^a-z0-9]/g,'');
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !opponent ||
+            !['win','loss','draw','no_contest'].includes(String(bout?.result||'').toLowerCase()))
+          throw Error(label + ': missing official UFC chronology for ' + slug);
+        const fingerprint=date+'|'+opponent;
+        if (ids.has(fingerprint)) throw Error(label + ': duplicated official bout ' + slug + '/' + fingerprint);
+        ids.add(fingerprint);
+      } else if (ufcstats) {
+        const opponent=String(bout?.opponent||'').trim(),url=String(bout?.fightUrl||'');
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(String(bout?.date||'')) || !opponent ||
+            !['win','loss','draw','no_contest'].includes(String(bout?.result||'').toLowerCase()) ||
+            !UFCSTATS_FIGHT.test(url))
+          throw Error(label + ': missing UFCStats bout identity for ' + slug);
+        if (ids.has(url)) throw Error(label + ': duplicated UFCStats bout ' + slug + '/' + url);
+        ids.add(url);
+      } else {
+        if (!id || !bout?.fightUrl || !bout?.nativeFighterId || !bout?.result)
+          throw Error(label + ': missing native/source bout identity for ' + slug);
+        if (ids.has(id)) throw Error(label + ': duplicated native bout ' + slug + '/' + id);
+        ids.add(id);
+      }
     }
   }
   return entries;
@@ -44,7 +81,17 @@ function validEntries(document, label, approved) {
 
 /** Check stable source-native identities, NOT innocuous review prose or aliases. */
 export function sourceNativeSignature(proof) {
-  return proof.bouts.map(b => [
+  if(proof.certificationStandard === 'ufcalendar_first')
+    return 'official:' + proof.bouts.map(b=>[
+      String(b.date), String(b.opponent||'').normalize('NFKD')
+       .replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,''),
+      String(b.result).toLowerCase()
+    ].join('|')).sort().join(';;');
+  if(isUfcStatsProof(proof))
+    return 'ufcstats:' + proof.bouts.map(b=>[
+      String(b.fightUrl), String(b.result).toLowerCase()
+    ].join('|')).sort().join(';;');
+  return 'native:' + proof.bouts.map(b => [
     String(b.nativeBoutId), String(b.nativeFighterId),
     String(b.fightUrl), String(b.result).toLowerCase()
   ].join('|')).sort().join(';;');

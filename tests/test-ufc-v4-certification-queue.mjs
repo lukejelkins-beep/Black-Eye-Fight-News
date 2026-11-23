@@ -23,16 +23,42 @@ test('source attestation that fails the independent gate becomes a bounded excep
  assert.equal(q.totals.exceptions,1);
  assert.deepEqual(q.lanes.exceptions[0].reasonCodes,['source_proof_fails_certification_gate']);
 });
-test('manual review, native identity, missing source and coverage gaps do not block fast lane',()=>{
+test('manual review, native identity and missing source remain exceptions, but optional round measurements do not',()=>{
  const r=fixture();
  r.fullFightIndexSearchReview=[{slug:'fighter-004',status:'manual_review'}];
  r.profilesWithAmbiguousNumericIdentity=[{slug:'fighter-005',knownNumericIds:['7','8']}];
  r.officialSourceInventory.cases=[{slug:'fighter-006'}];
  r.careerVerificationDecisions[7].allKnownFightsMeasured=false;
  const q=buildCertificationQueue(r);
- assert.equal(q.totals.exceptions,4);
- assert.equal(q.totals.fastLane,778);
+ assert.equal(q.totals.exceptions,3);
+ assert.equal(q.totals.fastLane,779);
+ assert.equal(q.lanes.fastLane.some(x=>x.slug==='fighter-007'),true);
  assert.equal(q.lanes.exceptions.find(x=>x.slug==='fighter-005').numericIds.length,2);
+});
+test('missing numeric index alone does not prevent full-career attestation triage',()=>{
+ const r=fixture();
+ r.careerVerificationDecisions[8].allKnownFightsIndexed=false;
+ r.careerVerificationDecisions[8].allKnownFightsMeasured=false;
+ const q=buildCertificationQueue(r);
+ assert.equal(q.totals.exceptions,0);
+ assert.equal(q.lanes.fastLane.some(x=>x.slug==='fighter-008'),true);
+ assert.match(q.certificationRule,/numeric IDs and optional round measurements are not required/);
+});
+test('documented unresolved source cases are deferred only for source-research priority, not recertified or reclassified',()=>{
+ const r=fixture();
+ r.careerVerificationDecisions[1].slug='zhu-kangjie';
+ r.careerVerificationDecisions[2].slug='dan-argueta';
+ r.careerVerificationDecisions[3].slug='rei-tsuruya';
+ const q=buildCertificationQueue(r);
+ assert.deepEqual(q.totals,{certified:1,fastLane:782,exceptions:0,approved:783});
+ assert.deepEqual(q.researchPriority.deferredKnown.map(x=>x.slug),
+   ['dan-argueta','rei-tsuruya','zhu-kangjie']);
+ assert.equal(q.researchPriority.nextSourceAttestation[0].slug,'fighter-004');
+ assert.equal(q.researchPriority.nextSourceAttestation.length,40);
+ assert.equal(q.lanes.fastLane.some(x=>x.slug==='zhu-kangjie'),true);
+ assert.equal(q.lanes.certified.some(x=>x.slug==='zhu-kangjie'),false);
+ assert.equal(q.researchPriority.nextSourceAttestation.every(x=>
+   !q.researchPriority.deferredKnown.some(d=>d.slug===x.slug)),true);
 });
 test('incomplete or stale certification audits fail closed',()=>{
  const r=fixture();r.careerVerificationDecisions.pop();

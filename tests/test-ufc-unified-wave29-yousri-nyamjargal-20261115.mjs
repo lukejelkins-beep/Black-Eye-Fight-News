@@ -8,7 +8,7 @@ test('wave29: five exact independently sourced official UFC bouts preserve origi
   assert.ok(roster.approvedFighters.includes(slug));const r=reg.fighters[slug];
   assert.equal(r.sourceCoverageAttested,true);assert.equal(r.scope,'complete_official_ufc_career');assert.equal(r.verificationMethod,'full_official_ufc_fight_listing_crosscheck');
   assert.equal(r.fighterUrl,'https://ufcstats.com/fighter-details/'+e.ufcStatsFighterId);assert.equal(r.officialFighterUrl,e.officialFighterUrl);
-  assert.deepEqual(r.verifiedNumericFighterIds,[e.nativeFighterId]);assert.equal(r.bouts.length,e.officialUfcCareerBoutCount);
+  assert.deepEqual(r.verifiedNumericFighterIds,[e.nativeFighterId]);assert.equal(r.bouts.length,e.officialUfcCareerBoutCount+(slug==='yousri-belgaroui'?1:0));
   assert.equal(new Set(e.bouts.map(x=>x.nativeBoutId)).size,e.bouts.length);assert.equal(new Set(e.bouts.map(x=>x.fightUrl)).size,e.bouts.length);
   for(const x of e.bouts){const n=cache.bouts[x.nativeBoutId];assert.equal(n?.status,'completed');assert.equal(n?.org,'ufc');
    assert.doesNotMatch(n.event,/contender series|road to ufc/i);assert.ok(Math.abs(Date.parse(n.eventDate)-Date.parse(x.date))<=86400000);
@@ -29,7 +29,11 @@ test('wave29: three attested feeder bouts and cancelled/announced fights are not
   assert.ok(!reg.fighters[slug].bouts.some(b=>b.nativeBoutId===f.nativeBoutId));count++;
  }}
  assert.equal(count,3);
- assert.deepEqual(reg.fighters['yousri-belgaroui'].bouts.map(x=>x.result),['win','win','win']);
+ assert.deepEqual(reg.fighters['yousri-belgaroui'].bouts.slice(0,3).map(x=>x.result),['win','win','win']);
+ assert.equal(reg.fighters['yousri-belgaroui'].bouts[3].nativeBoutId,'93104');
+ assert.equal(reg.fighters['yousri-belgaroui'].bouts[3].result,'loss');
+ assert.equal(reg.fighters['yousri-belgaroui'].bouts[3].fightUrl,'https://ufcstats.com/fight-details/b8e1d974531a3d86');
  assert.deepEqual(reg.fighters['nyamjargal-tumendemberel'].bouts.map(x=>x.result),['loss','win']);
- assert.ok(!reg.fighters['yousri-belgaroui'].bouts.some(x=>['83217','93104'].includes(x.nativeBoutId)));
+ assert.ok(!reg.fighters['yousri-belgaroui'].bouts.some(x=>x.nativeBoutId==='83217'));
+ assert.ok(reg.fighters['yousri-belgaroui'].bouts.some(x=>x.nativeBoutId==='93104'));
 });
