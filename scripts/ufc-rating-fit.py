@@ -11,9 +11,15 @@ Step 2, blend: for each quarter from 2019 to 2023 the stats build is re-run as i
 before=cutoff)), and each decided bout in the next quarter between two fighters with a results rating and a skills
 composite is a case. A two-feature logistic regression (results points / 400, skills composite / 100, no intercept)
 on all those cases gives the blend weights.
+
+Owner choices (PR #453, 2026-11-23) are passed as fixed values rather than fitted:
+  --fix idle=0.1 --fix title=1.5   hold these results parameters (the rest of the grid is still searched)
+  --mix 0.6                        rescale the fitted blend so results carry this share of the spread (skills the
+                                   rest), keeping the total spread the same, so the headline's range is unchanged
 """
 from __future__ import annotations
 
+import argparse
 import datetime as dt
 import importlib.util
 import itertools
@@ -27,7 +33,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIT_FROM, FIT_TO = "2016-01-01", "2024-01-01"
 BLEND_FROM = dt.date(2019, 1, 1)
 GRID = {"start": [1450, 1500], "k": [32, 48, 64, 80, 96], "boost": [0.0, 1.0, 2.0], "finish": [1.0, 1.25, 1.5],
-        "split": [0.5, 0.75, 1.0], "idle": [0.0, 0.1, 0.2, 0.35]}
+        "split": [0.5, 0.75, 1.0], "idle": [0.0, 0.1, 0.2, 0.35], "title": [1.0]}
 
 
 def load_build():
@@ -152,6 +158,13 @@ def fit_blend(build_mod, bouts):
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--fix", action="append", default=[], help="name=value: hold a results parameter (owner choice)")
+    ap.add_argument("--mix", type=float, help="share of the spread carried by results, e.g. 0.6")
+    args = ap.parse_args()
+    for item in args.fix:
+        key, value = item.split("=")
+        GRID[key] = [float(value)]
     build_mod = load_build()
     r = build_mod.ufc_ratings
     end = dt.date.fromisoformat(json.loads((ROOT / "data/ufc-stats/index.json").read_text())["asOf"])
@@ -172,6 +185,14 @@ def main() -> int:
     sd = lambda v: (sum((x - sum(v) / len(v)) ** 2 for x in v) / len(v)) ** .5
     cr, cs = abs(w[0]) * sd([x[0] for x in xs]), abs(w[1]) * sd([x[1] for x in xs])
     print(f"  share of the spread: results {cr / (cr + cs):.0%}, skills {cs / (cr + cs):.0%}")
+    if args.mix:
+        sr, ss = sd([x[0] for x in xs]), sd([x[1] for x in xs])
+        total = cr + cs
+        wr, ws = args.mix * total / sr, (1 - args.mix) * total / ss
+        print(f"Owner mix {args.mix:.0%} results / {1 - args.mix:.0%} skills, same total spread:")
+        print("BLEND =", json.dumps({"results": round(wr, 3), "skills": round(ws, 3)}))
+        print(f"  log loss with the owner mix: {logloss([logistic(wr * a + ws * b) for a, b in xs], ys):.4f} "
+              f"(fitted mix {logloss([logistic(w[0] * a + w[1] * b) for a, b in xs], ys):.4f})")
     return 0
 
 

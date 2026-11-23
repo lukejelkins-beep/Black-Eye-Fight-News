@@ -42,12 +42,15 @@ OPPONENT_SWING = .25
 SHRINK_K = 4
 
 # Results rating (Elo-type). Fitted on decided UFC fights before 2024 only by scripts/ufc-rating-fit.py, then frozen.
-RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "idle": 0.2}
+# Owner choices (PR #453): a title fight counts 1.5x and the idle drift is 10% a year; the rest is fitted
+# (`python3 scripts/ufc-rating-fit.py --fix idle=0.1 --fix title=1.5 --mix 0.6`).
+RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "idle": 0.1, "title": 1.5}
 RESULTS_MEAN = 1500          # an idle rating drifts back toward this
 RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as established
-# Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Fitted walk-forward on
-# 2019-2023 fights only by scripts/ufc-rating-fit.py, then frozen. The four skills keep their old relative weights.
-BLEND = {"results": 2.245, "skills": 1.04}
+# Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Owner's mix: results carry
+# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 68/32), same total spread as the fit.
+# The four skills keep their old relative weights.
+BLEND = {"results": 1.843, "skills": 1.354}
 SKILL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
 HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit of log-odds
@@ -216,13 +219,15 @@ def _idle(value: float, last: str | None, when: str, p: dict) -> float:
 
 
 def result_margin(bout: dict, p: dict) -> float:
+    """How much a result moves the ratings: finishes more, split or majority decisions less, title fights more."""
+    title = p.get("title", 1.0) if bout.get("titleFight") else 1.0
     if bout["outcome"] == "D":
-        return 1.0
+        return title
     if bout.get("method") in ("ko", "sub"):
-        return p["finish"]
+        return p["finish"] * title
     if bout.get("method") == "dec" and str(bout.get("methodDetail") or "").lower() in ("split", "majority"):
-        return p["split"]
-    return 1.0
+        return p["split"] * title
+    return title
 
 
 def results_walk(bouts: list[dict], p: dict | None = None):

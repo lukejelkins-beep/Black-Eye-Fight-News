@@ -758,7 +758,8 @@ def results_bouts(per_fighter: dict) -> list[dict]:
                 continue
             seen.add(f["boutId"])
             out.append({"boutId": f["boutId"], "date": f["date"], "a": slug, "b": f["opponentSlug"],
-                        "outcome": f["outcome"], "method": f["method"], "methodDetail": f.get("methodDetail")})
+                        "outcome": f["outcome"], "method": f["method"], "methodDetail": f.get("methodDetail"),
+                        "titleFight": bool(f.get("titleFight"))})
     return out
 
 

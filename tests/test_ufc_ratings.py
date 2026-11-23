@@ -215,6 +215,12 @@ class Results(unittest.TestCase):
         self.assertGreater(ud, split)
         self.assertGreater(split, r.RESULTS["start"])
 
+    def test_title_fight_counts_more(self):
+        plain = r.results_as_of([bout("a", "b")], "2025-02-01")["a"]["rating"]
+        title = r.results_as_of([{**bout("a", "b"), "titleFight": True}], "2025-02-01")["a"]["rating"]
+        self.assertGreater(title, plain)
+        self.assertAlmostEqual(title - r.RESULTS["start"], (plain - r.RESULTS["start"]) * r.RESULTS["title"])
+
     def test_draw_and_no_contest(self):
         draw = r.results_as_of([bout("a", "b", "D")], "2025-02-01")
         self.assertAlmostEqual(draw["a"]["rating"], draw["b"]["rating"])

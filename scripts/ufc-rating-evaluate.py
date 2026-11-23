@@ -52,7 +52,10 @@ def old_engine(ref: str, new):
     shim = types.ModuleType("ufc_ratings_shim")
     shim.__dict__.update(new.__dict__)          # constants the build reads (MODEL, HEADLINE_CENTRE, ...)
     shim.__dict__.update({k: v for k, v in old.__dict__.items() if not k.startswith("__")})
-    shim.rate_roster = lambda fighters, bouts=None, as_of=None: old.rate_roster(fighters)
+    import inspect
+    takes_bouts = len(inspect.signature(old.rate_roster).parameters) > 1   # model 2026-11 or later
+    shim.rate_roster = (lambda fighters, bouts=None, as_of=None: old.rate_roster(fighters, bouts, as_of)) if takes_bouts \
+        else (lambda fighters, bouts=None, as_of=None: old.rate_roster(fighters))
     return shim
 
 
