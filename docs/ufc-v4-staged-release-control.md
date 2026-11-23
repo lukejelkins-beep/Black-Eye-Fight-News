@@ -42,4 +42,4 @@ For later R1 functional PRs: create a *new short-lived branch from latest main* 
 - [ ] Check exact GitHub main SHA versus deployed Render SHA; run live site regression and record rollback SHA.
 - [ ] Update issue #171 with status `in PR / CI pass / human QA / approved / deployed and SHA confirmed`.
 
-**Current disposition:** R1 guardrail only. R2–R4 remain unapproved for live activation. GitHub CI/merge does not by itself prove Render deployment. 
+**Current disposition (updated 2026-11-23):** R1 certification infrastructure is merged (Stage 3 audit 775 certified / 0 fast lane / 8 exceptions). R2 (verified career view) and R3 (Last 5 / Last 10 / Career) are merged and switched on, #425 to #429 (flags in `data/ufc-v4-flags.json`). R4 (V4 ratings, classification, leaderboards) is research only and not approved as a release: see `docs/ufc-v4-r4-calibration-20261123.md` and the owner's decision that the rating is descriptive only (#432). GitHub CI/merge does not by itself prove Render deployment. 
