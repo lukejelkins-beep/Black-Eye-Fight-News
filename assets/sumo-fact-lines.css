@@ -1,0 +1,31 @@
+/* BEFN Sumo fact engine: fact lines (matchups, head-to-head, profile, kimarite, stables). */
+.sumo-fact-line{display:flex;gap:12px;align-items:center;margin:8px 0 0;padding:9px 11px;background:#fbf6ea;border-left:3px solid var(--gold,#f3c332);border-radius:6px;color:#2a2326}
+.bout-item>.sumo-fact-line{margin:0 8px 8px}
+.sumo-fact-body{display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1}
+.sumo-fact-line.has-face .sumo-fact-body{flex-direction:column;gap:5px}
+.sumo-fact-tag{flex:none;font:800 12px/1.25 'Barlow Condensed',Impact,sans-serif;letter-spacing:.06em;text-transform:uppercase;background:#171315;color:var(--gold,#f3c332);border-radius:4px;padding:3px 7px;margin-top:1px}
+.sumo-fact-text{margin:0;font-size:13px;line-height:1.45;min-width:0}
+.sumo-fact-text b{font-weight:800;color:#171315}
+.sumo-fact-text a{color:#a11b27;font-weight:800}
+.sumo-fact-scope{display:block;font-size:12px;color:#7a6f70;margin-top:2px}
+/* Face: transparent head-and-shoulders crop on a warm disc; portraits are cropped to the head. */
+.sumo-fact-face{flex:none;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#f3e4c2,#d9c39a);overflow:hidden;display:block;border:2px solid #fff;box-shadow:0 1px 4px rgba(23,19,21,.18)}
+.sumo-fact-face img{width:100%;height:100%;object-fit:cover;object-position:50% 10%;display:block}
+.sumo-fact-face.is-portrait img{object-position:50% 4%;transform:scale(1.9);transform-origin:50% 0}
+.sumo-fact-panel{background:#fffdfa;border:1px solid var(--border,#ded5cb);border-radius:10px;padding:16px 18px;margin:0 0 22px}
+.sumo-fact-panel h2{font:900 clamp(24px,3vw,32px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:0 0 4px}
+.sumo-fact-panel>p{margin:0 0 10px;font-size:12px;color:#7a6f70}
+.sumo-fact-panel ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.sumo-fact-panel .sumo-fact-line{margin:0}
+.sumo-fact-subhead{font:800 15px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 8px;color:#5f5559}
+.sumo-fact-leaders{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sumo-fact-leaders li{display:flex;align-items:center;gap:10px;background:#fbf6ea;border-radius:8px;padding:8px 10px;min-width:0}
+.sumo-fact-leaders a:not(.sumo-fact-face){font:800 17px/1.05 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;text-decoration:none;color:#171315;min-width:0;overflow-wrap:anywhere;flex:1}
+.sumo-fact-leaders b{font:900 24px/1 'Barlow Condensed',Impact,sans-serif;color:#a11b27}
+.heya-facts{margin:22px 0}
+@media (max-width:560px){
+ .sumo-fact-body{flex-direction:column;gap:6px}
+ .sumo-fact-panel{padding:14px}
+ .sumo-fact-face{width:56px;height:56px}
+ .sumo-fact-leaders{grid-template-columns:1fr}
+}

@@ -1,0 +1,71 @@
+name: Refresh Sumo preview daily results and announced matches
+on:
+  push:
+    branches: [feat/sumo-section-test-20261114]
+    paths:
+      - data/sumo/daily-refresh-request.json
+      - scripts/sumo-refresh-daily.mjs
+      - .github/workflows/sumo-daily-refresh.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sumo-preview-single-writer
+  cancel-in-progress: false
+jobs:
+  daily-data:
+    if: github.ref == 'refs/heads/feat/sumo-section-test-20261114'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/sumo-section-test-20261114
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test source and upcoming-first day selection
+        run: node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
+      - name: Refresh latest results and announced next-day torikumi
+        run: node scripts/sumo-refresh-daily.mjs
+      - name: Build historical win-percentage rollups (existing cached bouts only)
+        run: node scripts/sumo-facts-rollup.mjs
+      - name: Commit only preview daily cache
+        id: commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo daily preview"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          git add data/sumo/preview-details.json
+          if git diff --cached --quiet; then
+            echo "No daily cache change"
+            exit 0
+          fi
+          git commit -m "Refresh verified-source Sumo daily preview results and torikumi"
+          for attempt in 1 2 3; do
+            git fetch origin feat/sumo-section-test-20261114
+            if ! git rebase origin/feat/sumo-section-test-20261114; then
+              git rebase --abort || true
+              echo "Concurrent snapshot conflict; leaving remote branch unchanged" >&2
+              exit 1
+            fi
+            if git push origin HEAD:feat/sumo-section-test-20261114; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1
+      # Pushes made with the workflow token do not trigger other workflows, so this
+      # job asks Render to redeploy the preview itself.
+      - name: Redeploy the Sumo preview on Render
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          HOOK: ${{ secrets.SUMO_PREVIEW_DEPLOY_HOOK_URL }}
+        shell: bash
+        run: |
+          if [ -z "${HOOK:-}" ]; then echo "SUMO_PREVIEW_DEPLOY_HOOK_URL is not set; preview not redeployed" >&2; exit 1; fi
+          curl -fsS --max-time 30 -X POST "$HOOK" > /dev/null
+          echo "Render preview deploy requested"

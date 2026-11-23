@@ -1,0 +1,145 @@
+/* BEFN Sumo — head-to-head board. Heads float with no frame; colour carries the record. */
+.h2h-head{display:block;width:48px;height:48px;flex:none;position:relative}
+.h2h-head img{width:100%;height:100%;object-fit:contain;display:block}
+.h2h-head.is-portrait{border-radius:50%;overflow:hidden;background:#e9e1d6}
+.h2h-head.is-portrait img{object-fit:cover;object-position:50% 4%;transform:scale(1.9);transform-origin:50% 0}
+.h2h-head.is-portrait>span{display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:20px}
+
+/* Selected rikishi */
+.h2h-hero{background:#151115;color:#fff;border-radius:12px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"head id stats" "head controls controls";gap:6px 24px;align-items:center;padding:20px 24px;margin-bottom:16px}
+.h2h-hero-head{grid-area:head;align-self:end}
+.h2h-hero-head .h2h-head{width:156px;height:156px;margin:-24px 0 -20px}
+.h2h-hero-id{grid-area:id;min-width:0}
+.h2h-hero-rank{font:700 13px/1.3 'DM Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f0cc75}
+.h2h-hero h2{margin:2px 0;font:900 clamp(36px,4.4vw,52px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+.h2h-hero h2 a,.h2h-hero h2 a:visited{color:#fff;text-decoration:none}
+.h2h-hero h2 a:hover{text-decoration:underline;text-decoration-thickness:2px}
+.h2h-hero-heya{font-size:14px;color:#d9cfcd}
+.h2h-hero-stats{grid-area:stats;display:grid;grid-template-columns:repeat(3,auto);gap:4px 24px}
+.h2h-hero-stats strong{display:block;font:800 34px/1 'Barlow Condensed',Impact,sans-serif;font-variant-numeric:tabular-nums}
+.h2h-hero-stats strong.is-win{color:#7fd3b0}
+.h2h-hero-stats strong.is-loss{color:#f2a0ad}
+.h2h-hero-stats span{display:block;font-size:12px;color:#d9cfcd;margin-top:4px}
+.h2h-hero-controls{grid-area:controls;display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin-top:10px}
+.h2h-scope{border-color:#70666b}
+.h2h-scope button[aria-pressed="true"]{background:var(--brand-red,#cf1824);color:#fff}
+
+/* Legend */
+.h2h-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:13px;color:var(--muted);margin:12px 0}
+.h2h-key{display:inline-block;width:14px;height:14px;border-radius:3px;margin-left:6px}
+.h2h-key:first-child{margin-left:0}
+.h2h-legend-note{flex-basis:100%;font-size:12px}
+.h2h-status{font-size:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Board */
+.h2h-board{display:flex;flex-direction:column;gap:2px;max-width:980px;margin:0 auto}
+.h2h-row{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);align-items:stretch;gap:6px}
+.h2h-rank{display:flex;align-items:center;justify-content:center;font:800 15px/1 'Barlow Condensed',Impact,sans-serif;color:var(--muted);letter-spacing:.02em}
+.h2h-cell{min-width:0;display:flex}
+.h2h-tile{box-sizing:border-box;flex:1;min-width:0;min-height:60px;display:grid;grid-template-columns:68px minmax(0,1fr) auto;grid-template-areas:"head name rec";align-items:center;gap:0 8px;padding:4px 10px 4px 6px;border-radius:8px;background:#fff;border:1px solid var(--border);color:var(--ink);position:relative}
+.h2h-cell.west .h2h-tile{grid-template-columns:auto minmax(0,1fr) 68px;grid-template-areas:"rec name head";padding:4px 6px 4px 10px;text-align:right}
+.h2h-tile .h2h-head{grid-area:head;align-self:end;width:68px;height:68px;margin:-14px 0 -4px}
+.h2h-row{padding-top:8px}
+.h2h-name{grid-area:name;min-width:0;font:700 17px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.h2h-rec{grid-area:rec;font:800 20px/1 'Barlow Condensed',Impact,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* The name button stretches over the whole tile: tap anywhere to make that rikishi
+ * the focus. The score is its own button above it and opens the meetings. */
+button.h2h-name{all:unset;box-sizing:border-box;grid-area:name;min-width:0;cursor:pointer;font:700 17px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+button.h2h-name::after{content:"";position:absolute;inset:0;border-radius:8px}
+button.h2h-name:focus-visible{outline:none}
+button.h2h-name:focus-visible::after{outline:3px solid #17664F;outline-offset:2px}
+.h2h-tile:has(button.h2h-name):hover{border-color:var(--ink)}
+button.h2h-rec{all:unset;box-sizing:border-box;grid-area:rec;position:relative;z-index:1;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;padding:0 8px;margin:-4px -6px;border-radius:6px;cursor:pointer;font:800 20px/1 'Barlow Condensed',Impact,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:rgba(var(--tone),.55)}
+button.h2h-rec:hover{background:rgba(255,255,255,.45)}
+button.h2h-rec:focus-visible{outline:3px solid #17664F;outline-offset:1px}
+.h2h-tile.is-focus:focus-visible{outline:3px solid #17664F;outline-offset:2px}
+.h2h-board.is-refocus .h2h-tile{animation:h2h-recolour .35s ease-out}
+@keyframes h2h-recolour{from{filter:saturate(.2) brightness(1.08)}to{filter:none}}
+@media(prefers-reduced-motion:reduce){.h2h-board.is-refocus .h2h-tile{animation:none}}
+.h2h-tile.is-empty{visibility:hidden;cursor:default}
+.h2h-tile.is-focus{background:#151115;color:#fff;border-color:#151115;box-shadow:inset 4px 0 0 var(--brand-red,#cf1824)}
+.h2h-tile.is-focus .h2h-rec{font:700 12px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f0cc75}
+.h2h-tile.tone-none{background:transparent;border-style:dashed}
+.h2h-tile.tone-none .h2h-head img{filter:grayscale(1);opacity:.55}
+.h2h-tile.tone-none .h2h-name{color:var(--muted)}
+.h2h-tile.tone-none .h2h-rec{color:var(--muted);font-size:16px}
+.h2h-tile.is-stablemate .h2h-rec{font:600 11px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.h2h-tile.is-loading .h2h-head img{opacity:.6}
+
+/* Tones: colour says who leads, depth says how many meetings. */
+.tone-win{--tone:23,102,79}
+.tone-loss{--tone:180,36,56}
+.tone-even{--tone:211,170,70}
+.h2h-tile.tone-win,.h2h-tile.tone-loss,.h2h-tile.tone-even,.h2h-key{background:rgba(var(--tone),.14);border-color:rgba(var(--tone),.35)}
+.s2{--a:.24}.s3{--a:.38}.s4{--a:.54}
+.h2h-tile.s2,.h2h-tile.s3,.h2h-tile.s4,.h2h-key.s3{background:rgba(var(--tone),var(--a))}
+.h2h-tile.tone-win .h2h-rec{color:#0d4b39}
+.h2h-tile.tone-loss .h2h-rec{color:#6e1424}
+.h2h-tile.tone-even .h2h-rec{color:#5c4410}
+
+/* Meeting sheet */
+.h2h-sheet{border:0;padding:0;border-radius:14px;width:min(520px,calc(100vw - 32px));max-height:calc(100dvh - 48px);background:var(--cream,#F6F2EA);color:var(--ink);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.h2h-sheet::backdrop{background:rgba(17,16,19,.6)}
+.h2h-sheet-top{display:flex;justify-content:space-between;align-items:center;background:#151115;color:#d9cfcd;padding:6px 6px 0 18px;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.h2h-close{all:unset;box-sizing:border-box;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;cursor:pointer;border-radius:6px}
+.h2h-close:focus-visible{outline:3px solid #f0cc75}
+.h2h-face-off{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:8px;background:#151115;color:#fff;padding:4px 16px 0}
+.h2h-side{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0;padding-bottom:12px}
+.h2h-side .h2h-head{width:112px;height:112px;margin-bottom:6px}
+.h2h-side strong{font:800 20px/1.05 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+.h2h-side span{font-size:12px;color:#d9cfcd}
+.h2h-score{align-self:center;display:flex;align-items:baseline;gap:6px;font:900 54px/1 'Barlow Condensed',Impact,sans-serif;font-variant-numeric:tabular-nums}
+.h2h-score i{font-style:normal;color:#8d8285;font-size:36px}
+.h2h-score.tone-win b:first-child,.h2h-score.tone-loss b:last-child{color:#7fd3b0}
+.h2h-lead{margin:16px 18px 4px;font:800 24px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
+.h2h-sub{margin:14px 18px 6px;font:700 12px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.h2h-meetings{list-style:none;margin:0 18px;padding:0}
+.h2h-meetings li{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:8px;padding:10px 0 10px 10px;border-bottom:1px solid var(--border);font-size:14px;border-left:3px solid transparent}
+.h2h-meetings li.is-win{border-left-color:#17664F}
+.h2h-meetings li.is-loss{border-left-color:#B42438}
+.h2h-when{color:var(--muted)}
+.h2h-who{font-weight:700}
+.h2h-sheet-actions{display:flex;flex-wrap:wrap;gap:10px;padding:16px 18px 18px}
+.h2h-sheet-actions .btn{flex:1 1 160px;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+
+@media(max-width:680px){
+ .h2h-hero{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"head id" "stats stats" "controls controls";padding:16px;gap:8px 14px}
+ .h2h-hero-head .h2h-head{width:104px;height:104px;margin:-12px 0 -16px}
+ .h2h-hero-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 12px;border-top:1px solid #3a3034;padding-top:12px}
+ .h2h-hero-stats strong{font-size:28px}
+ .h2h-hero-controls{margin-top:4px}
+ .h2h-scope{width:100%}
+ .h2h-scope button{flex:1}
+ .h2h-row{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);gap:4px}
+ .h2h-rank{font-size:13px}
+ .h2h-tile{grid-template-columns:52px minmax(0,1fr);grid-template-areas:"head name" "head rec";gap:1px 6px;padding:4px 8px 4px 3px;min-height:54px}
+ .h2h-cell.west .h2h-tile{grid-template-columns:minmax(0,1fr) 52px;grid-template-areas:"name head" "rec head";padding:4px 3px 4px 8px}
+ .h2h-name{align-self:end}
+ .h2h-rec{align-self:start}
+ .h2h-tile .h2h-head{width:52px;height:52px;margin:-10px 0 -3px}
+ .h2h-name,button.h2h-name{font-size:15px;line-height:1.05}
+ button.h2h-rec{font-size:18px;min-height:44px;min-width:44px;margin:-10px -6px -10px;padding:0 6px;justify-self:start}
+ .h2h-cell.west button.h2h-rec{justify-self:end}
+ .h2h-rec{font-size:18px}
+ .h2h-sheet{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:14px 14px 0 0;max-height:88dvh}
+ .h2h-side .h2h-head{width:92px;height:92px}
+ .h2h-score{font-size:44px}
+ .h2h-meetings li{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+ .h2h-meetings .h2h-how{grid-column:1/-1;color:var(--muted);margin-top:-6px}
+}
+
+/* Placeholder while a head loads: a soft head-and-shoulders shape in the tile's own
+ * text colour, so tiles are never blank on a slow first load. Removed on load. */
+.h2h-head:not(.is-portrait)::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 36%,var(--ph) 0 21%,transparent 22%),
+    radial-gradient(ellipse 46% 26% at 50% 100%,var(--ph) 0 98%,transparent 100%);
+  --ph:color-mix(in srgb,currentColor 13%,transparent);
+  transition:opacity .25s ease}
+.h2h-head.is-loaded::before{opacity:0}
+.h2h-head:not(.is-loaded):not(.is-portrait) img{opacity:0}
+.h2h-head img{transition:opacity .25s ease}
+@media(prefers-reduced-motion:no-preference){
+ .h2h-head:not(.is-loaded):not(.is-portrait)::before{animation:h2h-ph 1.4s ease-in-out infinite alternate}
+ @keyframes h2h-ph{from{opacity:.55}to{opacity:1}}
+}

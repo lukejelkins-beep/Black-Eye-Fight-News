@@ -80,6 +80,8 @@ export function createSumoClient({ fetchImpl = globalThis.fetch, maxCalls = DEFA
       request('/rikishi/' + positiveId(id) + '/matches?' +
         listParams({ limit, skip }) + (basho ? '&bashoId=' + bashoId(basho) : '')),
     headToHead: (id, opponentId) => request('/rikishi/' + positiveId(id) + '/matches/' + positiveId(opponentId)),
+    ranks: (id) => request('/ranks?rikishiId=' + positiveId(id) + '&limit=200&skip=0&sortOrder=asc'),
+    measurements: (id) => request('/measurements?rikishiId=' + positiveId(id) + '&limit=200&skip=0&sortOrder=asc'),
     basho: (id) => request('/basho/' + bashoId(id)),
     banzuke: (id, div) => request('/basho/' + bashoId(id) + '/banzuke/' + division(div)),
     torikumi: (id, div, day) => {
