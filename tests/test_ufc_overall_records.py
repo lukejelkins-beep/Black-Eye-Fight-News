@@ -51,5 +51,17 @@ class OverallRecord(unittest.TestCase):
         self.assertEqual(out["coverage"]["withOverall"], 2)
 
 
+class SharedNames(unittest.TestCase):
+    def test_names_held_by_two_fighters_are_listed(self):
+        research = {"bruno-silva": {"name": "Bruno Silva"}, "bruno-silva-blindado": {"name": "Bruno Silva"},
+                    "ann-lee": {"name": "Ann Lee"}}
+        fighters = {"bruno-silva": {"name": "Bruno Silva"}, "ann-lee": {"name": "Ann Lee"}}
+        self.assertEqual(overall.shared_names(research, fighters), ["brunosilva"])
+
+    def test_a_shared_name_with_no_stats_fighter_is_not_listed(self):
+        research = {"x-1": {"name": "Zed Zed"}, "x-2": {"name": "Zed Zed"}}
+        self.assertEqual(overall.shared_names(research, {}), [])
+
+
 if __name__ == "__main__":
     unittest.main()

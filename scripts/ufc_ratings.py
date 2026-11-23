@@ -185,11 +185,13 @@ def rate_roster(fighters: dict) -> dict:
         raw[slug] = {k: raw_skill(w["rates"], w, k) for k in SKILLS}
 
     shrunk = {slug: {} for slug in raw}
+    means = {}
     for skill in SKILLS:
         values = [raw[s][skill] for s in raw if raw[s][skill] is not None]
         if len(values) < MIN_ROSTER:
             continue
         mean = sum(values) / len(values)
+        means[skill] = mean
         for slug in raw:
             if raw[slug][skill] is not None:
                 shrunk[slug][skill] = shrink(raw[slug][skill], mean, eligible[slug])
@@ -204,8 +206,28 @@ def rate_roster(fighters: dict) -> dict:
         if div:
             by_division.setdefault(div, set()).add(slug)
 
+    # Provisional: a fighter with one or two measured fights is placed against the ESTABLISHED roster (the
+    # populations above, unchanged), using the same shrinkage toward the roster mean. They never enter a
+    # population, so no one else's percentile and no leaderboard moves, and they stay eligible=False.
+    provisional = {}
+    for slug, f in fighters.items():
+        w = f["window"]
+        if slug in raw or not 1 <= w.get("statFights", 0) < MIN_STAT_FIGHTS or not w.get("rates"):
+            continue
+        n = max(w.get("effectiveFights") or 0, 0.0)
+        vals = {}
+        for skill in SKILLS:
+            r = raw_skill(w["rates"], w, skill)
+            if r is not None and skill in means:
+                vals[skill] = shrink(r, means[skill], n)
+        if vals:
+            provisional[slug] = vals
+
     skill_pct = {slug: {k: percentile(v.get(k), roster_pop[k]) if k in v else None for k in SKILLS}
                  for slug, v in shrunk.items()}
+
+    prov_pct = {slug: {k: percentile(vals[k], roster_pop[k]) if k in vals else None for k in SKILLS}
+                for slug, vals in provisional.items()}   # kept apart from skill_pct: never used as opponent strength
 
     # Opponent strength: mean of two best skill percentiles and unadjusted form.
     strength = {}
@@ -219,27 +241,29 @@ def rate_roster(fighters: dict) -> dict:
 
     out = {}
     for slug, f in fighters.items():
-        pcts = skill_pct.get(slug, {k: None for k in SKILLS})
+        pcts = skill_pct.get(slug) or prov_pct.get(slug) or {k: None for k in SKILLS}
+        own = shrunk.get(slug) or provisional.get(slug) or {}
         div = f.get("divisionSlug")
         members = by_division.get(div) if div else None
         division_pct = {}
         for k in SKILLS:
             peers = population(k, members) if members else []
-            division_pct[k] = (percentile(shrunk[slug][k], peers)
-                               if slug in shrunk and k in shrunk[slug] and len(peers) >= MIN_DIVISION_PEERS else None)
+            division_pct[k] = (percentile(own[k], peers) if k in own and len(peers) >= MIN_DIVISION_PEERS else None)
         opp = {}
         form = recent_form(f["history"], lambda fight: opp.setdefault(
             fight["boutId"], strength.get(fight.get("opponentSlug"))))
         scores = {**pcts, "form": form}
         w = f["window"]
         rated = slug in shrunk
+        shown = rated or slug in provisional
         out[slug] = {
             "scale": "percentile", "window": "weighted",
             "eligible": rated,
+            "provisional": slug in provisional,
             "sample": {"statFights": w.get("statFights", 0), "effectiveFights": w.get("effectiveFights"),
                        "minimum": MIN_STAT_FIGHTS},
             "skills": {k: {"roster": pcts.get(k), "division": division_pct.get(k),
-                           "drivers": drivers(w.get("rates") or {}, w, k) if rated else []} for k in SKILLS},
+                           "drivers": drivers(w.get("rates") or {}, w, k) if shown else []} for k in SKILLS},
             "form": {"score": form, "opponents": [
                 {"boutId": fight["boutId"], "opponent": fight["opponent"], "strength": opp.get(fight["boutId"])}
                 for fight in [x for x in f["history"] if x["outcome"] in ("W", "L", "D")][:5]]},

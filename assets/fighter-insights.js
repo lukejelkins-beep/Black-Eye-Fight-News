@@ -285,7 +285,7 @@
   const pills=fights.map(x=>{const [s,k]=resultSymbol(x.outcome||x.result);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
   // UFC fighters outside the old V3 snapshot use the stats build directly when
   // their file exists: v2 ratings (if eligible) and the stats sections.
-  const stats=statsFor(f),SP=window.BEFNStatsProfile,v2=stats?.ratings?.eligible?stats.ratings:null;
+  const stats=statsFor(f),SP=window.BEFNStatsProfile,v2=(stats?.ratings?.eligible||stats?.ratings?.provisional)?stats.ratings:null;
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
@@ -304,7 +304,7 @@
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
   const tier=scoreTier(v2Overall);
   return '<section class="befn-profile-insights befn-pro-insights'+(v2?'':' befn-v3-pending')+'" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
-   '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating</span>'+
+   '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):v2Overall+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(v2Overall||0)+'%"></span></span>'+
    verifiedTag+
@@ -312,9 +312,9 @@
    '</aside>'+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
-   proSection('ratings','Ratings',v2?'Percentile vs. UFC roster':stats?.ratings?'Not enough measured fights yet':'UFC statistics pending','<div class="befn-pro-meters">'+
+   proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC roster'):stats?.ratings?'Not enough measured fights yet':'UFC statistics pending','<div class="befn-pro-meters">'+
     (v2?v2Meters:(ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
-    (v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
+    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
      ' rated UFC fighters, using the whole UFC career with recent fights counting most. Recent form is out of 100.</p>':
      stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
@@ -495,7 +495,7 @@
   if(d?.schema!==1||!d.names)return;
   statsMeta=d;
   for(const [k,v] of Object.entries(d.names))statsNames.set(k,v);
-  update();
+  applyOverall();update();
  }).catch(()=>{});
  // R2 verified career view: both files are tiny; the flag is OFF in the repository.
  let careerFlags=null,careerList=null;
@@ -507,14 +507,38 @@
  // keeps showing the UFC record, labelled as that.
  const overallRecords=new Map();
  let overallLoaded=false;
+ const sharedNames=new Set();
  const overallLoading=fetch("data/ufc-overall-records.json").then(r=>r.ok?r.json():null).then(d=>{
-  if(d?.schema===1&&d.records)for(const [k,v] of Object.entries(d.records))overallRecords.set(k,v);
- }).catch(()=>{}).then(()=>{overallLoaded=true;update();});
+  if(d?.schema!==1||!d.records)return;
+  for(const [k,v] of Object.entries(d.records))overallRecords.set(k,v);
+  for(const n of d.sharedNames||[])sharedNames.add(n);
+ }).catch(()=>{}).then(()=>{overallLoaded=true;applyOverall();update();});
  const recordText=r=>r.W+"–"+r.L+(r.D?"–"+r.D:"")+(r.NC?" ("+r.NC+" NC)":"");
+ // The saved profile records (the reviewed files and the older roster) are from the day each was checked and go stale
+ // after the next fight. Where the stats build holds the fighter, the header and cards use the overall record
+ // instead (saved record plus UFC fights since). A name two fighters share is never matched on the name alone.
+ function applyOverall(){
+  if(!overallLoaded||!statsMeta)return;
+  for(const f of profiles){
+   if(!isUfcProfile(f)||f.recordLabel==="Overall record")continue;
+   const key=norm(f.name);
+   if(sharedNames.has(key))continue;
+   const o=overallRecords.get(f.statsSlug||statsNames.get(key));
+   if(o){f.record=recordText(o);f.recordLabel="Overall record";}
+  }
+  const open=document.querySelector("#fighterDialog .befn-pro-record");
+  const cur=open&&document.querySelector("#fighterDialog .befn-profile-insights[data-befn-profile]");
+  const pf=cur&&byId.get(cur.dataset.befnProfile);
+  if(pf&&pf.recordLabel==="Overall record"){open.querySelector("strong").textContent=pf.record;open.querySelector("span").textContent=pf.recordLabel;}
+ }
  // A fighter the stats build holds takes a rating from that build or from
  // nowhere; until names.json has loaded we do not yet know, so show no number.
  const ratedByBuild=f=>!!f?.statsSlug||!statsMeta||statsNames.has(norm(f?.name));
  const noScore=stats=>stats?'Unrated':'—';
+ // A fighter with one or two measured fights is rated provisionally (scripts/ufc_ratings.py): the same percentiles,
+ // placed against the established roster, and clearly tagged. They are never counted in the roster or a leaderboard.
+ const provisionalNote=r=>'Provisional: based on '+r.sample.statFights+' measured UFC '+(r.sample.statFights===1?'fight':'fights')+
+  '. A full rating needs '+(r.sample.minimum||3)+'. Percentiles are placed against the '+(statsMeta?.rated||'rated')+' established UFC fighters and do not change theirs.';
  function statsFor(f){
   const slug=f?.statsSlug||statsNames.get(norm(f?.name));
   if(!slug)return null;
@@ -582,7 +606,7 @@
   const isPercentileV1=id=>!stored(id)&&computedById[id]?.scale==="percentile";
   // Ratings v2 (whole UFC career, recency-weighted, roster + division percentiles)
   // replace the last-five V3 ratings as soon as the fighter's stats file loads.
-  const stats=statsFor(f),v2=stats?.ratings?.eligible?stats.ratings:null;
+  const stats=statsFor(f),v2=(stats?.ratings?.eligible||stats?.ratings?.provisional)?stats.ratings:null;
   const SP=window.BEFNStatsProfile;
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
@@ -655,7 +679,7 @@
   const rosterSize=ctx.population?.skills?.striking?.values?.length;
   const pills=v3.recent.map(b=>{const [s,k]=resultSymbol(b.outcome);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
   const scorePanel='<aside class="befn-pro-score is-'+tier+'" aria-label="Overall fighter rating">'+
-   '<span class="befn-pro-tag">BEFN rating</span>'+
+   '<span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):score+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
    '<div class="befn-v3-status befn-scout-classification">'+
@@ -673,7 +697,7 @@
     }
     return proMeter(label,s,isPercentile(id),scoreTier(s),hint,v2&&id!=='form'?driversHTML(v2.skills?.[id]?.drivers):'');
    }).join('')+'</div>'+
-   (v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
+   (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
     ' rated UFC fighters, using the whole UFC career with recent fights counting most. A rating needs at least '+
     (v2.sample?.minimum||3)+' fights with full round statistics. Recent form is out of 100.</p>':
    built?(stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+

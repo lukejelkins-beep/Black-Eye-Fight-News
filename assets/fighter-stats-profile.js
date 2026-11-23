@@ -211,7 +211,8 @@
  function compare(stats,divisions){
   const div=divisions?.divisions?.[stats.divisionSlug];
   const w=stats.windows?.l36;
-  if(!div||!w||(w.statFights||0)<(divisions.minFights||3))return "";
+  if(!div||!w||(w.statFights||0)<1)return "";
+  const few=(w.statFights||0)<(divisions.minFights||3);
   const fields=divisions.rateFields||[];
   const avg=k=>div.rates[fields.indexOf(k)];
   const rows=COMPARE.filter(([k])=>Number.isFinite(w.rates?.[k])&&Number.isFinite(avg(k)));
@@ -225,8 +226,8 @@
      (lowerBetter?' <small>lower is better</small>':'')+'</span>'+
      '<div class="bsp-compare-bars"><span class="bsp-bar is-own'+(better?' is-better':'')+'"><span style="width:'+Math.round(100*me/max)+'%"></span></span><b>'+show(me)+'</b>'+
      '<span class="bsp-bar is-avg"><span style="width:'+Math.round(100*them/max)+'%"></span></span><b>'+show(them)+'</b></div></div>';
-   }).join("")+'<small class="bsp-note">Last 36 months. Average of '+div.fighters+' '+esc(div.label)+
-   ' fighters with 3+ UFC fights in that time.</small></div>';
+   }).join("")+'<small class="bsp-note">'+(few?'Based on '+w.statFights+' measured UFC '+(w.statFights===1?'fight':'fights')+' in the last 36 months: a small sample. ':'Last 36 months. ')+
+   'Average of '+div.fighters+' '+esc(div.label)+' fighters with 3+ UFC fights in that time.</small></div>';
  }
 
  const api={careerState,breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
