@@ -119,8 +119,8 @@ class Roster(unittest.TestCase):
         fighters = self.roster()
         fighters["f39"]["window"]["statFights"] = 2
         out = r.rate_roster(fighters)
-        self.assertFalse(out["f39"]["eligible"])
-        self.assertIsNone(out["f39"]["skills"]["striking"]["roster"])
+        self.assertFalse(out["f39"]["eligible"], "two measured fights is not a full rating")
+        self.assertTrue(out["f39"]["provisional"])
         thin = self.roster()
         thin["f39"]["window"]["effectiveFights"] = .5
         self.assertLess(r.rate_roster(thin)["f39"]["skills"]["striking"]["roster"],
@@ -131,6 +131,36 @@ class Roster(unittest.TestCase):
         opponents = out["f20"]["form"]["opponents"]
         self.assertEqual(len(opponents), 5)
         self.assertTrue(all(o["strength"] is None or 0 <= o["strength"] <= 1 for o in opponents))
+
+    def test_provisional_ratings_never_move_anyone_else(self):
+        base = self.roster()
+        before = r.rate_roster(base)
+        extra = self.roster()
+        extra["new1"] = {"window": {"statFights": 1, "effectiveFights": .9, "rates": dict(STRONG),
+                                    "koWinShare": .9, "subWinShare": .9},
+                         "history": [{"boutId": "n-1", "outcome": "W", "opponentSlug": "f05", "opponent": "x"}],
+                         "divisionSlug": "lightweight"}
+        extra["new2"] = {"window": {"statFights": 2, "effectiveFights": 1.7, "rates": dict(WEAK),
+                                    "koWinShare": 0, "subWinShare": 0},
+                         "history": [{"boutId": "n-2", "outcome": "L", "opponentSlug": "f06", "opponent": "x"}] * 2,
+                         "divisionSlug": "lightweight"}
+        after = r.rate_roster(extra)
+        for slug in base:
+            self.assertEqual(before[slug], after[slug], slug)
+        for slug in ("new1", "new2"):
+            self.assertFalse(after[slug]["eligible"])
+            self.assertTrue(after[slug]["provisional"])
+            self.assertIsNone(after[slug]["opponentStrength"], "a provisional fighter is never used as opponent strength")
+        self.assertGreater(after["new1"]["skills"]["striking"]["roster"], after["new2"]["skills"]["striking"]["roster"])
+
+    def test_established_and_unmeasured_fighters_are_not_provisional(self):
+        extra = self.roster()
+        extra["none"] = {"window": {"statFights": 0, "rates": {}}, "history": [], "divisionSlug": None}
+        out = r.rate_roster(extra)
+        self.assertFalse(out["f39"]["provisional"])
+        self.assertFalse(out["none"]["provisional"])
+        self.assertIsNone(out["none"]["skills"]["striking"]["roster"])
+
 
 
 if __name__ == "__main__":

@@ -19,6 +19,15 @@ function load(fighters){
  return window.BEFNFighterInsights;
 }
 
+
+// A provisional rating (1-2 measured fights) is in the fighter's own file but deliberately not in index.json, so the
+// leaderboards and the rated count never see it. The page shows it, tagged; the index row stays blank.
+function expectedRating(slug,row){
+ const own=read("data/ufc-stats/fighters/"+slug+".json").ratings;
+ if(!own.provisional)return row.rating;
+ return [own.overall??null,...["striking","grappling","wrestling","defence"].map(k=>own.skills[k].roster??null),own.form.score??null];
+}
+
 test("profile rating and skills equal the stats build, with no credential points",async()=>{
  const index=read("data/ufc-stats/index.json").fighters,names=read("data/ufc-stats/names.json").names;
  const fighters=[],ui=load(fighters);
@@ -36,9 +45,10 @@ test("profile rating and skills equal the stats build, with no credential points
   if(ui.credentialsFor(profile).length)credentialled++;
   const html=ui.renderProfile(profile);
   const shown=/class="befn-v3-score">(\d+|Unrated|—)/.exec(html)?.[1];
-  assert.equal(shown,row.rating[0]===null?"Unrated":String(row.rating[0]),slug+" headline");
+  const want=expectedRating(slug,row);
+  assert.equal(shown,want[0]===null?"Unrated":String(want[0]),slug+" headline");
   for(const [i,label] of ["Striking","Grappling","Wrestling","Defence"].entries()){
-   const value=row.rating[i+1],meter=html.slice(html.indexOf(">"+label+"<"));
+   const value=want[i+1],meter=html.slice(html.indexOf(">"+label+"<"));
    const got=/<b[^>]*>(Not rated|\d+)/.exec(meter)?.[1];
    assert.equal(got,value===null?"Not rated":String(value),slug+" "+label);
   }
@@ -57,7 +67,21 @@ test("every fighter in the stats build has a profile with their own stats and ra
   const html=ui.renderProfile(f),shown=/class="befn-v3-score">(\d+|Unrated|—)/.exec(html)?.[1];
   const plain=n=>n.normalize("NFKD").replace(/[^a-z0-9]/gi,"").toLowerCase();
   assert.equal(plain(f.name),plain(row.name),slug);
-  assert.equal(shown,row.rating[0]===null?"Unrated":String(row.rating[0]),slug+" headline");
+  const want=expectedRating(slug,row);
+  assert.equal(shown,want[0]===null?"Unrated":String(want[0]),slug+" headline");
   assert(html.includes("data-bsp-stats"),slug+" has no statistics panel");
  }
+});
+
+test("a provisional rating is tagged and stays out of the index",()=>{
+ const index=read("data/ufc-stats/index.json").fighters;
+ let n=0;
+ for(const [slug,row] of Object.entries(index)){
+  const own=read("data/ufc-stats/fighters/"+slug+".json").ratings;
+  if(!own.provisional)continue;
+  n++;
+  assert.equal(own.eligible,false,slug+" is not a full rating");
+  assert(row.rating.slice(0,5).every(v=>v===null),slug+" index row keeps the percentiles blank");
+ }
+ assert(n>=100,"provisional fighters are covered");
 });
