@@ -495,16 +495,36 @@
   if(d?.schema!==1||!d.names)return;
   statsMeta=d;
   for(const [k,v] of Object.entries(d.names))statsNames.set(k,v);
-  update();
+  applyOverall();update();
  }).catch(()=>{});
  // Overall (all-promotion) records from scripts/build-ufc-overall-records.py. A fighter without one
  // keeps showing the UFC record, labelled as that.
  const overallRecords=new Map();
  let overallLoaded=false;
+ const sharedNames=new Set();
  const overallLoading=fetch("data/ufc-overall-records.json").then(r=>r.ok?r.json():null).then(d=>{
-  if(d?.schema===1&&d.records)for(const [k,v] of Object.entries(d.records))overallRecords.set(k,v);
- }).catch(()=>{}).then(()=>{overallLoaded=true;update();});
+  if(d?.schema!==1||!d.records)return;
+  for(const [k,v] of Object.entries(d.records))overallRecords.set(k,v);
+  for(const n of d.sharedNames||[])sharedNames.add(n);
+ }).catch(()=>{}).then(()=>{overallLoaded=true;applyOverall();update();});
  const recordText=r=>r.W+"–"+r.L+(r.D?"–"+r.D:"")+(r.NC?" ("+r.NC+" NC)":"");
+ // The saved profile records (the reviewed files and the older roster) are from the day each was checked and go stale
+ // after the next fight. Where the stats build holds the fighter, the header and cards use the overall record
+ // instead (saved record plus UFC fights since). A name two fighters share is never matched on the name alone.
+ function applyOverall(){
+  if(!overallLoaded||!statsMeta)return;
+  for(const f of profiles){
+   if(!isUfcProfile(f)||f.recordLabel==="Overall record")continue;
+   const key=norm(f.name);
+   if(sharedNames.has(key))continue;
+   const o=overallRecords.get(f.statsSlug||statsNames.get(key));
+   if(o){f.record=recordText(o);f.recordLabel="Overall record";}
+  }
+  const open=document.querySelector("#fighterDialog .befn-pro-record");
+  const cur=open&&document.querySelector("#fighterDialog .befn-profile-insights[data-befn-profile]");
+  const pf=cur&&byId.get(cur.dataset.befnProfile);
+  if(pf&&pf.recordLabel==="Overall record"){open.querySelector("strong").textContent=pf.record;open.querySelector("span").textContent=pf.recordLabel;}
+ }
  // A fighter the stats build holds takes a rating from that build or from
  // nowhere; until names.json has loaded we do not yet know, so show no number.
  const ratedByBuild=f=>!!f?.statsSlug||!statsMeta||statsNames.has(norm(f?.name));
