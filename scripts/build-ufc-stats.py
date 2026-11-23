@@ -146,6 +146,26 @@ def load(name: str):
     return json.loads((DATA / name).read_text(encoding="utf-8"))
 
 
+def apply_display_names(fights: list) -> int:
+    """Spell a fighter as UFC.com does where the archive's name differs (data/ufc-display-names.json).
+
+    The slug never changes. The name is replaced on the fighter's own side of every fight, which is also how an
+    opponent is named in other fighters' rows and how names.json is keyed, so one spelling is used everywhere.
+    """
+    try:
+        table = load("ufc-display-names.json").get("names") or {}
+    except (OSError, ValueError):
+        return 0
+    changed = 0
+    for fight in fights:
+        for corner in ("a", "b"):
+            entry = table.get(fight[corner].get("slug") or "")
+            if entry and entry.get("name") and fight[corner].get("name") != entry["name"]:
+                fight[corner]["name"] = entry["name"]
+                changed += 1
+    return changed
+
+
 def results_rows() -> list:
     """The site's own result rows, or nothing if the file is absent or unreadable."""
     try:
@@ -754,6 +774,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
     fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped, showcases)
     fights += certified_no_contests(fights, skipped)
     skipped["breakdownRoundsRepaired"] = apply_breakdown_repairs(fights, load_repairs()) if repairs else 0
+    apply_display_names(fights)
     if before is not None:   # research only (R4 calibration): the stats as they stood on this day, fights from it on left out
         fights = [f for f in fights if (parse_date(f["date"]) or before) < before]
 
