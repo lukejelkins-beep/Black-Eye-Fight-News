@@ -145,8 +145,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await careerTiles.count(),2,'Career summary has exactly Basho and Makuuchi Championships');
   assert.deepEqual(await careerTiles.locator('span').allInnerTexts(),['Basho','Makuuchi Championships'],
     'Two clear, nonduplicative labels');
-  assert.deepEqual(await careerTiles.locator('strong').allInnerTexts(),['22','6'],
-    'Onosato source-listed Basho 22 and Makuuchi titles 6');
+  // Career totals only grow, so check a floor (22 basho and 6 Makuuchi titles when this was written)
+  // and that titles cannot exceed basho, rather than a fixed value that goes stale each tournament.
+  const careerTotals=(await careerTiles.locator('strong').allInnerTexts()).map(Number);
+  assert.ok(careerTotals.length===2&&careerTotals.every(Number.isInteger)&&careerTotals[0]>=22&&careerTotals[1]>=6&&careerTotals[1]<=careerTotals[0],
+    'Onosato source-listed basho (at least 22) and Makuuchi titles (at least 6): '+JSON.stringify(careerTotals));
   assert.equal(await page.locator('#sumo-career .sumo-career-facts').count(),0,
     'The original closed career disclosures have been replaced');
   assert.equal(await page.locator('#sumo-career .sumo-career-detail-section').count(),4,
