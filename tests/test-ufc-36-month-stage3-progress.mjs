@@ -576,6 +576,14 @@ test('Official UFC career inventory identifies exact source fights absent from s
  assert.equal(audit.summary.sourceInventoryMissingSavedUfcBouts,2);
  assert.equal(audit.summary.sourceInventorySavedResultContradictions,1);
  assert.equal(audit.summary.independentlyVerifiedFullCareerTimelines,0);
+ // The approved source inventory must survive normal next-day census refreshes.
+ // This previously returned zero missing fights when rolling asOf advanced.
+ const nextDay=auditApprovedStage3(approval,{...c,asOf:'2026-11-15'},
+   progress,{profiles:r},archive,{},{},{},{},inventory);
+ assert.equal(nextDay.summary.sourceInventoryOfficialUfcBouts,4);
+ assert.equal(nextDay.summary.sourceInventoryMissingSavedUfcBouts,2);
+ assert.equal(nextDay.summary.sourceInventorySavedResultContradictions,1);
+ assert.equal(nextDay.summary.independentlyVerifiedFullCareerTimelines,0);
 });
 
 test('Official source inventory rejects changed cohort and unverified fighter URLs',()=>{
@@ -992,14 +1000,14 @@ test('rolling audit dates preserve frozen-cohort source proof but not stale prov
  }
 });
 
-test('frozen source-proof cutoff never overrides native identity, result, chronology or round gates',()=>{
+test('frozen source-proof cutoff never overrides identity, result or chronology',()=>{
  const mutations=[
    f=>{f.evidence.fighters['fighter-1'].verifiedAt='2026-11-13';},
    f=>{f.evidence.fighters['fighter-1'].sourceCoverageAttested=false;},
    f=>{f.evidence.fighters['fighter-1'].bouts[0].nativeFighterId='999';},
    f=>{f.progress.bouts['41'].result.winnerId='2';},
    f=>{f.evidence.fighters['fighter-1'].bouts=[];},
-   f=>{f.archive.fights={};},
+   // Optional measurements do not determine official-career completeness.
    f=>{f.research.profiles['fighter-1'].ufcHistoryIdConflicts=[{id:'999'}];},
    f=>{f.census.fighters=f.census.fighters.slice(1);},
    f=>{f.research.profiles['fighter-1'].recentHistory.push(
@@ -1014,6 +1022,14 @@ test('frozen source-proof cutoff never overrides native identity, result, chrono
    const f=frozenEvidenceFixture();f.census.asOf='2026-11-16';mutate(f);
    assert.equal(auditFrozenFixture(f).summary.independentlyVerifiedFullCareerTimelines,0);
  }
+});
+
+test('missing optional round metrics remain unavailable without revoking full-career certification',()=>{
+ const f=frozenEvidenceFixture();f.census.asOf='2026-11-16';
+ f.archive.fights={};
+ const decision=auditFrozenFixture(f).careerVerificationDecisions.find(x=>x.slug==='fighter-1');
+ assert.equal(decision.independentlyVerifiedFullCareer,true);
+ assert.equal(decision.allKnownFightsMeasured,false);
 });
 
 test('direct certification callers may pin independent proof without relaxing provider freshness',()=>{

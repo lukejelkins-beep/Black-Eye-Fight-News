@@ -14,11 +14,12 @@ test('unchanged 783-person cohort and six original complete UFC bouts independen
   assert.ok(roster.approvedFighters.includes(slug));const a=reg.fighters[slug],s=source.fighters[slug];
   assert.ok(a&&a.sourceCoverageAttested===true,slug);assert.equal(a.scope,'complete_official_ufc_career',slug);
   assert.equal(a.fighterUrl,s.pinnedGrecoFighterUrl,slug);assert.equal(a.officialFighterUrl,s.officialFighterUrl,slug);
-  assert.equal(a.officialUfcCareerBoutCount,3,slug);assert.equal(a.bouts.length,3,slug);
+  assert.equal(a.officialUfcCareerBoutCount,slug==='donte-johnson'?4:3,slug);
+  assert.equal(a.bouts.length,slug==='donte-johnson'?4:3,slug);
   assert.deepEqual(a.verifiedNumericFighterIds,[x.fighterId],slug);
-  assert.deepEqual(a.bouts.map(z=>[z.nativeBoutId,z.opponent,z.result]),x.bouts,slug);
-  assert.equal(new Set(a.bouts.map(z=>z.nativeBoutId)).size,3,slug);
-  assert.equal(a.sourceSnapshot.sourceCommit,'c742842f29466758fedc3906dbad28d6d320a8da',slug);
+  assert.deepEqual(a.bouts.slice(0,3).map(z=>[z.nativeBoutId,z.opponent,z.result]),x.bouts,slug);
+  assert.equal(new Set(a.bouts.map(z=>z.nativeBoutId)).size,slug==='donte-johnson'?4:3,slug);
+  assert.equal(a.sourceSnapshot.sourceCommit,slug==='donte-johnson'?'96adace863c0a793579cc06d27d468797545607f':'c742842f29466758fedc3906dbad28d6d320a8da',slug);
   for(const b of a.bouts){assert.equal(b.nativeFighterId,x.fighterId,slug);assert.match(b.fightUrl,/^https:\/\/ufcstats\.com\/fight-details\/[a-f0-9]{16}$/);}
  }
 });
@@ -33,8 +34,11 @@ test('Donte and Kody each have one and only one source-attested saved DWCS non-U
 });
 test('official scorecards control contradictory narrative/UI results without inventing upcoming 14 Nov fight',()=>{
  const d=reg.fighters['donte-johnson'];
- assert.deepEqual(d.bouts.map(z=>z.result),['win','win','win']);
- assert.ok(!d.bouts.some(z=>z.date==='2026-11-14'));
+ assert.deepEqual(d.bouts.slice(0,3).map(z=>z.result),['win','win','win']);
+ assert.equal(d.bouts[3].result,'loss');
+ assert.equal(d.bouts[3].nativeBoutId,'93616');
+ assert.equal(d.bouts[3].fightUrl,'https://ufcstats.com/fight-details/2a4b33c38e7b16b0');
+ assert.equal(d.bouts.filter(z=>z.date==='2026-11-14').length,1);
  assert.match(d.sourceScopeVerified,/split decision/);
  assert.ok(d.independentSourceCrosschecks.includes('https://www.ufc.com/news/ufc-326-official-scorecards-holloway-vs-oliveira-2'));
  const k=reg.fighters['kody-steele'];

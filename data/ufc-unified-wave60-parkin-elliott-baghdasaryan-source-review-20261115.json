@@ -1,0 +1,237 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave60-independent-source-review",
+  "reviewedOn": "2026-11-15",
+  "frozenApprovedCohort": 783,
+  "rosterAsOf": "2026-11-14",
+  "nonproduction": true,
+  "certificationGranted": false,
+  "purpose": "Evidence is not a certificate; only latest successful strict full-cohort Stage3 audit certifies fighters. No paid provider calls, cache mutation or release.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14"
+  },
+  "fighters": {
+    "mick-parkin": {
+      "fighterName": "Mick Parkin",
+      "officialFighterUrl": "https://www.ufc.com/athlete/mick-parkin",
+      "ufcStatsFighterId": "0d5cc0170c1a7e71",
+      "nativeFighterId": "2819",
+      "officialUfcCareerBoutCount": 6,
+      "sourceReviewStatus": "full_source_reconciled_pending_strict_stage3_audit",
+      "sourceScopeVerified": "Official UFC.com dated athlete biography lists exactly six completed UFC Octagon contests from 2023-07-22 through 2026-10-03, independently matched one-for-one to the pinned Greco UFCStats-derived historical fighter and fight URLs, original saved native IDs and both paired corners, results, dates, method and measured rounds. The 2022-08-23 DWCS match with Eduardo Neves remains separately excluded. UFC athlete graphical Win badges are not authoritative when contradicted by dated fight narrative and source results.",
+      "bouts": [
+        {
+          "date": "2026-10-03",
+          "opponent": "Johnny Walker",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e92092a37dc1cfc8",
+          "nativeBoutId": "83723",
+          "nativeFighterId": "2819",
+          "originalOpponentNumericId": "7170"
+        },
+        {
+          "date": "2025-03-22",
+          "opponent": "Marcin Tybura",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/dd229687cb62c871",
+          "nativeBoutId": "60316",
+          "nativeFighterId": "2819",
+          "originalOpponentNumericId": "264"
+        },
+        {
+          "date": "2024-07-27",
+          "opponent": "Lukasz Brzeski",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/a5558e8fec59a687",
+          "nativeBoutId": "61089",
+          "nativeFighterId": "2819",
+          "originalOpponentNumericId": "2771"
+        },
+        {
+          "date": "2024-03-23",
+          "opponent": "Mohammed Usman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/3223b7e196a07224",
+          "nativeBoutId": "39004",
+          "nativeFighterId": "2819",
+          "originalOpponentNumericId": "2799"
+        },
+        {
+          "date": "2023-11-18",
+          "opponent": "Caio Machado",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/36f10b949b935b8c",
+          "nativeBoutId": "59982",
+          "nativeFighterId": "2819",
+          "originalOpponentNumericId": "2844"
+        },
+        {
+          "date": "2023-07-22",
+          "opponent": "Jamal Pogues",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/89b96bc5f3e824c5",
+          "nativeBoutId": "60109",
+          "nativeFighterId": "2819",
+          "originalOpponentNumericId": "2777"
+        }
+      ],
+      "excludedFeederBout": {
+        "nativeBoutId": "84124",
+        "date": "2022-08-23",
+        "opponent": "Eduardo Neves",
+        "classification": "Dana White's Contender Series",
+        "officialFighterUrl": "https://www.ufc.com/athlete/mick-parkin"
+      }
+    },
+    "oban-elliott": {
+      "fighterName": "Oban Elliott",
+      "officialFighterUrl": "https://www.ufc.com/athlete/oban-elliott",
+      "ufcStatsFighterId": "6b56e94a59b7b134",
+      "nativeFighterId": "319",
+      "officialUfcCareerBoutCount": 6,
+      "sourceReviewStatus": "full_source_reconciled_pending_strict_stage3_audit",
+      "sourceScopeVerified": "Official UFC.com dated athlete biography lists exactly six completed UFC Octagon contests from 2024-02-17 through 2026-08-01, independently matched one-for-one to the pinned Greco UFCStats-derived historical fighter and fight URLs, original saved native IDs and both paired corners, results, dates, method and measured rounds. The 2023-08-22 DWCS match with Kaik Brito remains separately excluded. UFC athlete graphical Win badges are not authoritative when contradicted by dated fight narrative and source results.",
+      "bouts": [
+        {
+          "date": "2026-08-01",
+          "opponent": "Michael Oliveira",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/f1bce0c9a3fa4bcb",
+          "nativeBoutId": "82889",
+          "nativeFighterId": "319",
+          "originalOpponentNumericId": "31755"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Jonathan Micallef",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/78912b78aa946375",
+          "nativeBoutId": "65855",
+          "nativeFighterId": "319",
+          "originalOpponentNumericId": "325"
+        },
+        {
+          "date": "2025-06-21",
+          "opponent": "Seokhyeon Ko",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e512b80bbaea36c2",
+          "nativeBoutId": "60277",
+          "nativeFighterId": "319",
+          "originalOpponentNumericId": "405"
+        },
+        {
+          "date": "2024-11-16",
+          "opponent": "Bassil Hafez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9676a4e9362e4bfd",
+          "nativeBoutId": "60391",
+          "nativeFighterId": "319",
+          "originalOpponentNumericId": "2820"
+        },
+        {
+          "date": "2024-07-27",
+          "opponent": "Preston Parsons",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/16b0a16ab2e20fdb",
+          "nativeBoutId": "61086",
+          "nativeFighterId": "319",
+          "originalOpponentNumericId": "981"
+        },
+        {
+          "date": "2024-02-17",
+          "opponent": "Val Woodburn",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9ddaa62cc806958d",
+          "nativeBoutId": "59898",
+          "nativeFighterId": "319",
+          "originalOpponentNumericId": "2821"
+        }
+      ],
+      "excludedFeederBout": {
+        "nativeBoutId": "83829",
+        "date": "2023-08-22",
+        "opponent": "Kaik Brito",
+        "classification": "Dana White's Contender Series",
+        "officialFighterUrl": "https://www.ufc.com/athlete/oban-elliott"
+      }
+    },
+    "melsik-baghdasaryan": {
+      "fighterName": "Melsik Baghdasaryan",
+      "officialFighterUrl": "https://www.ufc.com/athlete/melsik-baghdasaryan",
+      "ufcStatsFighterId": "a52bc1e62cf0b7c6",
+      "nativeFighterId": "1214",
+      "officialUfcCareerBoutCount": 6,
+      "sourceReviewStatus": "full_source_reconciled_pending_strict_stage3_audit",
+      "sourceScopeVerified": "Official UFC.com dated athlete biography lists exactly six completed UFC Octagon contests from 2021-07-31 through 2026-06-20, independently matched one-for-one to the pinned Greco UFCStats-derived historical fighter and fight URLs, original saved native IDs and both paired corners, results, dates, method and measured rounds. The 2020-09-01 DWCS match with Dennis Buzukja remains separately excluded. UFC athlete graphical Win badges are not authoritative when contradicted by dated fight narrative and source results.",
+      "bouts": [
+        {
+          "date": "2026-06-20",
+          "opponent": "Murtazali Magomedov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/e4849375d1949c74",
+          "nativeBoutId": "66453",
+          "nativeFighterId": "1214",
+          "originalOpponentNumericId": "2987"
+        },
+        {
+          "date": "2025-02-22",
+          "opponent": "Jean Silva",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8ef7723b6a8b45e1",
+          "nativeBoutId": "38531",
+          "nativeFighterId": "1214",
+          "originalOpponentNumericId": "236"
+        },
+        {
+          "date": "2023-07-15",
+          "opponent": "Tucker Lutz",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/8362b372adb2f302",
+          "nativeBoutId": "60121",
+          "nativeFighterId": "1214",
+          "originalOpponentNumericId": "1185"
+        },
+        {
+          "date": "2023-02-11",
+          "opponent": "Josh Culibao",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8b7bc2af1e15b668",
+          "nativeBoutId": "59736",
+          "nativeFighterId": "1214",
+          "originalOpponentNumericId": "2699"
+        },
+        {
+          "date": "2021-11-06",
+          "opponent": "Bruno Souza",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/73d541adc2909dc8",
+          "nativeBoutId": "61692",
+          "nativeFighterId": "1214",
+          "originalOpponentNumericId": "1083"
+        },
+        {
+          "date": "2021-07-31",
+          "opponent": "Collin Anglin",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6671b567c4eb9982",
+          "nativeBoutId": "66325",
+          "nativeFighterId": "1214",
+          "originalOpponentNumericId": "1121"
+        }
+      ],
+      "excludedFeederBout": {
+        "nativeBoutId": "88232",
+        "date": "2020-09-01",
+        "opponent": "Dennis Buzukja",
+        "classification": "Dana White's Contender Series",
+        "officialFighterUrl": "https://www.ufc.com/athlete/melsik-baghdasaryan"
+      }
+    }
+  }
+}
