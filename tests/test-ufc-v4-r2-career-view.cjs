@@ -72,3 +72,17 @@ test("a fight after the evidence cutoff is newer, not a gap",()=>{
 test("the certified list states the evidence cutoff it covers",()=>{
  assert.match(read("data/ufc-v4-certified-careers.json").certifiedThrough,/^\d{4}-\d{2}-\d{2}$/);
 });
+
+test("every certified fighter with a stats file matches the certificate up to the cutoff",()=>{
+ const careers=read("data/ufc-v4-certified-careers.json");
+ let checked=0,missing=[];
+ for(const [slug,want] of Object.entries(careers.certified)){
+  const path=__dirname+"/../data/ufc-stats/fighters/"+slug+".json";
+  if(!fs.existsSync(path)){missing.push(slug);continue;}
+  const fights=JSON.parse(fs.readFileSync(path,"utf8")).fights.filter(f=>f.date<=careers.certifiedThrough);
+  assert.equal(fights.length,want,slug+" stats vs certificate");
+  checked++;
+ }
+ assert(checked>=740,"most certified fighters are checked");
+ assert(missing.length<=2,"only the two shared-name fighters have no stats file: "+missing);
+});

@@ -622,6 +622,66 @@ def known_divisions() -> dict[str, str]:
     return out
 
 
+CERTIFIED_CAREERS = DATA / "ufc-v4-certified-careers.json"
+REGISTER = DATA / "ufc-independent-full-career-verification.json"
+
+
+def certified_no_contests(fights: list, skipped: dict) -> list:
+    """Official no-contests from the independent career register that the archive could not carry.
+
+    The archive/collector path drops a bout with no recorded result (skipped["noResult"]), but a certified career
+    (Stage 3) lists these as official no-contests with a UFCStats fight link. For FIGHTERS IN THE CERTIFIED LANE ONLY,
+    a register no-contest that is not already among the fights (same opponent, date within a day) is added as a
+    result-only NC: no rounds, no statistics, no winner, never rated. Nothing is estimated. Both fighters of a pair
+    get the same record when both are certified. Returns the new fights.
+    """
+    try:
+        certified = set(json.loads(CERTIFIED_CAREERS.read_text(encoding="utf-8")).get("certified") or {})
+        register = json.loads(REGISTER.read_text(encoding="utf-8")).get("fighters") or {}
+    except (OSError, ValueError):
+        return []
+    by_name = {norm(e.get("fighterName")): slug for slug, e in register.items() if slug in certified}
+
+    def have(slug_name: str, opponent: str, day: dt.date) -> bool:
+        for f in fights:
+            if f["method"] != "nc":
+                continue
+            names = {norm(f["a"]["name"]): f["b"]["name"], norm(f["b"]["name"]): f["a"]["name"]}
+            d = parse_date(f["date"])
+            if names.get(norm(slug_name)) is not None and norm(names[norm(slug_name)]) == norm(opponent) \
+                    and d and abs((d - day).days) <= 1:
+                return True
+        return False
+
+    out, seen = [], set()
+    for slug in sorted(certified):
+        entry = register.get(slug) or {}
+        for bout in entry.get("bouts") or []:
+            if bout.get("result") != "no_contest" or not bout.get("date"):
+                continue
+            day = parse_date(bout["date"])
+            if day is None or have(entry["fighterName"], bout["opponent"], day):
+                continue
+            # A UFCStats fight link where the register has one; otherwise (a gap bout certified from the fighter's
+            # official UFC.com page) a key from the date and the two names, the same for both fighters.
+            fid = (str(bout["fightUrl"]).rstrip("/").rsplit("/", 1)[-1] if bout.get("fightUrl") else
+                   bout["date"] + "-" + "-".join(sorted((norm(entry["fighterName"]), norm(bout["opponent"])))))
+            if fid in seen:
+                continue
+            seen.add(fid)
+            other = by_name.get(norm(bout["opponent"]))
+            out.append({
+                "boutId": "ufcstats-" + fid, "date": bout["date"], "event": None, "titleFight": False, "mainEvent": False,
+                "a": {"slug": slug, "name": entry["fighterName"], "id": None},
+                "b": {"slug": other, "name": (register.get(other) or {}).get("fighterName") or bout["opponent"], "id": None},
+                "winner": None, "method": "nc", "methodDetail": None, "endRound": None, "endTime": None, "seconds": None,
+                "rounds": [], "statsComplete": False, "scorecards": None, "resultSource": "certified-register",
+            })
+    skipped["certifiedNoContest"] = len(out)
+    return out
+
+
+
 def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict:
     archive = load("ufc-research-archive.json")["fights"]
     bouts = load("ufcalendar-rich-progress.json")["bouts"]
@@ -649,6 +709,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         fights.append(fight)
     collected_to = max((d for d in (parse_date(f["date"]) for f in fights) if d), default=None)
     fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped, showcases)
+    fights += certified_no_contests(fights, skipped)
 
     per_fighter: dict[str, dict] = {}
     for fight in fights:
