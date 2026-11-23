@@ -13,7 +13,7 @@ The R4 checklist asks for a frozen algorithm, an independent hold-out calibratio
 5. **No-contests and draws** are not rated and not scored (9 NC, 9 draws in the test period); fights with a fighter outside the roster at the cutoff (301) are not scored.
 
 ## Limits of this test (read before using it)
-- **Survivorship.** The fights come from the current 921-fighter roster (active in the last 36 months as of November 2026), so a fighter who left the UFC after a test fight is missing. The direction of the bias is not known, but it is not a clean population.
+- **Survivorship.** The fights come from the current 921-fighter roster (active in the last 36 months as of November 2026), so a fighter who left the UFC after a test fight is missing. The direction of the bias is not known, but it is not a clean population. See `docs/ufc-v4-r4-calibration-full-20261123.md`: the archive holds about 100% of decided UFC fights from 2024 on, so this limit mainly concerns earlier years.
 - **About 1,100 decided fights, 926 scored.** Division results have 35 to 127 fights each; the ranges above are the honest read.
 - **Fighter-level, not opponent-adjusted.** Opponent strength enters only through the form score.
 - **No credential, ranking or market information** was used or tested. Betting or "favourite" language should not be built on this.
