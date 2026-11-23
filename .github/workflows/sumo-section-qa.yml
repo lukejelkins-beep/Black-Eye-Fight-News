@@ -1,7 +1,7 @@
-name: Sumo section isolated preview QA
+name: Sumo section QA
 on:
-  push:
-    branches: [feat/sumo-section-test-20261114]
+  pull_request:
+    branches: [main]
     paths:
       - sumo.html
       - index.html
@@ -26,7 +26,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: sumo-preview-qa
+  group: sumo-section-qa-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   qa:
