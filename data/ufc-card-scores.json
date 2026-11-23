@@ -4,14 +4,14 @@
    "bouts": [
     {
      "basis": {
-      "defence": "roster",
-      "durability": "roster",
-      "grappling": "roster",
-      "power": "roster",
-      "striking": "roster",
-      "wrestling": "roster"
+      "defence": "division",
+      "durability": "division",
+      "grappling": "division",
+      "power": "division",
+      "striking": "division",
+      "wrestling": "division"
      },
-     "division": null,
+     "division": "Middleweight",
      "fighters": [
       "israeladesanya",
       "sharabutdinmagomedov"
@@ -21,23 +21,23 @@
       {
        "defence": {
         "band": "orange",
-        "score": 36
+        "score": 46
        },
        "durability": {
         "band": "red",
-        "score": 16
+        "score": 22
        },
        "grappling": {
         "band": "red",
-        "score": 19
+        "score": 22
        },
        "power": {
-        "band": "gold",
-        "score": 59
+        "band": "orange",
+        "score": 50
        },
        "striking": {
-        "band": "gold",
-        "score": 56
+        "band": "orange",
+        "score": 49
        },
        "wrestling": {
         "band": "red",
@@ -45,12 +45,30 @@
        }
       },
       {
-       "defence": null,
-       "durability": null,
-       "grappling": null,
-       "power": null,
-       "striking": null,
-       "wrestling": null
+       "defence": {
+        "band": "gold",
+        "score": 67
+       },
+       "durability": {
+        "band": "green",
+        "score": 75
+       },
+       "grappling": {
+        "band": "red",
+        "score": 26
+       },
+       "power": {
+        "band": "orange",
+        "score": 49
+       },
+       "striking": {
+        "band": "gold",
+        "score": 68
+       },
+       "wrestling": {
+        "band": "red",
+        "score": 15
+       }
       }
      ]
     },
@@ -1661,16 +1679,16 @@
    "status": "scored"
   },
   "matthieulethoduclos": {
-   "division": null,
-   "divisionSlug": null,
-   "divisionSource": null,
-   "latestBoutDivision": null,
-   "name": "Matthieu Letho Duclos",
+   "division": "Middleweight",
+   "divisionSlug": "middleweight",
+   "divisionSource": "official-roster",
+   "latestBoutDivision": "Middleweight",
+   "name": "Matthieu Duclos",
    "newToDivision": false,
    "previousDivision": null,
-   "slug": null,
-   "statFights": 0,
-   "status": "none"
+   "slug": "matthieu-duclos",
+   "statFights": 1,
+   "status": "limited"
   },
   "mayceebarber": {
    "division": "Women's Flyweight",
@@ -1757,16 +1775,16 @@
    "status": "scored"
   },
   "sharabutdinmagomedov": {
-   "division": null,
-   "divisionSlug": null,
-   "divisionSource": null,
-   "latestBoutDivision": null,
-   "name": "Sharabutdin Magomedov",
+   "division": "Middleweight",
+   "divisionSlug": "middleweight",
+   "divisionSource": "official-roster",
+   "latestBoutDivision": "Middleweight",
+   "name": "Shara Magomedov",
    "newToDivision": false,
    "previousDivision": null,
-   "slug": null,
-   "statFights": 0,
-   "status": "none"
+   "slug": "shara-magomedov",
+   "statFights": 5,
+   "status": "scored"
   },
   "uransatybaldiev": {
    "division": "Light Heavyweight",
