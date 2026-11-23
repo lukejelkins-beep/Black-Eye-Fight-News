@@ -457,5 +457,66 @@ class FeederScope(unittest.TestCase):
         self.assertIn("60900", m.attested_showcase_ids())
 
 
+class CertifiedNoContests(unittest.TestCase):
+    """A certified career's official no-contest, which the archive path drops for want of a recorded result."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        root = pathlib.Path(self.tmp.name)
+        self.old = (m.CERTIFIED_CAREERS, m.REGISTER)
+        m.CERTIFIED_CAREERS, m.REGISTER = root / "c.json", root / "r.json"
+        self.addCleanup(lambda: setattr(m, "CERTIFIED_CAREERS", self.old[0]) or setattr(m, "REGISTER", self.old[1]))
+
+    def write(self, certified, register):
+        m.CERTIFIED_CAREERS.write_text(json.dumps({"certified": {s: 1 for s in certified}}))
+        m.REGISTER.write_text(json.dumps({"fighters": register}))
+
+    def nc(self, name, opp, date="2021-03-13", url="https://ufcstats.com/fight-details/abc123"):
+        b = {"date": date, "opponent": opp, "result": "no_contest"}
+        if url:
+            b["fightUrl"] = url
+        return {"fighterName": name, "bouts": [b]}
+
+    def test_a_pair_of_certified_fighters_gets_one_two_sided_record(self):
+        self.write(["belal", "edwards"], {"belal": self.nc("Belal Muhammad", "Leon Edwards"),
+                                          "edwards": self.nc("Leon Edwards", "Belal Muhammad")})
+        skipped = {}
+        out = m.certified_no_contests([], skipped)
+        self.assertEqual(len(out), 1)
+        f = out[0]
+        self.assertEqual((f["a"]["slug"], f["b"]["slug"]), ("belal", "edwards"))
+        self.assertEqual((f["method"], f["winner"], f["rounds"], f["statsComplete"]), ("nc", None, [], False))
+        self.assertEqual(m.side_view(f, "a")["outcome"], "NC")
+        self.assertEqual(m.side_view(f, "b")["outcome"], "NC")
+        self.assertEqual(skipped["certifiedNoContest"], 1)
+
+    def test_a_no_contest_already_among_the_fights_is_not_added_again(self):
+        self.write(["belal"], {"belal": self.nc("Belal Muhammad", "Leon Edwards")})
+        have = {"date": "2021-03-14", "method": "nc", "a": {"name": "Belal Muhammad", "slug": "belal"},
+                "b": {"name": "Leon Edwards", "slug": "edwards"}}
+        self.assertEqual(m.certified_no_contests([have], {}), [])
+
+    def test_only_certified_fighters_are_used(self):
+        self.write([], {"belal": self.nc("Belal Muhammad", "Leon Edwards")})
+        self.assertEqual(m.certified_no_contests([], {}), [])
+
+    def test_a_gap_bout_without_a_fight_link_is_keyed_by_date_and_names(self):
+        self.write(["lane"], {"lane": self.nc("Austen Lane", "Justin Tafa", date="2023-06-24", url=None)})
+        out = m.certified_no_contests([], {})
+        self.assertEqual(len(out), 1)
+        self.assertEqual(out[0]["boutId"], "ufcstats-2023-06-24-austenlane-justintafa")
+        self.assertIsNone(out[0]["b"]["slug"], "an opponent outside the certified set has no stats slug")
+
+    def test_results_other_than_no_contest_are_ignored(self):
+        e = self.nc("Belal Muhammad", "Leon Edwards")
+        e["bouts"][0]["result"] = "loss"
+        self.write(["belal"], {"belal": e})
+        self.assertEqual(m.certified_no_contests([], {}), [])
+
+    def test_missing_files_are_survivable(self):
+        self.assertEqual(m.certified_no_contests([], {}), [])
+
+
 if __name__ == "__main__":
     unittest.main()
