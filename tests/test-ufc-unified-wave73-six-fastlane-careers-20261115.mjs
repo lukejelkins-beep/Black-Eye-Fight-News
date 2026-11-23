@@ -79,19 +79,15 @@ for(const [slug,x] of Object.entries(cases)){
   assert.equal(gate(slug,invented),false);
  });
 }
-test('wave73 Roberts remains uncertified: the official 2020 Kevin Croom NC is absent from cached native UFC history',()=>{
+test('wave73 Roberts is certified 2026-11-23: the official 2020 Kevin Croom NC is a saved-history-gap bout, absent from cached native UFC history',()=>{
  const slug='roosevelt-roberts';
  assert.ok(cohort.has(slug));
- assert.equal(source[slug],undefined,'no unsupported certificate for Roberts');
+ assert.ok(source[slug],'independent register entry for Roberts');
  const h=officialHistory(slug);
  assert.equal(h.length,9,'nine preserved official UFC native fight IDs');
- assert.equal(h.some(x=>x.opponent==='Kevin Croom'),false,'official 2020 NC must not be invented');
- const confirmed=inventory.fighters?.[slug];
- assert.equal(confirmed?.sourceUrl,'https://www.ufc.com/athlete/roosevelt-roberts');
- assert.equal(confirmed?.bouts?.length,1);
- assert.deepEqual([confirmed.bouts[0].date,confirmed.bouts[0].opponent,confirmed.bouts[0].result],
-  ['2020-09-12','Kevin Croom','no_contest']);
- assert.equal(confirmed.bouts[0].independentUfcStatsFightUrl,
-  'https://ufcstats.com/fight-details/e1bb0b615c02d715');
- assert.equal(gate(slug,source[slug]),false);
+ assert.equal(h.some(x=>x.opponent==='Kevin Croom'),false,'official 2020 NC must not be invented as a native fight');
+ assert.equal(inventory.fighters?.[slug],undefined,'no longer a source-only inventory gap');
+ const gap=source[slug].bouts.find(b=>b.savedHistoryGap===true);
+ assert.deepEqual([gap.date,gap.opponent,gap.result],['2020-09-12','Kevin Croom','no_contest']);
+ assert.equal(gap.fightUrl,'https://ufcstats.com/fight-details/e1bb0b615c02d715');
 });
