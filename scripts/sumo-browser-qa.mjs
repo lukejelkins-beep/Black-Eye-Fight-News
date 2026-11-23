@@ -296,7 +296,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     screenshotCount++;
   }
   assert.ok(!profile.includes('API-TRUSTED'),'Technical API badge is not displayed');
-  assertContains(profile,'Career results: independently corroborated','career evidence is labelled separately');
+  // (The profile no longer carries a sourcing/verification block, so the old
+  // "Career results: independently corroborated" label is not asserted here; #sumo-sources absent is checked above.)
   assertContains(profile,'Opponents and head-to-head','opponent catalogue');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>=10,'Complete sourced opponent directory available');
@@ -402,7 +403,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('#sumo-opponent-search').fill('');
   await page.locator('#sumo-opponent-sort').selectOption('name');
   assert.ok(await page.locator('.sumo-rival').count()>0,'Sort keeps catalogue accessible');
-  assert.ok(await page.locator('.sumo-country').count()>0,'Profile shows birthplace-country flag');
+  assert.ok(await page.locator('.sumo-poster-chip.country').count()>0,'Profile shows the birthplace country (poster chip)');
   await page.evaluate(()=>scrollTo(0,0));
   await snap(page,label+'-profile',{fullPage:false});
   // Full pair-specific history is distinct from a single basho's opponent record.
