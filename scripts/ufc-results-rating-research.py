@@ -19,6 +19,9 @@ Method
     like for like. A blend (results rating + live rating) is also fitted walk-forward to see whether the measured skills
     add anything once results are known.
 Output: Markdown to stdout or --out. Deterministic.
+
+Historical: written against the ratings v2 engine (commit e60369c), where "overall" was the 0-100 skills-and-form
+average. On later commits "overall" is the 2026-11 blended rating; use scripts/ufc-rating-evaluate.py instead.
 """
 from __future__ import annotations
 
