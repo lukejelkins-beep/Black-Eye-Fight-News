@@ -632,6 +632,38 @@ def known_divisions() -> dict[str, str]:
     return out
 
 
+REPAIRS = DATA / "ufc-round-breakdown-repairs.json"
+REPAIR_FIELDS = ("headLanded", "headAttempted", "bodyLanded", "bodyAttempted", "legLanded", "legAttempted",
+                 "distanceLanded", "distanceAttempted", "clinchLanded", "clinchAttempted",
+                 "groundLanded", "groundAttempted")
+
+
+def load_repairs(path: Path | None = None) -> dict:
+    """slug -> boutId -> round -> the twelve breakdown figures (see scripts/build-ufc-round-breakdown-repairs.py)."""
+    try:
+        return json.loads((path or REPAIRS).read_text(encoding="utf-8")).get("repairs") or {}
+    except (OSError, ValueError):
+        return {}
+
+
+def apply_breakdown_repairs(fights: list, repairs: dict) -> int:
+    """Replace a round's head/body/leg and distance/clinch/ground figures with the saved UFCStats ones, for the fighter
+    they were saved for. The repair file only holds rounds whose archived parts did not add up and whose strikes
+    landed and attempted agree with UFCStats, so nothing else in the round is touched. Returns rounds repaired."""
+    done = 0
+    for fight in fights:
+        for corner in ("a", "b"):
+            saved = (repairs.get(fight[corner]["slug"] or "") or {}).get(str(fight["boutId"]))
+            if not saved:
+                continue
+            for r in fight["rounds"]:
+                vals = saved.get(str(r["round"]))
+                if vals and len(vals) == len(REPAIR_FIELDS):
+                    r[corner] = {**r[corner], **dict(zip(REPAIR_FIELDS, vals))}
+                    done += 1
+    return done
+
+
 CERTIFIED_CAREERS = DATA / "ufc-v4-certified-careers.json"
 REGISTER = DATA / "ufc-independent-full-career-verification.json"
 
@@ -692,7 +724,7 @@ def certified_no_contests(fights: list, skipped: dict) -> list:
 
 
 
-def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict:
+def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs: bool = True) -> dict:
     archive = load("ufc-research-archive.json")["fights"]
     bouts = load("ufcalendar-rich-progress.json")["bouts"]
     judging = load("ufcalendar-judging-research.json").get("decisions", {})
@@ -720,6 +752,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
     collected_to = max((d for d in (parse_date(f["date"]) for f in fights) if d), default=None)
     fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped, showcases)
     fights += certified_no_contests(fights, skipped)
+    skipped["breakdownRoundsRepaired"] = apply_breakdown_repairs(fights, load_repairs()) if repairs else 0
 
     per_fighter: dict[str, dict] = {}
     for fight in fights:
