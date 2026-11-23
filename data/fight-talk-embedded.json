@@ -1,13 +1,13 @@
 {
-  "attemptedAt": "2026-11-23T20:32:25.572Z",
-  "checkedAt": "2026-11-23T20:32:25.572Z",
+  "attemptedAt": "2026-11-23T21:28:17.179Z",
+  "checkedAt": "2026-11-23T21:28:17.179Z",
   "windowDays": 28,
-  "articlesChecked": 30,
+  "articlesChecked": 28,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 42,
   "publisherSourcesConfigured": 32,
-  "linksFound": 28,
+  "linksFound": 19,
   "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
@@ -18,6 +18,28 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "mma",
+      "name": "Ilia Topuria",
+      "role": "fighter",
+      "handle": "@topuriailia",
+      "fighterTier": "contender",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-23T17:16:53.701Z",
+      "sourceLinkedAt": "2026-11-23T18:30:00+00:00",
+      "discoveredAt": "2026-11-23T21:28:17.179Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/523055/ilia-topuria-pitches-tuf-coaching-gig-with-paddy-pimblett-mocks-justin-gaethje-and-conor-mcgregor",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 69,
+      "url": "https://x.com/Topuriailia/status/2124915100800991301"
+    },
     {
       "type": "post",
       "platform": "Instagram",
@@ -2323,25 +2345,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DfztAEEkf6f/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-16T19:00:00+00:00",
-      "discoveredAt": "2026-11-17T04:23:07.419Z",
-      "sourcePublisher": "MMA Junkie",
-      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/mma/blue-corner/2026/11/16/ufc-334-winner-loser-reactions-thrill-agony-gane-hokit-harrison-nunes/92815895007/",
-      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/DfwhO17ATVL/"
     }
   ],
   "seenOriginals": [
@@ -3500,6 +3503,10 @@
     {
       "url": "https://www.instagram.com/p/Df-6_aLPFDk/",
       "firstSeen": "2026-11-23T20:32:25.572Z"
+    },
+    {
+      "url": "https://x.com/Topuriailia/status/2124915100800991301",
+      "firstSeen": "2026-11-23T21:28:17.179Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
