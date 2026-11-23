@@ -15,6 +15,8 @@ Rules
   * A record that cannot be true is left out, never repaired: if the overall wins, losses or draws are fewer than the
     fighter's own UFC wins, losses or draws, the fighter gets no overall record and the page keeps showing the UFC record.
   * A fighter with no saved record gets no overall record. Nothing is estimated and no zero is written.
+  * "sharedNames" lists names held by two or more fighters (the Bruno Silvas). The records are per slug and correct; the
+    list is for a page that has only a name to go on, which must not guess between them.
   * Output is deterministic (sorted, no timestamps) so an unchanged input is a no-op.
 """
 from __future__ import annotations
@@ -22,6 +24,8 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import unicodedata
+from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +35,21 @@ RESEARCH = DATA / "ufcalendar-fighter-research.json"
 STATS = DATA / "ufc-stats"
 RECORD = re.compile(r"^(\d+)-(\d+)-(\d+)$")
 OUTCOME = {"W": "W", "L": "L", "D": "D", "NC": "NC"}
+
+
+def fold(name) -> str:
+    text = unicodedata.normalize("NFKD", str(name or "")).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]", "", text)
+
+
+def shared_names(research: dict, fighters: dict) -> list:
+    """Folded names that belong to more than one fighter. A page that finds a fighter by name alone must not use a record for these."""
+    groups = defaultdict(set)
+    for slug, p in research.items():
+        groups[fold(p.get("name"))].add(slug)
+    for slug, f in fighters.items():
+        groups[fold(f.get("name"))].add(slug)
+    return sorted(k for k, v in groups.items() if k and len(v) > 1 and any(s in fighters for s in v))
 
 
 def ufc_counts(fights, after: str | None = None) -> dict:
@@ -80,6 +99,7 @@ def build(research: dict, fighters: dict) -> dict:
                  "saved record is lower than their own UFC results, is left out."),
         "coverage": {"fighters": len(fighters), "withOverall": len(out), "noSavedRecord": sorted(missing),
                      "recordBelowUfcResults": sorted(inconsistent)},
+        "sharedNames": shared_names(research, fighters),
         "records": out,
     }
 
