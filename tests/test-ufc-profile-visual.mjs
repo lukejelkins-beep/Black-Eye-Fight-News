@@ -36,6 +36,29 @@ if(fs.existsSync(profileStatsSource)){
    if(f?.name&&f.trackedBouts>0)expectedPostfight.add(normalized(f.name));
  }
 }
+// Stats-build files, resolved the way the page does (data/ufc-stats/names.json: normalised name to slug).
+const statsNames=JSON.parse(fs.readFileSync(path.join(root,"data/ufc-stats/names.json"),"utf8")).names||{};
+function statsFileFor(name){
+ const slug=statsNames[normalized(name)];
+ const file=slug&&path.join(root,"data/ufc-stats/fighters",slug+".json");
+ return file&&fs.existsSync(file)?JSON.parse(fs.readFileSync(file,"utf8")):null;
+}
+const nameWords=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+ .replace(/ł/g,"l").replace(/Ł/g,"L").replace(/ø/g,"o").replace(/Ø/g,"O").replace(/đ/g,"d").replace(/ß/g,"ss")
+ .toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>1);
+const sharesNameWord=(a,b)=>{const w=new Set(nameWords(a));return nameWords(b).some(x=>w.has(x))};
+const STATS_METHOD_LABEL={ko:"KO/TKO",sub:"Submission",dec:"Decision",draw:"Draw",nc:"No contest",dq:"DQ"};
+// The kind of finish in a reviewed profile's wording ("TKO R1 3:11", "Split decision R3"), or "" when unclear.
+function reviewedMethodKind(text){
+ const t=String(text||"").toLowerCase();
+ if(/no contest/.test(t))return "nc";
+ if(/submission/.test(t))return "sub";
+ if(/decision/.test(t))return "dec";
+ if(/draw/.test(t))return "draw";
+ if(/disqualif|\bdq\b/.test(t))return "dq";
+ if(/\bt?ko\b/.test(t))return "ko";
+ return "";
+}
 const profiles=[];
 for(const cohort of cohorts){
  const file=path.join(root,"data/ufc-"+cohort+"-profiles.json");
@@ -207,11 +230,39 @@ async function checkProfile(page,profile,screen){
   assert(details.noProvisionalRanks||vettedPerformance,
    "provisional rankings must not appear without qualifying V3 metric evidence");
   assert(details.noLegacyTable,"duplicated legacy fight table must not appear in V3");
-  assert.equal(details.recentFiveCount,Math.min(profile.latest.length,5),
-   "V3 recent fights must contain up to five verified UFC results");
-  const sourcedRows=profile.latest.slice(0,5).map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
-  assert.deepEqual(details.recentRows,sourcedRows,
-   "V3 fight rows differ from the individually reviewed UFC results");
+  // Since #433 the five recent fights come from the fighter's stats file wherever the stats build holds the fighter
+  // (kept current by the results import; a reviewed profile is only as new as the day it was checked, and words a
+  // method differently). So for those fighters the dialog must show exactly the stats file's rows, and every reviewed
+  // fight inside that window must still be there, with the same outcome, opponent and kind of finish. A fighter the
+  // stats build does not hold keeps the original rule: the reviewed rows, exactly.
+  const statsFile=statsFileFor(profile.name);
+  if(!statsFile){
+   assert.equal(details.recentFiveCount,Math.min(profile.latest.length,5),
+    "V3 recent fights must contain up to five verified UFC results");
+   const sourcedRows=profile.latest.slice(0,5).map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
+   assert.deepEqual(details.recentRows,sourcedRows,
+    "V3 fight rows differ from the individually reviewed UFC results");
+  }else{
+   const shown=statsFile.fights.slice(0,5);
+   assert.equal(details.recentFiveCount,shown.length,
+    "V3 recent fights must contain up to five UFC results from the stats file");
+   assert.deepEqual(details.recentRows.map(r=>r.slice(0,3)),shown.map(f=>[f.date,f.opponent,f.outcome]),
+    "V3 fight rows differ from the fighter's stats file");
+   details.recentRows.forEach((r,i)=>assert(
+    String(r[3]).startsWith(STATS_METHOD_LABEL[shown[i].method]||"\u0000"),
+    "method text '"+r[3]+"' does not match the stats file's "+shown[i].method+" for "+shown[i].opponent));
+   const oldestShown=shown.at(-1)?.date||"";
+   for(const r of profile.latest.slice(0,5)){
+    if(Date.parse(r.date)<Date.parse(oldestShown)-86400000)continue;   // pushed out of the five by newer fights
+    // One opponent per fighter per date, so date and outcome pin the bout; the names must still share a word, which
+    // allows "Jose Miguel Delgado" / "Jose Delgado" and an accent ("Błachowicz") but not a different opponent.
+    const hit=statsFile.fights.find(f=>f.outcome===r.outcome&&sharesNameWord(f.opponent,r.opponent)&&
+     Math.abs(Date.parse(f.date)-Date.parse(r.date))<=86400000);
+    assert(hit,"reviewed fight is not in the stats file: "+r.date+" "+r.opponent+" "+r.outcome);
+    const kind=reviewedMethodKind(r.method);
+    if(kind)assert.equal(hit.method,kind,"reviewed and stats methods disagree for "+r.date+" "+r.opponent);
+   }
+  }
   // On mobile all outcome/method fields must fit within the dialog itself,
   // not merely exist in the DOM beyond the right-hand edge of the viewport.
   if(screen==="mobile"&&profile.latest.length){
