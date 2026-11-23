@@ -1,7 +1,7 @@
 name: Sumo desktop and mobile browser QA
 on:
-  push:
-    branches: [feat/sumo-section-test-20261114, feat/sumo-editorial-results-desk-20261116, feat/sumo-roster-flag-movement-20261116, feat/sumo-ux-refinement-20261116, feat/sumo-profile-career-h2h-refine-20261116, feat/sumo-daily-matchup-flags-stats-20261116, feat/sumo-daily-division-relative-wl-20261116]
+  pull_request:
+    branches: [main]
     paths:
       - sumo.html
       - assets/sumo.css

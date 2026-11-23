@@ -1,15 +1,10 @@
 name: Sumo — import official JSA kimarite photos
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - feat/sumo-section-test-20261114
-    paths:
-      - .github/workflows/sumo-jsa-kimarite-photos.yml
-      - scripts/fetch-jsa-kimarite-photos.py
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: sumo-jsa-photo-import
@@ -21,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Check out latest Sumo test branch
+      - name: Check out main
         uses: actions/checkout@v4
         with:
-          ref: feat/sumo-section-test-20261114
+          ref: main
           persist-credentials: true
       - name: Import 82 official reference images
         run: python3 scripts/fetch-jsa-kimarite-photos.py
@@ -36,6 +31,10 @@ jobs:
           if git diff --staged --quiet; then
             echo "All 82 official photos are already committed."
           else
-            git commit -m "Sumo preview: bundle 82 official JSA kimarite photos for mobile cards"
-            git push origin HEAD:feat/sumo-section-test-20261114
+            git commit -m "Sumo: bundle 82 official JSA kimarite photos for mobile cards"
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+            # Photos are not JSON: have release readiness check this commit so deploys are not blocked.
+            GH_TOKEN="${{ github.token }}" gh workflow run befn-release-readiness.yml --ref main
           fi

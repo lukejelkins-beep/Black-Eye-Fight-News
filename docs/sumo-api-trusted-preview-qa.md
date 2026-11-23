@@ -1,7 +1,7 @@
 # BEFN Sumo — 190-profile API-trusted preview handover
 
 **Date:** 15 November 2026  
-**Branch:** `feat/sumo-section-test-20261114` (draft PR #196; no merge to main)  
+**Branch:** `feat/sumo-section-test-20261114` (draft PR #196; no merge to main). *Superseded 23 Nov 2026: Sumo is built and deployed through `main`; this is kept as a record.*  
 **Companion source branch:** `research/sumo-190-career-cache-20261114` (draft PR #200)
 
 ## Change authorised
