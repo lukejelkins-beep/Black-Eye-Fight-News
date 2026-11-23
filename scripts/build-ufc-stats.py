@@ -718,9 +718,10 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
             "roundWinRate": (windows["career"]["judging"] or {}).get("roundWinRate"),
             # [overall, striking, grappling, wrestling, defence, form] roster percentiles (form /100)
             # and the same four skills as division percentiles.
-            "rating": None if not rating else [rating["overall"]] + [rating["skills"][k]["roster"] for k in ufc_ratings.SKILLS]
-                      + [rating["form"]["score"]],
-            "divisionRating": None if not rating else [rating["skills"][k]["division"] for k in ufc_ratings.SKILLS],
+            "rating": None if not rating else [None] * 5 + [rating["form"]["score"]] if rating.get("provisional") else
+                      [rating["overall"]] + [rating["skills"][k]["roster"] for k in ufc_ratings.SKILLS] + [rating["form"]["score"]],
+            "divisionRating": None if not rating else [None] * 4 if rating.get("provisional") else
+                              [rating["skills"][k]["division"] for k in ufc_ratings.SKILLS],
         }
 
     index = {
