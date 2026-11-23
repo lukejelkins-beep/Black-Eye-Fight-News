@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-23T19:40:06.808Z",
-  "checkedAt": "2026-11-23T19:40:06.808Z",
+  "attemptedAt": "2026-11-23T20:32:25.572Z",
+  "checkedAt": "2026-11-23T20:32:25.572Z",
   "windowDays": 28,
-  "articlesChecked": 29,
+  "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 41,
+  "rssArticleCandidates": 42,
   "publisherSourcesConfigured": 32,
-  "linksFound": 17,
-  "newEmbedsVerified": 0,
+  "linksFound": 28,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -18,6 +18,25 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-23T19:00:00+00:00",
+      "discoveredAt": "2026-11-23T20:32:25.572Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/one/522934/christian-lee-responds-to-one-championship-stripping-his-welterweight-title-im-far-from-finished",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/Df-6_aLPFDk/"
+    },
     {
       "type": "post",
       "platform": "Instagram",
@@ -2323,25 +2342,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DfwhO17ATVL/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-16T19:00:00+00:00",
-      "discoveredAt": "2026-11-17T04:23:07.419Z",
-      "sourcePublisher": "MMA Junkie",
-      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/mma/blue-corner/2026/11/16/ufc-334-winner-loser-reactions-thrill-agony-gane-hokit-harrison-nunes/92815895007/",
-      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/DfxmFjyAmRg/"
     }
   ],
   "seenOriginals": [
@@ -3496,6 +3496,10 @@
     {
       "url": "https://www.instagram.com/reel/DgFz0F5zxiR/",
       "firstSeen": "2026-11-23T18:29:00.121Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/Df-6_aLPFDk/",
+      "firstSeen": "2026-11-23T20:32:25.572Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
