@@ -12,14 +12,16 @@ const cases=[
   {slug:'mason-jones',opponent:'alan-patrick',date:'2021-06-05',id:'9cdfcd164b48f55e'},
   {slug:'roosevelt-roberts',opponent:'kevin-croom',date:'2020-09-12',id:'e1bb0b615c02d715'}
 ];
-test('Mason Jones and Roosevelt Roberts remain blocked until genuine original native NC records are recovered',()=>{
+test('Mason Jones and Roosevelt Roberts are certified with their original no-contests as saved-history-gap bouts, no native NC fabricated',()=>{
  for(const {slug,opponent,date,id} of cases){
-  assert.equal(certified[slug],undefined,slug+' must not be prematurely certified');
-  const entry=inventory.fighters[slug];
-  assert.ok(entry,slug+' has an official source inventory entry');
-  const source=entry.bouts.find(b=>b.date===date&&b.result==='no_contest');
+  const entry=certified[slug];
+  assert.ok(entry,slug+' has an independent register entry');
+  assert.equal(inventory.fighters[slug],undefined,slug+' is no longer a source-only inventory gap');
+  const source=entry.bouts.find(b=>b.fightUrl==='https://ufcstats.com/fight-details/'+id);
   assert.ok(source,slug+' original no-contest must remain in official history');
-  assert.equal(source.independentUfcStatsFightUrl,'https://ufcstats.com/fight-details/'+id);
+  assert.equal(source.date,date);
+  assert.equal(source.result,'no_contest');
+  assert.equal(source.savedHistoryGap,true);
   assert.ok(source.opponent.toLowerCase().includes(opponent.split('-')[0]));
   const matches=Object.entries(rich.bouts).filter(([numeric,b])=>
    /^\d+$/.test(numeric)&&b.org==='ufc'&&b.status==='completed'&&
