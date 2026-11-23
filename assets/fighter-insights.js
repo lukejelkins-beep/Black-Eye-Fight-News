@@ -593,6 +593,8 @@
    '</ul></details>';
  }
  function renderV3Profile(f,v3,kind){
+  const fresh=freshRows(f);
+  if(fresh)v3={...v3,recent:fresh};
   // The V3 build ships metrics only; ratings come from the shared engine
   // unless a reviewed score has been stored in the data file.
   const ctx=v3Context();
@@ -901,7 +903,20 @@
  const secTime=s=>Number.isInteger(s)&&s>=0?
   Math.floor(s/60)+":"+String(s%60).padStart(2,"0"):"—";
  const plainDate=str=>String(str||"").replace(/^\s+/,"");
+ // Last five UFC fights. Where the stats build holds the fighter, they come from its file (kept current by the
+ // results import); the reviewed profile's "latest" and the V3 snapshot are from the day each was checked and miss
+ // a fight since. A name two fighters share is never matched on the name alone.
+ function isSharedName(key){try{return sharedNames.has(key)}catch(e){return false}}   // sharedNames is declared further down
+ function freshRows(f){
+  if(!f||!isUfcProfile(f)||(!f.statsSlug&&isSharedName(norm(f.name))))return null;
+  const s=statsFor(f),SP=window.BEFNStatsProfile;
+  if(!s?.fights?.length)return null;
+  return s.fights.slice(0,5).map(b=>({date:b.date,opponent:b.opponent,outcome:b.outcome,boutId:b.boutId,
+   method:SP?.methodText?SP.methodText(b):""}));
+ }
  function latestRows(f){
+  const fresh=freshRows(f);
+  if(fresh)return fresh;
   if(!f||!Array.isArray(f.latest))return [];
   return f.latest.filter(x=>x&&x.opponent&&/^(W|L|D|NC|WIN|LOSS|DRAW|NO CONTEST)$/i.test(String(x.outcome||x.result||"")))
     .slice(0,5);
