@@ -8,8 +8,8 @@ const stats={slug:"pilot",name:"Pilot",fights:[fight(3),fight(2,"L"),fight(1)]};
 const list={schema:1,approved:783,certifiedThrough:"2026-12-01",certified:{pilot:3}};
 const on={verifiedCareerView:true};
 
-test("the flag is off in the repository",()=>{
- assert.equal(read("data/ufc-v4-flags.json").verifiedCareerView,false);
+test("the career view flag exists and is a boolean (the owner turns it on with a PR, #429)",()=>{
+ assert.equal(typeof read("data/ufc-v4-flags.json").verifiedCareerView,"boolean");
 });
 test("flag off: nothing changes and no history is called verified",()=>{
  assert.equal(sp.careerState(stats,list,{verifiedCareerView:false}).view,"off");
@@ -95,8 +95,8 @@ const certN=n=>({schema:1,approved:783,certifiedThrough:"2026-12-01",certified:{
 const p_on={periodViews:true};
 const labels=html=>[...html.matchAll(/data-bsp-window="(\w+)"/g)].map(m=>m[1]);
 
-test("period views are off in the repository",()=>{
- assert.equal(read("data/ufc-v4-flags.json").periodViews,false);
+test("the period views flag exists and is a boolean (the owner turns it on with a PR, #429)",()=>{
+ assert.equal(typeof read("data/ufc-v4-flags.json").periodViews,"boolean");
 });
 test("flag off: the existing switcher, whatever the fighter",()=>{
  const st=big(12),mode=sp.periodMode(st,certN(12),{periodViews:false});
