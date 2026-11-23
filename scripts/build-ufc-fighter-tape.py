@@ -28,6 +28,8 @@ import urllib.request
 from collections import defaultdict
 from pathlib import Path
 
+from ufc_card_aliases import load_aliases
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 OUT = DATA / "ufc-fighter-tape.json"
@@ -92,7 +94,7 @@ def index_export(text: str) -> dict:
 def build(card_names: dict, index: dict) -> dict:
     fighters, missing, ambiguous = {}, [], []
     for key in sorted(card_names):
-        rows = index.get(key, [])
+        rows = index.get(key) or index.get(load_aliases().get(key, ""), [])
         if len(rows) > 1:
             ambiguous.append(card_names[key])
             continue

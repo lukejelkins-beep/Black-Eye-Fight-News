@@ -31,6 +31,8 @@ import json
 import sys
 from pathlib import Path
 
+from ufc_card_aliases import with_aliases
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ufc_snapshot_scores as sc  # noqa: E402
 
@@ -139,7 +141,7 @@ def main() -> int:
         if w:
             windows[d["slug"]] = w
         divisions[d["slug"]] = fighter_division(d, wc.get(d["slug"]) or {})
-    out = build(snapshots, index.get("names", {}), windows, divisions, index.get("asOf"))
+    out = build(snapshots, with_aliases(index.get("names", {})), windows, divisions, index.get("asOf"))
     text = json.dumps(out, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
     path = Path(args.out)
     if not path.exists() or path.read_text() != text:
