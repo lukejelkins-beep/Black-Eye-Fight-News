@@ -497,6 +497,14 @@
   for(const [k,v] of Object.entries(d.names))statsNames.set(k,v);
   update();
  }).catch(()=>{});
+ // Overall (all-promotion) records from scripts/build-ufc-overall-records.py. A fighter without one
+ // keeps showing the UFC record, labelled as that.
+ const overallRecords=new Map();
+ let overallLoaded=false;
+ const overallLoading=fetch("data/ufc-overall-records.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema===1&&d.records)for(const [k,v] of Object.entries(d.records))overallRecords.set(k,v);
+ }).catch(()=>{}).then(()=>{overallLoaded=true;update();});
+ const recordText=r=>r.W+"–"+r.L+(r.D?"–"+r.D:"")+(r.NC?" ("+r.NC+" NC)":"");
  // A fighter the stats build holds takes a rating from that build or from
  // nowhere; until names.json has loaded we do not yet know, so show no number.
  const ratedByBuild=f=>!!f?.statsSlug||!statsMeta||statsNames.has(norm(f?.name));
@@ -522,7 +530,7 @@
  function statsProfile(id,ready){
   const slug=/^ufc--([a-z0-9-]+)$/.exec(id||"")?.[1];
   if(!slug)return null;
-  if(statsMeta&&statsCache.get(slug)){
+  if(statsMeta&&overallLoaded&&statsCache.get(slug)){
    const d=statsCache.get(slug),known=byName.get(norm(d.name));
    if(known&&isUfcProfile(known)&&statsNames.get(norm(d.name))===slug)return known;
    if(!statsProfiles.has(slug)){
@@ -530,14 +538,14 @@
     if(window.BEFNStatsProfile?.breakdownsSound?.(d)===false)d.hideBreakdowns=true;
     const f={id,statsSlug:slug,noPortrait:statsNames.get(norm(d.name))!==slug,name:d.name,sport:"MMA",organisation:"UFC",division:d.division||"",credentials:[],
      category:d.champion?"Champion":ranked?"Ranked #"+d.officialRank:"UFC fighter",
-     recordLabel:"UFC record",
-     record:c.fights?c.W+"–"+c.L+(c.D?"–"+c.D:"")+(c.NC?" ("+c.NC+" NC)":""):"",
+     recordLabel:overallRecords.has(slug)?"Overall record":"UFC record",
+     record:overallRecords.has(slug)?recordText(overallRecords.get(slug)):c.fights?recordText(c):"",
      latest:(d.fights||[]).slice(0,5).map(b=>({date:b.date,opponent:b.opponent,outcome:b.outcome,method:STATS_METHOD[b.method]||""}))};
     statsProfiles.set(slug,f);byId.set(id,f);
    }
    return statsProfiles.get(slug);
   }
-  Promise.all([namesLoading,fetch("data/ufc-stats/fighters/"+slug+".json").then(r=>r.ok?r.json():null)]).then(([,d])=>{
+  Promise.all([namesLoading,overallLoading,fetch("data/ufc-stats/fighters/"+slug+".json").then(r=>r.ok?r.json():null)]).then(([,,d])=>{
    if(d?.schema!==1||!statsMeta)return;
    statsCache.set(slug,d);ready?.();
   }).catch(()=>{});
