@@ -117,14 +117,16 @@
  // fights on record, never as a full career. Pure: callers pass the two small data files.
  function careerState(stats,certified,flags){
   if(flags?.verifiedCareerView!==true)return {view:"off"};
-  const n=(stats?.fights||[]).length,want=certified?.certified?.[stats?.slug];
-  if(certified?.schema!==1||certified.approved!==783)return {view:"on",verified:false,reason:"no_certified_list"};
+  const all=stats?.fights||[],want=certified?.certified?.[stats?.slug],through=certified?.certifiedThrough;
+  if(certified?.schema!==1||certified.approved!==783||!/^\d{4}-\d{2}-\d{2}$/.test(through||""))return {view:"on",verified:false,reason:"no_certified_list"};
   if(!Number.isSafeInteger(want))return {view:"on",verified:false,reason:"not_certified"};
-  if(n!==want)return {view:"on",verified:false,reason:"count_mismatch"};
-  const ids=new Set((stats.fights||[]).map(f=>String(f.boutId)));
-  if(ids.size!==n||(stats.fights||[]).some(f=>!f.date||!f.opponent||!["W","L","D","NC"].includes(f.outcome)))
+  // The certificate covers the official fights up to its evidence cutoff. A fight after that day is newer, not a gap.
+  const covered=all.filter(f=>String(f.date)<=through),later=all.length-covered.length;
+  if(covered.length!==want)return {view:"on",verified:false,reason:"count_mismatch"};
+  const ids=new Set(all.map(f=>String(f.boutId)));
+  if(ids.size!==all.length||all.some(f=>!f.date||!f.opponent||!["W","L","D","NC"].includes(f.outcome)))
    return {view:"on",verified:false,reason:"invalid_bouts"};
-  return {view:"on",verified:true,count:n};
+  return {view:"on",verified:true,count:want,later,through};
  }
  function history(stats,skipBoutIds,career){
   const skip=new Set((skipBoutIds||[]).map(String));
@@ -133,11 +135,11 @@
   if(!rows.length){
    // Every fight is already in the recent list above; the career status still has to be said, in one line.
    return career?.view==="on"&&n?'<p class="bsp-career-note'+(career.verified?' is-verified':'')+'">'+
-    (career.verified?'Verified UFC career · '+n+' official '+(n===1?'fight':'fights')+' · independently verified':
+    (career.verified?'Verified UFC career · '+career.count+' official '+(career.count===1?'fight':'fights')+' · independently verified to '+career.through+(career.later?' · '+career.later+' newer':''):
      'UFC fights on record · '+n+' · full career not yet independently verified')+'</p>':"";
   }
   const title=career?.view!=="on"?'Full UFC history <small>'+n+' fights</small>':
-   career.verified?'Verified UFC career <small>'+n+' official fights · independently verified</small>':
+   career.verified?'Verified UFC career <small>'+career.count+' official fights · independently verified to '+career.through+(career.later?' · '+career.later+' newer':'')+'</small>':
    'UFC fights on record <small>'+n+' · full career not yet independently verified</small>';
   return '<details class="bsp-history'+(career?.verified?' is-verified':'')+'"><summary>'+title+'</summary><ul>'+
    rows.map(f=>{
