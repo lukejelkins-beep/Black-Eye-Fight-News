@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles4';
+const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles4-r2a';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',

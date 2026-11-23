@@ -111,11 +111,35 @@
  }
 
  // ---- Full UFC history ----
- function history(stats,skipBoutIds){
+ // R2 verified career view (release tracker #171). Fail closed and OFF by default: only when the flag is on, the
+ // fighter is in the independently certified list, and the fights BEFN holds are exactly the certified number
+ // (no fight missing, none extra) is the history called a verified career. Anyone else is labelled as the
+ // fights on record, never as a full career. Pure: callers pass the two small data files.
+ function careerState(stats,certified,flags){
+  if(flags?.verifiedCareerView!==true)return {view:"off"};
+  const n=(stats?.fights||[]).length,want=certified?.certified?.[stats?.slug];
+  if(certified?.schema!==1||certified.approved!==783)return {view:"on",verified:false,reason:"no_certified_list"};
+  if(!Number.isSafeInteger(want))return {view:"on",verified:false,reason:"not_certified"};
+  if(n!==want)return {view:"on",verified:false,reason:"count_mismatch"};
+  const ids=new Set((stats.fights||[]).map(f=>String(f.boutId)));
+  if(ids.size!==n||(stats.fights||[]).some(f=>!f.date||!f.opponent||!["W","L","D","NC"].includes(f.outcome)))
+   return {view:"on",verified:false,reason:"invalid_bouts"};
+  return {view:"on",verified:true,count:n};
+ }
+ function history(stats,skipBoutIds,career){
   const skip=new Set((skipBoutIds||[]).map(String));
   const rows=(stats.fights||[]).filter(f=>!skip.has(String(f.boutId)));
-  if(!rows.length)return "";
-  return '<details class="bsp-history"><summary>Full UFC history <small>'+(stats.fights||[]).length+' fights</small></summary><ul>'+
+  const n=(stats.fights||[]).length;
+  if(!rows.length){
+   // Every fight is already in the recent list above; the career status still has to be said, in one line.
+   return career?.view==="on"&&n?'<p class="bsp-career-note'+(career.verified?' is-verified':'')+'">'+
+    (career.verified?'Verified UFC career · '+n+' official '+(n===1?'fight':'fights')+' · independently verified':
+     'UFC fights on record · '+n+' · full career not yet independently verified')+'</p>':"";
+  }
+  const title=career?.view!=="on"?'Full UFC history <small>'+n+' fights</small>':
+   career.verified?'Verified UFC career <small>'+n+' official fights · independently verified</small>':
+   'UFC fights on record <small>'+n+' · full career not yet independently verified</small>';
+  return '<details class="bsp-history'+(career?.verified?' is-verified':'')+'"><summary>'+title+'</summary><ul>'+
    rows.map(f=>{
     const klass=f.outcome==="W"?"is-win":f.outcome==="L"?"is-loss":"is-draw";
     return '<li class="'+klass+'"><div class="bsp-history-row"><span class="befn-power-result '+klass+'">'+esc(f.outcome)+'</span>'+
@@ -205,7 +229,7 @@
    ' fighters with 3+ UFC fights in that time.</small></div>';
  }
 
- const api={breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
+ const api={careerState,breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
  scope.BEFNStatsProfile=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);

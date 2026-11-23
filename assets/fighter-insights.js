@@ -320,7 +320,7 @@
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
    proSection('fights','Recent fights','Up to five recorded UFC fights',
     (history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'<p class="befn-pro-note">Fight history awaiting verification</p>')+
-    (SP&&stats?SP.history(stats,matched):''))+
+    (SP&&stats?SP.history(stats,matched,careerFor(stats)):''))+
    '</div>'+
    proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages appear once UFC statistics are recorded',
     SP&&stats?SP.statsPanel(stats):
@@ -497,6 +497,12 @@
   for(const [k,v] of Object.entries(d.names))statsNames.set(k,v);
   update();
  }).catch(()=>{});
+ // R2 verified career view: both files are tiny; the flag is OFF in the repository.
+ let careerFlags=null,careerList=null;
+ fetch("data/ufc-v4-flags.json").then(r=>r.ok?r.json():null).then(d=>{careerFlags=d;}).catch(()=>{})
+  .then(()=>careerFlags?.verifiedCareerView===true?fetch("data/ufc-v4-certified-careers.json").then(r=>r.ok?r.json():null).then(d=>{careerList=d;}).catch(()=>{}):null)
+  .then(()=>update());
+ const careerFor=stats=>window.BEFNStatsProfile.careerState(stats,careerList,careerFlags);
  // Overall (all-promotion) records from scripts/build-ufc-overall-records.py. A fighter without one
  // keeps showing the UFC record, labelled as that.
  const overallRecords=new Map();
@@ -685,7 +691,7 @@
     '<div class="befn-pro-fight-side"><span class="befn-power-result '+klass+'">'+symbol+'</span>'+
     (band?'<small class="befn-pro-opp is-'+band.toLowerCase()+'" title="Opponent strength: '+Math.round(q*100)+'th percentile">'+band+' opp.</small>':'')+
     '</div>'+(SP&&stats?SP.fightDetail(stats,{boutId:b.boutId,date:b.date,opponent:b.opponent}):'')+'</li>';
-  }).join('')+'</ul>'+(SP&&stats?SP.history(stats,v3.recent.map(b=>b.boutId)):'');
+  }).join('')+'</ul>'+(SP&&stats?SP.history(stats,v3.recent.map(b=>b.boutId),careerFor(stats)):'');
   const statsBody=SP&&stats?SP.statsPanel(stats):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
    '<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small>'+
    (rank?'<b class="befn-pro-rank">'+escapeHTML(rank)+'</b>':'')+'</div>').join('')+'</div>';
