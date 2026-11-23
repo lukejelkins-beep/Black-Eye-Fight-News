@@ -64,6 +64,23 @@ def truth_fights(stats_dir: Path) -> list:
     return sorted(rows, key=lambda r: (r["date"], r["bout"]))
 
 
+def full_truth(mod, end: dt.date) -> list:
+    """Every decided and undecided fight in the archive, including fighters who have since left the UFC.
+
+    truth_fights() on data/ufc-stats only sees the current active roster, so a fight with a fighter who has since left
+    is missing (survivorship). Here the stats build is run once as of `end` with the 36-month active filter lifted, so
+    every fighter with a UFC fight gets a file. Ratings are unchanged: they are still built as of each cutoff.
+    """
+    old = mod.ACTIVE_MONTHS
+    mod.ACTIVE_MONTHS = 10 ** 4
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            mod.build(end, Path(tmp), None, True)
+            return truth_fights(Path(tmp))
+    finally:
+        mod.ACTIVE_MONTHS = old
+
+
 def snapshot(mod, cutoff: dt.date) -> dict:
     """slug -> {overall, form, winrate, status, division, sex} from the stats as they stood on `cutoff`."""
     with tempfile.TemporaryDirectory() as tmp:
@@ -240,6 +257,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--first", default="2024-01-01")
     ap.add_argument("--end", default=None, help="last test day (default: the stats build's as-of date)")
+    ap.add_argument("--truth", choices=("current", "full"), default="current",
+                    help="test fights from the current active roster (default, reproduces the 23 Nov note) or from every archived fighter")
     ap.add_argument("--out")
     args = ap.parse_args()
     stats_dir = DATA / "ufc-stats"
@@ -247,7 +266,8 @@ def main() -> int:
     cutoffs = quarter_starts(dt.date.fromisoformat(args.first), end - dt.timedelta(days=45))
     mod = load_stats_module()
     snaps = {c: snapshot(mod, c) for c in cutoffs}
-    text = report(evaluate(truth_fights(stats_dir), snaps, cutoffs, end), cutoffs, end) + "\n"
+    truth = full_truth(mod, end) if args.truth == "full" else truth_fights(stats_dir)
+    text = report(evaluate(truth, snaps, cutoffs, end), cutoffs, end) + "\n"
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8")
     else:
