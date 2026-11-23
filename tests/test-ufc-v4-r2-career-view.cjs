@@ -86,3 +86,39 @@ test("every certified fighter with a stats file matches the certificate up to th
  assert(checked>=740,"most certified fighters are checked");
  assert(missing.length<=2,"only the two shared-name fighters have no stats file: "+missing);
 });
+
+/* ---- R3 period views ---- */
+const many=n=>Array.from({length:n},(_,i)=>({...fight(i+1),date:"2026-01-"+String(i+1).padStart(2,"0"),outcome:i===2?"NC":"W"}));
+const win=(fights,statFights)=>({fights,statFights,W:fights,L:0,D:0,NC:0,winsBy:{ko:1,sub:0},rates:{slpm:3}});
+const big=n=>({slug:"vet",name:"Vet",fights:many(n),windows:{last5:win(Math.min(5,n),Math.min(5,n)),last10:win(Math.min(10,n),Math.min(10,n)-1),l12:win(2,2),l36:win(4,4),career:win(n,n-1)}});
+const certN=n=>({schema:1,approved:783,certifiedThrough:"2026-12-01",certified:{vet:n}});
+const p_on={periodViews:true};
+const labels=html=>[...html.matchAll(/data-bsp-window="(\w+)"/g)].map(m=>m[1]);
+
+test("period views are off in the repository",()=>{
+ assert.equal(read("data/ufc-v4-flags.json").periodViews,false);
+});
+test("flag off: the existing switcher, whatever the fighter",()=>{
+ const st=big(12),mode=sp.periodMode(st,certN(12),{periodViews:false});
+ assert.equal(mode.on,false);
+ assert.deepEqual(labels(sp.statsPanel(st,mode)),["last5","l12","l36","career"]);
+ assert.deepEqual(labels(sp.statsPanel(st)),["last5","l12","l36","career"],"no argument, same");
+});
+test("flag on, verified career: Last 5 / Last 10 / Career, and a Last N only with N fights",()=>{
+ assert.deepEqual(labels(sp.statsPanel(big(12),sp.periodMode(big(12),certN(12),p_on))),["last5","last10","career"]);
+ assert.deepEqual(labels(sp.statsPanel(big(7),sp.periodMode(big(7),certN(7),p_on))),["last5","career"],"7 fights: no Last 10");
+ assert.deepEqual(labels(sp.statsPanel(big(3),sp.periodMode(big(3),certN(3),p_on))),["career"],"3 fights: Career only");
+});
+test("flag on, not verified: the existing switcher, never the new views",()=>{
+ const st=big(12);
+ for(const c of [null,certN(11),{...certN(12),certified:{}}]){
+  const mode=sp.periodMode(st,c,p_on);
+  assert.equal(mode.on,false);
+  assert.deepEqual(labels(sp.statsPanel(st,mode)),["last5","l12","l36","career"]);
+ }
+});
+test("the 12 and 36 month windows are replaced, and the first view states its measured count",()=>{
+ const st=big(12),html=sp.statsPanel(st,sp.periodMode(st,certN(12),p_on));
+ assert.match(html,/5 fights with stats/,"Last 5: all five measured");
+ assert(!/data-bsp-window="l12"|data-bsp-window="l36"/.test(html));
+});

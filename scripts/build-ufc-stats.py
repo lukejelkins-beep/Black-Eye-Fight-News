@@ -519,6 +519,7 @@ def windows_for(history: list[dict], as_of: dt.date) -> dict:
         weights.append(round(math.pow(0.5, max(age, 0) / HALF_LIFE_DAYS), 6))
     return {
         "last5": aggregate(history[:5]),
+        "last10": aggregate(history[:10]),   # R3 period view; a no-contest holds its chronological slot
         "l12": aggregate(within(12)),
         "l36": aggregate(within(36)),
         "career": aggregate(history),

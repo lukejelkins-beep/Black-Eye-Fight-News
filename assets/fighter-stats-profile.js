@@ -9,6 +9,7 @@
  const norm=s=>String(s||"").normalize("NFKD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
  const eventTitle=t=>(scope.BEFNEventTitle||(x=>x))(t);
  const WINDOWS=[["last5","Last 5"],["l12","12 months"],["l36","36 months"],["career","Career"]];
+ const PERIOD_VIEWS=[["last5","Last 5"],["last10","Last 10"],["career","Career"]];
  const METHOD={ko:"KO/TKO",sub:"Submission",dec:"Decision",draw:"Draw",nc:"No contest",dq:"DQ"};
  const cache=new Map();      // slug -> stats file (for the window switcher)
  const selected=new Map();   // slug -> chosen window
@@ -151,8 +152,25 @@
  }
 
  // ---- Stats with a window switcher (keeps the nine tiles) ----
- function statsPanel(stats){
+ // R3 period views (release tracker #171), OFF by default (periodViews in data/ufc-v4-flags.json). Only for a fighter
+ // whose full UFC career is independently verified and matches the certificate (the R2 rule): the switcher is then
+ // Last 5 / Last 10 / Career, a "Last N" view only when the fighter has N official fights (never a shorter window under
+ // a longer name, never an older fight substituted), and a no-contest holds its chronological slot. Anyone else keeps
+ // the existing switcher unchanged.
+ const periods=new Map();    // slug -> period mode
+ function periodMode(stats,certified,flags){
+  if(flags?.periodViews!==true)return {on:false};
+  const c=careerState(stats,certified,{verifiedCareerView:true});
+  return c.verified?{on:true,total:(stats.fights||[]).length}:{on:false,reason:c.reason};
+ }
+ function views(stats,period){
+  if(!period?.on)return WINDOWS;
+  const n=(stats.fights||[]).length;
+  return PERIOD_VIEWS.filter(([k])=>k==="career"||n>=(k==="last10"?10:5));
+ }
+ function statsPanel(stats,period){
   cache.set(stats.slug,stats);
+  periods.set(stats.slug,period||{on:false});
   return '<div class="bsp-stats" data-bsp-stats="'+esc(stats.slug)+'">'+statsInner(stats)+'</div>';
  }
  // Head, body and legs, like distance, clinch and ground, must add up to the
@@ -165,9 +183,12 @@
   }))));
  }
  function statsInner(stats){
-  const key=selected.get(stats.slug)||"last5";
+  const period=periods.get(stats.slug),list=views(stats,period);
+  const chosen=selected.get(stats.slug);
+  const key=list.some(([k])=>k===chosen)?chosen:list[0][0];
   const w=stats.windows?.[key]||{};const r=w.rates||{};
-  const sample=w.statFights?w.statFights+" fight"+(w.statFights===1?"":"s")+" with stats":"No fights in this window";
+  const sample=w.statFights?(period?.on&&w.fights>w.statFights?w.statFights+" of "+w.fights+" fights measured":
+   w.statFights+" fight"+(w.statFights===1?"":"s")+" with stats"):"No fights in this window";
   const tiles=[
    [record(w),"Record",w.fights?w.fights+" fights":""],
    [w.fights?String(w.winsBy?.ko??0):"—","KO/TKO wins",""],
@@ -185,7 +206,7 @@
   const pace=Number.isFinite(r.paceRetention)?'<div class="bsp-pace"><span class="bsp-tag">Pace</span><strong>'+
    Math.round(r.paceRetention*100)+'%</strong><small>Output after round 1, compared with round 1'+
    (r.paceRetention>=1?' (keeps or raises the pace)':' (slows after round 1)')+'</small></div>':"";
-  return '<div class="bsp-windows" role="group" aria-label="Time window">'+WINDOWS.map(([k,l])=>
+  return '<div class="bsp-windows" role="group" aria-label="Time window">'+list.map(([k,l])=>
    '<button type="button" data-bsp-window="'+k+'" aria-pressed="'+(k===key)+'">'+esc(l)+'</button>').join("")+'</div>'+
    '<div class="befn-pro-tiles">'+tiles.map(([v,l,s])=>'<div><strong>'+esc(v)+'</strong><span>'+esc(l)+'</span>'+
     (s?'<small>'+esc(s)+'</small>':'')+'</div>').join("")+'</div>'+
@@ -232,7 +253,7 @@
    'Average of '+div.fighters+' '+esc(div.label)+' fighters with 3+ UFC fights in that time.</small></div>';
  }
 
- const api={careerState,breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
+ const api={periodMode,careerState,breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
  scope.BEFNStatsProfile=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);

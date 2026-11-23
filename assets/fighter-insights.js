@@ -323,7 +323,7 @@
     (SP&&stats?SP.history(stats,matched,careerFor(stats)):''))+
    '</div>'+
    proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages appear once UFC statistics are recorded',
-    SP&&stats?SP.statsPanel(stats):
+    SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags)):
     '<div class="befn-pro-tiles">'+metric.map(([label,value,note])=>'<div><strong>'+escapeHTML(String(value))+'</strong>'+
     '<span>'+escapeHTML(label)+'</span><small>'+escapeHTML(note)+'</small></div>').join('')+'</div>')+
    (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
@@ -500,7 +500,7 @@
  // R2 verified career view: both files are tiny; the flag is OFF in the repository.
  let careerFlags=null,careerList=null;
  fetch("data/ufc-v4-flags.json").then(r=>r.ok?r.json():null).then(d=>{careerFlags=d;}).catch(()=>{})
-  .then(()=>careerFlags?.verifiedCareerView===true?fetch("data/ufc-v4-certified-careers.json").then(r=>r.ok?r.json():null).then(d=>{careerList=d;}).catch(()=>{}):null)
+  .then(()=>(careerFlags?.verifiedCareerView===true||careerFlags?.periodViews===true)?fetch("data/ufc-v4-certified-careers.json").then(r=>r.ok?r.json():null).then(d=>{careerList=d;}).catch(()=>{}):null)
   .then(()=>update());
  const careerFor=stats=>window.BEFNStatsProfile.careerState(stats,careerList,careerFlags);
  // Overall (all-promotion) records from scripts/build-ufc-overall-records.py. A fighter without one
@@ -716,7 +716,7 @@
     (band?'<small class="befn-pro-opp is-'+band.toLowerCase()+'" title="Opponent strength: '+Math.round(q*100)+'th percentile">'+band+' opp.</small>':'')+
     '</div>'+(SP&&stats?SP.fightDetail(stats,{boutId:b.boutId,date:b.date,opponent:b.opponent}):'')+'</li>';
   }).join('')+'</ul>'+(SP&&stats?SP.history(stats,v3.recent.map(b=>b.boutId),careerFor(stats)):'');
-  const statsBody=SP&&stats?SP.statsPanel(stats):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
+  const statsBody=SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags)):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
    '<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small>'+
    (rank?'<b class="befn-pro-rank">'+escapeHTML(rank)+'</b>':'')+'</div>').join('')+'</div>';
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
