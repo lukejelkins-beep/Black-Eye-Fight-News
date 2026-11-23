@@ -1,8 +1,8 @@
 {
   "platform": "X",
-  "status": "connected",
+  "status": "unavailable",
   "type": "original-source-posts",
-  "attemptedAt": "2026-11-22T23:27:26.553Z",
+  "attemptedAt": "2026-11-23T01:29:20.906Z",
   "checkedAt": "2026-11-22T23:27:26.553Z",
   "updatedAt": "2026-11-22T23:27:26.553Z",
   "trackedAccounts": 141,
@@ -22,9 +22,9 @@
   "returnedCount": 20,
   "matchedOriginalPosts": 20,
   "postCount": 180,
-  "paidXApiCalls": 156,
+  "paidXApiCalls": 157,
   "budgetMonth": "2026-11",
-  "estimatedReservedUsd": 0.5304,
+  "estimatedReservedUsd": 0.5338,
   "monthlyBudgetUsd": 2,
   "billingNote": "Pessimistic request reservations, not confirmed provider charges. Provider prepaid balance and disabled auto top-ups remain necessary.",
   "posts": [
@@ -4039,5 +4039,7 @@
       "verifiedHandle": "CageWarriors",
       "sourceProvider": "twitterapi.io"
     }
-  ]
+  ],
+  "message": "X API temporarily unavailable; existing public posts retained.",
+  "lastErrorCode": "TwitterAPI.io returned HTTP 503"
 }
