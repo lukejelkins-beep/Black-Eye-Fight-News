@@ -1,6 +1,6 @@
 # UFC rating calibration, R4 research (23 November 2026)
 
-**Research only. Nothing here is on the site, changes a rating or approves a release.** R4 (V4 ratings, classification, leaderboards) is still not approved for live use (tracker #171). This tests the rating that is live today (`scripts/ufc_ratings.py`, "ratings v2"), not the experimental `ufc-v4-shadow-0.1` from draft #109, which is not on `main`.
+**Research only. Nothing here changes a rating or the site.** R4 (V4 ratings, classification, leaderboards) is approved by the owner (confirmed 2026-11-23, tracker #171); this note tests the claim it can honestly make. This tests the rating that is live today (`scripts/ufc_ratings.py`, "ratings v2"), not the experimental `ufc-v4-shadow-0.1` from draft #109, which is not on `main`.
 
 ## What was asked and how it was tested
 The R4 checklist asks for a frozen algorithm, an independent hold-out calibration, division and era fairness checks, and validation of minimum samples and no-contest handling. This is a walk-forward hold-out: for each quarter from 2024 the stats build is re-run as it stood on that day (fights from that day on left out, algorithm unchanged), and every decided fight in the following quarter is scored with a one-parameter logistic of the rating difference. The slope is fitted only on earlier quarters. Reproduce with `python3 scripts/ufc-r4-calibration.py`.
@@ -19,8 +19,8 @@ The R4 checklist asks for a frozen algorithm, an independent hold-out calibratio
 - **No credential, ranking or market information** was used or tested. Betting or "favourite" language should not be built on this.
 - **One slope, no intercept, no home or corner effect.** A richer model was not tried.
 
-## What would be needed before any R4 release
-An owner decision on what claim the rating makes (descriptive percentile vs prediction), a larger or de-biased test set (include fighters who left), and the design review in the release checklist. None is started.
+## What is still open for R4
+The owner has decided what claim the rating makes: descriptive only, a percentile among rated UFC fighters, never a forecast (#432). Still open: a larger or de-biased test set (include fighters who left) and the design review in the release checklist. Neither is started.
 
 ---
 
