@@ -118,7 +118,7 @@
  // fights on record, never as a full career. Pure: callers pass the two small data files.
  function careerState(stats,certified,flags){
   if(flags?.verifiedCareerView!==true)return {view:"off"};
-  const all=stats?.fights||[],want=certified?.certified?.[stats?.slug],through=certified?.certifiedThrough;
+  const all=stats?.fights||[],key=certified?.statsAliases?.[stats?.slug]||stats?.slug,want=certified?.certified?.[key],through=certified?.certifiedThrough;
   if(certified?.schema!==1||certified.approved!==783||!/^\d{4}-\d{2}-\d{2}$/.test(through||""))return {view:"on",verified:false,reason:"no_certified_list"};
   if(!Number.isSafeInteger(want))return {view:"on",verified:false,reason:"not_certified"};
   // The certificate covers the official fights up to its evidence cutoff. A fight after that day is newer, not a gap.

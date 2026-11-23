@@ -73,18 +73,24 @@ test("the certified list states the evidence cutoff it covers",()=>{
  assert.match(read("data/ufc-v4-certified-careers.json").certifiedThrough,/^\d{4}-\d{2}-\d{2}$/);
 });
 
-test("every certified fighter with a stats file matches the certificate up to the cutoff",()=>{
+test("every certified fighter has a stats file (directly or by alias) that matches the certificate up to the cutoff",()=>{
  const careers=read("data/ufc-v4-certified-careers.json");
- let checked=0,missing=[];
+ const byStats=Object.fromEntries(Object.entries(careers.statsAliases).map(([st,cert])=>[cert,st]));
+ let checked=0;
  for(const [slug,want] of Object.entries(careers.certified)){
-  const path=__dirname+"/../data/ufc-stats/fighters/"+slug+".json";
-  if(!fs.existsSync(path)){missing.push(slug);continue;}
+  const path=__dirname+"/../data/ufc-stats/fighters/"+(byStats[slug]||slug)+".json";
+  assert(fs.existsSync(path),slug+" has no stats file (alias: "+byStats[slug]+")");
   const fights=JSON.parse(fs.readFileSync(path,"utf8")).fights.filter(f=>f.date<=careers.certifiedThrough);
   assert.equal(fights.length,want,slug+" stats vs certificate");
   checked++;
  }
- assert(checked>=740,"most certified fighters are checked");
- assert(missing.length<=2,"only the two shared-name fighters have no stats file: "+missing);
+ assert.equal(checked,careers.certifiedCount,"all certified fighters are checked");
+});
+
+test("the two known aliases are the ones the builder verifies",()=>{
+ const careers=read("data/ufc-v4-certified-careers.json");
+ assert.deepEqual(careers.statsAliases,{"bruno-silva":"bruno-gustavo-da-silva","hyunsung-park":"park-hyun-sung"});
+ for(const cert of Object.values(careers.statsAliases))assert(careers.certified[cert],cert+" is certified");
 });
 
 /* ---- R3 period views ---- */
@@ -121,4 +127,11 @@ test("the 12 and 36 month windows are replaced, and the first view states its me
  const st=big(12),html=sp.statsPanel(st,sp.periodMode(st,certN(12),p_on));
  assert.match(html,/5 fights with stats/,"Last 5: all five measured");
  assert(!/data-bsp-window="l12"|data-bsp-window="l36"/.test(html));
+});
+
+test("a fighter filed under another slug in the stats build is verified through the alias",()=>{
+ const list={...certN(3),certified:{"cert-slug":3},statsAliases:{vet:"cert-slug"}};
+ assert.equal(sp.careerState(big(3),list,on).verified,true);
+ assert.equal(sp.careerState(big(3),{...list,statsAliases:{}},on).reason,"not_certified","no alias, no certificate");
+ assert.equal(sp.careerState(big(4),list,on).reason,"count_mismatch","the alias does not loosen the count rule");
 });

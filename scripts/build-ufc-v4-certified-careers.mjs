@@ -15,7 +15,20 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const OUT=path.join(root,'data/ufc-v4-certified-careers.json');
 const read=f=>JSON.parse(fs.readFileSync(path.join(root,f),'utf8'));
-export function buildCertifiedCareers(queue,approval,progress){
+/* Two certified fighters are filed under a different slug in the stats build (the collector names them "Bruno Silva" and
+ * "HyunSung Park"). stats slug -> certified slug. Each is verified bout for bout against the register before it is written;
+ * a mismatch stops the build rather than attaching a certificate to the wrong fighter. */
+export const STATS_ALIASES={'bruno-silva':'bruno-gustavo-da-silva','hyunsung-park':'park-hyun-sung'};
+const fold=t=>String(t||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const RESULT={win:'W',loss:'L',no_contest:'NC',draw:'D'};
+export function verifyAlias(statsFile,registerEntry,cutoff){
+ const stats=(statsFile.fights||[]).filter(f=>f.date<=cutoff);
+ const bouts=registerEntry?.bouts||[];
+ if(!bouts.length||stats.length!==bouts.length)return false;
+ return bouts.every(b=>stats.some(f=>fold(f.opponent)===fold(b.opponent)&&f.outcome===RESULT[b.result]&&
+  Math.abs(Date.parse(f.date)-Date.parse(b.date))<=86400000));
+}
+export function buildCertifiedCareers(queue,approval,progress,aliases){
  const lanes=queue?.lanes||{};
  const through=progress?.summary?.certificationEvidenceCutoff;
  if(!/^\d{4}-\d{2}-\d{2}$/.test(through||''))throw new Error('no certification evidence cutoff in the Stage 3 report');
@@ -36,11 +49,20 @@ export function buildCertifiedCareers(queue,approval,progress){
   note:'Fighters whose full UFC career is independently verified (Stage 3 certified lane), with the number of official UFC bouts certified. Feeds the R2 verified career view, which is OFF by default (data/ufc-v4-flags.json). Rebuild with scripts/build-ufc-v4-certified-careers.mjs.',
   approvalHash:approval?.approvedRosterSha256,approved:783,certifiedCount:Object.keys(careers).length,
   queueAsOf:queue.asOf,certifiedThrough:through,
+  statsAliases:aliases||{},
   certified:Object.fromEntries(Object.entries(careers).sort(([a],[b])=>a<b?-1:a>b?1:0))
  };
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const out=buildCertifiedCareers(read('qa/ufc-v4-certification-queue.json'),read('data/ufc-36-month-roster-approval.json'),read('qa/ufc-36-month-stage3-progress.json'));
+ const progress=read('qa/ufc-36-month-stage3-progress.json'),register=read('data/ufc-independent-full-career-verification.json').fighters;
+ const aliases={};
+ for(const [statsSlug,certSlug] of Object.entries(STATS_ALIASES)){
+  const p=path.join(root,'data/ufc-stats/fighters/'+statsSlug+'.json');
+  if(!fs.existsSync(p)||!verifyAlias(JSON.parse(fs.readFileSync(p,'utf8')),register[certSlug],progress.summary.certificationEvidenceCutoff))
+   throw new Error('alias '+statsSlug+' -> '+certSlug+' does not match the register bout for bout');
+  aliases[statsSlug]=certSlug;
+ }
+ const out=buildCertifiedCareers(read('qa/ufc-v4-certification-queue.json'),read('data/ufc-36-month-roster-approval.json'),progress,aliases);
  const text=JSON.stringify(out,null,1)+'\n';
  if(process.argv.includes('--check')){
   if(!fs.existsSync(OUT)||fs.readFileSync(OUT,'utf8')!==text){console.error('data/ufc-v4-certified-careers.json is out of date');process.exit(1);}
