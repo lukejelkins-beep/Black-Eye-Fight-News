@@ -35,6 +35,12 @@ The records include world and continental events in amateur MMA, wrestling, judo
 - Screened all 921 against 25 official Commonwealth Games documents, covering 7,110 pages after excluding overlaps. The files include all sports at Glasgow 2014 and Gold Coast 2018, combat-sport results at Birmingham 2022, and Glasgow 2026 judo and boxing draws. Draws and final results support different claims. [Commonwealth source ledger](screening/commonwealth-coverage.json)
 - Screened the cohort against 28 IMMAF, WMMAA and FIAS sources, plus a second group of federation books covering wrestling, Wushu, Muay Thai, kickboxing and related events. The second group had 24 usable books, including three Games wrestling books. Source URLs, file hashes where available, parsed scope and exclusions are archived. [IMMAF and FIAS coverage](screening/immaf-fias-coverage.json) · [Other federation books](screening/federation-books.json)
 
+## Overnight research run (24-25 Nov)
+
+Owner-approved overnight run. Official results were screened with free local scripts, then strong matches were checked against the UFC bio before recording. Sources are used only where their terms don't forbid automated collection and robots.txt allows it.
+- **Sambo (FIAS results):** Ihor Potieria, 2017 World Sambo Championships, combat sambo 100 kg bronze for Ukraine. His UFC bio names combat sambo from age 10 and an International Master of Sports title. Ramaška's and Dvalishvili's World silvers were already recorded. A USA 58 kg Julian Marquez (2025) is a different person.
+- **Amateur MMA (IMMAF bout listings, 2014-2022):** 25 roster names appear, and 23 already have IMMAF records here. Lawrence Lui (2019 Oceania) and Otari Tanzilovi (2019 European) are new, but IMMAF's pages are behind a Cloudflare check. Their files are `needs_review` with the bout links.
+
 ## Coverage remaining
 
 The [921-row ledger](screening/roster-pass-2026-11-24.json) records the result of this pass for every fighter in each lane. **This completes the roster-wide screen of the listed sources.** Full individual credential histories across all three lanes remain open. “No verified claim in this pass” means the searches and source coverage described here did not produce a claim we could substantiate.
