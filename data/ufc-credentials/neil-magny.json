@@ -6,22 +6,56 @@
  "name": "Neil Magny",
  "identity": {
   "status": "confirmed",
-  "note": "Not checked; no research performed."
+  "note": "UFC welterweight born in Brooklyn, Army veteran, SIUE graduate; matched by UFC athlete page."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
  "flags": [
-  "needs_escalation"
+  "thin_sources"
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
-   "sources_checked": [],
-   "note": "Not researched: web search budget was exhausted before this fighter could be checked."
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wikipedia says he wrestled and played football at Thornwood High School in the Chicago Southland; no results given.",
+     "source_url": "https://en.wikipedia.org/wiki/Neil_Magny",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/neil-magny"
+    },
+    {
+     "name": "SIUE Athletics wrestling rosters 2005-06 to 2011-12",
+     "checked": "2026-11-24",
+     "url": "https://siuecougars.com/sports/wrestling/roster/2007-08"
+    },
+    {
+     "name": "Sherdog 5 Things feature",
+     "checked": "2026-11-24",
+     "url": "https://www.sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Neil-Magny-145585"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Neil_Magny"
+    }
+   ],
+   "note": "His UFC page mentions no wrestling. Wikipedia, citing a 2015 interview, says he wrestled in high school (Thornwood HS, Illinois) and in college but names no college team. He is not on Southern Illinois Edwardsville wrestling rosters for 2006-07, 2007-08, 2008-09 or 2011-12 (other seasons in that spa"
   },
   "grappling": {
    "status": "unknown",
@@ -66,6 +100,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.600Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.121Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

@@ -6,15 +6,14 @@
  "name": "Jim Miller",
  "identity": {
   "status": "confirmed",
-  "note": "Matched by name and division on UFC/ESPN pages."
+  "note": "UFC.com: Jim Miller, lightweight, born Newton NJ, age 43, attended Virginia Tech, trains at Miller Brothers MMA in Sparta NJ. The Sherdog and NJ Sports Heroes profiles describe the same UFC fighter, brother of Dan Miller."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
  "flags": [
-  "thin_sources",
-  "needs_escalation"
+  "thin_sources"
  ],
  "disciplines": {
   "wrestling": {
@@ -25,36 +24,63 @@
    ],
    "claims": [
     {
-     "text": "Wrestled at Sparta High School in New Jersey.",
-     "source_url": "https://en.wikipedia.org/wiki/Jim_Miller_(fighter)",
-     "source_name": "Wikipedia",
-     "tier": "C",
+     "text": "Wrestled for Sparta High School in New Jersey, as did his brothers.",
+     "source_url": "https://www.njsportsheroes.com/jimmillerbxw.html",
+     "source_name": "NJ Sports Heroes",
+     "tier": "B",
      "retrieved": "2026-11-24",
      "year": null,
      "level": "high_school",
-     "display": "claimed"
+     "display": "sourced"
     },
     {
-     "text": "Reportedly spent one season on the Virginia Tech wrestling team as a walk-on before leaving over disagreements with the program.",
-     "source_url": "https://en.wikipedia.org/wiki/Jim_Miller_(fighter)",
-     "source_name": "Wikipedia",
-     "tier": "C",
+     "text": "Joined the Virginia Tech wrestling team as a freshman walk-on and left after about one year; season not stated.",
+     "source_url": "https://www.njsportsheroes.com/jimmillerbxw.html",
+     "source_name": "NJ Sports Heroes",
+     "tier": "B",
      "retrieved": "2026-11-24",
      "year": null,
      "level": "ncaa_d1",
      "ncaa_division": "I",
      "ncaa_result": "participant",
-     "display": "claimed"
+     "display": "sourced"
+    },
+    {
+     "text": "Sherdog also reports that he joined the Virginia Tech wrestling team and soon left after a dispute with the coaches.",
+     "source_url": "https://sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Jim-Miller-159371",
+     "source_name": "Sherdog",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
     }
    ],
    "sources_checked": [
     {
-     "name": "Wikipedia (lead only)",
+     "name": "UFC.com athlete page",
      "checked": "2026-11-24",
-     "url": "https://en.wikipedia.org/wiki/Jim_Miller_(fighter)"
+     "url": "https://www.ufc.com/athlete/jim-miller"
+    },
+    {
+     "name": "Sherdog, 5 Things You Might Not Know About Jim Miller",
+     "checked": "2026-11-24",
+     "url": "https://sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Jim-Miller-159371"
+    },
+    {
+     "name": "NJ Sports Heroes, Jim Miller",
+     "checked": "2026-11-24",
+     "url": "https://www.njsportsheroes.com/jimmillerbxw.html"
+    },
+    {
+     "name": "Virginia Tech Athletics wrestling roster 2001-02 (no athletes listed)",
+     "checked": "2026-11-24",
+     "url": "https://hokiesports.com/sports/wrestling/roster/2001-02"
     }
    ],
-   "note": "Wikipedia, citing nj.com, Star-Ledger and About.com, says one year at Virginia Tech (NCAA D-I) as a walk-on. Season not stated and no Virginia Tech roster page found; search budget ran out before it could be confirmed."
+   "note": "Two independent secondary sources (Sherdog; NJ Sports Heroes) say he joined the Virginia Tech wrestling team (NCAA Division I) and left after about a year, but neither gives the season. No Virginia Tech roster or NCAA record confirms it: the official 2001-02 roster page holds no athlete list. They d"
   },
   "grappling": {
    "status": "unknown",
@@ -99,6 +125,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.573Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.116Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

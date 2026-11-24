@@ -6,22 +6,40 @@
  "name": "Bassil Hafez",
  "identity": {
   "status": "confirmed",
-  "note": "Not checked; no research performed."
+  "note": "UFC.com athlete page: Bassil Hafez, welterweight, born Pennsylvania, age 33; UFC.com and Sherdog features describe him as a Philadelphia native who now trains in Colorado."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
- "flags": [
-  "needs_escalation"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
    "status": "unknown",
    "levels": [],
    "claims": [],
-   "sources_checked": [],
-   "note": "Not researched: web search budget was exhausted before this fighter could be checked."
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/bassil-hafez"
+    },
+    {
+     "name": "UFC.com feature (UFC Vegas 77)",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/news/bassil-hafez-fights-honor-his-parents-welterweight-ufc-vegas-77"
+    },
+    {
+     "name": "Sherdog, 5 Things You Might Not Know About Bassil Hafez",
+     "checked": "2026-11-24",
+     "url": "https://sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Bassil-Hafez-193830"
+    },
+    {
+     "name": "Web search for high school or college wrestling",
+     "checked": "2026-11-24"
+    }
+   ],
+   "note": "No school, college or federation wrestling record found. His UFC page says he left community college before the first semester, so NCAA wrestling is unlikely. UFC.com and Sherdog features say he came to combat sports through jiu-jitsu at about 18. The UFC page lists his style as freestyle and wrestl"
   },
   "grappling": {
    "status": "unknown",
@@ -66,6 +84,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.538Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.109Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

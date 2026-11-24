@@ -6,11 +6,11 @@
  "name": "Dakota Hope",
  "identity": {
   "status": "confirmed",
-  "note": "Matched by name and UFC athlete page."
+  "note": "UFC featherweight born in Georgia, age 29, UFC debut April 2026; matched by UFC athlete page."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
  "flags": [
   "thin_sources"
@@ -23,7 +23,7 @@
    ],
    "claims": [
     {
-     "text": "Wrestled one season for New Mexico Highlands University in NCAA Division II.",
+     "text": "His UFC bio says he wrestled one season for New Mexico Highlands University in NCAA Division II; the school's archived rosters do not list him and the season is not stated.",
      "source_url": "https://www.ufc.com/athlete/dakota-hope",
      "source_name": "UFC.com",
      "tier": "C",
@@ -42,12 +42,22 @@
      "url": "https://www.ufc.com/athlete/dakota-hope"
     },
     {
-     "name": "UFCalendar",
+     "name": "New Mexico Highlands Athletics wrestling rosters (archived seasons)",
      "checked": "2026-11-24",
-     "url": "https://www.ufcalendar.com/fighters/dakota-hope"
+     "url": "https://nmhuathletics.com/sports/wrestling/roster/2018"
+    },
+    {
+     "name": "New Mexico Highlands Athletics 2015-16 wrestling roster",
+     "checked": "2026-11-24",
+     "url": "https://nmhuathletics.com/sports/wrestling/roster/2015-16"
+    },
+    {
+     "name": "New Mexico Highlands Athletics 2018-19 wrestling roster",
+     "checked": "2026-11-24",
+     "url": "https://nmhuathletics.com/sports/wrestling/roster/2018-2019"
     }
    ],
-   "note": "One year at New Mexico Highlands (Division II) per UFC.com and UFCalendar; years unstated and no roster or NCAA result found."
+   "note": "Only his UFC bio says he wrestled one year at New Mexico Highlands (NCAA Division II). He does not appear on the school's archived wrestling rosters for 2013-14, 2014-15, 2015-16, 2017-18 (listed as 2018), 2018-19, 2019-20 or 2020-21; no 2016-17 roster is archived, so that season could not be checke"
   },
   "grappling": {
    "status": "unknown",
@@ -92,6 +102,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.555Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.114Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

@@ -6,35 +6,33 @@
  "name": "Mark Choinski",
  "identity": {
   "status": "confirmed",
-  "note": "UFC.com lists UW-Oshkosh; school news item names him and West Allis Central High School."
+  "note": "UFC.com: Mark Choinski, lightweight, born Milwaukee, age 29, attended UW-Oshkosh, self-reports three NCAA All-America honors. The UW Oshkosh, National Wrestling Hall of Fame and Advance-Titan pages name the same UW-Oshkosh wrestler from West Allis Central."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
- "flags": [
-  "thin_sources"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
-   "status": "claimed",
+   "status": "verified",
    "levels": [
     "high_school",
     "ncaa_other"
    ],
    "claims": [
     {
-     "text": "Won a Wisconsin high school state title in his senior year at West Allis Central.",
+     "text": "Won a Wisconsin high school state title as a senior at West Allis Central.",
      "source_url": "https://uwosh.edu/today/?p=48948",
      "source_name": "UW Oshkosh",
      "tier": "B",
      "retrieved": "2026-11-24",
-     "year": 2014,
+     "year": null,
      "level": "high_school",
      "display": "sourced"
     },
     {
-     "text": "Wrestled at UW Oshkosh (NCAA Division III) at 157 lb as a sophomore and won a conference title.",
+     "text": "Wrestled at 157 lb for UW-Oshkosh, an NCAA Division III program, in 2016-17 and won the conference tournament title at that weight.",
      "source_url": "https://uwosh.edu/today/?p=48948",
      "source_name": "UW Oshkosh",
      "tier": "B",
@@ -46,7 +44,7 @@
      "display": "sourced"
     },
     {
-     "text": "Placed sixth at 157 lb at the 2017 NCAA Division III championships, earning All-America honors, per the school.",
+     "text": "Placed sixth at 157 lb at the 2017 NCAA Division III championships for UW-Oshkosh, earning All-America honors.",
      "source_url": "https://uwosh.edu/today/?p=48948",
      "source_name": "UW Oshkosh",
      "tier": "B",
@@ -58,36 +56,87 @@
      "display": "sourced"
     },
     {
-     "text": "Self-reports 3x NCAA All-American on his UFC page; only the 2017 result is backed elsewhere.",
-     "source_url": "https://www.ufc.com/athlete/mark-choinski",
-     "source_name": "UFC.com",
-     "tier": "C",
+     "text": "The National Wrestling Hall of Fame records him as a 2017 Division III All-American, sixth at 157 lb, for UW-Oshkosh.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13766",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2017,
+     "level": "ncaa_other",
+     "ncaa_division": "III",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    },
+    {
+     "text": "The National Wrestling Hall of Fame records him as a 2018 Division III All-American, fifth at 157 lb, for UW-Oshkosh.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13766",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "ncaa_other",
+     "ncaa_division": "III",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    },
+    {
+     "text": "The National Wrestling Hall of Fame records him as a 2019 Division III All-American, third at 165 lb, for UW-Oshkosh.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13766",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
      "retrieved": "2026-11-24",
      "year": 2019,
      "level": "ncaa_other",
      "ncaa_division": "III",
      "ncaa_result": "all_american",
-     "display": "claimed"
+     "display": "sourced"
+    },
+    {
+     "text": "The UW Oshkosh student paper reports he finished third at the 2019 NCAA Division III championships, his third All-America honor.",
+     "source_url": "https://advancetitan.com/sports/2019/03/14/choinski-caps-career-with-third-place-at-nationals",
+     "source_name": "Advance-Titan",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2019,
+     "level": "ncaa_other",
+     "ncaa_division": "III",
+     "ncaa_result": "all_american",
+     "display": "sourced"
     }
    ],
    "sources_checked": [
     {
-     "name": "UFC.com athlete page",
+     "name": "National Wrestling Hall of Fame, All-American record",
      "checked": "2026-11-24",
-     "url": "https://www.ufc.com/athlete/mark-choinski"
+     "url": "https://nwhof.org/hall_of_fame/bio/13766"
     },
     {
-     "name": "UW Oshkosh news",
+     "name": "UW Oshkosh Today",
      "checked": "2026-11-24",
      "url": "https://uwosh.edu/today/?p=48948"
     },
     {
-     "name": "Cageside Press profile",
+     "name": "Advance-Titan (UW Oshkosh student newspaper)",
      "checked": "2026-11-24",
-     "url": "https://cagesidepress.com/2025/06/07/welcome-to-the-ufc-mark-choinski/"
+     "url": "https://advancetitan.com/sports/2019/03/14/choinski-caps-career-with-third-place-at-nationals"
+    },
+    {
+     "name": "NCAA.com 2019 Division III championships recap (no content returned)",
+     "checked": "2026-11-24",
+     "url": "https://www.ncaa.com/news/wrestling/2019-03-06/2019-diii-wrestling-championships-augsburg-claims-national-title"
+    },
+    {
+     "name": "UW-Oshkosh athletics wrestling bio and releases (HTTP 403)",
+     "checked": "2026-11-24",
+     "url": "https://uwosh.prestosports.com/sports/wrest/2017-18/bios/ChoinskiMark"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/mark-choinski"
     }
    ],
-   "note": "All-American finish rests on the school's own news item and his UFC page; the NCAA bracket was not found. Claim of 3x All-American is self-reported and unconfirmed."
+   "note": "Three NCAA Division III All-America finishes for UW-Oshkosh: 6th at 157 lb (2017), 5th at 157 lb (2018), 3rd at 165 lb (2019). The National Wrestling Hall of Fame record and UW Oshkosh/Advance-Titan reports agree. The ncaa.com recap could not be read, and the school's own release pages returned 403."
   },
   "grappling": {
    "status": "unknown",
@@ -136,10 +185,22 @@
    "input_tokens": 0,
    "output_tokens": 0,
    "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.120Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
   }
  ],
  "validation": {
   "dropped": [],
-  "adjustments": []
+  "adjustments": [
+   "wrestling:tier_A_held_at_B_unlisted_host:uwosh.edu"
+  ]
  }
 }

@@ -6,22 +6,69 @@
  "name": "Cody Garbrandt",
  "identity": {
   "status": "confirmed",
-  "note": "Not checked; no research performed."
+  "note": "UFC athlete page: Cody Garbrandt, bantamweight, age 35, born Uhrichsville, Ohio."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
  "flags": [
-  "needs_escalation"
+  "thin_sources"
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
-   "sources_checked": [],
-   "note": "Not researched: web search budget was exhausted before this fighter could be checked."
+   "status": "claimed",
+   "levels": [
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "UFC profile lists a 2007 state wrestling title in Ohio, without saying whether it was a high school or youth event.",
+     "source_url": "https://www.ufc.com/athlete/cody-garbrandt",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2007,
+     "level": "other",
+     "level_note": "State title, age group and organiser not stated",
+     "display": "claimed"
+    },
+    {
+     "text": "UFC profile lists a second-place state wrestling finish in 2008.",
+     "source_url": "https://www.ufc.com/athlete/cody-garbrandt",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2008,
+     "level": "other",
+     "level_note": "State runner-up, age group and organiser not stated",
+     "display": "claimed"
+    },
+    {
+     "text": "UFC profile lists him as a Senior National All-American in wrestling in 2010, without naming the event or organiser.",
+     "source_url": "https://www.ufc.com/athlete/cody-garbrandt",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2010,
+     "level": "other",
+     "level_note": "National placing, event and organiser not stated",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/cody-garbrandt"
+    },
+    {
+     "name": "OHSAA past state results archive (2007-2009 files not available)",
+     "checked": "2026-11-24",
+     "url": "https://www.ohsaa.org/sports/wr/Boys/PastResults/1998.pdf"
+    }
+   ],
+   "note": "Only self-reported pre-college credentials on his UFC profile. No college or NCAA wrestling found: the UFC page names no college. OHSAA archives for 2007-2009 were not retrievable and two searches found no state-tournament record, so the state title and its level are unconfirmed."
   },
   "grappling": {
    "status": "unknown",
@@ -66,6 +113,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.553Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.113Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

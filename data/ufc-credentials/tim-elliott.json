@@ -6,57 +6,79 @@
  "name": "Tim Elliott",
  "identity": {
   "status": "confirmed",
-  "note": "UFC flyweight; UFC bio lists Labette and Central Oklahoma"
+  "note": "UFC athlete page: flyweight, age 39, attended Labette and the University of Central Oklahoma, describes himself as a national champion collegiate wrestler. NCAA results list Tim Elliott of Central Oklahoma at 125 and 133, matching his weight range."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
- "flags": [
-  "thin_sources",
-  "needs_escalation"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
-   "status": "claimed",
+   "status": "verified",
    "levels": [
-    "high_school",
     "ncaa_other",
     "other"
    ],
    "claims": [
     {
-     "text": "Won the 2007 NJCAA national wrestling title while at Labette Community College, per Wikipedia citing NJCAA results.",
-     "source_url": "https://en.wikipedia.org/wiki/Tim_Elliott",
-     "source_name": "Wikipedia",
-     "tier": "C",
+     "text": "Placed fifth at 133 pounds for Central Oklahoma at the 2008 NCAA Division II championships, beating John Putman of Minnesota State Mankato in the fifth-place bout.",
+     "source_url": "https://ncaanewsarchive.s3.amazonaws.com/2008/division-ii/photo-finish-decides-wrestling-crown---03-17-08-ncaa-news.html",
+     "source_name": "NCAA News",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2008,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    },
+    {
+     "text": "Placed fourth at 125 pounds for Central Oklahoma at the 2009 NCAA Division II championships, losing the third-place bout to Oliver 4-3 after a semifinal loss to champion Arsenia Barksdale.",
+     "source_url": "https://ncaanewsarchive.s3.amazonaws.com/2009/Division-II/numero_uno_mavericks_stampede_to_title_03_16_09_ncaa_news.html",
+     "source_name": "NCAA News",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2009,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    },
+    {
+     "text": "Central Oklahoma's All-America list includes him at 133 in 2007-08 and at 125 in 2008-09, confirming he wrestled for the Bronchos both seasons.",
+     "source_url": "https://bronchosports.com/sports/2010/9/13/WREST_0913105239.aspx",
+     "source_name": "University of Central Oklahoma Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2009,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Won the 125-pound title at the 2009 NCAA Division II Super Regional Two tournament for Central Oklahoma, qualifying for nationals.",
+     "source_url": "https://bronchosports.com/news/2009/3/1/WREST_0301094013.aspx",
+     "source_name": "University of Central Oklahoma Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2009,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Labette Community College lists him as its national champion at 125 pounds in 2007, a junior college title.",
+     "source_url": "https://labette.edu/athletics/wrestling/honors.html",
+     "source_name": "Labette Community College Athletics",
+     "tier": "B",
      "retrieved": "2026-11-24",
      "year": 2007,
      "level": "other",
      "level_note": "NJCAA",
-     "display": "claimed"
-    },
-    {
-     "text": "Wrestled at the University of Central Oklahoma and earned All-American honors, per Wikipedia and his UFC bio; years and placings not found.",
-     "source_url": "https://en.wikipedia.org/wiki/Tim_Elliott",
-     "source_name": "Wikipedia",
-     "tier": "C",
-     "retrieved": "2026-11-24",
-     "year": null,
-     "level": "ncaa_other",
-     "ncaa_division": "II",
-     "ncaa_result": "all_american",
-     "display": "claimed"
-    },
-    {
-     "text": "Won a Kansas state high school title at Wichita South in 2005.",
-     "source_url": "https://en.wikipedia.org/wiki/Tim_Elliott",
-     "source_name": "Wikipedia",
-     "tier": "C",
-     "retrieved": "2026-11-24",
-     "year": 2005,
-     "level": "high_school",
-     "display": "claimed"
+     "display": "sourced"
     }
    ],
    "sources_checked": [
@@ -66,12 +88,37 @@
      "url": "https://www.ufc.com/athlete/tim-elliott"
     },
     {
-     "name": "Wikipedia",
+     "name": "NCAA News archive, 2008 Division II championships results",
      "checked": "2026-11-24",
-     "url": "https://en.wikipedia.org/wiki/Tim_Elliott"
+     "url": "https://ncaanewsarchive.s3.amazonaws.com/2008/division-ii/photo-finish-decides-wrestling-crown---03-17-08-ncaa-news.html"
+    },
+    {
+     "name": "NCAA News archive, 2009 Division II championships results",
+     "checked": "2026-11-24",
+     "url": "https://ncaanewsarchive.s3.amazonaws.com/2009/Division-II/numero_uno_mavericks_stampede_to_title_03_16_09_ncaa_news.html"
+    },
+    {
+     "name": "Central Oklahoma athletics wrestling All-America history",
+     "checked": "2026-11-24",
+     "url": "https://bronchosports.com/sports/2010/9/13/WREST_0913105239.aspx"
+    },
+    {
+     "name": "Central Oklahoma athletics 2009 Super Regional recap",
+     "checked": "2026-11-24",
+     "url": "https://bronchosports.com/news/2009/3/1/WREST_0301094013.aspx"
+    },
+    {
+     "name": "Labette Community College wrestling honors",
+     "checked": "2026-11-24",
+     "url": "https://labette.edu/athletics/wrestling/honors.html"
+    },
+    {
+     "name": "NJCAA 2007 national brackets PDF (could not be downloaded)",
+     "checked": "2026-11-24",
+     "url": "https://stats.njcaa.org/sports/wrest/2006-07/national_championship/2007NJCAABrackets2.pdf"
     }
    ],
-   "note": "Only UFC bio and Wikipedia found; NCAA D2 All-American years/places and UCO roster not confirmed (search limit reached)."
+   "note": "Two-time NCAA Division II All-American for Central Oklahoma: fifth at 133 in 2008 and fourth at 125 in 2009, both from NCAA News bracket results. Earlier NJCAA title at 125 for Labette in 2007 rests on the college's honors list. First-pass Wichita South high school title claim removed: no source che"
   },
   "grappling": {
    "status": "unknown",
@@ -120,10 +167,24 @@
    "input_tokens": 0,
    "output_tokens": 0,
    "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.122Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
   }
  ],
  "validation": {
   "dropped": [],
-  "adjustments": []
+  "adjustments": [
+   "wrestling:tier_A_held_at_B_unlisted_host:ncaanewsarchive.s3.amazonaws.com",
+   "wrestling:tier_A_held_at_B_unlisted_host:ncaanewsarchive.s3.amazonaws.com",
+   "wrestling:tier_A_school_athletics_participation:bronchosports.com"
+  ]
  }
 }

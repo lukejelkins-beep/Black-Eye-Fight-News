@@ -6,15 +6,14 @@
  "name": "Austin Bashi",
  "identity": {
   "status": "confirmed",
-  "note": "Name and division match UFC coverage."
+  "note": "UFC athlete page: Austin Bashi, featherweight, age 25, born in Michigan."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
  "flags": [
-  "thin_sources",
-  "needs_escalation"
+  "thin_sources"
  ],
  "disciplines": {
   "wrestling": {
@@ -24,14 +23,14 @@
    ],
    "claims": [
     {
-     "text": "Wrestled at West Bloomfield High School in Michigan and was a two-time All-State wrestler, per UFC coverage.",
-     "source_url": "https://www.ufc.com/news/austin-bashi-believes-in-all-his-work",
+     "text": "His UFC profile says he was a two-time All-State wrestler, presumably in high school in Michigan; no school or years are given.",
+     "source_url": "https://www.ufc.com/athlete/austin-bashi",
      "source_name": "UFC.com",
-     "tier": "B",
+     "tier": "C",
      "retrieved": "2026-11-24",
-     "year": 2017,
+     "year": null,
      "level": "high_school",
-     "display": "sourced"
+     "display": "claimed"
     }
    ],
    "sources_checked": [
@@ -41,12 +40,12 @@
      "url": "https://www.ufc.com/athlete/austin-bashi"
     },
     {
-     "name": "Sherdog Prospect Watch",
+     "name": "UFC.com feature article",
      "checked": "2026-11-24",
-     "url": "https://www.sherdog.com/news/articles/Sherdog-Prospect-Watch-Austin-Bashi-192462"
+     "url": "https://www.ufc.com/news/austin-bashi-believes-in-all-his-work"
     }
    ],
-   "note": "Only high school wrestling found; no college wrestling found, no NCAA source checked."
+   "note": "Only the self-reported two-time All-State line on his UFC profile, with no school named. The first-pass West Bloomfield High School detail was removed: the cited UFC article does not mention wrestling or a school. No college or NCAA wrestling found, and no MHSAA record surfaced in a search."
   },
   "grappling": {
    "status": "unknown",
@@ -91,6 +90,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.538Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.107Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

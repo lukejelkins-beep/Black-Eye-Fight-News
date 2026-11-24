@@ -6,22 +6,130 @@
  "name": "Thomas Gantt",
  "identity": {
   "status": "confirmed",
-  "note": "Not checked; no research performed."
+  "note": "UFC.com: Tommy (Thomas) Gantt, lightweight, born Belleville IL, age 33, holds NC State degrees and was an NC State wrestler and assistant coach. NC State Athletics and the Technician student paper describe the same NC State 157-lb wrestler from Cahokia High School, Illinois."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
- "flags": [
-  "needs_escalation"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
-   "sources_checked": [],
-   "note": "Not researched: web search budget was exhausted before this fighter could be checked."
+   "status": "verified",
+   "levels": [
+    "high_school",
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled for Cahokia High School in Illinois before NC State.",
+     "source_url": "https://technicianonline.com/?p=107281",
+     "source_name": "Technician",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "sourced"
+    },
+    {
+     "text": "On the NC State wrestling roster (NCAA Division I) for the 2012-13 season.",
+     "source_url": "https://gopack.com/roster.aspx?rp_id=1665",
+     "source_name": "NC State Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Finished ninth at the NCAA Division I championships, one place short of All-American, in the season before his redshirt year (taken as 2014).",
+     "source_url": "https://technicianonline.com/?p=107281",
+     "source_name": "Technician",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2014,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "On the NC State wrestling roster (NCAA Division I) for the 2015-16 season as a redshirt senior at 157 lb.",
+     "source_url": "https://gopack.com/roster.aspx?rp_id=2911",
+     "source_name": "NC State Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Seeded second at 157 lb at the 2016 NCAA championships, he lost the seventh-place match 6-3 to Oklahoma State's Joseph Smith and finished eighth, earning All-American status.",
+     "source_url": "https://www.themat.com/news/2016/march/19/live-penn-state-clinches-ncaa-championship-while-terao-and-epperly-steal-the-show",
+     "source_name": "TheMat.com (USA Wrestling)",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    },
+    {
+     "text": "FloWrestling's 2016 NCAA placement list has him eighth at 157 lb for NC State.",
+     "source_url": "https://www.flowrestling.org/articles/5049966-by-the-numbers-2016-ncaas",
+     "source_name": "FloWrestling",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/thomas-gantt"
+    },
+    {
+     "name": "NC State Athletics roster 2012-13",
+     "checked": "2026-11-24",
+     "url": "https://gopack.com/roster.aspx?rp_id=1665"
+    },
+    {
+     "name": "NC State Athletics roster 2015-16",
+     "checked": "2026-11-24",
+     "url": "https://gopack.com/roster.aspx?rp_id=2911"
+    },
+    {
+     "name": "TheMat.com 2016 NCAA championships finals-day report",
+     "checked": "2026-11-24",
+     "url": "https://www.themat.com/news/2016/march/19/live-penn-state-clinches-ncaa-championship-while-terao-and-epperly-steal-the-show"
+    },
+    {
+     "name": "FloWrestling, By The Numbers: 2016 NCAAs",
+     "checked": "2026-11-24",
+     "url": "https://www.flowrestling.org/articles/5049966-by-the-numbers-2016-ncaas"
+    },
+    {
+     "name": "Technician (NC State student newspaper)",
+     "checked": "2026-11-24",
+     "url": "https://technicianonline.com/?p=107281"
+    },
+    {
+     "name": "NC State News 2016 NCAA preview",
+     "checked": "2026-11-24",
+     "url": "https://news.ncsu.edu/?p=340591"
+    }
+   ],
+   "note": "NCAA Division I at NC State, 2012-13 to 2015-16, with a redshirt in 2014-15. He was eighth at 157 lb at the 2016 NCAA championships (All-American); TheMat and FloWrestling agree. A 2016 Technician article says he was ninth, one spot short of All-American, in an earlier season, which is taken to be 2"
   },
   "grappling": {
    "status": "unknown",
@@ -66,6 +174,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.611Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.122Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

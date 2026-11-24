@@ -6,22 +6,41 @@
  "name": "Charles Johnson",
  "identity": {
   "status": "confirmed",
-  "note": "Not checked; no research performed."
+  "note": "UFC flyweight born in Topeka, Kansas, age 35; matched by UFC athlete page. Common name, so only the UFC page was used."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
  "flags": [
-  "needs_escalation"
+  "thin_sources"
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
-   "sources_checked": [],
-   "note": "Not researched: web search budget was exhausted before this fighter could be checked."
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Self-reports being an All-State wrestler in high school; school and year not given.",
+     "source_url": "https://www.ufc.com/athlete/charles-johnson",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/charles-johnson"
+    }
+   ],
+   "note": "His UFC page lists All-State high school wrestling and five years as a high school wrestling coach. His college sport was Division I cross-country and track, not wrestling. No college wrestling found."
   },
   "grappling": {
    "status": "unknown",
@@ -66,6 +85,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.544Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.111Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

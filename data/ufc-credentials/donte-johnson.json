@@ -6,15 +6,14 @@
  "name": "Donte Johnson",
  "identity": {
   "status": "confirmed",
-  "note": "Name and hometown match UFC coverage."
+  "note": "UFC.com: Donte Johnson, middleweight, born Fond du Lac, WI, age 27, played college football at Minnesota Duluth. A KFIZ article from 2026-03-09 covers the same Fond du Lac native's UFC win over Cody Brundage and his high school wrestling."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
  "flags": [
-  "thin_sources",
-  "needs_escalation"
+  "thin_sources"
  ],
  "disciplines": {
   "wrestling": {
@@ -24,12 +23,22 @@
    ],
    "claims": [
     {
-     "text": "Finished a senior high school season 39-3 as a heavyweight in Fond du Lac, Wisconsin, per a local report.",
+     "text": "Went 39-3 as a senior heavyweight at Fond du Lac High School in Wisconsin, graduating in 2017.",
      "source_url": "https://kfiz.com/?p=137383",
      "source_name": "KFIZ",
      "tier": "B",
      "retrieved": "2026-11-24",
-     "year": 2016,
+     "year": 2017,
+     "level": "high_school",
+     "display": "sourced"
+    },
+    {
+     "text": "Named Fox Valley Association wrestler of the year as a senior and holds Fond du Lac's record for career wins by a heavyweight (136).",
+     "source_url": "https://kfiz.com/?p=137383",
+     "source_name": "KFIZ",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2017,
      "level": "high_school",
      "display": "sourced"
     }
@@ -41,12 +50,21 @@
      "url": "https://www.ufc.com/athlete/donte-johnson"
     },
     {
-     "name": "UFC.com news",
+     "name": "KFIZ, Donte Johnson UFC feature",
      "checked": "2026-11-24",
-     "url": "https://www.ufc.com/news/donte-johnson-clocking-in-ufc-vegas-110"
+     "url": "https://kfiz.com/?p=137383"
+    },
+    {
+     "name": "Fond du Lac Cardinal athletic alumni site (unreachable, HTTP 503)",
+     "checked": "2026-11-24",
+     "url": "https://www.cardinalathleticalumni.com/?p=19036"
+    },
+    {
+     "name": "Web search for college wrestling background",
+     "checked": "2026-11-24"
     }
    ],
-   "note": "He mentions college football and wrestling in an interview but no school found; college wrestling unconfirmed."
+   "note": "High school only. His UFC page names college football at Minnesota Duluth and mentions no college wrestling; no NCAA wrestling record was found. A Fond du Lac alumni site (cardinalathleticalumni.com) appears to report a fourth-place WIAA Division 1 state finish at heavyweight in 2016, but it returne"
   },
   "grappling": {
    "status": "unknown",
@@ -91,6 +109,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T08:55:43.558Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.115Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,
