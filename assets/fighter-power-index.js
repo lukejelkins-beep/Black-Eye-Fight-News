@@ -110,7 +110,7 @@
    koLossRate:finite(stats.koTkoLossRate,0,1),tdAgainst15:finite(stats.tdAgainstAvg,0,20)
   };
  }
- const WW={td15:.25,tdAcc:.12,ctrlShare:.23,tdDef:.14,tdAbs15:.12,ctrlAgainstShare:.10,rev15:.04};
+ const WW={td15:.25,tdAcc:.12,ctrlShare:.23,tdDef:.17,tdAbs15:.06,ctrlAgainstShare:.12,rev15:.05};
  const GW={sub15:.20,subWinShare:.28,ctrlShare:.12,subLossShare:.15,subAbs15:.10,rev15:.08,ctrlAgainstShare:.07};
  const SW={slpm:.10,diffPm:.17,strAcc:.08,kd15:.11,koWinShare:.14,strDef:.12,sapm:.09,kdAbs15:.12,koLossShare:.07};
  function metricSpecs(d){

@@ -51,10 +51,10 @@ RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "
 RESULTS_MEAN = 1500          # an idle rating drifts back toward this
 RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as established
 # Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Owner's mix: results carry
-# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 69/31 with the 2026-11-24 skills), same total
+# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 70/30 with the 2026-11-24 skills), same total
 # spread as the fit.
 # The four skills keep their old relative weights.
-BLEND = {"results": 1.783, "skills": 1.236}
+BLEND = {"results": 1.781, "skills": 1.223}
 # Old weights were striking 25, defence 25, wrestling 20, grappling 15; striking now carries the strike defence.
 SKILL_WEIGHTS = {"striking": .55, "grappling": .20, "wrestling": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
@@ -72,13 +72,15 @@ SCORE_DIVISOR = 8
 # measurable cost. See docs/ufc-rating-model-2026-11.md.
 # Wrestling (owner, 2026-11-24): offence 60% (takedowns landed 25, accuracy 12, control won 23), defence 40%
 # (takedown defence %, taken down per 15 min, control conceded, reversals). Takedown defence % alone misses a fighter
-# who stops most attempts but faces many; "taken down per 15" counts how often it actually happens. Its weight was set
-# by a walk-forward test, see docs/ufc-rating-model-2026-11.md.
+# who stops most attempts but faces many; "taken down per 15" counts how often it actually happens. Walk-forward test on
+# 2024+ fights (wrestling-only Brier at 0, .06, .12, .18: .2434, .2436, .2439, .2443): more weight never tracked results
+# better, since defence % and control conceded carry most of it, so .06 keeps it counted at no measurable cost.
 WRESTLING_WEIGHTS = {"td15": .25, "tdAcc": .12, "ctrlShare": .23,
-                     "tdDef": .14, "tdAbs15": .12, "ctrlAgainstShare": .10, "rev15": .04}
+                     "tdDef": .17, "tdAbs15": .06, "ctrlAgainstShare": .12, "rev15": .05}
 # Grappling (owner, 2026-11-24): offence 60% (submission attempts 20, submission wins 28, control won 12), defence 40%
-# (submission losses, opponents' submission attempts, reversals, control conceded); the submission-loss weight was set
-# by a walk-forward test, see docs/ufc-rating-model-2026-11.md.
+# (submission losses, opponents' submission attempts, reversals, control conceded). Submission losses weigh .15: on
+# 2024+ fights grappling-only Brier at 0, .07, .15, .22 was .2466, .2459, .2458, .2458 (leaving them out is worse; the
+# gain levels off at .15).
 GRAPPLING_WEIGHTS = {"sub15": .20, "subWinShare": .28, "ctrlShare": .12,
                      "subLossShare": .15, "subAbs15": .10, "rev15": .08, "ctrlAgainstShare": .07}
 STRIKING_WEIGHTS = {"slpm": .10, "diffPm": .17, "strAcc": .08, "kd15": .11, "koWinShare": .14,
@@ -187,6 +189,14 @@ def specs(rates: dict, window: dict) -> dict:
                      (_between(window.get("koWinShare"), 0, .50), W["koWinShare"]),
                      (_between(_pct(r.get("strDef")), 35, 75), W["strDef"]), (_between(sapm, 6.0, 1.2), W["sapm"]),
                      (_between(r.get("kdAbs15"), 1.0, 0), W["kdAbs15"]), (_between(window.get("koLossShare"), .25, 0), W["koLossShare"])],
+        # The fight-card tiles' wrestling and grappling, frozen at the formulas live before 2026-11-24 (#453), because the
+        # tiles show Defence separately; changing them is a separate owner decision.
+        "grapplingCard": [(_between(r.get("sub15"), 0, 3.0), .20), (_between(window.get("subWinShare"), 0, .35), .30),
+                          (_between(window.get("subLossShare"), .25, 0), .20), (_between(r.get("subAbs15"), 2.0, 0), .10),
+                          (_between(r.get("rev15"), 0, 2), .10), (_between(r.get("netCtrl"), -.40, .50), .10)],
+        "wrestlingCard": [(_between(r.get("td15"), 0, 5.5), .20), (_between(_pct(r.get("tdAcc")), 20, 65), .10),
+                          (_between(_pct(r.get("tdDef")), 40, 95), .30), (_between(r.get("netCtrl"), -.40, .50), .35),
+                          (_between(r.get("rev15"), 0, 2), .05)],
         "strikeOutput": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
                          (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
                          (_between(window.get("koWinShare"), 0, .50), .25)],
@@ -216,9 +226,9 @@ def raw_skill(rates: dict, window: dict, skill: str):
     s = specs(rates, window)[skill]
     if skill in ("striking", "strikeOutput"):
         return _sum_parts(s, .50)
-    if skill == "grappling":
+    if skill in ("grappling", "grapplingCard"):
         return _sum_parts(s, .45) if any(v is not None for v, _ in s[:3]) else None
-    if skill == "wrestling":
+    if skill in ("wrestling", "wrestlingCard"):
         return _sum_parts(s, .53) if s[0][0] is not None else None
     if skill == "defence":
         return _sum_parts(s, .48) if s[0][0] is not None or s[1][0] is not None else None
