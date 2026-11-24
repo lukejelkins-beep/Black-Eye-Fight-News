@@ -1,78 +1,105 @@
-/* BEFN Banzuke changes page (sumo.html#changes/YYYYMM). Renders buildChanges() from
+/* BEFN Banzuke changes page (sumo.html#changes/YYYYMM), design A with a desktop slope chart
+   (owner, 24 Nov 2026: "A but I want a slope chart on desktop"). Renders buildChanges() from
    sumo-banzuke-changes.mjs. h = { e, head(id), cutout(id), known(id), releases: [YYYYMM newest first] }. */
-import { face, who, head } from './sumo-home.mjs?v=20261124-banzuke1';
-import { plainRank, shortRank, bashoName } from './sumo-home-data.mjs?v=20261124-banzuke1';
-import { tableRows } from './sumo-banzuke-changes.mjs?v=20261124-banzuke1';
+import { face, who } from './sumo-home.mjs?v=20261124-banzuke2';
+import { shortRank, bashoName, position, tierOf, parseRank } from './sumo-home-data.mjs?v=20261124-banzuke2';
 
-const n = (k, one, many) => k + ' ' + (k === 1 ? one : many);
-
-function summary(c) {
-  const H = c.headline, bits = [];
-  if (H.yokozuna.length) bits.push(n(H.yokozuna.length, 'new Yokozuna', 'new Yokozuna'));
-  if (H.ozekiUp.length) bits.push(n(H.ozekiUp.length, 'new Ozeki', 'new Ozeki'));
-  if (H.ozekiDown.length) bits.push(n(H.ozekiDown.length, 'Ozeki demoted', 'Ozeki demoted'));
-  if (!bits.length) bits.push('No change at Yokozuna or Ozeki');
-  bits.push(n(H.intoSanyaku.length, 'new face in sanyaku', 'new faces in sanyaku'));
-  bits.push(n(H.intoMakuuchi.length, 'promotion to Makuuchi', 'promotions to Makuuchi'));
-  bits.push(n(H.intoJuryo.length, 'new or returning sekitori', 'new or returning sekitori'));
-  return bits.join(' · ');
+/* Move size: exact rank numbers within Maegashira or Juryo; otherwise an arrow only, because
+   division sizes vary and a place count across divisions would be an estimate. */
+function moveLabel(m) {
+  if (m.change === 0) return '<b class="sbz-eq" aria-label="No change">–</b>';
+  const up = m.change > 0, a = parseRank(m.from), b = parseRank(m.to);
+  const same = a && b && a.tier === b.tier && (a.tier === 'Maegashira' || a.tier === 'Juryo');
+  const n = same ? Math.abs(a.number - b.number) : 0;
+  const text = (up ? '▲' : '▼') + (n ? ' ' + n : '');
+  return '<b class="' + (up ? 'sbz-up' : 'sbz-dn') + '" aria-label="' + (up ? 'Up' : 'Down') + (n ? ' ' + n : '') + '">' + text + '</b>';
 }
 
-function picker(h, c) {
-  const ids = h.releases || [];
-  if (ids.length < 2) return '';
-  return '<div class="srev-pick"><label for="sbz-pick">Banzuke</label><select id="sbz-pick" data-changes-select>' +
-    ids.map(id => '<option value="' + h.e(id) + '"' + (id === c.bashoId ? ' selected' : '') + '>' + h.e(bashoName(id)) + '</option>').join('') + '</select></div>';
+/* One tag per wrestler for the line he crossed or his Ozeki status. */
+function tags(c) {
+  const H = c.headline, t = new Map();
+  const put = (list, label, cls) => list.forEach(m => { if (!t.has(m.id)) t.set(m.id, { label: label || m.note, cls }); });
+  put(H.yokozuna, 'New Yokozuna', 'up'); put(H.ozekiUp, 'New Ozeki', 'up'); put(H.ozekiDown, 'Ozeki demoted', 'dn'); put(H.kadoban, 'Kadoban', 'warn');
+  put(H.intoSanyaku, null, 'up'); put(H.outOfSanyaku, 'Out of sanyaku', 'dn');
+  put(H.intoMakuuchi, null, 'up'); put(H.outOfMakuuchi, 'Out of Makuuchi', 'dn');
+  put(H.intoJuryo, null, 'up'); put(H.outOfJuryo, 'Out of Juryo', 'dn');
+  return t;
 }
 
 function hero(h, c, released) {
-  return '<section class="shome-hero srev-hero sbz-hero"><div class="shome-hero-copy"><div class="shome-kicker">Banzuke changes · ranks for the ' + h.e(c.name) + ' basho</div>' +
-    '<h1>' + h.e(c.name) + ' banzuke</h1><p>' + h.e(summary(c)) + '. Every move below is read against the wrestler’s record at the ' + h.e(c.previousName) + ' basho.</p>' +
-    (released ? '<p class="sbz-released">' + h.e(released) + '</p>' : '') + picker(h, c) + '</div></section>';
-}
-
-const line = (h, m, extra) => '<li><span class="sbz-who">' + face(h, m.id) + '<span><strong>' + who(h, m.id, m.name) + '</strong><small>' + h.e(plainRank(m.from)) + ' → ' + h.e(plainRank(m.to)) + ' · ' + h.e(m.record) + '</small></span></span>' + (extra ? '<em>' + h.e(extra) + '</em>' : '') + '</li>';
-
-function topBlock(h, c) {
   const H = c.headline;
-  const groups = [['New Yokozuna', H.yokozuna, 'is-up'], ['New Ozeki', H.ozekiUp, 'is-up'], ['Ozeki demoted', H.ozekiDown, 'is-down'], ['Kadoban Ozeki (must win 8 this basho)', H.kadoban, 'is-warn']].filter(g => g[1].length);
-  return '<section class="shome-block">' + head(h, 'At the top', ['#banzuke', 'Current rankings']) +
-    (groups.length ? '<div class="sbz-groups">' + groups.map(([t, list, cls]) => '<div class="shome-card sbz-group ' + cls + '"><h3>' + h.e(t) + '</h3><ul>' + list.map(m => line(h, m)).join('') + '</ul></div>').join('') + '</div>'
-      : '<p class="shome-note">No promotions or demotions at Yokozuna or Ozeki, and no Ozeki is kadoban.</p>') + '</section>';
+  const tiles = [[H.yokozuna.length + H.ozekiUp.length, 'Promoted to Ozeki or above'], [H.ozekiDown.length, 'Ozeki demoted'], [H.kadoban.length, 'Kadoban Ozeki'],
+    [H.intoSanyaku.length, 'Into sanyaku'], [H.intoMakuuchi.length, 'Up to Makuuchi'], [H.intoJuryo.length, 'New or returning sekitori']].filter(([n], i) => n > 0 || i >= 3);
+  const ids = h.releases || [];
+  return '<section class="sbz-hero"><div class="sbz-hero-in"><div><div class="shome-kicker">Banzuke changes · ' + h.e(c.name) + '</div><h1>' + h.e(c.name) + ' banzuke</h1>' +
+    '<p>Each move read against the wrestler’s record at the ' + h.e(c.previousName) + ' basho.</p>' + (released ? '<p class="sbz-released">' + h.e(released) + '</p>' : '') +
+    '<div class="sbz-tiles">' + tiles.map(([n, l]) => '<div class="sbz-tile"><b>' + n + '</b><span>' + h.e(l) + '</span></div>').join('') + '</div></div>' +
+    (ids.length > 1 ? '<div class="sbz-pick"><label for="sbz-pick">Banzuke</label><select id="sbz-pick" data-changes-select>' + ids.map(id => '<option value="' + h.e(id) + '"' + (id === c.bashoId ? ' selected' : '') + '>' + h.e(bashoName(id)) + '</option>').join('') + '</select></div>' : '') +
+    '</div></section>';
 }
 
-function linesBlock(h, c) {
-  const H = c.headline;
-  const pair = (title, ins, outs) => '<div class="shome-card sbz-line"><h3>' + h.e(title) + '</h3><div class="sbz-io"><div class="is-up"><div class="shome-colhead">▲ In</div>' +
-    (ins.length ? '<ul>' + ins.map(m => line(h, m, m.note)).join('') + '</ul>' : '<p class="shome-note">None</p>') + '</div><div class="is-down"><div class="shome-colhead">▼ Out</div>' +
-    (outs.length ? '<ul>' + outs.map(m => line(h, m)).join('') + '</ul>' : '<p class="shome-note">None</p>') + '</div></div></div>';
-  return '<section class="shome-block">' + head(h, 'Across the lines', null, 'Who crossed into or out of sanyaku, Makuuchi and Juryo (the salaried sekitori ranks).') +
-    pair('Sanyaku', H.intoSanyaku, H.outOfSanyaku) + pair('Makuuchi', H.intoMakuuchi, H.outOfMakuuchi) + pair('Juryo', H.intoJuryo, H.outOfJuryo) + '</section>';
+function stories(h, c) {
+  const H = c.headline, list = [];
+  const add = (arr, label, cls) => arr.forEach(m => { if (!list.some(x => x.m.id === m.id)) list.push({ m, label: label || m.note, cls }); });
+  add(H.yokozuna, 'New Yokozuna', 'up'); add(H.ozekiUp, 'New Ozeki', 'up'); add(H.ozekiDown, 'Ozeki demoted', 'dn'); add(H.kadoban, 'Kadoban', 'warn');
+  add(H.intoSanyaku, null, 'up'); add(H.outOfSanyaku, 'Out of sanyaku', 'dn');
+  add(H.intoMakuuchi.filter(m => /debut/.test(m.note)), null, 'up'); add(H.intoJuryo.filter(m => /New sekitori/.test(m.note)), null, 'up');
+  if (!list.length) return '';
+  return '<div class="sbz-stories" aria-label="Biggest stories">' + list.slice(0, 10).map(({ m, label, cls }) => {
+    const img = h.cutout(m.id);
+    return '<article class="sbz-sc is-' + cls + '"><div class="sbz-ph">' + (img ? '<img src="' + h.e(img) + '" alt="" loading="lazy">' : '') + '</div><div class="sbz-bd"><span class="sbz-tag">' + h.e(label) + '</span>' +
+      '<strong>' + who(h, m.id, m.name) + '</strong><span class="sbz-mv">' + h.e(shortRank(m.from)) + ' → ' + h.e(shortRank(m.to)) + '</span><span class="sbz-rec">' + h.e(m.record) + ' in ' + h.e(c.previousName.split(' ')[0]) + '</span></div></article>';
+  }).join('') + '</div>';
 }
 
-function swingBlock(h, c) {
-  const col = (title, list, cls) => '<div class="shome-card ' + cls + '"><div class="shome-colhead">' + title + '</div>' + list.map(m => '<div class="shome-mv">' + face(h, m.id) + '<div><strong>' + who(h, m.id, m.name) + '</strong><span>' + h.e(plainRank(m.from)) + ' → ' + h.e(plainRank(m.to)) + '</span></div><em>' + h.e(m.record) + '</em></div>').join('') + '</div>';
-  return '<section class="shome-block">' + head(h, 'Biggest climbs and falls', null, 'Makuuchi and Juryo, with the record that earned the move.') +
-    '<div class="shome-moves">' + col('▲ Climbs', c.climbs, 'is-up') + col('▼ Falls', c.falls, 'is-down') + '</div></section>';
+/* Desktop slope chart: everyone in Makuuchi on either banzuke, old rank left, new rank right. */
+function slope(h, c, tagMap) {
+  const people = c.moves.filter(m => m.levelFrom >= 3 || m.levelTo >= 3);
+  if (people.length < 10) return '';
+  const left = people.slice().sort((a, b) => position(a.from) - position(b.from)), right = people.slice().sort((a, b) => position(a.to) - position(b.to));
+  const row = 19, top = 34, W = 820, x1 = 230, x2 = W - 230;
+  const yL = new Map(left.map((m, i) => [m.id, top + i * row])), yR = new Map(right.map((m, i) => [m.id, top + i * row]));
+  const H = top + people.length * row + 6;
+  const strong = m => tagMap.has(m.id) || Math.abs(m.change) >= 10;
+  const col = m => m.change > 0 ? 'var(--sh-up)' : m.change < 0 ? 'var(--sh-down)' : '#bdb6ad';
+  const sanyakuEnd = right.findIndex(m => tierOf(m.to) === 'Maegashira' || tierOf(m.to) === 'Juryo');
+  const esc = h.e;
+  return '<section class="shome-block sbz-chart-wrap"><div class="shome-head"><h2>The reshuffle at a glance</h2></div><p class="shome-sub-line">Makuuchi, ' + esc(c.previousName) + ' rank on the left and ' + esc(c.name) + ' rank on the right. Green climbed, red fell; thick lines crossed a line or moved ten places or more.</p>' +
+    '<div class="shome-card sbz-chart"><svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="Slope chart of Makuuchi rank changes; the same moves are listed below">' +
+    '<text x="' + x1 + '" y="18" text-anchor="end" class="sbz-ax">' + esc(c.previousName) + '</text><text x="' + x2 + '" y="18" class="sbz-ax">' + esc(c.name) + '</text>' +
+    (sanyakuEnd > 0 ? '<line x1="' + (x2 - 4) + '" x2="' + W + '" y1="' + (top + (sanyakuEnd - .5) * row + 4) + '" y2="' + (top + (sanyakuEnd - .5) * row + 4) + '" class="sbz-sep"/><text x="' + (W - 4) + '" y="' + (top + (sanyakuEnd - .5) * row) + '" text-anchor="end" class="sbz-sept">sanyaku</text>' : '') +
+    left.filter(m => !strong(m)).concat(left.filter(strong)).map(m => '<line x1="' + (x1 + 6) + '" y1="' + yL.get(m.id) + '" x2="' + (x2 - 6) + '" y2="' + yR.get(m.id) + '" stroke="' + col(m) + '" stroke-width="' + (strong(m) ? 3 : 1.2) + '" opacity="' + (strong(m) ? 1 : .45) + '"/>').join('') +
+    left.map(m => '<text x="' + x1 + '" y="' + (yL.get(m.id) + 4) + '" text-anchor="end" class="sbz-lb' + (strong(m) ? ' is-s' : '') + '">' + esc(m.name) + ' <tspan class="sbz-rk">' + esc(shortRank(m.from)) + ' · ' + esc(m.record) + '</tspan></text>').join('') +
+    right.map(m => '<text x="' + x2 + '" y="' + (yR.get(m.id) + 4) + '" class="sbz-lb' + (strong(m) ? ' is-s' : '') + '"><tspan class="sbz-rk">' + esc(shortRank(m.to)) + '</tspan> ' + esc(m.name) + '</text>').join('') +
+    '</svg></div></section>';
 }
 
-function observationsBlock(h, c) {
-  if (!c.observations.length) return '';
-  return '<section class="shome-block">' + head(h, 'Worth noticing', null, 'Each is a plain rule applied to the records; the Japan Sumo Association does not publish its reasons.') + '<div class="sbz-obs">' +
-    c.observations.map(o => '<div class="shome-card sbz-ob is-' + h.e(o.kind) + '"><h3>' + h.e(o.title) + '</h3><p>' + h.e(o.text) + '</p>' + (o.list.length ? '<ul>' + o.list.map(m => line(h, m)).join('') + '</ul>' : '') + '</div>').join('') + '</div></section>';
+function list(h, c, tagMap) {
+  const row = m => {
+    const t = tagMap.get(m.id);
+    const dir = m.change > 0 ? 'up' : m.change < 0 ? 'dn' : 'eq';
+    return '<div class="sbz-row is-' + dir + '" data-dir="' + dir + '" data-cross="' + (t ? 1 : 0) + '" data-win="' + (m.winning ? 1 : 0) + '">' +
+      '<span class="sbz-nr">' + h.e(shortRank(m.to)) + '</span>' + face(h, m.id) + '<span class="sbz-nm"><strong>' + who(h, m.id, m.name) + '</strong>' + (t ? '<em class="is-' + t.cls + '">' + h.e(t.label) + '</em>' : '') + '</span>' +
+      '<span class="sbz-was">from ' + h.e(shortRank(m.from)) + '</span><span class="sbz-rc ' + (m.winning ? 'is-w' : 'is-l') + '">' + h.e(m.record) + '</span><span class="sbz-dl">' + moveLabel(m) + '</span></div>';
+  };
+  const maku = c.moves.filter(m => m.levelTo >= 3), juryo = c.moves.filter(m => m.levelTo === 2), leftJuryo = c.moves.filter(m => m.levelFrom === 2 && m.levelTo === 1);
+  const filters = [['all', 'All'], ['up', '▲ Up'], ['dn', '▼ Down'], ['cross', 'Crossed a line'], ['win', 'Winning record']];
+  return '<div class="sbz-main"><div class="sbz-filters" role="group" aria-label="Filter the list">' + filters.map(([k, l], i) => '<button type="button" data-bz-filter="' + k + '" aria-pressed="' + (i === 0) + '">' + h.e(l) + '</button>').join('') + '</div>' +
+    '<div class="sbz-list" data-filter="all"><h3 class="sbz-dh">Makuuchi</h3>' + maku.map(row).join('') + '<p class="sbz-empty">No wrestlers match this filter.</p>' +
+    '<details class="sbz-juryo"><summary class="sbz-dh">Juryo (' + juryo.length + ')' + (leftJuryo.length ? ' and left Juryo (' + leftJuryo.length + ')' : '') + '</summary>' + juryo.map(row).join('') +
+    (leftJuryo.length ? '<h3 class="sbz-dh">Left Juryo</h3>' + leftJuryo.map(row).join('') : '') + '</details></div></div>';
 }
 
-function tableBlock(h, c) {
-  const rows = tableRows(c);
-  const tr = m => '<tr><td>' + h.e(shortRank(m.to)) + '</td><td>' + who(h, m.id, m.name) + '</td><td>' + h.e(shortRank(m.from)) + '</td><td>' + h.e(m.record) + '</td><td class="' + (m.change > 0 ? 'is-up' : m.change < 0 ? 'is-down' : '') + '">' + (m.change > 0 ? '▲' : m.change < 0 ? '▼' : '=') + '</td></tr>';
-  const table = (list, caption) => '<div class="sbz-scroll"><table class="sbz-table"><caption>' + h.e(caption) + '</caption><thead><tr><th>New rank</th><th>Wrestler</th><th>Was</th><th>Record</th><th><span class="visually-hidden">Move</span></th></tr></thead><tbody>' + list.map(tr).join('') + '</tbody></table></div>';
-  const maku = rows.filter(m => m.levelTo >= 3), juryo = rows.filter(m => m.levelTo === 2);
-  return '<section class="shome-block">' + head(h, 'The full list') + table(maku, 'Makuuchi') +
-    '<details class="sbz-more"><summary>Juryo (' + juryo.length + ')</summary>' + table(juryo, 'Juryo') + '</details></section>';
+function sidebar(h, c) {
+  if (!c.observations.length) return '<aside class="sbz-side"></aside>';
+  return '<aside class="sbz-side"><h2 class="sbz-side-h">Worth noticing</h2><p class="shome-note">Plain rules applied to the records; the Japan Sumo Association does not publish its reasons.</p>' +
+    c.observations.map(o => '<div class="shome-card sbz-ob"><h3>' + h.e(o.title) + '</h3><p>' + h.e(o.text) + '</p>' + (o.list.length ? '<ul>' + o.list.map(m => '<li>' + who(h, m.id, m.name) + ' <span>' + h.e(shortRank(m.from)) + ' → ' + h.e(shortRank(m.to)) + ' · ' + h.e(m.record) + '</span></li>').join('') + '</ul>' : '') + '</div>').join('') + '</aside>';
 }
 
 export function renderChanges(c, h, { released } = {}) {
-  return '<div class="sumo-home sumo-banzuke">' + hero(h, c, released) + topBlock(h, c) + linesBlock(h, c) + swingBlock(h, c) + observationsBlock(h, c) + tableBlock(h, c) +
+  const tagMap = tags(c);
+  return '<div class="sumo-home sumo-banzuke">' + hero(h, c, released) + stories(h, c) + slope(h, c, tagMap) +
+    '<section class="shome-block sbz-grid">' + list(h, c, tagMap) + sidebar(h, c) + '</section>' +
     '<p class="shome-source">From the saved Sumo API banzuke for ' + h.e(c.name) + ' and the ' + h.e(c.previousName) + ' results. Wins are counted from each wrestler’s bouts; absences count as losses for a winning or losing record.</p></div>';
 }
 

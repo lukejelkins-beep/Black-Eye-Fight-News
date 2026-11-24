@@ -75,7 +75,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await open(page,'changes','.sumo-banzuke');
   assert.equal(await page.locator('.sumo-banzuke h1').count(),1,'Banzuke changes has one headline');
   assert.ok(await page.locator('[data-changes-select] option').count()>=5,'Five most recent banzuke selectable');
-  assert.ok(await page.locator('.sbz-table tbody tr').count()>=40,'Full Makuuchi list shown');
+  assert.ok(await page.locator('.sbz-row').count()>=40,'Full Makuuchi list shown');
+  await page.locator('[data-bz-filter="up"]').click();
+  assert.ok(await page.locator('.sbz-row[data-dir="up"]:visible').count()>0&&await page.locator('.sbz-row[data-dir="dn"]:visible').count()===0,'Up filter shows only climbers');
+  await page.locator('[data-bz-filter="all"]').click();
   {
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
     assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on Banzuke changes: '+JSON.stringify(widths));

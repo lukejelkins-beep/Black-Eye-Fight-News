@@ -13,12 +13,12 @@ import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailyS
 import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
-import { buildHome, bashoStart } from './sumo-home-data.mjs?v=20261124-banzuke1';
-import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-banzuke1';
+import { buildHome, bashoStart } from './sumo-home-data.mjs?v=20261124-banzuke2';
+import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-banzuke2';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview } from './sumo-review.mjs?v=20261124-review1';
-import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke1';
-import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-banzuke1';
+import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
+import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-banzuke2';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -1788,6 +1788,18 @@ document.addEventListener('click',ev=>{
   }
 });
 let lastRoute=location.hash.slice(1).split('?')[0];
+/* Banzuke changes list filters (All, Up, Down, Crossed a line, Winning record). */
+document.addEventListener('click',ev=>{
+  const btn=ev.target.closest&&ev.target.closest('[data-bz-filter]');
+  if(!btn)return;
+  const list=document.querySelector('.sbz-list');
+  if(!list)return;
+  list.dataset.filter=btn.dataset.bzFilter;
+  document.querySelectorAll('[data-bz-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+  /* Empty only if no row matches anywhere, including the folded Juryo section. */
+  const f=btn.dataset.bzFilter,match=r=>f==='all'||(f==='up'&&r.dataset.dir==='up')||(f==='dn'&&r.dataset.dir==='dn')||(f==='cross'&&r.dataset.cross==='1')||(f==='win'&&r.dataset.win==='1');
+  list.classList.toggle('is-empty',![...list.querySelectorAll('.sbz-row')].some(match));
+});
 document.addEventListener('change',ev=>{
   const sel=ev.target.closest&&ev.target.closest('[data-review-select]');
   if(sel)location.hash='#review/'+sel.value;
