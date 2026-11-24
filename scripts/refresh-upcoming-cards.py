@@ -20,6 +20,7 @@ import xml.etree.ElementTree as ET
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import one_schedule  # noqa: E402  (sibling module; works when loaded by path in tests)
 import espn_pfl_schedule  # noqa: E402
+import ksw_schedule  # noqa: E402
 
 DATA = Path("data/upcoming-cards.json")
 USER_AGENT = "Mozilla/5.0 (compatible; BlackEyeFightNews/1.0; card-monitor)"
@@ -507,6 +508,24 @@ def refresh_pfl(events, now):
     return espn_pfl_schedule.merge_new(events, new), len(board.get("events") or [])
 
 
+def refresh_ksw(events, now):
+    """Add KSW cards where Wikipedia's fight card matches KSW's official event list on
+    number, date and main event (scripts/ksw_schedule.py). KSW's /apiksw is never read.
+    Existing events are never changed; any fetch or parse problem keeps what is there."""
+    official = ksw_schedule.parse_official(webpage(ksw_schedule.OFFICIAL_URL))
+    year = datetime.now(timezone.utc).year
+    wiki = {}
+    for y in (year, year + 1):
+        try:
+            page = json.loads(webpage(ksw_schedule.WIKI_API.format(year=y)))
+        except Exception:
+            continue
+        if "parse" in page:
+            wiki.update(ksw_schedule.parse_wikipedia(page["parse"]["wikitext"]["*"], y))
+    new, skipped = ksw_schedule.build_events(official, wiki, now, now[:10])
+    return ksw_schedule.merge_new(events, new), skipped
+
+
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     events = data["events"]
@@ -569,6 +588,13 @@ def main():
               + (": " + ", ".join(e["title"] for e in added_pfl) if added_pfl else ""))
     except Exception as exc:
         print(f"ESPN PFL schedule unavailable ({type(exc).__name__}); existing PFL entries retained")
+    try:
+        added_ksw, skipped = refresh_ksw(events, now)
+        print(f"KSW official list + Wikipedia: {len(added_ksw)} added"
+              + (": " + ", ".join(e["title"] for e in added_ksw) if added_ksw else "")
+              + ("; " + "; ".join(skipped) if skipped else ""))
+    except Exception as exc:
+        print(f"KSW schedule unavailable ({type(exc).__name__}); existing KSW entries retained")
     for event in events:
         participants = {}
         for bout in event.get("bouts", []):
