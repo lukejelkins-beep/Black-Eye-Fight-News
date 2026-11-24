@@ -78,12 +78,16 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
         .filter(el=>getComputedStyle(el).display!=='none');
       return links.map(el=>({label:el.innerText.trim(),
         client:el.clientWidth,scroll:el.scrollWidth,
-        left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right}));
+        top:Math.round(el.getBoundingClientRect().top),
+        left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,
+        viewport:document.documentElement.clientWidth}));
     });
     assert.equal(nav.length,7,'Mobile navigation has the seven Sumo destinations: '+JSON.stringify(nav.map(n=>n.label)));
-    assert.ok(nav.every((item,i)=>item.scroll<=item.client+2&&
-      (i===0||item.left>=nav[i-1].right-2)),
-      'No overlapping or clipped mobile navigation text: '+JSON.stringify(nav));
+    // The seven destinations may wrap onto a second row. Within a row they must not overlap, and no label may be
+    // clipped or run off the screen.
+    assert.ok(nav.every((item,i)=>item.scroll<=item.client+2&&item.left>=-1&&item.right<=item.viewport+1&&
+      (i===0||item.top!==nav[i-1].top||item.left>=nav[i-1].right-2)),
+      'No overlapping, clipped or off-screen mobile navigation text: '+JSON.stringify(nav));
   }
   await snap(page,label+'-home',{fullPage:false});
 
