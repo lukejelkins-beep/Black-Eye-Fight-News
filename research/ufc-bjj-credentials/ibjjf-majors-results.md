@@ -206,3 +206,19 @@ Screened 25 November 2026, with the owner's IBJJF permission. `ibjjf_screen.py` 
 - `lucas-almeida`: The UFC fighter is a Brazilian striker; nothing ties this result to him.
 
 **Not covered.** Weaker 'loose' matches (98 fighters) and first-initial matches on recent pages (73 fighters, e.g. 'J. Soares') are in the runner's `full-output/ibjjf-screening.json` and are not listed here. Recent IBJJF pages shorten first names to an initial, so results from about 2024 on are under-matched. Open, regional and kids events were not screened.
+
+## Gym-corroborated additions (25 Nov 2026)
+
+A second pass over the weaker matches: rows where the published name includes extra names (for example "André Muniz de Aguiar") and the result's academy matches the gym on the fighter's UFC profile. The fighter is old enough, and the division is adult or juvenile. Of 1,030 weaker rows for 120 fighters, nine rows for eight fighters pass. One more gym match was ruled out on age: "J. Park", a 2025 juvenile white belt, is not the UFC's Junyong Park. The 11 provisional fighters above have no gym link and stay provisional.
+
+| Fighter slug | Identity | Event | Division | Place | Published name | Academy | Source |
+| --- | --- | --- | --- | ---: | --- | --- | --- |
+| andre-muniz | Corroborated (gym: TATA Fight Team) | 2019 Brazilian National No-Gi Championship | Male / Adult / Black / Super Heavy (97.50kg) | 3 | André Muniz de Aguiar | Tata Fight Team - TFT BJJ | [IBJJF](https://ibjjf.com/events/1327/results) |
+| jefferson-nascimento | Corroborated (gym: Renovação Fight Team) | 2024 Brazilian National No-Gi Championship | Male / Adult / Brown / Medium Heavy (85.50kg) | 2 | Jefferson Jorge de Souza Nascimento | RFT-Renovação Fight Team | [IBJJF](https://ibjjf.com/events/2496/results) |
+| jessica-andrade | Corroborated (gym: PRVT Para Vale Tudo) | 2019 Brazilian National No-Gi Championship | Female / Adult / Brown / Middle (66.50kg) | 3 | Jessica Fernanda da Costa Andrade | PRVT Brazilian Jiu-Jitsu | [IBJJF](https://ibjjf.com/events/1327/results) |
+| jessica-andrade | Corroborated (gym: PRVT Para Vale Tudo) | 2019 Brazilian National No-Gi Championship | Female / Adult / Brown / Open Class | 1 | Jessica Fernanda da Costa Andrade | PRVT Brazilian Jiu-Jitsu | [IBJJF](https://ibjjf.com/events/1327/results) |
+| jose-henrique | Corroborated (gym: Nova União) | 2023 South American No-Gi Championship | Male / Adult / Purple / Super Heavy (97.50kg) | 3 | Jose Henrique Nascimento de Souza | Nova União | [IBJJF](https://ibjjf.com/events/2286/results) |
+| ketlen-vieira | Corroborated (gym: Nova União) | 2023 South American No-Gi Championship | Female / Adult / Black / Medium Heavy (71.50kg) | 2 | Ketlen Vieira da Silva | Nova União | [IBJJF](https://ibjjf.com/events/2286/results) |
+| pedro-falcao | Corroborated (gym: Nova União) | 2017 Brazilian National No-Gi Championship | Male / Adult / Black / Light (73.50kg) | 3 | Pedro de Alcântara Falcão Filho | Nova União | [IBJJF](https://ibjjf.com/events/808/results) |
+| rani-yahya | Corroborated (gym: Constrictor Team Brazilia) | 2017 Brazilian National No-Gi Championship | Male / Adult / Black / Light (73.50kg) | 2 | Rani Ahmad Yahya | Constrictor Team | [IBJJF](https://ibjjf.com/events/808/results) |
+| tabatha-ricci | Corroborated (gym: Paragon BJJ / Knuckleheadz Boxing) | 2018 Pan Championship | Female / Adult / Brown / Feather (129.00lb) | 3 | Tabatha Ricci Fabri Salto | Paragon BJJ Academy | [IBJJF](https://ibjjf.com/events/867/results) |

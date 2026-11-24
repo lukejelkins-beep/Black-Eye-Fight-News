@@ -4,13 +4,15 @@
  * "Amateur career" list with one row per result and a link to its source. */
 (function(){
  'use strict';
- const DATA_URL='data/ufc-amateur-credentials.json?v=20261125-am1';
+ const DATA_URL='data/ufc-amateur-credentials.json?v=20261125-am5';
  let data=null,loading=null;
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const safeURL=u=>/^https:\/\//i.test(u||'')?u:'';
  const slugOf=f=>f?.statsSlug||String(f?.name||'').normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase()
   .replace(/['’.]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
  const MEDALS={gold:'Gold',silver:'Silver',bronze:'Bronze'};
+ const BELTS=['white','blue','purple','brown','black'];
+ const FOLD=8;
 
  function load(){
   if(data||loading)return loading||Promise.resolve(data);
@@ -34,17 +36,21 @@
  function sectionHTML(entry){
   if(!entry?.rows?.length)return '';
   const sports=[...new Set(entry.rows.map(r=>r.sport).filter(Boolean))];
-  const rows=entry.rows.map(r=>{
+  const row=r=>{
    const detail=[r.year,r.event,r.country].filter(Boolean).join(' · ');
    const result=!r.medal&&!r.place?'<span class="befn-am-result">'+esc(r.result)+'</span>':'';
    const url=safeURL(r.source?.url);
+   const belt=BELTS.includes(r.belt)?'<i class="befn-am-belt is-'+r.belt+'" role="img" aria-label="'+r.belt+' belt"></i>':'';
    return '<li class="befn-am-row">'+medalHTML(r.medal,r.place,false)+
-    '<div class="befn-am-text"><b>'+esc(r.edition)+'</b><span>'+esc(detail)+'</span>'+result+'</div>'+
+    '<div class="befn-am-text"><b>'+esc(r.edition)+'</b><span>'+belt+esc(detail)+'</span>'+result+'</div>'+
     (url?'<a class="befn-am-source" href="'+esc(url)+'" target="_blank" rel="noopener" title="'+esc(r.source.name)+'">Source</a>':'')+'</li>';
-  }).join('');
+  };
+  // Long careers (some grapplers have 70+ podiums) fold after the first rows.
+  const shown=entry.rows.slice(0,FOLD).map(row).join(''),rest=entry.rows.slice(FOLD);
   return '<section class="befn-pro-card befn-am-card" data-pro-section="amateur" data-befn-amateur>'+
    '<header><h3>Amateur career</h3><p>'+esc(sports.join(' · '))+' · verified against official results</p></header>'+
-   '<ol class="befn-am-list">'+rows+'</ol>'+
+   '<ol class="befn-am-list">'+shown+'</ol>'+
+   (rest.length?'<details class="befn-am-more"><summary>Show all '+entry.rows.length+' results</summary><ol class="befn-am-list" start="'+(FOLD+1)+'">'+rest.map(row).join('')+'</ol></details>':'')+
    '<div class="befn-am-key" aria-hidden="true">'+medalHTML('gold',1,true)+'Gold'+medalHTML('silver',2,true)+'Silver'+
    medalHTML('bronze',3,true)+'Bronze'+medalHTML(null,8,true)+'Placed</div>'+
    '<p class="befn-am-note">Only results checked against the official source appear here.</p></section>';
