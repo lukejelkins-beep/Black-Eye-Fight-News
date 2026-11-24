@@ -19,7 +19,7 @@ Format: date — decision — who — where it shows up.
   - PFL: 182. 18 PFL placeholder silhouettes were rejected, and the runner now refuses any image file staged for more than one fighter.
   - 8 RIZIN photos are staged and waiting for the owner.
 - **137 UFC ESPN headshots from 24 Nov were re-processed** to remove colour streaks. Their cut-outs were rebuilt, and 11 that failed before now pass, checked by eye. The cut-outs the owner dropped stay dropped.
-- **Not yet:** the pages do not read the MMA cut-out register (`data/mma-cutout-register.json`). The MMA photos themselves show through the image map.
+- **The pages now read the MMA cut-out register** (`data/mma-cutout-register.json`, with files in `assets/img/mma-cutouts/`) wherever UFC and boxing cut-outs are merged: the front page, the Overviews and the Fights cards. For example, Chihiro Sawada's cut-out shows on the ONE Samurai 6 card.
 
 ## 2026-11-24 (Fight Talk: talk cards)
 - **Fight Talk posts are BEFN's own cards** (owner picked design A, "Talk cards", from two mock-ups). Each card shows the face, name, role (Champion, Contender, Prospect, Fighter, Promoter, Media and so on), platform, time, the post's own text and likes and replies. Desktop shows 3 columns; phones show 1.
