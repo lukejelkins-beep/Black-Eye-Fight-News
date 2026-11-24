@@ -63,3 +63,11 @@
   .sumo-poster-stats{margin-top:14px;gap:24px}
   .sumo-poster-stats b{font-size:40px}
 }
+
+/* 360 px and below: the Last bout / Next bout block must fit a 288 px column even with a long
+   technique name and a long opponent name (profile 16 at 320 px overflowed by 1 px). */
+@media(max-width:360px){
+  .sumo-poster-bout{padding:16px 12px;gap:8px}
+  .sumo-poster-bout strong{font-size:22px}
+  .sumo-poster-bout .h2h .kim{font-size:18px}
+}
