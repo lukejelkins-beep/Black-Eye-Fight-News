@@ -426,6 +426,19 @@ class Attestations(unittest.TestCase):
                 mma.host_ok("https://pflmma-prod.s3.amazonaws.com/fighters/jane-doe.png")
         mma._robots.clear()
 
+    def test_rizin_photo_host_404_counts_as_no_robots_file_only_for_that_host(self):
+        mma = load(REPO, "mma-portrait-intake.py")
+        with mock.patch.object(mma.box, "robots_allows", return_value=(False, "robots.txt unreadable: HTTP Error 404: Not Found")):
+            mma._robots.clear()
+            mma.host_ok("https://d1uzk9o9cg136f.cloudfront.net/img/abc.jpg")
+            mma._robots.clear()
+            with self.assertRaises(mma.Blocked):
+                mma.host_ok("https://pflmma-prod.s3.amazonaws.com/x.png")
+            mma._robots.clear()
+            with self.assertRaises(mma.Blocked):
+                mma.host_ok("https://www.cagewarriors.com/fighters/")
+        mma._robots.clear()
+
 
 class DictLiteral(unittest.TestCase):
     def test_add_is_idempotent(self):

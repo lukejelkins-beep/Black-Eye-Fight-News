@@ -65,6 +65,24 @@ RIGHTS_NOTE = (f"Owner attestation of 2026-11-24, answering \"{QUESTION}\": PFL,
 # Photographs fetched, looked at by eye and not used (slug -> reason), so a later run does
 # not take them back. Written by `scripts/photo-runner.py approve --reject`.
 REVIEWED_OUT = {
+    "yahaya-yahuza": "PFL silhouette placeholder, not a photo",
+    "thimna-mhlauli": "PFL silhouette placeholder, not a photo",
+    "shane-campbell": "PFL silhouette placeholder, not a photo",
+    "sanaa-mandar": "PFL silhouette placeholder, not a photo",
+    "salim-mhamdi": "PFL silhouette placeholder, not a photo",
+    "saher-qasmieh": "PFL silhouette placeholder, not a photo",
+    "richard-muzaan": "PFL silhouette placeholder, not a photo",
+    "oussama-el-idrissi": "PFL silhouette placeholder, not a photo",
+    "mostafa-neda": "PFL silhouette placeholder, not a photo",
+    "josh-weems": "PFL silhouette placeholder, not a photo",
+    "jordan-fongno": "PFL silhouette placeholder, not a photo",
+    "jane-osigwe": "PFL silhouette placeholder, not a photo",
+    "haidy-ahmed": "PFL silhouette placeholder, not a photo",
+    "elisandra-ferreira": "PFL silhouette placeholder, not a photo",
+    "edson-machavane": "PFL silhouette placeholder, not a photo",
+    "dauda-rajabu": "PFL silhouette placeholder, not a photo",
+    "daniel-bzdigian": "PFL silhouette placeholder, not a photo",
+    "aureo-cruz": "PFL silhouette placeholder, not a photo",
 }
 
 
@@ -79,6 +97,9 @@ _robots = {}
 # is how S3 says there is no such object in a bucket whose listing is private. For this one host only, that
 # 403 counts as "no robots.txt", so nothing is disallowed. Any other host, and any other answer, still fails closed.
 NO_ROBOTS_FILE_ON_403 = {"pflmma-prod.s3.amazonaws.com"}
+# Owner's decision, 2026-11-24 ("Yes, that host only"): RIZIN's photo host answers robots.txt with 404 Not
+# Found, which by the robots convention means no rules. Only this host; a 404 anywhere else still fails closed.
+NO_ROBOTS_FILE_ON_404 = {"d1uzk9o9cg136f.cloudfront.net"}
 
 
 def host_ok(url):
@@ -89,6 +110,8 @@ def host_ok(url):
         _robots[key] = box.robots_allows(p.netloc, p.path or "/")
     ok, why = _robots[key]
     if not ok and p.netloc in NO_ROBOTS_FILE_ON_403 and why.startswith("robots.txt unreadable") and "403" in why:
+        ok = True
+    if not ok and p.netloc in NO_ROBOTS_FILE_ON_404 and why.startswith("robots.txt unreadable") and "404" in why:
         ok = True
     if not ok:
         raise Blocked(f"{p.netloc}: {why}")
