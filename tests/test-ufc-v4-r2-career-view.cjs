@@ -108,6 +108,22 @@ test("an extension-cohort fighter is verified against the extension list and its
  assert.equal(reasons(st,both),"count_mismatch","the 783 list wins when a slug is in both (the builder refuses that)");
 });
 
+test("a rolled-forward or rolling-cohort fighter uses its own weekly count and cutoff",()=>{
+ const reasons=(s,l)=>sp.careerState(s,l,on).reason;
+ const st={slug:"vet",fights:[fight(1),fight(2),{...fight(3),date:"2026-11-21"}]};
+ const base={schema:1,approved:783,certifiedThrough:"2026-11-14",certified:{vet:2}};
+ const before=sp.careerState(st,base,on);
+ assert.equal(before.verified,true);assert.equal(before.later,1,"before the weekly job: one newer fight");
+ const rolled={...base,rolling:{certified:{vet:3},certifiedThrough:{vet:"2026-11-21"}}};
+ const after=sp.careerState(st,rolled,on);
+ assert.equal(after.count,3);assert.equal(after.through,"2026-11-21");assert.equal(after.later,0);
+ assert.equal(reasons(st,{...rolled,rolling:{certified:{vet:4},certifiedThrough:{vet:"2026-11-21"}}}),"count_mismatch");
+ const malformed=sp.careerState(st,{...base,rolling:{certified:{vet:3},certifiedThrough:{vet:"soon"}}},on);
+ assert.equal(malformed.count,2,"a malformed rolling row is ignored, the base certificate stands");
+ const newcomer={...base,certified:{},rolling:{certified:{vet:3},certifiedThrough:{vet:"2026-11-21"}}};
+ assert.equal(sp.careerState(st,newcomer,on).verified,true);
+});
+
 /* ---- R3 period views ---- */
 const many=n=>Array.from({length:n},(_,i)=>({...fight(i+1),date:"2026-01-"+String(i+1).padStart(2,"0"),outcome:i===2?"NC":"W"}));
 const win=(fights,statFights)=>({fights,statFights,W:fights,L:0,D:0,NC:0,winsBy:{ko:1,sub:0},rates:{slpm:3}});

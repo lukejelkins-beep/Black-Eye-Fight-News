@@ -46,6 +46,9 @@ UFCSTATS_NAMES = {
     "rafael-cerqueira": (["Rafael Cerqueira", "Rafael Cerquiera"], None),
     "bruno-silva-blindado": (["Bruno Silva"], "Middleweight"),
     "waldo-cortes-acosta-2": (["Waldo Cortes Acosta"], None),
+    # stats slug of the certified Bruno Gustavo da Silva ("Bulldog", flyweight); the middleweight is bruno-silva-blindado
+    "bruno-silva": (["Bruno Silva"], "Flyweight"),
+    "bruno-gustavo-da-silva": (["Bruno Silva"], "Flyweight"),
 }
 # Opponent spellings that differ between UFCStats and saved history (UFCStats -> saved), reviewed one by one.
 OPPONENT_ALIASES = {
@@ -102,7 +105,9 @@ def saved_history(slug, profile, cutoff, fdates, curated, showcase_ids=frozenset
 
 
 # Reviewed fighter pages for names UFCStats gives to two fighters (the weight-class filter separates their bouts).
-UFCSTATS_PAGE = {"bruno-silva-blindado": "https://ufcstats.com/fighter-details/12ebd7d157e91701"}
+UFCSTATS_PAGE = {"bruno-silva-blindado": "https://ufcstats.com/fighter-details/12ebd7d157e91701",
+                 "bruno-silva": "https://ufcstats.com/fighter-details/294aa73dbf37d281",
+                 "bruno-gustavo-da-silva": "https://ufcstats.com/fighter-details/294aa73dbf37d281"}
 
 
 def propose(slug, name, greco, cutoff, showcases=None):

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "scope": "ufc-standing-certification-rule",
+  "status": "approved",
+  "approvedBy": "user",
+  "approvedAt": "2026-11-24",
+  "cohort": "ufc-rolling",
+  "rules": {
+    "newcomers": "automatic",
+    "secondSource": "wikipedia-event-article",
+    "release": "weekly-draft-pr",
+    "rollForward": true
+  },
+  "note": "Owner standing approval (24 Nov 2026, selectors: \"Standing approval\", \"Weekly draft PR\", \"Yes, roll forward\", \"Wikipedia card\"). Any UFC fighter who gets a BEFN profile (a file in data/ufc-stats/fighters) and is in neither the frozen 783 cohort nor the 24 Nov extension cohort joins the rolling cohort automatically, and certification is attempted with the same strict gate. Certified fighters are rolled forward after each new fight when UFCStats and the event's Wikipedia article agree. A fighter who fails stays uncertified (or keeps the old certificate) with the reason recorded; nothing is guessed. Results reach the site only through the weekly draft PR and the owner's \"Merge N\". The frozen 783 cohort and the 24 Nov extension cohort are not changed by this rule."
+}
