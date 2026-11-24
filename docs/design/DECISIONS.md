@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Sumo housekeeping)
+- **Old Sumo header styles removed:** the masthead, utility bar, seven-link bar, site menu and logo rules left over from the Sumo pages' old header (replaced by the shared header in #458), 62 selectors from `assets/sumo.css`, `assets/sumo-editorial.css` and `assets/sumo-main-font.css` (about 4 KB). Nothing in the Sumo pages or scripts uses those classes; `index.html` uses two of the same names but does not load these files. Checked by pixel-comparing all 14 Sumo views at 390 and 1280 px against the old stylesheets: identical, apart from Banzuke changes at 1280 px, which also differs between two loads of the old build (photos loading at different moments).
+- **2027 banzuke dates completed** in `data/sumo/banzuke-release-dates.json`, all "reported" (third-party calendars, not checked on sumo.or.jp): March 1 March (three sources), May 26 April (ozumo.jp, japan-event.info), July 28 June (ozumo.jp only), September 30 August (tokyocheapo.com, sumostats.com), November 1 November (ozumo.jp only). Single-source dates are flagged to check again. — Owner chose "Remove old sumo CSS" and "Recheck 2027 dates" 2026-11-24 — awaiting owner "Merge N".
+
 ## 2026-11-24 (Fighters hub replaces the MMA directory)
 - **On the MMA Fighters page the hub is the whole page.** The old "All fighter profiles" directory under the hub is removed from the MMA view, and the hub's top bar gets a "Find a fighter ›" link to the UFC stats page search (every UFC fighter with statistics). 121 of the directory's 124 MMA fighters have a UFC stats profile; the other 3 (Klaudia Syguła, Alatengheili, José Souza) stay reachable in the directory when the sport is set to All, which is unchanged. — Owner (selector, 24 Nov 2026) — awaiting owner "Merge N".
 - **`data/ufc-ranked-profiles.json` stays missing.** The profile loader asks for this reserved cohort and gets a harmless 404. An empty placeholder would need a review date for a review that never happened, so the slot is left as it is. — Owner (selector, 24 Nov 2026).
