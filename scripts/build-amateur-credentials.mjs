@@ -78,24 +78,39 @@ export function rowsFor(record) {
 
 const best = rows => rows.reduce((m, r) => (r.medal && (!m || MEDAL_PLACE[r.medal] < MEDAL_PLACE[m]) ? r.medal : m), null);
 
+const titleLabel = (pool, prefix) => {
+  const golds = pool.filter(r => r.medal === 'gold').length;
+  return golds > 1 ? `${prefix} titles ×${golds}` : golds ? `${prefix} champion` : `${prefix} medallist`;
+};
+
 export function badgesFor(rows) {
   const badges = [];
-  const olympic = rows.filter(r => r.kind === 'games_participation' && r.lane === 'olympic');
+  const rep = rows.filter(r => r.lane !== 'grappling');
+  const grap = rows.filter(r => r.lane === 'grappling' && r.medal);
+  const olympic = rep.filter(r => r.kind === 'games_participation' && r.lane === 'olympic');
   if (olympic.length) {
     const m = best(olympic);
     badges.push({ label: m === 'gold' ? 'Olympic champion' : m ? 'Olympic medallist' : 'Olympian', medal: m, highlight: m === 'gold' });
   }
-  const worlds = rows.filter(r => /\bWorld\b/i.test(r.edition) && !/World Cup|University|Universiade|Games/i.test(r.edition) && r.medal);
+  const worlds = rep.filter(r => /\bWorld\b/i.test(r.edition) && !/World Cup|University|Universiade|Games/i.test(r.edition) && r.medal);
   if (worlds.length) {
     const senior = worlds.filter(r => r.category === 'senior' || r.category === 'open');
     const pool = senior.length ? senior : worlds;
-    const golds = pool.filter(r => r.medal === 'gold').length;
-    const prefix = senior.length ? 'World' : 'Junior world';
-    badges.push({ label: golds > 1 ? `${prefix} titles ×${golds}` : golds ? `${prefix} champion` : `${prefix} medallist`, medal: best(pool), highlight: false });
+    badges.push({ label: titleLabel(pool, senior.length ? 'World' : 'Junior world'), medal: best(pool), highlight: false });
+  }
+  // Grappling: ADCC Worlds, then IBJJF black-belt titles (Worlds, then Pan or European).
+  const adcc = grap.filter(r => r.org === 'ADCC');
+  if (adcc.length) badges.push({ label: titleLabel(adcc, 'ADCC world'), medal: best(adcc), highlight: best(adcc) === 'gold' && !badges.some(b => b.highlight) });
+  const black = grap.filter(r => r.org === 'IBJJF' && r.belt === 'black' && r.category === 'senior');
+  const bjjWorlds = black.filter(r => /Worlds/.test(r.edition));
+  if (bjjWorlds.length) badges.push({ label: titleLabel(bjjWorlds, 'BJJ world'), medal: best(bjjWorlds), highlight: false });
+  else {
+    const bjjCont = black.filter(r => /\bPan\b|European/.test(r.edition));
+    if (bjjCont.length) badges.push({ label: titleLabel(bjjCont, /European/.test(bjjCont[0].edition) ? 'BJJ European' : 'BJJ Pan'), medal: best(bjjCont), highlight: false });
   }
   if (badges.length < 3) {
     for (const [re, name] of CONTINENTAL) {
-      const cont = rows.filter(r => re.test(r.edition) && r.medal && (r.category === 'senior' || r.category === 'open'));
+      const cont = rep.filter(r => re.test(r.edition) && r.medal && (r.category === 'senior' || r.category === 'open'));
       if (!cont.length) continue;
       const m = best(cont);
       badges.push({ label: m === 'gold' ? `${name} champion` : `${name} medallist`, medal: m, highlight: false });
@@ -103,23 +118,106 @@ export function badgesFor(rows) {
     }
   }
   if (badges.length < 3) {
-    const team = rows.find(r => r.kind === 'team_appearance' && r.category === 'senior') || rows.find(r => r.kind === 'team_appearance');
+    const team = rep.find(r => r.kind === 'team_appearance' && r.category === 'senior') || rep.find(r => r.kind === 'team_appearance');
     if (team) badges.push({ label: `${team.country} ${TEAM_LEVEL[team.category] || 'national team'}`, medal: null, highlight: false });
   }
+  if (!badges.length && rows.some(r => r.org === 'ADCC')) badges.push({ label: 'ADCC Worlds competitor', medal: null, highlight: false });
   return badges.slice(0, 3);
 }
 
-export function build(dir = REVIEWS) {
+// ---- BJJ and submission grappling (research/ufc-bjj-credentials) ----
+// Rows come from the markdown results tables, only for fighters listed in profile-verified.json
+// for that file, only adult or juvenile divisions (no masters, teens or kids), only names that
+// start with the fighter's first name and end with their surname.
+const BJJ_DIR = join(ROOT, 'research/ufc-bjj-credentials');
+const BELTS = ['white', 'blue', 'purple', 'brown', 'black'];
+const PLACE_WORDS = { gold: 1, silver: 2, bronze: 3, first: 1, second: 2, third: 3, fourth: 4 };
+const norm = s => String(s).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean);
+
+export function tables(markdown) {
+  const out = []; let header = null;
+  for (const line of markdown.split('\n')) {
+    if (!line.startsWith('|')) { header = null; continue; }
+    const cells = line.split('|').slice(1, -1).map(c => c.trim());
+    if (!header) { header = cells; out.push({ header, rows: [] }); continue; }
+    if (cells.every(c => /^:?-+:?$/.test(c))) continue;
+    out[out.length - 1].rows.push(Object.fromEntries(header.map((h, i) => [h, cells[i] ?? ''])));
+  }
+  return out;
+}
+const link = cell => { const m = String(cell).match(/\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/); return m ? { name: m[1], url: m[2] } : null; };
+const medalOf = place => ({ 1: 'gold', 2: 'silver', 3: 'bronze' })[place] || null;
+const nameFits = (published, slugName) => { const p = norm(published), w = norm(slugName); return p.length >= 2 && p[0] === w[0] && p[p.length - 1] === w[w.length - 1]; };
+
+export function grapplingRows(names, dir = BJJ_DIR) {
+  const verified = JSON.parse(readFileSync(join(dir, 'profile-verified.json'), 'utf8'));
+  const rows = {};
+  const add = (slug, row) => (rows[slug] ||= []).push(row);
+  const adcc = tables(readFileSync(join(dir, 'adcc-results.md'), 'utf8'));
+  for (const t of adcc) {
+    if (t.header.includes('Placement')) {
+      for (const r of t.rows) {
+        const slug = r['Fighter slug']; const src = link(r.Source);
+        if (!verified['adcc-results.md'].placements.includes(slug) || !src) continue;
+        const place = PLACE_WORDS[String(r.Placement).toLowerCase()] || null;
+        add(slug, { lane: 'grappling', org: 'ADCC', kind: 'grappling_result', year: yearOf(r.Edition), edition: `${r.Edition} ADCC World Championship`,
+          sport: 'Submission grappling', event: r.Division, country: null, category: 'senior', result: r.Placement,
+          medal: medalOf(place), place, belt: null, source: src });
+      }
+    } else if (t.header.includes('What is documented')) {
+      for (const r of t.rows) {
+        const slug = r['Fighter slug']; const src = link(r.Sources); const text = r['What is documented'];
+        if (!verified['adcc-results.md'].entries.includes(slug) || !src || !/Competed/.test(text)) continue;
+        add(slug, { lane: 'grappling', org: 'ADCC', kind: 'grappling_entry', year: yearOf(r.Edition), edition: `${yearOf(r.Edition)} ADCC World Championship`,
+          sport: 'Submission grappling', event: r.Division, country: null, category: 'senior',
+          result: text.replace(/^.*?Competed:\s*/, '').replace(/^./, c => c.toUpperCase()), medal: null, place: null, belt: null, source: src });
+      }
+    }
+  }
+  for (const file of ['ibjjf-world-results.md', 'ibjjf-majors-results.md']) {
+    for (const t of tables(readFileSync(join(dir, file), 'utf8'))) {
+      if (!t.header.includes('Published name')) continue;
+      for (const r of t.rows) {
+        const slug = r['Fighter slug']; const src = link(r.Source);
+        if (!verified[file].includes(slug) || !src || !names[slug]) continue;
+        if (r.Identity && r.Identity !== 'Corroborated') continue;
+        const div = r.Division; const d = div.toLowerCase();
+        if (/master|teen|kids|infant|mirim|pee wee/.test(d)) continue;
+        if (!/adult|juvenile/.test(d)) continue;
+        const aliases = [names[slug], ...(names.aliases?.[slug] || [])];
+        if (!aliases.some(n => nameFits(r['Published name'], n))) continue;
+        const place = Number(r.Place) || null;
+        const belt = BELTS.find(b => new RegExp(`\\b${b}\\b`, 'i').test(div)) || null;
+        add(slug, { lane: 'grappling', org: 'IBJJF', kind: 'grappling_result', year: yearOf(r.Event), edition: `${r.Event} (IBJJF)`,
+          sport: 'Brazilian jiu-jitsu', event: div.replace(/\s+\/\s+/g, ' · ').replace(/\s+/g, ' '), country: null,
+          category: /juvenile/.test(d) ? 'junior' : 'senior', result: place ? `Place ${place}` : '', medal: medalOf(place), place, belt, source: src });
+      }
+    }
+  }
+  return rows;
+}
+
+export function build(dir = REVIEWS, bjjDir = BJJ_DIR) {
   const fighters = {};
+  const all = {};
   for (const file of readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     const record = JSON.parse(readFileSync(join(dir, file), 'utf8'));
     const rows = rowsFor(record);
-    if (!rows.length) continue;
-    fighters[record.slug] = { badges: badgesFor(rows), rows };
+    if (rows.length) all[record.slug] = rows;
+  }
+  if (bjjDir) {
+    const cohort = JSON.parse(readFileSync(join(dir, '..', 'cohort.json'), 'utf8'));
+    const names = Object.fromEntries((cohort.fighters || []).map(f => [f.slug, f.name]));
+    names.aliases = { 'bia-mesquita': ['Beatriz Mesquita', 'Beatriz de Oliveira Mesquita'], 'marcus-almeida': ['Marcus Almeida', 'Marcus Buchecha Almeida'] };
+    for (const [slug, rows] of Object.entries(grapplingRows(names, bjjDir))) (all[slug] ||= []).push(...rows);
+  }
+  for (const slug of Object.keys(all).sort()) {
+    const rows = all[slug].sort((a, b) => (b.year || 0) - (a.year || 0) || (a.place || 99) - (b.place || 99));
+    fighters[slug] = { badges: badgesFor(rows), rows };
   }
   return {
     schema: 1,
-    note: 'Verified amateur and national-team results for UFC profiles, built from research/ufc-representative-credentials by scripts/build-amateur-credentials.mjs. Leads and unresolved records are never included.',
+    note: 'Verified amateur and national-team results for UFC profiles, built from research/ufc-representative-credentials and research/ufc-bjj-credentials by scripts/build-amateur-credentials.mjs. Leads and unresolved records are never included.',
     fighters,
   };
 }
