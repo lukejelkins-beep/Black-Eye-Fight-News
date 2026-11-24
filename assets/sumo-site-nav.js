@@ -34,6 +34,7 @@
     if (page === 'banzuke') return { section: 'fighters', page: 'banzuke' };
     if (page === 'changes') return { section: 'fighters', page: 'changes' };
     if (page === 'review') return { section: 'analysis', page: 'review' };
+    if (page === 'insights') return { section: 'analysis', page: 'insights' };
     if (page === 'kimarite') return { section: 'analysis', page: 'kimarite' };
     return { section: 'overview', page: 'home' };
   }
