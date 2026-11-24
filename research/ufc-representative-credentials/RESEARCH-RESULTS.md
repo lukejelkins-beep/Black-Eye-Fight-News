@@ -77,15 +77,28 @@ WCSF/ECSF is a combat sambo body separate from FIAS, and the records say so.
 
 **Checked, not recorded:**
 - Supported only by news or databases:
-  - Mason Jones (2012 Commonwealth Judo bronze per JudoInside)
+  - Mason Jones: now recorded (see the 25 Nov browser pass below)
   - Puja Tomar (World Wushu, edition unknown)
   - Tofiq Musayev (sanda title, body unknown)
   - Giga Chikadze (2008 karate world title, style body)
   - Diana Belbita (2012 WAKO World Cup, open event)
   - Shanelle Dyer (2013 youth title)
   - Irina Alekseeva (2017 FIAS European silver, identity open)
-  - Marcin Prachnio (2012 European Kyokushin Open, placing unseen)
-  - Rei Tsuruya (2019 U17 Worlds, profile unreadable)
+  - Marcin Prachnio: placing found, still `needs_review` (see the 25 Nov browser pass below)
+  - Rei Tsuruya: now recorded (see the 25 Nov browser pass below)
 - Pro or other-body titles: Joanne Wood, Istela Nunes, Tainara Lisboa, Viacheslav Borshchev.
 - Not found: Satybaldiev, Ketlen Souza, Santiago Luna, Daniel Barez, William Gomis, Uros Medić, Bruna Brasil, Muin Gafurov, Nurullo Aliev, Daria Zhelezniakova, Norma Dumont, Kai Kara-France.
+
+## Browser pass on unrecorded leads (25 Nov 2026)
+
+Four leads from the overnight run were checked by hand in a browser, one page at a time.
+
+| Fighter | Result | Status | Source |
+|---|---|---|---|
+| Mason Jones | 2012 Commonwealth Judo Championships (Cardiff), men's -60 kg, Wales | Bronze, `seed` | Official medal winners list (EJU / Fighting Films); JudoInside agrees |
+| Rei Tsuruya | 2019 Cadet World Wrestling Championships (Sofia), Greco-Roman 55 kg, JPN | Competed, 21st, `seed` | UWW athlete page |
+| Marcin Prachnio | 2012 IKO European Weight Category Championships (Budapest), +90 kg, POL; also 2011 (Padova) -90 kg bronze | Silver per almanac, `needs_review` | Kyokushin Results almanac only; the IKO's own results weren't found |
+| Stephanie Egger | 2010 European U23 Judo Championships (Sarajevo), women's -70 kg, SUI | Gold per JudoInside; not recorded here | Her record is in PR #503. JudoInside's event results and the NZZ report agree. EJU's own results page is still missing (404) |
+
+The Commonwealth Judo Championships are a domestic championship, not the Commonwealth Games, so Jones's medal is in the national lane.
 
