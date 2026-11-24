@@ -376,6 +376,35 @@ class Attestations(unittest.TestCase):
             with self.assertRaises(mma.Refused):
                 mma.labelled("Tony Laramie", url, printed, alt)
 
+    def test_rizin_hashed_file_name_needs_the_name_printed_and_on_the_image(self):
+        # Owner, 2026-11-24: RIZIN only; the hash replaces the file-name check, nothing else is relaxed.
+        mma = load(REPO, "mma-portrait-intake.py")
+        self.assertTrue(mma.labelled("Tony Laramie", "https://x/1840b2b91504f3267dd.jpg", "Tony Laramie", "Tony Laramie", hashed_file_ok=True))
+        for printed, alt, url in (("Makoto Shinryu", "Tony Laramie", "https://x/1840b2b.jpg"),
+                                  ("Tony Laramie", "", "https://x/1840b2b.jpg"),
+                                  ("Tony Laramie", "Tony Laramie", "https://x/1840b2b-30x17.jpg")):
+            with self.assertRaises(mma.Refused):
+                mma.labelled("Tony Laramie", url, printed, alt, hashed_file_ok=True)
+
+    def test_pfl_bucket_403_counts_as_no_robots_file_only_for_that_host(self):
+        mma = load(REPO, "mma-portrait-intake.py")
+        unreadable = (False, "robots.txt unreadable: HTTP Error 403: Forbidden")
+        with mock.patch.object(mma.box, "robots_allows", return_value=unreadable):
+            mma._robots.clear()
+            mma.host_ok("https://pflmma-prod.s3.amazonaws.com/fighters/jane-doe.png")
+            mma._robots.clear()
+            with self.assertRaises(mma.Blocked):
+                mma.host_ok("https://www.cagewarriors.com/fighters/")
+        with mock.patch.object(mma.box, "robots_allows", return_value=(False, "robots.txt disallows claudebot from /")):
+            mma._robots.clear()
+            with self.assertRaises(mma.Blocked):
+                mma.host_ok("https://pflmma-prod.s3.amazonaws.com/fighters/jane-doe.png")
+        with mock.patch.object(mma.box, "robots_allows", return_value=(False, "robots.txt unreadable: timed out")):
+            mma._robots.clear()
+            with self.assertRaises(mma.Blocked):
+                mma.host_ok("https://pflmma-prod.s3.amazonaws.com/fighters/jane-doe.png")
+        mma._robots.clear()
+
 
 class DictLiteral(unittest.TestCase):
     def test_add_is_idempotent(self):

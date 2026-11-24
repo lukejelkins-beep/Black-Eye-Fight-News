@@ -74,6 +74,12 @@ class Blocked(Exception):
 
 _robots = {}
 
+# Owner's decision, 2026-11-24 (selector "The runner refused some sources to stay safe. Which should I open
+# up?" -> "PFL (232 fighters)"): PFL's photo bucket answers robots.txt with S3's own 403 AccessDenied, which
+# is how S3 says there is no such object in a bucket whose listing is private. For this one host only, that
+# 403 counts as "no robots.txt", so nothing is disallowed. Any other host, and any other answer, still fails closed.
+NO_ROBOTS_FILE_ON_403 = {"pflmma-prod.s3.amazonaws.com"}
+
 
 def host_ok(url):
     """robots.txt of the URL's host allows the path; cached per host and path prefix."""
@@ -82,6 +88,8 @@ def host_ok(url):
     if key not in _robots:
         _robots[key] = box.robots_allows(p.netloc, p.path or "/")
     ok, why = _robots[key]
+    if not ok and p.netloc in NO_ROBOTS_FILE_ON_403 and why.startswith("robots.txt unreadable") and "403" in why:
+        ok = True
     if not ok:
         raise Blocked(f"{p.netloc}: {why}")
 
@@ -101,13 +109,16 @@ def fetch_text(url):
     return text
 
 
-def labelled(name, url, printed, alt):
-    """The checks every adapter's photograph must pass (see the module docstring)."""
+def labelled(name, url, printed, alt, hashed_file_ok=False):
+    """The checks every adapter's photograph must pass (see the module docstring).
+    hashed_file_ok: RIZIN only (owner, 2026-11-24, "RIZIN (8 fighters)"). RIZIN names every photograph by a
+    hash, so the file-name check is replaced by its fighter list printing the name and labelling the image
+    with it; every other check still applies."""
     if norm(printed) != norm(name):
         raise Refused(f"the page prints {printed!r}, not {name}")
     if norm(alt) != norm(name):
         raise Refused(f"the image is labelled {alt!r}, not {name}")
-    if not name_in_file(name, url):
+    if not hashed_file_ok and not name_in_file(name, url):
         raise Refused(f"the file name does not carry the fighter's name: {url.rsplit('/', 1)[-1]}")
     if AGENCY.search(url):
         raise Refused("agency photograph: licence does not transfer")
@@ -203,8 +214,11 @@ def rizin(person):
     if not f:
         return None
     page = "https://jp.rizinff.com/_tags/" + urllib.parse.quote(f.get("tag", ""))
-    return labelled(person["name"], f.get("img_src", ""), f.get("english_name", ""), f.get("english_name", "")), page, \
-        "RIZIN's MMA fighter list pairs this English name with this photograph"
+    src = urllib.parse.urljoin("https://jp.rizinff.com/", f.get("img_src", ""))
+    if src:
+        host_ok(src)
+    return labelled(person["name"], src, f.get("english_name", ""), f.get("english_name", ""), hashed_file_ok=True), page, \
+        "RIZIN's MMA fighter list prints this English name and pairs it with this photograph (hashed file name; owner decision 2026-11-24)"
 
 
 def cage_warriors(person):
