@@ -19,8 +19,8 @@ import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview } from './sumo-review.mjs?v=20261124-review1';
 import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
 import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-next1';
-import { fromArchive, fromDetails, runs, stables, rivalries, records } from './sumo-insights-data.mjs?v=20261124-insights1';
-import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261124-insights1';
+import { fromArchive, fromDetails, runs, stables, rivalries, records, sizeExtremes } from './sumo-insights-data.mjs?v=20261124-size1';
+import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261124-size1';
 import { completedDay, recap as liveRecap, asOfDay } from './sumo-live-data.mjs?v=20261124-live1';
 import { renderLiveHome, dayByDay } from './sumo-live.mjs?v=20261124-live1';
 import { asDetails } from './sumo-review-data.mjs?v=20261124-live1';
@@ -1625,7 +1625,7 @@ function renderSumoInsights(){
   if(missing.length){missing.forEach(id=>loadArchive(id));return '<div class="sumo-home"><p class="srev-loading">Loading insights…</p></div>';}
   const basho=ids.filter(id=>ARCHIVE.files[id]).map(id=>fromArchive(ARCHIVE.files[id]));
   const latest=basho[basho.length-1];
-  return renderInsights({runs:runs(basho),rivalries:rivalries(STATE.h2hSummary,STATE.roster),stables:stables(latest,STATE.roster),records:records(basho,STATE.careerHistory,STATE.roster),latestId:latest.bashoId},homeHelpers());
+  return renderInsights({runs:runs(basho),rivalries:rivalries(STATE.h2hSummary,STATE.roster),stables:stables(latest,STATE.roster),records:records(basho,STATE.careerHistory,STATE.roster),size:sizeExtremes(basho,STATE.careerHistory,STATE.roster),latestId:latest.bashoId},homeHelpers());
 }
 function renderBashoReview(id){
   if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';

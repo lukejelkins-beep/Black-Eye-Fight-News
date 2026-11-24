@@ -2,7 +2,7 @@
    Renders sumo-insights-data.mjs. h = { e, head(id), cutout(id), known(id) }. */
 import { face, who, head } from './sumo-home.mjs?v=20261124-insights1';
 import { shortRank, plainRank, bashoName } from './sumo-home-data.mjs?v=20261124-insights1';
-import { OZEKI_BAR } from './sumo-insights-data.mjs?v=20261124-insights1';
+import { OZEKI_BAR, GIANT_GAP } from './sumo-insights-data.mjs?v=20261124-size1';
 
 const photo = (h, id, cls) => { const src = h.cutout(id); return src ? '<img class="' + cls + '" src="' + h.e(src) + '" alt="" loading="lazy">' : '<span class="' + cls + ' is-empty" aria-hidden="true">相</span>'; };
 const nextName = id => { let y = Number(id.slice(0, 4)), m = Number(id.slice(4)) + 2; if (m > 11) { m = 1; y++; } return bashoName(String(y) + String(m).padStart(2, '0')); };
@@ -56,11 +56,26 @@ function recordsBlock(h, R) {
     '</div></section>';
 }
 
+function sizeBlock(h, S) {
+  if (!S) return '';
+  const B = S.banzuke;
+  const tile = (label, w, val) => w ? '<article class="sin-sz">' + photo(h, w.id, 'sin-sz-ph') + '<div><span class="sin-tag">' + h.e(label) + '</span><strong>' + who(h, w.id, w.name) + '</strong><b>' + h.e(val) + '</b><small>' + h.e(shortRank(w.rank)) + '</small></div></article>' : '';
+  const tiles = '<div class="sin-szs">' + tile('Heaviest', B.heaviest, B.heaviest?.kg + ' kg') + tile('Lightest', B.lightest, B.lightest?.kg + ' kg') + tile('Tallest', B.tallest, B.tallest?.cm + ' cm') + tile('Shortest', B.shortest, B.shortest?.cm + ' cm') + '</div>';
+  const mis = S.mismatches.map(f => '<div class="sin-mm"><span class="sin-mm-p is-w">' + face(h, f.winner.id) + '<span>' + who(h, f.winner.id, f.winner.name) + '<small>' + f.winner.kg + ' kg</small></span></span>' +
+    '<span class="sin-mm-mid"><b>' + f.gap + ' kg</b><small>' + h.e(bashoName(f.bashoId)) + ', day ' + f.day + '</small>' + (f.lighterWon ? '<em>Lighter man won</em>' : '') + '</span>' +
+    '<span class="sin-mm-p">' + face(h, f.loser.id) + '<span>' + who(h, f.loser.id, f.loser.name) + '<small>' + f.loser.kg + ' kg</small></span></span></div>').join('');
+  const kill = S.giantKillers.map(k => '<article class="sin-gk">' + photo(h, k.id, 'sin-gk-ph') + '<div><strong>' + who(h, k.id, k.name) + '</strong><b>' + k.n + '</b><small>wins over men ' + GIANT_GAP + ' kg or more heavier</small>' +
+    '<small>Biggest: ' + h.e(k.best.loser.name) + ', ' + k.best.gap + ' kg heavier (' + h.e(bashoName(k.best.bashoId)) + ')</small></div></article>').join('');
+  return '<section class="shome-block" id="size">' + head(h, 'Size extremes', null, 'Makuuchi now (official measurements), and fought Makuuchi bouts in the saved basho where both men have a weigh-in from that basho or up to four before it: ' + S.covered + ' of ' + S.total + ' bouts.') +
+    tiles + '<div class="sin-two"><div><h3 class="sin-sub">Biggest weight gaps</h3><div class="shome-card sin-mms">' + mis + '</div></div>' +
+    '<div><h3 class="sin-sub">Giant-killers</h3><div class="sin-gks">' + kill + '</div></div></div></section>';
+}
+
 export function renderInsights(d, h) {
   return '<div class="sumo-home sumo-insights"><section class="sbz-hero"><div class="sbz-hero-in"><div><div class="shome-kicker">Sumo insights</div><h1>Runs, rivals, stables and records</h1>' +
-    '<p>Who is chasing promotion, the rivalries that keep coming round, which stables are winning, and the records of the last two years.</p>' +
-    '<nav class="sin-jump" aria-label="On this page"><a href="#insights/runs">Promotion watch</a><a href="#insights/rivalries">Rivalries</a><a href="#insights/stables">Stables</a><a href="#insights/records">Records</a></nav></div></div></section>' +
-    runsBlock(h, d.runs) + rivalBlock(h, d.rivalries) + stableBlock(h, d.stables, d.latestId) + recordsBlock(h, d.records) +
+    '<p>Who is chasing promotion, the rivalries that keep coming round, which stables are winning, the records of the last two years, and the size extremes.</p>' +
+    '<nav class="sin-jump" aria-label="On this page"><a href="#insights/runs">Promotion watch</a><a href="#insights/rivalries">Rivalries</a><a href="#insights/stables">Stables</a><a href="#insights/records">Records</a><a href="#insights/size">Size</a></nav></div></div></section>' +
+    runsBlock(h, d.runs) + rivalBlock(h, d.rivalries) + stableBlock(h, d.stables, d.latestId) + recordsBlock(h, d.records) + sizeBlock(h, d.size) +
     '<p class="shome-source">Worked out from BEFN’s saved Sumo API records: the basho archive, rank history, roster and head-to-head summary.</p></div>';
 }
 
