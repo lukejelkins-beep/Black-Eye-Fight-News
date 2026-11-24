@@ -35,14 +35,57 @@ The records include world and continental events in amateur MMA, wrestling, judo
 - Screened all 921 against 25 official Commonwealth Games documents, covering 7,110 pages after excluding overlaps. The files include all sports at Glasgow 2014 and Gold Coast 2018, combat-sport results at Birmingham 2022, and Glasgow 2026 judo and boxing draws. Draws and final results support different claims. [Commonwealth source ledger](screening/commonwealth-coverage.json)
 - Screened the cohort against 28 IMMAF, WMMAA and FIAS sources, plus a second group of federation books covering wrestling, Wushu, Muay Thai, kickboxing and related events. The second group had 24 usable books, including three Games wrestling books. Source URLs, file hashes where available, parsed scope and exclusions are archived. [IMMAF and FIAS coverage](screening/immaf-fias-coverage.json) · [Other federation books](screening/federation-books.json)
 
-## Overnight research run (24-25 Nov)
-
-Owner-approved overnight run. Official results were screened with free local scripts, then strong matches were checked against the UFC bio before recording. Sources are used only where their terms don't forbid automated collection and robots.txt allows it.
-- **Sambo (FIAS results):** Ihor Potieria, 2017 World Sambo Championships, combat sambo 100 kg bronze for Ukraine. His UFC bio names combat sambo from age 10 and an International Master of Sports title. Ramaška's and Dvalishvili's World silvers were already recorded. A USA 58 kg Julian Marquez (2025) is a different person.
-- **Amateur MMA (IMMAF bout listings, 2014-2022):** 25 roster names appear, and 23 already have IMMAF records here. Lawrence Lui (2019 Oceania) and Otari Tanzilovi (2019 European) are new, but IMMAF's pages are behind a Cloudflare check. Their files are `needs_review` with the bout links.
-
 ## Coverage remaining
 
 The [921-row ledger](screening/roster-pass-2026-11-24.json) records the result of this pass for every fighter in each lane. **This completes the roster-wide screen of the listed sources.** Full individual credential histories across all three lanes remain open. “No verified claim in this pass” means the searches and source coverage described here did not produce a claim we could substantiate.
 
 Coverage gaps include alternate or native-script names that did not match, Olympic trials and selectors without searchable records, Commonwealth Games before 2014, Commonwealth Youth Games, some Commonwealth non-combat sports, and national-team sources outside the countries, events, age groups and seasons inspected. Several public federation entry pages returned navigation without a usable full athlete list. The files preserve verified positives and the pending queue for those gaps. Run `node research/ufc-representative-credentials/check.mjs 01` from the repository root for the pending lane list in batch 01. 
+
+## Overnight research run (24-25 Nov)
+
+Owner-approved overnight run. Official results were screened with free local scripts, then strong matches were checked against the UFC bio and the source page before recording. Sources are used only where their terms don't forbid automated collection and robots.txt allows it. IJF, UWW and IBJJF forbid automated collection; IFMA and WKF block Anthropic bots. Their pages were read only one at a time to confirm a specific fighter.
+
+**Added (14 fighter files; 17 new claims, plus 2 unresolved leads):**
+
+| Fighter | Event | Result | Source |
+|---|---|---|---|
+| Ihor Potieria | 2017 FIAS World Sambo Championships (Sochi), combat 100 kg, UKR | Bronze | FIAS results page |
+| Seokhyeon Ko | 2017 FIAS World Sambo Championships (Sochi), combat 82 kg, KOR | Gold | FIAS results page |
+| Imanol Rodriguez | 2023 FIAS Pan American Championships, sambo 58 kg and combat 58 kg, MEX | Two golds | FIAS results data |
+| Ateba Gautier | 2024 FIAS African Championships, combat 88 kg, CMR | Silver | FIAS results data |
+| Yaroslav Amosov | WCSF Worlds 2014 (82 kg) and 2015 (90 kg); ECSF Europeans 2014 (82 kg, gold) and 2012 (82 kg, bronze), UKR | Two world golds | ECSF pages (Wayback copies) |
+| Ion Cutelaba | 2012 ECSF European Combat Sambo Championship, +90 kg, MDA | Gold | ECSF page (Wayback copy) |
+| Ikram Aliskerov | 2012 ECSF European Combat Sambo Championship, 82 kg, RUS | Gold (added to his record) | ECSF page (Wayback copy) |
+| Josefine Knutsson | 2018 IFMA World Championships (Cancún), women's −51 kg, SWE | Gold | IFMA Live profile |
+| Armen Petrosyan | IFMA Royal World Cup 2015 (Bangkok), −86 kg, RUS | Gold | IFMA results document |
+| Shauna Bannon | 2017 World Taekwondo Championships, IRL | Competed | World Taekwondo results |
+| Robelis Despaigne | 2013 and 2017 World Taekwondo Championships, CUB | Competed (added to his record) | World Taekwondo results |
+| Brando Peričić | 2019 WAKO World Championships (Sarajevo), K1 +91 kg, AUS | Named in the entry list (`team_selected`) | WAKO official report book |
+| Lawrence Lui | 2019 IMMAF Oceania Championships | `needs_review` (bout listing only) | IMMAF sitemap |
+| Otari Tanzilovi | 2019 IMMAF European Championships | `needs_review` (bout listing only) | IMMAF sitemap |
+
+WCSF/ECSF is a combat sambo body separate from FIAS, and the records say so.
+
+**Ruled out:**
+- Julian Marquez: a USA 58 kg sambo entrant (the UFC fighter is a middleweight).
+- Juan Carlos Diaz: a Venezuelan taekwondo heavyweight.
+- Natalia Silva: Athens 2004 taekwondo entrant (the UFC fighter was a child then).
+- Gabriel Santos: taekwondo, kickboxing and judo entries with no link.
+- David Martinez: a 94 kg kickboxer.
+- Yair Rodriguez: a 2023 WAKO entrant of the same name.
+- Several juniors and cadets with the same names.
+
+**Checked, not recorded:**
+- Supported only by news or databases:
+  - Mason Jones (2012 Commonwealth Judo bronze per JudoInside)
+  - Puja Tomar (World Wushu, edition unknown)
+  - Tofiq Musayev (sanda title, body unknown)
+  - Giga Chikadze (2008 karate world title, style body)
+  - Diana Belbita (2012 WAKO World Cup, open event)
+  - Shanelle Dyer (2013 youth title)
+  - Irina Alekseeva (2017 FIAS European silver, identity open)
+  - Marcin Prachnio (2012 European Kyokushin Open, placing unseen)
+  - Rei Tsuruya (2019 U17 Worlds, profile unreadable)
+- Pro or other-body titles: Joanne Wood, Istela Nunes, Tainara Lisboa, Viacheslav Borshchev.
+- Not found: Satybaldiev, Ketlen Souza, Santiago Luna, Daniel Barez, William Gomis, Uros Medić, Bruna Brasil, Muin Gafurov, Nurullo Aliev, Daria Zhelezniakova, Norma Dumont, Kai Kara-France.
+
