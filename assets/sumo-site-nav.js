@@ -9,8 +9,8 @@
   'use strict';
   const KEY = 'befn-selected-sport-v1.0.3';
   const SECTIONS = [
-    ['overview', 'Overview', 'sumo.html#basho', 'news'],
-    ['fights', 'Fights', 'sumo.html#matchups', 'fights'],
+    ['overview', 'Overview', 'sumo.html#home', 'news'],
+    ['fights', 'Fights', 'sumo.html#basho', 'fights'],
     ['fighters', 'Fighters', 'sumo.html#rikishi', 'fighters'],
     ['analysis', 'Analysis', 'sumo-stories.html', 'analysis']
   ];
@@ -26,13 +26,14 @@
     const file = (location.pathname.split('/').pop() || 'sumo.html').toLowerCase();
     if (file.startsWith('sumo-stables')) return { section: 'fighters', page: 'stables' };
     if (file.startsWith('sumo-stories')) return { section: 'analysis', page: 'stories' };
-    const page = decodeURIComponent(location.hash.slice(1)).split(/[/?]/)[0] || 'basho';
+    const page = decodeURIComponent(location.hash.slice(1)).split(/[/?]/)[0] || 'home';
+    if (page === 'basho') return { section: 'fights', page: 'basho' };
     if (page === 'matchups') return { section: 'fights', page: 'matchups' };
     if (page === 'h2h' || page === 'headtohead') return { section: 'fights', page: 'h2h' };
     if (page === 'rikishi' || page === 'profile') return { section: 'fighters', page: 'rikishi' };
     if (page === 'banzuke') return { section: 'fighters', page: 'banzuke' };
     if (page === 'kimarite') return { section: 'analysis', page: 'kimarite' };
-    return { section: 'overview', page: 'basho' };
+    return { section: 'overview', page: 'home' };
   }
 
   function mark(el, on) {
