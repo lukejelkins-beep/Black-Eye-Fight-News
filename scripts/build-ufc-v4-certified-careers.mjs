@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /** Writes data/ufc-v4-certified-careers.json from the offline Stage 3 certification queue (R2, verified career view).
  *
- * Offline and read-only: no provider call, no collector write. Run the same two steps CI runs first:
- *   node scripts/ufc-36-month-stage3-progress.mjs && node scripts/ufc-v4-certification-queue.mjs
+ * Offline and read-only: no provider call, no collector write. Run the same steps CI runs first:
+ *   node scripts/ufc-36-month-stage3-progress.mjs && node scripts/ufc-v4-certification-queue.mjs &&
+ *   node scripts/ufc-extension-stage3-audit.mjs
  * then this script. `--check` rebuilds in memory and fails if the committed file differs (use in review).
  *
  * The file lists ONLY fighters in the queue's `certified` lane (independently verified full UFC career), with the
@@ -53,6 +54,28 @@ export function buildCertifiedCareers(queue,approval,progress,aliases){
   certified:Object.fromEntries(Object.entries(careers).sort(([a],[b])=>a<b?-1:a>b?1:0))
  };
 }
+/* Owner-approved extension cohort (24 Nov 2026): profile fighters outside the 783, certified by
+ * scripts/ufc-extension-stage3-audit.mjs with their own evidence cutoff. Kept in a separate block so the 783 fields
+ * (approved, certified, certifiedThrough) mean exactly what they did. */
+export function buildExtension(audit,approval,base){
+ if(audit?.schema!==1||audit?.scope!=='ufc-extension-stage3-audit')throw new Error('not an extension audit');
+ if(audit.cohort!==approval?.cohort||audit.approvalHash!==approval?.approvedRosterSha256||
+    audit.evidenceCutoff!==approval?.evidenceCutoff||!/^\d{4}-\d{2}-\d{2}$/.test(audit.evidenceCutoff||''))
+  throw new Error('extension audit does not match its approval');
+ const slugs=new Set(approval.approvedFighters||[]);
+ const lanes=[...(audit.lanes?.certified||[]),...(audit.lanes?.exceptions||[])].map(x=>x.slug);
+ if(lanes.length!==slugs.size||new Set(lanes).size!==lanes.length||lanes.some(s=>!slugs.has(s)))
+  throw new Error('extension lanes do not partition the extension cohort');
+ const careers={};
+ for(const c of audit.lanes.certified){
+  if(base.certified[c.slug]!=null)throw new Error(c.slug+' is certified in both cohorts');
+  if(!Number.isSafeInteger(c.knownUfcBouts)||c.knownUfcBouts<1)throw new Error('no bout count for '+c.slug);
+  careers[c.slug]=c.knownUfcBouts;
+ }
+ return {cohort:approval.cohort,approved:slugs.size,approvalHash:approval.approvedRosterSha256,
+  certifiedCount:Object.keys(careers).length,certifiedThrough:audit.evidenceCutoff,
+  certified:Object.fromEntries(Object.entries(careers).sort(([a],[b])=>a<b?-1:a>b?1:0))};
+}
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const progress=read('qa/ufc-36-month-stage3-progress.json'),register=read('data/ufc-independent-full-career-verification.json').fighters;
  const aliases={};
@@ -63,12 +86,14 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   aliases[statsSlug]=certSlug;
  }
  const out=buildCertifiedCareers(read('qa/ufc-v4-certification-queue.json'),read('data/ufc-36-month-roster-approval.json'),progress,aliases);
+ // Run node scripts/ufc-extension-stage3-audit.mjs first.
+ out.extension=buildExtension(read('qa/ufc-extension-stage3-audit.json'),read('data/ufc-extension-cohort-approval-20261124.json'),out);
  const text=JSON.stringify(out,null,1)+'\n';
  if(process.argv.includes('--check')){
   if(!fs.existsSync(OUT)||fs.readFileSync(OUT,'utf8')!==text){console.error('data/ufc-v4-certified-careers.json is out of date');process.exit(1);}
-  console.log('certified careers up to date: '+out.certifiedCount);
+  console.log('certified careers up to date: '+out.certifiedCount+' + extension '+out.extension.certifiedCount);
  }else{
   if(!fs.existsSync(OUT)||fs.readFileSync(OUT,'utf8')!==text)fs.writeFileSync(OUT,text);
-  console.log('certified careers: '+out.certifiedCount+' of 783');
+  console.log('certified careers: '+out.certifiedCount+' of 783, extension '+out.extension.certifiedCount+' of '+out.extension.approved);
  }
 }

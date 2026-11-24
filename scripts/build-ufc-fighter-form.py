@@ -214,7 +214,7 @@ def load_json(path, default=None):
 
 def certified_set():
     c = load_json(DATA / "ufc-v4-certified-careers.json", {}) or {}
-    out = set(c.get("certified") or {})
+    out = set(c.get("certified") or {}) | set((c.get("extension") or {}).get("certified") or {})
     for a, b in (c.get("statsAliases") or {}).items():
         if a in out or b in out:
             out |= {a, b}

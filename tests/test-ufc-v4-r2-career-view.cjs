@@ -93,6 +93,21 @@ test("the two known aliases are the ones the builder verifies",()=>{
  for(const cert of Object.values(careers.statsAliases))assert(careers.certified[cert],cert+" is certified");
 });
 
+/* ---- Extension cohort (owner-approved 24 Nov 2026): its own list and evidence cutoff ---- */
+test("an extension-cohort fighter is verified against the extension list and its own cutoff",()=>{
+ const reasons=(s,l)=>sp.careerState(s,l,on).reason;
+ const st={slug:"newer",fights:[fight(1),fight(2),{...fight(3),date:"2026-11-21"}]};
+ const ext={schema:1,approved:783,certifiedThrough:"2026-11-14",certified:{other:1},
+  extension:{approved:141,certifiedThrough:"2026-11-24",certified:{newer:3}}};
+ const s=sp.careerState(st,ext,on);
+ assert.equal(s.verified,true);assert.equal(s.count,3);assert.equal(s.through,"2026-11-24");assert.equal(s.later,0);
+ assert.equal(reasons(st,{...ext,extension:{...ext.extension,certified:{newer:2}}}),"count_mismatch");
+ assert.equal(reasons(st,{...ext,extension:{...ext.extension,certifiedThrough:"bad"}}),"not_certified");
+ assert.equal(reasons(st,{...ext,extension:undefined}),"not_certified");
+ const both={...ext,certified:{newer:5}};
+ assert.equal(reasons(st,both),"count_mismatch","the 783 list wins when a slug is in both (the builder refuses that)");
+});
+
 /* ---- R3 period views ---- */
 const many=n=>Array.from({length:n},(_,i)=>({...fight(i+1),date:"2026-01-"+String(i+1).padStart(2,"0"),outcome:i===2?"NC":"W"}));
 const win=(fights,statFights)=>({fights,statFights,W:fights,L:0,D:0,NC:0,winsBy:{ko:1,sub:0},rates:{slpm:3}});

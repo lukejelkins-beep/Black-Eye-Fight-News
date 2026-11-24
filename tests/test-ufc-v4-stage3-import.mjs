@@ -21,8 +21,11 @@ test('keep frozen, uniquely approved 783-fighter roster; do not silently add a n
   assert.equal(evidence.rosterAsOf,roster.rosterAsOf);
   assert.equal(manifest.rosterAsOf,roster.rosterAsOf);
   assert.equal(manifest.productionReleaseAuthorized,false);
-  const known=new Set(roster.approvedFighters);
-  assert.ok(Object.keys(evidence.fighters).every(slug=>known.has(slug)));
+  // A register entry belongs to the frozen 783 or, tagged with its cohort, to the owner-approved extension (24 Nov 2026).
+  const extension=read('data/ufc-extension-cohort-approval-20261124.json');
+  const known=new Set(roster.approvedFighters),ext=new Set(extension.approvedFighters);
+  assert.ok(Object.entries(evidence.fighters).every(([slug,e])=>known.has(slug)||
+    (ext.has(slug)&&e.cohort===extension.cohort)));
 });
 
 test('reconcile 66 original and 147 V4 records into 153 distinct nonduplicated fighter proofs',()=>{

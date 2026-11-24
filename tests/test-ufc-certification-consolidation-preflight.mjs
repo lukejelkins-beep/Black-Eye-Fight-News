@@ -141,3 +141,14 @@ test('a sourced Road to UFC final in a UFCStats proof is accepted; an unsourced 
   const { roadToUfcFinal, ...plainGap } = final;
   assert.throws(() => preflight(register({ 'fighter-0': ufcstats(plainGap) }), approved, []), /missing UFCStats bout identity/);
 });
+
+test('extension-cohort entries are accepted only when tagged and listed in the extension approval', () => {
+  const ext = { scope: 'ufc-extension-cohort', status: 'approved', cohort: 'ext-1', approvedFighters: ['newcomer'] };
+  const tagged = { ...proof(), cohort: 'ext-1' };
+  assert.equal(preflight(register({ newcomer: tagged }), approved, [], ext).counts.canonical, 1);
+  assert.throws(() => preflight(register({ newcomer: tagged }), approved, []), /unapproved fighter/);
+  assert.throws(() => preflight(register({ newcomer: proof() }), approved, [], ext), /unapproved fighter/);
+  assert.throws(() => preflight(register({ stranger: tagged }), approved, [], ext), /unapproved fighter/);
+  const overlapping = { ...ext, approvedFighters: ['fighter-0'] };
+  assert.throws(() => preflight(register({ newcomer: tagged }), approved, [], overlapping), /unapproved fighter/);
+});
