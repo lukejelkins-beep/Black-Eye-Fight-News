@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdtempSync, readdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { build, referencedDataFiles, DATA_DIRS } from '../scripts/build-site.mjs';
+import { build, referencedDataFiles, DATA_DIRS, OPTIONAL_DATA } from '../scripts/build-site.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const out = mkdtempSync(join(tmpdir(), 'befn-dist-'));
@@ -22,6 +22,32 @@ test('every data file a page requests is published', () => {
   assert.ok(refs.includes('data/results.json'));
   assert.ok(refs.includes('data/upcoming-cards.json'));
   for (const ref of refs) assert.ok(existsSync(join(out, ref)), ref);
+});
+
+test('no required data file is missing from the real build', () => {
+  assert.deepEqual(report.missing, [], 'referenced but missing: ' + report.missing.join(', '));
+});
+
+test('a missing required feed is reported; an optional one is not', () => {
+  const fixture = mkdtempSync(join(tmpdir(), 'befn-fixture-'));
+  const fixtureOut = join(fixture, 'dist');
+  try {
+    mkdirSync(join(fixture, 'data'));
+    writeFileSync(join(fixture, 'data', 'present.json'), '{}');
+    const optional = [...OPTIONAL_DATA.keys()].find(ref => !ref.includes('YYYY'));
+    writeFileSync(join(fixture, 'index.html'),
+      `<script>fetch('data/present.json');fetch('data/required.json');fetch('${optional}')</script>`);
+    const r = build(fixture, fixtureOut);
+    assert.deepEqual(r.missing, ['data/required.json']);
+    assert.deepEqual(r.optionalMissing, [optional]);
+    assert.ok(existsSync(join(fixtureOut, 'data', 'present.json')));
+  } finally {
+    rmSync(fixture, { recursive: true, force: true });
+  }
+});
+
+test('every OPTIONAL_DATA entry has a reason', () => {
+  for (const [ref, reason] of OPTIONAL_DATA) assert.ok(reason && reason.length > 10, ref);
 });
 
 test('internal files and research data stay off the public site', () => {

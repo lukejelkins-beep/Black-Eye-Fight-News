@@ -1,0 +1,7 @@
+# Everything the full Python test suite (tests/*.py) imports. Used by
+# .github/workflows/python-tests.yml. rembg and OpenCV are not needed: the
+# cutout tests run on synthetic masks.
+numpy>=2,<3
+Pillow>=11,<13
+requests>=2.31,<3
+beautifulsoup4>=4.12,<5

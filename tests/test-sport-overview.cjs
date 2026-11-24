@@ -61,3 +61,45 @@ assert(mma.includes('Stirling stops Prochazka') && mma.includes('UFC champions')
 assert(!mma.includes('Latest news'), 'no news block without stories');
 assert(O.build({ area: 'mma', now, events: [], results: null }, h).includes('Loading'));
 console.log('sport overview tests passed');
+
+// ---- All-sports front page (owner, 24 Nov 2026: design A, hero rotates by sport) ----
+{
+  // Own links and photos: site routes and BEFN-held webp files only.
+  assert.strictEqual(O.ownLink(h, '#results'), '#results'); assert.strictEqual(O.ownLink(h, 'sumo.html#review'), 'sumo.html#review');
+  assert.strictEqual(O.ownLink(h, 'javascript:alert(1)'), '#'); assert(!O.ownLink(h, '#x"onclick').includes('"'), 'a quote never reaches the attribute');
+  assert.strictEqual(O.ownSrc(h, 'assets/sumo-photos/cutout/jsa-8850.webp'), 'assets/sumo-photos/cutout/jsa-8850.webp');
+  assert.strictEqual(O.ownSrc(h, 'assets/../secret.webp'), '#');
+  // Sumo: the second Sunday, and the latest finished basho with the next one's banzuke date.
+  assert.strictEqual(O.bashoStart('202701'), '2027-01-10'); assert.strictEqual(O.bashoStart('202611'), '2026-11-08');
+  const index = { basho: [
+    { bashoId: '202609', endDate: '2026-09-27T00:00:00Z', makuuchiChampion: 'Onosato', makuuchiChampionId: 8850, makuuchiChampionRecord: { wins: 12, losses: 3 } },
+    { bashoId: '202611', endDate: '2026-11-22T00:00:00Z', makuuchiChampion: 'Onosato', makuuchiChampionId: 8850, makuuchiChampionRank: 'Yokozuna 1 East', makuuchiChampionRecord: { wins: 13, losses: 2 } },
+    { bashoId: '202701', endDate: '2027-01-24T00:00:00Z', makuuchiChampion: null } ] };
+  const releases = { releases: { '202701': { date: '2026-12-21' } } };
+  const sm = O.sumoSummary(index, releases, now);
+  assert.strictEqual(sm.last.id, '202611'); assert.strictEqual(sm.last.record, '13–2'); assert.strictEqual(sm.last.name, 'November basho');
+  assert.strictEqual(sm.next.id, '202701'); assert.strictEqual(sm.next.start, '2027-01-10'); assert.strictEqual(sm.next.banzuke, '2026-12-21');
+  assert.strictEqual(O.sumoSummary({ basho: [] }, releases, now), null);
+  const ctx = { now, events, results, featured, sumoIndex: index, sumoReleases: releases, sumoPhoto: 'assets/sumo-photos/cutout/jsa-8850.webp',
+    stories: [{ title: 'Box story', url: 'https://example.com/b', sport: 'boxing' }, { title: 'Box two', url: 'https://example.com/b2', sport: 'boxing' },
+      { title: 'Sumo story', url: 'https://example.com/s', sport: 'sumo', language: 'ja' }, { title: 'MMA story', url: 'https://example.com/m', sport: 'mma' }] };
+  // The hero follows the rotation order; each sport's hero is that sport's own.
+  const first = order => /fp-tag fp-(\w+)/.exec(/<section class="sov-hero fp-hero[\s\S]*?<\/section>/.exec(O.buildFront({ ...ctx, heroOrder: order }, h))[0])[1];
+  assert.strictEqual(first(['mma', 'sumo', 'boxing']), 'mma'); assert.strictEqual(first(['sumo', 'boxing', 'mma']), 'sumo'); assert.strictEqual(first(['boxing', 'mma', 'sumo']), 'boxing');
+  const page = O.buildFront({ ...ctx, heroOrder: ['sumo', 'boxing', 'mma'] }, h);
+  assert(page.includes('Onosato wins the November basho at <span class="sov-nw">13–2</span>'));
+  assert(page.includes('Pick a sport') && page.includes('href="sumo.html#home"') && page.includes('data-area="boxing"'));
+  assert(page.includes('The January banzuke is out on'));
+  // Mixed results include the sumo champion; news takes each sport in turn and marks translations.
+  assert(page.includes('fp-res"><span class="fp-tag fp-sumo">'));
+  const news = /Latest news[\s\S]*$/.exec(page)[0];
+  assert(news.indexOf('Box story') < news.indexOf('MMA story') && news.indexOf('MMA story') < news.indexOf('Sumo story') && news.includes('translated'));
+  // When the boxing hero is the featured fight, the boxing card shows something else.
+  const boxFirst = O.buildFront({ ...ctx, heroOrder: ['boxing', 'mma', 'sumo'] }, h);
+  const cards = /Pick a sport[\s\S]*?<\/section>/.exec(boxFirst)[0];
+  assert(!/fp-sc fp-boxing[\s\S]*?Fury vs Joshua/.test(cards.split('fp-sc fp-mma')[0]));
+  // No dead links anywhere on the page.
+  assert(!/href="#"/.test(page) && !/href="#"/.test(boxFirst));
+  assert(O.buildFront({ now, events: [], results: null }, h).includes('Loading'));
+  console.log('front page tests passed');
+}
