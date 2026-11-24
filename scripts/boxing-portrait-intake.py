@@ -23,6 +23,10 @@ Usage:
   python3 -I scripts/boxing-portrait-intake.py --names "A,B" --commons-candidates DIR
       (lists and saves thumbnails of every free Commons photograph tied to each boxer,
        for review by eye; changes nothing in the repository)
+  python3 -I scripts/boxing-portrait-intake.py --names-file F --stage DIR
+      (staging, for scripts/photo-runner.py: the crops go to DIR/boxing/files/ and the rows
+       that would be registered to DIR/boxing/result.json; nothing under assets/ or data/
+       is written, and nothing is registered until the runner's approve step)
 
 Processing needs Pillow where it is available, and falls back to macOS `sips`, which
 crops centred rather than top-biased; rows made that way carry "centredCrop": true so
@@ -38,7 +42,9 @@ REGISTER = ROOT / "data/boxing-image-register.json"
 OUT_DIR = ROOT / "assets/img/boxing"
 PRIORITY = ROOT / "docs/design/boxing-photo-priority.csv"
 AGENT = "BEFN-image-intake/1.0 (+https://black-eye-fight-news.onrender.com)"
-ROBOTS_AGENTS = ("befn-image-intake", "claudebot", "*")
+# anthropic-ai added 2026-11-24 (photo runner): a site that turns away Anthropic's crawler
+# token is skipped too, which only ever narrows what is fetched.
+ROBOTS_AGENTS = ("befn-image-intake", "claudebot", "anthropic-ai", "*")
 ATTESTATION = ("Owner attested 2026-11-22 that BEFN may republish fighter photographs "
                "from Matchroom, Queensberry, BOXXER, PBC, MVP and Salita press kits, "
                "with the promoter credited.")
@@ -505,7 +511,9 @@ def review_commons(names, out_dir):
     return 0
 
 
-def wanted_names(limit, only):
+def wanted_names(limit, only, names_file=""):
+    if names_file:
+        return [n.strip() for n in Path(names_file).read_text(encoding="utf-8").splitlines() if n.strip()]
     if only:
         return [n.strip() for n in only.split(",") if n.strip()]
     rows = list(csv.DictReader(PRIORITY.open(encoding="utf-8-sig")))
@@ -589,17 +597,24 @@ def main():
     ap.add_argument("--commons-candidates", metavar="DIR", default="",
                     help="list the Commons photographs of --names for review, thumbnails into DIR; fetch nothing else")
     ap.add_argument("--no-events", action="store_true", help="rosters only; skip the promoters' event pages")
+    ap.add_argument("--names-file", default="", help="one name per line, instead of --names or the list")
+    ap.add_argument("--stage", metavar="DIR", default="",
+                    help="staging: crops into DIR/boxing/files/, rows into DIR/boxing/result.json; registers nothing")
     args = ap.parse_args()
+    global OUT_DIR
+    if args.stage:
+        OUT_DIR = Path(args.stage) / "boxing" / "files"
 
     if args.commons_candidates:
-        return review_commons(wanted_names(args.limit, args.names), Path(args.commons_candidates))
+        return review_commons(wanted_names(args.limit, args.names, args.names_file), Path(args.commons_candidates))
     register = json.loads(REGISTER.read_text(encoding="utf-8")) if REGISTER.exists() else {
         "version": 1, "sport": "boxing", "basePath": "assets/img/boxing/",
         "rights": "promoter-press-kit, wikimedia-cc", "images": [], "skipped": []}
     register["rightsNote"] = RIGHTS_NOTE
     register["attestations"] = dict(ATTESTATIONS)
     have = {r["id"] for r in register["images"]}
-    want = wanted_names(args.limit, args.names)
+    want = wanted_names(args.limit, args.names, args.names_file)
+    held = len(register["images"])  # rows appended after this are the ones this run took
     want_keys = {norm(n): n for n in want}
     report, added, skipped = [], [], []
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -751,7 +766,13 @@ def main():
     for promoter, why in NOT_FETCHED.items():
         report.append(f"{promoter}: not fetched, {why}")
 
-    if not args.dry_run:
+    if args.stage and not args.dry_run:
+        # Staging: the rows exactly as they would be registered, for a person to look at
+        # first. `scripts/photo-runner.py approve` registers the ones that pass.
+        (Path(args.stage) / "boxing" / "result.json").write_text(json.dumps(
+            {"images": register["images"][held:], "skipped": skipped, "report": report},
+            indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    elif not args.dry_run:
         register["generated"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
         register["images"].sort(key=lambda r: r["id"])
         # A run over part of the list (--names) keeps what earlier runs recorded for the

@@ -55,6 +55,15 @@ BY_EYE = {
     "william-crolla": "full-length flexing pose, the head too small to read",
 }
 
+# Other MMA promotions (PFL, ONE, KSW, RIZIN, Cage Warriors; data/mma-image-register.json, added 2026-11-24 with
+# scripts/photo-runner.py). Same code, same checks, its own folder and register, its own by-eye list.
+BY_EYE_MMA = {
+}
+SPORTS = {
+    "boxing": (OUT_DIR, REGISTER, IMAGE_REGISTER, BY_EYE),
+    "mma": (ROOT / "assets/img/mma-cutouts", DATA / "mma-cutout-register.json", DATA / "mma-image-register.json", BY_EYE_MMA),
+}
+
 
 def judge_frame(framed):
     """A backstop for the head-and-shoulders crop, not a substitute for looking at it.
@@ -86,7 +95,10 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--only", help="comma-separated register ids (default: every boxer in the register)")
     ap.add_argument("--reframe", action="store_true", help="re-crop the existing cutouts to the common framing (no model needed)")
+    ap.add_argument("--sport", choices=sorted(SPORTS), default="boxing",
+                    help="boxing (default) or mma: the other MMA promotions' register")
     args = ap.parse_args()
+    OUT_DIR, REGISTER, IMAGE_REGISTER, by_eye = SPORTS[args.sport]
     from PIL import Image
     import numpy as np
     shared = ufc_cutouts()
@@ -110,13 +122,14 @@ def main() -> int:
         row = rows.get(rid)
         src = base / (row or {}).get("files", {}).get("portrait", "")
         if not row or not src.is_file():
-            reg["cutouts"][rid] = {"ok": False, "reason": "no portrait in the boxing image register"}
+            reg["cutouts"][rid] = {"ok": False, "reason": f"no portrait in the {args.sport} image register"}
             continue
         if Image.open(src).width < MIN_WIDTH:
             reg["cutouts"][rid] = {"ok": False, "reason": f"source portrait under {MIN_WIDTH}px wide"}
             continue
-        if rid in BY_EYE:
-            reg["cutouts"][rid] = {"ok": False, "reason": "dropped by eye: " + BY_EYE[rid]}
+        if rid in by_eye:
+            reg["cutouts"][rid] = {"ok": False, "reason": "dropped by eye: " + by_eye[rid]}
+            (OUT_DIR / f"{rid}.webp").unlink(missing_ok=True)
             continue
         session = session or new_session("isnet-general-use")
         arr = np.array(remove(Image.open(src).convert("RGB"), session=session))
@@ -132,8 +145,9 @@ def main() -> int:
             continue
         reg["cutouts"][rid] = {"ok": True, "reason": reason, "credit": row.get("credit", ""), "rights": row.get("rights", "")}
     reg["cutouts"] = dict(sorted(reg["cutouts"].items()))
-    reg["note"] = ("Derived from the photographs in data/boxing-image-register.json; each cutout carries that row's "
-                   "credit and rights (promoter press kit under the owner's attestation, or a free Commons licence). "
+    reg["note"] = (f"Derived from the photographs in data/{IMAGE_REGISTER.name}; each cutout carries that row's "
+                   "credit and rights (promoter press kit under the owner's attestation, a free Commons licence, "
+                   "or a photograph the owner supplied with their attestation). "
                    "ok=false means the page keeps the original photograph in a disc.")
     REGISTER.write_text(json.dumps(reg, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     good = sum(1 for v in reg["cutouts"].values() if v["ok"])

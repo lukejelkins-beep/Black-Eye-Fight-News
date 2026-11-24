@@ -106,12 +106,46 @@ def cutout_module():
     return mod
 
 
+def photo_row(sid, w, source_url, profile_url, digest, now):
+    """The approved-photos.json row for one official portrait."""
+    return {
+        'approved': True, 'path': 'assets/sumo-photos/jsa-' + sid + '.jpg', 'name': w.get('shikonaEn'),
+        'sourceId': int(sid), 'officialNskId': int(w['officialNskId']), 'license': LICENSE,
+        'credit': 'Japan Sumo Association', 'sourceUrl': source_url, 'profileUrl': profile_url,
+        'sha256': digest, 'changes': 'Original official JPEG; CSS may crop',
+        'identityBasis': 'JSA profile at roster officialNskId; ring name and stable match roster (automated check)',
+        'intake': {'method': 'automated', 'at': now}}
+
+
+def record_photo(sid, row, data, photos, cutouts, cut):
+    """Write the portrait, record it and make its display cut-out (or record it as a headshot).
+    Used by the daily intake and by scripts/photo-runner.py approve."""
+    rel = row['path']
+    with open(os.path.join(ROOT, rel), 'wb') as f:
+        f.write(data)
+    photos[sid] = row
+    cut_rel = 'assets/sumo-photos/cutout/' + os.path.splitext(os.path.basename(rel))[0] + '.webp'
+    cutouts['headshotOrPartial'] = [x for x in cutouts.get('headshotOrPartial', []) if x != sid]
+    try:
+        cut.cutout(os.path.join(ROOT, rel), os.path.join(ROOT, cut_rel))
+        cutouts['bySourceId'][sid] = {'path': cut_rel, 'sourceSha256': row['sha256'],
+                                      'bytes': os.path.getsize(os.path.join(ROOT, cut_rel))}
+    except ValueError:
+        cutouts['bySourceId'].pop(sid, None)
+        cutouts['headshotOrPartial'].append(sid)
+        if os.path.exists(os.path.join(ROOT, cut_rel)):
+            os.remove(os.path.join(ROOT, cut_rel))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--update-batch', type=int, default=24)
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--only')
+    ap.add_argument('--stage', default='', help='staging dir (scripts/photo-runner.py): portraits and rows go '
+                    'to STAGE/sumo/, nothing is registered and no cut-out is made')
     args = ap.parse_args(argv)
+    staged = []
 
     roster = load('data/sumo/rikishi-index.json')['rikishi']
     photos_doc = load('data/sumo/approved-photos.json')
@@ -170,28 +204,16 @@ def main(argv=None):
             if args.dry_run:
                 (result['updated'] if old.get('approved') else result['added']).append(sid)
                 continue
-            rel = 'assets/sumo-photos/jsa-' + sid + '.jpg'
-            with open(os.path.join(ROOT, rel), 'wb') as f:
-                f.write(data)
-            photos[sid] = {
-                'approved': True, 'path': rel, 'name': w.get('shikonaEn'), 'sourceId': int(sid),
-                'officialNskId': int(w['officialNskId']), 'license': LICENSE,
-                'credit': 'Japan Sumo Association', 'sourceUrl': source_url, 'profileUrl': profile_url,
-                'sha256': digest, 'changes': 'Original official JPEG; CSS may crop',
-                'identityBasis': 'JSA profile at roster officialNskId; ring name and stable match roster (automated check)',
-                'intake': {'method': 'automated', 'at': now}}
-            cut = cut or cutout_module()
-            cut_rel = 'assets/sumo-photos/cutout/jsa-' + sid + '.webp'
-            cutouts['headshotOrPartial'] = [x for x in cutouts.get('headshotOrPartial', []) if x != sid]
-            try:
-                cut.cutout(os.path.join(ROOT, rel), os.path.join(ROOT, cut_rel))
-                cutouts['bySourceId'][sid] = {'path': cut_rel, 'sourceSha256': digest,
-                                              'bytes': os.path.getsize(os.path.join(ROOT, cut_rel))}
-            except ValueError:
-                cutouts['bySourceId'].pop(sid, None)
-                cutouts['headshotOrPartial'].append(sid)
-                if os.path.exists(os.path.join(ROOT, cut_rel)):
-                    os.remove(os.path.join(ROOT, cut_rel))
+            row = photo_row(sid, w, source_url, profile_url, digest, now)
+            if args.stage:
+                # Staging (scripts/photo-runner.py): the JPEG and the row it would get, nothing registered.
+                os.makedirs(os.path.join(args.stage, 'sumo', 'files'), exist_ok=True)
+                with open(os.path.join(args.stage, 'sumo', 'files', 'jsa-' + sid + '.jpg'), 'wb') as f:
+                    f.write(data)
+                staged.append(row)
+            else:
+                cut = cut or cutout_module()
+                record_photo(sid, row, data, photos, cutouts, cut)
             (result['updated'] if old.get('approved') else result['added']).append(sid)
         except Blocked as error:
             result['blocked'] = str(error)[:160]
@@ -199,7 +221,11 @@ def main(argv=None):
         except Exception as error:
             result['errors'].append({'sourceId': sid, 'error': str(error)[:160]})
 
-    if not args.dry_run:
+    if args.stage:
+        os.makedirs(os.path.join(args.stage, 'sumo'), exist_ok=True)
+        with open(os.path.join(args.stage, 'sumo', 'result.json'), 'w', encoding='utf-8') as f:
+            json.dump({'images': staged, 'result': result}, f, indent=1, ensure_ascii=False)
+    elif not args.dry_run:
         save('data/sumo/approved-photos.json', photos_doc)
         cutouts['headshotOrPartial'] = sorted(set(cutouts.get('headshotOrPartial', [])), key=int)
         save('data/sumo/cutouts.json', cutouts)

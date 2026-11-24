@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
-"""Generate boxing-photo-credits.html from data/boxing-image-register.json.
+"""Generate boxing-photo-credits.html and mma-photo-credits.html from the image registers.
 
 CC BY and CC BY-SA ask for the photographer, the licence and the changes made to be
-named where the work is used. A photograph in a bout disc has no room for that, so the
-credit lives on this page, which every page that can show one links to. Run it after the
-intake:  python3 -I scripts/build-photo-credits.py
+named where the work is used, and the promoter attestations ask for the promoter to be
+credited. A photograph in a bout disc has no room for that, so the credit lives on these
+pages, which every page that can show one links to. Run it after every intake or
+`scripts/photo-runner.py approve`:  python3 -I scripts/build-photo-credits.py
 """
 import html, json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-REGISTER = ROOT / "data/boxing-image-register.json"
-OUT = ROOT / "boxing-photo-credits.html"
+PAGES = [  # register, page, sport label, attestation wording for press-kit photographs
+    (ROOT / "data/boxing-image-register.json", ROOT / "boxing-photo-credits.html", "Boxing", "boxer",
+     "Published under the BEFN operator's attestations (22 November 2026; Top Rank 24 November 2026) "
+     "that these photographs may be republished with the promoter credited"),
+    (ROOT / "data/mma-image-register.json", ROOT / "mma-photo-credits.html", "MMA", "fighter",
+     "Published under the BEFN operator's attestation of 24 November 2026 that press-kit and media fighter "
+     "photographs from PFL, ONE Championship, KSW, RIZIN and Cage Warriors may be republished with the promoter credited"),
+]
 e = html.escape
 
 STYLE = ("body{max-width:850px;margin:3rem auto;padding:0 1rem;font:16px/1.6 'DM Sans',system-ui,sans-serif;"
@@ -22,22 +29,22 @@ STYLE = ("body{max-width:850px;margin:3rem auto;padding:0 1rem;font:16px/1.6 'DM
          "a{color:#cf1824}li{margin:1rem 0}")
 
 
-def main():
-    reg = json.loads(REGISTER.read_text(encoding="utf-8"))
+def page(reg, sport, who, press_wording):
     images = sorted(reg["images"], key=lambda r: r["name"])
     commons = [r for r in images if r.get("rights") == "wikimedia-cc"]
     press = [r for r in images if r.get("rights") == "promoter-press-kit"]
+    owner = [r for r in images if r.get("rights") == "owner-supplied"]
 
     parts = ["<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">",
              "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
-             "<title>Boxing Photo Credits | BEFN</title>",
+             f"<title>{sport} Photo Credits | BEFN</title>",
              "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">",
              "<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>",
              "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Unbounded:wght@700;800&display=swap\">",
              f"<style>{STYLE}</style></head><body>",
              "<a href=\"index.html#home\">Return to Black Eye Fight News</a>",
-             "<h1>Boxing photograph credits</h1>",
-             "<p>Every boxer photograph BEFN hosts is listed here with its source, its photographer where one is named, "
+             f"<h1>{sport} photograph credits</h1>",
+             f"<p>Every {who} photograph BEFN hosts is listed here with its source, its photographer where one is named, "
              "its licence and what was changed. Photographs are cropped to a portrait, card and thumbnail shape and "
              "converted to WebP; nothing else is altered.</p>"]
 
@@ -47,27 +54,42 @@ def main():
         for r in commons:
             licence = e(r.get("licence", ""))
             licence_link = (f"<a href=\"{e(r['licenceUrl'])}\">{licence}</a>" if r.get("licenceUrl") else licence)
-            page = (f"<a href=\"{e(r['sourcePage'])}\">Source photograph</a>" if r.get("sourcePage") else "Source photograph")
+            src = (f"<a href=\"{e(r['sourcePage'])}\">Source photograph</a>" if r.get("sourcePage") else "Source photograph")
             parts.append(f"<li><strong>{e(r['name'])}</strong> — Photograph by {e(r.get('photographer', 'Unknown photographer'))}. "
-                         f"{page} · {licence_link} · Changes: {e(r.get('changes', 'Cropped and converted to WebP.'))}</li>")
+                         f"{src} · {licence_link} · Changes: {e(r.get('changes', 'Cropped and converted to WebP.'))}</li>")
         parts.append("</ul>")
 
     if press:
         promoters = sorted({r.get("promoter", "") for r in press if r.get("promoter")})
         parts.append("<h2>Promoter press kits</h2>"
-                     f"<p>Published under the BEFN operator's attestations (22 November 2026; Top Rank 24 November 2026) "
-                     f"that these photographs may be republished with the promoter credited: {e(', '.join(promoters))}. "
+                     f"<p>{press_wording}: {e(', '.join(promoters))}. "
                      "They are not claimed to be Creative Commons licensed.</p><ul>")
         for r in press:
-            page = (f"<a href=\"{e(r['sourcePage'])}\">Source page</a>" if r.get("sourcePage") else "Source page")
-            parts.append(f"<li><strong>{e(r['name'])}</strong> — {e(r.get('credit', ''))}. {page} · "
+            src = (f"<a href=\"{e(r['sourcePage'])}\">Source page</a>" if r.get("sourcePage") else "Source page")
+            parts.append(f"<li><strong>{e(r['name'])}</strong> — {e(r.get('credit', ''))}. {src} · "
                          "Changes: cropped to BEFN's portrait, card and thumbnail shapes and converted to WebP.</li>")
         parts.append("</ul>")
 
-    parts.append(f"<p>{len(images)} photographs in all. A boxer with no photograph here is shown by name alone, "
+    if owner:
+        parts.append("<h2>Supplied by the BEFN operator</h2><p>Photographs the operator supplied, each with the "
+                     "credit it carries and the operator's own statement of permission.</p><ul>")
+        for r in owner:
+            parts.append(f"<li><strong>{e(r['name'])}</strong> — {e(r.get('credit', ''))}. "
+                         f"Permission: {e(r.get('attestation', ''))} · "
+                         "Changes: cropped to BEFN's portrait, card and thumbnail shapes and converted to WebP.</li>")
+        parts.append("</ul>")
+
+    parts.append(f"<p>{len(images)} photographs in all. A {who} with no photograph here is shown by name alone, "
                  "or by their initials; BEFN does not use a photograph it cannot account for.</p></body></html>")
-    OUT.write_text("\n".join(parts) + "\n", encoding="utf-8")
-    print(f"{OUT.name}: {len(commons)} Commons, {len(press)} press-kit, {len(images)} in all")
+    return "\n".join(parts) + "\n", len(commons), len(press), len(owner), len(images)
+
+
+def main():
+    for register, out, sport, who, wording in PAGES:
+        reg = json.loads(register.read_text(encoding="utf-8")) if register.exists() else {"images": []}
+        text, commons, press, owner, total = page(reg, sport, who, wording)
+        out.write_text(text, encoding="utf-8")
+        print(f"{out.name}: {commons} Commons, {press} press-kit, {owner} owner-supplied, {total} in all")
 
 
 if __name__ == "__main__":

@@ -29,6 +29,10 @@ OUT_DIR = ROOT / "assets/img/ufc-cutouts"
 REGISTER = DATA / "ufc-cutout-register.json"
 MIN_COVER, MAX_COVER = 0.25, 0.75
 MIN_WIDTH = 300  # cutouts are shown at about 150 px, so a 300 px source stays sharp on 2x screens
+# Looked at by eye and dropped (slug -> reason), as for boxing: the page keeps the photo in a disc, and a later
+# run does not take the cutout back. Written by `scripts/photo-runner.py reject-cutout`.
+BY_EYE = {
+}
 
 
 def judge(alpha):
@@ -191,6 +195,10 @@ def main() -> int:
             continue
         if Image.open(src).width < MIN_WIDTH:
             reg["cutouts"][slug] = {"ok": False, "reason": f"source portrait under {MIN_WIDTH}px wide"}
+            continue
+        if slug in BY_EYE:
+            reg["cutouts"][slug] = {"ok": False, "reason": "dropped by eye: " + BY_EYE[slug]}
+            (OUT_DIR / f"{slug}.webp").unlink(missing_ok=True)
             continue
         session = session or new_session("isnet-general-use")
         out = remove(Image.open(src).convert("RGB"), session=session)
