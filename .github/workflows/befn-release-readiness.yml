@@ -40,6 +40,7 @@ jobs:
           node tests/test-sport-overview.cjs
           node tests/test-fights-route.cjs
           node tests/test-service-worker.cjs
+          node tests/test-landing-film.cjs
           node --test tests/test-ufc-async-authority.cjs
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-postfight-metrics.mjs

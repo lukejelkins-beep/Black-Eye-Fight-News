@@ -147,9 +147,12 @@
       (r.cutout ? '<img class="lp-cutout" src="' + h.safeURL(r.cutout) + '" alt="' + h.esc(r.winner) + '" loading="lazy" decoding="async">' : '') + '</div>';
   }
 
-  /* Film from the card the latest result came from: a video whose title names one of
-     the two fighters, finishes first, newest first. Nothing is matched on the event name
-     because the film feed rarely carries one. At most three, and none if none match. */
+  /* Videos of the two fighters in the latest result: a video whose title names one of
+     them, finishes first, newest first. Matched on names only (the film feed rarely
+     carries an event), so it is labelled "Related fighter videos" with each clip's date,
+     never "from this card", which an older fight or a same-surname athlete could
+     contradict (QA audit D03). At most three, and none if none match. */
+  const filmDate = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d || '')); return m ? Number(m[3]) + ' ' + MONTH[Number(m[2]) - 1].charAt(0) + MONTH[Number(m[2]) - 1].slice(1).toLowerCase() + ' ' + m[1] : ''; };
   function cardFilm(result, videos, h) {
     if (!result || !Array.isArray(videos) || !videos.length) return '';
     const names = [result.winner, result.loser].map(n => slug(n)).filter(Boolean);
@@ -166,8 +169,8 @@
     const row = v => '<a class="lp-film-row" href="' + h.safeURL(v.url) + '" target="_blank" rel="noopener noreferrer">' +
       '<span class="lp-film-thumb"><img src="' + h.safeURL(v.thumbnail) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="lp-film-play" aria-hidden="true">▶</span></span>' +
       '<span class="lp-film-copy"><span class="lp-film-title">' + h.esc(v.title) + '</span>' +
-      '<span class="lp-meta">' + h.esc(v.kind || (v.isFinish ? 'Finish' : 'Highlights')) + ' · ' + h.esc(v.publisher || 'Publisher') + '</span></span></a>';
-    return '<section class="lp-film" aria-label="Film from this card"><div class="lp-kicker">Film from this card</div>' +
+      '<span class="lp-meta">' + h.esc([v.kind || (v.isFinish ? 'Finish' : 'Highlights'), v.publisher || 'Publisher', filmDate(v.date)].filter(Boolean).join(' · ')) + '</span></span></a>';
+    return '<section class="lp-film" aria-label="Related fighter videos"><div class="lp-kicker">Related fighter videos</div>' +
       picked.map(row).join('') +
       '<a class="lp-film-all" href="#highlights">All fight film ›</a></section>';
   }
