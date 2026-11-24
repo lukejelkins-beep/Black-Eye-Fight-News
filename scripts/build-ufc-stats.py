@@ -439,7 +439,7 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     pace = {"r1": [0.0, 0.0], "later": [0.0, 0.0]}  # [sig attempts, minutes]
     rounds_scored = rounds_won = rounds_10_8 = 0
     unsound = set()  # "target" / "position": a round whose parts do not add up to the strikes landed
-    w_fights, w_wins, w_sub_losses = 0.0, {"ko": 0.0, "sub": 0.0}, 0.0
+    w_fights, w_wins, w_sub_losses, w_ko_losses = 0.0, {"ko": 0.0, "sub": 0.0}, 0.0, 0.0
     for fight, w in zip(fights, weights):
         if fight["outcome"] != "NC":
             w_fights += w
@@ -447,6 +447,8 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
                 w_wins[fight["method"]] += w
             if fight["outcome"] == "L" and fight["method"] == "sub":
                 w_sub_losses += w
+            if fight["outcome"] == "L" and fight["method"] == "ko":
+                w_ko_losses += w
         out[fight["outcome"]] += 1
         out["titleFights"] += 1 if fight["titleFight"] else 0
         if fight["outcome"] == "W" and fight["method"] in out["winsBy"]:
@@ -486,6 +488,7 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     out["koWinShare"] = round(w_wins["ko"] / w_fights, 4) if w_fights else None
     out["subWinShare"] = round(w_wins["sub"] / w_fights, 4) if w_fights else None
     out["subLossShare"] = round(w_sub_losses / w_fights, 4) if w_fights else None
+    out["koLossShare"] = round(w_ko_losses / w_fights, 4) if w_fights else None
     out["effectiveFights"] = round(sum(w for f, w in zip(fights, weights) if f["statsComplete"] and f["rounds"]), 3)
 
     def known(side, key):
@@ -511,6 +514,7 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
             "totalPm": per(own, "totalLanded", 60),
             "kd15": per(own, "knockdowns", 900), "kdAbs15": per(opp, "knockdowns", 900),
             "td15": per(own, "takedowns", 900), "tdAtt15": per(own, "takedownAttempts", 900),
+            "tdAbs15": per(opp, "takedowns", 900),   # taken down per 15 min (wrestling defence, 2026-11-24)
             "tdAcc": ratio(own, "takedowns", own, "takedownAttempts", minimum=3),
             "tdDef": ratio(opp, "takedowns", opp, "takedownAttempts", invert=True, minimum=3),
             "sub15": per(own, "subAttempts", 900), "subAbs15": per(opp, "subAttempts", 900),
@@ -837,8 +841,10 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
             if w.get("statFights", 0) >= ufc_ratings.MIN_STAT_FIGHTS and w.get("rates"):
                 rows.append({"slug": slug, "statFights": w["statFights"], "rates": w["rates"],
                              "window": {"koWinShare": w.get("koWinShare"), "subWinShare": w.get("subWinShare"),
-                                        "subLossShare": w.get("subLossShare")},
-                             "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k) for k in ufc_ratings.SKILLS}})
+                                        "subLossShare": w.get("subLossShare"), "koLossShare": w.get("koLossShare")},
+                             # defence too: no longer a rated skill, but the fight-card tiles still use it
+                             "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k)
+                                     for k in (*ufc_ratings.SKILLS, "defence")}})
         parity_out.write_text(json.dumps(rows), encoding="utf-8")
 
     index_rows = {}
@@ -865,12 +871,12 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
             "rates": {k: [windows[k]["rates"].get(m) for m in INDEX_RATES] for k in WINDOWS},
             "finishRate": windows["career"]["finishRate"],
             "roundWinRate": (windows["career"]["judging"] or {}).get("roundWinRate"),
-            # [overall, striking, grappling, wrestling, defence, form]: overall is the BEFN rating (1500 = median
-            # established fighter), the four skills are roster percentiles, form is out of 100; then the same four
+            # [overall, striking, grappling, wrestling, form]: overall is the BEFN score out of 100 (50 = median
+            # established fighter), the three skills are roster percentiles, form is out of 100; then the same three
             # skills as division percentiles.
-            "rating": None if not rating else [None] * 5 + [rating["form"]["score"]] if rating.get("provisional") else
+            "rating": None if not rating else [None] * (1 + len(ufc_ratings.SKILLS)) + [rating["form"]["score"]] if rating.get("provisional") else
                       [rating["overall"]] + [rating["skills"][k]["roster"] for k in ufc_ratings.SKILLS] + [rating["form"]["score"]],
-            "divisionRating": None if not rating else [None] * 4 if rating.get("provisional") else
+            "divisionRating": None if not rating else [None] * len(ufc_ratings.SKILLS) if rating.get("provisional") else
                               [rating["skills"][k]["division"] for k in ufc_ratings.SKILLS],
         }
 
@@ -884,7 +890,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
         "ratingFields": ["overall", *ufc_ratings.SKILLS, "form"],
         "ratingRules": {"window": "weighted", "minStatFights": ufc_ratings.MIN_STAT_FIGHTS,
                         "minDivisionPeers": ufc_ratings.MIN_DIVISION_PEERS, "scale": "percentile",
-                        "overallScale": "rating", "overallCentre": ufc_ratings.HEADLINE_CENTRE,
+                        "overallScale": "score-100", "overallCentre": 50, "scoreDivisor": ufc_ratings.SCORE_DIVISOR,
                         "model": ufc_ratings.MODEL},
         "divisionCoverage": {"withDivision": sum(1 for r in index_rows.values() if r["divisionSlug"]),
                              "officialRoster": sum(1 for c in computed.values() if c["divisionSource"] == "official-roster"),
@@ -897,7 +903,8 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
     names = {}
     for slug, row in index_rows.items():
         names.setdefault(norm(row["name"]), slug)
-    rated = sum(1 for row in index_rows.values() if row["rating"] and any(v is not None for v in row["rating"][1:5]))
+    rated = sum(1 for row in index_rows.values()  # skill slots only, not form (Defence left the skills on 2026-11-24)
+                if row["rating"] and any(v is not None for v in row["rating"][1:1 + len(ufc_ratings.SKILLS)]))
     (out_dir / "names.json").write_text(json.dumps({"schema": SCHEMA, "asOf": as_of.isoformat(), "rated": rated,
                                                     "names": names},
                                                    separators=(",", ":"), sort_keys=True), encoding="utf-8")
@@ -969,7 +976,8 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         r = ratings.get(slug)
         if r and r.get("eligible"):
             rated.append([position[slug], r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
-                          r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"]])
+                          r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"],
+                          r.get("overallRank")])
     labels = {}
     for c in computed.values():
         if c["divisionSlug"] and c["division"]:
@@ -984,7 +992,7 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         "fighters": fighters,
         "rowFields": ["fighter", "statFights", *[b[0] for b in BOARD_STATS]],
         "rows": windows,
-        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights"],
+        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank"],
         "ratings": rated,
     }
 

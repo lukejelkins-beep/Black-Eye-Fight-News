@@ -33,7 +33,10 @@ from __future__ import annotations
 import datetime as _dt
 import math
 
-SKILLS = ("striking", "grappling", "wrestling", "defence")
+# Rated skills. Since 2026-11-24 (owner) each skill includes its own defence, so there is no separate Defence skill:
+# striking counts strikes absorbed, strike defence and knockdowns absorbed; wrestling counts takedown defence and control
+# conceded; grappling counts submissions conceded. "defence" stays in specs() for the fight-card tiles only.
+SKILLS = ("striking", "grappling", "wrestling")
 OVERALL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25, "form": .15}
 MIN_STAT_FIGHTS = 3          # complete-stat UFC fights needed before any skill is rated
 MIN_ROSTER = 20              # a skill needs this many rated fighters to rank anyone
@@ -48,12 +51,43 @@ RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "
 RESULTS_MEAN = 1500          # an idle rating drifts back toward this
 RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as established
 # Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Owner's mix: results carry
-# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 68/32), same total spread as the fit.
+# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 70/30 with the 2026-11-24 skills), same total
+# spread as the fit.
 # The four skills keep their old relative weights.
-BLEND = {"results": 1.843, "skills": 1.354}
-SKILL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25}
+BLEND = {"results": 1.763, "skills": 1.214}
+# Old weights were striking 25, defence 25, wrestling 20, grappling 15; striking now carries the strike defence.
+SKILL_WEIGHTS = {"striking": .55, "grappling": .20, "wrestling": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
 HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit of log-odds
+# What readers see (owner's choice, display option A, 2026-11-24): a score out of 100 where 50 is the median rated
+# fighter, 50 + (rating - 1500) / SCORE_DIVISOR, clamped to 1-99. With the rating's spread (sd about 134) the divisor 8
+# (owner, 2026-11-24, was 11) puts the top ten at about 88 or higher and only the very best at the 99 cap. The full rating is kept as
+# "overallRating" and orders the ranks, so two fighters with the same rounded score still have distinct ranks.
+SCORE_DIVISOR = 8
+
+# Striking (owner, 2026-11-24): output 60% (landed, differential, accuracy, knockdowns, KO wins) and defence 40%
+# (strike defence, strikes absorbed, knockdowns absorbed, KO/TKO losses). KO/TKO losses weigh .07: a walk-forward test
+# on 2024+ fights of 0, .07, .13 and .20 found a larger weight never tracked results better (skills-only Brier .2311,
+# .2312, .2318, .2326), since knockdowns and strikes absorbed already carry most of it; .07 keeps it counted at no
+# measurable cost. See docs/ufc-rating-model-2026-11.md.
+# Wrestling (owner, 2026-11-24): offence 60% (takedowns landed 25, accuracy 12, control won 23), defence 40%
+# (takedown defence %, taken down per 15 min, control conceded, reversals). Takedown defence % alone misses a fighter
+# who stops most attempts but faces many; "taken down per 15" counts how often it actually happens. Walk-forward test on
+# 2024+ fights (wrestling-only Brier at 0, .06, .12, .18: .2434, .2436, .2439, .2443): more weight never tracked results
+# better, since defence % and control conceded carry most of it, so .06 keeps it counted at no measurable cost.
+# Control conceded weighs .24 and takedown defence % .05 (owner, 2026-11-24): being taken down and getting straight
+# back up costs little, being held down costs a lot. Tested at .12/.18/.24/.29 control: wrestling-only Brier .2436,
+# .2438, .2442, .2445 and accuracy 58.2/58.6/58.7/57.3% - level up to .24, worse with no takedown defence at all.
+WRESTLING_WEIGHTS = {"td15": .25, "tdAcc": .12, "ctrlShare": .23,
+                     "tdDef": .05, "tdAbs15": .06, "ctrlAgainstShare": .24, "rev15": .05}
+# Grappling (owner, 2026-11-24): offence 60% (submission attempts 20, submission wins 28, control won 12), defence 40%
+# (submission losses, opponents' submission attempts, reversals, control conceded). Submission losses weigh .15: on
+# 2024+ fights grappling-only Brier at 0, .07, .15, .22 was .2466, .2459, .2458, .2458 (leaving them out is worse; the
+# gain levels off at .15).
+GRAPPLING_WEIGHTS = {"sub15": .20, "subWinShare": .28, "ctrlShare": .12,
+                     "subLossShare": .15, "subAbs15": .10, "rev15": .08, "ctrlAgainstShare": .07}
+STRIKING_WEIGHTS = {"slpm": .10, "diffPm": .17, "strAcc": .08, "kd15": .11, "koWinShare": .14,
+                    "strDef": .12, "sapm": .09, "kdAbs15": .12, "koLossShare": .07}
 MODEL = "results+skills 2026-11"
 
 # (key, label, unit) for the "what drives this rating" view.
@@ -62,17 +96,25 @@ COMPONENTS = {
                  ("diffPm", "Strike differential per min", "rate"),
                  ("strAcc", "Significant strike accuracy", "pct"),
                  ("kd15", "Knockdowns per 15 min", "rate"),
-                 ("koWinShare", "KO/TKO wins per fight", "pct")],
+                 ("koWinShare", "KO/TKO wins per fight", "pct"),
+                 ("strDef", "Significant strike defence", "pct"),
+                 ("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
+                 ("kdAbs15", "Knockdowns absorbed per 15 min (lower is better)", "rate"),
+                 ("koLossShare", "KO/TKO losses per fight (lower is better)", "pct")],
+    # Order matters: the grappling gate reads the first three (any submission evidence), wrestling the first.
     "grappling": [("sub15", "Submission attempts per 15 min", "rate"),
                   ("subWinShare", "Submission wins per fight", "pct"),
                   ("subLossShare", "Submission losses per fight (lower is better)", "pct"),
+                  ("ctrlShare", "Control-time share", "pct"),
                   ("subAbs15", "Opponent submission attempts per 15 min (lower is better)", "rate"),
                   ("rev15", "Reversals per 15 min", "rate"),
-                  ("netCtrl", "Control time won minus conceded", "signed")],
+                  ("ctrlAgainstShare", "Time controlled by opponents (lower is better)", "pct")],
     "wrestling": [("td15", "Takedowns per 15 min", "rate"),
                   ("tdAcc", "Takedown accuracy", "pct"),
+                  ("ctrlShare", "Control-time share", "pct"),
                   ("tdDef", "Takedown defence", "pct"),
-                  ("netCtrl", "Control time won minus conceded", "signed"),
+                  ("tdAbs15", "Taken down per 15 min (lower is better)", "rate"),
+                  ("ctrlAgainstShare", "Time controlled by opponents (lower is better)", "pct"),
                   ("rev15", "Reversals per 15 min", "rate")],
     "defence": [("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
                 ("strDef", "Significant strike defence", "pct"),
@@ -110,7 +152,7 @@ BOUNDS = {"slpm": (0, 20), "sapm": (0, 20), "td15": (0, 20), "sub15": (0, 12), "
           "ctrlShare": (0, 1), "ctrlAgainstShare": (0, 1), "kd15": (0, 7), "kdAbs15": (0, 7),
           "strAcc": (0, 1), "strDef": (0, 1), "tdAcc": (0, 1), "tdDef": (0, 1),
           "koWinShare": (0, 1), "subWinShare": (0, 1), "subLossShare": (0, 1), "subAbs15": (0, 12),
-          "netCtrl": (-1, 1)}
+          "netCtrl": (-1, 1), "koLossShare": (0, 1), "tdAbs15": (0, 20)}
 
 
 def bounded(rates: dict, window: dict) -> dict:
@@ -120,6 +162,7 @@ def bounded(rates: dict, window: dict) -> dict:
     net = (round(ctrl - against, 3) if isinstance(ctrl, (int, float)) and isinstance(against, (int, float)) else None)
     merged = {**rates, "koWinShare": (window or {}).get("koWinShare"),
               "subWinShare": (window or {}).get("subWinShare"), "subLossShare": (window or {}).get("subLossShare"),
+              "koLossShare": (window or {}).get("koLossShare"),
               "netCtrl": net}
     out = {}
     for key, value in merged.items():
@@ -134,17 +177,30 @@ def specs(rates: dict, window: dict) -> dict:
     window = r
     slpm, sapm = r.get("slpm"), r.get("sapm")
     diff = slpm - sapm if slpm is not None and sapm is not None else None
+    W, G, WR = STRIKING_WEIGHTS, GRAPPLING_WEIGHTS, WRESTLING_WEIGHTS
     return {
-        "striking": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
-                     (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
-                     (_between(window.get("koWinShare"), 0, .50), .25)],
-        # Effectiveness, not volume: what a fighter stops counts as well as what they land.
-        "grappling": [(_between(r.get("sub15"), 0, 3.0), .20), (_between(window.get("subWinShare"), 0, .35), .30),
-                      (_between(window.get("subLossShare"), .25, 0), .20), (_between(r.get("subAbs15"), 2.0, 0), .10),
-                      (_between(r.get("rev15"), 0, 2), .10), (_between(r.get("netCtrl"), -.40, .50), .10)],
-        "wrestling": [(_between(r.get("td15"), 0, 5.5), .20), (_between(_pct(r.get("tdAcc")), 20, 65), .10),
-                      (_between(_pct(r.get("tdDef")), 40, 95), .30), (_between(r.get("netCtrl"), -.40, .50), .35),
-                      (_between(r.get("rev15"), 0, 2), .05)],
+        # Striking is landing and not getting hit (owner, 2026-11-24): output 60%, defence 40%, being knocked out
+        # included. Weights in STRIKING_WEIGHTS.
+        "striking": [(_between(slpm, .8, 6.5), W["slpm"]), (_between(diff, -2.0, 3.0), W["diffPm"]),
+                     (_between(_pct(r.get("strAcc")), 25, 65), W["strAcc"]), (_between(r.get("kd15"), 0, 1.0), W["kd15"]),
+                     (_between(window.get("koWinShare"), 0, .50), W["koWinShare"]),
+                     (_between(_pct(r.get("strDef")), 35, 75), W["strDef"]), (_between(sapm, 6.0, 1.2), W["sapm"]),
+                     (_between(r.get("kdAbs15"), 1.0, 0), W["kdAbs15"]), (_between(window.get("koLossShare"), .25, 0), W["koLossShare"])],
+        # Offence 60%, defence 40%, like striking (owner, 2026-11-24). Weights in GRAPPLING_WEIGHTS / WRESTLING_WEIGHTS.
+        "grappling": [(_between(r.get("sub15"), 0, 3.0), G["sub15"]),
+                      (_between(window.get("subWinShare"), 0, .35), G["subWinShare"]),
+                      (_between(window.get("subLossShare"), .25, 0), G["subLossShare"]),
+                      (_between(r.get("ctrlShare"), 0, .50), G["ctrlShare"]),
+                      (_between(r.get("subAbs15"), 2.0, 0), G["subAbs15"]),
+                      (_between(r.get("rev15"), 0, 2), G["rev15"]),
+                      (_between(r.get("ctrlAgainstShare"), .50, 0), G["ctrlAgainstShare"])],
+        "wrestling": [(_between(r.get("td15"), 0, 5.5), WR["td15"]),
+                      (_between(_pct(r.get("tdAcc")), 20, 65), WR["tdAcc"]),
+                      (_between(r.get("ctrlShare"), 0, .50), WR["ctrlShare"]),
+                      (_between(_pct(r.get("tdDef")), 40, 95), WR["tdDef"]),
+                      (_between(r.get("tdAbs15"), 4.0, 0), WR["tdAbs15"]),
+                      (_between(r.get("ctrlAgainstShare"), .50, 0), WR["ctrlAgainstShare"]),
+                      (_between(r.get("rev15"), 0, 2), WR["rev15"])],
         "defence": [(_between(sapm, 6.0, 1.2), .31), (_between(_pct(r.get("strDef")), 35, 75), .29),
                     (_between(_pct(r.get("tdDef")), 35, 90), .22), (_between(r.get("kdAbs15"), 1.0, 0), .12),
                     (_between(r.get("ctrlAgainstShare"), .50, 0), .06)],
@@ -265,15 +321,22 @@ def results_as_of(bouts: list[dict], as_of: str, p: dict | None = None) -> dict:
 
 
 def skills_composite(pcts: dict):
-    """Weighted average of the skill percentiles (needs three of the four)."""
+    """Weighted average of the skill percentiles (needs two of the three)."""
     have = [k for k in SKILLS if pcts.get(k) is not None]
-    if len(have) < 3:
+    if len(have) < 2:
         return None
     return sum(pcts[k] * SKILL_WEIGHTS[k] for k in have) / sum(SKILL_WEIGHTS[k] for k in have)
 
 
 def blend_logit(results: float, skills: float) -> float:
     return BLEND["results"] * (results - RESULTS_MEAN) / 400 + BLEND["skills"] * (skills - 50) / 100
+
+
+def score_100(rating):
+    """The reader-facing score out of 100 for a headline rating (1500 = 50)."""
+    if rating is None:
+        return None
+    return int(_clamp(round(50 + (rating - HEADLINE_CENTRE) / SCORE_DIVISOR), 1, 99))
 
 
 def overall(scores: dict):
@@ -363,6 +426,11 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
     centre = sorted(logits[x] for x in established)[len(established) // 2] if established else 0.0
     headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre)) for slug, v in logits.items()}
     headline_pop = sorted(headline[x] for x in established)
+    # Rank among established fighters by the full rating; equal ratings share a rank.
+    ordered = sorted(established, key=lambda x: -headline[x])
+    rank = {}
+    for i, slug in enumerate(ordered):
+        rank[slug] = rank[ordered[i - 1]] if i and headline[slug] == headline[ordered[i - 1]] else i + 1
     results_pop = sorted(results[x]["rating"] for x in established)
 
     out = {}
@@ -393,7 +461,10 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
             "form": {"score": form, "opponents": [
                 {"boutId": fight["boutId"], "opponent": fight["opponent"], "strength": opp.get(fight["boutId"])}
                 for fight in [x for x in f["history"] if x["outcome"] in ("W", "L", "D")][:5]]},
-            "overall": headline.get(slug),
+            "overall": score_100(headline.get(slug)),
+            "overallRating": headline.get(slug),
+            "overallRank": rank.get(slug) if rated else None,
+            "rankOf": len(established),
             "overallPercentile": percentile(headline[slug], headline_pop) if slug in headline else None,
             "model": MODEL,
             "results": None if slug not in results else {

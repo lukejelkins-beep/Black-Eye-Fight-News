@@ -15,12 +15,22 @@ WEAK = {"slpm": 2.0, "sapm": 5.0, "strAcc": .35, "strDef": .45, "kd15": 0.0, "td
 
 
 class Formulas(unittest.TestCase):
-    def test_striking_matches_engine_weights_by_hand(self):
-        rates = {"slpm": 3.65, "sapm": 3.0, "strAcc": .45, "kd15": .5}
-        window = {"koWinShare": .25}
-        # between: slpm (3.65-.8)/5.7=50, diff .65 -> (2.65)/5=53, acc 50, kd 50, ko 50
-        expected = (50 * .18 + 53 * .22 + 50 * .15 + 50 * .20 + 50 * .25) / 1.0
+    def test_striking_includes_strike_defence_by_hand(self):
+        rates = {"slpm": 3.65, "sapm": 3.0, "strAcc": .45, "kd15": .5, "strDef": .55, "kdAbs15": .25}
+        window = {"koWinShare": .25, "koLossShare": .125}
+        # output as above; strDef (55-35)/40=50, sapm (3.0-6.0)/(1.2-6.0)=62.5, knockdowns absorbed (.25-1)/(0-1)=75,
+        # KO losses (.125-.25)/(0-.25)=50
+        scores = {"slpm": 50, "diffPm": 53, "strAcc": 50, "kd15": 50, "koWinShare": 50,
+                  "strDef": 50, "sapm": 62.5, "kdAbs15": 75, "koLossShare": 50}
+        W = r.STRIKING_WEIGHTS
+        self.assertAlmostEqual(sum(W.values()), 1.0)
+        self.assertAlmostEqual(W["strDef"] + W["sapm"] + W["kdAbs15"] + W["koLossShare"], .40, msg="defence is 40%")
+        expected = sum(scores[k] * W[k] for k in W)
         self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), expected, places=6)
+        hittable = r.raw_skill({**rates, "strDef": .40, "kdAbs15": .9}, window, "striking")
+        self.assertLess(hittable, expected - 8, "being hit and dropped lowers striking")
+        stopped = r.raw_skill(rates, {**window, "koLossShare": .25}, "striking")
+        self.assertLess(stopped, r.raw_skill(rates, {**window, "koLossShare": 0}, "striking"), "KO losses lower striking")
 
     def test_evidence_gates(self):
         no_grappling = {"slpm": 3, "sapm": 3, "ctrlShare": .2}
@@ -33,8 +43,11 @@ class Formulas(unittest.TestCase):
         # Real case: 8.3 knockdowns per 15 min from a short, finish-heavy sample.
         rates = {"slpm": 5.324, "sapm": 1.921, "strAcc": .67, "kd15": 8.289}
         window = {"koWinShare": .6314}
-        with_kd = (79.368 * .18 + 100 * .22 + 100 * .15 + 100 * .25) / (.18 + .22 + .15 + .25)
-        self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), with_kd, places=2)
+        # the 8.3 is dropped as missing, so striking is the weighted mean of the parts that are present
+        W = r.STRIKING_WEIGHTS
+        present = {"slpm": 79.368, "diffPm": 100, "strAcc": 100, "koWinShare": 100, "sapm": 84.979}
+        expected = sum(v * W[k] for k, v in present.items()) / sum(W[k] for k in present)
+        self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), expected, places=2)
         self.assertIsNone(next(d for d in r.drivers(rates, window, "striking") if d["key"] == "kd15")["value"])
 
     def test_lower_is_better_components(self):
@@ -44,7 +57,7 @@ class Formulas(unittest.TestCase):
 
     def test_drivers_explain_each_component(self):
         d = r.drivers(STRONG, {"koWinShare": .3, "subWinShare": .1}, "striking")
-        self.assertEqual([x["key"] for x in d], ["slpm", "diffPm", "strAcc", "kd15", "koWinShare"])
+        self.assertEqual([x["key"] for x in d], ["slpm", "diffPm", "strAcc", "kd15", "koWinShare", "strDef", "sapm", "kdAbs15", "koLossShare"])
         self.assertEqual(sum(x["weight"] for x in d), 1.0)
         self.assertEqual(d[0]["value"], 5.0)
         self.assertTrue(all(0 <= x["score"] <= 100 for x in d if x["score"] is not None))
@@ -181,10 +194,23 @@ class Roster(unittest.TestCase):
 
     def test_headline_is_centred_on_the_median_established_fighter(self):
         out = self.rate(self.roster())
-        established = sorted(v["overall"] for v in out.values() if v["eligible"])
+        established = sorted(v["overallRating"] for v in out.values() if v["eligible"])
         self.assertEqual(established[len(established) // 2], r.HEADLINE_CENTRE)
-        self.assertGreater(out["f39"]["overall"], r.HEADLINE_CENTRE)
-        self.assertLess(out["f00"]["overall"], r.HEADLINE_CENTRE)
+        self.assertGreater(out["f39"]["overallRating"], r.HEADLINE_CENTRE)
+        self.assertLess(out["f00"]["overallRating"], r.HEADLINE_CENTRE)
+        self.assertEqual(out["f39"]["overall"], r.score_100(out["f39"]["overallRating"]))
+
+    def test_score_out_of_100_and_rank(self):
+        self.assertEqual(r.score_100(r.HEADLINE_CENTRE), 50)
+        self.assertEqual(r.score_100(r.HEADLINE_CENTRE + 11 * r.SCORE_DIVISOR), 61)
+        self.assertEqual(r.score_100(5000), 99)
+        self.assertEqual(r.score_100(0), 1)
+        self.assertIsNone(r.score_100(None))
+        out = self.rate(self.roster())
+        rated = sorted((v["overallRating"], v["overallRank"]) for v in out.values() if v["eligible"])
+        self.assertEqual(rated[-1][1], 1, "the highest rating ranks first")
+        self.assertTrue(all(a[1] >= b[1] for a, b in zip(rated, rated[1:])), "ranks follow the full rating")
+        self.assertTrue(all(v["rankOf"] == len(rated) for v in out.values()))
         self.assertGreater(out["f39"]["overallPercentile"], out["f00"]["overallPercentile"])
 
     def test_no_bouts_means_no_headline(self):
@@ -244,7 +270,24 @@ class Effectiveness(unittest.TestCase):
         base = {"td15": .2, "tdAcc": None, "ctrlShare": .05, "ctrlAgainstShare": .05}
         stops = r.raw_skill({**base, "tdDef": .9}, {}, "wrestling")
         concedes = r.raw_skill({**base, "tdDef": .4}, {}, "wrestling")
-        self.assertGreater(stops - concedes, 25)
+        W = r.WRESTLING_WEIGHTS
+        present = sum(W[k] for k in ("td15", "ctrlShare", "tdDef", "ctrlAgainstShare"))   # tdAcc and rev15 missing
+        # takedown defence .9 scores 90.9, .4 scores 0 on its 40-95% range
+        self.assertAlmostEqual(stops - concedes, 90.909 * W["tdDef"] / present, places=2)
+        self.assertGreater(stops, concedes)
+
+    def test_offence_and_defence_split_60_40(self):
+        for W, defence in ((r.WRESTLING_WEIGHTS, ("tdDef", "tdAbs15", "ctrlAgainstShare", "rev15")),
+                           (r.GRAPPLING_WEIGHTS, ("subLossShare", "subAbs15", "rev15", "ctrlAgainstShare")),
+                           (r.STRIKING_WEIGHTS, ("strDef", "sapm", "kdAbs15", "koLossShare"))):
+            self.assertAlmostEqual(sum(W.values()), 1.0)
+            self.assertAlmostEqual(sum(W[k] for k in defence), .40)
+
+    def test_wrestling_counts_being_taken_down(self):
+        base = {"td15": 1, "tdDef": .7, "ctrlShare": .2, "ctrlAgainstShare": .1}
+        rarely = r.raw_skill({**base, "tdAbs15": .3}, {}, "wrestling")
+        often = r.raw_skill({**base, "tdAbs15": 2.4}, {}, "wrestling")
+        self.assertGreater(rarely, often, "same defence % but taken down far more often")
 
     def test_wrestling_counts_control_conceded(self):
         a = r.raw_skill({"td15": 1, "tdDef": .7, "ctrlShare": .2, "ctrlAgainstShare": .0}, {}, "wrestling")
@@ -255,7 +298,9 @@ class Effectiveness(unittest.TestCase):
         rates = {"sub15": 0.0, "rev15": 0.0, "subAbs15": .2, "ctrlShare": .05, "ctrlAgainstShare": .05}
         safe = r.raw_skill(rates, {"subWinShare": 0, "subLossShare": 0}, "grappling")
         tapped = r.raw_skill(rates, {"subWinShare": 0, "subLossShare": .25}, "grappling")
-        self.assertGreater(safe - tapped, 15)
+        # all seven parts present: a submission loss every fourth fight costs the whole submission-loss weight
+        self.assertAlmostEqual(safe - tapped, 100 * r.GRAPPLING_WEIGHTS["subLossShare"], places=6)
+        self.assertGreater(safe, tapped)
 
     def test_drivers_weights_sum_to_one(self):
         for skill in r.SKILLS:

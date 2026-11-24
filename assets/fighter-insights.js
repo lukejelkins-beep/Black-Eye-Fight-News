@@ -308,7 +308,7 @@
    '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):headlineHTML(v2Overall))+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(headlineBar(v2)||0)+'%"></span></span>'+
-   (v2Overall===null?'':'<p class="befn-pro-hint">'+RATING_HINT+'</p>')+
+   (v2Overall===null?'':rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>')+
    verifiedTag+
    (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC'+' · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>'+
@@ -358,17 +358,21 @@
  }
  // Rating model 2026-11: the headline is a rating (1500 = median established UFC fighter), not out of 100. Its bar
  // and colour use the fighter's percentile on that rating; the number itself is shown as is.
- const RATING_HINT="UFC results weighted by opponent strength, plus measured skills. 1500 is the median rated UFC fighter.";
+ const RATING_HINT="50 is the average UFC fighter. Built from results against opponent strength, plus measured skills.";
  const RESULTS_HINT="Who they beat and how: stronger opponents and finishes count more";
- const SKILL_IDS=['striking','wrestling','grappling','defence'];
- const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
+ // Each skill includes its own defence (2026-11-24), so there is no separate Defence bar for rated fighters.
+ const SKILL_IDS=['striking','wrestling','grappling'];
+ const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['form','Recent Form']];
  function ratingsNote(){
   return 'Results and skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+' rated UFC fighters. '+
    'Results come from every UFC fight, weighting wins over strong opponents and finishes. Skills use the whole UFC career, '+
-   'recent fights counting most, and credit what a fighter stops as well as what they land. Recent form is out of 100.';
+   'recent fights counting most, and each includes its own defence: what a fighter stops counts as well as what they land. Recent form is out of 100.';
  }
- const headlineBar=r=>Number.isFinite(r?.overallPercentile)?r.overallPercentile:null;
- const headlineHTML=v=>String(v)+'<small class="befn-pro-scale">rating</small>';
+ // Display option A (owner, 2026-11-24): a score out of 100 (50 = average) and the overall rank under it.
+ const headlineBar=r=>Number.isFinite(r?.overall)?r.overall:null;
+ const headlineHTML=v=>String(v)+'<small>/100</small>';
+ const rankHTML=r=>Number.isInteger(r?.overallRank)&&Number.isInteger(r?.rankOf)?
+  '<p class="befn-pro-standing"><strong>#'+r.overallRank+'</strong> of '+r.rankOf+' rated UFC fighters</p>':'';
  function scoreTier(value){
   return value===null?'unrated':value>=90?'legendary':value>=80?'emerald':value>=70?'lime':value>=50?'amber':'red';
  }
@@ -702,7 +706,7 @@
    '<span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):v2?headlineHTML(score):score+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:v2?headlineBar(v2)||0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
-   (v2&&score!==null?'<p class="befn-pro-hint">'+RATING_HINT+'</p>':'')+
+   (v2&&score!==null?rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>':'')+
    '<div class="befn-v3-status befn-scout-classification">'+
    (v3.category!=='Champion'?'<span>'+escapeHTML(v3.category)+'</span>':'')+
    (v3.officialRank?'<small>UFC division #'+v3.officialRank+'</small>':'')+'</div>'+
@@ -806,7 +810,7 @@
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
  const BOARD_RATINGS=[["overall","BEFN rating","score"],["results","Results rating","pct"],["striking","Striking rating","pct"],
-  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["defence","Defence rating","pct"],["form","Recent form","score"]];
+  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["form","Recent form","score"]];
  function boardValue(v,unit){
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";
@@ -822,7 +826,9 @@
   if(rating){
    const col=d.ratingFields.indexOf(st.metric);
    sampleIndex=d.ratingFields.indexOf("statFights");
-   rows=d.ratings.map(r=>({f:r[0],v:r[col],n:r[sampleIndex]}));
+   const rankCol=d.ratingFields.indexOf("overallRank");
+   // The score out of 100 is rounded, so the overall board is ordered by the stored rank (full-precision rating).
+   rows=d.ratings.map(r=>({f:r[0],v:r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null}));
    unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
   }else{
    const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];
@@ -833,9 +839,10 @@
   const minimum=rating?Math.max(d.minFights,BOARD_RATING_MIN_FIGHTS):d.minFights;
   rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&
    (st.division==="all"||fighters[r.f][2]===st.division));
-  rows.sort((a,b)=>(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
+  const ranked=rows.length&&rows.every(r=>Number.isInteger(r.k));
+  rows.sort((a,b)=>(ranked?a.k-b.k:0)||(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
   let rank=0,prev=null;
-  rows.forEach((r,i)=>{if(prev===null||r.v!==prev)rank=i+1;r.rank=rank;prev=r.v;});
+  rows.forEach((r,i)=>{const key=ranked?r.k:r.v;if(prev===null||key!==prev)rank=i+1;r.rank=rank;prev=key;});
   return {rows,unit,lower,label,total:rows.length,isRating:!!rating,minimum};
  }
  // Photos are matched on name, so two fighters with one name get initials.

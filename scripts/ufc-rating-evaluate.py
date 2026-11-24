@@ -82,8 +82,12 @@ def snapshot(build, engine, cut):
                 have = [k for k, v in pcts.items() if v is not None]
                 w = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25}
                 out[d["slug"]] = {
-                    "overall": r.get("overall") if (r.get("eligible") or r.get("provisional")) else None,
-                    "skills": sum(pcts[k] * w[k] for k in have) / sum(w[k] for k in have) if len(have) >= 3 else None,
+                    # the full-precision rating where the engine has one (2026-11 model), else the old 0-100 headline
+                    "overall": r.get("overallRating", r.get("overall")) if (r.get("eligible") or r.get("provisional")) else None,
+                    # the engine's own composite where it publishes one (2026-11 model), else the old four-skill average
+                    "skills": r["skillsComposite"] if r.get("skillsComposite") is not None else
+                              sum(pcts[k] * w[k] for k in have) / sum(w[k] for k in have) if len(have) >= 3 else None,
+                    "pcts": pcts,
                     "winrate": c["W"] / (c["W"] + c["L"]) if c["W"] + c["L"] else None}
             return out
     finally:
@@ -165,6 +169,10 @@ def main() -> int:
                 row[tag] = None if None in (x["overall"], z["overall"]) else x["overall"] - z["overall"]
                 row[tag + "Skills"] = None if None in (x["skills"], z["skills"]) else x["skills"] - z["skills"]
             row["winrate"] = None if None in (na["winrate"], nb["winrate"]) else na["winrate"] - nb["winrate"]
+            for tag, x, z in (("new", na, nb), ("old", oa, ob)):
+                for k in ("striking", "wrestling", "grappling"):
+                    u, v = x["pcts"].get(k), z["pcts"].get(k)
+                    row[tag + ":" + k] = None if None in (u, v) else u - v
             fold.append(row)
         folds.append(fold)
         print(f"  {cut}: {len(fold)} fights", file=sys.stderr)
@@ -214,6 +222,22 @@ def main() -> int:
     by_year = {}
     for c in tested:
         by_year.setdefault(c["date"][:4], []).append(c)
+    # Each skill on its own, previous and new formula, on the fights where both fighters have that skill under both.
+    out += ["", "Each skill on its own (walk-forward, same method; fights where both fighters have the skill):", "",
+            "| Skill | Fights | Previous accuracy | New accuracy | Previous Brier | New Brier |", "|---|---:|---:|---:|---:|---:|"]
+    for k in ("striking", "wrestling", "grappling"):
+        fo, fn = "old:" + k, "new:" + k
+        rows_k = []
+        for i, fold in enumerate(folds):
+            train = [c for f in folds[:i] for c in f if c.get(fo) is not None and c.get(fn) is not None]
+            if len(train) < 100:
+                continue
+            ko_, kn_ = fit_k([c[fo] for c in train], [c["y"] for c in train]), fit_k([c[fn] for c in train], [c["y"] for c in train])
+            rows_k += [(logistic(ko_ * c[fo]), logistic(kn_ * c[fn]), c["y"]) for c in fold
+                       if c.get(fo) is not None and c.get(fn) is not None]
+        if rows_k:
+            so_, sn_ = score([a for a, _, _ in rows_k], [y for *_, y in rows_k]), score([b for _, b, _ in rows_k], [y for *_, y in rows_k])
+            out.append(f"| {k} | {len(rows_k)} | {100 * so_['acc']:.1f}% | {100 * sn_['acc']:.1f}% | {so_['brier']:.4f} | {sn_['brier']:.4f} |")
     out += ["", "By year (accuracy, new / previous): " + ", ".join(
         f"{y} {100 * score([c['p']['new'] for c in v], [c['y'] for c in v])['acc']:.1f}% / "
         f"{100 * score([c['p']['old'] for c in v], [c['y'] for c in v])['acc']:.1f}% ({len(v)})" for y, v in sorted(by_year.items()))]
@@ -233,7 +257,8 @@ def main() -> int:
         return d["champion"] or d["officialRank"] is not None
 
     def table_for(src):
-        rows = [(d["ratings"]["overall"], s) for s, d in src.items() if d.get("ratings") and d["ratings"].get("eligible")]
+        rows = [(d["ratings"].get("overallRating", d["ratings"]["overall"]), s) for s, d in src.items()
+                if d.get("ratings") and d["ratings"].get("eligible")]
         return [s for _, s in sorted(rows, reverse=True)]
 
     def spearman(src):
