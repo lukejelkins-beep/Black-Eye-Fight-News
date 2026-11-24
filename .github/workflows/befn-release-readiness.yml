@@ -38,6 +38,7 @@ jobs:
           node tests/test-fighter-stats-profile.cjs
           node tests/test-snapshot-tiles.cjs
           node tests/test-sport-overview.cjs
+          node tests/test-fights-route.cjs
           node --test tests/test-ufc-async-authority.cjs
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-postfight-metrics.mjs
