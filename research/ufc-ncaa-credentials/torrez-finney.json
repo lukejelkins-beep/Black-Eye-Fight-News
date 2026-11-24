@@ -1,0 +1,145 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "torrez-finney",
+ "name": "Torrez Finney",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC middleweight from Macon, Georgia (Jones County HS); UFC page and the UTC alumni article both place him at the University of Tennessee at Chattanooga, playing football and wrestling one year."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 2
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "high_school",
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Listed on the University of Tennessee at Chattanooga wrestling roster for the 2017-18 season.",
+     "source_url": "https://gomocs.com/roster.aspx?rp_id=6271",
+     "source_name": "Chattanooga Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Wrestled briefly for Chattanooga from 2017 to 2018 while playing football for the Mocs from 2016 to 2020.",
+     "source_url": "https://alumni.utc.edu/from-the-field-to-the-octagon/",
+     "source_name": "UTC Alumni",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Two-time Georgia high school state champion who went 40-0 as a senior and placed top ten at a national high school event, per his UFC bio.",
+     "source_url": "https://www.ufc.com/athlete/torrez-finney",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Chattanooga Athletics 2017-18 wrestling roster bio",
+     "checked": "2026-11-24",
+     "url": "https://gomocs.com/roster.aspx?rp_id=6271"
+    },
+    {
+     "name": "UTC Alumni feature",
+     "checked": "2026-11-24",
+     "url": "https://alumni.utc.edu/from-the-field-to-the-octagon/"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/torrez-finney"
+    }
+   ],
+   "note": "One season on the Chattanooga (NCAA Division I, SoCon) wrestling roster in 2017-18, alongside football. No NCAA championship appearance found. The Georgia high school titles rest on his UFC bio only."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.613Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.123Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": [
+   "wrestling:tier_A_held_at_B_unlisted_host:gomocs.com"
+  ]
+ }
+}

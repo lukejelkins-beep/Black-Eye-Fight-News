@@ -1,0 +1,98 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "dominick-reyes",
+ "name": "Dominick Reyes",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by UFC.com athlete page"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled as well as played football growing up; Hesperia High School graduate. No placings found.",
+     "source_url": "https://en.wikipedia.org/wiki/Dominick_Reyes",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Dominick_Reyes"
+    }
+   ],
+   "note": "Wrestled in high school per Wikipedia; college sport was football at Stony Brook (not wrestling). No college wrestling found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.558Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

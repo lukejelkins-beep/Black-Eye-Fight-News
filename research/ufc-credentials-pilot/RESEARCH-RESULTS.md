@@ -1,6 +1,6 @@
 # UFC credentials pilot report, 22 Nov 2026
 
-Research only. 25 approved-roster fighters, files in `data/ufc-credentials/`. Not wired into any page, rating or certificate.
+Research only. 25 approved-roster fighters, files now in `research/ufc-credentials-pilot/` (moved from `data/ufc-credentials/` on 24 Nov 2026). Not wired into any page, rating or certificate.
 
 ## How it was run (differs from the plan)
 No paid API call was made. On the owner's instruction (to stay on the Claude plan, no extra spend) the research was done by Claude Code subagents with web search, then put through the same runner and validator (`--from-dir`). So:

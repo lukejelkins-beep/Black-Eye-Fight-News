@@ -1,0 +1,103 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "drew-dober",
+ "name": "Drew Dober",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name, weight class and school context from search results; UFC athlete page not separately fetched."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled at Millard North High School in Omaha.",
+     "source_url": "https://Sherdog.com/news/articles/5-Defining-Moments-Drew-Dober-192392",
+     "source_name": "Sherdog",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Sherdog",
+     "checked": "2026-11-24",
+     "url": "https://Sherdog.com/news/articles/5-Defining-Moments-Drew-Dober-192392"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/drew-dober"
+    }
+   ],
+   "note": "No college wrestling found in one search; official profile mentions only community college study, with no team shown. Not an NCAA or governing-body check."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.559Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

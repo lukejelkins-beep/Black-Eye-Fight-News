@@ -1,0 +1,103 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "matt-frevola",
+ "name": "Matt Frevola",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name, weight class and school context from search results; UFC athlete page not separately fetched."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Was on the Harborfields High School wrestling team on Long Island.",
+     "source_url": "https://www.tapology.com/fightcenter/fighters/83149-matt-frevola",
+     "source_name": "Tapology",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Tapology",
+     "checked": "2026-11-24",
+     "url": "https://www.tapology.com/fightcenter/fighters/83149-matt-frevola"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/matt-frevola"
+    }
+   ],
+   "note": "Only high school wrestling found; University of Tampa degree noted but no wrestling roster check done."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.595Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

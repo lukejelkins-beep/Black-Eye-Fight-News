@@ -1,0 +1,89 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "christian-edwards",
+ "name": "Christian Edwards",
+ "identity": {
+  "status": "confirmed"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/christian-edwards"
+    },
+    {
+     "name": "UNCP wrestling roster (different person)",
+     "checked": "2026-11-24",
+     "url": "https://uncpbraves.com/sports/wrestling/roster/christian-edwards/13039"
+    }
+   ],
+   "note": "UFC page lists no wrestling or college. A UNCP wrestler named Christian Edwards (Snow Hill NC, 141 lb) is a different person and was not used."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.548Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

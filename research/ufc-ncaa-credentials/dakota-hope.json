@@ -1,0 +1,125 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "dakota-hope",
+ "name": "Dakota Hope",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC featherweight born in Georgia, age 29, UFC debut April 2026; matched by UFC athlete page."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 2
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "His UFC bio says he wrestled one season for New Mexico Highlands University in NCAA Division II; the school's archived rosters do not list him and the season is not stated.",
+     "source_url": "https://www.ufc.com/athlete/dakota-hope",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/dakota-hope"
+    },
+    {
+     "name": "New Mexico Highlands Athletics wrestling rosters (archived seasons)",
+     "checked": "2026-11-24",
+     "url": "https://nmhuathletics.com/sports/wrestling/roster/2018"
+    },
+    {
+     "name": "New Mexico Highlands Athletics 2015-16 wrestling roster",
+     "checked": "2026-11-24",
+     "url": "https://nmhuathletics.com/sports/wrestling/roster/2015-16"
+    },
+    {
+     "name": "New Mexico Highlands Athletics 2018-19 wrestling roster",
+     "checked": "2026-11-24",
+     "url": "https://nmhuathletics.com/sports/wrestling/roster/2018-2019"
+    }
+   ],
+   "note": "Only his UFC bio says he wrestled one year at New Mexico Highlands (NCAA Division II). He does not appear on the school's archived wrestling rosters for 2013-14, 2014-15, 2015-16, 2017-18 (listed as 2018), 2018-19, 2019-20 or 2020-21; no 2016-17 roster is archived, so that season could not be checke"
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.555Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.114Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

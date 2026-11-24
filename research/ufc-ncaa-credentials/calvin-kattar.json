@@ -1,0 +1,98 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "calvin-kattar",
+ "name": "Calvin Kattar",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by UFC.com athlete page"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled at Methuen High School from ninth grade; placed fifth at the 2006 Division I state meet as a senior at 160 lb.",
+     "source_url": "https://en.wikipedia.org/wiki/Calvin_Kattar",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2006,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Calvin_Kattar"
+    }
+   ],
+   "note": "High school wrestler at Methuen; chose MMA over college wrestling per Wikipedia; Middlesex CC wrestling not mentioned."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.543Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

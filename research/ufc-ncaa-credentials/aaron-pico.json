@@ -1,0 +1,130 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "aaron-pico",
+ "name": "Aaron Pico",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and UFC athlete page"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "national_team",
+    "world_medal"
+   ],
+   "claims": [
+    {
+     "text": "Won the California state high school title at 132 pounds as a St. John Bosco freshman, then left high school wrestling to focus on freestyle.",
+     "source_url": "https://en.wikipedia.org/wiki/Aaron_Pico",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    },
+    {
+     "text": "Cadet world champion in freestyle (2013) and a two-time Junior World medalist.",
+     "source_url": "https://en.wikipedia.org/wiki/Aaron_Pico",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "world_medal",
+     "display": "claimed"
+    },
+    {
+     "text": "Finished second at the 2016 U.S. Olympic Team Trials in freestyle.",
+     "source_url": "https://en.wikipedia.org/wiki/Aaron_Pico",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "national_team",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia (lead only)",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Aaron_Pico"
+    },
+    {
+     "name": "TheMat.com cadet nationals",
+     "checked": "2026-11-24",
+     "url": "https://www.themat.com/news/2012/july/16/california-s-pico-named-outsta-25322"
+    },
+    {
+     "name": "InterMat",
+     "checked": "2026-11-24",
+     "url": "https://intermatwrestle.com/articles.html/college/one-on-one-with-aaron-pico-r76546"
+    }
+   ],
+   "note": "No NCAA college wrestling found; freestyle/folkstyle youth and senior career only. NCAA source not checked."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.522Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

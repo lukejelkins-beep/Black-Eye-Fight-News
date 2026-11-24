@@ -1,0 +1,121 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "miles-johns",
+ "name": "Miles Johns",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched via UFC athlete page and roster slug."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "high_school",
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled as a freshman at 141 lb for Newman University (Wichita, Kansas) in 2012-13; roster lists Newton HS as his school. Newman competes in NCAA Division II.",
+     "source_url": "https://newmanjets.com/sports/wrestling/roster/miles-johns/1282",
+     "source_name": "Newman University Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Won a Kansas 5A state wrestling title in high school, per his UFC athlete profile.",
+     "source_url": "https://www.ufc.com/athlete/miles-johns",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/miles-johns"
+    },
+    {
+     "name": "Newman Jets roster",
+     "checked": "2026-11-24",
+     "url": "https://newmanjets.com/sports/wrestling/roster/miles-johns/1282"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Miles_Johns"
+    }
+   ],
+   "note": "One college year on Newman roster; left to pursue MMA. No NCAA championship result found. Division II status of Newman in 2012-13 not checked on a dedicated NCAA page (Heartland Conference era)."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.598Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

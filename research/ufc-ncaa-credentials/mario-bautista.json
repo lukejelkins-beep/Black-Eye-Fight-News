@@ -1,0 +1,103 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "mario-bautista",
+ "name": "Mario Bautista",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC.com page: age 33, bantamweight, born Winnemucca NV; local paper matches"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "A local newspaper says he graduated from Lowry High School in Winnemucca, Nevada in 2011 and placed fourth at the 2011 state wrestling championships at 145 pounds.",
+     "source_url": "https://greatbasinsun.com/news/2024/sep/24/bautista-preparing-for-biggest-ufc-fight-to-date",
+     "source_name": "Great Basin Sun",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2011,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/mario-bautista"
+    },
+    {
+     "name": "Great Basin Sun",
+     "checked": "2026-11-24",
+     "url": "https://greatbasinsun.com/news/2024/sep/24/bautista-preparing-for-biggest-ufc-fight-to-date"
+    }
+   ],
+   "note": "Only one outlet found for the high school result; no college wrestling found. No NCAA source checked."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T09:12:38.948Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

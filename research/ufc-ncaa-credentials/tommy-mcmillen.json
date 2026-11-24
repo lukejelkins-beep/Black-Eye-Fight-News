@@ -1,0 +1,104 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "tommy-mcmillen",
+ "name": "Tommy McMillen",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by UFC athlete name and division"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "conflict",
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Won Montana state high school wrestling titles at Great Falls High School; the count is two on the UFC page and three in KRTV coverage.",
+     "source_url": "https://www.ufc.com/athlete/tommy-mcmillen",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/tommy-mcmillen"
+    },
+    {
+     "name": "KRTV",
+     "checked": "2026-11-24",
+     "url": "https://krtv.com/sports/great-falls-native-tommy-mcmillen-on-verge-of-becoming-next-ufc-star-from-montana"
+    }
+   ],
+   "note": "High school only. UFC page says two-time Montana state champion, local TV and CBS say three-time; counts disagree. Says he did not attend college."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.612Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}
