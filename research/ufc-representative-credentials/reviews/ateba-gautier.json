@@ -1,0 +1,51 @@
+{
+  "slug": "ateba-gautier",
+  "identity": {
+    "url": "https://www.ufc.com/athlete/ateba-gautier",
+    "summary": "UFC lists the Yaoundé middleweight; FIAS results list ATEBA Gautier of Cameroon at combat sambo 88 kg."
+  },
+  "lanes": {
+    "national": {
+      "state": "seed",
+      "checkedOn": "2026-11-24",
+      "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "FIAS results data: competition 92, draw CSMMADT88",
+          "url": "https://api-info-portal-fias.sambo.sport/api/v1/info/competitions/92/draws/CSMMADT88",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "FIAS results data: competition 92 entry list",
+          "url": "https://api-info-portal-fias.sambo.sport/api/v1/info/competitions/92/competitors?offset=0&limit=1000",
+          "outcome": "supports_claim"
+        }
+      ],
+      "claims": [
+        {
+          "kind": "team_appearance",
+          "edition": "2024 FIAS African Sambo Championships (Egypt, late May to 1 June 2024)",
+          "sport": "Combat sambo",
+          "event": "Men's 88 kg",
+          "delegation": "CMR",
+          "category": "senior",
+          "result": "Silver medallist (beat KEITA Dji, GUI, 2-0 in the semifinal; lost the final to MOUKNAJ Mustapha, MAR, 1-6)",
+          "medal": "silver",
+          "sources": [
+            {
+              "name": "FIAS results data: competition 92, draw CSMMADT88",
+              "url": "https://api-info-portal-fias.sambo.sport/api/v1/info/competitions/92/draws/CSMMADT88",
+              "authority": "federation"
+            },
+            {
+              "name": "FIAS results data: competition 92 entry list",
+              "url": "https://api-info-portal-fias.sambo.sport/api/v1/info/competitions/92/competitors?offset=0&limit=1000",
+              "authority": "federation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
