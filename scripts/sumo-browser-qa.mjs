@@ -54,7 +54,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok(await page.locator('.shome-hero h1').count()===1,'Overview has one headline');
   assertContains(overview,'Sanyaku scorecard','Sanyaku scorecard shown');
   assert.ok(await page.locator('.shome-srow').count()>=4,'Sanyaku rows listed');
-  assert.equal(await page.locator('.shome-ex').count(),10,'Explore links to every Sumo page');
+  assert.equal(await page.locator('.shome-ex').count(),11,'Explore links to every Sumo page');
   assert.ok(await page.locator('.shome-hero-photo img, .shome-face[src]').count()>0,'Overview shows wrestler photographs');
   {
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
@@ -82,6 +82,24 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   {
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
     assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on Banzuke changes: '+JSON.stringify(widths));
+  }
+  // Insights (#insights): promotion watch, rivalries, stables, records.
+  await open(page,'insights','.sumo-insights');
+  assert.ok(await page.locator('.sin-rv').count()>=4,'Rivalries shown');
+  assert.ok(await page.locator('.sin-table tbody tr').count()>=5,'Stable leaderboard shown');
+  assert.ok(await page.locator('.sin-rec').count()>=4,'Records shown');
+  {
+    const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on Insights: '+JSON.stringify(widths));
+  }
+  // Live basho mode, previewed by replaying the latest basho as of day 10 (#home?liveday=10).
+  await open(page,'home?liveday=10','.sumo-live');
+  assertContains(await page.locator('#sumo-main').innerText(),'Day 10 of 15','Live header shows the day');
+  assert.ok(await page.locator('.slive-c.is-lead').count()>=1,'Title race leaders shown');
+  assert.ok(await page.locator('[data-recap-copy]').count()===1,'Recap card with copy button');
+  {
+    const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow in live mode: '+JSON.stringify(widths));
   }
   // The results desk is #basho, under Fights.
   await open(page,'basho','.sumo-page-head');

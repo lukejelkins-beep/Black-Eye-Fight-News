@@ -38,8 +38,8 @@
     const lead = (x, y) => isNum(x) && isNum(y) && x !== y ? (x > y ? 0 : 1) : null;
     const rows = [
       { key: 'age', label: 'Age', v: age.map(x => isNum(x) ? String(x) : '—'), lead: null, have: age.some(isNum) },
-      { key: 'height', label: 'Height', v: [inchesText(ta.heightIn), inchesText(tb.heightIn)], lead: lead(ta.heightIn, tb.heightIn), have: isNum(ta.heightIn) || isNum(tb.heightIn) },
-      { key: 'reach', label: 'Reach', v: [isNum(ta.reachIn) ? ta.reachIn + '″' : '—', isNum(tb.reachIn) ? tb.reachIn + '″' : '—'], lead: lead(ta.reachIn, tb.reachIn), have: isNum(ta.reachIn) || isNum(tb.reachIn) },
+      { key: 'height', label: 'Height', v: [inchesText(ta.heightIn), inchesText(tb.heightIn)], n: [ta.heightIn, tb.heightIn], lead: lead(ta.heightIn, tb.heightIn), have: isNum(ta.heightIn) || isNum(tb.heightIn) },
+      { key: 'reach', label: 'Reach', v: [isNum(ta.reachIn) ? ta.reachIn + '″' : '—', isNum(tb.reachIn) ? tb.reachIn + '″' : '—'], n: [ta.reachIn, tb.reachIn], lead: lead(ta.reachIn, tb.reachIn), have: isNum(ta.reachIn) || isNum(tb.reachIn) },
       { key: 'weight', label: 'Listed weight', v: [isNum(ta.weightLb) ? ta.weightLb + ' lb' : '—', isNum(tb.weightLb) ? tb.weightLb + ' lb' : '—'], lead: null, have: isNum(ta.weightLb) || isNum(tb.weightLb) },
       { key: 'stance', label: 'Stance', v: [ta.stance || '—', tb.stance || '—'], lead: null, have: !!(ta.stance || tb.stance) }
     ];
@@ -103,27 +103,45 @@
   // One fighter's figure: a cutout over a red disc, else the photo in the disc, else initials.
   function figureHTML(fig, name, esc) {
     if (fig && fig.cutout) return '<span class="sb-fig" aria-hidden="true"><span class="sb-disc' + (fig.flag ? ' has-flag' : '') + '">' + (fig.flag ? '<img class="sb-flag" src="' + esc(fig.flag) + '" alt="" width="132" height="132" loading="lazy" decoding="async" onerror="this.remove()">' : '') + '</span><img class="sb-cut" src="' + esc(fig.cutout) + '" alt="" width="120" height="150" loading="lazy" decoding="async" onerror="this.remove()"></span>';
-    if (fig && fig.photo) return '<span class="sb-fig sb-fig-photo" aria-hidden="true"><span class="sb-disc"><img src="' + esc(fig.photo) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span><b>' + esc(initialsOf(name)) + '</b></span>';
+    if (fig && fig.photo) return '<span class="sb-fig sb-fig-photo" aria-hidden="true"><span class="sb-disc"><b>' + esc(initialsOf(name)) + '</b><img src="' + esc(fig.photo) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span></span>';
     return '<span class="sb-fig sb-fig-initials" aria-hidden="true"><span class="sb-disc"><b>' + esc(initialsOf(name)) + '</b></span></span>';
   }
 
-  // sides: [{ name, record, form: ['W','L',...], fig: { cutout, photo } }]
+  // Bar widths for a row where a bigger number is simply more (height, reach): each value as a share of the larger,
+  // drawn from zero so the bars never exaggerate a gap. Null when the row has no bars or a side is missing.
+  function barWidths(row) {
+    if (!row || !row.n || !isNum(row.n[0]) || !isNum(row.n[1])) return null;
+    const max = Math.max(row.n[0], row.n[1]);
+    return max > 0 ? row.n.map(v => Math.round(v / max * 100)) : null;
+  }
+
+  // Layout B "face-off" (owner chose option B, 24 Nov 2026): the two figures face each other with a VS badge,
+  // billing and weight class said once above them, then names, records and form, then the tape rows.
+  // sides: [{ name, record, form: ['W','L',...], fig: { cutout, photo } }]; h.billing e.g. "Main event", h.division.
   function tapeHTML(sides, a, b, h) {
     const esc = h && h.esc ? h.esc : String;
     const today = (h && h.today) || new Date();
     const rows = tapeRows(a, b, today);
-    const side = (s, i) => '<div class="sb-fighter sb-' + (i ? 'b' : 'a') + '">' + figureHTML(s.fig, s.name, esc) +
+    const info = (s, i) => '<div class="sb-fighter sb-' + (i ? 'b' : 'a') + '">' +
       '<strong class="sb-name">' + esc(s.name) + '</strong>' +
+      (s.tags && s.tags.length ? '<span class="sb-tags">' + s.tags.map(t => '<em>' + esc(t) + '</em>').join('') + '</span>' : '') +
       '<span class="sb-record">' + esc(s.record || '—') + '</span>' +
       (s.form && s.form.length ? '<span class="sb-form" aria-label="Last ' + s.form.length + ' fights, newest first: ' + esc(s.form.join(', ')) + '">' +
         s.form.map(x => '<i class="' + (FORM_CLASS[x] || 'is-draw') + '">' + esc(x) + '</i>').join('') + '</span>' : '') + '</div>';
-    const rowHTML = rows.map(r => '<div class="sb-row" role="group" aria-label="' + esc(r.label) + '">' +
-      '<span class="sb-val' + (r.lead === 0 ? ' is-lead' : '') + '">' + esc(r.v[0]) + '</span>' +
-      '<span class="sb-lab">' + esc(r.label) + '</span>' +
-      '<span class="sb-val' + (r.lead === 1 ? ' is-lead' : '') + '">' + esc(r.v[1]) + '</span></div>').join('');
-    const division = h && h.division ? '<span class="sb-division">' + esc(h.division) + '</span>' : '';
-    return '<section class="sb-tape" aria-label="Tale of the tape"><div class="sb-title-row"><h3 class="sb-title">Tale of the tape</h3>' + division + '</div>' +
-      '<div class="sb-head">' + sides.map(side).join('') + '</div>' +
+    const bar = (w, i, lead) => w ? '<span class="sb-bar sb-bar-' + (i ? 'b' : 'a') + (lead ? ' is-lead' : '') + '" aria-hidden="true"><i style="width:' + w[i] + '%"></i></span>' : '<span class="sb-bar" aria-hidden="true"></span>';
+    const rowHTML = rows.map(r => {
+      const w = barWidths(r);
+      return '<div class="sb-row' + (w ? ' has-bars' : '') + '" role="group" aria-label="' + esc(r.label) + '">' +
+        '<span class="sb-val' + (r.lead === 0 ? ' is-lead' : '') + '">' + esc(r.v[0]) + '</span>' + bar(w, 0, r.lead === 0) +
+        '<span class="sb-lab">' + esc(r.label) + '</span>' +
+        bar(w, 1, r.lead === 1) + '<span class="sb-val' + (r.lead === 1 ? ' is-lead' : '') + '">' + esc(r.v[1]) + '</span></div>';
+    }).join('');
+    const chip = h ? [h.billing, h.division, h.rounds, h.status].filter(Boolean).join(' · ') : '';
+    return '<section class="sb-tape" aria-label="Tale of the tape"><h3 class="sb-title sb-title-hidden">Tale of the tape</h3>' +
+      (chip ? '<p class="sb-chip">' + esc(chip) + '</p>' : '') +
+      '<div class="sb-stage">' + figureHTML(sides[0] && sides[0].fig, sides[0] && sides[0].name, esc) +
+      '<span class="sb-vs" aria-hidden="true">VS</span>' + figureHTML(sides[1] && sides[1].fig, sides[1] && sides[1].name, esc) + '</div>' +
+      '<div class="sb-head">' + sides.map(info).join('') + '</div>' +
       (rowHTML ? '<div class="sb-rows">' + rowHTML + '</div>' +
         (rows.some(r => r.key === 'weight') ? '<p class="sb-note">Listed weight is as shown on UFCStats, not fight-day weight.</p>' : '') : '') +
       '</section>';
@@ -144,7 +162,7 @@
       '<button type="button" role="tab" data-befn-history-tab="' + esc(id) + '" aria-selected="' + String(active === id) + '" class="' + (active === id ? 'is-active' : '') + '">' + esc(label) + '</button>').join('') + '</div>';
   }
 
-  const api = { GAP, inchesText, ageOn, shortNames, tapeRows, analysisLines, figureHTML, tapeHTML, analysisHTML, tabsHTML, initialsOf };
+  const api = { GAP, inchesText, ageOn, shortNames, tapeRows, barWidths, analysisLines, figureHTML, tapeHTML, analysisHTML, tabsHTML, initialsOf };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.BEFNSnapshotB = api;
 })(typeof window !== 'undefined' ? window : globalThis);
