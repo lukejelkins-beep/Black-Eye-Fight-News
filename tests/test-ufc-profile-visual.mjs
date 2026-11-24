@@ -114,6 +114,15 @@ async function checkProfile(page,profile,screen){
   // The initial HTML contains legacy fighter cards. Reviewed UFC cohorts
   // hydrate asynchronously; never open a stale legacy profile while
   // the reviewed record is still being loaded.
+  // If the reviewed record never arrives, say which field differs instead of a bare timeout.
+  const hydrationState=expected=>page.evaluate(expected=>{
+   const f=window.COMBAT_DATA?.fighters?.find(x=>x.id===expected.id);
+   if(!f)return {missing:true};
+   const pick=x=>JSON.stringify((x||[]).map(y=>[y.date,y.opponent,y.outcome,y.method]));
+   return {reviewed:!!(f.reviewedUfcProfile||f.championReview),record:[f.record,expected.record],
+    division:[f.division,expected.division],category:[f.category,expected.category],
+    latest:pick(f.latest)===pick(expected.latest)?"same":[pick(f.latest).slice(0,160),pick(expected.latest).slice(0,160)]};
+  },expected);
   await page.waitForFunction(expected=>{
    const f=window.COMBAT_DATA?.fighters?.find(x=>x.id===expected.id);
    const ur=expected.ufcRecord||{};
@@ -125,7 +134,9 @@ async function checkProfile(page,profile,screen){
     f.division===expected.division&&f.category===category&&
     JSON.stringify((f.latest||[]).map(x=>[x.date,x.opponent,x.outcome,x.method]))===
     JSON.stringify(expected.latest.map(x=>[x.date,x.opponent,x.outcome,x.method]));
-  },profile,{timeout:18000});
+  },profile,{timeout:18000}).catch(async e=>{
+   throw new Error(e.message+" | hydration state: "+JSON.stringify(await hydrationState(profile).catch(()=>"unavailable")));
+  });
   await page.evaluate(id=>{
    const hash="#fighter/"+encodeURIComponent(id);
    if(location.hash!==hash)location.hash=hash;
