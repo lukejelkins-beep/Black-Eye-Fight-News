@@ -84,10 +84,13 @@ test('derived per-fighter statistics are published, JSON only', () => {
 // A tripwire for runaway growth, not a budget. The published site was 156 MB on 2026-11-22
 // (assets 142 MB: kimarite clips 54, UFC and poster images 44, Sumo portraits 43; data 47 MB),
 // all of it owner-cleared media the site is meant to serve. The old 80 MB line was written when
-// the build was a fraction of that and had been failing since the Sumo merge. 200 MB leaves
-// about 28% headroom: enough for more photos, small enough that an unintended folder trips it.
+// the build was a fraction of that and had been failing since the Sumo merge.
+// 2026-11-25: 197.7 MB, almost all the growth being UFC headshots and cutouts (assets/img
+// 44 -> 84 MB, #487); kimarite 54, Sumo portraits 43, data 52. The 200 MB line would have tripped
+// on the next photo batch. 260 MB keeps about 30% headroom, as before: room for more approved
+// photos, small enough that an unintended folder (raw research, video masters) still trips it.
 test('the build does not grow unexpectedly', () => {
-  assert.ok(report.megabytes < 200, `dist is ${report.megabytes} MB; if this growth is intended, raise the limit deliberately`);
+  assert.ok(report.megabytes < 260, `dist is ${report.megabytes} MB; if this growth is intended, raise the limit deliberately`);
 });
 
 test.after(() => rmSync(out, { recursive: true, force: true }));
