@@ -28,20 +28,21 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  const liveSlugs=new Set(census.fighters.map(f=>f.slug));
  assert.equal(afterMidnight.frozenApprovedCohortAnchorFallbacks,
   approval.approvedFighters.filter(slug=>!liveSlugs.has(slug)).length);
- const evidenceEntries=Object.keys(independentlyVerified.fighters).length;
+ // Extension-cohort entries (owner-approved 24 Nov 2026) are judged by their own audit, not the frozen 783 audit.
+ const evidenceEntries=Object.keys(independentlyVerified.fighters).filter(s=>approval.approvedFighters.includes(s)).length;
  const pending=next.careerVerificationDecisions.filter(d=>
   independentlyVerified.fighters[d.slug]&&!d.independentlyVerifiedFullCareer);
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines+pending.length,evidenceEntries);
  // Two approved slugs that point at one real athlete (same UFCStats page) must
- // stay uncertified until the owner resolves canonical identity. That is a
- // different reason from a newer unproven bout, so assert it explicitly.
+ // stay uncertified until the owner resolves canonical identity. The owner resolved this pair
+ // (one person; carlos-hernandez canonical, 24 Nov 2026): the alias never certifies, the canonical may.
  const documentedDuplicateIdentity=new Set(['carlos-hernandez','carlos-hernandez-7']);
  const urls=new Set(['carlos-hernandez','carlos-hernandez-7'].map(s=>independentlyVerified.fighters[s]?.fighterUrl));
  assert.equal(urls.size,1,'duplicate-identity pair still shares one source athlete');
- for(const slug of documentedDuplicateIdentity){
-  assert.ok(approval.approvedFighters.includes(slug));
-  assert.equal(next.careerVerificationDecisions.find(d=>d.slug===slug)?.independentlyVerifiedFullCareer,false,slug+' must not certify while identity is unresolved');
- }
+ assert.equal(independentlyVerified.fighters['carlos-hernandez-7'].ownerConfirmedDuplicateOf,'carlos-hernandez');
+ for(const slug of documentedDuplicateIdentity)assert.ok(approval.approvedFighters.includes(slug));
+ assert.equal(next.careerVerificationDecisions.find(d=>d.slug==='carlos-hernandez-7')?.independentlyVerifiedFullCareer,false,'the alias slug never certifies');
+ assert.equal(next.careerVerificationDecisions.find(d=>d.slug==='carlos-hernandez')?.independentlyVerifiedFullCareer,true,'the canonical slug certifies once resolved');
  for(const decision of pending.filter(d=>!documentedDuplicateIdentity.has(d.slug))){
   const proof=independentlyVerified.fighters[decision.slug];
   const latestProvenBout=proof.bouts.map(b=>b.date).sort().at(-1);
