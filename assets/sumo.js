@@ -13,10 +13,12 @@ import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailyS
 import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
-import { buildHome } from './sumo-home-data.mjs?v=20261124-review1';
-import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-review1';
+import { buildHome, bashoStart } from './sumo-home-data.mjs?v=20261124-banzuke1';
+import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-banzuke1';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview } from './sumo-review.mjs?v=20261124-review1';
+import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke1';
+import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-banzuke1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -1529,7 +1531,25 @@ function homeHelpers(){
 }
 function renderSumoHome(){
   const home=buildHome({details:STATE.details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
-  return renderOverview(home,homeHelpers());
+  return renderOverview(home,{...homeHelpers(),afterHero:nextBanzukeCard(home.headline.next)});
+}
+/* Countdown to the next banzuke, or a link once it is out (data/sumo/banzuke-release/YYYYMM.json). */
+function nextBanzukeCard(next){
+  if(!next?.id)return '';
+  if(!(next.id in RELEASES.files))loadRelease(next.id);
+  const dates=RELEASES.dates?.releases?.[next.id];
+  const y=Number(next.id.slice(0,4)),m=Number(next.id.slice(4));
+  return '<section class="shome-block">'+releaseCard(homeHelpers(),{next,released:!!RELEASES.files[next.id],date:dates?.date||null,status:dates?.status||null,
+    day1:bashoStart(y,m),latest:STATE.details?.bashoId,now:Date.now()})+'</section>';
+}
+const RELEASES={dates:null,files:{},loading:new Set()};
+function loadRelease(id){
+  if(RELEASES.loading.has(id))return;
+  RELEASES.loading.add(id);
+  loadJson('data/sumo/banzuke-release/'+id+'.json').then(x=>{RELEASES.files[id]=x;}).catch(()=>{RELEASES.files[id]=null;})
+    .finally(()=>{RELEASES.loading.delete(id);const page=location.hash.slice(1).split('/')[0];
+      /* The changes page waits for this answer either way; the home only changes if it is out. */
+      if(page==='changes'||(RELEASES.files[id]&&(page===''||page==='home')))render();});
 }
 /* Basho review: the archive index and each tournament file load on demand, then the page re-renders. */
 const ARCHIVE={index:null,files:{},failed:false,loading:new Set()};
@@ -1540,12 +1560,38 @@ function loadArchive(id){
     ARCHIVE.loading.add(b);
     want.push(loadJson('data/sumo/basho-archive/'+b+'.json').then(x=>{ARCHIVE.files[b]=x;}).catch(()=>{ARCHIVE.files[b]=null;}).finally(()=>ARCHIVE.loading.delete(b)));
   }
-  if(want.length)Promise.all(want).catch(()=>{ARCHIVE.failed=true;}).finally(()=>{if(location.hash.startsWith('#review'))render();});
+  if(want.length)Promise.all(want).catch(()=>{ARCHIVE.failed=true;}).finally(()=>{if(/^#(review|changes)/.test(location.hash))render();});
 }
 function prevBashoId(id){
   if(!/^\d{6}$/.test(String(id||'')))return null;
   let y=Number(id.slice(0,4)),m=Number(id.slice(4))-2;if(m<1){m=11;y-=1;}
   return String(y)+String(m).padStart(2,'0');
+}
+/* Banzuke changes: the newest five releases that have the basho before saved. A released banzuke
+   for the next basho (no bouts yet) is included once the release watch has saved it. */
+function changeIds(){
+  const saved=(ARCHIVE.index?.basho||[]).map(b=>b.bashoId).sort();
+  const ids=saved.filter(id=>saved.includes(prevBashoId(id)));
+  const next=saved.length?nextBashoFrom(saved[saved.length-1]):null;
+  if(next&&RELEASES.files[next])ids.push(next);
+  return ids.reverse().slice(0,5);
+}
+function nextBashoFrom(id){let y=Number(id.slice(0,4)),m=Number(id.slice(4))+2;if(m>11){m=1;y+=1;}return String(y)+String(m).padStart(2,'0');}
+function renderBanzukeChanges(id){
+  if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
+  if(!ARCHIVE.index){loadArchive(null);return '<div class="sumo-home"><p class="srev-loading">Loading banzuke changes…</p></div>';}
+  const saved=ARCHIVE.index.basho.map(b=>b.bashoId);
+  const next=nextBashoFrom(saved[saved.length-1]);
+  if(!(next in RELEASES.files)){loadRelease(next);return '<div class="sumo-home"><p class="srev-loading">Loading banzuke changes…</p></div>';}
+  const ids=changeIds();
+  const want=/^\d{6}$/.test(String(id||''))&&ids.includes(id)?id:ids[0];
+  if(!want)return '<div class="sumo-home"><p class="srev-loading">No banzuke changes saved yet.</p></div>';
+  const fromRelease=!saved.includes(want);
+  if(!fromRelease&&!(want in ARCHIVE.files)||!(prevBashoId(want) in ARCHIVE.files)||ARCHIVE.loading.size){loadArchive(fromRelease?prevBashoId(want)+'':want);return '<div class="sumo-home"><p class="srev-loading">Loading banzuke changes…</p></div>';}
+  const newFile=fromRelease?RELEASES.files[want]:ARCHIVE.files[want],prevFile=ARCHIVE.files[prevBashoId(want)];
+  if(!newFile||!prevFile)return '<div class="sumo-home"><p class="srev-loading">That banzuke is not saved. <a href="#changes">See the latest</a>.</p></div>';
+  const released=fromRelease?'Published ahead of the '+(newFile.bashoId?'basho':'')+'; first seen by BEFN '+new Date(newFile.firstSeenAt).toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})+'.':'';
+  return renderChanges(buildChanges(newFile,prevFile,STATE.careerHistory),{...homeHelpers(),releases:ids},{released});
 }
 function renderBashoReview(id){
   if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
@@ -1580,6 +1626,7 @@ function render() {
       if(STATE.boardRecent&&!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();break;
     case 'home': ROOT.innerHTML=renderSumoHome();break;
     case 'review': ROOT.innerHTML=renderBashoReview(id);break;
+    case 'changes': ROOT.innerHTML=renderBanzukeChanges(id);break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'matchups': ROOT.innerHTML=renderDailyMatchups();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
@@ -1744,6 +1791,8 @@ let lastRoute=location.hash.slice(1).split('?')[0];
 document.addEventListener('change',ev=>{
   const sel=ev.target.closest&&ev.target.closest('[data-review-select]');
   if(sel)location.hash='#review/'+sel.value;
+  const pick=ev.target.closest&&ev.target.closest('[data-changes-select]');
+  if(pick)location.hash='#changes/'+pick.value;
 });
 window.addEventListener('hashchange',()=>{
   const sheet=document.getElementById('h2h-sheet');if(sheet?.open)sheet.close();
@@ -1825,6 +1874,8 @@ async function init(){
     STATE.landmarks=(await loadJson('data/sumo/landmarks.json').catch(()=>null))?.byCountry||null;
     // Verified family links for the home page's fact of the basho; the page works without them.
     STATE.editorial=await loadJson('data/sumo/fun-facts-editorial.json').catch(()=>null);
+    // Publication dates for the next banzuke (Sumo home countdown); the page works without them.
+    RELEASES.dates=await loadJson('data/sumo/banzuke-release-dates.json').catch(()=>null);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');

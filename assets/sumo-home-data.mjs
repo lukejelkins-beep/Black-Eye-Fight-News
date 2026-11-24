@@ -51,6 +51,11 @@ export function nextBasho(id) {
   const n = String(y) + String(m).padStart(2, '0');
   return { id: n, month: MONTH[n.slice(4)], venue: VENUE[n.slice(4)] };
 }
+/* Day 1 of a basho: the second Sunday of its month (ISO date). */
+export function bashoStart(year, month) {
+  const first = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
+  return new Date(Date.UTC(year, month - 1, 1 + ((7 - first) % 7) + 7)).toISOString().slice(0, 10);
+}
 export const venueOf = id => VENUE[String(id).slice(4)] || '';
 
 /* All banzuke rows of a snapshot, best rank first. */

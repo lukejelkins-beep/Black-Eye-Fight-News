@@ -54,7 +54,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok(await page.locator('.shome-hero h1').count()===1,'Overview has one headline');
   assertContains(overview,'Sanyaku scorecard','Sanyaku scorecard shown');
   assert.ok(await page.locator('.shome-srow').count()>=4,'Sanyaku rows listed');
-  assert.equal(await page.locator('.shome-ex').count(),9,'Explore links to every Sumo page');
+  assert.equal(await page.locator('.shome-ex').count(),10,'Explore links to every Sumo page');
   assert.ok(await page.locator('.shome-hero-photo img, .shome-face[src]').count()>0,'Overview shows wrestler photographs');
   {
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
@@ -71,6 +71,15 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on the Basho review: '+JSON.stringify(widths));
   }
   await snap(page,label+'-review',{fullPage:false});
+  // Banzuke changes (#changes): the newest released banzuke read against the basho before.
+  await open(page,'changes','.sumo-banzuke');
+  assert.equal(await page.locator('.sumo-banzuke h1').count(),1,'Banzuke changes has one headline');
+  assert.ok(await page.locator('[data-changes-select] option').count()>=5,'Five most recent banzuke selectable');
+  assert.ok(await page.locator('.sbz-table tbody tr').count()>=40,'Full Makuuchi list shown');
+  {
+    const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on Banzuke changes: '+JSON.stringify(widths));
+  }
   // The results desk is #basho, under Fights.
   await open(page,'basho','.sumo-page-head');
   const home=await page.locator('#sumo-main').innerText();

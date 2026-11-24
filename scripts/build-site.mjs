@@ -25,7 +25,10 @@ const ROOT_FILE = /^(.+\.html|manifest\.webmanifest|sw\.js|robots\.txt)$/;
 const COPY_DIRS = ['assets', 'push'];
 // Public, derived statistics loaded per fighter at runtime. Never add raw
 // research or provider caches here.
-export const DATA_DIRS = ['data/ufc-stats'];
+// data/sumo/basho-archive and data/sumo/banzuke-release hold one saved tournament or banzuke per
+// file, loaded by the Sumo Basho review and Banzuke changes pages; published with the provider's
+// permission (owner, 24 Nov 2026; docs/design/DECISIONS.md).
+export const DATA_DIRS = ['data/ufc-stats', 'data/sumo/basho-archive', 'data/sumo/banzuke-release'];
 const DATA_REF = /(?:^|[^A-Za-z0-9_-])\/?(data\/[A-Za-z0-9_./-]+?\.json)/g;
 
 function walk(dir, files = []) {

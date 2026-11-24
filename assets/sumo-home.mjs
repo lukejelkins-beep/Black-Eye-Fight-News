@@ -106,7 +106,7 @@ function factBlock(h, d) {
 const EXPLORE = [
   ['Fights', 'Results', '#basho', 'Each day’s results and the standings'], ['Fights', 'Bouts', '#matchups', 'Matchups with head-to-head records'],
   ['Fights', 'Head-to-head', '#h2h', 'Who leads whom on this banzuke'], ['Fighters', 'Rikishi', '#rikishi', 'Profiles of every tracked wrestler'],
-  ['Fighters', 'Rankings', '#banzuke', 'The banzuke and who moved'], ['Fighters', 'Stables', 'sumo-stables.html', 'The heya and their wrestlers'],
+  ['Fighters', 'Rankings', '#banzuke', 'The current banzuke'], ['Fighters', 'Banzuke changes', '#changes', 'Who moved up and down, and why'], ['Fighters', 'Stables', 'sumo-stables.html', 'The heya and their wrestlers'],
   ['Analysis', 'Basho review', '#review', 'Every tournament since Nov 2024'], ['Analysis', 'Stories', 'sumo-stories.html', 'Sourced facts and records'],
   ['Analysis', 'Techniques', '#kimarite', 'The winning moves, explained']
 ];
@@ -116,7 +116,7 @@ function exploreBlock(h) {
 }
 
 export function renderHome(d, h) {
-  return '<div class="sumo-home">' + hero(h, d) + championsBlock(h, d) +
+  return '<div class="sumo-home">' + hero(h, d) + (h.afterHero || '') + championsBlock(h, d) +
     '<section class="shome-block shome-two">' + starsBlock(h, d) + sanyakuBlock(h, d) + '</section>' +
     risingBlock(h, d) + moversBlock(h, d) + watchBlock(h, d) + factBlock(h, d) + exploreBlock(h) +
     '<p class="shome-source">Worked out from the Sumo API snapshot of the ' + h.e(d.headline.name) + ' basho and BEFN’s saved rank history. Photographs: Japan Sumo Association.</p></div>';
