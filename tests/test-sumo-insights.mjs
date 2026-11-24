@@ -66,3 +66,21 @@ test('page and teaser render with one h1 and escaped names', () => {
   d.stables[0].heya = '<b>x</b>';
   assert.doesNotMatch(renderInsights(d, h), /<b>x<\/b>/);
 });
+
+import { sizeExtremes, weightAt, GIANT_GAP } from '../assets/sumo-insights-data.mjs';
+test('size: weights come from a weigh-in at or before the basho, at most four basho old', () => {
+  const ch2 = { bySourceId: { 1: { weight: [{ basho: '202501', kg: 150 }, { basho: '202509', kg: 160 }] } } };
+  assert.equal(weightAt(ch2, 1, '202507'), 150);
+  assert.equal(weightAt(ch2, 1, '202511'), 160);
+  assert.equal(weightAt(ch2, 1, '202411'), null, 'no weigh-in before');
+  assert.equal(weightAt(ch2, 1, '202611'), null, 'last weigh-in more than four basho old');
+});
+test('size: gaps and giant-killers are consistent; coverage is reported', () => {
+  const S = sizeExtremes(basho, ch, roster);
+  assert.ok(S.covered > 0 && S.covered <= S.total);
+  for (const f of S.mismatches) { assert.equal(f.gap, Math.abs(f.winner.kg - f.loser.kg)); assert.equal(f.lighterWon, f.winner.kg < f.loser.kg); }
+  for (const k of S.giantKillers) assert.ok(k.n >= 1 && k.best.lighterWon && k.best.gap >= GIANT_GAP);
+  const maku = roster.rikishi.filter(w => isMakuuchi(w.currentRank));
+  assert.equal(S.banzuke.heaviest.kg, Math.max(...maku.map(w => w.weightKg)));
+  assert.equal(S.banzuke.shortest.cm, Math.min(...maku.map(w => w.heightCm)));
+});

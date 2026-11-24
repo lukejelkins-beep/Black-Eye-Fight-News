@@ -121,3 +121,51 @@ export function records(basho, careerHistory, roster) {
   const span = basho.length ? bashoName(basho[0].bashoId) + ' to ' + bashoName(basho[basho.length - 1].bashoId) : '';
   return { span, titles: titles.slice(0, 5), stars: stars.slice(0, 5), streaks: streaks.slice(0, 5), fastest: fastest.slice(0, 5), comebacks: comebacks.slice(0, 5), youngest };
 }
+
+/* Size extremes. A wrestler's weight for a basho is his latest dated weigh-in at or before it
+   (rank history: Sumo API and SumoDB measurements, plus the official listing for the latest basho),
+   used only when it is no more than four basho old. Bouts without both weights are left out. */
+const bIdx = b => Number(String(b).slice(0, 4)) * 6 + (Number(String(b).slice(4, 6)) - 1) / 2;
+export function weightAt(careerHistory, id, bashoId, latestId) {
+  const h = careerHistory?.bySourceId?.[String(id)];
+  if (!h) return null;
+  const points = (h.weight || []).filter(w => Number.isFinite(w.kg) && w.basho).map(w => ({ basho: String(w.basho), kg: w.kg }));
+  if (latestId && Number.isFinite(h.currentListedWeight?.kg)) points.push({ basho: String(latestId), kg: h.currentListedWeight.kg });
+  const before = points.filter(p => p.basho <= String(bashoId)).sort((a, b) => b.basho.localeCompare(a.basho))[0];
+  return before && bIdx(bashoId) - bIdx(before.basho) <= 4 ? before.kg : null;
+}
+export const GIANT_GAP = 40;
+export function sizeExtremes(basho, careerHistory, roster, { limit = 5 } = {}) {
+  const latestId = basho.length ? basho[basho.length - 1].bashoId : null;
+  const fights = [];
+  let total = 0;
+  for (const b of basho) {
+    const byId = new Map(b.rows.map(r => [r.rikishiID, r]));
+    for (const r of b.rows) {
+      if (!isMakuuchi(r.rank)) continue;
+      (r.record || []).forEach((x, i) => {
+        if (!x || x.result !== 'win') return;
+        const o = byId.get(x.opponentID);
+        if (!o || !isMakuuchi(o.rank)) return;
+        total++;
+        const wW = weightAt(careerHistory, r.rikishiID, b.bashoId, latestId), wL = weightAt(careerHistory, o.rikishiID, b.bashoId, latestId);
+        if (wW == null || wL == null) return;
+        fights.push({ bashoId: b.bashoId, day: i + 1, kimarite: x.kimarite || '', winner: { id: r.rikishiID, name: r.shikonaEn, rank: r.rank, kg: wW }, loser: { id: o.rikishiID, name: o.shikonaEn, rank: o.rank, kg: wL }, gap: Math.abs(wW - wL), lighterWon: wW < wL });
+      });
+    }
+  }
+  const mismatches = fights.slice().sort((a, b) => b.gap - a.gap || b.bashoId.localeCompare(a.bashoId)).slice(0, limit);
+  const killers = new Map();
+  for (const f of fights) {
+    if (!f.lighterWon || f.gap < GIANT_GAP) continue;
+    const k = killers.get(f.winner.id) || { id: f.winner.id, name: f.winner.name, n: 0, best: null };
+    k.n++; if (!k.best || f.gap > k.best.gap) k.best = f;
+    killers.set(f.winner.id, k);
+  }
+  const giantKillers = [...killers.values()].sort((a, b) => b.n - a.n || b.best.gap - a.best.gap).slice(0, limit);
+  const maku = (roster?.rikishi || []).filter(w => isMakuuchi(w.currentRank) && Number.isFinite(w.weightKg) && Number.isFinite(w.heightCm));
+  const pick = (key, dir) => maku.slice().sort((a, b) => dir * (a[key] - b[key]))[0];
+  const view = w => w && ({ id: w.sourceId, name: w.shikonaEn, rank: w.currentRank, kg: w.weightKg, cm: w.heightCm });
+  const banzuke = { heaviest: view(pick('weightKg', -1)), lightest: view(pick('weightKg', 1)), tallest: view(pick('heightCm', -1)), shortest: view(pick('heightCm', 1)), count: maku.length };
+  return { mismatches, giantKillers, banzuke, covered: fights.length, total };
+}
