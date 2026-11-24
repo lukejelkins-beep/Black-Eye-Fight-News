@@ -1,0 +1,423 @@
+{
+  "schema": 1,
+  "lane": "commonwealth_games",
+  "checkedAt": "2026-11-24",
+  "method": {
+    "dataset": "BEFN pinned certified cohort including frozen and extension, with canonical slug and display name",
+    "comparison": "Each of 921 fighter names and slugs against every extractable PDF text line in each source, using case-insensitive, diacritic-folded full name token inclusion in any order. Source page and match context were reviewed for positives, with official event-specific pages for identity and results.",
+    "interpretation": "This is corpus screening and candidate adjudication. Unmatched fighters remain unresolved outside the tested sources, aliases and documented selection checks."
+  },
+  "verified": [
+    {
+      "slug": "michelle-montague",
+      "event": "Birmingham 2022 Commonwealth Games",
+      "sport": "freestyle wrestling",
+      "category": "women 76 kg",
+      "represented": "NZL",
+      "role": "athlete",
+      "participation": "competed",
+      "result": "7th of 8; lost quarter-final to Pooja Sihag 3–5",
+      "sources": [
+        "https://olympic.org.nz/athletes/michelle-montague",
+        "https://uww.org/athletes/montague-michelle-yvonne",
+        "https://b2022-pdf.microplustimingservices.com/WRE/ResultBook/CG2022_WRE_v1.1.pdf"
+      ]
+    },
+    {
+      "slug": "michelle-montague",
+      "event": "Gold Coast 2018 Commonwealth Games",
+      "sport": "freestyle wrestling",
+      "category": "women 68 kg",
+      "represented": "NZL",
+      "role": "athlete",
+      "participation": "selected_withdrew",
+      "result": "Withdrew before start",
+      "sources": [
+        "https://www.sporty.co.nz/wrestlingnz/newsarticle/59049",
+        "https://www.olympicwrestlingnz.com/newsarticle/60693",
+        "https://olympic.org.nz/athletes/michelle-montague"
+      ]
+    },
+    {
+      "slug": "robert-whittaker",
+      "event": "Gold Coast 2018 Commonwealth Games",
+      "sport": "freestyle wrestling",
+      "category": "men 97 kg",
+      "represented": "AUS",
+      "role": "athlete",
+      "participation": "selected_withdrew",
+      "result": "Withdrew before start",
+      "sources": [
+        "https://commonwealthgames.com.au/wrestling-team-for-gold-coast-2018-announced/",
+        "https://commonwealthgames.com.au/whittaker-withdraws-from-gc2018/"
+      ]
+    }
+  ],
+  "related": [
+    {
+      "slug": "sebastian-szalay",
+      "event": "2011 Commonwealth Karate Championships",
+      "sport": "karate kumite",
+      "category": "junior men −61 kg",
+      "represented": "AUS",
+      "role": "athlete",
+      "participation": "competed",
+      "result": "1st for Australia AKF National Team; separate federation competition",
+      "sources": [
+        "https://www.sportdata.org/karate/ausschreibungen/338/CKF%20Official%20Results.pdf",
+        "https://www.ufc.com/athlete/sebastian-szalay"
+      ]
+    },
+    {
+      "slug": "michelle-montague",
+      "event": "2017 Commonwealth Wrestling Championship",
+      "sport": "freestyle wrestling",
+      "category": "women 68 kg",
+      "represented": "NZL",
+      "role": "athlete",
+      "participation": "competed",
+      "result": "4th; separate federation competition",
+      "sources": [
+        "https://uww.org/athletes/montague-michelle-yvonne"
+      ]
+    }
+  ],
+  "rejectedExamples": [
+    {
+      "slug": "shane-collins",
+      "claim": "The NZOC athlete was a 1992 NZ women’s hockey player. UFC athlete born in the United States decades later; same name.",
+      "sources": [
+        "https://olympic.org.nz/athletes/shane-collins",
+        "https://www.ufc.com/athlete/shane-collins"
+      ]
+    },
+    {
+      "slug": "mike-davis",
+      "claim": "Delhi 2010 Mike Davis was Ottawa communications staff, not a competition athlete and different identity.",
+      "sources": [
+        "https://commonwealthsport.ca/fr/nouvelles/jeux-du-commonwealth-canada-ajoute-des-membres-aon-equipe-de-mission-pour-delhi-2010",
+        "https://www.ufc.com/athlete/mike-davis"
+      ]
+    },
+    {
+      "slug": "michael-johnson",
+      "claim": "Glasgow 2014 book cites the USA track runner’s world record on pp.21–27. Gold Coast 2018 p.1654 lists a lawn bowls technical official of the same name. Neither establishes fighter participation.",
+      "sources": [
+        "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/a76d261f-3895-44cd-ab7c-80cd1d83b3fc/Glasgow-2014-Official-Results-Book-All-Sports.pdf",
+        "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/aeb9b33f-53d7-4345-910b-7d901de6e88c/Gold-Coast-2018-Results-Book-All-Sports.pdf",
+        "https://www.ufc.com/athlete/michael-johnson"
+      ]
+    },
+    {
+      "slug": "joshua-van",
+      "claim": "Gold Coast 2018 occurrences are South African cyclist Joshua van Wyk, not UFC fighter Joshua Van.",
+      "sources": [
+        "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/aeb9b33f-53d7-4345-910b-7d901de6e88c/Gold-Coast-2018-Results-Book-All-Sports.pdf",
+        "https://www.ufc.com/athlete/joshua-van"
+      ]
+    }
+  ],
+  "coverageGaps": [
+    "Glasgow 2026 boxing was screened from all 14 official draw sheets, not final bout timing or late substitutions. Other Glasgow 2026 sports outside boxing and judo were not comprehensively screened.",
+    "Birmingham 2022 non-combat sports and all pre-2014 editions were not exhaustively extracted.",
+    "Commonwealth Youth Games and historical delegation selection lists, including withdrawals, have not been comprehensively checked.",
+    "Names exclusively recorded under aliases, changed surnames, non-Latin transliterations, or separate line breaks may evade exact-token extraction. A candidate or unmatched line is not an athlete eligibility or participation result."
+  ],
+  "snapshotSha": "7a35f2aaeb9a7252e5c4783882faae60b1c3af77",
+  "screenedFighters": 921,
+  "documents": [
+    {
+      "edition": "Glasgow 2014",
+      "sportCoverage": "all sports",
+      "publisher": "Commonwealth Sport",
+      "sourceUrl": "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/a76d261f-3895-44cd-ab7c-80cd1d83b3fc/Glasgow-2014-Official-Results-Book-All-Sports.pdf",
+      "pages": 3151,
+      "includesDuplicatePages": false,
+      "sha256": "69a34010d60f794dade4bcc01992897f0c6d3d2cdb17eaac02c68a5aeed19f23",
+      "candidateSlugs": [
+        "lauren-murphy",
+        "mason-jones",
+        "michael-johnson",
+        "paul-craig",
+        "sam-patterson"
+      ],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Glasgow 2014",
+      "sportCoverage": "boxing",
+      "publisher": "Commonwealth Sport",
+      "sourceUrl": "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/f2f3ea41-da46-4da8-8e49-8bd9b2313710/BOXING-CG2014-Official-Results-Book.pdf",
+      "pages": 80,
+      "includesDuplicatePages": true,
+      "sha256": "364f72e517c52102823423ae04ef39876b5630066a933bd462447ef2ef7aa4f3",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Glasgow 2014",
+      "sportCoverage": "judo",
+      "publisher": "Commonwealth Sport",
+      "sourceUrl": "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/e720049e-7ca6-4c75-9a27-8b6e55b1af1f/JUDO-CG2014-Official-Results-Book.pdf",
+      "pages": 85,
+      "includesDuplicatePages": true,
+      "sha256": "ec1cb80b8b02ec43a1084d53d3b7fad209b90844b969947b2c8062fd03bdfc65",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Glasgow 2014",
+      "sportCoverage": "freestyle wrestling",
+      "publisher": "Commonwealth Sport",
+      "sourceUrl": "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/fd43da7b-9c2f-419d-81b9-c6e5a10b677f/WRESTLING-CG2014-Official-Results-Book.pdf",
+      "pages": 223,
+      "includesDuplicatePages": true,
+      "sha256": "d099a0bd081a9aaa0b6851accb36f0ed2502b65a60ca6d6ce7e0de3c38db7cb7",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Gold Coast 2018",
+      "sportCoverage": "all sports",
+      "publisher": "Commonwealth Sport",
+      "sourceUrl": "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/aeb9b33f-53d7-4345-910b-7d901de6e88c/Gold-Coast-2018-Results-Book-All-Sports.pdf",
+      "pages": 3274,
+      "includesDuplicatePages": false,
+      "sha256": "30537e3e8761e71f7696b61b2a8b09a3b45b000f5788fa71a131dbc060f4eb7d",
+      "candidateSlugs": [
+        "anthony-smith",
+        "arnold-allen",
+        "christian-edwards",
+        "elijah-smith",
+        "joshua-van",
+        "michael-johnson",
+        "mike-davis"
+      ],
+      "adjudication": "none confirmed; two separately documented withdrawals omit athletes from final lists"
+    },
+    {
+      "edition": "Gold Coast 2018",
+      "sportCoverage": "boxing",
+      "publisher": "Commonwealth Sport",
+      "sourceUrl": "https://resources.cwg-qbr.pulselive.com/qbr-commonwealth-games/document/2022/11/24/7025ca62-8921-4019-8e87-3eec5802e685/GC2018_BOX_Results_Book.pdf",
+      "pages": 94,
+      "includesDuplicatePages": true,
+      "sha256": "945cf9f9e491d8f5985e82b56a222f6d704eed95c7894c157c596948dd379e4d",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Gold Coast 2018",
+      "sportCoverage": "freestyle wrestling",
+      "publisher": "United World Wrestling",
+      "sourceUrl": "https://cdn.uww.org/2018-05/results_04_goldcoast.pdf",
+      "pages": 203,
+      "includesDuplicatePages": true,
+      "sha256": "9c75ff4a3465806710607dd99410473eb03280ba98a7647c8e7cbe5604c52503",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Birmingham 2022",
+      "sportCoverage": "boxing",
+      "publisher": "Birmingham 2022 organizer",
+      "sourceUrl": "https://b2022-pdf.microplustimingservices.com/BOX/ResultBook/CG2022_BOX_v1.0.pdf",
+      "pages": 116,
+      "includesDuplicatePages": false,
+      "sha256": "09cc7f93e6128412d288c5bc588e5b53ae5ff6132d920f00d85523ff45716bc2",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Birmingham 2022",
+      "sportCoverage": "judo",
+      "publisher": "Birmingham 2022 organizer",
+      "sourceUrl": "https://b2022-pdf.microplustimingservices.com/JUD/ResultBook/CG2022_JUD_v1.0.pdf",
+      "pages": 326,
+      "includesDuplicatePages": false,
+      "sha256": "f9ca1b67732df84c6c27b26b11b6059455ae5a33916a064234a29a4577c920e4",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Birmingham 2022",
+      "sportCoverage": "freestyle wrestling",
+      "publisher": "Birmingham 2022 organizer",
+      "sourceUrl": "https://b2022-pdf.microplustimingservices.com/WRE/ResultBook/CG2022_WRE_v1.1.pdf",
+      "pages": 207,
+      "includesDuplicatePages": false,
+      "sha256": "5c895665ef7c2c540f72f48922ec0bdd01e2bba5f872f930915acfaf64e9156e",
+      "candidateSlugs": [
+        "michelle-montague"
+      ],
+      "adjudication": "Michelle Montague, entry pp.9/79, ranking p.80, bout p.81 and final ranking p.90"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "judo",
+      "publisher": "International Judo Federation",
+      "sourceUrl": "https://78884ca60822a34fb0e6-082b8fd5551e97bc65e327988b444396.ssl.cf3.rackcdn.com/up/2026/08/Commonwealth_Games_Glasgow_202-1785686979.pdf",
+      "pages": 22,
+      "includesDuplicatePages": false,
+      "sha256": "e9b6b1df71561ad86e883150510a873556cf45bc9841dec80fd4d96fd6420608",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Men's 55 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXM55KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "b33ef1b395c2da3c6add65085b7b99af68e6052af05cf9adaa93022f46097698",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Women's 51 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXW51KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "e525b161aeab521c35e41161b0b6b99c911acfa198ae403d9f527d4fa1070f9d",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Men's 60 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXM60KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "65fb60efb39f6bb22a5acba6eab36a38a94610c45869c590c860913a26114014",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Women's 54 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXW54KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "ded57223531797fc26167248a363cb1d8b2a38b0a033e150bff39c70ec4232b1",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Men's 65 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXM65KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "729a35eca6ec2789937c69c86bd34d12320355d3fed58c6dd7c9ac9aa3e386dc",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Women's 57 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXW57KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "0338ff46415830a1c33d5c354795cf95bf61fc005f4f46ad49edb3ab6a66e53e",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Men's 70 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXM70KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "08cfddfa6199070512166c7478f4f5d18aac31a14e237bc1239341500ccd5516",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Women's 60 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXW60KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "2135f4c6632c27b21fe034e03f631392f0e76164570b75aaa3ff14556b8978bc",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Men's 80 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXM80KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "1676d9b4a0c3bf34aea51754183d20a4a602a8c258b62bae501adf9cae0d46c5",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Women's 65 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXW65KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "c8127c660b6ebbafc2e0d7835409caa47e829796a4eb037639b5bf41552cea18",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Men's 90 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXM90KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "0b0917b8991da42491ce8d58235066f8f32ee3dc0343c199115587eed50a6e8c",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Women's 70 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXW70KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "075395ea70b06661118f395f02e6220b3cf6b90338ea6feba825a5eba66c1374",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Men's +90 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXMO90KG-------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "b34df21512b1efe602ee8ec55aa9313b446bb377f9a0b2a82ebd26c1752e5136",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    },
+    {
+      "edition": "Glasgow 2026",
+      "sportCoverage": "boxing, Women's 75 kg",
+      "publisher": "Glasgow 2026 organizer",
+      "sourceUrl": "https://crs-cg2026-static-assets.glasgow2026.com/CG2026/static/_PDF/CG2026/BOX/2026-07-22/BOXW75KG--------------------------__C75_1.0.pdf",
+      "pages": 1,
+      "includesDuplicatePages": false,
+      "sha256": "c15c24a67d81d3e543c9fdd9033346db5a86c9aca4165fc299fb6dfcb400918d",
+      "candidateSlugs": [],
+      "adjudication": "none confirmed; draw names constitute entries, and do not alone establish a bout start"
+    }
+  ],
+  "pagesIncludingOverlap": 7795,
+  "pagesWithoutWholeBookOverlap": 7110
+}
