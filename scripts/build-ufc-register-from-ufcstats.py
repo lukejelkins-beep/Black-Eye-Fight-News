@@ -29,6 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ufcstats_greco import Greco, fold, same_name  # noqa: E402
+import ufc_wikipedia_check as WIKI  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -126,7 +127,9 @@ def propose(slug, name, greco, cutoff, showcases=None):
     return rows, url
 
 
-def reconcile(slug, profile, stats_name, greco, cutoff, fdates, curated, showcases=None):
+def reconcile(slug, profile, stats_name, greco, cutoff, fdates, curated, showcases=None, wikipedia=None, checked_on=None):
+    """wikipedia: a ufc_wikipedia_check.Wikipedia. A bout matched only to a results-importer row (itself read from
+    UFCStats) needs the event's Wikipedia article to agree; without that second source the fighter is not proposed."""
     showcases = showcases or {}
     rows, url = propose(slug, stats_name, greco, cutoff, showcases)
     if rows is None:
@@ -151,6 +154,13 @@ def reconcile(slug, profile, stats_name, greco, cutoff, fdates, curated, showcas
             b["independentEventSourceDate"] = r["date"]
         if s["opponent"] != r["opponent"]:
             b["sourceOpponentName"] = r["opponent"]
+        if s["from"] == "results-importer":
+            if wikipedia is None:
+                return None, f"second source needed (run with --wikipedia): {s['date']} {s['opponent']}"
+            found, why = wikipedia.confirm(stats_name, s["opponent"], s["date"], r["result"])
+            if not found:
+                return None, f"not confirmed by Wikipedia: {why}"
+            b.update(WIKI.evidence(found, checked_on or cutoff))
         bouts.append(b)
     extra = [s for i, s in enumerate(saved) if i not in used]
     if extra:
@@ -172,12 +182,15 @@ def main():
     ap.add_argument("--verified-at", default=None)
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--report", default=None)
+    ap.add_argument("--wikipedia", action="store_true",
+                    help="confirm fights saved history lacks against the event's Wikipedia article (network)")
     a = ap.parse_args()
     greco = Greco()
     snapshot = greco.snapshot()
     research = (load(DATA / "ufcalendar-fighter-research.json", {}) or {}).get("profiles") or {}
     curated = (load(DATA / "ufc-feeder-bout-evidence.json", {}) or {}).get("bouts") or []
     fdates = feeder_dates()
+    wiki = WIKI.Wikipedia() if a.wikipedia else None
     # Official UFC showcase bouts on feeder-labelled cards, attested bout by bout in the register (by UFCStats link).
     showcases = {x["fightUrl"]: {k: v for k, v in x.items() if k != "opponent"}
                  for e in load(REGISTER)["fighters"].values() for x in e.get("officialShowcaseBouts") or []
@@ -187,13 +200,14 @@ def main():
     for slug in [s for s in a.slugs.split(",") if s]:
         stats = load(DATA / "ufc-stats" / "fighters" / f"{slug}.json", {}) or {}
         name = stats.get("name") or (research.get(slug) or {}).get("name")
-        if slug not in research or not name:
-            failed[slug] = "no saved research history"
+        if not name:
+            failed[slug] = "no name in the stats file or saved research"
             continue
         if slug in reg["fighters"]:
             failed[slug] = "already in the register"
             continue
-        res, why = reconcile(slug, research[slug], name, greco, a.cutoff, fdates, curated, showcases)
+        res, why = reconcile(slug, research.get(slug) or {}, name, greco, a.cutoff, fdates, curated, showcases,
+                             wiki, a.verified_at or a.cutoff)
         if res is None:
             failed[slug] = why
             continue
@@ -208,8 +222,8 @@ def main():
             "sourceSnapshot": {**snapshot, "evidenceCutoff": a.cutoff},
             "sourceNotes": (f"Complete UFCStats fighter fight list ({n} UFC bouts to {a.cutoff}) from the free UFCStats "
                             "export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar "
-                            "research rows" + (", plus the free results importer for fights after that snapshot"
-                                               if late else "") +
+                            "research rows" + (", plus the free results importer for fights after that snapshot, each also "
+                                               "confirmed by the event's Wikipedia article" if late else "") +
                             ") by opponent, result and date within a day; saved date and name kept, the source's in "
                             "independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks "
                             "is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. "

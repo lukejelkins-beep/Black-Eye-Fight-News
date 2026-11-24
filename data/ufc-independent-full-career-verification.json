@@ -78053,14 +78053,18 @@
         "eventDetailsBlobSha": "3d4d5a12f405fa783b9a5db5351051dd8619084c",
         "evidenceCutoff": "2026-11-24"
       },
-      "sourceNotes": "Complete UFCStats fighter fight list (1 UFC bouts to 2026-11-24) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows, plus the free results importer for fights after that snapshot) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py.",
+      "sourceNotes": "Complete UFCStats fighter fight list (1 UFC bouts to 2026-11-24) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows, plus the free results importer for fights after that snapshot, each also confirmed by the event's Wikipedia article) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py.",
       "bouts": [
         {
           "date": "2026-11-21",
           "opponent": "Diyar Nurgozhay",
           "result": "loss",
           "fightUrl": "https://ufcstats.com/fight-details/c3fa8091bc2428d7",
-          "sourceMethod": "KO/TKO"
+          "sourceMethod": "KO/TKO",
+          "secondSource": "wikipedia-event-article",
+          "secondSourceUrl": "https://en.wikipedia.org/wiki/UFC_Fight_Night%3A_Proch%C3%A1zka_vs._Stirling",
+          "secondSourceEvent": "UFC Fight Night: Procházka vs. Stirling",
+          "secondSourceCheckedOn": "2026-11-24"
         }
       ]
     },
@@ -78080,7 +78084,7 @@
         "eventDetailsBlobSha": "3d4d5a12f405fa783b9a5db5351051dd8619084c",
         "evidenceCutoff": "2026-11-24"
       },
-      "sourceNotes": "Complete UFCStats fighter fight list (19 UFC bouts to 2026-11-24) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows, plus the free results importer for fights after that snapshot) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py.",
+      "sourceNotes": "Complete UFCStats fighter fight list (19 UFC bouts to 2026-11-24) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows, plus the free results importer for fights after that snapshot, each also confirmed by the event's Wikipedia article) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py.",
       "bouts": [
         {
           "date": "2013-08-03",
@@ -78214,7 +78218,11 @@
           "opponent": "Kayla Harrison",
           "result": "loss",
           "fightUrl": "https://ufcstats.com/fight-details/32112fd0aaf7fba2",
-          "sourceMethod": "Submission"
+          "sourceMethod": "Submission",
+          "secondSource": "wikipedia-event-article",
+          "secondSourceUrl": "https://en.wikipedia.org/wiki/UFC_334",
+          "secondSourceEvent": "UFC 334",
+          "secondSourceCheckedOn": "2026-11-24"
         }
       ]
     },
@@ -86538,14 +86546,18 @@
         "eventDetailsBlobSha": "3d4d5a12f405fa783b9a5db5351051dd8619084c",
         "evidenceCutoff": "2026-11-24"
       },
-      "sourceNotes": "Complete UFCStats fighter fight list (1 UFC bouts to 2026-11-24) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows, plus the free results importer for fights after that snapshot) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py.",
+      "sourceNotes": "Complete UFCStats fighter fight list (1 UFC bouts to 2026-11-24) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows, plus the free results importer for fights after that snapshot, each also confirmed by the event's Wikipedia article) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py.",
       "bouts": [
         {
           "date": "2026-11-14",
           "opponent": "Evan Elder",
           "result": "loss",
           "fightUrl": "https://ufcstats.com/fight-details/aad8a97d1a0852a0",
-          "sourceMethod": "Decision - Unanimous"
+          "sourceMethod": "Decision - Unanimous",
+          "secondSource": "wikipedia-event-article",
+          "secondSourceUrl": "https://en.wikipedia.org/wiki/UFC_334",
+          "secondSourceEvent": "UFC 334",
+          "secondSourceCheckedOn": "2026-11-24"
         }
       ]
     },

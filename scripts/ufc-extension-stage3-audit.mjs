@@ -12,7 +12,8 @@
  *   - the fighter's register entry (data/ufc-independent-full-career-verification.json) for this cohort;
  * and, in addition:
  *   - no malformed or duplicated saved row; the entry's UFCStats fighter page belongs to no other register entry;
- *   - every fight in the fighter's stats file up to the cutoff is a register bout (what the profile shows is certified).
+ *   - every fight in the fighter's stats file up to the cutoff is a register bout (what the profile shows is certified);
+ *   - a fight only the results importer holds carries a second source, the event's Wikipedia article.
  * Nothing here calls a provider or writes collector-owned files.
  */
 import fs from 'node:fs';
@@ -124,6 +125,13 @@ export function auditExtension({approval,base,research,progress,register,feeder,
    const proof=evaluateCareerEvidence(profile,history,latest,cutoff,entry,progress?.bouts||{},cutoff);
    if(!proof.independentlyVerified)reasons.push(proof.rosterLatestPresent?'source_proof_fails_certification_gate':'latest_fight_not_in_saved_history');
    const bouts=arr(entry.bouts);
+   // Owner, 24 Nov 2026: a fight only the free results importer holds (it reads UFCStats, the same source as the
+   // register) needs a second source, the event's Wikipedia article, recorded on the matching register bout.
+   const wiki=b=>b?.secondSource==='wikipedia-event-article'&&
+    /^https:\/\/en\.wikipedia\.org\/wiki\/\S+$/.test(String(b?.secondSourceUrl||''))&&date(b?.secondSourceCheckedOn);
+   const unconfirmed=history.filter(r=>r.source==='results-importer').filter(r=>!bouts.some(b=>
+    dayGap(b.date,r.date)<=1&&b.result===r.result&&sameName(b.opponent,r.opponent)&&wiki(b)));
+   if(unconfirmed.length)reasons.push('new_fight_without_second_source');
    const unlisted=shown.filter(f=>!bouts.some(b=>b.result===OUTCOME[f.outcome]&&
     (dayGap(b.date,f.date)<=1||(b.independentEventSourceDate&&dayGap(b.independentEventSourceDate,f.date)<=1))&&
     (sameName(b.opponent,f.opponent)||sameName(b.sourceOpponentName,f.opponent))));

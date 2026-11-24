@@ -86,3 +86,14 @@ test('the certified list carries the extension in its own block with its own cut
  assert.throws(()=>buildExtension(audit,{...approval,cohort:'other'},careers));
  assert.throws(()=>buildExtension(audit,approval,{certified:{'jose-aldo':1}}),/both cohorts/);
 });
+
+test('a fight only the results importer holds needs its Wikipedia second source',()=>{
+ const slug='alik-lorenz';
+ const bout=register.fighters[slug].bouts.find(b=>b.date==='2026-11-21');
+ assert.match(bout.secondSourceUrl,/^https:\/\/en\.wikipedia\.org\/wiki\//);
+ assert.equal(lane(auditExtension(inputs()),slug),'certified');
+ const stripped=withEntry(slug,e=>{for(const b of e.bouts){delete b.secondSource;delete b.secondSourceUrl;}return e;});
+ const r=auditExtension(inputs({register:stripped}));
+ assert.equal(lane(r,slug),'exception');
+ assert.ok(r.lanes.exceptions.find(x=>x.slug===slug).reasons.includes('new_fight_without_second_source'));
+});
