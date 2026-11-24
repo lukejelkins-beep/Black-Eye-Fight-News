@@ -6,7 +6,7 @@ window.ResultsDesk=(()=>{
  const activeCardSection=new Map();
  const attemptedPortraits=new Set(),portraitJobs=[];
  let portraitActive=0;
- const filters={sport:'All',query:'',clips:false,promotion:'ufc'};
+ const filters={sport:'All',query:'',clips:false,promotion:'all'};
  const promotions=[['ufc','UFC','UFC Logo.svg'],['pfl','PFL','Professional Fighters League Primary Logo.jpg'],['one','ONE','ONE Championship.png']];
 
  // Event-specific historical promotional images with original source URLs.
@@ -29,7 +29,7 @@ window.ResultsDesk=(()=>{
   return posterPending;
  }
  const selectedPromotion=()=>window.BEFNFightsUI?.promotion||filters.promotion;
- const belongsToPromotion=r=>{const e=(data?.events||[]).find(x=>x.id===r.eventId)||{};const name=String([r.event,r.promotion,r.organization,e.name,e.promotion,e.organization].filter(Boolean).join(' ')).toLowerCase();return ({ufc:/\bufc\b|ultimate fighting championship/,pfl:/\bpfl\b|professional fighters league/,one:/\bone\b|one championship/})[selectedPromotion()]?.test(name)??false};
+ const belongsToPromotion=r=>{const e=(data?.events||[]).find(x=>x.id===r.eventId)||{};const name=String([r.event,r.promotion,r.organization,e.name,e.promotion,e.organization].filter(Boolean).join(' ')).toLowerCase();const p=selectedPromotion();if(p==='all')return true;return (window.BEFNPromotions||{ufc:/\bufc\b|ultimate fighting championship/,pfl:/\bpfl\b|professional fighters league/,one:/\bone\b|one championship/})[p]?.test(name)??false};
  const promotionMatch=r=>window.BEFNSport?.get()!=='mma'||belongsToPromotion(r);
  const isFinalStatus=s=>['completed','no_contest','draw'].includes(String(s||'').toLowerCase());
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -222,7 +222,7 @@ window.ResultsDesk=(()=>{
  }
  const group=(title,items)=>items.length?'<section class="fights-result-group"><h2>'+title+'</h2>'+dated(items)+'</section>':'';
  const sport=window.BEFNSport?.get()||'all',promo=window.BEFNFightsUI?.promotion||filters.promotion;
- const promotionLabel={ufc:'UFC',one:'ONE Championship',pfl:'PFL'}[promo]||'MMA';
+ const promotionLabel={ufc:'UFC',one:'ONE Championship',pfl:'PFL',ksw:'KSW',rizin:'RIZIN',cw:'Cage Warriors'}[promo]||'MMA';
  const isSearching=String(window.BEFNFightsUI?.query??filters.query).trim().length>0;
  const empty=isSearching?'<div class="empty">No results match your search. Try another event or fighter.</div>':
   '<div class="empty">'+(sport==='mma'?'No verified '+promotionLabel+' results are currently available in this feed.':'No completed fight results are currently available in this category.')+'</div>';

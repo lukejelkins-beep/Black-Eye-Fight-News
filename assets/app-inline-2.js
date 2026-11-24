@@ -21,7 +21,7 @@ const D=window.COMBAT_DATA;
 const main=document.querySelector('#main');
 const dialog=document.querySelector('#fighterDialog');
 if(!D||!main){if(main) main.textContent='Fight data unavailable. Please refresh the page.';return;}
-const fightDesk=window.BEFNFightsUI={view:'upcoming',promotion:'ufc',query:''};
+const fightDesk=window.BEFNFightsUI={view:'upcoming',promotion:'all',query:''};
 const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',talkPromotion:'all',talkFighter:'',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'balanced',calendar:'boxing',highlights:'boxing'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeURL=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);if(x==='sumo.html')return 'sumo.html';try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch(_){return '#'}};
@@ -99,7 +99,8 @@ const calendarSportIcons=Object.freeze({
  grappling:`<svg class="sport-toggle-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" focusable="false"><circle cx="11" cy="7.3" r="4" stroke="currentColor" stroke-width="2.6"/><circle cx="29" cy="7.3" r="4" stroke="currentColor" stroke-width="2.6"/><path d="m9 13-5 8 7 5 8-8m12-5 5 8-7 5-8-8M13 14l7 5 7-5M9 19l6 5-4 12m20-17-6 5 4 12M15 24l6 12m10-12-6 12" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><path d="m16 15 4 4 4-4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`
 });
 const calendarSportLabels=Object.freeze({boxing:'Boxing',mma:'Mixed martial arts',grappling:'Wrestling and grappling'});
-const calendarHeading=`<header class="section-heading calendar-photo-heading"><h1>Fights</h1></header>`;
+/* Fights pages (owner, 24 Nov 2026): one heading per sport and one switch for Upcoming, Results and Fight film. */
+const fightsHeading=()=>`<header class="section-heading calendar-photo-heading"><h1>${activeSport()==='boxing'?'Boxing fights':activeSport()==='mma'?'MMA fights':'Fights'}</h1></header>`;
 const segments=(name,opts,selected)=>`<div class="segment${name==='calendar'?' sport-photo-segment':''}" role="group" aria-label="${name==='calendar'?'Fight discipline':esc(name)}">${opts.map(x=>`<button type="button" data-segment="${esc(name)}" data-value="${esc(x)}"${name==='calendar'?` aria-label="${calendarSportLabels[x]||esc(x)}" title="${calendarSportLabels[x]||esc(x)}"`:''} aria-pressed="${String(x===selected)}">${name==='calendar'?`<span class="sport-photo-visual" aria-hidden="true"></span>`:esc(x)}</button>`).join('')}</div>`;
 const renderFrame=(inner)=>`<div class="shell page">${inner}</div>`;
 const picture=(src,alt)=>`<div class="card-photo">${src?`<img loading="lazy" src="${safeURL(src)}" alt="${esc(alt)}" referrerpolicy="no-referrer">`:''}<div class="photo-fail">PHOTOGRAPH UNAVAILABLE</div></div>`;
@@ -248,13 +249,17 @@ function renderFightsContent(){
  if(fightDesk.view==='results')return window.ResultsDesk.render({embedded:true});
  return sport==='grappling'?renderGrapplingEvents(false):window.UpcomingCards.render(sport)+(sport==='all'?renderGrapplingEvents(true):'');
 }
-function renderFightsControls(){
- const views=[['upcoming','Upcoming'],['results','Results']].map(([id,label])=>'<button type="button" role="tab" data-fights-view="'+id+'" class="fights-view-tab'+(fightDesk.view===id?' is-active':'')+'" aria-selected="'+String(fightDesk.view===id)+'" aria-controls="fights-active-content">'+label+'</button>').join('');
- const logos=[['ufc','UFC','UFC Logo.svg'],['one','ONE','ONE Championship.png'],['pfl','PFL','Professional Fighters League Primary Logo.jpg']];
- const promotions=activeSport()==='mma'?'<div class="fights-promotion-tabs" role="group" aria-label="MMA organisation">'+logos.map(([id,label,file])=>'<button type="button" data-fights-promotion="'+id+'" class="fights-promotion-tab'+(fightDesk.promotion===id?' is-active':'')+'" aria-label="'+label+'" aria-pressed="'+String(fightDesk.promotion===id)+'"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(file)+'" alt="" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span hidden>'+label+'</span></button>').join('')+'</div>':'';
- return '<div class="fights-controls"><label class="fights-search"><span class="fights-search-icon" aria-hidden="true">⌕</span><input type="search" id="fights-event-search" placeholder="Search by events or fighters" aria-label="Search by events or fighters" value="'+esc(fightDesk.query)+'"></label><div class="fights-view-tabs" role="tablist" aria-label="Fight schedule or completed results">'+views+'</div>'+promotions+'</div>';
+function renderFightsControls(film){
+ const on=id=>film?id==='film':fightDesk.view===id;
+ const views=[['upcoming','Upcoming'],['results','Results']].map(([id,label])=>'<button type="button" role="tab" data-fights-view="'+id+'" class="fights-view-tab'+(on(id)?' is-active':'')+'" aria-selected="'+String(on(id))+'" aria-controls="fights-active-content">'+label+'</button>').join('')+
+  '<a href="#highlights" class="fights-view-tab'+(film?' is-active':'')+'"'+(film?' aria-current="page"':'')+'>Fight film</a>';
+ /* MMA covers every promotion we hold (owner: "All" first), the same as the MMA Overview. */
+ const chips=[['all','All'],['ufc','UFC'],['pfl','PFL'],['one','ONE'],['ksw','KSW'],['rizin','RIZIN'],['cw','Cage Warriors']];
+ const promotions=activeSport()==='mma'&&!film?'<div class="fights-promotion-chips" role="group" aria-label="MMA promotion">'+chips.map(([id,label])=>'<button type="button" data-fights-promotion="'+id+'" class="fights-promotion-chip'+(fightDesk.promotion===id?' is-active':'')+'" aria-pressed="'+String(fightDesk.promotion===id)+'">'+label+'</button>').join('')+'</div>':'';
+ const search=film?'':'<label class="fights-search"><span class="fights-search-icon" aria-hidden="true">⌕</span><input type="search" id="fights-event-search" placeholder="Search events or fighters" aria-label="Search events or fighters" value="'+esc(fightDesk.query)+'"></label>';
+ return '<div class="fights-controls"><div class="fights-view-tabs" role="tablist" aria-label="Fight schedule, results or film">'+views+'</div>'+promotions+search+'</div>';
 }
-function renderFights(){return renderFrame('<section class="fights-unified">'+calendarHeading+renderFightsControls()+'<div id="fights-active-content" role="tabpanel">'+renderFightsContent()+'</div></section>');}
+function renderFights(){return renderFrame('<section class="fights-unified">'+fightsHeading()+renderFightsControls()+'<div id="fights-active-content" role="tabpanel">'+renderFightsContent()+'</div></section>');}
 function renderCalendar(){return renderFights();}
 function renderGrapplingEvents(underOtherSports){
  const horizon=window.FightTime.dayKey(new Date(Date.now()+42*86400000));
@@ -1121,7 +1126,7 @@ function fixtureCellText(value){
  });
 }
 function tableHTML(t){return `<section class="calendar-block"><div class="subheader">${esc(t.label==='Upcoming cards'?'Fight cards & event status':t.label)}</div><div class="scroller"><table class="data-table"><thead><tr><th scope="col">Event status</th>${t.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(row=>`<tr><td>${window.EventStatus.row(row)}</td>${row.map(v=>`<td>${esc(fixtureCellText(v))}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`;}
-function renderHighlights(){return window.FightFilm.render()+window.BEFNCoverage.panel(activeSport())}
+function renderHighlights(){return '<section class="fights-unified fights-film-head">'+fightsHeading()+renderFightsControls(true)+'</section>'+window.FightFilm.render()+window.BEFNCoverage.panel(activeSport())}
 function befnDivisionKey(s){return String(s||'').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]/g,'')}
 // Days held is counted live from the reign's start date ("15 Nov 2025") so it
 // never goes stale between data refreshes; the stored count is the fallback.
@@ -1162,7 +1167,7 @@ if(Array.isArray(r.previousReigns)&&r.previousReigns.length)parts.push('<span><b
 return parts.length?'<div class="befn-reign"><strong>UFC '+esc(r.division)+' title reign</strong><div>'+parts.join('')+'</div></div>':'';
 }
 const navGroup={highlights:'fights',champions:'fighters',leaderboards:'analysis'};
-const subLinks={fights:['Fights',[['#fights','Upcoming and results','fights'],['#highlights','Fight film','highlights']]]};
+const subLinks={};
 function subNavHTML(key){const g=subLinks[navGroup[key]||key];return g?'<nav class="sh-sub" aria-label="'+g[0]+' sections">'+g[1].map(([href,label,k])=>'<a href="'+href+'"'+(k===key?' aria-current="page"':'')+'>'+label+'</a>').join('')+'</nav>':'';}
 function renderAnalysis(){if(activeSport()==='mma')return renderLeaderboards();return renderFrame('<div class="np"><header class="np-head"><h1>Analysis</h1><p>Fight breakdowns for the biggest cards are on the way. Until then, see who is fighting next.</p></header><a class="np-button" href="#fights">See upcoming fights</a></div>');}
 // Latest three headlines that name this fighter (exact or close spelling only; see assets/related-news.js).
@@ -1194,6 +1199,7 @@ document.addEventListener('click',e=>{
  const fightButton=e.target.closest('button[data-fights-view],button[data-fights-promotion]');
  if(fightButton){
   if(fightButton.dataset.fightsView)fightDesk.view=fightButton.dataset.fightsView;
+  if(location.hash!=='#fights'){location.hash='#fights';return;}
   if(fightButton.dataset.fightsPromotion)fightDesk.promotion=fightButton.dataset.fightsPromotion;
   main.innerHTML=renderFights();
   if(fightButton.dataset.fightsView)main.querySelector('[data-fights-view="'+fightDesk.view+'"]')?.focus({preventScroll:true});

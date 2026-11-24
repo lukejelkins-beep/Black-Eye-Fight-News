@@ -1,7 +1,7 @@
 /* Sourced future boxing/MMA cards; never assign unverified fights to prelims. */
 window.UpcomingCards=(()=>{
  'use strict';
- let feed=null,error='',loading=null,lastCheck=0,newsStories=null;
+ let feed=null,error='',loading=null,lastCheck=0,newsStories=null,cutouts={},featured=null;
  const opened=new Set(),active=new Map();
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const href=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch{return '#'}};
@@ -97,6 +97,10 @@ window.UpcomingCards=(()=>{
    contender(second,true,fighterRecord(b,1),fighterLabels(b,1,second,event))+'</div>'+
    '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span>'+roundText+'</div></article>';
  }
+ /* MMA promotions for the Fights chips (owner, 24 Nov 2026: "All" first). Shared with results.js. */
+ const PROMOTIONS={ufc:/\bufc\b|ultimate fighting championship/,one:/\bone\b|one championship/,pfl:/\bpfl\b|professional fighters league/,
+  ksw:/\bksw\b/,rizin:/\brizin\b/,cw:/cage warriors|\bcw\b/};
+ window.BEFNPromotions=PROMOTIONS;
  const groups=[['main','Main Card'],['prelims','Prelims'],['early','Early Prelims'],['undercard','Undercard / order TBC'],['announced','Announced / order TBC']];
 
  function heroWhen(e){
@@ -117,6 +121,27 @@ window.UpcomingCards=(()=>{
    '<span class="upcoming-hero-fighter-initials" aria-hidden="true">'+esc(initials(first.name))+'</span>'+
    (first.src?'<img class="upcoming-hero-fighter" src="'+href(first.src)+'" data-upcoming-fighter-options="'+esc(JSON.stringify(options))+'" data-upcoming-fighter-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+
    '<span class="upcoming-hero-fighter-name">'+esc(first.name)+'</span></span>';
+ }
+ /* No poster: a photo card with both main-event fighters (owner, 24 Nov 2026). Each side tries a
+    BEFN cut-out, then BEFN's own photo, then the sourced portrait, and shows initials if none load. */
+ const slugName=n=>String(n||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ function sideOptions(name,e){
+  const out=[],k=slugName(name),c=cutouts[k];
+  if(c&&c.ok===true)out.push({name,src:c.dir+k+'.webp',cut:true});
+  const local=window.BEFNLocalImages?.url?.(name,'portrait');if(local)out.push({name,src:local});
+  const sourced=sourcePhoto(name);if(sourced)out.push({name,src:sourced});
+  const custom=e.fighterFallback;if(custom?.name===name&&/^https:\/\//i.test(custom.url||''))out.push({name,src:custom.url});
+  return out;
+ }
+ function heroPair(e){
+  const main=e.bouts.find(b=>b.section==='main')||e.bouts[0];
+  return (main?.fighters||[]).slice(0,2).map((name,i)=>{
+   const options=sideOptions(name,e),first=options[0];
+   return (i?'<span class="fxc-vs" aria-hidden="true">vs</span>':'')+'<span class="upcoming-hero-fighter-slot fxc-side'+(first?.cut?' is-cutout':'')+'">'+
+    '<span class="upcoming-hero-fighter-initials" aria-hidden="true">'+esc(initials(name))+'</span>'+
+    (first?'<img class="upcoming-hero-fighter" src="'+(first.cut||/^assets\//.test(first.src)?esc(first.src):href(first.src))+'" data-upcoming-fighter-options="'+esc(JSON.stringify(options))+'" data-upcoming-fighter-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+
+    '<span class="upcoming-hero-fighter-name">'+esc(name)+'</span></span>';
+  }).join('');
  }
  /* Prefer a full-size original from FIGHTMAG's WordPress feed, retaining the
     sourced thumbnail as an automatic fallback when the original is unavailable. */
@@ -145,8 +170,10 @@ window.UpcomingCards=(()=>{
     items.push({url:candidate,kind:'portrait'});seen.add(candidate);
    }
   }
-  // Landscape banners are not event posters. Use a single main-event fighter
-  // until the two-day poster discovery adds a validated portrait/square asset.
+  // Official landscape key art BEFN holds comes after any portrait or square poster; it is shown
+  // whole, at its own shape (owner, 24 Nov 2026: posters first, formatted correctly).
+  const wide=(window.BEFNLocalPosters||{})[e.id]?.landscape?.url;
+  if(wide&&!seen.has(wide))items.push({url:wide,kind:'landscape'});
   return items;
  }
  // Only convert explicit source times. No guessed ring-walk or unverified start hours.
@@ -189,10 +216,6 @@ window.UpcomingCards=(()=>{
    '<span>'+label+' <strong>'+esc(window.FightTime.localClock(main.toISOString()))+'</strong></span>'+
    '<span class="upcoming-time-countdown'+(window.FightTime.startReached(main.toISOString())?' is-reached':'')+'" data-upcoming-start="'+esc(main.toISOString())+'">'+esc(window.FightTime.relative(main.toISOString()))+'</span>';
  }
- function dateLabel(day){
-  const d=new Date(day+'T12:00:00Z');
-  return '<h4 class="upcoming-list-date"><span>'+esc(d.toLocaleDateString('en-AU',{day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase())+'</span> <span>· '+esc(d.toLocaleDateString('en-AU',{weekday:'long',timeZone:'UTC'}))+'</span></h4>';
- }
  // Latest three headlines that name a fighter on this card (exact or close spelling only; see related-news.js).
  function relatedNewsHTML(e){
   const rn=window.BEFNRelatedNews;if(!rn||!Array.isArray(newsStories))return '';
@@ -208,16 +231,28 @@ window.UpcomingCards=(()=>{
    '<button type="button" class="result-card-tab'+(g.key===selected.key?' is-active':'')+'" data-upcoming-tab="'+esc(e.id)+'" data-upcoming-section="'+esc(g.key)+'" aria-controls="upcoming-'+esc(e.id)+'-'+g.key+'" aria-pressed="'+String(g.key===selected.key)+'"><span>'+esc(g.label)+'</span><small>'+g.rows.length+'</small></button>').join('')+'</div>':
    '<div class="upcoming-single-section">'+esc(selected?.label||'Announced bouts')+'</div>';
   const panels=sections.map(g=>'<div id="upcoming-'+esc(e.id)+'-'+esc(g.key)+'" class="result-bouts upcoming-fights" data-upcoming-panel="'+esc(g.key)+'" role="list" aria-label="'+esc(g.label)+'" '+(g.key===selected.key?'':'hidden')+'>'+g.rows.map(b=>'<div role="listitem">'+bout(b,e)+'</div>').join('')+'</div>').join('');
-  const artCandidates=posterCandidates(e),first=artCandidates[0],art=first?href(first.url):'';
-  const media='<span class="upcoming-hero-media" aria-hidden="true"><span class="upcoming-hero-fallback is-single-fighter">'+heroFighters(e)+'</span>'+
+  const artCandidates=posterCandidates(e),first=artCandidates[0],art=first?(/^assets\//.test(first.url)?esc(first.url):href(first.url)):'';
+  const known=(window.BEFNLocalPosters||{})[e.id]?.[first?.kind==='landscape'?'landscape':'portrait'];
+  const ratio=known&&known.width&&known.height&&first&&known.url===first.url?' style="--poster-ratio:'+known.width+' / '+known.height+'"':'';
+  const media='<span class="upcoming-hero-media fxc-media"'+ratio+' aria-hidden="true"><span class="upcoming-hero-fallback fxc-pair">'+heroPair(e)+'</span>'+
    (first?'<img class="upcoming-hero-poster" src="'+art+'" data-upcoming-poster-candidates="'+esc(JSON.stringify(artCandidates))+'" data-upcoming-poster-index="0" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
-  const summary='<summary class="upcoming-event-summary upcoming-hero upcoming-schedule-row'+(art?' has-poster':' is-artwork-missing')+'">'+media+
-   '<span class="upcoming-hero-content"><span class="upcoming-row-kicker">'+esc(e.promotion)+(window.BEFNSport?.get()==='all'?' · '+esc(e.sport==='mma'?'MMA':'BOXING'):'')+'</span>'+
+  const main=e.bouts.find(b=>b.section==='main')||e.bouts[0]||{};
+  const note=String(main.note||'').split('·')[0].trim();
+  const showNote=note&&!/tbc|pending|awaiting|reported|^main event$|headline|confirmed/i.test(note);
+  const titleFight=/title|championship/i.test(main.note||'')&&!/eliminator/i.test(main.note||'');
+  const records=Array.isArray(main.records)&&main.records.some(Boolean)?(main.records.map(r=>r?String(r).split(' (')[0]:'record n/a').join(' · ')):'';
+  const day=new Date(auDay(e)+'T12:00:00Z').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
+  const n=Math.round((Date.parse(auDay(e)+'T00:00:00Z')-Date.parse(localDate()+'T00:00:00Z'))/86400000);
+  const summary='<summary class="upcoming-event-summary upcoming-hero upcoming-schedule-row fxc-head'+(art?' has-poster':' is-artwork-missing')+'">'+media+
+   '<span class="fxc-days">'+(n<=0?'Today':n===1?'Tomorrow':n+'d')+'</span>'+(titleFight?'<span class="fxc-belt">Title fight</span>':'')+
+   '<span class="upcoming-hero-content fxc-body"><span class="upcoming-row-kicker">'+esc(day)+' · '+esc(e.promotion)+(window.BEFNSport?.get()==='all'?' · '+esc(e.sport==='mma'?'MMA':'BOXING'):'')+'</span>'+
    '<strong class="upcoming-hero-title">'+esc((globalThis.BEFNEventTitle||(x=>x))(e.title))+'</strong>'+
+   '<span class="fxc-line">'+esc([main.division,showNote?note:''].filter(Boolean).join(' · '))+'</span>'+
+   (records?'<span class="fxc-records">'+esc(records)+'</span>':'')+
    '<span class="upcoming-hero-times">'+rowTimes(e)+'</span>'+
    '<span class="upcoming-hero-location">'+esc(e.location||'Venue TBC')+'</span>'+
-   (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+'</span>'+
-   '<span class="upcoming-row-chevron" aria-hidden="true">⌄</span></summary>';
+   (e.sourceStatus==='reported'?'<span class="upcoming-row-provisional">Reported · UFC confirmation pending</span>':'')+
+   '<span class="fxc-more">Full card · '+e.bouts.length+(e.bouts.length===1?' bout':' bouts')+' <span class="upcoming-row-chevron" aria-hidden="true">⌄</span></span></span></summary>';
   // Event time is already presented in the compact header. When expanded,
   // go straight to the card itself, without duplicate times, source links
   // or long editorial notes. Source URLs remain in the underlying JSON.
@@ -228,30 +263,31 @@ window.UpcomingCards=(()=>{
   if(!feed)return '<div class="upcoming-loading" role="status">'+(error?'Upcoming card feed unavailable. Please reload to try again.':'Loading announced fight cards…')+'</div>';
   const today=localDate(),recent=window.FightTime.dayKey(new Date(Date.now()-2*86400000));
   const query=String(window.BEFNFightsUI?.query||'').trim().toLowerCase();
-  const promo=window.BEFNFightsUI?.promotion||'ufc';
+  const promo=window.BEFNFightsUI?.promotion||'all';
   const events=feed.events.filter(e=>{
    if((sport!=='all'&&e.sport!==sport)||!Array.isArray(e.bouts)||!e.bouts.length)return false;
    if(sport==='mma'){
     const name=String(e.promotion||'').toLowerCase();
-    const matches={ufc:/\bufc\b|ultimate fighting championship/,one:/\bone\b|one championship/,pfl:/\bpfl\b|professional fighters league/};
-    if(!matches[promo]?.test(name))return false;
+    if(promo!=='all'&&!PROMOTIONS[promo]?.test(name))return false;
    }
    if(query&&!String([e.title,e.promotion,e.location,...e.bouts.flatMap(b=>b.fighters||[])].join(' ')).toLowerCase().includes(query))return false;
    const t=publishedInstant(e);
    return t?t.getTime()>Date.now()-36*3600000:e.date>=recent;
   }).sort((a,b)=>auDay(a).localeCompare(auDay(b))||a.title.localeCompare(b.title));
-  const cutoff=new Date(today+'T12:00:00Z');cutoff.setUTCDate(cutoff.getUTCDate()+6);
-  const nextWeek=cutoff.toISOString().slice(0,10);
-  function section(label,items){
+  /* The headline fight leads (the Overview's rule, owner's headline list first), then the cards by week. */
+  const lead=(sport==='boxing'||sport==='mma')&&!query&&window.BEFNSportOverview?window.BEFNSportOverview.bigUpcoming(events,sport,featured,Date.now()):null;
+  const rest=events.filter(e=>e!==lead);
+  const daysOut=e=>Math.round((Date.parse(auDay(e)+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000);
+  function section(label,items,cls){
    if(!items.length)return '';
-   let prev='',html='';
-   for(const e of items){const date=auDay(e);if(date!==prev){html+=dateLabel(date);prev=date}html+=eventCard(e)}
-   return '<section class="upcoming-list-group"><h3 class="upcoming-list-heading">'+esc(label)+'</h3>'+html+'</section>';
+   return '<section class="upcoming-list-group'+(cls?' '+cls:'')+'"><h3 class="upcoming-list-heading">'+esc(label)+'</h3><div class="fxc-grid">'+items.map(eventCard).join('')+'</div></section>';
   }
-  return '<div class="upcoming-schedule">'+
+  return '<div class="upcoming-schedule" id="fxc-schedule">'+
    (error?'<p class="upcoming-feed-warning">Latest refresh failed; showing saved listings.</p>':'')+
-   section('This Week',events.filter(e=>auDay(e)<=nextWeek))+
-   section('Upcoming',events.filter(e=>auDay(e)>nextWeek))+
+   (lead?section('Headline fight',[lead],'fxc-feature'):'')+
+   section('This week',rest.filter(e=>daysOut(e)<=7))+
+   section('Next week',rest.filter(e=>daysOut(e)>7&&daysOut(e)<=14))+
+   section('Later',rest.filter(e=>daysOut(e)>14))+
    (events.length?'':'<p class="upcoming-empty">No upcoming fight cards confirmed in this category.</p>')+
    '<details class="compact-note"><summary>Schedule and timing notes</summary><p>Exact published start times display in your local time zone. Date-only events retain venue dates; matchups and bout order can change. Records are shown when verified. Reviewed: '+esc(feed.reviewedAt||'not confirmed')+'.</p></details></div>';
  }
@@ -303,8 +339,7 @@ window.UpcomingCards=(()=>{
   }
   pump();
  }
- function listing(sport){return markLead(listingRaw(sport))}
- function markLead(html){const i=html.indexOf('has-poster');if(i<0)return html;const d=html.lastIndexOf('<details class="result-event upcoming-event"',i);return d<0?html:html.slice(0,d)+'<details class="result-event upcoming-event is-lead"'+html.slice(d+'<details class="result-event upcoming-event"'.length);}
+ function listing(sport){return listingRaw(sport)}
  function render(sport){const markup='<div id="upcoming-cards-root" data-local-day="'+localDate()+'" data-upcoming-sport="'+esc(sport)+'">'+listing(sport)+'</div>';if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>{hydratePortraits();reconcileHeroImages()});return markup}
  function refreshCountdowns(){
   document.querySelectorAll('.upcoming-time-countdown[data-upcoming-start]').forEach(el=>{
@@ -381,6 +416,13 @@ window.UpcomingCards=(()=>{
  async function load(){
   if(loading)return loading;
   loading=(async()=>{
+   const json=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
+   Promise.all([json('data/ufc-cutout-register.json'),json('data/boxing-cutout-register.json'),json('data/sport-overview-featured.json')]).then(([u,b,f])=>{
+    const next={};
+    for(const [dir,reg] of [['assets/img/ufc-cutouts/',u],['assets/img/boxing-cutouts/',b]])for(const [k,v] of Object.entries(reg?.cutouts||{}))if(v)next[k]=next[k]&&next[k].dir!==dir?{ok:false}:{...v,dir};
+    cutouts=next;featured=f;
+    if(feed&&location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view!=='results'){const root=document.getElementById('upcoming-cards-root');if(root)root.innerHTML=listing(root.dataset.upcomingSport||'all');}
+   });
    try{
     const urls=['https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/data/upcoming-cards.json','data/upcoming-cards.json'];
     const results=await Promise.all(urls.map(async u=>{
