@@ -57,7 +57,7 @@ function dataNotes(h, r) {
 
 export function renderReview(r, file, h) {
   const d = { ...r, finished: true };
-  return '<div class="sumo-home sumo-review">' + top(h, r, file) +
+  return '<div class="sumo-home sumo-review">' + top(h, r, file) + (h.dayByDay || '') +
     championsBlock(h, d, null) +
     '<section class="shome-block shome-two">' + starsBlock(h, d) + sanyakuBlock(h, d) + '</section>' +
     (r.kadobanKnown ? '' : '<p class="shome-note">Kadoban flags need the tournament before, which is not saved for ' + h.e(r.headline.name) + '.</p>') +
