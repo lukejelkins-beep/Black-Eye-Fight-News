@@ -24,7 +24,7 @@ if(!D||!main){if(main) main.textContent='Fight data unavailable. Please refresh 
 const fightDesk=window.BEFNFightsUI={view:'upcoming',promotion:'ufc',query:''};
 const state={news:'boxing',champions:'boxing',fightersSport:'Boxing',fightersCategory:'All',fightersDivision:'All',fightersQuery:'',social:'all',talkPromotion:'all',talkFighter:'',socialMode:'latest',socialPlatform:'all',socialPage:1,talkRole:'all',talkSort:'balanced',calendar:'boxing',highlights:'boxing'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const safeURL=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch(_){return '#'}};
+const safeURL=x=>{if(/^assets\/img\/[a-z0-9-]+\/[a-z0-9-]+\.webp$/.test(String(x)))return esc(x);if(x==='sumo.html')return 'sumo.html';try{const u=new URL(x);return u.protocol==='https:'?esc(u.href):'#'}catch(_){return '#'}};
 const domain=x=>{try{return new URL(x).hostname.replace(/^www\./,'')}catch{return 'Source'}};
 const short=x=>String(x||'').length>215?String(x).slice(0,212)+'…':String(x||'');
 const normalizePortraitName=name=>String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[‘’]/g,"'").trim();
@@ -501,7 +501,7 @@ function renderLanding(skipLoad){
  const stories=newsFeedItems().concat(leads.map(l=>l.story)).sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
  if(!stories.length)return renderFrame('<div class="np"><header class="np-head"><h1>Home</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>');
  const sumo=['all','sumo'].includes(activeSport())?window.BEFNNewsPage.usableLanguageStories(desk.language,'sumo'):[];
- return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'https://befn-sumo-preview.onrender.com/sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,posters:window.BEFNLocalPosters||null,videos:landing.videos,now:Date.now()},h)+updatedLine());
+ return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,posters:window.BEFNLocalPosters||null,videos:landing.videos,now:Date.now()},h)+updatedLine());
 }
 const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';const m=Math.max(0,Math.floor((Date.now()-t)/60000));return m<1?'just now':m<60?m+' min ago':m<48*60?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' days ago'};
 const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';
