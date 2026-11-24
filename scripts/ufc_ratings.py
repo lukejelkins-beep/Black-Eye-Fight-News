@@ -47,14 +47,19 @@ SHRINK_K = 4
 # Results rating (Elo-type). Fitted on decided UFC fights before 2024 only by scripts/ufc-rating-fit.py, then frozen.
 # Owner choices (PR #453): a title fight counts 1.5x and the idle drift is 10% a year; the rest is fitted
 # (`python3 scripts/ufc-rating-fit.py --fix idle=0.1 --fix title=1.5 --mix 0.6`).
-RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "idle": 0.1, "title": 1.5}
+RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "idle": 0.3, "title": 1.5}
+# 2026-11-24 (owner, from scripts/ufc-results-tuning-study.py): idle drift 30% a year (was 10%; stronger drift tracked
+# results better on 2016-2023 and on 2024+), and a debutant starts from their pre-UFC record instead of a flat 1500:
+# start = 1500 + PRIOR_SCALE * (shrunk pre-UFC win rate - its roster median), shrunk = (W + 2) / (W + L + 4). Scale 400
+# was best on 2016-2023 and helps 2024+ too, mostly for fighters with fewer than three UFC fights.
+PRIOR_SCALE = 400
 RESULTS_MEAN = 1500          # an idle rating drifts back toward this
 RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as established
 # Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Owner's mix: results carry
-# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 70/30 with the 2026-11-24 skills), same total
+# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 73/27 with the 2026-11-24 settings), same total
 # spread as the fit.
 # The four skills keep their old relative weights.
-BLEND = {"results": 1.763, "skills": 1.214}
+BLEND = {"results": 1.77, "skills": 1.203}
 # Old weights were striking 25, defence 25, wrestling 20, grappling 15; striking now carries the strike defence.
 SKILL_WEIGHTS = {"striking": .55, "grappling": .20, "wrestling": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
@@ -315,10 +320,20 @@ def results_walk(bouts: list[dict], p: dict | None = None, prior: dict | None = 
     return state, pre
 
 
-def results_as_of(bouts: list[dict], as_of: str, p: dict | None = None) -> dict:
+def pre_ufc_priors(records: dict, scale: float | None = None) -> dict:
+    """slug -> starting rating from the pre-UFC record. records: slug -> (wins, losses) before the UFC."""
+    scale = PRIOR_SCALE if scale is None else scale
+    if not records or not scale:
+        return {}
+    shrunk = {s: (w + 2) / (w + l + 4) for s, (w, l) in records.items()}
+    mid = sorted(shrunk.values())[len(shrunk) // 2]
+    return {s: RESULTS_MEAN + scale * (v - mid) for s, v in shrunk.items()}
+
+
+def results_as_of(bouts: list[dict], as_of: str, p: dict | None = None, prior: dict | None = None) -> dict:
     """slug -> {"rating", "fights", "last"}, with idle drift applied up to as_of."""
     p = p or RESULTS
-    state, _ = results_walk(bouts, p)
+    state, _ = results_walk(bouts, p, prior)
     return {slug: {**v, "rating": _idle(v["rating"], v["last"], as_of, p)} for slug, v in state.items()}
 
 
@@ -350,10 +365,12 @@ def overall(scores: dict):
     return round(total / sum(OVERALL_WEIGHTS[k] for k in skills + ["form"]))
 
 
-def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | None = None) -> dict:
+def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | None = None,
+                prior: dict | None = None) -> dict:
     """fighters: slug -> {"window": weighted window, "history": newest-first fights,
     "divisionSlug": str|None}. bouts: every archived UFC bout (all fighters, including those who have left), for
-    the results rating; as_of: ISO date the results are aged to. Returns slug -> ratings dict."""
+    the results rating; as_of: ISO date the results are aged to; prior: slug -> starting rating (pre_ufc_priors).
+    Returns slug -> ratings dict."""
     raw, eligible = {}, {}
     for slug, f in fighters.items():
         w = f["window"]
@@ -417,7 +434,7 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
         skill = sum(best) / 2
         strength[slug] = ((skill + form) / 2 if form is not None else skill) / 100
 
-    results = results_as_of(bouts or [], as_of or "9999-12-31") if bouts else {}
+    results = results_as_of(bouts or [], as_of or "9999-12-31", None, prior) if bouts else {}
     composite = {slug: skills_composite(skill_pct.get(slug) or prov_pct.get(slug) or {}) for slug in fighters}
     logits = {}
     for slug in fighters:

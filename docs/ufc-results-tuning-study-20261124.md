@@ -38,3 +38,10 @@ Scored on bouts where both fighters have a saved record (debuts included). 'few-
 | prior scale 200 | 0.6837 / 56.3% (few-fight 0.6859, n=558) | 0.6597 / 60.4% (few-fight 0.6653, n=678) |
 | prior scale 300 | 0.6831 / 56.6% (few-fight 0.6854, n=558) | 0.6584 / 60.3% (few-fight 0.6631, n=678) |
 | prior scale 400 | 0.6828 / 55.9% (few-fight 0.6854, n=558) | 0.6572 / 60.6% (few-fight 0.6611, n=678) |
+
+## Owner's choices and the result (24 Nov 2026)
+Chosen via selector: pre-UFC start at scale 400, inactivity 30% a year, title fights stay 1.5x, mix stays 60/40 (blend re-fitted on 2019-2023: results 1.77, skills 1.203).
+
+Mix test on 2024+ fights (before these choices): 50/50 Brier .2287, 60/40 .2296, 70/30 .2309; rank correlation with the official order .67, .73, .77. The 2019-2023 fit preferred 70/30, so the periods disagree; all within noise.
+
+Result against the live engine (`scripts/ufc-rating-evaluate.py`, 1,134 fights from 2024): accuracy 61.5% to 62.7%, Brier .2296 to .2274 (improvement +0.0021, interval +0.0009 to +0.0035). Caveat: pre-UFC records exist only for fighters still active, so part of the 2024+ gain may be survivorship; the 2016-2023 test restricted to bouts where both fighters have a record also improved.
