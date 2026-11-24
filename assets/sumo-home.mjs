@@ -116,7 +116,8 @@ function exploreBlock(h) {
 }
 
 export function renderHome(d, h) {
-  return '<div class="sumo-home">' + hero(h, d) + (h.afterHero || '') + championsBlock(h, d) +
+  /* The next-banzuke card sits under the hero on desktop and above it on phones (CSS order). */
+  return '<div class="sumo-home">' + (h.afterHero ? '<div class="shome-next">' + h.afterHero + '</div>' : '') + hero(h, d) + championsBlock(h, d) +
     '<section class="shome-block shome-two">' + starsBlock(h, d) + sanyakuBlock(h, d) + '</section>' +
     risingBlock(h, d) + moversBlock(h, d) + watchBlock(h, d) + factBlock(h, d) + exploreBlock(h) +
     '<p class="shome-source">Worked out from the Sumo API snapshot of the ' + h.e(d.headline.name) + ' basho and BEFN’s saved rank history. Photographs: Japan Sumo Association.</p></div>';
