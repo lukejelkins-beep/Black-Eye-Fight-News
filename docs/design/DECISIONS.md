@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fighters hub replaces the MMA directory)
+- **On the MMA Fighters page the hub is the whole page.** The old "All fighter profiles" directory under the hub is removed from the MMA view, and the hub's top bar gets a "Find a fighter ›" link to the UFC stats page search (every UFC fighter with statistics). 121 of the directory's 124 MMA fighters have a UFC stats profile; the other 3 (Klaudia Syguła, Alatengheili, José Souza) stay reachable in the directory when the sport is set to All, which is unchanged. — Owner (selector, 24 Nov 2026) — awaiting owner "Merge N".
+- **`data/ufc-ranked-profiles.json` stays missing.** The profile loader asks for this reserved cohort and gets a harmless 404. An empty placeholder would need a review date for a review that never happened, so the slot is left as it is. — Owner (selector, 24 Nov 2026).
+
 ## 2026-11-24 (Fighters hub and one Form score)
 - **One Form score everywhere.** `scripts/build-ufc-fighter-form.py` writes `data/ufc-fighter-form.json`, and both the fighter profile and the new Fighters hub read Form, stage, badges and form rank from it, so the same fighter shows the same number in both places. Form is the handover's points score (section 3) shown as a percentile among fighters with a UFC fight in the last 24 months (1 to 99). Spec: `docs/design/FIGHTERS-HUB-FORM.md`. — Owner and the Fighters hub chat (handover, 24 Nov 2026) — PR #471, awaiting owner "Merge 471".
 - **Overall stays the BEFN rating**, 0 to 100 but not a percentile (Overall 78 is about the 95th percentile). Form and Overall are shown side by side with no wording that compares them. — Owner (selector, 24 Nov 2026) — PR #471.
