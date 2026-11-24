@@ -5,8 +5,7 @@
  "slug": "elisha-ellison",
  "name": "Elisha Ellison",
  "identity": {
-  "status": "confirmed",
-  "note": "UFC heavyweight from Seattle."
+  "status": "confirmed"
  },
  "researched": {
   "date": "2026-11-24",
@@ -18,8 +17,14 @@
    "status": "unknown",
    "levels": [],
    "claims": [],
-   "sources_checked": [],
-   "note": "No wrestling background found in search results; no NCAA source checked."
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/elisha-ellison"
+    }
+   ],
+   "note": "No college identified on UFC page or in a targeted search; only BJJ and amateur MMA background. No NCAA database checked."
   },
   "grappling": {
    "status": "unknown",
@@ -63,7 +68,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.561Z",
+   "at": "2026-11-24T09:46:00.339Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

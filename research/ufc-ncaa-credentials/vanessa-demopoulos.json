@@ -6,15 +6,13 @@
  "name": "Vanessa Demopoulos",
  "identity": {
   "status": "confirmed",
-  "note": "Matched by UFC.com athlete page"
+  "note": "Matched on UFC.com athlete page (name, division, hometown)."
  },
  "researched": {
   "date": "2026-11-24",
   "pass": 1
  },
- "flags": [
-  "thin_sources"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
    "status": "unknown",
@@ -25,9 +23,14 @@
      "name": "UFC.com athlete page",
      "checked": "2026-11-24",
      "url": "https://www.ufc.com/athlete/vanessa-demopoulos"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Vanessa_Demopoulos"
     }
    ],
-   "note": "No wrestling background found."
+   "note": "Wikipedia: raised in Greece, expelled from schools, began MMA around 21; no college or wrestling mentioned. No NCAA database page was checked, so status stays unknown rather than none_found."
   },
   "grappling": {
    "status": "unknown",
@@ -71,7 +74,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.617Z",
+   "at": "2026-11-24T09:46:00.355Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

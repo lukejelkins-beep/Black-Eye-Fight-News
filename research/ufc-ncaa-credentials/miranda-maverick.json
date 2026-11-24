@@ -5,7 +5,8 @@
  "slug": "miranda-maverick",
  "name": "Miranda Maverick",
  "identity": {
-  "status": "confirmed"
+  "status": "confirmed",
+  "note": "Matched on UFC.com athlete page (name, division, hometown)."
  },
  "researched": {
   "date": "2026-11-24",
@@ -16,11 +17,35 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
-   "sources_checked": [],
-   "note": "No wrestling background found; short check only."
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled on the boys varsity team at Buffalo High School in Missouri during her senior year, then chose not to pursue college wrestling.",
+     "source_url": "https://en.wikipedia.org/wiki/Miranda_Maverick",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/miranda-maverick"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Miranda_Maverick"
+    }
+   ],
+   "note": "Drury University graduate (2018), now PhD student at Old Dominion; Wikipedia says she wrestled on the boys varsity team at Buffalo High School (Missouri) in her senior year and did not wrestle in college. UFC page does not mention wrestling."
   },
   "grappling": {
    "status": "unknown",
@@ -64,7 +89,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.599Z",
+   "at": "2026-11-24T09:46:00.348Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,
