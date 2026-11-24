@@ -58,11 +58,30 @@ def judge(alpha):
 FRAME_W, FRAME_H = 400, 500  # every cutout ends up 4:5 with the head at the same size, so cards line up
 
 
+SHOULDER_TO_HEAD = 0.75
+
+
+def shoulder_line(sm, top, bottom, fh):
+    """First row, below the top fifth of the figure, where the outline is 1.6x the head's width (1.35x if never).
+
+    sm: smoothed outline width per row. The head's width is the median over 8-25% of the figure, so hair counts as head.
+    Returns the row, or None when the outline never widens that much (a face filling the frame).
+    """
+    import numpy as np
+    hw = float(np.median(sm[top + int(0.08 * fh):top + int(0.25 * fh)]))
+    for factor in (1.6, 1.35):
+        for y in range(top + int(0.2 * fh), bottom + 1):
+            if sm[y] >= factor * hw:
+                return y
+    return None
+
+
 def frame(im):
     """Head-and-shoulders crop, same head size for every fighter. im: RGBA PIL image. Uses only the mask (no face model).
 
     The neck is the first clear narrowing below the head; the head height is top-of-hair to just under the chin.
-    Shots with no neck (face fills the frame) use the whole figure as the head. The crop is then 2.1 head heights tall,
+    With no neck in the outline (long hair, a thick neck), the head is 0.75 of the way from the top to the shoulder
+    line (see shoulder_line). Shots with neither (face fills the frame) use the whole figure as the head. The crop is then 2.1 head heights tall,
     centred on the head, and cut at the bottom of the source when the source has no more body to show.
     """
     import numpy as np
@@ -81,8 +100,15 @@ def frame(im):
             neck = y
             break
     shoulder_ratio = sm[min(top + int(0.85 * fh), bottom)] / max(sm[top + int(0.2 * fh)], 1)
+    shoulder = shoulder_line(sm, top, bottom, fh)
     if neck is not None:
         head_h = (neck - top) * 1.08
+    elif shoulder is not None:
+        # No neck in the outline (long hair falling to the shoulders, a thick neck or beard). The old fallback, 30% of
+        # the figure, read the head far too small and cropped tight (24 Nov 2026 review: Holly Holm, Alexa Grasso,
+        # Christian Edwards and 100+ more). Across 698 fighters whose neck is found, head height is 0.75 of the
+        # distance from the top of the head to the shoulder line (p10-p90: 0.65-0.78), so use that.
+        head_h = SHOULDER_TO_HEAD * (shoulder - top)
     elif shoulder_ratio >= 1.3:
         head_h = 0.30 * fh
     else:
