@@ -2,6 +2,8 @@
 
 This folder gives Claude Code and other reviewers a shared process for researching 921 BEFN-certified UFC fighters. It records three independent lanes: Olympic credentials, Commonwealth Games credentials and national-team representation in any sport.
 
+[Current research results and source coverage](RESEARCH-RESULTS.md) · [921-row screening ledger](screening/roster-pass-2026-11-24.json)
+
 ## Scope and files
 
 - [`cohort.json`](cohort.json) pins 780 individual certificates from the frozen cohort and 141 from the fixed extension. The [certificate file](https://github.com/lukejelkins-beep/Black-Eye-Fight-News/blob/7a35f2aaeb9a7252e5c4783882faae60b1c3af77/data/ufc-v4-certified-careers.json) defines membership. [Form](https://github.com/lukejelkins-beep/Black-Eye-Fight-News/blob/7a35f2aaeb9a7252e5c4783882faae60b1c3af77/data/ufc-fighter-form.json) supplies display names. The rolling cohort is outside this snapshot. Some rolling records overlap and should never be added to the total.

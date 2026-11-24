@@ -11,7 +11,7 @@
       "checks": [
         {
           "type": "federation_or_team",
-          "name": "International Mixed Martial Arts Federation alumni",
+          "name": "IMMAF alumni and national-team credentials",
           "url": "https://immaf.org/about/immaf-alumni/",
           "outcome": "supports_claim"
         },
@@ -19,6 +19,18 @@
           "type": "federation_or_team",
           "name": "IMMAF competition medal table",
           "url": "https://immaf.org/2017-world-championships-medallists/",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "IMMAF 2016 World Championships bout results",
+          "url": "https://immaf.org/championship/2016-immaf-world-championships/2016-immaf-worlds-results/",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "IMMAF 2017 World Championships bout results",
+          "url": "https://immaf.org/2017-world-championships-results/",
           "outcome": "supports_claim"
         }
       ],
@@ -34,13 +46,35 @@
           "medal": "gold",
           "sources": [
             {
-              "name": "International Mixed Martial Arts Federation alumni",
+              "name": "IMMAF alumni and national-team credentials",
               "url": "https://immaf.org/about/immaf-alumni/",
               "authority": "federation"
             },
             {
               "name": "IMMAF competition medal table",
               "url": "https://immaf.org/2017-world-championships-medallists/",
+              "authority": "federation"
+            },
+            {
+              "name": "IMMAF 2017 World Championships bout results",
+              "url": "https://immaf.org/2017-world-championships-results/",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2016 IMMAF World Championships",
+          "sport": "Amateur MMA",
+          "event": "Women’s bantamweight 61.2 kg",
+          "delegation": "FRA",
+          "category": "senior",
+          "result": "Competed",
+          "medal": null,
+          "sources": [
+            {
+              "name": "IMMAF 2016 World Championships bout results",
+              "url": "https://immaf.org/championship/2016-immaf-world-championships/2016-immaf-worlds-results/",
               "authority": "federation"
             }
           ]

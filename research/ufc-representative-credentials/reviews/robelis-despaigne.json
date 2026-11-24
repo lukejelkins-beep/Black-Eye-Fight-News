@@ -14,6 +14,12 @@
           "name": "World Taekwondo Olympic medal table",
           "url": "https://results.worldtaekwondo.org/competitions/london-2012-og/medalists",
           "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "Pan American qualification tournament bracket",
+          "url": "https://www.taekwondo-oezer.de/wp-content/uploads/Turniere/20111118-20-Panamerikanisches-Olympia-Qualifikationsturnier-2011-Poollisten.pdf",
+          "outcome": "supports_claim"
         }
       ],
       "claims": [
@@ -33,6 +39,54 @@
               "authority": "federation"
             }
           ]
+        },
+        {
+          "kind": "qualifier",
+          "edition": "London 2012",
+          "sport": "Taekwondo",
+          "event": "2011 Pan American Olympic qualification men’s +80 kg",
+          "delegation": "CUB",
+          "category": "senior",
+          "result": "Won the qualifying division",
+          "medal": null,
+          "sources": [
+            {
+              "name": "Pan American qualification tournament bracket",
+              "url": "https://www.taekwondo-oezer.de/wp-content/uploads/Turniere/20111118-20-Panamerikanisches-Olympia-Qualifikationsturnier-2011-Poollisten.pdf",
+              "authority": "games"
+            }
+          ]
+        }
+      ]
+    },
+    "national": {
+      "state": "seed",
+      "checkedOn": "2026-11-24",
+      "claims": [
+        {
+          "kind": "team_appearance",
+          "edition": "2015 World Taekwondo Championships",
+          "sport": "Taekwondo",
+          "event": "Men’s +87 kg",
+          "delegation": "CUB",
+          "category": "senior",
+          "result": "Bronze medallist",
+          "medal": "bronze",
+          "sources": [
+            {
+              "name": "World Taekwondo medal table",
+              "url": "https://www.worldtaekwondo.org/wp-content/uploads/2015/11/8.-List-of-All-medallist_2015-WTF-World-Taekwondo-Championships-chelyabinsk.pdf",
+              "authority": "federation"
+            }
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "World Taekwondo medal table",
+          "url": "https://www.worldtaekwondo.org/wp-content/uploads/2015/11/8.-List-of-All-medallist_2015-WTF-World-Taekwondo-Championships-chelyabinsk.pdf",
+          "outcome": "supports_claim"
         }
       ]
     }

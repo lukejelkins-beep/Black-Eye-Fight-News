@@ -1,5 +1,7 @@
 # Initial research pass
 
+For the expanded research, see [the current results and coverage](RESEARCH-RESULTS.md).
+
 24 November 2026
 
 ## Olympic candidate screen

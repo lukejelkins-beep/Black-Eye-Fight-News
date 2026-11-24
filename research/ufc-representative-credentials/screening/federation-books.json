@@ -1,0 +1,362 @@
+{
+  "schema": 1,
+  "checkedOn": "2026-11-24",
+  "cohortSourceRef": "7a35f2aaeb9a7252e5c4783882faae60b1c3af77",
+  "cohortSize": 921,
+  "method": "Search the locally extracted official PDFs by accent-folded, tokenized display/certificate names plus selected verified aliases. Primary results, entry sheets and medal tables have different coverage. Raw source files and copied extracts are excluded.",
+  "sources": [
+    {
+      "id": "2024-olympic-wrestling-source",
+      "pages": 110,
+      "pagesWithText": 110,
+      "usable": true,
+      "sha256": "e56f2ac31def48c42b40287f981affc513f563607fd461ae6bee21a04dba3e01",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2024-08/2024-olympic-games_final-book.pdf",
+      "title": "Paris 2024 Olympic wrestling results"
+    },
+    {
+      "id": "iba-world-2019",
+      "pages": 2,
+      "usable": false,
+      "cohortCandidateSlugs": [],
+      "url": "https://boksofederacija.lt/storage/uploads/2021/02/2019-10-03-13-Pasaulio-moteru-cempionatas-Ulan-Ude-RUS.pdf",
+      "title": "2019 AIBA Women’s World Boxing Championships results"
+    },
+    {
+      "id": "ifma-cup-2015",
+      "pages": 129,
+      "pagesWithText": 128,
+      "usable": true,
+      "sha256": "982e74a7c3289a05b571c493012e3f88e5d9f57b413036fa4a850cbb80b0535a",
+      "cohortCandidateSlugs": [
+        "magomed-zaynukov",
+        "nora-cornolle",
+        "valentina-shevchenko"
+      ],
+      "url": "https://www.cyprusmuaythai.org/files/RWC2015-MASTER-PROGRAMME---RESULTS.pdf",
+      "title": "2015 IFMA Royal World Cup"
+    },
+    {
+      "id": "ifma-senior-world-2019",
+      "pages": 59,
+      "pagesWithText": 59,
+      "usable": true,
+      "sha256": "d6d53f13e74dabc4977b83d0d2c22b266eaf7bfc73ce4656550b2521ab45e0b1",
+      "cohortCandidateSlugs": [
+        "loma-lookboonmee",
+        "lucia-szabova"
+      ],
+      "url": "https://muaythai.sport/wp-content/uploads/2021/02/IFMA-IFMA-Senior-World-Championships-2019-All-Brackets-PDF-202102161541.pdf",
+      "title": "2019 IFMA Senior World Championships"
+    },
+    {
+      "id": "ijf-2010",
+      "parsedAthleteNames": 24,
+      "usable": false,
+      "cohortCandidateSlugs": [],
+      "url": "https://www.ijf.org/competition/1008/judoka_athletes",
+      "title": "2010 World Judo Championships entries"
+    },
+    {
+      "id": "ijf-2021",
+      "parsedAthleteNames": 24,
+      "usable": false,
+      "cohortCandidateSlugs": [],
+      "url": "https://www.ijf.org/competition/2239/judoka_athletes",
+      "title": "2021 Senior World Judo Championships entries"
+    },
+    {
+      "id": "ijf-2022",
+      "parsedAthleteNames": 24,
+      "usable": false,
+      "cohortCandidateSlugs": [],
+      "url": "https://www.ijf.org/competition/2298/judoka_athletes",
+      "title": "2022 Senior World Judo Championships entries"
+    },
+    {
+      "id": "ijf-2023",
+      "parsedAthleteNames": 24,
+      "usable": false,
+      "cohortCandidateSlugs": [],
+      "url": "https://ijf.org/events/wc_sen2023/judoka",
+      "title": "2023 Senior World Judo Championships entries"
+    },
+    {
+      "id": "ijf-2024",
+      "parsedAthleteNames": 24,
+      "usable": false,
+      "cohortCandidateSlugs": [],
+      "url": "https://ijf.org/events/wc_sen2024/judoka",
+      "title": "2024 Senior World Judo Championships entries"
+    },
+    {
+      "id": "ijf-2025",
+      "parsedAthleteNames": 24,
+      "usable": false,
+      "cohortCandidateSlugs": [],
+      "url": "https://ijf.org/events/wc_sen2025/judoka",
+      "title": "2025 Senior World Judo Championships entries"
+    },
+    {
+      "id": "iwga-world-games-2017",
+      "pages": 47,
+      "pagesWithText": 35,
+      "usable": true,
+      "sha256": "24dea1545d14f4dc68fa456aea833d5c93f4ccfaf6e928e56278a374651b6fe4",
+      "cohortCandidateSlugs": [],
+      "url": "https://swog2017.theworldgames.org/nh/en/-60/Pdf/GetResultbookPdf?filename=Muaythai.pdf",
+      "title": "2017 World Games Muaythai"
+    },
+    {
+      "id": "iwuf-sanda-2014",
+      "pages": 6,
+      "pagesWithText": 6,
+      "usable": true,
+      "sha256": "b3da167b7996522f50067b1a13e656cd290605d6e8879959e6f6abb483e1e60c",
+      "cohortCandidateSlugs": [
+        "wang-cong"
+      ],
+      "url": "https://iwuf.org/wp-content/uploads/2019/08/7th-Sanda-World-Cup-2014_results.pdf",
+      "title": "2014 Sanda World Cup"
+    },
+    {
+      "id": "iwuf-world-2013",
+      "pages": 62,
+      "pagesWithText": 62,
+      "usable": true,
+      "sha256": "8185f065120227f77f238e29e03ec110cc1430609bdeb3247b9ce0e2c70cd0bb",
+      "cohortCandidateSlugs": [
+        "muslim-salikhov",
+        "wang-cong"
+      ],
+      "url": "https://iwuf.org/wp-content/uploads/2019/07/12th-World-Wushu-Championships-2013-Kuala-Lumpur-Malaysia-Results.pdf",
+      "title": "2013 World Wushu Championships"
+    },
+    {
+      "id": "iwuf-world-2019",
+      "pages": 53,
+      "pagesWithText": 53,
+      "usable": true,
+      "sha256": "45d01fc24e26d5528231ac58cc4dbe0c27d941d7ca5e28d202cc3f5ef4d0571b",
+      "cohortCandidateSlugs": [],
+      "url": "https://www.iwuf.org/wp-content/uploads/2019/10/%E7%AC%AC%E5%8D%81%E4%BA%94%E5%B1%8A%E4%B8%96%E7%95%8C%E6%AD%A6%E6%9C%AF%E9%94%A6%E6%A0%87%E8%B5%9B_%E6%88%90%E7%BB%A9%E5%86%8C.pdf",
+      "title": "2019 World Wushu Championships"
+    },
+    {
+      "id": "iwuf-world-junior-2022",
+      "pages": 102,
+      "pagesWithText": 102,
+      "usable": true,
+      "sha256": "b227889545723f751d777d6154a6a246073e18f1dec8a9e3c868b02e081ab1af",
+      "cohortCandidateSlugs": [
+        "armen-petrosyan"
+      ],
+      "url": "https://iwuf.org/wp-content/uploads/2023/07/The-8th-WORLD-JUNIOR-WUSHU-Championships1.pdf",
+      "title": "2022 World Junior Wushu Championships"
+    },
+    {
+      "id": "uww-africa-2020",
+      "pages": 393,
+      "pagesWithText": 393,
+      "usable": true,
+      "sha256": "ddf401c6354781ac23be669f6be459863e13696599ea8e0c98f65d10dfbcf128",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2020-02/results_02_alger.pdf",
+      "title": "2020 African Wrestling Championships"
+    },
+    {
+      "id": "uww-amam-2025",
+      "pages": 75,
+      "pagesWithText": 75,
+      "usable": true,
+      "sha256": "a0d8864c76b3e4d8dbb597616df7994de4348b0b7e4efffe8141156726c63345",
+      "cohortCandidateSlugs": [
+        "viktoriia-dudakova"
+      ],
+      "url": "https://cdn.uww.org/2025-10/results_10_novi_sad_amma.pdf",
+      "title": "2025 UWW Senior Amateur MMA World Championships"
+    },
+    {
+      "id": "uww-pankration-2023",
+      "pages": 213,
+      "pagesWithText": 213,
+      "usable": true,
+      "sha256": "c49ae3b48da964b8b4f74fb973714b471852ce1c11c268e13630143987455e81",
+      "cohortCandidateSlugs": [
+        "alibi-idiris",
+        "diyar-nurgozhay"
+      ],
+      "url": "https://cdn.uww.org/2023-05/results_05_tashkent_pk.pdf",
+      "title": "2023 UWW Pankration World Championships"
+    },
+    {
+      "id": "uww-rio-2016",
+      "pages": 118,
+      "pagesWithText": 118,
+      "usable": true,
+      "sha256": "b3e1184fc8d1559a18e62617403b8e9c2071df7753d46d62d55abc9115e96409",
+      "cohortCandidateSlugs": [
+        "hamdy-abdelwahab"
+      ],
+      "url": "https://cdn.uww.org/media/document/event/results/rio_2016_wrestling_results_book_v1.0.pdf",
+      "title": "2016 Olympic Games wrestling"
+    },
+    {
+      "id": "uww-tokyo-2020",
+      "pages": 108,
+      "pagesWithText": 108,
+      "usable": true,
+      "sha256": "12ce56c83b431b8aa68ea8d83bcd36b3d8de0751b69a53d5b36cf3226c6dff49",
+      "cohortCandidateSlugs": [
+        "gable-steveson"
+      ],
+      "url": "https://cdn.uww.org/2021-08/results_tokyo.pdf",
+      "title": "2020 Olympic Games wrestling"
+    },
+    {
+      "id": "uww-u23-2017",
+      "pages": 152,
+      "pagesWithText": 152,
+      "usable": true,
+      "sha256": "404ee0da73c0ec03cacd4e8ba37c19797c2ed22e591e13bf65a450c8d0c8b60b",
+      "cohortCandidateSlugs": [
+        "luis-hernandez",
+        "rinya-nakamura"
+      ],
+      "url": "https://cdn.uww.org/2021-04/2017-u23-world_final-book.pdf",
+      "title": "2017 U23 World Wrestling Championships"
+    },
+    {
+      "id": "uww-u23-2019",
+      "pages": 185,
+      "pagesWithText": 183,
+      "usable": true,
+      "sha256": "1ecd613b150c82ec8a64779b32b7c0910e8e21f3bce4e08c63ed743a73bca5b1",
+      "cohortCandidateSlugs": [
+        "bo-nickal"
+      ],
+      "url": "https://cdn.uww.org/2019-11/u23_senior_world_championships_final-book.pdf",
+      "title": "2019 U23 World Wrestling Championships"
+    },
+    {
+      "id": "uww-u23-2022",
+      "pages": 191,
+      "pagesWithText": 191,
+      "usable": true,
+      "sha256": "75bfe61ac5ce4fa63f57576ea1299862e945632510e7cb29bbc97bd1b3e66e30",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2022-10/final-book-2022-u23_world_championships_0.pdf",
+      "title": "2022 U23 World Wrestling Championships"
+    },
+    {
+      "id": "uww-world-2017",
+      "pages": 171,
+      "pagesWithText": 170,
+      "usable": true,
+      "sha256": "7caec6acf490378c7ff085aa45a35f8b440e38fea5994c8f47cdb232aec4dd42",
+      "cohortCandidateSlugs": [
+        "rinya-nakamura"
+      ],
+      "url": "https://cdn.uww.org/2018-03/results_08_paris_2.pdf",
+      "title": "2017 Senior World Wrestling Championships"
+    },
+    {
+      "id": "uww-world-2019",
+      "pages": 239,
+      "pagesWithText": 238,
+      "usable": true,
+      "sha256": "44248bba2fc51359d974006b30fc70b544bc48d42f33dfadea2918b39cdc96de",
+      "cohortCandidateSlugs": [
+        "michelle-montague"
+      ],
+      "url": "https://cdn.uww.org/2021-05/2019-worlds_final-book.pdf",
+      "title": "2019 Senior World Wrestling Championships"
+    },
+    {
+      "id": "uww-world-2021",
+      "pages": 205,
+      "pagesWithText": 205,
+      "usable": true,
+      "sha256": "9a260b51e4ad9ff1d6a55e43db8420aa3ca40be9173284fd806465e691b05323",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2021-10/results_10_oslo.pdf",
+      "title": "2021 Senior World Wrestling Championships"
+    },
+    {
+      "id": "uww-world-2022",
+      "pages": 213,
+      "pagesWithText": 213,
+      "usable": true,
+      "sha256": "9a009b5c1953ce4ed7c3876b20c6c0d0f2d960b763f2a7651bf2d60be4ad4b24",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2024-09/final-book_2022-world-championships-20240910.pdf",
+      "title": "2022 Senior World Wrestling Championships"
+    },
+    {
+      "id": "uww-world-2023",
+      "pages": 251,
+      "pagesWithText": 251,
+      "usable": true,
+      "sha256": "643d5b4eee0abdffaa1ae9718363b51c6710d5e818fea6b1faea4ad4859b8ee2",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2024-04/2023_seniors-world-chsips_final-book-20240424.pdf",
+      "title": "2023 Senior World Wrestling Championships"
+    },
+    {
+      "id": "uww-world-2024",
+      "pages": 83,
+      "pagesWithText": 83,
+      "usable": true,
+      "sha256": "54edde88fb968de29eb3cedd0ffc8f353f3d4f6e9d766878a7087e5dddb57032",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2026-03/final-book_2024-senior_worlds-non-olympic_weight_20260303.pdf",
+      "title": "2024 Senior World Wrestling Championships, non-Olympic weights"
+    },
+    {
+      "id": "uww-world-2025",
+      "pages": 232,
+      "pagesWithText": 232,
+      "usable": true,
+      "sha256": "b7e58507f561e9ef7495d8bdc6953837a72e2ce81ed1aaff420fd2b60cc97bdf",
+      "cohortCandidateSlugs": [],
+      "url": "https://cdn.uww.org/2025-09/final-book-2025_senior_world_championships.pdf",
+      "title": "2025 Senior World Wrestling Championships"
+    },
+    {
+      "id": "wako-junior-world-2016",
+      "pages": 16,
+      "pagesWithText": 16,
+      "usable": true,
+      "sha256": "befcaead81fb5576d6d94b0bd2a2d5f7893d7d74e8df993d852ab562c4956d3b",
+      "cohortCandidateSlugs": [
+        "ernesta-kareckaite",
+        "sean-brady"
+      ],
+      "url": "https://www.sportdata.org/kickboxing/ausschreibungen/227/Medals_Competitors.pdf",
+      "title": "2016 WAKO Cadet and Junior World Championships medals"
+    }
+  ],
+  "identityExclusions": [
+    {
+      "slug": "armen-petrosyan",
+      "source": "iwuf-world-junior-2022",
+      "reason": "Junior 52 kg fighter in 2022; incompatible with the senior UFC record."
+    },
+    {
+      "slug": "sean-brady",
+      "source": "wako-junior-world-2016",
+      "reason": "Irish junior national kickboxing competitor; not the American senior UFC fighter."
+    },
+    {
+      "slug": "luis-hernandez",
+      "source": "uww-u23-2017",
+      "reason": "Cuban wrestler Lázaro Daniel Hernández Luis has a different full name and background."
+    },
+    {
+      "slug": "viktoriia-dudakova",
+      "source": "uww-amam-2025",
+      "reason": "Competed under the UWW delegation code in the 2025 event; do not convert this result into a national-team appearance."
+    }
+  ]
+}
