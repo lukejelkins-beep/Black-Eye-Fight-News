@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (NCAA research follow-up)
+- **King University's athletics site is a reviewed host** (owner approved, 24 Nov). The homepage kingtornado.com is titled as King University's official athletics website and links to king.edu, so its wrestling roster counts as Tier A, for team participation only. As a result, Ethyn Ewing's NCAA Division II record rests on Tier A plus Tier B sources. — Owner — `research/ufc-ncaa-credentials/_school-athletics-hosts.json`, `RESEARCH-RESULTS.md`
+- **Three round-2 leads followed up** (owner approved): McGhee, Vines and Raposo. None was tied to a college or state record, and no status changed. Research only, outside the site build. — Owner — `research/ufc-ncaa-credentials/_runs/us-ncaa-3c/`
+
 ## 2026-11-24 (Fights tab URLs)
 - **Each Fights tab has its own URL**: `#fights` is Upcoming and `#fights/results` is Results. `#results` and `#calendar` still work and redirect to these. Before, every route was rewritten to `#fights`, so reloading or sharing Results opened Upcoming (QA audit D02). Claude, at the owner's request. Shows up in `assets/fights-route.js` and the Fights tabs.
 
