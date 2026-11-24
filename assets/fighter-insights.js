@@ -1274,23 +1274,27 @@
  // Sumo-style profile shell: lift the rating panel into the hero slot and
  // show only the section tabs whose sections exist for this fighter.
  // Profile hero, option P2 "dark band" (owner, 24 Nov 2026): a UFC fighter with a cutout stands in a dark band over a
- // faded half of their flag. Everyone else keeps the photo hero. `force` redraws once the country list arrives.
+ // faded half of their flag. The cutout is shown through the profile's own portrait frame (its image is swapped for the
+ // cutout), so the frame's loaded / "Photo unavailable" fallback states keep working as before. Everyone else keeps the
+ // photo hero. `force` redraws once the country list arrives.
  function heroCutout(force){
   const hero=document.querySelector('#fighterDialog.befn-pro-dialog .befn-pro-hero');
   const name=hero?.querySelector('.befn-pro-id h2')?.textContent.trim()||"";
-  if(!hero||!name)return;
+  const frame=hero?.querySelector('.befn-pro-photo [data-fighter-portrait]');
+  if(!hero||!name||!frame)return;
   const slug=/^UFC\b/.test(hero.querySelector('.befn-pro-eyebrow')?.textContent||"")?slugOf(name):"";
-  const clear=()=>{hero.classList.remove('has-cut');hero.querySelectorAll('.befn-hero-cut,.befn-hero-figure').forEach(x=>x.remove());delete hero.dataset.cut;};
-  if(!slug||cutoutRegister?.[slug]?.ok!==true){clear();return;}
+  if(!slug||cutoutRegister?.[slug]?.ok!==true){hero.classList.remove('has-cut');hero.querySelector(':scope > .befn-hero-cut')?.remove();return;}
   if(hero.dataset.cut===slug&&!force)return;
-  clear();
   hero.dataset.cut=slug;
   const cc=fighterCountries?.[window.BEFNSnapshotTiles?.fold(name)||""];
+  hero.querySelector(':scope > .befn-hero-cut')?.remove();
   hero.classList.add('has-cut');
-  // The flag is the band's backdrop; the figure goes in the photo column so it follows the column at every width.
   hero.insertAdjacentHTML('afterbegin','<div class="befn-hero-cut" aria-hidden="true">'+
    (/^[a-z]{2}$/.test(cc||"")?'<img class="befn-hero-flag" src="assets/img/flags/'+cc+'.svg" alt="" onerror="this.remove()">':'')+'</div>');
-  hero.querySelector('.befn-pro-photo')?.insertAdjacentHTML('beforeend','<img class="befn-hero-figure" src="assets/img/ufc-cutouts/'+escapeHTML(slug)+'.webp" alt="" aria-hidden="true" onerror="var h=this.closest(\'.befn-pro-hero\');if(h){h.classList.remove(\'has-cut\');h.querySelector(\'.befn-hero-cut\')?.remove();}this.remove()">');
+  let img=frame.querySelector('img');
+  if(!img){img=document.createElement('img');img.alt='Photograph of '+name;frame.appendChild(img);}
+  const src='assets/img/ufc-cutouts/'+slug+'.webp';
+  if(img.getAttribute('src')!==src){frame.classList.remove('is-loaded');img.classList.remove('is-error');img.removeAttribute('referrerpolicy');img.src=src;}
  }
  function layoutProDialog(){
   const dialog=document.querySelector('#fighterDialog.befn-pro-dialog');
