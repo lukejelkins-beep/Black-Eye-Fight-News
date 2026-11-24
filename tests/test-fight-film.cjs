@@ -39,6 +39,11 @@ assert.strictEqual(F.tagOf({ title: 'A vs B', kind: 'TKO · R2 4:39' }), 'finish
 assert.strictEqual(F.tagOf({ title: 'CLINICAL RD 1 FINISH | A VS B | CW 215 FREE FIGHT' }), 'finish');
 assert.strictEqual(F.tagOf({ title: 'A vs B | FULL FIGHT | UFC Qatar' }), 'full');
 assert.strictEqual(F.tagOf({ title: 'HIGHLIGHTS | A vs. B' }), 'highlights');
+// Owner, 24 Nov 2026: compilations are not fight finishes.
+for (const t of ['AND NEW! 5 CRAZY Knockouts That Won Championships | HIGHLIGHTS', '4 Forgotten Knockouts, Do You Remember Them?', 'Every Knockout & Submission From UFC Qatar | UFC Highlights', "PFL's Most Dominant Performances | Full Fight Compilation", 'AND THE CROWD WAS STUNNED! | 100 Knockouts In PFL MMA!'])
+  assert.strictEqual(F.tagOf({ title: t }), 'highlights', t);
+assert.strictEqual(F.tagOf({ title: 'Alex Pereira vs Sergei Pavlovich | Full Fight Marathon' }), 'full');
+assert.strictEqual(F.tagOf({ title: 'INSANE KNOCKOUT | Jordan Vucenic VS Daniel Konrad | CW 215 FREE FIGHT' }), 'finish');
 assert.strictEqual(F.tagOf({ title: "I'M BACK FOR FINISHES! | UFC 334 Media Day" }), 'highlights', 'media day is not a finish');
 
 // YouTube ids.

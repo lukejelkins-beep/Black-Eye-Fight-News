@@ -82,8 +82,13 @@
   return /#shorts?\b/i.test(String(v?.title||''))||/^shorts?$/i.test(String(v?.kind||''))||/youtube\.com\/shorts\//i.test(String(v?.url||''));
  }
  const FINISH_WORDS=/\b(?:knock\s?outs?|k\.?o\.?s?|tko|submissions?|finish(?:es)?|stoppage|pins?)\b/i;
+ /* Owner, 24 Nov 2026 ("Only real finishes lead"): a compilation of many knockouts is not a fight finish,
+    so it is Highlights and never the big clip or "Latest finishes". */
+ const COMPILATION=/\b(?:compilation|marathon|countdown|montage)\b|\bevery\s+(?:knock\s?out|k\.?o|finish|submission|stoppage)\b|\b(?:\d+|every|all|best|top|most|greatest|historic|forgotten)\b[^|]*?\b(?:knock\s?outs|k\.?o\.?s|finishes|submissions|stoppages|performances)\b/i;
+ function isCompilation(v){return COMPILATION.test(String(v?.title||''));}
  function tagOf(v){
   const kind=String(v?.kind||''),title=String(v?.title||'');
+  if(isCompilation(v))return /\b(?:full|free)\s+(?:fight|match)\b/i.test(title)&&!/\bcompilation\b/i.test(title)?'full':'highlights';
   if(v?.isFinish===true||/\b(?:KO|TKO|Submission|Pin)\b/i.test(kind))return 'finish';
   if(FINISH_WORDS.test(title)&&!/\b(?:media day|press conference|interview|weigh[\s-]?ins?|reacting|reaction|preview|predictions?)\b/i.test(title))return 'finish';
   if(/\b(?:full|free)\s+(?:fight|match)\b/i.test(title))return 'full';

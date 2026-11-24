@@ -13,6 +13,8 @@ Format: date — decision — who — where it shows up.
 - **Staff notes moved to a closed "About this film" panel** at the foot (DIRECTION rule 6): the AU playback check, sources and update time. "Publisher clip · AU playback not verified" is no longer on every card. The availability rules themselves are unchanged.
 - Code: `assets/fight-film.js` and `assets/fight-film.css`; `tests/test-fight-film.cjs` was added to the release readiness gate. — owner — Fights › Fight film
 
+- **Only real fight finishes count as "Finish"** (owner's choice). A compilation ("5 Crazy Knockouts...", "Every Knockout & Submission From UFC Qatar", "100 Knockouts In PFL") is Highlights, so it never leads the page or appears under Latest finishes.
+
 ## 2026-11-24 (Photo runner)
 - **A photo runner finds fighters with no photo and stages photos for the owner to approve** (owner's choices: all four sports, "Stage, then approve", a drop folder for the owner's own photos, a weekly GitHub run that opens a draft PR, and a missing-photo report). It is `scripts/photo-runner.py`, with `missing`, `fetch`, `approve`, `drop`, `reject-cutout` and `report`.
   - Nothing is registered until `approve`.
@@ -28,7 +30,7 @@ Format: date — decision — who — where it shows up.
   - Run 1: 48 (boxing 3, UFC 10, KSW 14, ONE 21). Safar and Suarez were rejected.
   - ONE: 2.
   - PFL: 182. 18 PFL placeholder silhouettes were rejected, and the runner now refuses any image file staged for more than one fighter.
-  - 8 RIZIN photos are staged and waiting for the owner.
+  - RIZIN: 8, approved by the owner on 2026-11-24 and checked by eye with their cut-outs.
 - **137 UFC ESPN headshots from 24 Nov were re-processed** to remove colour streaks. Their cut-outs were rebuilt, and 11 that failed before now pass, checked by eye. The cut-outs the owner dropped stay dropped.
 - **The pages now read the MMA cut-out register** (`data/mma-cutout-register.json`, with files in `assets/img/mma-cutouts/`) wherever UFC and boxing cut-outs are merged: the front page, the Overviews and the Fights cards. For example, Chihiro Sawada's cut-out shows on the ONE Samurai 6 card.
 
