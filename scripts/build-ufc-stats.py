@@ -439,7 +439,7 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     pace = {"r1": [0.0, 0.0], "later": [0.0, 0.0]}  # [sig attempts, minutes]
     rounds_scored = rounds_won = rounds_10_8 = 0
     unsound = set()  # "target" / "position": a round whose parts do not add up to the strikes landed
-    w_fights, w_wins, w_sub_losses = 0.0, {"ko": 0.0, "sub": 0.0}, 0.0
+    w_fights, w_wins, w_sub_losses, w_ko_losses = 0.0, {"ko": 0.0, "sub": 0.0}, 0.0, 0.0
     for fight, w in zip(fights, weights):
         if fight["outcome"] != "NC":
             w_fights += w
@@ -447,6 +447,8 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
                 w_wins[fight["method"]] += w
             if fight["outcome"] == "L" and fight["method"] == "sub":
                 w_sub_losses += w
+            if fight["outcome"] == "L" and fight["method"] == "ko":
+                w_ko_losses += w
         out[fight["outcome"]] += 1
         out["titleFights"] += 1 if fight["titleFight"] else 0
         if fight["outcome"] == "W" and fight["method"] in out["winsBy"]:
@@ -486,6 +488,7 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     out["koWinShare"] = round(w_wins["ko"] / w_fights, 4) if w_fights else None
     out["subWinShare"] = round(w_wins["sub"] / w_fights, 4) if w_fights else None
     out["subLossShare"] = round(w_sub_losses / w_fights, 4) if w_fights else None
+    out["koLossShare"] = round(w_ko_losses / w_fights, 4) if w_fights else None
     out["effectiveFights"] = round(sum(w for f, w in zip(fights, weights) if f["statsComplete"] and f["rounds"]), 3)
 
     def known(side, key):
@@ -837,7 +840,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
             if w.get("statFights", 0) >= ufc_ratings.MIN_STAT_FIGHTS and w.get("rates"):
                 rows.append({"slug": slug, "statFights": w["statFights"], "rates": w["rates"],
                              "window": {"koWinShare": w.get("koWinShare"), "subWinShare": w.get("subWinShare"),
-                                        "subLossShare": w.get("subLossShare")},
+                                        "subLossShare": w.get("subLossShare"), "koLossShare": w.get("koLossShare")},
                              # defence too: no longer a rated skill, but the fight-card tiles still use it
                              "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k)
                                      for k in (*ufc_ratings.SKILLS, "defence")}})

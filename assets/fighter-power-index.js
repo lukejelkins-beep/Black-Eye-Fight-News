@@ -106,9 +106,11 @@
    controlAgainst:finite(stats.controlAgainst,0,1),
    kd15:finite(stats.kdAvg,0,7),kdAgainst15:finite(stats.kdAgainstAvg,0,7),
    koRate:finite(stats.koTkoWinRate,0,1),subFinishRate:finite(stats.submissionWinRate,0,1),
-   subLossRate:finite(stats.submissionLossRate,0,1),subAgainst15:finite(stats.subAgainstAvg,0,12)
+   subLossRate:finite(stats.submissionLossRate,0,1),subAgainst15:finite(stats.subAgainstAvg,0,12),
+   koLossRate:finite(stats.koTkoLossRate,0,1)
   };
  }
+ const SW={slpm:.10,diffPm:.17,strAcc:.08,kd15:.11,koWinShare:.14,strDef:.10,sapm:.07,kdAbs15:.10,koLossShare:.13};
  function metricSpecs(d){
   if(!d)return null;
   const diff=d.slpm!==null&&d.sapm!==null?d.slpm-d.sapm:null;
@@ -116,16 +118,18 @@
   const netCtrl=d.controlShare!==null&&d.controlShare!==undefined&&d.controlAgainst!==null&&d.controlAgainst!==undefined?
    Math.round((d.controlShare-d.controlAgainst)*1000)/1000:null;
   return {
-    // Striking is landing and not getting hit (2026-11-24): output 70%, strike defence 30%.
+    // Striking is landing and not getting hit (2026-11-24): output 60%, defence 40% including KO/TKO losses.
+    // Weights must equal STRIKING_WEIGHTS in scripts/ufc_ratings.py (CI parity check).
     striking:[
-      [between(d.slpm,.8,6.5),.12,"Significant strikes landed/min"],
-      [between(diff,-2.0,3.0),.20,"Significant-strike differential/min"],
-      [between(d.strAcc,25,65),.10,"Striking accuracy"],
-      [between(d.kd15,0,1.0),.13,"Knockdowns/15"],
-      [between(d.koRate,0,.50),.15,"KO/TKO finishes per recorded fight"],
-      [between(d.strDef,35,75),.12,"Significant-strike avoidance"],
-      [between(d.sapm,6.0,1.2),.08,"Strikes absorbed/min (lower is better)"],
-      [between(d.kdAgainst15,1.0,0),.10,"Knockdowns received/15"]
+      [between(d.slpm,.8,6.5),SW.slpm,"Significant strikes landed/min"],
+      [between(diff,-2.0,3.0),SW.diffPm,"Significant-strike differential/min"],
+      [between(d.strAcc,25,65),SW.strAcc,"Striking accuracy"],
+      [between(d.kd15,0,1.0),SW.kd15,"Knockdowns/15"],
+      [between(d.koRate,0,.50),SW.koWinShare,"KO/TKO finishes per recorded fight"],
+      [between(d.strDef,35,75),SW.strDef,"Significant-strike avoidance"],
+      [between(d.sapm,6.0,1.2),SW.sapm,"Strikes absorbed/min (lower is better)"],
+      [between(d.kdAgainst15,1.0,0),SW.kdAbs15,"Knockdowns received/15"],
+      [between(d.koLossRate,.25,0),SW.koLossShare,"KO/TKO losses per recorded fight (lower is better)"]
     ],
     // Effectiveness, not volume (rating model 2026-11): what a fighter stops counts as well as what they land.
     grappling:[

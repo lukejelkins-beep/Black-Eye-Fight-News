@@ -64,6 +64,12 @@ HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit o
 # (owner, 2026-11-24, was 11) puts the top ten at about 88 or higher and only the very best at the 99 cap. The full rating is kept as
 # "overallRating" and orders the ranks, so two fighters with the same rounded score still have distinct ranks.
 SCORE_DIVISOR = 8
+
+# Striking (owner, 2026-11-24): output 60% (landed, differential, accuracy, knockdowns, KO wins) and defence 40%
+# (strike defence, strikes absorbed, knockdowns absorbed, KO/TKO losses). The KO-loss share of the defence part was
+# chosen by a walk-forward test (scripts/ufc-rating-evaluate.py), see docs/ufc-rating-model-2026-11.md.
+STRIKING_WEIGHTS = {"slpm": .10, "diffPm": .17, "strAcc": .08, "kd15": .11, "koWinShare": .14,
+                    "strDef": .10, "sapm": .07, "kdAbs15": .10, "koLossShare": .13}
 MODEL = "results+skills 2026-11"
 
 # (key, label, unit) for the "what drives this rating" view.
@@ -75,7 +81,8 @@ COMPONENTS = {
                  ("koWinShare", "KO/TKO wins per fight", "pct"),
                  ("strDef", "Significant strike defence", "pct"),
                  ("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
-                 ("kdAbs15", "Knockdowns absorbed per 15 min (lower is better)", "rate")],
+                 ("kdAbs15", "Knockdowns absorbed per 15 min (lower is better)", "rate"),
+                 ("koLossShare", "KO/TKO losses per fight (lower is better)", "pct")],
     # Output only (the pre-2026-11-24 striking formula), for the fight-card tiles, which show defence separately.
     "strikeOutput": [("slpm", "Significant strikes landed per min", "rate"),
                  ("diffPm", "Strike differential per min", "rate"),
@@ -129,7 +136,7 @@ BOUNDS = {"slpm": (0, 20), "sapm": (0, 20), "td15": (0, 20), "sub15": (0, 12), "
           "ctrlShare": (0, 1), "ctrlAgainstShare": (0, 1), "kd15": (0, 7), "kdAbs15": (0, 7),
           "strAcc": (0, 1), "strDef": (0, 1), "tdAcc": (0, 1), "tdDef": (0, 1),
           "koWinShare": (0, 1), "subWinShare": (0, 1), "subLossShare": (0, 1), "subAbs15": (0, 12),
-          "netCtrl": (-1, 1)}
+          "netCtrl": (-1, 1), "koLossShare": (0, 1)}
 
 
 def bounded(rates: dict, window: dict) -> dict:
@@ -139,6 +146,7 @@ def bounded(rates: dict, window: dict) -> dict:
     net = (round(ctrl - against, 3) if isinstance(ctrl, (int, float)) and isinstance(against, (int, float)) else None)
     merged = {**rates, "koWinShare": (window or {}).get("koWinShare"),
               "subWinShare": (window or {}).get("subWinShare"), "subLossShare": (window or {}).get("subLossShare"),
+              "koLossShare": (window or {}).get("koLossShare"),
               "netCtrl": net}
     out = {}
     for key, value in merged.items():
@@ -153,12 +161,15 @@ def specs(rates: dict, window: dict) -> dict:
     window = r
     slpm, sapm = r.get("slpm"), r.get("sapm")
     diff = slpm - sapm if slpm is not None and sapm is not None else None
+    W = STRIKING_WEIGHTS
     return {
-        # Striking is landing and not getting hit: output 70%, strike defence 30% (owner, 2026-11-24).
-        "striking": [(_between(slpm, .8, 6.5), .12), (_between(diff, -2.0, 3.0), .20),
-                     (_between(_pct(r.get("strAcc")), 25, 65), .10), (_between(r.get("kd15"), 0, 1.0), .13),
-                     (_between(window.get("koWinShare"), 0, .50), .15), (_between(_pct(r.get("strDef")), 35, 75), .12),
-                     (_between(sapm, 6.0, 1.2), .08), (_between(r.get("kdAbs15"), 1.0, 0), .10)],
+        # Striking is landing and not getting hit (owner, 2026-11-24): output 60%, defence 40%, being knocked out
+        # included. Weights in STRIKING_WEIGHTS.
+        "striking": [(_between(slpm, .8, 6.5), W["slpm"]), (_between(diff, -2.0, 3.0), W["diffPm"]),
+                     (_between(_pct(r.get("strAcc")), 25, 65), W["strAcc"]), (_between(r.get("kd15"), 0, 1.0), W["kd15"]),
+                     (_between(window.get("koWinShare"), 0, .50), W["koWinShare"]),
+                     (_between(_pct(r.get("strDef")), 35, 75), W["strDef"]), (_between(sapm, 6.0, 1.2), W["sapm"]),
+                     (_between(r.get("kdAbs15"), 1.0, 0), W["kdAbs15"]), (_between(window.get("koLossShare"), .25, 0), W["koLossShare"])],
         "strikeOutput": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
                          (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
                          (_between(window.get("koWinShare"), 0, .50), .25)],
