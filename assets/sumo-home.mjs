@@ -124,4 +124,4 @@ export function renderHome(d, h) {
 }
 
 /* Shared with the Basho review page (sumo-review.mjs). */
-export { face, who, head, championsBlock, starsBlock, sanyakuBlock, moversBlock };
+export { face, who, head, championsBlock, starsBlock, sanyakuBlock, moversBlock, exploreBlock };

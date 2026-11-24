@@ -13,14 +13,17 @@ import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailyS
 import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
-import { buildHome, bashoStart } from './sumo-home-data.mjs?v=20261124-banzuke2';
-import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-insights1';
+import { buildHome, bashoStart, bashoFinished } from './sumo-home-data.mjs?v=20261124-banzuke2';
+import { renderHome as renderOverview, exploreBlock } from './sumo-home.mjs?v=20261124-live1';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview } from './sumo-review.mjs?v=20261124-review1';
 import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
 import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-next1';
 import { fromArchive, fromDetails, runs, stables, rivalries, records } from './sumo-insights-data.mjs?v=20261124-insights1';
 import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261124-insights1';
+import { completedDay, recap as liveRecap, asOfDay } from './sumo-live-data.mjs?v=20261124-live1';
+import { renderLiveHome, dayByDay } from './sumo-live.mjs?v=20261124-live1';
+import { asDetails } from './sumo-review-data.mjs?v=20261124-live1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -1532,6 +1535,11 @@ function homeHelpers(){
   return {e,head:id=>verifiedDerivative(STATE.heads,id,'head'),cutout:id=>verifiedDerivative(STATE.cutouts,id,'cutout'),known:id=>known.has(Number(id))};
 }
 function renderSumoHome(){
+  /* Live basho mode while the basho is on; #home?liveday=N replays a finished basho as of day N (labelled preview). */
+  const q=new URLSearchParams(location.hash.split('?')[1]||'');
+  const previewDay=Number(q.get('liveday'));
+  const preview=Number.isInteger(previewDay)&&previewDay>=1&&previewDay<=15;
+  if(preview||!bashoFinished(STATE.details))return renderSumoLive(preview?asOfDay(STATE.details,previewDay):STATE.details,preview);
   const home=buildHome({details:STATE.details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
   let extra='';
   try{
@@ -1539,6 +1547,14 @@ function renderSumoHome(){
     extra=insightsTeaser(homeHelpers(),{runs:runs(two),rivalries:rivalries(STATE.h2hSummary,STATE.roster,{limit:1}),stables:stables(two[1],STATE.roster)});
   }catch(_){extra='';}
   return renderOverview(home,{...homeHelpers(),afterHero:nextBanzukeCard(home.headline.next),extra});
+}
+function renderSumoLive(details,preview){
+  const day=completedDay(details);
+  const home=buildHome({details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
+  let extra='';
+  try{const two=fromDetails(details);extra=insightsTeaser(homeHelpers(),{runs:runs(two),rivalries:rivalries(STATE.h2hSummary,STATE.roster,{limit:1}),stables:[]});}catch(_){extra='';}
+  return renderLiveHome({bashoId:details.bashoId,preview,recap:day?liveRecap(details,day):null,sanyakuView:home},
+    {...homeHelpers(),extra,explore:exploreBlock(homeHelpers()),afterHero:day?'':nextBanzukeCard(home.headline.next)});
 }
 /* Countdown to the next banzuke, or a link once it is out (data/sumo/banzuke-release/YYYYMM.json). */
 function nextBanzukeCard(next){
@@ -1618,7 +1634,10 @@ function renderBashoReview(id){
   if(!ARCHIVE.index||!want||!(want in ARCHIVE.files)||ARCHIVE.loading.has(prevBashoId(want))){loadArchive(want||null);return '<div class="sumo-home"><p class="srev-loading">Loading the basho review…</p></div>';}
   const file=ARCHIVE.files[want];
   if(!file)return '<div class="sumo-home"><p class="srev-loading">No saved review for that tournament. <a href="#review">See the latest basho</a>.</p></div>';
-  return renderReview(buildReview(file,ARCHIVE.files[prevBashoId(want)]||null,STATE.careerHistory),file,{...homeHelpers(),index:ARCHIVE.index});
+  const det=asDetails(file,null);
+  const recaps=[];for(let day=1;day<=Math.min(15,completedDay(det));day++)recaps.push(liveRecap(det,day));
+  const hh={...homeHelpers(),index:ARCHIVE.index};
+  return renderReview(buildReview(file,ARCHIVE.files[prevBashoId(want)]||null,STATE.careerHistory),file,{...hh,dayByDay:dayByDay(hh,recaps)});
 }
 function render() {
   const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
@@ -1808,6 +1827,23 @@ document.addEventListener('click',ev=>{
   }
 });
 let lastRoute=location.hash.slice(1).split('?')[0];
+/* Live mode: day picker on the Basho review, and copy/share on recap cards. */
+document.addEventListener('click',ev=>{
+  const dayBtn=ev.target.closest&&ev.target.closest('[data-recap-day]');
+  if(dayBtn){
+    const d=dayBtn.dataset.recapDay;
+    document.querySelectorAll('[data-recap-day]').forEach(b=>b.setAttribute('aria-pressed',String(b===dayBtn)));
+    document.querySelectorAll('[data-recap-panel]').forEach(p=>{p.hidden=p.dataset.recapPanel!==d;});
+    return;
+  }
+  const copy=ev.target.closest&&ev.target.closest('[data-recap-copy],[data-recap-share]');
+  if(!copy)return;
+  const card=copy.closest('.slive-recap'),text=card?.querySelector('[data-recap-text]')?.textContent||'',ok=card?.querySelector('.slive-recap-ok');
+  const done=msg=>{if(ok)ok.textContent=msg;};
+  const doCopy=()=>navigator.clipboard?.writeText(text+' '+location.href.split('#')[0]+'#home').then(()=>done('Copied'),()=>done('Copy not available'))||done('Copy not available');
+  if(copy.hasAttribute('data-recap-share')&&navigator.share)navigator.share({title:'BEFN Sumo',text,url:location.href.split('#')[0]+'#home'}).catch(()=>{});
+  else doCopy();
+});
 /* Banzuke changes list filters (All, Up, Down, Crossed a line, Winning record). */
 document.addEventListener('click',ev=>{
   const btn=ev.target.closest&&ev.target.closest('[data-bz-filter]');

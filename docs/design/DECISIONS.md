@@ -2,6 +2,17 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Sumo live basho mode)
+- **Live basho mode** (owner chose all four parts): while a basho is on (its snapshot not finished), the Sumo home switches to live mode, worked out by `assets/sumo-live-data.mjs` from the bout-by-bout records the daily refresh already saves. Rules: a win is "win" or "fusen win"; a loss is "loss", "fusen loss" or "absent"; Makuuchi only.
+  - **Day X of 15 header:** the leader or leaders and their record, days left, how many are one and two behind, links to today's bouts and the standings, leaders' cut-outs.
+  - **Title race:** leaders (gold-framed), one behind and two behind as photo cards; from day 9, while at most eight men are within one loss, each leader and chaser shows the contenders he has not yet faced.
+  - **Day highlights:** the upset of the day (lower-ranked winner, largest rank gap) and any kinboshi that day, as photo cards.
+  - **Daily recap card:** a one-paragraph summary with Copy and Share buttons. On day 15 a tie at the top reads "a playoff decides the title" while live and names the playoff winner once the title is known.
+  - Before day 1 (banzuke out, no bouts) the home shows "Day 1 is <date>" with links to Banzuke changes and Rankings, plus the countdown slot.
+  - **Basho review: Day by day** for every saved tournament: a day picker (1-15) showing the recap, leaders, one behind and that day's highlights.
+  - **Preview:** `sumo.html#home?liveday=N` replays the latest finished basho as of day N, labelled "Preview: ... replayed as of day N", so the design can be checked outside a basho; the Sumo browser QA uses it.
+  - Files: `assets/sumo-live-data.mjs`, `assets/sumo-live.mjs`, styles in `assets/sumo-home.css`; tests `tests/test-sumo-live.mjs` (replays November 2026 day by day: day 8 kinboshi Hakunofuji; day 10 Atamifuji and Wakamotoharu lead at 9-1; day 15 Onosato and Wakamotoharu level at 13-2, Onosato won the playoff). Added to the deploy watch list. — Owner 2026-11-24 — awaiting owner "Merge N".
+
 ## 2026-11-24 (Sumo insights)
 - **Insights page** (owner chose all four extras on one page): `sumo.html#insights`, under Analysis as "Insights", photo-led, with jump links and a teaser of three cards on the Sumo home (closest promotion run, top rivalry, top stable).
   - **Promotion watch:** each Sekiwake or Komusubi whose two latest basho were in sanyaku, with a winning record in the latest, shows wins so far and wins needed next basho to reach about 33 over three, stated as the usual benchmark the JSA applies with judgement, not a rule. Runs needing more than 15 are left out. Yokozuna watch: an Ozeki who won the latest title. November 2026: Atamifuji, 8 + 11, needs 14 in January; no Yokozuna watch.
