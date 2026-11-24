@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Judo results from the IJF data)
+- **Judo credentials come from the IJF's published results data** (owner approved recording the strong leads, 24 Nov). The ijf.org event pages load their results by script, so page screens found no names. The entrant lists and places at data.ijf.org are the federation's own data and count as a `federation` source. A same-name match with no other link stays `needs_review`, because the data hides birth dates. — Owner — `research/ufc-representative-credentials/` (Mahjoub, Baraniewski, Barbosa added; Jung and Egger unresolved)
+- **IJF permission (owner, 25 Nov 2026):** the owner has permission to collect the IJF's information, which resolves the terms question raised on this PR.
+
 ## 2026-11-24 (Fights: Results cards)
 - **Results get the same treatment as Upcoming** (owner chose "Results tab redesign" after merging #511). Each finished event is a card showing:
   - the event poster BEFN holds, shown whole on dark; otherwise both main-event fighters' faces, the winner large with a sport-colour ring and the loser smaller and greyed;

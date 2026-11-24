@@ -147,6 +147,12 @@
           "name": "IJF JudoTV athlete bout records",
           "url": "https://judotv.com/judoka/2684",
           "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "IJF results data (data.ijf.org) entrant lists: 1117, 1115",
+          "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=1117",
+          "outcome": "supports_claim"
         }
       ],
       "claims": [
@@ -163,6 +169,50 @@
             {
               "name": "IJF JudoTV athlete bout records",
               "url": "https://judotv.com/judoka/2684",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2013 World Judo Championships",
+          "sport": "Judo",
+          "event": "Men’s −100 kg",
+          "delegation": "IRI",
+          "category": "senior",
+          "result": "Competed for Iran and lost his first contest",
+          "medal": "none",
+          "sources": [
+            {
+              "name": "IJF results data, competition entrant list",
+              "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=1117",
+              "authority": "federation"
+            },
+            {
+              "name": "International Judo Federation athlete results",
+              "url": "https://www.ijf.org/judoka/2684/results?results_rank_group=all",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2013 Moscow Judo Grand Slam",
+          "sport": "Judo",
+          "event": "Men’s −100 kg",
+          "delegation": "IRI",
+          "category": "senior",
+          "result": "Won the category, four contests won and none lost",
+          "medal": "gold",
+          "sources": [
+            {
+              "name": "IJF results data, competition entrant list",
+              "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=1115",
+              "authority": "federation"
+            },
+            {
+              "name": "International Judo Federation athlete results",
+              "url": "https://www.ijf.org/judoka/2684/results?results_rank_group=all",
               "authority": "federation"
             }
           ]
