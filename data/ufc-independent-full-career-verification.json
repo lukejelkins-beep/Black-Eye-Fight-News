@@ -262,7 +262,9 @@
           "nativeFighterId": "1071"
         }
       ],
-      "note": "Seven completed official UFC flyweight fights and seven unique, measured native links, with no source-only or cache-only UFC bouts. Official UFC.com 2026-11-14 career narrative separately lists the earlier DWCS bout; it is excluded. One native 2023-12-10 date reflects UTC displacement relative to 2023-12-09 UFCStats event date; name-order difference HyunSung Park / Park Hyun-sung is independently reconciled through one native fight ID and both corners. No claim of direct access to blocked UFCStats pages."
+      "note": "Seven completed official UFC flyweight fights and seven unique, measured native links, with no source-only or cache-only UFC bouts. Official UFC.com 2026-11-14 career narrative separately lists the earlier DWCS bout; it is excluded. One native 2023-12-10 date reflects UTC displacement relative to 2023-12-09 UFCStats event date; name-order difference HyunSung Park / Park Hyun-sung is independently reconciled through one native fight ID and both corners. No claim of direct access to blocked UFCStats pages.",
+      "ownerConfirmedDuplicateOf": "carlos-hernandez",
+      "ownerConfirmedDuplicateNote": "Owner, 23 Nov 2026: carlos-hernandez and carlos-hernandez-7 are one person (same UFCStats page 798e48f9e7f6ba22, same seven UFC bouts). Owner, 24 Nov 2026: carlos-hernandez is the certified profile; this slug is the alias and is never certified."
     },
     "park-hyun-sung": {
       "sourceCoverageAttested": true,
@@ -77524,6 +77526,270 @@
           "fightUrl": "https://ufcstats.com/fight-details/1158a27a1a04b971"
         }
       ]
+    },
+    "waldo-cortes-acosta-2": {
+      "fighterName": "Waldo Cortes Acosta",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-24",
+      "evidenceCutoff": "2026-11-14",
+      "cohort": "ufc-36-month-roster",
+      "fighterUrl": "https://ufcstats.com/fighter-details/fc08099550072fe4",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "2676a4a098f83676c99ec1d143cc681ee4f86870",
+        "fighterDetailsBlobSha": "11ac0127fdb5e26786725331ddedaa8b787c1b6c",
+        "eventDetailsBlobSha": "3d4d5a12f405fa783b9a5db5351051dd8619084c",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "sourceNotes": "Complete UFCStats fighter fight list (15 UFC bouts to 2026-11-14) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py.",
+      "bouts": [
+        {
+          "date": "2022-10-29",
+          "opponent": "Jared Vanderaa",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5b6bdaf89e493674"
+        },
+        {
+          "date": "2022-11-19",
+          "opponent": "Chase Sherman",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/110f539523a4b571"
+        },
+        {
+          "date": "2023-04-29",
+          "opponent": "Marcos Rogerio de Lima",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/8dbfbd8f8bd0f00b"
+        },
+        {
+          "date": "2023-08-26",
+          "opponent": "Lukasz Brzeski",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/bfc9989751bd0d04"
+        },
+        {
+          "date": "2024-01-13",
+          "opponent": "Andrei Arlovski",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/6f13fe34cb3ca906"
+        },
+        {
+          "date": "2024-05-11",
+          "opponent": "Robelis Despaigne",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e98eb6de29c62c9c"
+        },
+        {
+          "date": "2025-03-15",
+          "opponent": "Ryan Spann",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/74bc22b367cca118"
+        },
+        {
+          "date": "2025-06-07",
+          "opponent": "Serghei Spivac",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ac977a0389682124"
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Sergei Pavlovich",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/5538d15c4eeac3b3"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "Ante Delija",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/9d9390b550d77e06"
+        },
+        {
+          "date": "2025-11-22",
+          "opponent": "Shamil Gaziev",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/e8307c7686c42d8c"
+        },
+        {
+          "date": "2026-01-24",
+          "opponent": "Derrick Lewis",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/d93ee3860196c4ae"
+        },
+        {
+          "date": "2026-05-09",
+          "opponent": "Alexander Volkov",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/22ba4f1b0aafbf82"
+        },
+        {
+          "date": "2026-09-12",
+          "opponent": "Curtis Blaydes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/606639bf387f60e2"
+        },
+        {
+          "date": "2026-11-07",
+          "opponent": "Johnny Walker",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4e6c304705f82ce0"
+        }
+      ]
+    },
+    "zhu-kangjie": {
+      "fighterName": "Zhu Kangjie",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-24",
+      "evidenceCutoff": "2026-11-14",
+      "cohort": "ufc-36-month-roster",
+      "fighterUrl": "https://ufcstats.com/fighter-details/6f4ec5aa3eced219",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "2676a4a098f83676c99ec1d143cc681ee4f86870",
+        "fighterDetailsBlobSha": "11ac0127fdb5e26786725331ddedaa8b787c1b6c",
+        "eventDetailsBlobSha": "3d4d5a12f405fa783b9a5db5351051dd8619084c",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "sourceNotes": "Complete UFCStats fighter fight list (1 UFC bouts to 2026-11-14) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py. Plus one Road to UFC tournament final from UFC.com (result only, roadToUfcFinal).",
+      "bouts": [
+        {
+          "date": "2025-05-23",
+          "opponent": "Bin Xie",
+          "result": "win",
+          "savedHistoryGap": true,
+          "roadToUfcFinal": true,
+          "officialUfcSourceUrl": "https://www.ufc.com/athlete/zhu-kangjie",
+          "officialUfcSourceQuote": "Road to UFC, Season 3: Finals (5/23/25) Zhu won a three round split decision over Bin Xie",
+          "officialUfcSourceCheckedOn": "2026-11-24",
+          "note": "Road to UFC tournament final: counts as a UFC career bout (owner, 23 Nov 2026) and is certified result-only (owner, 24 Nov 2026). UFCStats and the saved native cache do not list it, so it has no native ID, corners or measured rounds; none are invented.",
+          "sourceMethod": "Decision - Split"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Rodrigo Vera",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/34d5ec676fb5bce3"
+        }
+      ],
+      "officialFighterUrl": "https://www.ufc.com/athlete/zhu-kangjie"
+    },
+    "rei-tsuruya": {
+      "fighterName": "Rei Tsuruya",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-24",
+      "evidenceCutoff": "2026-11-14",
+      "cohort": "ufc-36-month-roster",
+      "fighterUrl": "https://ufcstats.com/fighter-details/2f43a3e82661fa99",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "2676a4a098f83676c99ec1d143cc681ee4f86870",
+        "fighterDetailsBlobSha": "11ac0127fdb5e26786725331ddedaa8b787c1b6c",
+        "eventDetailsBlobSha": "3d4d5a12f405fa783b9a5db5351051dd8619084c",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "sourceNotes": "Complete UFCStats fighter fight list (4 UFC bouts to 2026-11-14) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py. Plus one Road to UFC tournament final from UFC.com (result only, roadToUfcFinal).",
+      "bouts": [
+        {
+          "date": "2024-02-03",
+          "opponent": "Jiniushiyue",
+          "result": "win",
+          "savedHistoryGap": true,
+          "roadToUfcFinal": true,
+          "officialUfcSourceUrl": "https://www.ufc.com/news/road-ufc-final-results-scorecards-season-2-finals-winner-interviews",
+          "officialUfcSourceQuote": "Flyweight Final: Rei Tsuruya defeats Jiniushiyue by TKO (strikes) at 4:59 of Round 1",
+          "officialUfcSourceCheckedOn": "2026-11-24",
+          "note": "Road to UFC tournament final: counts as a UFC career bout (owner, 23 Nov 2026) and is certified result-only (owner, 24 Nov 2026). UFCStats and the saved native cache do not list it, so it has no native ID, corners or measured rounds; none are invented.",
+          "sourceMethod": "KO/TKO"
+        },
+        {
+          "date": "2024-06-29",
+          "opponent": "Carlos Hernandez",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/7856621db043423d"
+        },
+        {
+          "date": "2025-03-08",
+          "opponent": "Joshua Van",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/af3e43049bc86fe9"
+        },
+        {
+          "date": "2026-05-30",
+          "opponent": "Luis Gurule",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/224dce2c0b03e7eb"
+        },
+        {
+          "date": "2026-08-29",
+          "opponent": "Kevin Borjas",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ec5281a72f09d8ac"
+        }
+      ],
+      "officialFighterUrl": "https://www.ufc.com/athlete/rei-tsuruya"
+    },
+    "yizha": {
+      "fighterName": "Yizha",
+      "scope": "complete_official_ufc_career",
+      "sourceCoverageAttested": true,
+      "verificationMethod": "full_official_ufc_fight_listing_crosscheck",
+      "verifiedAt": "2026-11-24",
+      "evidenceCutoff": "2026-11-14",
+      "cohort": "ufc-36-month-roster",
+      "fighterUrl": "https://ufcstats.com/fighter-details/3f11fd1751fa83b1",
+      "sourceSnapshot": {
+        "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+        "fightResultsBlobSha": "2676a4a098f83676c99ec1d143cc681ee4f86870",
+        "fighterDetailsBlobSha": "11ac0127fdb5e26786725331ddedaa8b787c1b6c",
+        "eventDetailsBlobSha": "3d4d5a12f405fa783b9a5db5351051dd8619084c",
+        "evidenceCutoff": "2026-11-14"
+      },
+      "sourceNotes": "Complete UFCStats fighter fight list (4 UFC bouts to 2026-11-14) from the free UFCStats export (Greco1899/scrape_ufc_stats), reconciled one-to-one to saved UFC history (UFCalendar research rows) by opponent, result and date within a day; saved date and name kept, the source's in independentEventSourceDate / sourceOpponentName. A no-contest or draw saved history lacks is a savedHistoryGap bout. Contender Series and Road to UFC qualifier rows excluded. Built by scripts/build-ufc-register-from-ufcstats.py. Plus one Road to UFC tournament final from UFC.com (result only, roadToUfcFinal).",
+      "bouts": [
+        {
+          "date": "2023-02-05",
+          "opponent": "JeongYeong Lee",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/765482eb58e8db48",
+          "independentEventSourceDate": "2023-02-04"
+        },
+        {
+          "date": "2024-02-03",
+          "opponent": "Kaiwen",
+          "result": "win",
+          "savedHistoryGap": true,
+          "roadToUfcFinal": true,
+          "officialUfcSourceUrl": "https://www.ufc.com/news/road-ufc-final-results-scorecards-season-2-finals-winner-interviews",
+          "officialUfcSourceQuote": "Featherweight Final: Yizha defeats Kaiwen by submission (armbar) at 3:03 of Round 1",
+          "officialUfcSourceCheckedOn": "2026-11-24",
+          "note": "Road to UFC tournament final: counts as a UFC career bout (owner, 23 Nov 2026) and is certified result-only (owner, 24 Nov 2026). UFCStats and the saved native cache do not list it, so it has no native ID, corners or measured rounds; none are invented.",
+          "sourceMethod": "Submission"
+        },
+        {
+          "date": "2024-09-07",
+          "opponent": "Gabriel Santos",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6e9876d2be2bbd02"
+        },
+        {
+          "date": "2025-08-23",
+          "opponent": "Westin Wilson",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/f0b7caa90faf47e5"
+        },
+        {
+          "date": "2026-01-31",
+          "opponent": "Kaan Ofli",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/4c1e7e1765a5438a"
+        }
+      ],
+      "officialFighterUrl": "https://www.ufc.com/athlete/yi-zha"
     }
   }
 }
