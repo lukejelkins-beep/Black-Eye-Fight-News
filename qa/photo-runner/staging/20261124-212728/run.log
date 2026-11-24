@@ -1,0 +1,38 @@
+$ /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/scripts/boxing-portrait-intake.py --names-file /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/boxing/names.txt --stage /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728
+matchroom: 90 boxers on the roster page
+boxxer: 21 boxers on the roster page
+salita: 30 boxers on the roster page
+toprank: 36 boxers on the roster page
+wikimedia commons: 3 taken
+PBC: not fetched, premierboxingchampions.com answers an automated request with HTTP 403
+MVP: not fetched, mostvaluablepromotions.com robots.txt disallows ClaudeBot and sets ai-train=no
+Queensberry: not fetched, queensberry.co.uk is the merchandise store and carries no fighter roster; queensberrypromotions.com is a parked domain (checked 2026-11-24)
+added 5: Bakhram Murtazaliev, Brian Norman Jr., Charly Suarez (Commons), Robin Sirwan Safar (Commons), Viddal Riley (Commons)
+not taken 235
+
+/home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/scripts/boxing-portrait-intake.py:545: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  pad = round(rgba.height * 0.05) if sum(top.getdata()) < rgba.width / 2 else 0
+
+$ /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/scripts/pull-ufc-hires-photos.py --work /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/ufc/work fetch --new-fighters /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/ufc/work/new-fighters.tsv --no-search
+[9/58] Alatengheili: downloaded
+[11/58] Cam Nelson: downloaded
+[17/58] Joe Kropschot: downloaded
+[18/58] John Mitchell: downloaded
+[20/58] José Souza: downloaded
+[22/58] Liu Ce: downloaded
+[30/58] Sean King III: downloaded
+[31/58] Shoaib Yousaf: downloaded
+[33/58] Tina Black: downloaded
+[34/58] Tommy Gantt: downloaded
+10 headshots downloaded; report in /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/ufc/work/fetch-report.json. Next: check a few in /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/ufc/work/raw, then run apply.
+
+
+$ /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/scripts/process-fighter-images.py /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/ufc/work/raw /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/ufc/work/process.csv /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/ufc/files
+10 processed; 0 skipped
+
+
+$ /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/scripts/mma-portrait-intake.py --names-file /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728/mma/people.tsv --stage /home/user/Black-Eye-Fight-News/.claude/worktrees/agent-a646c365453895193/qa/photo-runner/staging/20261124-212728
+added 35: Piotr Kuberski, Adam Niedźwiedź, Adam Soldaev, Aleksander Winiarski, Andi Vrtačić, Artur Szpilka, Dawid Kuczmarski, Hugo Deux, Josef Štummer, Kacper Sochacki, Oleksii Polishchuk, Patryk Kaczmarczyk, Souheil Kaouchen, Štefan Vojčák, Christian Lee, Jarred Brooks, Jhanlo Mark Sangiao, Joshua Pacio, Joshua Perreira, Keito Yamakita, Lucas Gabriel, Macarena Aragon, Natalie Salcedo, Paul Elliott, Pedro Dantas, Shamil Erdogan, Tatsumitsu Wada, Tye Ruotolo, Eko Roni Saputra, Jihin Radzuan, Lito Adiwang, Sanzhar Zakirov, Shamil Gasanov, Tang Kai, Yosuke Saruta
+not taken 313; blocked: {'PFL': 'pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden', 'Cage Warriors': 'www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden'}
+
+
