@@ -1,0 +1,345 @@
+<!-- Trimmed from https://www.kswmma.com/en/events on 2026-11-25: the <main> element. -->
+<html><body>
+<main>
+            
+
+<div class="homepage-container" style="margin-top: 100px;">
+    <section>
+        <div class="row mt-8">
+            <div class="col-lg-3">
+                <h2 class="text-uppercase mb-0">Galas</h2>
+            </div>
+            <div class="col-lg-9">
+                <form class="filters" onsubmit="getEvents()">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span id="filters-btn" style="text-transform: uppercase">Filters:</span>
+                        <div class="select-container filter-field">
+                            <select name="event-status" id="event-status" onchange="getEvents()">
+                                <option selected="selected">Status</option>
+                                <option value="all">Show all</option>
+                                <option value="new">Upcoming</option>
+                                <option value="past">Finished</option>
+                            </select>
+                            <svg class="select-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.84364 9.96804C4.8916 9.98801 4.94355 10 4.9995 10C5.05545 10 5.10341 9.98801 5.15536 9.96804C5.20332 9.94806 5.24728 9.9201 5.28324 9.88014L9.8831 5.28166C10.039 5.12585 10.039 4.87415 9.88311 4.71834C9.72725 4.56253 9.47547 4.56253 9.31961 4.71834L5.39914 8.63764L5.39914 0.39952C5.39914 0.179784 5.2193 -2.08971e-07 4.9995 -2.18579e-07C4.7797 -2.28187e-07 4.59986 0.179784 4.59986 0.39952L4.59986 8.63364L0.679388 4.71434C0.523529 4.55853 0.271755 4.55853 0.115895 4.71434C0.0359676 4.79425 -2.13929e-07 4.89413 -2.1847e-07 4.998C-2.2301e-07 5.10188 0.0399635 5.20176 0.115895 5.28166L4.71576 9.88014C4.75172 9.9161 4.79568 9.94806 4.84364 9.96804Z" fill="black"/>
+                            </svg>
+
+                        </div>
+                        <div class="select-container filter-field">
+                            <select name="year" id="year"  onchange="getEvents()">
+                                <option selected="selected">Year</option>
+                                                                    <option value="2026">2026</option>
+                                                                    <option value="2025">2025</option>
+                                                                    <option value="2024">2024</option>
+                                                                    <option value="2023">2023</option>
+                                                                    <option value="2022">2022</option>
+                                                                    <option value="2021">2021</option>
+                                                                    <option value="2020">2020</option>
+                                                                    <option value="2019">2019</option>
+                                                                    <option value="2018">2018</option>
+                                                                    <option value="2017">2017</option>
+                                                                    <option value="2016">2016</option>
+                                                                    <option value="2015">2015</option>
+                                                                    <option value="2014">2014</option>
+                                                                    <option value="2013">2013</option>
+                                                                    <option value="2012">2012</option>
+                                                                    <option value="2011">2011</option>
+                                                                    <option value="2010">2010</option>
+                                                                    <option value="2009">2009</option>
+                                                                    <option value="2008">2008</option>
+                                                                    <option value="2007">2007</option>
+                                                                    <option value="2006">2006</option>
+                                                                    <option value="2005">2005</option>
+                                                                    <option value="2004">2004</option>
+                                                            </select>
+                            <svg class="select-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.84364 9.96804C4.8916 9.98801 4.94355 10 4.9995 10C5.05545 10 5.10341 9.98801 5.15536 9.96804C5.20332 9.94806 5.24728 9.9201 5.28324 9.88014L9.8831 5.28166C10.039 5.12585 10.039 4.87415 9.88311 4.71834C9.72725 4.56253 9.47547 4.56253 9.31961 4.71834L5.39914 8.63764L5.39914 0.39952C5.39914 0.179784 5.2193 -2.08971e-07 4.9995 -2.18579e-07C4.7797 -2.28187e-07 4.59986 0.179784 4.59986 0.39952L4.59986 8.63364L0.679388 4.71434C0.523529 4.55853 0.271755 4.55853 0.115895 4.71434C0.0359676 4.79425 -2.13929e-07 4.89413 -2.1847e-07 4.998C-2.2301e-07 5.10188 0.0399635 5.20176 0.115895 5.28166L4.71576 9.88014C4.75172 9.9161 4.79568 9.94806 4.84364 9.96804Z" fill="black"/>
+                            </svg>
+
+                        </div>
+                        <div class="select-container filter-field">
+                            <select name="country" id="country" onchange="getEvents()" >
+                                <option value="0">Country</option>
+                                <option value="pl">Poland</option>
+                                <option value="cr">Croatia</option>
+                                <option value="cz">Czech Republic</option>
+                                <option value="fr">France</option>
+                                <option value="gb">United Kingdom</option>
+                            </select>
+                            <svg class="select-icon" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.84364 9.96804C4.8916 9.98801 4.94355 10 4.9995 10C5.05545 10 5.10341 9.98801 5.15536 9.96804C5.20332 9.94806 5.24728 9.9201 5.28324 9.88014L9.8831 5.28166C10.039 5.12585 10.039 4.87415 9.88311 4.71834C9.72725 4.56253 9.47547 4.56253 9.31961 4.71834L5.39914 8.63764L5.39914 0.39952C5.39914 0.179784 5.2193 -2.08971e-07 4.9995 -2.18579e-07C4.7797 -2.28187e-07 4.59986 0.179784 4.59986 0.39952L4.59986 8.63364L0.679388 4.71434C0.523529 4.55853 0.271755 4.55853 0.115895 4.71434C0.0359676 4.79425 -2.13929e-07 4.89413 -2.1847e-07 4.998C-2.2301e-07 5.10188 0.0399635 5.20176 0.115895 5.28166L4.71576 9.88014C4.75172 9.9161 4.79568 9.94806 4.84364 9.96804Z" fill="black"/>
+                            </svg>
+
+                        </div>
+                        <button type="reset" id="reset-btn" class="filter-field">Reset filters</button>
+                    </div>
+                    <div id="search-container" class="filter-field">
+                        <input minlength="3" type="text" name="event-search" id="event-search-input" placeholder="Search" >
+                        <button type="submit" id="search-icon">
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.96804 5.15636C9.98802 5.1084 10 5.05645 10 5.0005C10 4.94455 9.98802 4.89659 9.96804 4.84464C9.94806 4.79668 9.9201 4.75272 9.88014 4.71675L5.28166 0.116895C5.12585 -0.0389649 4.87415 -0.0389649 4.71834 0.116895C4.56253 0.272755 4.56253 0.524528 4.71834 0.680388L8.63764 4.60086L0.399521 4.60086C0.179784 4.60086 0 4.7807 0 5.0005C0 5.2203 0.179784 5.40014 0.399521 5.40014L8.63364 5.40014L4.71434 9.32061C4.55853 9.47647 4.55853 9.72824 4.71434 9.8841C4.79425 9.96403 4.89413 10 4.998 10C5.10188 10 5.20176 9.96004 5.28166 9.8841L9.88014 5.28424C9.9161 5.24828 9.94806 5.20432 9.96804 5.15636Z" fill="black"/>
+                            </svg>
+                        </button>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-3" id="events-page-content">
+            
+                        <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/ksw-125" onclick="getEvent(136)">
+                        <img class="img-fluid swipper-img" alt="KSW 125" src="/storage/2026-11/1795284437-ksw125-lesko-1920x1080.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                KSW 125
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                23-01-2027
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Leśko
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Różański                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+                                <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/xtb-ksw-124" onclick="getEvent(135)">
+                        <img class="img-fluid swipper-img" alt="XTB KSW 124" src="/storage/2026-11/1794673606-ksw124-www-kopia.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                XTB KSW 124
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                19-12-2026
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Pawlak
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Kuberski                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+                                <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/xtb-ksw-123" onclick="getEvent(134)">
+                        <img class="img-fluid swipper-img" alt="XTB KSW 123" src="/storage/2026-11/1795000110-ksw123-wwww.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                XTB KSW 123
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                21-11-2026
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Mircea
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Held                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                Enea Arena, Szczecin
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+                                <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/xtb-ksw-122" onclick="getEvent(133)">
+                        <img class="img-fluid swipper-img" alt="XTB KSW 122" src="/storage/2026-09/1788447868-ksw122-www.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                XTB KSW 122
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                10-10-2026
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Yakymenko
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Morelli                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                Hala Podpromie, Rzeszów
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+                                <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/xtb-ksw-121" onclick="getEvent(132)">
+                        <img class="img-fluid swipper-img" alt="XTB KSW 121" src="/storage/2026-08/1787929725-ksw121-www.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                XTB KSW 121
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                19-09-2026
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Vojčák
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Wójcik                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                Home Credit Arena, Liberec
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+                                <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/xtb-ksw-120" onclick="getEvent(131)">
+                        <img class="img-fluid swipper-img" alt="XTB KSW 120" src="/storage/2026-07/1783959259-ksw120-www.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                XTB KSW 120
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                18-07-2026
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Haratyk
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Leśko                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                Polsat Plus Arena, Gdynia
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+                                <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/xtb-ksw-119" onclick="getEvent(130)">
+                        <img class="img-fluid swipper-img" alt="XTB KSW 119" src="/storage/2026-05/1778952234-ksw119-hd.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                XTB KSW 119
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                20-06-2026
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Kaczmarczyk
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Brichta                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                RCS, Radom
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+                                <div class="col-md-6 mt-5">
+                                    <a href="https://www.kswmma.com/en/event/xtb-ksw-118" onclick="getEvent(129)">
+                        <img class="img-fluid swipper-img" alt="XTB KSW 118" src="/storage/2026-03/1773510573-ksw118-hd.jpg.800.webp" style="width: 100%;"/>
+                        <div class="row">
+                            <div class="col-sm-6 pt-2 ps-5 text-uppercase">
+                                XTB KSW 118
+                            </div>
+                            <div class="col-sm-6 text-end pt-2 pe-5">
+                                16-05-2026
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+
+                                <h2 class="oswald">
+                                    Kuberski
+                                                                         <span class="text-lowercase oswald">vs</span>                                     Michalski                                </h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 ps-5 text-uppercase">
+                                Kalisz Arena, Kalisz
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+            <div class="col-md-12 mt-7">
+    <div class="row">
+    <div class="col-12 text-center custom-pagination" style="color:black">
+        <span  style="color: lightgray" class="disabled" ><<&nbsp;</span>
+        <span  style="color: lightgray" class="disabled" >< &nbsp;</span>
+                
+            
+                
+            
+            
+        
+        
+                                                <span  class="text-warning active-page disabled" >1</span>
+                                    <span >2</span>
+                                    <span >3</span>
+                                    <span >4</span>
+                                    <span >5</span>
+                                    <span >6</span>
+                                    <span >7</span>
+                                    <span >8</span>
+                                        
+                    
+                
+                    
+                
+            
+                <span >&nbsp; ></span>
+        <span >&nbsp; >></span>
+    </div>
+    <span class="last-page" style="display: none">17</span>
+</div>
+    
+</div>
+        </div>
+
+    </section>
+</div>
+            </main>
+</body></html>

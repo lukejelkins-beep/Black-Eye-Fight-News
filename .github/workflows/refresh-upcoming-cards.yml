@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate event merging and publisher checks
-        run: python -m unittest discover -s tests -p 'test_upcoming_cards.py' && python -m unittest discover -s tests -p 'test_one_schedule.py' && python -m unittest discover -s tests -p 'test_espn_pfl_schedule.py'
+        run: python -m unittest discover -s tests -p 'test_upcoming_cards.py' && python -m unittest discover -s tests -p 'test_one_schedule.py' && python -m unittest discover -s tests -p 'test_espn_pfl_schedule.py' && python -m unittest discover -s tests -p 'test_ksw_schedule.py'
       - name: Validate browser-side upcoming card JavaScript
         run: |
           node --check assets/upcoming-cards.js
