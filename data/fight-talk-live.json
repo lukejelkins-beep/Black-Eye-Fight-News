@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-24T04:42:13.763Z",
-  "checkedAt": "2026-11-24T04:42:13.763Z",
-  "updatedAt": "2026-11-23T23:02:16Z",
+  "attemptedAt": "2026-11-24T04:50:22.473Z",
+  "checkedAt": "2026-11-24T04:50:22.473Z",
+  "updatedAt": "2026-11-24T00:30:18.394228Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,94 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
-      "X": 26,
-      "Bluesky": 4,
-      "Threads": 9,
-      "Reddit": 2
+      "Instagram": 36,
+      "X": 34,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2zfcfu7td2t",
+      "cid": "bafyreiakjw7eogussudhiupksfgmubpxkbivceadocs4usakkanfu5pkbe",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "The winner of Taylor Lapilus vs. Mitch McKee will be automatically crowned the inaugural MVP MMA bantamweight champion at #PFLLyon\n\n📰 mma-fighting.visitlink.me/Vv7hYb",
+      "postedAt": "2026-11-24T00:30:18.394228Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2zfcfu7td2t",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2zdqdxigo2c",
+      "cid": "bafyreic73aeaycouvucb7mkdvrbganh5sqalbxcejylz6sd5oy3v2j56ma",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "14 fights official for PFL’s last card before MVP MMA transition in 2027 www.mmafighting.com/pfl/523032/1...",
+      "postedAt": "2026-11-24T00:02:18.571196Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2zdqdxigo2c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2zch2ftj62h",
+      "cid": "bafyreihf5g2cgzmmf4drdpbjzdchoaplbprvj64so5l6c7t7vl3o7akfoa",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Jake Paul gets absolutely cooked in GTA 6! 🎮\n\nThe game appears to mock his Mike Tyson fight, portraying him as a 22-year-old influencer facing an 86-year-old former heavyweight champion. The punchline? A joke about the veteran's dialysis machine!🥊",
+      "postedAt": "2026-11-23T23:39:14Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2zch2ftj62h",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 2,
+        "comments": 0,
+        "shares": 2
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2zaex6ss725",
       "cid": "bafyreicustc6rf5tp5dp6qd6l62fg2wbduo3hx6ir5wwhgqfqg3rsfllk4",
@@ -96,6 +168,54 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2z5xowajn2k",
+      "cid": "bafyreic6kg5pdi2nbefyzbiot5lwwmrck6gwvq76dpyx44oorq4orb3dem",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Vergil Ortiz Jr. has signed to fight Jermell Charlo! 🥊\n\nThe December 5 offer is reportedly on the table after Keith Thurman's withdrawal, but the former undisputed champion has yet to sign and promoters are casting doubt on the fight despite a verbal agreement. 🇺🇸",
+      "postedAt": "2026-11-23T22:19:04Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2z5xowajn2k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2z52dyzb62t",
+      "cid": "bafyreickaetlhjypmwyyowkpvvdgxoilp7yui7m63hekeljwq4nhc554zi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "On To the Next One: Matches to make after UFC Qatar www.mmafighting.com/ufc/522903/o...",
+      "postedAt": "2026-11-23T22:02:37.960592Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2z52dyzb62t",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2z2gngn3w2m",
       "cid": "bafyreigafy7xdf7mlr4nulhrhbgdlfaz2dpph7tcdthvsbixqpfwfvrgji",
       "platform": "Bluesky",
@@ -116,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -164,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -188,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -236,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -260,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -308,7 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -332,7 +452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -356,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -380,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -428,7 +548,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -452,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -480,30 +600,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ymgnzxmv22",
-      "cid": "bafyreic2ksq3uc36xfhx4nbj5x3xlg3oe5qh27kxts56b6lhab7yk45cem",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Islam Makhachev says Usman Nurmagomedov-Merab Dvalishvili situation ‘got blown way out of proportion’ www.mmafighting.com/ufc/523011/i...",
-      "postedAt": "2026-11-23T17:05:18.064467Z",
-      "date": "24 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ymgnzxmv22",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ymc6iqcm2f",
       "cid": "bafyreibrcjeywckfosfelxkurqpkc3y5rzpovlphdvdxk3ci3a3twokutm",
       "platform": "Bluesky",
@@ -525,30 +621,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-24T02:47:29.022Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yiyll6tl2f",
-      "cid": "bafyreibh7byws4ccasf6bk7ilkm3tvp3ixpp5jdr22b7w2me5gai3s6hxy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Video: Kevin Holland calls for Mike Perry fight with creative GTA 6 scene www.mmafighting.com/ufc/523008/v...",
-      "postedAt": "2026-11-23T16:03:44.123844Z",
-      "date": "24 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yiyll6tl2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -576,30 +648,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yfpphwe72f",
-      "cid": "bafyreiakinken4ugrkaiegzbtjoudrux4mk25uyv5c7xmytsrxgfpg2mjq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Deontay Wilder gets new opponent for Fury vs. Joshua co-main event www.mmafighting.com/boxing/52300...",
-      "postedAt": "2026-11-23T15:05:04.904552Z",
-      "date": "24 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yfpphwe72f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2yewoyuph2b",
       "cid": "bafyreifa22tu742rvpanoqx4xbhw2qesnmhlcvj6estdubo4i3af7crm4i",
       "platform": "Bluesky",
@@ -620,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -644,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -788,7 +836,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -836,7 +884,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -933,54 +981,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-23T22:31:41.291Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2wj7k3ot42e",
-      "cid": "bafyreigpf22pqbwjl5y5wn5dvla3t7zjeyuqtnwpsd7afw46lzqvll3rxm",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Tank Davis, Haney ‘Fought to the Death’ as Floyd, Broner Watched #boxing #boxingnews",
-      "postedAt": "2026-11-22T21:02:19Z",
-      "date": "23 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2wj7k3ot42e",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2wfdi4u4w24",
-      "cid": "bafyreiavfheo6bxkysop3m4qaiupffafpt7kqt6tvorpj2kjnjmbyf7xpu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Floyd can win! 🥊 \n\nDevin Haney believes Floyd Mayweather can beat his old rival Ryan Garcia if their proposed February 6 clash goes ahead. 👀\n\nA decision on the fight is expected to be made on Monday.",
-      "postedAt": "2026-11-22T19:52:56Z",
-      "date": "23 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2wfdi4u4w24",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-23T21:20:16.011Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
