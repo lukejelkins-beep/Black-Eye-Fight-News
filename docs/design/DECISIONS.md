@@ -13,6 +13,12 @@ Format: date — decision — who — where it shows up.
 - **Reign lengths are not shown.** The title tracker stores them as fixed text ("952 days") with no review date, so they would go stale. Defences are used instead.
 - **MMA's Analysis tab gets a top section above the UFC stats leaderboards** (owner's choice): the UFC champions (with "since" and defences), the last two weeks' MMA finishes (KO/TKO, submission, decision, other) and UFC title fights coming up. A reported card keeps its "Reported" tag.
 - Code: `assets/fight-analysis.js` (pure builders, which fetch the schedule and results themselves) and `assets/fight-analysis.css`. `tests/test-fight-analysis.cjs` was added to the release readiness gate.
+- **18 more boxer photos, 10 of them from Top Rank** (owner attested Top Rank on 2026-11-24, and Top Rank's robots.txt allows it):
+  - Top Rank: Leo, Carrington, Espinoza, Jalolov, Torrez Jr., Tucker, Polanco, Gonzalez, Vargas and Delgado.
+  - Matchroom: Brown, Whittaker, Omari Jones, Visioli, Madrimov, Wardley and Parker.
+  - BOXXER: Callum Simpson.
+  - Each was looked at by eye and registered with its attestation. 16 new cut-outs were made; Omari Jones's was dropped by eye.
+  - The UFC Riyadh poster is still not added: no copy of clear official origin could be reached (ufc.com 403, MMA Mania disallows us).
 - **The two long-failing tests were not real bugs.** CI runs both and they are green there.
   - `tests/ufc-ratings-parity.cjs` needed its fixture path as an argument. Run without one, it now builds the fixture itself, as CI does.
   - `test-ufc-profile-visual.mjs` needs Playwright, which CI installs and the repo doesn't list. It is left as is; adding it to devDependencies would need the owner's decision.
