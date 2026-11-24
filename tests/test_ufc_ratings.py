@@ -15,14 +15,6 @@ WEAK = {"slpm": 2.0, "sapm": 5.0, "strAcc": .35, "strDef": .45, "kd15": 0.0, "td
 
 
 class Formulas(unittest.TestCase):
-    def test_strike_output_matches_engine_weights_by_hand(self):
-        # The pre-2026-11-24 striking formula, kept as "strikeOutput" for the fight-card tiles.
-        rates = {"slpm": 3.65, "sapm": 3.0, "strAcc": .45, "kd15": .5}
-        window = {"koWinShare": .25}
-        # between: slpm (3.65-.8)/5.7=50, diff .65 -> (2.65)/5=53, acc 50, kd 50, ko 50
-        expected = (50 * .18 + 53 * .22 + 50 * .15 + 50 * .20 + 50 * .25) / 1.0
-        self.assertAlmostEqual(r.raw_skill(rates, window, "strikeOutput"), expected, places=6)
-
     def test_striking_includes_strike_defence_by_hand(self):
         rates = {"slpm": 3.65, "sapm": 3.0, "strAcc": .45, "kd15": .5, "strDef": .55, "kdAbs15": .25}
         window = {"koWinShare": .25, "koLossShare": .125}
@@ -51,8 +43,11 @@ class Formulas(unittest.TestCase):
         # Real case: 8.3 knockdowns per 15 min from a short, finish-heavy sample.
         rates = {"slpm": 5.324, "sapm": 1.921, "strAcc": .67, "kd15": 8.289}
         window = {"koWinShare": .6314}
-        with_kd = (79.368 * .18 + 100 * .22 + 100 * .15 + 100 * .25) / (.18 + .22 + .15 + .25)
-        self.assertAlmostEqual(r.raw_skill(rates, window, "strikeOutput"), with_kd, places=2)
+        # the 8.3 is dropped as missing, so striking is the weighted mean of the parts that are present
+        W = r.STRIKING_WEIGHTS
+        present = {"slpm": 79.368, "diffPm": 100, "strAcc": 100, "koWinShare": 100, "sapm": 84.979}
+        expected = sum(v * W[k] for k, v in present.items()) / sum(W[k] for k in present)
+        self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), expected, places=2)
         self.assertIsNone(next(d for d in r.drivers(rates, window, "striking") if d["key"] == "kd15")["value"])
 
     def test_lower_is_better_components(self):

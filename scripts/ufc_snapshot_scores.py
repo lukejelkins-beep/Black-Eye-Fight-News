@@ -17,11 +17,13 @@ import re
 
 import ufc_ratings as ur
 
-ATTRIBUTES = ("striking", "power", "defence", "wrestling", "grappling", "durability")
+# Striking, wrestling and grappling are the profile formulas, each with its own defence (owner, 2026-11-24, "align
+# with profiles"), so the separate Defence attribute is gone. Power and Durability stay: the card's rare-event views.
+ATTRIBUTES = ("striking", "power", "wrestling", "grappling", "durability")
 MIN_STAT_FIGHTS = ur.MIN_STAT_FIGHTS
 MIN_ROSTER = ur.MIN_ROSTER
 MIN_DIVISION_PEERS = ur.MIN_DIVISION_PEERS
-SHRINK_K = {"striking": 4, "defence": 4, "wrestling": 4, "grappling": 4, "power": 8, "durability": 8}
+SHRINK_K = {"striking": 4, "wrestling": 4, "grappling": 4, "power": 8, "durability": 8}
 BANDS = ((75, "green"), (55, "gold"), (35, "orange"), (0, "red"))   # same cut points as the profile engine
 
 
@@ -68,10 +70,7 @@ def raw_attribute(window: dict, name: str):
         return power_raw(window)
     if name == "durability":
         return durability_raw(window)
-    # The card tiles show Defence and Durability separately, so their striking, wrestling and grappling stay at the
-    # formulas live before 2026-11-24 (the profile's skills include their own defence since then).
-    card = {"striking": "strikeOutput", "wrestling": "wrestlingCard", "grappling": "grapplingCard"}
-    return ur.raw_skill(window.get("rates") or {}, window, card.get(name, name))
+    return ur.raw_skill(window.get("rates") or {}, window, name)
 
 
 def eligible(window) -> bool:

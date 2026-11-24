@@ -14,10 +14,10 @@ Each attribute is a **percentile: 1 to 99 against the other UFC fighters** in th
 ## Attributes and weights (existing, except Power and Durability)
 | Attribute | Made from (weight) |
 |---|---|
-| **Striking** | strikes landed per min (18%), strike differential per min (22%), accuracy (15%), knockdowns per 15 min (20%), KO/TKO wins per fight (25%) |
-| **Wrestling** | takedowns per 15 (34%), takedown accuracy (21%), control-time share (28%), takedown defence (12%), reversals (5%) |
-| **Grappling** | submission attempts per 15 (30%), submission wins per fight (50%), reversals (15%), control share (5%) |
-| **Defence** | strikes absorbed per min, lower is better (31%), strike defence (29%), takedown defence (22%), knockdowns absorbed per 15, lower is better (12%), opponent control share, lower is better (6%) |
+| **Striking** | Same as the fighter profiles since 24 Nov 2026 (`STRIKING_WEIGHTS` in `scripts/ufc_ratings.py`): 60% output (landed 10, differential 17, accuracy 8, knockdowns 11, KO wins 14), 40% defence (strike defence 12, knockdowns absorbed 12, strikes absorbed 9, KO/TKO losses 7) |
+| **Wrestling** | Same as the profiles (`WRESTLING_WEIGHTS`): takedowns 25, accuracy 12, control won 23 / control conceded 24, taken down per 15 min 6, takedown defence 5, reversals 5 |
+| **Grappling** | Same as the profiles (`GRAPPLING_WEIGHTS`): submission attempts 20, submission wins 28, control won 12 / submission losses 15, opponents' attempts 10, reversals 8, control conceded 7 |
+| ~~Defence~~ | Removed from the card on 24 Nov 2026 (owner, "align with profiles"): each skill above includes its own defence. Earlier: strikes absorbed 31%, strike defence 29%, takedown defence 22%, knockdowns absorbed 12%, opponent control 6%. |
 | **Recent form** | last five decided fights, newest counts most (5,4,3,2,1), starting from a neutral prior; each result is nudged up or down by the opponent's strength (at most plus or minus 25% of a win) |
 | **Power (new)** | knockdowns per 15 min (50%), KO/TKO wins per fight (50%). Finishing damage, not volume: Striking rewards how much you land, Power rewards what it does. Both components must be measured. |
 | **Durability (new)** | knockdowns absorbed per 15 min, lower is better (40%); share of recorded fights lost by KO/TKO, lower is better (40%); strikes absorbed per min, lower is better (20%). Ability to take punishment and still be there at the end. Both of the first two must be measured. |

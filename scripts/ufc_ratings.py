@@ -101,12 +101,6 @@ COMPONENTS = {
                  ("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
                  ("kdAbs15", "Knockdowns absorbed per 15 min (lower is better)", "rate"),
                  ("koLossShare", "KO/TKO losses per fight (lower is better)", "pct")],
-    # Output only (the pre-2026-11-24 striking formula), for the fight-card tiles, which show defence separately.
-    "strikeOutput": [("slpm", "Significant strikes landed per min", "rate"),
-                 ("diffPm", "Strike differential per min", "rate"),
-                 ("strAcc", "Significant strike accuracy", "pct"),
-                 ("kd15", "Knockdowns per 15 min", "rate"),
-                 ("koWinShare", "KO/TKO wins per fight", "pct")],
     # Order matters: the grappling gate reads the first three (any submission evidence), wrestling the first.
     "grappling": [("sub15", "Submission attempts per 15 min", "rate"),
                   ("subWinShare", "Submission wins per fight", "pct"),
@@ -192,17 +186,6 @@ def specs(rates: dict, window: dict) -> dict:
                      (_between(window.get("koWinShare"), 0, .50), W["koWinShare"]),
                      (_between(_pct(r.get("strDef")), 35, 75), W["strDef"]), (_between(sapm, 6.0, 1.2), W["sapm"]),
                      (_between(r.get("kdAbs15"), 1.0, 0), W["kdAbs15"]), (_between(window.get("koLossShare"), .25, 0), W["koLossShare"])],
-        # The fight-card tiles' wrestling and grappling, frozen at the formulas live before 2026-11-24 (#453), because the
-        # tiles show Defence separately; changing them is a separate owner decision.
-        "grapplingCard": [(_between(r.get("sub15"), 0, 3.0), .20), (_between(window.get("subWinShare"), 0, .35), .30),
-                          (_between(window.get("subLossShare"), .25, 0), .20), (_between(r.get("subAbs15"), 2.0, 0), .10),
-                          (_between(r.get("rev15"), 0, 2), .10), (_between(r.get("netCtrl"), -.40, .50), .10)],
-        "wrestlingCard": [(_between(r.get("td15"), 0, 5.5), .20), (_between(_pct(r.get("tdAcc")), 20, 65), .10),
-                          (_between(_pct(r.get("tdDef")), 40, 95), .30), (_between(r.get("netCtrl"), -.40, .50), .35),
-                          (_between(r.get("rev15"), 0, 2), .05)],
-        "strikeOutput": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
-                         (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
-                         (_between(window.get("koWinShare"), 0, .50), .25)],
         # Offence 60%, defence 40%, like striking (owner, 2026-11-24). Weights in GRAPPLING_WEIGHTS / WRESTLING_WEIGHTS.
         "grappling": [(_between(r.get("sub15"), 0, 3.0), G["sub15"]),
                       (_between(window.get("subWinShare"), 0, .35), G["subWinShare"]),
@@ -227,11 +210,11 @@ def specs(rates: dict, window: dict) -> dict:
 def raw_skill(rates: dict, window: dict, skill: str):
     """Weighted composite before shrinkage, with the JS engine's evidence gates."""
     s = specs(rates, window)[skill]
-    if skill in ("striking", "strikeOutput"):
+    if skill == "striking":
         return _sum_parts(s, .50)
-    if skill in ("grappling", "grapplingCard"):
+    if skill == "grappling":
         return _sum_parts(s, .45) if any(v is not None for v, _ in s[:3]) else None
-    if skill in ("wrestling", "wrestlingCard"):
+    if skill == "wrestling":
         return _sum_parts(s, .53) if s[0][0] is not None else None
     if skill == "defence":
         return _sum_parts(s, .48) if s[0][0] is not None or s[1][0] is not None else None
