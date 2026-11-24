@@ -47,6 +47,7 @@ BY_EYE = {
     "ishmael-davis": "the forearm covers the face",
     "naoya-inoue": "award-ceremony still: the trophy in front of him leaves shards in the cutout and holes in the jacket",
     "teofimo-lopez": "video still in a gym: a dark object behind his head is kept as part of the figure",
+    "litzy-vazquez": "mid-jab: the fist sits in front of the chin and the crop comes out as a torso with a small head",
     "lauren-price": "the belts fill the frame and the head sits small above them",
     "ryan-garcia": "a weigh-in face-off: two other people in the frame, both masked, the subject not told apart",
     "teremoana-teremoana": "mid-punch, the torso fills the frame and the head is small",
