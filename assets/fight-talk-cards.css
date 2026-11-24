@@ -1,0 +1,53 @@
+/* Fight Talk cards, design A (owner, 24 Nov 2026). Loaded after fight-talk.css.
+   BEFN's own post cards; the platform's embed loads only after "Show post". */
+.tk-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 6px}
+.tk-bar .tk-seg{display:flex;background:#111013;border-radius:12px;padding:4px;gap:4px;border:0}
+.tk-bar .tk-seg button{min-height:44px;padding:0 18px;border:0;border-radius:9px;background:transparent;color:#fff;font:800 14px 'DM Sans',system-ui,sans-serif;cursor:pointer}
+.tk-bar .tk-seg button[aria-pressed="true"]{background:#f3c332;color:#111013}
+.tk-chips{display:flex;flex-wrap:wrap;gap:6px}
+.tk-chips button{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #d9d2c4;background:#fff;color:#111013;font:700 13px 'DM Sans',system-ui,sans-serif;cursor:pointer}
+.tk-chips button[aria-pressed="true"]{background:#111013;color:#fff;border-color:#111013}
+.tk-search{flex:1;min-width:200px;max-width:340px}
+.tk-search .talk-filter{margin:0}
+.tk-search label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.tk-search input{width:100%;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #d9d2c4;background:#fff;font:500 15px 'DM Sans',system-ui,sans-serif;box-sizing:border-box}
+.tk-more-filters{flex-basis:100%}
+.tk-more-filters>summary,.tk-about>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font:800 14px 'DM Sans',system-ui,sans-serif;color:#111013}
+.tk-more-filters[open]{background:#fff;border:1px solid #e5e1d8;border-radius:12px;padding:0 14px 14px}
+.tk-hot,.tk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.tk-card{background:#fff;border:1px solid #e5e1d8;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;color:#111013;min-width:0}
+.tk-card.is-hot{background:#151115;color:#fff;border:0;border-bottom:4px solid #e0a400}
+.tk-head{display:flex;align-items:center;gap:10px}
+.tk-av,.tk-card .tk-av{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;flex:none;position:relative;background:#2c262b;border:2px solid #e0a400;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}
+.tk-av img{width:100%;height:100%;object-fit:cover;object-position:top}
+.tk-who{flex:1;min-width:0;display:flex;flex-direction:column}
+.tk-who strong{font-size:15px;line-height:1.25}
+.tk-who small{color:#5b565d;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tk-card.is-hot .tk-who small,.tk-card.is-hot .tk-foot{color:#c9c1c4}
+.tk-role{font-size:12px;font-weight:800;border-radius:4px;padding:3px 7px;background:#111013;color:#f3c332;white-space:nowrap}
+.tk-card.is-hot .tk-role{background:#f3c332;color:#111013}
+.tk-r-promoter .tk-role,.tk-r-media .tk-role,.tk-r-commentator .tk-role,.tk-r-fan .tk-role,.tk-r-meme .tk-role{background:#efe8dd;color:#4a454c}
+.tk-text{margin:0;font-size:15px;line-height:1.45;white-space:pre-line;overflow-wrap:anywhere}
+.tk-card.is-hot .tk-text{font-size:16px}
+.tk-link{font-size:13px;color:#4a454c;background:#efe8dd;border-radius:6px;padding:4px 8px;align-self:flex-start;display:inline-block;margin-top:8px}
+.tk-card.is-hot .tk-link{background:#2c262b;color:#d8d0d3}
+.tk-body .talk-native-card{margin:0;padding:0;border:0;background:none}
+.tk-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:13px;color:#5b565d}
+.tk-plat{display:inline-flex;align-items:center}
+.tk-plat svg{width:18px;height:18px}
+.tk-show{margin-left:auto;min-height:44px;padding:0 4px;border:0;background:none;color:#b0141f;font:800 14px 'DM Sans',system-ui,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.tk-card.is-hot .tk-show{color:#f3c332}
+.tk-show:focus-visible,.tk-chips button:focus-visible,.tk-seg button:focus-visible{outline:3px solid #f3c332;outline-offset:2px}
+.tk-about{margin-top:28px;background:#fff;border:1px solid #e5e1d8;border-radius:10px;padding:4px 14px 12px;font-size:14px;color:#4a454c}
+@media(max-width:760px){
+ .tk-hot,.tk-grid{grid-template-columns:1fr}
+ .tk-bar{gap:8px}
+ .tk-bar .tk-seg{flex:1}.tk-bar .tk-seg button{flex:1}
+ .tk-chips{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none}
+ .tk-chips button{flex:none}
+ .tk-search{max-width:none;flex-basis:100%}
+}
+.tk-open{min-height:44px;display:inline-flex;align-items:center;color:#4a454c;font-weight:700;text-decoration:none}
+.tk-card.is-hot .tk-open{color:#d8d0d3}
+.tk-open:not(.tk-show){margin-left:2px}
+.tk-quiet{color:#5b565d;font-style:italic}.tk-card.is-hot .tk-quiet{color:#c9c1c4}

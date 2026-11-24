@@ -2,6 +2,19 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fight Talk: talk cards)
+- **Fight Talk posts are BEFN's own cards** (owner picked design A, "Talk cards", from two mock-ups). Each card shows the face, name, role (Champion, Contender, Prospect, Fighter, Promoter, Media and so on), platform, time, the post's own text and likes and replies. Desktop shows 3 columns; phones show 1.
+- **The platform's embed loads only when the reader taps "Show post".** Before this, the page loaded every X, Instagram, Threads and Bluesky widget up front. Every card also keeps a direct "Open ↗" link to the original post.
+- **"Hottest right now"** is the three most-engaged posts in view: likes, plus replies ×3, plus shares ×2. It shows on page one and is hidden while a search is active.
+- **One slim bar:**
+  - a Fighters / Everyone switch (Everyone stays the default);
+  - platform chips;
+  - fighter search;
+  - "More filters", which holds Latest / Last 4 weeks, the detailed "Posts from", the order and the promotion.
+- **"About this feed" is at the foot of the page.** It holds the freshness line (#520), the post sources and the tracked fighter profiles. This follows DIRECTION rule 6: staff details never lead a public page.
+- **Only the post's own words are shown.** A collector's or reporter's summary never stands in for them; a card with no text says "Tap Show post to read it on <platform>". The "Link or video in the post" tag shows only on short posts.
+- The code is `talkCard` in `assets/app-inline-2.js`, with styles in `assets/fight-talk-cards.css`, which loads after `fight-talk.css`. `tests/test-fight-talk.cjs` now loads `assets/talk-status.js`; it had failed on main since #520. It also checks the new layout.
+
 ## 2026-11-24 (Analysis pages)
 - **Boxing's Analysis tab is a real page** (owner chose all four section groups from a mock-up). The page has:
   - **The title picture:** every division by WBA, WBC, IBF and WBO, with faces. A gold row marks undisputed and tinted cells mark one boxer holding several belts. WBA "Regular" holders are shown in grey as "(regular)" (owner's choice), not as Vacant. Counts sit above: undisputed, unified, and split (no one holds two).
