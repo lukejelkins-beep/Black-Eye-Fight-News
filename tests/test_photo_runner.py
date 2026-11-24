@@ -26,7 +26,13 @@ RECENT = (date.today() - timedelta(days=10)).isoformat()
 FUTURE = (date.today() + timedelta(days=20)).isoformat()
 
 
-def png(color=(90, 60, 40), size=(600, 750)):
+_png_n = [0]
+
+
+def png(color=None, size=(600, 750)):
+    # Each call a different colour: one image file for two fighters is refused as a placeholder.
+    _png_n[0] += 1
+    color = color or (90, 60, (40 + _png_n[0]) % 256)
     buf = io.BytesIO()
     Image.new("RGB", size, color).save(buf, "PNG")
     return buf.getvalue()
@@ -220,6 +226,21 @@ class Staging(Base):
         self.assertEqual(blocked[0]["category"], "blocked host")
         state = json.loads((self.root / "qa/photo-runner/state.json").read_text())
         self.assertEqual(state["attempts"]["mma|pflperson"]["category"], "blocked host")
+
+
+    def test_one_image_file_for_several_fighters_is_a_placeholder(self):
+        runner = load(REPO, "photo-runner.py")
+        with tempfile.TemporaryDirectory() as tmp:
+            stage = Path(tmp)
+            for n in ("a", "b", "c"):
+                Image.new("RGB", (40, 50), "#222").save(stage / f"{n}.webp")
+            row = lambda sha: {"sourceUrl": "https://x/1.png", "sha256": sha, "sourceWidth": 40, "sourceHeight": 50}
+            entries = [{"sport": "mma", "name": n, "portrait": f"{n.lower()}.webp", "credit": "PFL", "row": row(sha)}
+                       for n, sha in (("A", "same"), ("B", "same"), ("C", "own"))]
+            skips = []
+            m = runner.write_manifest_and_sheet(stage, "t", entries, skips, {})
+            self.assertEqual([e["name"] for e in m["entries"]], ["C"])
+            self.assertEqual(sorted(x["name"] for x in skips if x["category"] == "placeholder"), ["A", "B"])
 
 
 class Approve(Base):

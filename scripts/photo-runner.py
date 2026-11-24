@@ -35,6 +35,7 @@ not fetched again. See docs/design/IMAGE-GUIDE.md, "Photo runner".
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import csv
 import hashlib
 import importlib.util
@@ -533,6 +534,13 @@ def write_manifest_and_sheet(stage, run_id, entries, skips, blocked, kind="fetch
                   "size": row.get("originalSize") or (f"{row['sourceWidth']}x{row['sourceHeight']}" if row.get("sourceWidth") else ""),
                   "fetchedAt": row.get("fetchedAt") or row.get("intake", {}).get("at") or now_iso(),
                   "bytes": f.stat().st_size if f.exists() else 0})
+    # The same image file for two or more fighters is a site placeholder (PFL's dark silhouette was staged for
+    # 18 fighters on 2026-11-24), never a portrait: refused before anyone has to look at it.
+    shared = Counter(e["sha256"] for e in entries if e.get("sha256"))
+    for e in [e for e in entries if e.get("sha256") and shared[e["sha256"]] > 1]:
+        entries.remove(e)
+        skips.append({"sport": e["sport"], "name": e["name"], "category": "placeholder",
+                      "reason": f"the same image file as {shared[e['sha256']] - 1} other fighter(s): a placeholder, not a portrait"})
     manifest = {"runId": run_id, "kind": kind, "createdAt": now_iso(), "approved": False,
                 "note": "Staged only: nothing here is registered or published until "
                         f"`python3 scripts/photo-runner.py approve {run_id}`.",
