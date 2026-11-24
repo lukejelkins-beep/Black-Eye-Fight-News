@@ -40,6 +40,7 @@ MIN_FRAME_WIDTH = 0.65  # see judge_frame()
 # automatic checks can see that a face is turned away or behind a glove. Named here so a
 # later run does not take them back; each of these boxers keeps the photograph in a disc.
 BY_EYE = {
+    "viddal-riley": "hard vertical crop edge on the right of the cut-out",
     "adam-azim": "full-length side-on shot: the head is a fraction of the frame",
     "alberto-palmetta": "press-conference shot: a microphone across the chin, mouth open mid-sentence",
     "conah-walker": "full-length pose with the arms across the chest, the head too small to read",

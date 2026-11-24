@@ -317,6 +317,8 @@ NOT_FETCHED = {
 # ringside. These were looked at and rejected, so a later run does not take them back.
 # A boxer listed here keeps the tile until a usable photograph exists.
 REVIEWED_OUT = {
+    "charly-suarez": "cropped casual selfie, not a portrait",
+    "robin-sirwan-safar": "in-ring arena shot, not a portrait",
     "keith-thurman": "the lead photograph is two fighters mid-exchange; which one he is cannot be told from a thumbnail",
     "ramla-ali": "the lead photograph is a ringside moment in black and white with her face turned away",
     "erislandy-lara": "the lead photograph is mid-fight, side-on, and the face is small at thumbnail size",
