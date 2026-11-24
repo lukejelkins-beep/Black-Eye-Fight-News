@@ -2,6 +2,21 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Analysis pages)
+- **Boxing's Analysis tab is a real page** (owner chose all four section groups from a mock-up). The page has:
+  - **The title picture:** every division by WBA, WBC, IBF and WBO, with faces. A gold row marks undisputed and tinted cells mark one boxer holding several belts. WBA "Regular" holders are shown in grey as "(regular)" (owner's choice), not as Vacant. Counts sit above: undisputed, unified, and split (no one holds two).
+  - **Title fights coming up:** the next four weeks, with the poster and the belts at stake, plus Unification and Vacant tags. Eliminators are left out.
+  - **How fights ended:** the KO/TKO, decision and other split of the boxing results BEFN holds from the last 14 days, with the latest stoppages.
+  - **Most title defences:** current full champions, from the title tracker.
+  - **Unbeaten records ended:** losers whose sourced pre-fight record had no losses, for example Pacheco at 26–0.
+  - **Unbeaten watch:** from the Boxing hub's roster, with records brought up to date from results.
+- **Reign lengths are not shown.** The title tracker stores them as fixed text ("952 days") with no review date, so they would go stale. Defences are used instead.
+- **MMA's Analysis tab gets a top section above the UFC stats leaderboards** (owner's choice): the UFC champions (with "since" and defences), the last two weeks' MMA finishes (KO/TKO, submission, decision, other) and UFC title fights coming up. A reported card keeps its "Reported" tag.
+- Code: `assets/fight-analysis.js` (pure builders, which fetch the schedule and results themselves) and `assets/fight-analysis.css`. `tests/test-fight-analysis.cjs` was added to the release readiness gate.
+- **The two long-failing tests were not real bugs.** CI runs both and they are green there.
+  - `tests/ufc-ratings-parity.cjs` needed its fixture path as an argument. Run without one, it now builds the fixture itself, as CI does.
+  - `test-ufc-profile-visual.mjs` needs Playwright, which CI installs and the repo doesn't list. It is left as is; adding it to devDependencies would need the owner's decision.
+
 ## 2026-11-24 (Fights: Results cards)
 - **Results get the same treatment as Upcoming** (owner chose "Results tab redesign" after merging #511). Each finished event is a card showing:
   - the event poster BEFN holds, shown whole on dark; otherwise both main-event fighters' faces, the winner large with a sport-colour ring and the loser smaller and greyed;
