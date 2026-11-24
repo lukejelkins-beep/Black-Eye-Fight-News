@@ -5,7 +5,7 @@ Format: date — decision — who — where it shows up.
 ## 2026-11-25 (UFC profiles: BJJ and ADCC added to the amateur career)
 - **BJJ and ADCC results now appear in the same "Amateur career" card and badges** (owner chose "Add BJJ/ADCC to profiles"). New badges: *ADCC world champion / titles ×N / medallist*, *ADCC Worlds competitor*, and IBJJF black-belt titles (*BJJ world*, else *BJJ Pan* / *BJJ European*). Badge priority: Olympic, World, ADCC, BJJ, continental, national team; three at most. BJJ rows carry a small belt-colour bar. Lists longer than eight results fold behind "Show all N results".
   - **Gate:** `research/ufc-bjj-credentials/profile-verified.json` names the fighters whose identity is corroborated for each results file. Only those, only adult or juvenile divisions (no masters, teens or kids), only names that start and end like the fighter's, and only rows with an https source are shown. ADCC entries count only where a bout is documented ("Competed").
-  - Result: 117 fighters, 465 results (30 with BJJ or ADCC rows). — owner — UFC profiles, #(this PR)
+  - Result: 117 fighters, 465 results (30 with BJJ or ADCC rows). — owner — UFC profiles, #524
 
 ## 2026-11-24 (Analysis pages)
 - **Boxing's Analysis tab is a real page** (owner chose all four section groups from a mock-up). The page has:
