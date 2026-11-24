@@ -4,7 +4,7 @@
  * "Amateur career" list with one row per result and a link to its source. */
 (function(){
  'use strict';
- const DATA_URL='data/ufc-amateur-credentials.json?v=20261125-am4';
+ const DATA_URL='data/ufc-amateur-credentials.json?v=20261125-am5';
  let data=null,loading=null;
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const safeURL=u=>/^https:\/\//i.test(u||'')?u:'';
