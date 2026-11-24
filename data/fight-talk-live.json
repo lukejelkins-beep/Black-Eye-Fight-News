@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-24T19:56:20.904Z",
-  "checkedAt": "2026-11-24T18:44:49.697Z",
-  "updatedAt": "2026-11-24T15:04:32Z",
+  "attemptedAt": "2026-11-24T20:17:26.546Z",
+  "checkedAt": "2026-11-24T20:17:26.546Z",
+  "updatedAt": "2026-11-24T19:01:49Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 4,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 9,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 17,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -54,21 +54,119 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 449,
-    "scheduledEntries": 29,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 17,
-      "X": 9,
-      "Threads": 3
+      "Threads": 12,
+      "X": 27,
+      "Instagram": 39,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 0,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n33dfvpmlc2r",
+      "cid": "bafyreicn4ss2crje7kru4qyrsqh2jtct6cj336uwa6bnoiaisnqm33tqye",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC re-signs 24-year-old prospect despite claim that the promotion weren’t re-signing unranked fighters",
+      "postedAt": "2026-11-24T19:01:49Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n33dfvpmlc2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n33a5hhjro2r",
+      "cid": "bafyreigsyhevq4rhawtclfhsr7tczlvwzuaviya2ddoqcelip4s6lepn7q",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Paddy Pimblett says he and Ilia Topuria would ‘bring The Ultimate Fighter back’ as he sends message to UFC",
+      "postedAt": "2026-11-24T18:03:24Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n33a5hhjro2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n334mci56z2p",
+      "cid": "bafyreig4m2zxcbg62oflngtvrvxujcbrowuiuuxfb7dnygv3kqxoh7j2ge",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Josh Hokit fires back at Bruce Buffer over UFC 334 middle finger incident: ‘You’d get beat up’",
+      "postedAt": "2026-11-24T17:00:07Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n334mci56z2p",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n32zds77zw2o",
+      "cid": "bafyreidstxm7rgt4phnbyepj25vfhi4ady3625mspe7ntrkpuo5i4k74ly",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Jiri Prochazka called out by former champion after claiming he will continue fighting",
+      "postedAt": "2026-11-24T16:01:41Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n32zds77zw2o",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n32w5m5ook2r",
       "cid": "bafyreiahk2jp7qjfsk2vgicq4wllebmjja7nq5nqwqtjps3jm742amizua",
@@ -90,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -114,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -210,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -306,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -402,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -666,7 +764,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -742,54 +840,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ymc6iqcm2f",
-      "cid": "bafyreibrcjeywckfosfelxkurqpkc3y5rzpovlphdvdxk3ci3a3twokutm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Stephen Thompson keen to continue working with UFC after Dana White’s TV offer",
-      "postedAt": "2026-11-23T17:02:48Z",
-      "date": "24 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ymc6iqcm2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2yismzwh52d",
-      "cid": "bafyreifllnwokwe6psfrfnuqjj2cupujy4n5i6dgziv2h54drmxka7c5vu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC should strip Islam Makhachev of welterweight title after Carlos Prates snub, says former champion",
-      "postedAt": "2026-11-23T16:00:26Z",
-      "date": "24 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2yismzwh52d",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2yewoyuph2b",
       "cid": "bafyreifa22tu742rvpanoqx4xbhw2qesnmhlcvj6estdubo4i3af7crm4i",
       "platform": "Bluesky",
@@ -859,54 +909,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-24T10:04:40.211Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ydkp4iij2o",
-      "cid": "bafyreihjgiq2rtpusspfbvvuffb6jpq2ieqxs4ozj3vslsd5qz2kpyvyce",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Dana White reveals Deontay Wilder’s new opponent for fight on Fury vs Joshua card",
-      "postedAt": "2026-11-23T14:26:31Z",
-      "date": "24 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ydkp4iij2o",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ycdabopy2r",
-      "cid": "bafyreiedjs3537twm22hlopokhdpdetca3e5q3f6o6tn6gestzmytotgbq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC Dallas update: Yair Rodriguez card complete with 13 fights confirmed",
-      "postedAt": "2026-11-23T14:04:26Z",
-      "date": "24 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ycdabopy2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1674,7 +1676,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1842,7 +1844,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1866,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1890,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1914,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1938,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1962,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1986,7 +1988,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2454,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T15:45:46.645Z",
+      "engagementCheckedAt": "2026-11-24T20:17:26.546Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
