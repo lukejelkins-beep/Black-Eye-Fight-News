@@ -51,6 +51,47 @@ def test_salita_hero_keyed_by_billing_order():
     assert card["stephanie pineiro"][0].endswith("steph-72.png")
 
 
+TOPRANK_SITEMAP = """<urlset>
+<url><loc>https://www.toprank.com/fighters</loc></url>
+<url><loc>https://www.toprank.com/fighters/angelo-leo</loc></url>
+<url><loc>https://www.toprank.com/fighters/richard-torrez-jr</loc></url>
+<url><loc>https://www.toprank.com/events/lopez-vs-leo</loc></url>
+</urlset>"""
+
+TOPRANK_PAGE = """<div class="fighter-hero__img" data-v-ec3da71e><img onerror="x" alt="Angelo Leo" loading="lazy"
+srcset="https://api.toprank.com/storage/uploads/284/conversions/Leo-thumb.webp 1x"
+src="https://api.toprank.com/storage/uploads/284/conversions/Leo-thumb.webp" data-v-ec3da71e></div>
+<h1 class="title h1 alt white" data-v-ec3da71e><!--[-->Angelo Leo<!--]--></h1>"""
+
+
+def test_toprank_roster_is_its_fighter_pages():
+    roster = intake.parse_toprank(TOPRANK_SITEMAP, "sitemap")
+    assert set(roster) == {"angelo leo", "richard torrez jr"}
+    assert roster["angelo leo"] == (None, "https://toprank.com/fighters/angelo-leo")
+    assert intake.norm("Richard Torrez Jr.") in roster
+
+
+def test_toprank_photo_needs_printed_name_and_file_name():
+    url = intake.toprank_hero(TOPRANK_PAGE, "Angelo Leo")
+    assert url.endswith("/284/conversions/Leo-thumb.webp")
+    # The page names someone else: refused, not guessed at.
+    import pytest
+    with pytest.raises(intake.Refused):
+        intake.toprank_hero(TOPRANK_PAGE, "Luis Alberto Lopez")
+    # The printed name matches but the file is somebody else's.
+    with pytest.raises(intake.Refused):
+        intake.toprank_hero(TOPRANK_PAGE.replace("Leo-thumb", "Lopez-thumb"), "Angelo Leo")
+    assert intake.toprank_hero("<h1>Angelo Leo</h1>", "Angelo Leo") is None
+
+
+def test_toprank_rows_carry_their_own_attestation():
+    src = next(s for s in intake.SOURCES if s["id"] == "toprank")
+    assert src["promoter"] == "Top Rank"
+    assert src["attestation"] == intake.ATTESTATIONS["2026-11-24"]
+    assert "Top Rank" in intake.ATTESTATIONS["2026-11-24"]
+    assert all(a in intake.RIGHTS_NOTE for a in intake.ATTESTATIONS.values())
+
+
 def test_commons_picks_and_rejections_are_disjoint():
     assert not set(intake.COMMONS_PICKS.values()) & set(intake.REVIEWED_OUT_FILES)
     for slug, title in intake.COMMONS_PICKS.items():

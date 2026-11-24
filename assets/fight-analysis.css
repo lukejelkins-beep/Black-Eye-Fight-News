@@ -1,0 +1,61 @@
+/* Analysis pages (fight-analysis.js). Builds on the .sov blocks in sport-overview.css. */
+#main .fa-h1{font:800 26px/1.2 var(--display,'Unbounded',sans-serif);margin:18px 0 0;color:var(--t-ink,#111013)}
+#main .fa-mma-h1{max-width:1200px;margin:18px auto 0}
+#main .fa-mount{display:block}
+#main .fa .fa-f{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top;background:#ece6dc;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--mute);border:2px solid var(--ac)}
+#main .fa .fa-f.is-l{width:38px;height:38px;border-color:var(--line);filter:grayscale(1);margin-left:-12px;align-self:flex-end;font-size:12px}
+#main .fa .fa-f.is-xs{width:30px;height:30px;font-size:12px;border-width:1px;margin-right:6px}
+#main .fa-stats{display:flex;gap:10px;margin-bottom:12px}
+#main .fa-stats div{flex:1;background:var(--dark);color:#fff;border-radius:10px;padding:12px 14px}
+#main .fa-stats b{display:block;font:800 28px var(--display,'Unbounded',sans-serif);color:var(--gold)}
+#main .fa-stats span{font-size:13px;color:#ddd5d8}
+#main .fa-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+#main .fa-grid{width:100%;border-collapse:separate;border-spacing:0 6px;min-width:600px}
+#main .fa-grid thead th{text-align:left;font:800 12px 'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding:4px 8px}
+#main .fa-grid tbody th{text-align:left;font:700 14px 'DM Sans',sans-serif;color:var(--ink);background:#fff;border-radius:8px 0 0 8px;white-space:nowrap;padding:6px 10px}
+#main .fa-grid td{background:#fff;padding:6px 8px;font-size:13px;font-weight:600}
+#main .fa-grid td:last-child{border-radius:0 8px 8px 0}
+#main .fa-grid td.is-same{background:#fff4d6}
+#main .fa-grid td.is-regular{color:#8a8287;font-weight:500}
+#main .fa-grid td small{font-size:12px;font-weight:500}
+#main .fa-grid tr.is-undisputed th,#main .fa-grid tr.is-undisputed td{background:var(--gold)}
+#main .fa-name{display:inline-flex;align-items:center;white-space:nowrap}
+#main .fa-vac{color:#8a8287;font-style:italic}
+#main .fa-tf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#main .fa-tf-card{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0}
+#main .fa-tf-p{width:120px;height:72px;object-fit:contain;background:var(--dark);border-radius:6px;flex:none}
+#main .fa-tf-p.is-pair{display:flex;align-items:center;justify-content:center;background:#efe8dd}
+#main .fa-tf-body{min-width:0;display:flex;flex-direction:column}
+#main .fa-tf-body strong{display:block;font-size:15px}
+#main .fa-belts{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+#main .fa-belts i{font-style:normal;font-size:12px;font-weight:800;background:#111013;color:var(--gold);border-radius:4px;padding:2px 6px}
+#main .fa-belts em{font-style:normal;font-size:12px;font-weight:800;background:#cf1824;color:#fff;border-radius:4px;padding:2px 6px}
+#main .fa-belts em.is-amber{background:#fff4d6;color:#7a4b00;border:1px solid #f0d48a}
+#main .fa-two{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+#main .fa-mma .fa-two{grid-template-columns:1fr 1fr}
+#main .fa-mma .fa-tf{grid-template-columns:1fr}
+#main .fa-bar{display:grid;grid-template-columns:150px 1fr 32px;align-items:center;gap:8px;margin:6px 0;font-size:14px}
+#main .fa-bar i{display:block;height:16px;border-radius:4px;min-width:2px}
+#main .fa-bar i.is-ko{background:#cf1824}#main .fa-bar i.is-sub{background:#e0a400}#main .fa-bar i.is-dec{background:#111013}#main .fa-bar i.is-oth{background:#b8b0b3}
+#main .fa-bar b{text-align:right}
+#main .fa-note{margin:8px 0 0}
+#main .fa-stops{margin-top:12px}
+#main .fa-stops div{display:flex;align-items:center;font-size:14px;margin-top:6px}
+#main .fa-def{list-style:none;margin:0;padding:0}
+#main .fa-def li{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:6px}
+#main .fa-rank{font:800 16px var(--display,'Unbounded',sans-serif);width:22px;color:#cf1824}
+#main .fa-def-n{flex:1;min-width:0}#main .fa-def small,#main .fa-ub small{display:block;color:var(--mute);font-size:12px}
+#main .fa-def em{font:800 22px var(--display,'Unbounded',sans-serif);font-style:normal}
+#main .fa-ub{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+#main .fa-ub>a,#main .fa-ub>div{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0}
+#main .fa-ub b{font-size:14px}
+#main .fa-foot{margin-top:24px}
+@media (max-width:760px){
+ #main .fa-two,#main .fa-mma .fa-two{grid-template-columns:1fr;gap:0}
+ #main .fa-tf{grid-template-columns:1fr}
+ #main .fa-ub{grid-template-columns:1fr 1fr}
+ #main .fa-stats b{font-size:22px}
+ #main .fa-bar{grid-template-columns:110px 1fr 28px}
+ #main .fa-tf-p{width:96px;height:60px}
+ #main .fa-h1{font-size:22px}
+}

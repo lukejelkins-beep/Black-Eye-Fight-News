@@ -1,10 +1,24 @@
 /* CI parity check: the Python ratings port (scripts/ufc_ratings.py) must give the
  * same raw skill composites as the browser engine (assets/fighter-power-index.js).
- * Usage: node tests/ufc-ratings-parity.cjs <fixture.json from build-ufc-stats.py --parity-out> */
+ * Usage: node tests/ufc-ratings-parity.cjs <fixture.json from build-ufc-stats.py --parity-out>
+ * With no argument (a plain local run of tests/*) it builds the fixture itself, writing the stats build's output to a
+ * temporary directory so no file in data/ changes. CI passes the fixture from its own build step. */
 const assert=require("node:assert/strict");
 const fs=require("node:fs");
+const os=require("node:os");
+const path=require("node:path");
+const {execFileSync}=require("node:child_process");
 const engine=require("../assets/fighter-power-index.js");
-const rows=JSON.parse(fs.readFileSync(process.argv[2],"utf8"));
+function buildFixture(){
+ const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"befn-ratings-parity-"));
+ const fixture=path.join(tmp,"ratings-parity.json");
+ try{
+  execFileSync(process.env.PYTHON||"python3",[path.join(__dirname,"../scripts/build-ufc-stats.py"),
+   "--out",path.join(tmp,"ufc-stats"),"--parity-out",fixture],{cwd:path.join(__dirname,".."),stdio:["ignore","ignore","inherit"]});
+  return fs.readFileSync(fixture,"utf8");
+ }finally{fs.rmSync(tmp,{recursive:true,force:true});}
+}
+const rows=JSON.parse(process.argv[2]?fs.readFileSync(process.argv[2],"utf8"):buildFixture());
 assert(Array.isArray(rows)&&rows.length>=100,"parity fixture needs at least 100 rated fighters");
 let compared=0;
 for(const row of rows){

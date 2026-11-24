@@ -2,6 +2,27 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Analysis pages)
+- **Boxing's Analysis tab is a real page** (owner chose all four section groups from a mock-up). The page has:
+  - **The title picture:** every division by WBA, WBC, IBF and WBO, with faces. A gold row marks undisputed and tinted cells mark one boxer holding several belts. WBA "Regular" holders are shown in grey as "(regular)" (owner's choice), not as Vacant. Counts sit above: undisputed, unified, and split (no one holds two).
+  - **Title fights coming up:** the next four weeks, with the poster and the belts at stake, plus Unification and Vacant tags. Eliminators are left out.
+  - **How fights ended:** the KO/TKO, decision and other split of the boxing results BEFN holds from the last 14 days, with the latest stoppages.
+  - **Most title defences:** current full champions, from the title tracker.
+  - **Unbeaten records ended:** losers whose sourced pre-fight record had no losses, for example Pacheco at 26–0.
+  - **Unbeaten watch:** from the Boxing hub's roster, with records brought up to date from results.
+- **Reign lengths are not shown.** The title tracker stores them as fixed text ("952 days") with no review date, so they would go stale. Defences are used instead.
+- **MMA's Analysis tab gets a top section above the UFC stats leaderboards** (owner's choice): the UFC champions (with "since" and defences), the last two weeks' MMA finishes (KO/TKO, submission, decision, other) and UFC title fights coming up. A reported card keeps its "Reported" tag.
+- Code: `assets/fight-analysis.js` (pure builders, which fetch the schedule and results themselves) and `assets/fight-analysis.css`. `tests/test-fight-analysis.cjs` was added to the release readiness gate.
+- **18 more boxer photos, 10 of them from Top Rank** (owner attested Top Rank on 2026-11-24, and Top Rank's robots.txt allows it):
+  - Top Rank: Leo, Carrington, Espinoza, Jalolov, Torrez Jr., Tucker, Polanco, Gonzalez, Vargas and Delgado.
+  - Matchroom: Brown, Whittaker, Omari Jones, Visioli, Madrimov, Wardley and Parker.
+  - BOXXER: Callum Simpson.
+  - Each was looked at by eye and registered with its attestation. 16 new cut-outs were made; Omari Jones's was dropped by eye.
+  - The UFC Riyadh poster is still not added: no copy of clear official origin could be reached (ufc.com 403, MMA Mania disallows us).
+- **The two long-failing tests were not real bugs.** CI runs both and they are green there.
+  - `tests/ufc-ratings-parity.cjs` needed its fixture path as an argument. Run without one, it now builds the fixture itself, as CI does.
+  - `test-ufc-profile-visual.mjs` needs Playwright, which CI installs and the repo doesn't list. It is left as is; adding it to devDependencies would need the owner's decision.
+
 ## 2026-11-25 (UFC profiles: amateur career and medals)
 - **Verified amateur results now show on UFC profiles** (owner picked option A from a mock, then asked for "shiny gold for gold medals ... something that pops", then "I like it"). Up to three badges sit under the record: *Olympic champion / medallist / Olympian*, *World champion / titles ×N / medallist* (age-group Worlds say "Junior world"), a continental or Commonwealth title or medal, and the national team (or "youth team" / "junior team" when every appearance is age-group). Lower down, an "Amateur career" card lists one row per result: medal or place, event, year, division, country, and a "Source" link.
   - **Medals:** metallic gold, silver and bronze discs with a slow light sweep; places outside the top three are plain cream discs. An Olympic gold badge is a polished gold pill. The sweep stops when the reader has reduced motion on.
