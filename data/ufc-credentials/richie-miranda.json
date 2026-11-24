@@ -1,0 +1,134 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "richie-miranda",
+ "name": "Richie Miranda",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched on UFC.com athlete page"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_other",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "On the 2015-16 University of Nebraska-Kearney wrestling roster at 165 pounds as a junior, transferring from Santa Ana College.",
+     "source_url": "https://lopers.com/sports/wrestling/roster/2015-16",
+     "source_name": "UNK Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2015,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "On the 2016-17 University of Nebraska-Kearney wrestling roster at 165 pounds as a senior.",
+     "source_url": "https://lopers.com/sports/wrestling/roster/2016-17",
+     "source_name": "UNK Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Wrestled two years at Santa Ana College (California junior college) and earned junior college All-American honors twice.",
+     "source_url": "https://unknews.unk.edu/?p=86546",
+     "source_name": "UNK News",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2014,
+     "level": "other",
+     "level_note": "California junior college (not NCAA)",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/richie-miranda"
+    },
+    {
+     "name": "UNK Athletics roster 2015-16",
+     "checked": "2026-11-24",
+     "url": "https://lopers.com/sports/wrestling/roster/2015-16"
+    },
+    {
+     "name": "UNK Athletics roster 2016-17",
+     "checked": "2026-11-24",
+     "url": "https://lopers.com/sports/wrestling/roster/2016-17"
+    }
+   ],
+   "note": "Santa Ana College is a California junior college; UNK was NCAA Division II in these seasons. No NCAA placing found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.603Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

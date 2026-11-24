@@ -1,0 +1,105 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "dan-ige",
+ "name": "Dan Ige",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC featherweight from Hawaii, Wartburg alumnus per UFC bio and Wartburg site."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled for Wartburg as a sophomore in 2010-11, placing in the top two at 157 lbs at an early-season tournament.",
+     "source_url": "https://go-knights.net/news/2010/11/21/WREST_1121104058.aspx",
+     "source_name": "Wartburg Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2011,
+     "level": "ncaa_other",
+     "ncaa_division": "III",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wartburg athletics news release",
+     "checked": "2026-11-24",
+     "url": "https://go-knights.net/news/2010/11/21/WREST_1121104058.aspx"
+    },
+    {
+     "name": "Wartburg athletics article on UFC alumni",
+     "checked": "2026-11-24",
+     "url": "https://go-knights.net/news/2019/12/17/wrestling-former-wartburg-wrestlers-enjoy-success-in-ufc.aspx"
+    }
+   ],
+   "note": "Wartburg site confirms team participation. No individual NCAA result found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.555Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "jim-miller",
+ "name": "Jim Miller",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and division on UFC/ESPN pages."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources",
+  "needs_escalation"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled at Sparta High School in New Jersey.",
+     "source_url": "https://en.wikipedia.org/wiki/Jim_Miller_(fighter)",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    },
+    {
+     "text": "Reportedly spent one season on the Virginia Tech wrestling team as a walk-on before leaving over disagreements with the program.",
+     "source_url": "https://en.wikipedia.org/wiki/Jim_Miller_(fighter)",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia (lead only)",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Jim_Miller_(fighter)"
+    }
+   ],
+   "note": "Wikipedia, citing nj.com, Star-Ledger and About.com, says one year at Virginia Tech (NCAA D-I) as a walk-on. Season not stated and no Virginia Tech roster page found; search budget ran out before it could be confirmed."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.573Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

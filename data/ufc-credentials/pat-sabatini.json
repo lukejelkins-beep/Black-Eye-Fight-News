@@ -1,0 +1,125 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "pat-sabatini",
+ "name": "Pat Sabatini",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by UFC athlete name and division"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Patrick Sabatini of Bristol, Pa. was on the Rider wrestling roster as a sophomore at 157 lbs and wrestled four matches that season.",
+     "source_url": "https://gobroncs.com/roster.aspx?rp_id=1794",
+     "source_name": "Rider Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Sabatini was listed on the Rider wrestling roster again as a junior at 157 lbs.",
+     "source_url": "https://gobroncs.com/roster.aspx?rp_id=1794",
+     "source_name": "Rider Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Rider Athletics wrestling roster profile",
+     "checked": "2026-11-24",
+     "url": "https://gobroncs.com/roster.aspx?rp_id=1794"
+    },
+    {
+     "name": "Rider Athletics 2013-14 roster",
+     "checked": "2026-11-24",
+     "url": "https://gobroncs.com/sports/wrestling/roster/2013-14"
+    },
+    {
+     "name": "Rider Athletics 2010-11 roster",
+     "checked": "2026-11-24",
+     "url": "https://gobroncs.com/sports/wrestling/roster/2010-11"
+    },
+    {
+     "name": "Wikipedia (leads only)",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Pat_Sabatini"
+    }
+   ],
+   "note": "Rider roster pages confirm two seasons on the team. Not listed on 2010-11 or 2013-14 rosters. NCAA championship results were not checked, no placing found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.601Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

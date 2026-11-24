@@ -1,0 +1,135 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "josh-hokit",
+ "name": "Josh Hokit",
+ "identity": {
+  "status": "confirmed",
+  "note": "Heavyweight, Fresno State football/wrestling; UFC profile and Wikipedia match."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources",
+  "needs_escalation"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Walked on and wrestled at Fresno State (NCAA Division I) alongside football.",
+     "source_url": "https://en.wikipedia.org/wiki/Josh_Hokit",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "claimed"
+    },
+    {
+     "text": "Reported as an All-American at the 2019 NCAA championships as a junior, leading the team with 27 wins.",
+     "source_url": "https://en.wikipedia.org/wiki/Josh_Hokit",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2019,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "all_american",
+     "display": "claimed"
+    },
+    {
+     "text": "Reported as a second-team NWCA All-American in his senior season after leading Fresno State with 24 wins; no NCAA tournament was held that year.",
+     "source_url": "https://en.wikipedia.org/wiki/Josh_Hokit",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2020,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Josh_Hokit"
+    },
+    {
+     "name": "Fresno State roster (empty when fetched)",
+     "checked": "2026-11-24",
+     "url": "https://gobulldogs.com/sports/wrestling/roster/josh-hokit/9589"
+    },
+    {
+     "name": "Wikipedia 2019 NCAA Division I Wrestling Championships",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/2019_NCAA_Division_I_Wrestling_Championships"
+    }
+   ],
+   "note": "Fresno State roster page and NCAA bracket could not be read here. All-American in 2019 rests on Wikipedia citing a Fresno Bee article; not found on the NCAA page I checked (only top 3 listed). Weight class unknown. Wikipedia says Big 12 fifth place as a sophomore."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.578Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

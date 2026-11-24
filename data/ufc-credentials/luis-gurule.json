@@ -1,0 +1,128 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "luis-gurule",
+ "name": "Luis Gurule",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and UFC athlete page."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled in NCAA Division II for Colorado School of Mines; seasons not confirmed.",
+     "source_url": "https://www.ufc.com/athlete/luis-gurule",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "claimed"
+    },
+    {
+     "text": "Later wrestled in Division II for Adams State University; seasons not confirmed.",
+     "source_url": "https://www.ufc.com/athlete/luis-gurule",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "claimed"
+    },
+    {
+     "text": "Won the Colorado high school wrestling state title in 2012 after placing third in 2011.",
+     "source_url": "https://www.ufc.com/athlete/luis-gurule",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/luis-gurule"
+    },
+    {
+     "name": "UFCalendar",
+     "checked": "2026-11-24",
+     "url": "https://www.ufcalendar.com/fighters/luis-gurule"
+    }
+   ],
+   "note": "UFC bio says D2 wrestler at Colorado School of Mines and Adams State; seasons, roster pages and NCAA results not confirmed. UFCalendar suggests Mines 2012-2015 (single weak source). Both schools are NCAA D2."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.591Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

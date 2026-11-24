@@ -1,0 +1,129 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "tim-elliott",
+ "name": "Tim Elliott",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC flyweight; UFC bio lists Labette and Central Oklahoma"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources",
+  "needs_escalation"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "ncaa_other",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Won the 2007 NJCAA national wrestling title while at Labette Community College, per Wikipedia citing NJCAA results.",
+     "source_url": "https://en.wikipedia.org/wiki/Tim_Elliott",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2007,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "claimed"
+    },
+    {
+     "text": "Wrestled at the University of Central Oklahoma and earned All-American honors, per Wikipedia and his UFC bio; years and placings not found.",
+     "source_url": "https://en.wikipedia.org/wiki/Tim_Elliott",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "all_american",
+     "display": "claimed"
+    },
+    {
+     "text": "Won a Kansas state high school title at Wichita South in 2005.",
+     "source_url": "https://en.wikipedia.org/wiki/Tim_Elliott",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2005,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/tim-elliott"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Tim_Elliott"
+    }
+   ],
+   "note": "Only UFC bio and Wikipedia found; NCAA D2 All-American years/places and UCO roster not confirmed (search limit reached)."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.612Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

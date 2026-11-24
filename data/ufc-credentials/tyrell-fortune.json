@@ -1,0 +1,176 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "tyrell-fortune",
+ "name": "Tyrell Fortune",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and UFC athlete page"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "conflict"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_other",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Won the NCAA Division II heavyweight (285) national title for Grand Canyon, beating Northern State's Matt Meuleners 4-3 in the final; finished 37-1.",
+     "source_url": "https://www.themat.com/news/2013/april/17/grand-canyon-s-fortune-named-d-26350",
+     "source_name": "TheMat.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "champion",
+     "display": "sourced"
+    },
+    {
+     "text": "Listed by the National Wrestling Hall of Fame as the 2013 NCAA Division II 285-pound champion for Grand Canyon.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13260",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "champion",
+     "display": "sourced"
+    },
+    {
+     "text": "Named NCAA Division II Wrestler of the Year after the 2012-13 season at Grand Canyon.",
+     "source_url": "https://gculopes.com/news/2013/4/17/WREST_0417134608",
+     "source_name": "Grand Canyon University Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "champion",
+     "display": "sourced"
+    },
+    {
+     "text": "On the Grand Canyon wrestling roster as a heavyweight in 2012-13, coming from Clackamas CC.",
+     "source_url": "https://gculopes.com/sports/wrestling/roster/tyrell-fortune/1635",
+     "source_name": "Grand Canyon University Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Won the NJCAA heavyweight national title for Clackamas Community College in 2011, beating Iowa Central's Seth McGregor 4-3; it was his second straight title.",
+     "source_url": "https://www.themat.com/news/2011/february/28/clackamas-wins-team-title-in-n-23203",
+     "source_name": "TheMat.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2011,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    },
+    {
+     "text": "Won the NJCAA heavyweight national title for Clackamas CC the previous year (2010 per TheMat; NWHOF labels the season 2009).",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13260",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2010,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "TheMat.com 2013 D2 Wrestler of the Year",
+     "checked": "2026-11-24",
+     "url": "https://www.themat.com/news/2013/april/17/grand-canyon-s-fortune-named-d-26350"
+    },
+    {
+     "name": "National Wrestling Hall of Fame bio",
+     "checked": "2026-11-24",
+     "url": "https://nwhof.org/hall_of_fame/bio/13260"
+    },
+    {
+     "name": "Grand Canyon athletics roster",
+     "checked": "2026-11-24",
+     "url": "https://gculopes.com/sports/wrestling/roster/tyrell-fortune/1635"
+    },
+    {
+     "name": "TheMat.com 2011 NJCAA championships",
+     "checked": "2026-11-24",
+     "url": "https://www.themat.com/news/2011/february/28/clackamas-wins-team-title-in-n-23203"
+    }
+   ],
+   "note": "NJCAA years differ between sources (NWHOF season labels 2009/2011; TheMat says 2010 and 2011 titles)."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.616Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": [
+   "wrestling:tier_A_held_at_B_unlisted_host:gculopes.com"
+  ]
+ }
+}

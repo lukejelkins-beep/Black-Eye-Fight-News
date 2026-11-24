@@ -1,0 +1,127 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "austin-vanderford",
+ "name": "Austin Vanderford",
+ "identity": {
+  "status": "confirmed",
+  "note": "Alaska native, Southern Oregon wrestler turned fighter; matched by UFC profile and Wikipedia."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources",
+  "needs_escalation"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Won two Alaska high school state wrestling titles, at 152 lb in 2006 and 160 lb in 2007.",
+     "source_url": "https://en.wikipedia.org/wiki/Austin_Vanderford",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2007,
+     "level": "high_school",
+     "display": "claimed"
+    },
+    {
+     "text": "Wrestled at Southern Oregon University (NAIA) and is credited as a two-time NAIA All-American.",
+     "source_url": "https://en.wikipedia.org/wiki/Austin_Vanderford",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "other",
+     "level_note": "NAIA",
+     "display": "claimed"
+    },
+    {
+     "text": "Credited with the 2012 NAIA national wrestling title at 184 lb.",
+     "source_url": "https://en.wikipedia.org/wiki/Austin_Vanderford",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "other",
+     "level_note": "NAIA",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Austin_Vanderford"
+    },
+    {
+     "name": "Alaska High School Hall of Fame page (404)",
+     "checked": "2026-11-24",
+     "url": "https://alaskahalloffame.org/inductees/hall-of-fame-class-of-2019/austin-vanderford/"
+    }
+   ],
+   "note": "NAIA, not NCAA. Only Wikipedia (Tier C) retrieved; the Alaska Hall of Fame page it cites returned 404. NAIA championship records not checked."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.538Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

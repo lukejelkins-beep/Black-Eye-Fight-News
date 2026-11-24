@@ -1,0 +1,121 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "bruce-whitehead",
+ "name": "Bruce Whitehead",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and UFC athlete page"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled in high school at Conroe High School in Texas.",
+     "source_url": "https://www.ufc.com/athlete/bruce-whitehead",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    },
+    {
+     "text": "Wrestled at Lyon College, which the UFC page describes as Division III, around 2018-2020 per UFCalendar; roster not verified.",
+     "source_url": "https://www.ufcalendar.com/fighters/bruce-whitehead",
+     "source_name": "UFCalendar",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "ncaa_other",
+     "ncaa_division": "III",
+     "ncaa_result": "participant",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/bruce-whitehead"
+    },
+    {
+     "name": "UFCalendar",
+     "checked": "2026-11-24",
+     "url": "https://www.ufcalendar.com/fighters/bruce-whitehead"
+    },
+    {
+     "name": "Lyon College roster 2026-27",
+     "checked": "2026-11-24",
+     "url": "https://lyonscots.com/sports/wrestling/roster"
+    }
+   ],
+   "note": "UFC page and UFCalendar say Lyon College (Division III); no Lyon roster page found. All-American status not found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.542Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

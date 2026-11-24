@@ -1,0 +1,116 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "torrez-finney",
+ "name": "Torrez Finney",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and UFC athlete page."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Briefly wrestled for the University of Tennessee at Chattanooga in 2017-18 alongside football.",
+     "source_url": "https://alumni.utc.edu/from-the-field-to-the-octagon/",
+     "source_name": "UTC Alumni",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2017,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Two-time Georgia high school state champion and top-10 finisher at a national high school tournament, per his UFC bio.",
+     "source_url": "https://www.ufc.com/athlete/torrez-finney",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UTC Alumni",
+     "checked": "2026-11-24",
+     "url": "https://alumni.utc.edu/from-the-field-to-the-octagon/"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/torrez-finney"
+    }
+   ],
+   "note": "Mainly a football player at Chattanooga; school alumni page says he briefly wrestled 2017-18. No roster or results found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.613Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

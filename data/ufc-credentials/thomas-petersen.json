@@ -1,0 +1,126 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "thomas-petersen",
+ "name": "Thomas Petersen",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and division on UFC/ESPN pages."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "high_school",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Won the 285-pound title at the 2017 NJCAA championships for Iowa Central, pinning Mario Pena of NIACC in the final.",
+     "source_url": "https://www.themat.com/news/2017/february/25/iowa-central-claims-team-crown-at-njcaa-with-three-national-champs",
+     "source_name": "TheMat.com (USA Wrestling)",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2017,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    },
+    {
+     "text": "UFC profile also lists him as a 2017 NJCAA national champion for Iowa Central.",
+     "source_url": "https://www.ufc.com/athlete/thomas-petersen",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2017,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    },
+    {
+     "text": "Says in his UFC Q&A that he was a two-time Minnesota state wrestling champion.",
+     "source_url": "https://www.ufc.com/athlete/thomas-petersen",
+     "source_name": "UFC.com (self-reported)",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/thomas-petersen"
+    },
+    {
+     "name": "TheMat.com NJCAA 2017 results",
+     "checked": "2026-11-24",
+     "url": "https://www.themat.com/news/2017/february/25/iowa-central-claims-team-crown-at-njcaa-with-three-national-champs"
+    }
+   ],
+   "note": "Junior college only (NJCAA), not NCAA. No NCAA wrestling found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.611Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

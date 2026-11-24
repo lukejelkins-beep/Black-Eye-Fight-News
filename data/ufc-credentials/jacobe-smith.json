@@ -1,0 +1,145 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "jacobe-smith",
+ "name": "Jacobe Smith",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name and UFC division/bout details from search results."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "ncaa_d1",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Won the NJCAA national title at 174 lbs for Northeastern Oklahoma A&M in 2015.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13144",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2015,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    },
+    {
+     "text": "Won the NJCAA national title at 174 lbs for Northeastern Oklahoma A&M again in 2016.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13144",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    },
+    {
+     "text": "Placed eighth at 174 lbs for Oklahoma State at the 2018 NCAA Division I championships, earning All-American status.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13144",
+     "source_name": "National Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    },
+    {
+     "text": "Listed on the Oklahoma State Cowboy wrestling roster for the 2018-19 season.",
+     "source_url": "https://okstate.com/roster.aspx?rp_id=7054",
+     "source_name": "Oklahoma State Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2019,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "National Wrestling Hall of Fame bio",
+     "checked": "2026-11-24",
+     "url": "https://nwhof.org/hall_of_fame/bio/13144"
+    },
+    {
+     "name": "Oklahoma State roster page 2018-19",
+     "checked": "2026-11-24",
+     "url": "https://okstate.com/roster.aspx?rp_id=7054"
+    },
+    {
+     "name": "On3 UFC 317 report",
+     "checked": "2026-11-24",
+     "url": "https://www.on3.com/pro/news/former-oklahoma-state-all-american-jacobe-smith-remains-undefeated-with-win-at-ufc-317"
+    }
+   ],
+   "note": "NCAA All-American finish is from the National Wrestling Hall of Fame record (8th, 2018) plus media headlines; the NCAA bracket itself was not retrieved because search budget ran out. NJCAA is not NCAA."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.568Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

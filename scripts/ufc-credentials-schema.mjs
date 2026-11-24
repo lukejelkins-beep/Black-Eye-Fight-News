@@ -33,10 +33,11 @@ export const TIER_A_HOSTS = ['ijf.org', 'judoinside.com', 'uww.org', 'unitedworl
 /** NCAA claims (owner, 24 Nov 2026). `ncaa_result` separates being on a team from placing at the championships. */
 export const NCAA_DIVISIONS = ['I', 'II', 'III'];
 export const NCAA_RESULTS = ['participant', 'all_american', 'finalist', 'champion'];
-/** A college's own athletics site (a .edu host, or a reviewed official athletics host such as gopsusports.com) is
- * Tier A proof of being on that NCAA team (ncaa_result "participant") and nothing more (owner, 24 Nov 2026). Placings
- * and titles still need ncaa.com / ncaa.org or two independent Tier B sources. */
-export const isSchoolAthleticsHost = (host, reviewed = []) => Boolean(host) && (/\.edu$/.test(host) || hostIn(host, reviewed));
+/** A college's own athletics site (a reviewed official athletics host, listed in
+ * data/ufc-credentials/_school-athletics-hosts.json) is Tier A proof of being on that NCAA team (ncaa_result
+ * "participant") and nothing more (owner, 24 Nov 2026). A .edu host is not enough on its own: news, alumni and
+ * student-paper pages are not rosters. Placings and titles still need ncaa.com / ncaa.org or two independent Tier B sources. */
+export const isSchoolAthleticsHost = (host, reviewed = []) => Boolean(host) && hostIn(host, reviewed);
 /** Hosts that are never better than Tier C, whatever the model says. */
 export const TIER_C_HOSTS = ['wikipedia.org', 'wikidata.org', 'fandom.com', 'reddit.com', 'facebook.com', 'instagram.com',
   'x.com', 'twitter.com', 'tiktok.com', 'youtube.com', 'youtu.be', 'quora.com', 'threads.net', 'bestfightodds.com'];

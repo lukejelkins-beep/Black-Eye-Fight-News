@@ -1,0 +1,133 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "curtis-blaydes",
+ "name": "Curtis Blaydes",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC heavyweight; NIU and Harper College match UFC bio"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_d1",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Listed as a freshman heavyweight on the Northern Illinois team in 2009-10 and won the 285 pound title at the Flash Flanagan Open.",
+     "source_url": "https://niuhuskies.com/news/2010/1/5/niu_takes_three_titles_at_flash_flanagan_open.aspx",
+     "source_name": "NIU Huskies athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2010,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Won the NJCAA heavyweight national title for Harper College at the 2012 nationals in Rochester, Minnesota, beating a Labette wrestler 6-5 in the final.",
+     "source_url": "https://www.harperhawks.net/news/2012/2/25/WREST_0229124852.aspx",
+     "source_name": "Harper College athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    },
+    {
+     "text": "UFC bio also lists him as the 2012 NJCAA heavyweight national champion.",
+     "source_url": "https://www.ufc.com/athlete/curtis-blaydes",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/curtis-blaydes"
+    },
+    {
+     "name": "NIU athletics",
+     "checked": "2026-11-24",
+     "url": "https://niuhuskies.com/news/2010/1/5/niu_takes_three_titles_at_flash_flanagan_open.aspx"
+    },
+    {
+     "name": "Harper College athletics",
+     "checked": "2026-11-24",
+     "url": "https://www.harperhawks.net/news/2012/2/25/WREST_0229124852.aspx"
+    }
+   ],
+   "note": "NCAA D1 participation at Northern Illinois (freshman 2009-10); NJCAA title at Harper is junior college, not NCAA. No NCAA championships result found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.553Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": [
+   "wrestling:tier_A_held_at_B_unlisted_host:niuhuskies.com"
+  ]
+ }
+}
