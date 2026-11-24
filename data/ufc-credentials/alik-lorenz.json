@@ -6,15 +6,13 @@
  "name": "Alik Lorenz",
  "identity": {
   "status": "confirmed",
-  "note": "Matched to UFC.com athlete page."
+  "note": "Matched UFC.com page: US light heavyweight, age 29, born Davenport IA, UNI computer science graduate 2018."
  },
  "researched": {
   "date": "2026-11-24",
-  "pass": 1
+  "pass": 2
  },
- "flags": [
-  "needs_escalation"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
    "status": "unknown",
@@ -22,17 +20,32 @@
    "claims": [],
    "sources_checked": [
     {
+     "name": "UNI Athletics wrestling roster 2014-15",
+     "checked": "2026-11-24",
+     "url": "https://unipanthers.com/sports/wrestling/roster/2014-15"
+    },
+    {
+     "name": "UNI Athletics wrestling roster 2015-16",
+     "checked": "2026-11-24",
+     "url": "https://unipanthers.com/sports/wrestling/roster/2015-16"
+    },
+    {
+     "name": "UNI Athletics wrestling roster 2016-17",
+     "checked": "2026-11-24",
+     "url": "https://unipanthers.com/sports/wrestling/roster/2016-17"
+    },
+    {
+     "name": "UNI Athletics wrestling roster 2017-18",
+     "checked": "2026-11-24",
+     "url": "https://unipanthers.com/sports/wrestling/roster/2017-18"
+    },
+    {
      "name": "UFC.com athlete page",
      "checked": "2026-11-24",
      "url": "https://www.ufc.com/athlete/alik-lorenz"
-    },
-    {
-     "name": "UNI Athletics wrestling rosters 2016-17, 2017-18 (page text had no names)",
-     "checked": "2026-11-24",
-     "url": "https://unipanthers.com/sports/wrestling/roster/2017-18"
     }
    ],
-   "note": "UFC.com lists University of Northern Iowa (graduated 2018, computer science) but no wrestling. UNI roster pages could not be read for names, so team membership is unconfirmed."
+   "note": "Fetched UNI wrestling roster pages for 2014-15, 2015-16, 2016-17 and 2017-18; each lists roughly 185-225 player links and none contains Lorenz or Alik. Not on roster is not proof he never walked on, so kept unknown per instruction; no wrestling claim."
   },
   "grappling": {
    "status": "unknown",
@@ -77,6 +90,16 @@
    "model": "claude-sonnet-5-5",
    "effort": "medium",
    "at": "2026-11-24T09:12:38.928Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:15:13.511Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

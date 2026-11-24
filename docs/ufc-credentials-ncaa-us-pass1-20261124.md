@@ -1,55 +1,57 @@
-# NCAA wrestling credentials: American UFC fighters, pass 1 (research, 24 Nov 2026)
+# NCAA wrestling credentials: American and Canadian UFC fighters (research, 24 Nov 2026)
 
-**Research only. Nothing here is shown on a page, used in a rating or treated as a certificate.** Pass 1 covered the 198 American profile fighters (flags file) not in the 25-fighter pilot, wrestling only, run in-session with research sub-agents (no API spend) and ingested through the credentials validator (`scripts/ufc-credentials-run.mjs --from-dir`, run `us-ncaa-1`).
+**Research only. Nothing here is shown on a page, used in a rating or treated as a certificate.** Wrestling only. Run in-session with research sub-agents (no API spend) and ingested through the credentials validator (`scripts/ufc-credentials-run.mjs --from-dir`): pass 1 `us-ncaa-1` (198 Americans not in the 25-fighter pilot), pass 2 `us-ncaa-2` (26 priority re-checks), unknowns round 1 `us-ncaa-3a` (31 fighters), Canadians `ca-ncaa-1` (20 fighters).
 
-**Coverage is thin.** The session's shared web-search budget ran out partway through every batch, so many fighters got one search. "Unknown" therefore means *not found yet*, not *checked and none*: no fighter is marked none_found. A second pass is planned for the fighters listed at the end.
+"Unknown" means not found yet, not checked-and-none: nobody is marked none_found, because that needs an NCAA or governing-body source actually searched.
 
-## NCAA wrestling verified (12)
+## Americans: NCAA wrestling verified (21)
 
-Verified = a Tier A record (NCAA results, or the school's own reviewed athletics roster for team participation only) or two independent Tier B outlets.
+Verified = a Tier A record (NCAA results, or the school's own reviewed athletics roster, for team participation only) or two independent Tier B outlets.
 
-| Fighter | Division | Results recorded | Tiers | Flags |
-|---|---|---|---|---|
-| Andre Petroski | D-I/D-II | on the team | A | thin_sources |
-| Curtis Blaydes | D-I | on the team | B | - |
-| Dan Ige | D-III | on the team | A | thin_sources |
-| Gable Steveson | D-I | NCAA finalist, NCAA champion | A, B | thin_sources |
-| Justin Gaethje | D-I | on the team, All-American | A, B | thin_sources |
-| Mansur Abdul-Malik | D-I | on the team | A | - |
-| Miles Johns | D-II | on the team | A | thin_sources |
-| Pat Sabatini | D-I | on the team | A | - |
-| Richie Miranda | D-II | on the team | A | thin_sources |
-| Ryan Loder | D-I | All-American | B | thin_sources |
-| Terrance McKinney | D-II | on the team | A, B | - |
-| Tyrell Fortune | D-II | on the team, NCAA champion | B | conflict |
+| Fighter | Division | Results recorded | Tiers |
+|---|---|---|---|
+| Andre Petroski | D-I/D-II | on the team | A |
+| Cody Brundage | D-II | on the team | A, B |
+| Curtis Blaydes | D-I | on the team | A |
+| Dan Ige | D-III | on the team | A |
+| Gable Steveson | D-I | NCAA finalist, NCAA champion | A, B |
+| Jacobe Smith | D-I | on the team, All-American | A, B |
+| Josh Hokit | D-I | on the team, All-American | A, B |
+| Justin Gaethje | D-I | on the team, All-American | A, B |
+| Luis Gurule | D-II | on the team | A |
+| Luke Fernandez | D-III | on the team | A, B |
+| Mansur Abdul-Malik | D-I | on the team | A |
+| Mark Choinski | D-III | on the team, All-American | B |
+| Miles Johns | D-II | on the team | A |
+| Pat Sabatini | D-I | on the team | A |
+| Richie Miranda | D-II | on the team | A |
+| Ryan Loder | D-I | All-American | B |
+| Terrance McKinney | D-II | on the team | A, B |
+| Thomas Gantt | D-I | on the team, All-American | A, B |
+| Tim Elliott | D-II | on the team, All-American | A, B |
+| Torrez Finney | D-I | on the team | B |
+| Tyrell Fortune | D-II | on the team, NCAA champion | A, B |
 
-## NCAA wrestling claimed, not yet verified (12)
+## Americans: NCAA claimed, not yet verified (3)
 
-| Fighter | Division | Results recorded | Tiers | Flags |
-|---|---|---|---|---|
-| Bruce Whitehead | D-III | on the team | C | thin_sources |
-| Cody Brundage | D-II | on the team | B, C | thin_sources |
-| Dakota Hope | D-II | on the team | C | thin_sources |
-| Jacobe Smith | D-I | on the team, All-American | A, B | thin_sources |
-| Jim Miller | D-I | on the team | C | thin_sources, needs_escalation |
-| John Castaneda | D-II | on the team | C | thin_sources |
-| Josh Hokit | D-I | on the team, All-American | C | thin_sources, needs_escalation |
-| Luis Gurule | D-II | on the team | C | thin_sources |
-| Luke Fernandez | D-III | on the team | B | thin_sources |
-| Mark Choinski | D-III | on the team, All-American | B, C | thin_sources |
-| Tim Elliott | D-II | All-American | C | thin_sources, needs_escalation |
-| Torrez Finney | D-I | on the team | B | thin_sources |
+Dakota Hope, Jim Miller, John Castaneda
 
-## Junior college (NJCAA / California JC) or NAIA only, not NCAA (11)
+## Americans: junior college / NAIA / other wrestling only, not NCAA (16)
 
-Alex Perez, Austin Vanderford, Chepe Mariscal, Denzel Freeman, Jamall Emmers, Josh Emmett, Kai Kamaka III, Kelvin Gastelum, Michael Johnson, Ryan Kuse, Thomas Petersen
+Aaron Pico, Alex Perez, Anthony Romero, Austin Vanderford, Bruce Whitehead, Chepe Mariscal, Cody Garbrandt, Denzel Freeman, Jamall Emmers, Josh Emmett, Kai Kamaka III, Kelvin Gastelum, Michael Johnson, Ryan Kuse, Thomas Petersen, Victor Henry
 
-## High school wrestling only found (33)
+## Americans: high school or youth wrestling only (41)
 
-Aaron Pico, Anthony Wint, Austin Bashi, Belal Muhammad, Calvin Kattar, Cody Durden, Dominick Reyes, Donte Johnson, Drakkar Klose, Drew Dober, Edmen Shahbazyan, Elijah Smith, Ezra Elliott, Grant Dawson, Jalin Turner, Jean-Paul Lebosnoyani, Joaquin Buckley, Joe Pyfer, Jordan Leavitt, King Green, Kody Steele, Kyler Phillips, Matt Frevola, Mickey Gall, Miesha Tate, Mike Davis, Montel Jackson, Nick Klein, Punahele Soriano, Ricky Simon, RJ Harris, Steven Nguyen, Tommy McMillen
+Alexander Hernandez, Anthony Wint, Austin Bashi, Belal Muhammad, Calvin Kattar, Charles Johnson, Charlie Campbell, Cody Durden, Danny Silva, Dominick Reyes, Donte Johnson, Drakkar Klose, Drew Dober, Edmen Shahbazyan, Elijah Smith, Eric Nolan, Ezra Elliott, Gauge Young, Grant Dawson, Jalin Turner, Jean-Paul Lebosnoyani, Joaquin Buckley, Joe Pyfer, Jordan Leavitt, Josiah Harrell, King Green, Kody Steele, Kyler Phillips, Mario Bautista, Matt Frevola, Mickey Gall, Miesha Tate, Mike Davis, Montel Jackson, Neil Magny, Nick Klein, Punahele Soriano, Ricky Simon, RJ Harris, Steven Nguyen, Tommy McMillen
 
-## Second pass (24 priority + unknowns)
+## Americans: still unknown (117)
 
-Priority: every NCAA claim not yet verified (find the school roster or NCAA bracket), and every fighter flagged needs_escalation: Alexander Hernandez, Austin Bashi, Austin Vanderford, Bassil Hafez, Bruce Whitehead, Charles Johnson, Cody Brundage, Cody Garbrandt, Dakota Hope, Donte Johnson, Jacobe Smith, Jean-Paul Lebosnoyani, Jim Miller, John Castaneda, Josh Hokit, Josiah Harrell, Luis Gurule, Luke Fernandez, Mark Choinski, Michael Johnson, Neil Magny, Thomas Gantt, Tim Elliott, Torrez Finney.
+Round 1 of the unknowns (31 fighters: UFC.com bio, Wikipedia and one search each) found no NCAA wrestler, so the owner stopped the sweep there (24 Nov). Alik Lorenz (Northern Iowa graduate) is not on any UNI wrestling roster 2014-15 to 2017-18.
 
-Then the 128 fighters still unknown, a few agents at a time so the search budget lasts. Also: confirm `anthony-romero-3` is the American fighter (the page found was a Canadian debutant); review niuhuskies.com (Northern Illinois) and gculopes.com (Grand Canyon) as official athletics hosts (blocked automated checks on 24 Nov); Tyrell Fortune's NJCAA title years conflict (2010/2011 vs 2009/2011).
+## Canadians (20): NCAA 0 verified, 0 claimed
+
+Other wrestling (provincial / national, from their UFC profiles only): Aiemann Zahabi, Jasmine Jasudavicius. High school only: Kyle Prepolec, Lance Gibson Jr.. Unknown: 16. Canadian university wrestling (U SPORTS) and Canadian titles are recorded as "other", never as NCAA.
+
+## Reviewed official athletics hosts
+
+A college roster counts as Tier A for team participation only when its host is in `data/ufc-credentials/_school-athletics-hosts.json` (18 hosts, each homepage checked 24 Nov). Pending (blocked automated checks): Fresno State (gobulldogs.com), Chattanooga (gomocs.com).
