@@ -32,6 +32,8 @@
     if (page === 'h2h' || page === 'headtohead') return { section: 'fights', page: 'h2h' };
     if (page === 'rikishi' || page === 'profile') return { section: 'fighters', page: 'rikishi' };
     if (page === 'banzuke') return { section: 'fighters', page: 'banzuke' };
+    if (page === 'changes') return { section: 'fighters', page: 'changes' };
+    if (page === 'review') return { section: 'analysis', page: 'review' };
     if (page === 'kimarite') return { section: 'analysis', page: 'kimarite' };
     return { section: 'overview', page: 'home' };
   }
