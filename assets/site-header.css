@@ -57,3 +57,33 @@
   .sh .befn-mobile-actions{gap:6px}
   .sh .befn-mobile-actions button,.sh .befn-mobile-actions .befn-install-button{padding:0 9px;font-size:10px}
 }
+
+/* Sport first, then section (owner, 23 Nov 2026). Desktop: the top bar lists the sports
+   (the logo is the all-sports front page); the row below names the area and holds its five
+   sections. Phone: the row below the masthead lists the sports and the bottom tab bar holds
+   the sections, so the section row is hidden there. Sport colours from DIRECTION.md. */
+:root{--area-colour:#cf1824}
+html[data-befn-area="mma"]{--area-colour:#e0a400}
+.sh .sh-areas a{font-size:15px;letter-spacing:.06em;padding:0 18px}
+.sh .sh-areas a[aria-current]{color:#fff;border-bottom-color:var(--area-colour)}
+.sh .sh-areas a:hover{border-bottom-color:#5a5156}
+.sh .sh-areas a[aria-current]:hover{border-bottom-color:var(--area-colour)}
+.sh-sports{border-bottom-color:var(--area-colour)}
+.sh-sections{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.sh-area-name{margin-right:8px;font:800 13px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b8b0b3}
+html[data-befn-area="boxing"] .sh-area-name,html[data-befn-area="mma"] .sh-area-name{color:var(--area-colour)}
+.sh-sections a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;text-decoration:none;white-space:nowrap}
+.sh-sections a:hover{background:#3a3238}
+.sh-sections a.active{background:#f3c332;color:#111013}
+.sh-sections a:focus-visible,.sh-areas-phone a:focus-visible{outline:3px solid #f3c332;outline-offset:2px}
+.sh-areas-phone{display:none}
+.sh-areas-phone a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;text-decoration:none}
+.sh-areas-phone a[aria-current]{background:#f3c332;color:#111013}
+.sh .befn-mobile-title{color:#fff;text-decoration:none}
+@media(max-width:760px){
+  .sh-sections{display:none}
+  .sh-areas-phone{display:flex;flex-wrap:nowrap;gap:6px;width:100%}
+  .sh-areas-phone a{flex:1 1 0;padding:0 6px;font-size:13px}
+}
+.befn-mobile-sheet .befn-mobile-sheet-sub{margin:16px 0 8px;font:800 12px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6b6266}
+.befn-mobile-sheet .befn-mobile-sheet-grid a[aria-current]{background:#111013;color:#fff;border-color:#111013}
