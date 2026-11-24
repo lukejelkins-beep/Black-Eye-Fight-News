@@ -1,6 +1,6 @@
 # Fighters without an approved photo
 
-Generated 2026-11-24T22:55:17+00:00 by `python3 scripts/photo-runner.py missing`. Sorted by prominence: current champion, upcoming main event, upcoming card, recent result, roster.
+Generated 2026-11-24T23:20:11+00:00 by `python3 scripts/photo-runner.py missing`. Sorted by prominence: current champion, upcoming main event, upcoming card, recent result, roster.
 
 ## BOXING: 240 without a photo, 17 with a photo but no cut-out (320 on the site)
 
@@ -390,331 +390,286 @@ Generated 2026-11-24T22:55:17+00:00 by `python3 scripts/photo-runner.py missing`
 
 </details>
 
-## MMA: 321 without a photo, 0 with a photo but no cut-out (377 on the site)
+## MMA: 137 without a photo, 134 with a photo but no cut-out (377 on the site)
 
 | Fighter | Why they matter | Last attempt |
 | --- | --- | --- |
 | Alistair Fitzharris (ONE Championship) | main event: ONE Friday Fights 180 & The Inner Circle 40 (2026-11-27) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Anastasia Nikolakakos (ONE Championship) | main event: ONE SAMURAI 6 (2026-12-02); result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Bhupen Mutum (ONE Championship) | main event: ONE Friday Fights 180 & The Inner Circle 40 (2026-11-27) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Chihiro Sawada (ONE Championship) | main event: ONE SAMURAI 6 (2026-12-02) | 2026-11-24: staged (awaiting approval) |
 | Paweł Pawlak (KSW) | main event: XTB KSW 124: Pawlak vs Kuberski (2026-12-19) | 2026-11-24: no source (KSW: no fighter page for this name on the KSW site) |
 | Arti Khatri (ONE Championship) | on the card: ONE Friday Fights 180 & The Inner Circle 40 (2026-11-27) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Fabio Henrique (ONE Championship) | on the card: ONE SAMURAI 6 (2026-12-02) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Hiroba Minowa (ONE Championship) | on the card: ONE SAMURAI 6 (2026-12-02) | 2026-11-24: staged (awaiting approval) |
 | Norika Ryu (ONE Championship) | on the card: ONE Friday Fights 180 & The Inner Circle 40 (2026-11-27) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Rafał Haratyk (KSW) | on the card: XTB KSW 124: Pawlak vs Kuberski (2026-12-19) | 2026-11-24: no source (KSW: no fighter page for this name on the KSW site) |
 | Ryo Hirayama (ONE Championship) | on the card: ONE SAMURAI 6 (2026-12-02) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Taiga Orii (ONE Championship) | on the card: ONE SAMURAI 6 (2026-12-02); result: ONE Friday Fights 157 & The Inner Circle 17 (2026-06-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Aaron Jeffery (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 7df34c7f1ba2d83edc76cc4a5c27f6a1-2-1.png) |
-| Abdelkrim Zouad (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 10 (2026-07-10) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: bf6091d78b1096a5c5a6ca87dbb8c91e-1-1.png) |
-| Abderrahman Errachidy (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 600a6bef2d6d2eef86202ce9928a03a3-2.png) |
-| Abdoulaye Kane (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: ed011a08a23fdbd67f6ba9177376af1a-1.png) |
-| Abraham Bably (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 32f0db803b0449b795909a577caf0f97-1-1.png) |
-| Adam Borics (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: d28e4da96f29d829dd7649debd816487-2-2.png) |
 | Ahmed El Sisy (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
-| Akhmed Magomedov (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 62463f9d628dc79f591884ea04568f09-1.png) |
-| Aleksandra Savicheva (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: cbb1116974f79ac7e64b9b04b143922a-2-2.png) |
-| Alexei Pergande (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 8479cb4c6ce6eeb836e9e8e1db07ed46-1-1.png) |
-| Ali Alshowakh (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 76d1b5de42c64eb94d515cb412a5b2a1-1-1.png) |
-| Allan Begosso (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 9620b8d8318acedfd8612aadac947065-1-1.png) |
 | Alridah Alnemar (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
-| Amru Magomedov (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 9b018a2be70436d2cd74cfcec3573acc-2-1.png) |
-| Angel Alvarez (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 1b04fa2fb86ccbf4342c32ba987b3125-1-1.png) |
 | Antonio Cesar (ONE Championship) | result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18); result: ONE Fight Night 48: Erdogan vs. Elliott (2026-10-03) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Archie Colgan (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: bc57576e76dff530b8fbd0e1ac828511-2-1.png) |
 | Artur Zaynukov (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Ashok Bagade (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 175 (2026-10-16) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Assem Ghanem (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 6c84057e04ec00d6d552c900e52bd85a-1-1.png) |
-| Aya Lounes (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 8e65dfb644570e04ccafc23401036555-1-1.png) |
-| Badr Medkouri (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: e26ff3563900827a9349b0ecb9fc10ce-1-1.png) |
-| Badreddine Diani (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 10 (2026-07-10) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 61a382fc00cf3d1467a30f2185899844-1-1.png) |
 | Ben Edwards (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Bobby Chikavhu (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Bos Chayut (ONE Championship) | result: ONE Friday Fights 177 (2026-11-06) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Boule Godogo (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 0fa6d990c37926670878018b81d83b0b-1.png) |
 | Brandon Hashimoto (ONE Championship) | result: ONE SAMURAI 5: Pacio vs Yamakita (2026-11-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Brandon Lewis (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 73814208410ecea5d4ad61bb2a2df76f-1-1.png) |
-| Brock Hamer (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: c0c92e13213b9bbf0f97ccecd1b4f7f9-1-1.png) |
-| Bruno Cappelozza (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 1f9fd9dfff045e79ac7c5837505529ec-1-1.png) |
 | Bruno Souza (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Caden Cox (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: cc39f485201079592c878a3833ce8d73-1-1.png) |
 | Callum Haughian (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Chamy Delva (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 49823865d8c24ac2e7b7d7cecf7c501b-1-1.png) |
-| Chelsea Hackett (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 1608521bd66273abdf44debc664936c5-1-1.png) |
-| Cheyanne Bowers (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 9f7ec15e333ebfbaf282c36c5e100651-1-1.png) |
-| Cheyden Leialoha (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 59b023d9c0796f668add00e37cf3ad59-2-1.png) |
 | Christos Ploumpis (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Cobey Fehr (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: a6031516fbc4d66701e3c3c66f146f7a-1-1.png) |
-| Connor Hughes (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 489c2d93653e64a840d663bf398ca09f-2-1.png) |
-| Cornel Thompson (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 1e50f86ffc3f97de25deb7fc9180b3db-2-1.png) |
-| Cris Cyborg (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 7f6be0f1f242df5c09a52ca8a9731072-1-1.png) |
-| Cássio Barão (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 8e92b19ee9e4254121e0a2b8d821447f-1-1.png) |
-| Dakota Bush (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: f58b43347d2bd6d455ccfb85b8246287-1-1.png) |
-| Dakota Ditcheva (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: dfab63fa0af017f23f0ac3dc717c054c-1-1.png) |
-| Dalton Rosta (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 30e909911cb97771b2fdec320fd6add6-1-1.png) |
-| Darryl Walker (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: d815924863b242a13765d8c2ac934449-1-1.png) |
 | Davi Brandāo (ONE Championship) | result: ONE Fight Night 46: Hemetsberger vs. Diachkova (2026-08-15) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| David Samuel (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 0b621b7917d193b07e5af7f51e561dc6-1-1.png) |
-| Demba Seck (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 2c378bb44b2939f89e43b09a8ac0c6cf-1-1.png) |
-| Denis Goltsov (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 38cadb424ebec773293b6b1485b3f3a8-1-1.png) |
-| Denise Kielholtz (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: d0681ca030da0b51b86bf6bc0bde14e2-2-1.png) |
-| Dovlet Yagshimuradov (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 34c606d71494ae928a7fdefb6f5a1769-1-1.png) |
-| Dwight Joseph (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 878eda9cd6086f7423e800134f17f050-2.png) |
-| Eduardo Neves (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 1e7c2870e5dca1324b73feceb12e3d26-1-1.png) |
-| Eliezer Kubanza (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 1af2c083ac3cdd7999fb7495866a42df-1-1.png) |
-| Elora Dana (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: c902364b4fb1895329124547eae1de6b-1-1.png) |
-| Emiliano Sordi (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 08c6a346a6283bfa9c051c3764c48a9e-1-1.png) |
-| Eoin Sheridan (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: ea1a50273545eca7be0e2f4740ab25c2-1-1.png) |
-| Ernesto Rodriguez (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 1991590e8560b5fb9e00cb20807bc2f3-1-1.png) |
 | Ethan Brockett (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 176 (2026-10-30) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Fabio Henrique Dourado (ONE Championship) | result: ONE Fight Night 43: Tang vs. Gasanov (2026-05-16); result: ONE Fight Night 47: Stamp vs. Flores (2026-09-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Fatima Al Ammari (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
-| Gabriel Braga (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 3b8cae97ca634297aa8beafcb5a42203-1-1.png) |
 | Gabriela Fujimoto (ONE Championship) | result: ONE Fight Night 47: Stamp vs. Flores (2026-09-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Gadzhi Rabadanov (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 28fa483d1dc912e2f87ba8dbe5f9e1f3-1-1.png) |
-| Gamid Khizriev (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: name mismatch (PFL: the file name does not carry the fighter's name: 48721127dbe04a4887ae739c489e0617-1-1.png) |
 | Geun Ho Son (ONE Championship) | result: ONE Friday Fights 168 & The Inner Circle 28 (2026-08-28) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Gino Van Steenis (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hasan Mezhiev (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hazem Kayyali (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Gino Van Steenis (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Hector Almonacid (ONE Championship) | result: ONE Fight Night 47: Stamp vs. Flores (2026-09-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Hussain Al Kurdi (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Hussain Al Kurdi (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Ieuan Mackenzie (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Ilmadi Israilov (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| J.P. Saint Louis (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jacinta Austin (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| James Vake (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| J.P. Saint Louis (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | James Wamsley (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jane Osigwe (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Jane Osigwe (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Javier Cabrera (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 175 (2026-10-16) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Jawany Scott (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jena Bishop (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jhony Gregory (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jinnosuke Kashimura (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: 2639ac166c1a9dcade761706f32bf01e43926af0_normal.jpg) |
-| Joji Goto (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jonathan Martin (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jonathan Piersma (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Josh Silveira (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Jinnosuke Kashimura (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Kalandar Tabarov (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Kentaro Okumura (ONE Championship) | result: ONE Friday Fights 177 (2026-11-06) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Kevin Pease (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Khabib Nabiev (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Khasan Magomedsharipov (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Koyuru Tanoue (ONE Championship) | result: ONE SAMURAI 2 (2026-08-08) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Landry Ward (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Lazaro Dayron (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Lee Seung Cheol (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07); result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Levan Khabalaev (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Lewis McGrillen (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07); result: PFL Austin: Eblen vs Kasanganay (2026-07-18) (+1 more) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Liz Carmouche (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Lucero Acosta (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Luke Trainer (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| MN (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| MN (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Magdalena Czaban (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07); result: ONE Fight Night 46: Hemetsberger vs. Diachkova (2026-08-15) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Magomed Magomedov (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07); result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Makoto Shinryu (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: fda077fdde2eee2171594dbeb9e657d94d0a373e_normal.jpg) |
+| Makoto Shinryu (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Manoel Silva (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Marcirley Alves (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22); result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Marcos Aurelio (ONE Championship) | result: ONE Fight Night 46: Hemetsberger vs. Diachkova (2026-08-15) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Mathew Gesto (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Maxwell Djantou Nana (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Mehdi Saadi (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24); result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Michael Boylan (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Mohammad Fahmi (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Morques Forest (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Mostafa Neda (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Mostafa Rashed Nada (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Mouhamed Ba (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Moustapha Diakhate (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Movsar Ibragimov (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22); result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Naoki Inoue (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08); result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: b92143a8e926381acfb8fb95f52042cbb1408132_normal.jpg) |
-| Natan Schulte (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Maxwell Djantou Nana (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Mehdi Saadi (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24); result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Morques Forest (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Mostafa Neda (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Mostafa Rashed Nada (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Mouhamed Ba (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Moustapha Diakhate (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Naoki Inoue (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08); result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Nattakorn Kesorn (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Nauris Bartoska (ONE Championship) | result: ONE Friday Fights 167 & The Inner Circle 27 (2026-08-21) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Nawras Abzakh (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Nazareth Lalthazuala (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07); result: ONE Friday Fights 157 & The Inner Circle 17 (2026-06-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Nik Bagley (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Nkosi Ndebele (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22); result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Noah Hermosillo (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Oga Akita (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 176 (2026-10-30) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Oleg Popov (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Ollie Sarwa (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Omar El Dafrawy (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Omar Hussein (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Osama ElSeady (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Oualy Tandia (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Oussama El Idrissi (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Patrick Habirora (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Omar El Dafrawy (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Omar Hussein (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 10 (2026-07-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Osama ElSeady (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Oussama El Idrissi (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Patrick Hill (ONE Championship) | result: ONE Friday Fights 167 & The Inner Circle 27 (2026-08-21) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Patrick Ocheme (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Paulina Wisniewska (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Peace Nguphane (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Pedro Duarte (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 176 (2026-10-30) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Pouya Rahmani (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Prashanth Guda (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 176 (2026-10-30) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Rafael do Nascimento (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Raufeon Stots (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Reda Abdellaoui (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Rivaldo Pereira (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Robbie Ring (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Robert Watley (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Roland Dunlap (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Rosario Romero (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Rafael do Nascimento (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Robbie Ring (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Ryohei Kurosawa (ONE Championship) | result: ONE Fight Night 47: Stamp vs. Flores (2026-09-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Ryoto Nishiyama (ONE Championship) | result: ONE Friday Fights 168 & The Inner Circle 28 (2026-08-28) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Ryugo Takeuchi (ONE Championship) | result: ONE SAMURAI 5: Pacio vs Yamakita (2026-11-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Ryuya Fukuda (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: 8d1920474214a4a5966db1848c992c2ae14b7001_normal.jpg) |
-| Sabrinna de Sousa (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Ryuya Fukuda (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
+| Sabrinna de Sousa (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Sado Ucar (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Salim Mhamdi (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Sanaa Mandar (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Salim Mhamdi (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Sanaa Mandar (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Sanjaya Hutagaol (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 175 (2026-10-16) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Sarvarjon Khamidov (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Sean Gauci (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Sergei Bilostenniy (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Sergio Pettis (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Shadi Kabbani (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Shannon Clark (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16); result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Shido Boris Esperança (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Shinobu Ota (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: edadba4b068467ba0f4b010af3a686084d016751_normal.jpg) |
+| Shido Boris Esperança (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Shinobu Ota (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Shirzad Qadrian (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Shosuke Kinoshita (ONE Championship) | result: ONE SAMURAI 5: Pacio vs Yamakita (2026-11-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Simeon Powell (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Soo Chul Kim (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: 0865964dac9f59f9e2ea21e33a475e5fd58c817e_normal.jpg) |
+| Soo Chul Kim (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Steven Hill (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Styve Ngono (PFL) | result: PFL Africa: Nigeria (2026-06-13); result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Subaru Mori (ONE Championship) | result: ONE SAMURAI 2 (2026-08-08) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Suhyeon Kim (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Taha Bendaoud (PFL) | result: PFL Africa: Morocco (2026-10-10); result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Taila Santos (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Takumi Fukamachi (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Takuya Shibamura (ONE Championship) | result: ONE SAMURAI 5: Pacio vs Yamakita (2026-11-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Tariq Pell (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Tatiana Postarnakova (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Timur Khizriev (PFL) | result: PFL Chicago: Carmouche vs Bishop 2 (2026-10-16) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Tony Laramie (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: a58bb8171d66fc00ea33a1ecc22c372ee4bb210a_normal.jpg) |
-| Tracy Reeder (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Trukon Carson (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Usman Nurmagomedov (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Vadim Nemkov (PFL) | result: PFL Dubai: Nemkov vs Bilostenniy (2026-11-14) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Valentin Moldavsky (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Tony Laramie (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Vick Souza (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Viet Anh Do (ONE Championship) | result: ONE Friday Fights 155 & The Inner Circle 15 (2026-05-22); result: ONE Fight Night 46: Hemetsberger vs. Diachkova (2026-08-15) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Wellington Lopes (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Will Fox (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Willians Nogueira (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Wilson Lopshire (PFL) | result: PFL Charlotte: Battle vs Rosta (2026-08-07) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Yabna N’Tchala (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ylies Djiroun (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Yrysbek Tilenov (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: name mismatch (RIZIN: the file name does not carry the fighter's name: 0f051b289ff96d691828042b4304acf2b601f716_normal.jpg) |
+| Yrysbek Tilenov (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Yusuke Sato (ONE Championship) | result: ONE SAMURAI 2 (2026-08-08) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Yuto Shioya (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 175 (2026-10-16) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| A.J. McKee (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Abdelhalim Elhoufy (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Abdullah Saleem (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Abeer Mansour (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Adam Meskini (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ahmed Albrahim (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ahmed Darwish (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ahmed Tarek (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Alain Majorique (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Alexander Shabliy (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Alfie Davis (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Andrea Vazquez (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Asaël Adjoudj (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ashley Reece (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ashley Thiner (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Aureo Cruz (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| A.J. McKee (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Aureo Cruz (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Ayaka “Zombie” Miura (ONE Championship) | result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Baris Adiguzel (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Basel Shalaan (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Benson Henderson (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Biaggio Ali Walsh (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Biaggio Ali Walsh (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Bokang “Little Giant” Masunyane (ONE Championship) | result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Borena Tsertsvadze (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Boris Atangana (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Brandon Davis (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Bryce Meredith (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Butti Suwaid Alameri (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Chad Yard (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Chris Mixan (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Coby Bradford (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Dania Ouhachi (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Daniel Bzdigian (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Dauda Rajabu (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Donegi Abena (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Edson Machavane (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Elias Boudegzdame (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Elisandra Ferreira (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Eslam Mostafa (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Gustavo Oliveira (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Haidy Ahmed (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hamad Marhoon (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hamada Osman (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hamza Kooheji (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Harda Karim (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hassan Shaaban (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hattan Alsaif (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Hussein Salem (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ibrahim Mahmoud (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ignacio Campos (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Ilara Joanne (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Imad El Azami (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Impa Kasanganay (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jackson Glass (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jacob Pais (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Butti Suwaid Alameri (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Daniel Bzdigian (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Dauda Rajabu (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Edson Machavane (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Elisandra Ferreira (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Haidy Ahmed (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Hussein Salem (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Imad El Azami (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Jason Chen (ONE Championship) | result: ONE Friday Fights 163 & The Inner Circle 23 (2026-07-24) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Jay De Villa (ONE Championship) | result: ONE Friday Fights 163 & The Inner Circle 23 (2026-07-24) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Jean Do Santos (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jesus Pinedo (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Jean Do Santos (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Jhon Brutas (ONE Championship) | result: ONE Friday Fights 157 & The Inner Circle 17 (2026-06-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Joe Schilling (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Joey Ruquet (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Johnny Eblen (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jordan Fongno (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Josh Weems (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Joey Ruquet (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Jordan Fongno (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Josh Weems (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Julian Mayorga (ONE Championship) | result: ONE Friday Fights 157 & The Inner Circle 17 (2026-06-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Juliet Ukah (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Justin Wetzell (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Karim Henniene (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Keisuke Sasu (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Keweny Lopes (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Khamzat Abaev (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Khasan Magomedshairpov (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Khasan Magomedshairpov (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Kyungjung Kim (ONE Championship) | result: ONE Friday Fights 155 & The Inner Circle 15 (2026-05-22) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Luca Poclit (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Malik Basahel (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Mia Grawe (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Michael Cyr (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Myke Ohura (ONE Championship) | result: ONE Friday Fights 163 & The Inner Circle 23 (2026-07-24) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | O'Neal Thompson (ONE Championship) | result: ONE Friday Fights 163 & The Inner Circle 23 (2026-07-24) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Octave Ayinda (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Rafael Xavier (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Raphael Uchegbu (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Rasul Magomedov (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Rayan Atmani (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Richard Muzaan (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Rob Wilkinson (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Rayan Atmani (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Richard Muzaan (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Ruslan Satiev (ONE Championship) | result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Rustam Serbiev (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Saher Qasmieh (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Salah Eddine Hamli (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Salamat Isbulaev (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Saud Almolhem (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Shane Campbell (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Shelda Chipito (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Sullivan Cauley (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Thad Jean (PFL) | result: PFL Washington DC: Jean vs Rodriguez (2026-07-25) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Thimna Mhlauli (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Victoria Alba (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Saher Qasmieh (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Salah Eddine Hamli (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Shane Campbell (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+| Shelda Chipito (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Thimna Mhlauli (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Victoria Souza (ONE Championship) | result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Wasi Adeshina (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Wissame Akhmouch (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Yahaya Yahuza (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Yousef Adel (PFL) | result: PFL MENA 10 (2026-07-10) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Zak Flessas (PFL) | result: PFL Austin: Eblen vs Kasanganay (2026-07-18) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Zamzam Al Hammadi (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: blocked host (PFL: pflmma-prod.s3.amazonaws.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
+| Yahaya Yahuza (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
+
+<details><summary>Photo but no cut-out</summary>
+
+- Aaron Jeffery: source portrait under 300px wide
+- Abderrahman Errachidy: source portrait under 300px wide
+- Abraham Bably: source portrait under 300px wide
+- Adam Borics: source portrait under 300px wide
+- Akhmed Magomedov: source portrait under 300px wide
+- Aleksandra Savicheva: source portrait under 300px wide
+- Alexei Pergande: source portrait under 300px wide
+- Allan Begosso: source portrait under 300px wide
+- Amru Magomedov: source portrait under 300px wide
+- Angel Alvarez: source portrait under 300px wide
+- Archie Colgan: source portrait under 300px wide
+- Badr Medkouri: source portrait under 300px wide
+- Boule Godogo: source portrait under 300px wide
+- Brandon Lewis: source portrait under 300px wide
+- Brock Hamer: source portrait under 300px wide
+- Bruno Cappelozza: source portrait under 300px wide
+- Caden Cox: source portrait under 300px wide
+- Chamy Delva: source portrait under 300px wide
+- Chelsea Hackett: source portrait under 300px wide
+- Cheyanne Bowers: source portrait under 300px wide
+- Cheyden Leialoha: source portrait under 300px wide
+- Cobey Fehr: source portrait under 300px wide
+- Connor Hughes: source portrait under 300px wide
+- Cornel Thompson: source portrait under 300px wide
+- Cássio Barão: source portrait under 300px wide
+- Dakota Bush: source portrait under 300px wide
+- Dakota Ditcheva: source portrait under 300px wide
+- Dalton Rosta: source portrait under 300px wide
+- Darryl Walker: source portrait under 300px wide
+- David Samuel: source portrait under 300px wide
+- Demba Seck: source portrait under 300px wide
+- Denis Goltsov: source portrait under 300px wide
+- Denise Kielholtz: source portrait under 300px wide
+- Dovlet Yagshimuradov: source portrait under 300px wide
+- Dwight Joseph: source portrait under 300px wide
+- Eduardo Neves: source portrait under 300px wide
+- Eliezer Kubanza: source portrait under 300px wide
+- Elora Dana: source portrait under 300px wide
+- Emiliano Sordi: source portrait under 300px wide
+- Eoin Sheridan: source portrait under 300px wide
+- Ernesto Rodriguez: source portrait under 300px wide
+- Gabriel Braga: source portrait under 300px wide
+- Gadzhi Rabadanov: source portrait under 300px wide
+- Gamid Khizriev: source portrait under 300px wide
+- Hasan Mezhiev: source portrait under 300px wide
+- Jacinta Austin: source portrait under 300px wide
+- James Vake: source portrait under 300px wide
+- Jena Bishop: source portrait under 300px wide
+- Jhony Gregory: source portrait under 300px wide
+- Joji Goto: source portrait under 300px wide
+- Jonathan Martin: source portrait under 300px wide
+- Jonathan Piersma: source portrait under 300px wide
+- Kevin Pease: source portrait under 300px wide
+- Khabib Nabiev: source portrait under 300px wide
+- Khasan Magomedsharipov: source portrait under 300px wide
+- Landry Ward: source portrait under 300px wide
+- Lazaro Dayron: source portrait under 300px wide
+- Levan Khabalaev: source portrait under 300px wide
+- Lewis McGrillen: source portrait under 300px wide
+- Liz Carmouche: source portrait under 300px wide
+- Lucero Acosta: source portrait under 300px wide
+- Marcirley Alves: source portrait under 300px wide
+- Michael Boylan: source portrait under 300px wide
+- Movsar Ibragimov: source portrait under 300px wide
+- Natan Schulte: source portrait under 300px wide
+- Nawras Abzakh: source portrait under 300px wide
+- Nkosi Ndebele: source portrait under 300px wide
+- Noah Hermosillo: source portrait under 300px wide
+- Oleg Popov: source portrait under 300px wide
+- Oualy Tandia: source portrait under 300px wide
+- Patrick Habirora: source portrait under 300px wide
+- Patrick Ocheme: source portrait under 300px wide
+- Paulina Wisniewska: source portrait under 300px wide
+- Peace Nguphane: source portrait under 300px wide
+- Raufeon Stots: source portrait under 300px wide
+- Robert Watley: source portrait under 300px wide
+- Roland Dunlap: source portrait under 300px wide
+- Rosario Romero: source portrait under 300px wide
+- Sarvarjon Khamidov: source portrait under 300px wide
+- Sean Gauci: source portrait under 300px wide
+- Sergei Bilostenniy: source portrait under 300px wide
+- Sergio Pettis: source portrait under 300px wide
+- Shannon Clark: source portrait under 300px wide
+- Simeon Powell: source portrait under 300px wide
+- Styve Ngono: source portrait under 300px wide
+- Taila Santos: source portrait under 300px wide
+- Tatiana Postarnakova: source portrait under 300px wide
+- Timur Khizriev: source portrait under 300px wide
+- Tracy Reeder: source portrait under 300px wide
+- Valentin Moldavsky: source portrait under 300px wide
+- Wilson Lopshire: source portrait under 300px wide
+- Yabna N’Tchala: source portrait under 300px wide
+- Adam Meskini: source portrait under 300px wide
+- Alain Majorique: source portrait under 300px wide
+- Alexander Shabliy: source portrait under 300px wide
+- Andrea Vazquez: source portrait under 300px wide
+- Asaël Adjoudj: source portrait under 300px wide
+- Ashley Reece: source portrait under 300px wide
+- Ashley Thiner: source portrait under 300px wide
+- Baris Adiguzel: source portrait under 300px wide
+- Benson Henderson: source portrait under 300px wide
+- Borena Tsertsvadze: source portrait under 300px wide
+- Boris Atangana: source portrait under 300px wide
+- Brandon Davis: source portrait under 300px wide
+- Bryce Meredith: source portrait under 300px wide
+- Chad Yard: source portrait under 300px wide
+- Coby Bradford: source portrait under 300px wide
+- Donegi Abena: source portrait under 300px wide
+- Gustavo Oliveira: source portrait under 300px wide
+- Hattan Alsaif: source portrait under 300px wide
+- Ilara Joanne: source portrait under 300px wide
+- Impa Kasanganay: source portrait under 300px wide
+- Jackson Glass: source portrait under 300px wide
+- Jacob Pais: source portrait under 300px wide
+- Jesus Pinedo: source portrait under 300px wide
+- Joe Schilling: source portrait under 300px wide
+- Johnny Eblen: source portrait under 300px wide
+- Juliet Ukah: source portrait under 300px wide
+- Justin Wetzell: source portrait under 300px wide
+- Karim Henniene: source portrait under 300px wide
+- Keisuke Sasu: source portrait under 300px wide
+- Keweny Lopes: source portrait under 300px wide
+- Khamzat Abaev: source portrait under 300px wide
+- Luca Poclit: source portrait under 300px wide
+- Malik Basahel: source portrait under 300px wide
+- Mia Grawe: source portrait under 300px wide
+- Michael Cyr: source portrait under 300px wide
+- Rafael Xavier: source portrait under 300px wide
+- Rasul Magomedov: source portrait under 300px wide
+- Rustam Serbiev: source portrait under 300px wide
+- Sullivan Cauley: source portrait under 300px wide
+- Victoria Alba: source portrait under 300px wide
+- Wasi Adeshina: source portrait under 300px wide
+- Zak Flessas: source portrait under 300px wide
+
+</details>
 
 ## SUMO: 0 without a photo, 98 with a photo but no cut-out (190 on the site)
 
