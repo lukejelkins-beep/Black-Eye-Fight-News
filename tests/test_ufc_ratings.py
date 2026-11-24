@@ -275,7 +275,18 @@ class Effectiveness(unittest.TestCase):
         base = {"td15": .2, "tdAcc": None, "ctrlShare": .05, "ctrlAgainstShare": .05}
         stops = r.raw_skill({**base, "tdDef": .9}, {}, "wrestling")
         concedes = r.raw_skill({**base, "tdDef": .4}, {}, "wrestling")
-        self.assertGreater(stops - concedes, 25)
+        W = r.WRESTLING_WEIGHTS
+        present = sum(W[k] for k in ("td15", "ctrlShare", "tdDef", "ctrlAgainstShare"))   # tdAcc and rev15 missing
+        # takedown defence .9 scores 90.9, .4 scores 0 on its 40-95% range
+        self.assertAlmostEqual(stops - concedes, 90.909 * W["tdDef"] / present, places=2)
+        self.assertGreater(stops, concedes)
+
+    def test_offence_and_defence_split_60_40(self):
+        for W, defence in ((r.WRESTLING_WEIGHTS, ("tdDef", "ctrlAgainstShare", "rev15")),
+                           (r.GRAPPLING_WEIGHTS, ("subLossShare", "subAbs15", "rev15", "ctrlAgainstShare")),
+                           (r.STRIKING_WEIGHTS, ("strDef", "sapm", "kdAbs15", "koLossShare"))):
+            self.assertAlmostEqual(sum(W.values()), 1.0)
+            self.assertAlmostEqual(sum(W[k] for k in defence), .40)
 
     def test_wrestling_counts_control_conceded(self):
         a = r.raw_skill({"td15": 1, "tdDef": .7, "ctrlShare": .2, "ctrlAgainstShare": .0}, {}, "wrestling")
@@ -286,7 +297,9 @@ class Effectiveness(unittest.TestCase):
         rates = {"sub15": 0.0, "rev15": 0.0, "subAbs15": .2, "ctrlShare": .05, "ctrlAgainstShare": .05}
         safe = r.raw_skill(rates, {"subWinShare": 0, "subLossShare": 0}, "grappling")
         tapped = r.raw_skill(rates, {"subWinShare": 0, "subLossShare": .25}, "grappling")
-        self.assertGreater(safe - tapped, 15)
+        # all seven parts present: a submission loss every fourth fight costs the whole submission-loss weight
+        self.assertAlmostEqual(safe - tapped, 100 * r.GRAPPLING_WEIGHTS["subLossShare"], places=6)
+        self.assertGreater(safe, tapped)
 
     def test_drivers_weights_sum_to_one(self):
         for skill in r.SKILLS:

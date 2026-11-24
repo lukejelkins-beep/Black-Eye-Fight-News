@@ -110,13 +110,12 @@
    koLossRate:finite(stats.koTkoLossRate,0,1)
   };
  }
+ const WW={td15:.25,tdAcc:.12,ctrlShare:.23,tdDef:.22,ctrlAgainstShare:.13,rev15:.05};
+ const GW={sub15:.20,subWinShare:.28,ctrlShare:.12,subLossShare:.15,subAbs15:.10,rev15:.08,ctrlAgainstShare:.07};
  const SW={slpm:.10,diffPm:.17,strAcc:.08,kd15:.11,koWinShare:.14,strDef:.12,sapm:.09,kdAbs15:.12,koLossShare:.07};
  function metricSpecs(d){
   if(!d)return null;
   const diff=d.slpm!==null&&d.sapm!==null?d.slpm-d.sapm:null;
-  // Rounded like the Python port (ufc_ratings.bounded), so the two give identical composites.
-  const netCtrl=d.controlShare!==null&&d.controlShare!==undefined&&d.controlAgainst!==null&&d.controlAgainst!==undefined?
-   Math.round((d.controlShare-d.controlAgainst)*1000)/1000:null;
   return {
     // Striking is landing and not getting hit (2026-11-24): output 60%, defence 40% including KO/TKO losses.
     // Weights must equal STRIKING_WEIGHTS in scripts/ufc_ratings.py (CI parity check).
@@ -131,21 +130,24 @@
       [between(d.kdAgainst15,1.0,0),SW.kdAbs15,"Knockdowns received/15"],
       [between(d.koLossRate,.25,0),SW.koLossShare,"KO/TKO losses per recorded fight (lower is better)"]
     ],
-    // Effectiveness, not volume (rating model 2026-11): what a fighter stops counts as well as what they land.
+    // Offence 60%, defence 40%, like striking (2026-11-24). Weights must equal GRAPPLING_WEIGHTS and
+    // WRESTLING_WEIGHTS in scripts/ufc_ratings.py (CI parity check). Grappling's gate reads the first three entries.
     grappling:[
-      [between(d.sub15,0,3.0),.20,"Submission attempts/15"],
-      [between(d.subFinishRate,0,.35),.30,"Submission finishes per recorded fight"],
-      [between(d.subLossRate,.25,0),.20,"Submission losses per recorded fight (lower is better)"],
-      [between(d.subAgainst15,2.0,0),.10,"Opponent submission attempts/15 (lower is better)"],
-      [between(d.rev15,0,2),.10,"Reversals/15"],
-      [between(netCtrl,-.40,.50),.10,"Control time won minus conceded"]
+      [between(d.sub15,0,3.0),GW.sub15,"Submission attempts/15"],
+      [between(d.subFinishRate,0,.35),GW.subWinShare,"Submission finishes per recorded fight"],
+      [between(d.subLossRate,.25,0),GW.subLossShare,"Submission losses per recorded fight (lower is better)"],
+      [between(d.controlShare,0,.50),GW.ctrlShare,"Control-time share"],
+      [between(d.subAgainst15,2.0,0),GW.subAbs15,"Opponent submission attempts/15 (lower is better)"],
+      [between(d.rev15,0,2),GW.rev15,"Reversals/15"],
+      [between(d.controlAgainst,.50,0),GW.ctrlAgainstShare,"Opponent control-time share (lower is better)"]
     ],
     wrestling:[
-      [between(d.td15,0,5.5),.20,"Takedowns landed/15"],
-      [between(d.tdAcc,20,65),.10,"Takedown completion rate"],
-      [between(d.tdDef,40,95),.30,"Takedown defence"],
-      [between(netCtrl,-.40,.50),.35,"Control time won minus conceded"],
-      [between(d.rev15,0,2),.05,"Reversals/15"]
+      [between(d.td15,0,5.5),WW.td15,"Takedowns landed/15"],
+      [between(d.tdAcc,20,65),WW.tdAcc,"Takedown completion rate"],
+      [between(d.controlShare,0,.50),WW.ctrlShare,"Control-time share"],
+      [between(d.tdDef,40,95),WW.tdDef,"Takedown defence"],
+      [between(d.controlAgainst,.50,0),WW.ctrlAgainstShare,"Opponent control-time share (lower is better)"],
+      [between(d.rev15,0,2),WW.rev15,"Reversals/15"]
     ],
     defence:[
       [between(d.sapm,6.0,1.2),.31,"Strikes absorbed/min (lower is better)"],
@@ -158,8 +160,8 @@
  }
  const LABELS=[
   ["striking","Striking","Significant-strike output and differential, accuracy, knockdowns, KO/TKO evidence, and strike defence"],
-  ["grappling","Grappling","Submission threats and finishes, submissions avoided, reversals and net control"],
-  ["wrestling","Wrestling","Takedowns landed and stopped, completion rate and control won minus conceded"],
+  ["grappling","Grappling","Submission threats and finishes, submissions avoided, reversals, control won and conceded"],
+  ["wrestling","Wrestling","Takedowns landed and stopped, completion rate, control won and conceded"],
   ["defence","Defence","Strikes absorbed, strike/takedown defence, damage and opponent control"],
   ["form","Recent form","Recency-weighted results from up to five recorded fights, with NC excluded"]
  ];

@@ -70,6 +70,14 @@ SCORE_DIVISOR = 8
 # on 2024+ fights of 0, .07, .13 and .20 found a larger weight never tracked results better (skills-only Brier .2311,
 # .2312, .2318, .2326), since knockdowns and strikes absorbed already carry most of it; .07 keeps it counted at no
 # measurable cost. See docs/ufc-rating-model-2026-11.md.
+# Wrestling (owner, 2026-11-24): offence 60% (takedowns landed 25, accuracy 12, control won 23), defence 40%
+# (takedown defence 22, control conceded 13, reversals 5).
+WRESTLING_WEIGHTS = {"td15": .25, "tdAcc": .12, "ctrlShare": .23, "tdDef": .22, "ctrlAgainstShare": .13, "rev15": .05}
+# Grappling (owner, 2026-11-24): offence 60% (submission attempts 20, submission wins 28, control won 12), defence 40%
+# (submission losses, opponents' submission attempts, reversals, control conceded); the submission-loss weight was set
+# by a walk-forward test, see docs/ufc-rating-model-2026-11.md.
+GRAPPLING_WEIGHTS = {"sub15": .20, "subWinShare": .28, "ctrlShare": .12,
+                     "subLossShare": .15, "subAbs15": .10, "rev15": .08, "ctrlAgainstShare": .07}
 STRIKING_WEIGHTS = {"slpm": .10, "diffPm": .17, "strAcc": .08, "kd15": .11, "koWinShare": .14,
                     "strDef": .12, "sapm": .09, "kdAbs15": .12, "koLossShare": .07}
 MODEL = "results+skills 2026-11"
@@ -91,16 +99,19 @@ COMPONENTS = {
                  ("strAcc", "Significant strike accuracy", "pct"),
                  ("kd15", "Knockdowns per 15 min", "rate"),
                  ("koWinShare", "KO/TKO wins per fight", "pct")],
+    # Order matters: the grappling gate reads the first three (any submission evidence), wrestling the first.
     "grappling": [("sub15", "Submission attempts per 15 min", "rate"),
                   ("subWinShare", "Submission wins per fight", "pct"),
                   ("subLossShare", "Submission losses per fight (lower is better)", "pct"),
+                  ("ctrlShare", "Control-time share", "pct"),
                   ("subAbs15", "Opponent submission attempts per 15 min (lower is better)", "rate"),
                   ("rev15", "Reversals per 15 min", "rate"),
-                  ("netCtrl", "Control time won minus conceded", "signed")],
+                  ("ctrlAgainstShare", "Time controlled by opponents (lower is better)", "pct")],
     "wrestling": [("td15", "Takedowns per 15 min", "rate"),
                   ("tdAcc", "Takedown accuracy", "pct"),
+                  ("ctrlShare", "Control-time share", "pct"),
                   ("tdDef", "Takedown defence", "pct"),
-                  ("netCtrl", "Control time won minus conceded", "signed"),
+                  ("ctrlAgainstShare", "Time controlled by opponents (lower is better)", "pct"),
                   ("rev15", "Reversals per 15 min", "rate")],
     "defence": [("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
                 ("strDef", "Significant strike defence", "pct"),
@@ -163,7 +174,7 @@ def specs(rates: dict, window: dict) -> dict:
     window = r
     slpm, sapm = r.get("slpm"), r.get("sapm")
     diff = slpm - sapm if slpm is not None and sapm is not None else None
-    W = STRIKING_WEIGHTS
+    W, G, WR = STRIKING_WEIGHTS, GRAPPLING_WEIGHTS, WRESTLING_WEIGHTS
     return {
         # Striking is landing and not getting hit (owner, 2026-11-24): output 60%, defence 40%, being knocked out
         # included. Weights in STRIKING_WEIGHTS.
@@ -175,13 +186,20 @@ def specs(rates: dict, window: dict) -> dict:
         "strikeOutput": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
                          (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
                          (_between(window.get("koWinShare"), 0, .50), .25)],
-        # Effectiveness, not volume: what a fighter stops counts as well as what they land.
-        "grappling": [(_between(r.get("sub15"), 0, 3.0), .20), (_between(window.get("subWinShare"), 0, .35), .30),
-                      (_between(window.get("subLossShare"), .25, 0), .20), (_between(r.get("subAbs15"), 2.0, 0), .10),
-                      (_between(r.get("rev15"), 0, 2), .10), (_between(r.get("netCtrl"), -.40, .50), .10)],
-        "wrestling": [(_between(r.get("td15"), 0, 5.5), .20), (_between(_pct(r.get("tdAcc")), 20, 65), .10),
-                      (_between(_pct(r.get("tdDef")), 40, 95), .30), (_between(r.get("netCtrl"), -.40, .50), .35),
-                      (_between(r.get("rev15"), 0, 2), .05)],
+        # Offence 60%, defence 40%, like striking (owner, 2026-11-24). Weights in GRAPPLING_WEIGHTS / WRESTLING_WEIGHTS.
+        "grappling": [(_between(r.get("sub15"), 0, 3.0), G["sub15"]),
+                      (_between(window.get("subWinShare"), 0, .35), G["subWinShare"]),
+                      (_between(window.get("subLossShare"), .25, 0), G["subLossShare"]),
+                      (_between(r.get("ctrlShare"), 0, .50), G["ctrlShare"]),
+                      (_between(r.get("subAbs15"), 2.0, 0), G["subAbs15"]),
+                      (_between(r.get("rev15"), 0, 2), G["rev15"]),
+                      (_between(r.get("ctrlAgainstShare"), .50, 0), G["ctrlAgainstShare"])],
+        "wrestling": [(_between(r.get("td15"), 0, 5.5), WR["td15"]),
+                      (_between(_pct(r.get("tdAcc")), 20, 65), WR["tdAcc"]),
+                      (_between(r.get("ctrlShare"), 0, .50), WR["ctrlShare"]),
+                      (_between(_pct(r.get("tdDef")), 40, 95), WR["tdDef"]),
+                      (_between(r.get("ctrlAgainstShare"), .50, 0), WR["ctrlAgainstShare"]),
+                      (_between(r.get("rev15"), 0, 2), WR["rev15"])],
         "defence": [(_between(sapm, 6.0, 1.2), .31), (_between(_pct(r.get("strDef")), 35, 75), .29),
                     (_between(_pct(r.get("tdDef")), 35, 90), .22), (_between(r.get("kdAbs15"), 1.0, 0), .12),
                     (_between(r.get("ctrlAgainstShare"), .50, 0), .06)],
