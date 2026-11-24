@@ -1,0 +1,91 @@
+name: Weekly UFC certification (draft PR)
+# Owner standing rule, 24 Nov 2026 (data/ufc-standing-certification-approval.json): every UFC fighter who gets a
+# BEFN profile is certified automatically when the strict gate passes, and certified fighters are rolled forward
+# after each new fight when UFCStats and the event's Wikipedia article agree. Results reach main only through the
+# draft PR this job opens or updates, merged by the owner ("Merge N"). The stats and Form files are not committed
+# here: the hourly stats build on main rebuilds them from the merged certified list.
+on:
+  workflow_dispatch:
+  schedule:
+    # Mondays 03:37 UTC: after the free UFCStats export refreshes (Sundays, about 18:00 UTC).
+    - cron: '37 3 * * 1'
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: befn-ufc-weekly-certification
+  cancel-in-progress: false
+jobs:
+  certify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      BRANCH: auto/ufc-weekly-certification
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests for the weekly job
+        run: python -m unittest tests/test_ufc_weekly_certification.py
+      - name: Download the free UFCStats export (Greco1899/scrape_ufc_stats)
+        run: |
+          mkdir -p "$RUNNER_TEMP/greco"
+          for f in ufc_fight_results.csv ufc_event_details.csv ufc_fighter_details.csv; do
+            curl -fsSL --retry 3 -o "$RUNNER_TEMP/greco/$f" "https://raw.githubusercontent.com/Greco1899/scrape_ufc_stats/main/$f"
+          done
+      - name: Certify newcomers and roll certified careers forward (UFCStats + Wikipedia)
+        env:
+          GRECO_DIR: ${{ runner.temp }}/greco
+        run: python scripts/ufc-weekly-certification.py --report "$RUNNER_TEMP/weekly.txt"
+      - name: Audit offline and rebuild the certified list
+        run: |
+          node scripts/ufc-36-month-stage3-progress.mjs
+          node scripts/ufc-v4-certification-queue.mjs
+          node scripts/ufc-extension-stage3-audit.mjs
+          node scripts/ufc-rolling-certification-audit.mjs
+          node scripts/build-ufc-v4-certified-careers.mjs
+          node scripts/run-ufc-stage3-tests.mjs
+          node scripts/ufc-certification-consolidation-preflight.mjs
+      - name: Open or update the weekly draft PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add data/ufc-independent-full-career-verification.json data/ufc-rolling-certification.json \
+            data/ufc-v4-certified-careers.json
+          cutoff=$(node -p "require('./data/ufc-rolling-certification.json').evidenceCutoff")
+          if git diff --cached --quiet -- data/ufc-independent-full-career-verification.json \
+              data/ufc-v4-certified-careers.json; then
+            echo "No new certificate this week (evidence to $cutoff)." | tee -a "$GITHUB_STEP_SUMMARY"
+            cat "$RUNNER_TEMP/weekly.txt" | tail -n 40 >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git config user.name 'befn-certification-bot'
+          git config user.email 'befn-certification-bot@users.noreply.github.com'
+          git commit -q -m "Weekly UFC certification: evidence to $cutoff"
+          # The branch belongs to this job and is rebuilt from main every week.
+          git push -q --force origin "HEAD:$BRANCH"
+          {
+            echo "Weekly UFC certification, evidence to **$cutoff** (owner standing rule, 24 Nov 2026)."
+            echo
+            echo "Merge with \"Merge N\" as usual. The hourly stats build then rebuilds the stats and Form files."
+            echo
+            echo '```'
+            tail -n 60 "$RUNNER_TEMP/weekly.txt"
+            echo '```'
+          } > "$RUNNER_TEMP/body.md"
+          if [ "$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')" != "0" ]; then
+            gh pr edit "$BRANCH" --title "Weekly UFC certification: evidence to $cutoff" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --draft --base main --head "$BRANCH" \
+              --title "Weekly UFC certification: evidence to $cutoff" --body-file "$RUNNER_TEMP/body.md" || {
+              echo "::error::Could not open the draft PR. Allow GitHub Actions to create pull requests (Settings > Actions > General), or open one from branch $BRANCH."
+              exit 1; }
+          fi
+          cat "$RUNNER_TEMP/body.md" >> "$GITHUB_STEP_SUMMARY"
