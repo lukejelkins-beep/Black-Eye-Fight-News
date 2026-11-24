@@ -519,7 +519,7 @@
   if(!slug)return null;
   if(cutoutRegister?.[slug]?.ok===true){
    const cc=fighterCountries?.[window.BEFNSnapshotTiles.fold(name||entry?.name||"")];
-   return {cutout:"assets/img/ufc-cutouts/"+slug+".webp",flag:/^[a-z]{2}$/.test(cc||"")?"assets/img/flags/"+cc+".svg":""};
+   return {cutout:"assets/img/ufc-cutouts/"+slug+".webp",flag:/^[a-z]{2}(-[a-z]{3})?$/.test(cc||"")?"assets/img/flags/"+cc+".svg":""};
   }
   return {photo:"assets/img/ufc/"+slug+"-thumb.webp"};
  }
@@ -1290,7 +1290,7 @@
   hero.querySelector(':scope > .befn-hero-cut')?.remove();
   hero.classList.add('has-cut');
   hero.insertAdjacentHTML('afterbegin','<div class="befn-hero-cut" aria-hidden="true">'+
-   (/^[a-z]{2}$/.test(cc||"")?'<img class="befn-hero-flag" src="assets/img/flags/'+cc+'.svg" alt="" onerror="this.remove()">':'')+'</div>');
+   (/^[a-z]{2}(-[a-z]{3})?$/.test(cc||"")?'<img class="befn-hero-flag" src="assets/img/flags/'+cc+'.svg" alt="" onerror="this.remove()">':'')+'</div>');
   let img=frame.querySelector('img');
   if(!img){img=document.createElement('img');img.alt='Photograph of '+name;frame.appendChild(img);}
   const src='assets/img/ufc-cutouts/'+slug+'.webp';
