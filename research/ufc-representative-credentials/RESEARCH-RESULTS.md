@@ -102,3 +102,21 @@ Four leads from the overnight run were checked by hand in a browser, one page at
 
 The Commonwealth Judo Championships are a domestic championship, not the Commonwealth Games, so Jones's medal is in the national lane.
 
+## Wide judo and wrestling screens (25 Nov 2026)
+
+The owner has permission from the IJF and UWW (25 Nov). The runner's wide screens covered 556 IJF competitions from 2005 to 2026 (Olympics, Worlds at every age, Grand Slams, Grand Prix, continental championships and opens) and 220 UWW result books from 2014 to 2026 (senior, U23, U20 and U17 Worlds, continental championships and World Cups). Matches were checked against each fighter's UFC profile before recording.
+
+| Fighter | New evidence | Status |
+|---|---|---|
+| Luana Pinheiro | 2013 IJF Grand Prix Qingdao, women's -52 kg, BRA, 7th | `seed` |
+| Alexander Romanov | 2018, 2020 and 2023 European Championships, and 2019 Worlds, freestyle 125 kg, MDA (8th to 12th); 2014 World University Championships, 5th; 2021 Olympic qualifier, 12th | `seed` (national and Olympic qualifier) |
+| Gable Steveson | 2015 and 2016 Cadet World champion (100 kg); 2017 Junior World champion (120 kg); 2018 Junior Worlds, 8th; 2021 Pan-American champion (125 kg), USA | added to his record |
+| Pavel Andrusca | 2021 U20 European bronze (61 kg), his second, as his UFC bio says; 2021 and 2022 U20 Worlds; 2022 U23 Europeans, MDA | added to his record |
+| Muhammad Mokaev | 2018 Junior Europeans (12th) and 2021 U23 Worlds (9th), freestyle 61 kg, GBR | added to his record |
+| Thomas Gantt | "Thomas Gantt Jr" (USA), 2021 Pan-American champion at 79 kg and 2019 World Cup team | `needs_review` (identity) |
+
+**Already recorded:** Kayla Harrison, Aaron Pico, Rinya Nakamura, Tyrell Fortune, Rei Tsuruya, Javad Mahjoub, Dione Barbosa, Iwo Baraniewski and Stephanie Egger.
+
+**Ruled out (same names):** Jesse Butler (a -81 to -100 kg judoka still competing in 2025; the UFC fighter is a bantamweight), Javier Reyes (Ecuadorian judoka; the UFC fighter is Colombian), José Henrique (the match was a Cuban "Jose Souza"), Gabriel Santos (+100 kg judoka), and wrestlers Alex Pérez Cimarra (ESP), Charles Johnson Calawen (PHI), Esteban David Martínez (COL), Daniel Felipe dos Santos (BRA, 2026), Julia da Silva Joaquim, Lázaro Daniel Hernández Luis (CUB), Jodalys Santiago Luna (PUR) and Manuel Torres (VEN).
+
+**Unresolved:** Daniel Santos (a BRA -66 kg judoka who medalled at 2013-14 Pan-American Opens; the UFC fighter is a Brazilian featherweight, but nothing links them), Irina Alekseeva (RUS U17 wrestling 2015-16; identity open), José Daniel Medina (ARG U20 wrestling 2014) and Luana Santos (a 40 kg U17 Pan-American entry in 2014).
