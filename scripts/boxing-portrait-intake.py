@@ -19,7 +19,7 @@ Processing needs Pillow where it is available, and falls back to macOS `sips`, w
 crops centred rather than top-biased; rows made that way carry "centredCrop": true so
 a later Pillow pass can redo them.
 """
-import argparse, csv, hashlib, json, re, shutil, subprocess, sys, tempfile, unicodedata, urllib.error, urllib.parse, urllib.request
+import argparse, csv, hashlib, json, re, shutil, subprocess, sys, tempfile, time, unicodedata, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
@@ -53,8 +53,24 @@ def get(url, timeout=25):
         url = parts._replace(path=urllib.parse.quote(parts.path, safe="/%"),
                              query=urllib.parse.quote(parts.query, safe="=&%")).geturl()
     req = urllib.request.Request(url, headers={"User-Agent": AGENT, "Accept": "*/*"})
+    return with_backoff(lambda: _read(req, timeout))
+
+
+def _read(req, timeout):
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read(), r.headers.get("Content-Type", "")
+
+
+def with_backoff(call, tries=5):
+    """Wait as long as a server asks when it answers 429 (Wikimedia rate-limits shared IPs)."""
+    for attempt in range(tries):
+        try:
+            return call()
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or attempt == tries - 1:
+                raise
+            wait = e.headers.get("Retry-After", "")
+            time.sleep(min(int(wait) if wait.isdigit() else 15, 60) + 1)
 
 
 def robots_allows(site, path="/"):
@@ -132,10 +148,17 @@ SOURCES = [
 ]
 # Promoters covered by the attestation but not fetched, with the reason. Their photos
 # need the owner to supply them by hand until the reason changes.
+# A roster whose page address misspells a boxer: (source, our name) -> the roster's key.
+# Each was checked against the boxer's own page on that roster, whose title spells the
+# name correctly, so the photograph is of the boxer we mean.
+ROSTER_SPELLING = {
+    ("matchroom", "diego pacheco"): "diego pachecho",  # /boxers/diego-pachecho/, titled "Diego Pacheco"
+}
 NOT_FETCHED = {
     "PBC": "premierboxingchampions.com answers an automated request with HTTP 403",
     "MVP": "mostvaluablepromotions.com robots.txt disallows ClaudeBot and sets ai-train=no",
-    "Queensberry": "queensberry.co.uk is the merchandise store; it carries no fighter roster",
+    "Queensberry": ("queensberry.co.uk is the merchandise store and carries no fighter roster; "
+                    "queensberrypromotions.com is a parked domain (checked 2026-11-24)"),
 }
 
 
@@ -151,6 +174,9 @@ REVIEWED_OUT = {
     "ramla-ali": "the lead photograph is a ringside moment in black and white with her face turned away",
     "erislandy-lara": "the lead photograph is mid-fight, side-on, and the face is small at thumbnail size",
     "carlos-adames": "the lead photograph is a training shot with his hand across his face",
+    # 2026-11-24 batch (champions and coming-up cards)
+    "daniel-dubois": "the lead photograph is a ring walk in a crowd: a dozen people in frame and his face small",
+    "oshaquie-foster": "the lead photograph is a podcast still: hood up and a microphone across his mouth",
 }
 
 FREE_LICENCE = re.compile(r"^(cc[ -]?by([ -]?sa)?([ -]?\d(\.\d)?)?|cc0|public domain|pd[- ])", re.I)
@@ -160,17 +186,29 @@ WIKI_UA = {"User-Agent": AGENT}
 def wiki_api(host, params):
     url = f"https://{host}/w/api.php?" + urllib.parse.urlencode({**params, "format": "json"})
     req = urllib.request.Request(url, headers=WIKI_UA)
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.loads(r.read())
+    time.sleep(0.5)  # stay well inside Wikimedia's rate limit
+    return json.loads(with_backoff(lambda: _read(req, 25))[0])
+
+
+def wiki_article(name):
+    """The English Wikipedia lead of this boxer's article. When the plain name is someone
+    else (Josh Kelly the actor) or a disambiguation page, try "<name> (boxer)", which is
+    still accepted only if its own lead calls the subject a boxer."""
+    name = name.replace("’", "'")  # Wikipedia titles use a straight apostrophe
+    for title in (name, f"{name} (boxer)"):
+        page = list(wiki_api("en.wikipedia.org", {
+            "action": "query", "titles": title, "prop": "pageimages|extracts", "piprop": "original",
+            "exintro": 1, "explaintext": 1, "exsentences": 2, "redirects": 1}).get("query", {}).get("pages", {}).values())[0]
+        intro = page.get("extract") or ""
+        if re.search(r"\bbox(er|ing)\b", intro, re.I) and "may refer to" not in intro:
+            return page
+    return None
 
 
 def commons_photo(name):
     """A free Commons photograph of this boxer, with its licence and photographer."""
-    page = list(wiki_api("en.wikipedia.org", {
-        "action": "query", "titles": name, "prop": "pageimages|extracts", "piprop": "original",
-        "exintro": 1, "explaintext": 1, "exsentences": 2, "redirects": 1}).get("query", {}).get("pages", {}).values())[0]
-    intro = page.get("extract") or ""
-    if not re.search(r"\bbox(er|ing)\b", intro, re.I):
+    page = wiki_article(name)
+    if page is None:
         return None, "no English Wikipedia article calling them a boxer"
     source = (page.get("original") or {}).get("source", "")
     if not source:
@@ -282,12 +320,13 @@ def main():
             continue
         report.append(f"{src['id']}: {len(roster)} boxers on the roster page")
         for key, name in list(want_keys.items()):
-            if key not in roster:
+            rkey = ROSTER_SPELLING.get((src["id"], key), key)
+            if rkey not in roster:
                 continue
             slug = slugify(name)
             if slug in have:
                 continue
-            photo, page = roster[key]
+            photo, page = roster[rkey]
             try:
                 if photo is None and src.get("photo"):
                     photo = src["photo"](page)
@@ -384,7 +423,12 @@ def main():
     if not args.dry_run:
         register["generated"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
         register["images"].sort(key=lambda r: r["id"])
-        register["skipped"] = sorted(skipped, key=lambda r: r["name"])
+        # A run over part of the list (--names) keeps what earlier runs recorded for the
+        # names it did not look at, and drops a skip for anyone who now has a photo.
+        looked_at = {norm(n) for n in want} | {norm(r["name"]) for r in skipped}
+        earlier = [r for r in register.get("skipped", [])
+                   if norm(r["name"]) not in looked_at and slugify(r["name"]) not in have]
+        register["skipped"] = sorted(earlier + skipped, key=lambda r: r["name"])
         REGISTER.write_text(json.dumps(register, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     print("\n".join(report))
     print(f"added {len(added)}: {', '.join(sorted(added)) or '-'}")
