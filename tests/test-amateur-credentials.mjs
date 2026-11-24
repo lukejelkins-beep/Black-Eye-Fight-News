@@ -112,10 +112,12 @@ test('grappling rows: only verified fighters, adult or juvenile divisions, match
     '| Fighter slug | Identity | Event | Division | Place | Published name | Academy | Source |', '| --- | --- | --- | --- | ---: | --- | --- | --- |',
     '| ada-lee | Provisional | 2014 Pan Championship | Female / Adult / Brown / Light | 1 | Ada Lee | Team | [IBJJF](https://ibjjf.com/e/4) |',
     '| ada-lee | Corroborated | 2013 Pan Championship | Female / Juvenile 2 / Purple / Light | 3 | Ada Lee | Team | [IBJJF](http://ibjjf.com/e/5) |',
+    '| ada-lee | Corroborated (gym: Team) | 2012 Pan Championship | Female / Adult / Purple / Light | 2 | Ada Maria Lee Santos | Team | [IBJJF](https://ibjjf.com/e/6) |',
+    '| ada-lee | Corroborated (gym: Team) | 2011 Pan Championship | Female / Adult / Purple / Light | 2 | Bea Lee | Team | [IBJJF](https://ibjjf.com/e/7) |',
   ].join('\n'));
   const rows = grapplingRows({ 'ada-lee': 'Ada Lee', 'bo-kim': 'Bo Kim', 'zed-roe': 'Zed Roe' }, dir);
   assert.deepEqual(Object.keys(rows).sort(), ['ada-lee', 'bo-kim']);
-  assert.deepEqual(rows['ada-lee'].map(r => r.edition), ['2019 ADCC World Championship', '2015 Gi Worlds (IBJJF)']);
+  assert.deepEqual(rows['ada-lee'].map(r => r.edition), ['2019 ADCC World Championship', '2015 Gi Worlds (IBJJF)', '2012 Pan Championship (IBJJF)']);
   assert.equal(rows['ada-lee'][1].belt, 'black');
   assert.deepEqual(rows['bo-kim'].map(r => [r.edition, r.medal]), [['2026 ADCC World Championship', null]]);
   const badges = badgesFor(rows['ada-lee']).map(b => b.label);
