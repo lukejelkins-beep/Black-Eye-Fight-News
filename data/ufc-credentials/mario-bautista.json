@@ -6,7 +6,7 @@
  "name": "Mario Bautista",
  "identity": {
   "status": "confirmed",
-  "note": "Matched by UFC.com athlete page"
+  "note": "UFC.com page: age 33, bantamweight, born Winnemucca NV; local paper matches"
  },
  "researched": {
   "date": "2026-11-24",
@@ -17,17 +17,35 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "A local newspaper says he graduated from Lowry High School in Winnemucca, Nevada in 2011 and placed fourth at the 2011 state wrestling championships at 145 pounds.",
+     "source_url": "https://greatbasinsun.com/news/2024/sep/24/bautista-preparing-for-biggest-ufc-fight-to-date",
+     "source_name": "Great Basin Sun",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2011,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
      "checked": "2026-11-24",
      "url": "https://www.ufc.com/athlete/mario-bautista"
+    },
+    {
+     "name": "Great Basin Sun",
+     "checked": "2026-11-24",
+     "url": "https://greatbasinsun.com/news/2024/sep/24/bautista-preparing-for-biggest-ufc-fight-to-date"
     }
    ],
-   "note": "Search reports say he wrestled in high school; no source page confirmed; no college wrestling found."
+   "note": "Only one outlet found for the high school result; no college wrestling found. No NCAA source checked."
   },
   "grappling": {
    "status": "unknown",
@@ -71,7 +89,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.594Z",
+   "at": "2026-11-24T09:12:38.948Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

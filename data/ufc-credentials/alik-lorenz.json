@@ -6,13 +6,15 @@
  "name": "Alik Lorenz",
  "identity": {
   "status": "confirmed",
-  "note": "Matched by name and division on UFC/ESPN pages."
+  "note": "Matched to UFC.com athlete page."
  },
  "researched": {
   "date": "2026-11-24",
   "pass": 1
  },
- "flags": [],
+ "flags": [
+  "needs_escalation"
+ ],
  "disciplines": {
   "wrestling": {
    "status": "unknown",
@@ -25,12 +27,12 @@
      "url": "https://www.ufc.com/athlete/alik-lorenz"
     },
     {
-     "name": "ESPN profile",
+     "name": "UNI Athletics wrestling rosters 2016-17, 2017-18 (page text had no names)",
      "checked": "2026-11-24",
-     "url": "https://www.espn.com/mma/fighter/bio/_/id/5220971/alik-lorenz"
+     "url": "https://unipanthers.com/sports/wrestling/roster/2017-18"
     }
    ],
-   "note": "No wrestling background found in the sources checked."
+   "note": "UFC.com lists University of Northern Iowa (graduated 2018, computer science) but no wrestling. UNI roster pages could not be read for names, so team membership is unconfirmed."
   },
   "grappling": {
    "status": "unknown",
@@ -74,7 +76,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.529Z",
+   "at": "2026-11-24T09:12:38.928Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

@@ -6,18 +6,33 @@
  "name": "Gauge Young",
  "identity": {
   "status": "confirmed",
-  "note": "Matched by name and division on UFC/ESPN pages."
+  "note": "Matched to UFC.com athlete page."
  },
  "researched": {
   "date": "2026-11-24",
   "pass": 1
  },
- "flags": [],
+ "flags": [
+  "thin_sources"
+ ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "youth"
+   ],
+   "claims": [
+    {
+     "text": "Says on his UFC athlete page that he has wrestled since age 12; no school or competition results found.",
+     "source_url": "https://www.ufc.com/athlete/gauge-young",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "youth",
+     "display": "claimed"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
@@ -25,7 +40,7 @@
      "url": "https://www.ufc.com/athlete/gauge-young"
     }
    ],
-   "note": "UFC page says he has wrestled since age 12; no college wrestling found."
+   "note": "Only a self-reported line on the UFC page; no school, college or NCAA record found."
   },
   "grappling": {
    "status": "unknown",
@@ -69,7 +84,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.566Z",
+   "at": "2026-11-24T09:12:38.942Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

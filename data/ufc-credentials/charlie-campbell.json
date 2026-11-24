@@ -6,7 +6,7 @@
  "name": "Charlie Campbell",
  "identity": {
   "status": "confirmed",
-  "note": "UFC lightweight from New York"
+  "note": "UFC.com page: age 30, lightweight, born New York, East Rockaway resident per local press"
  },
  "researched": {
   "date": "2026-11-24",
@@ -17,17 +17,35 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "youth"
+   ],
+   "claims": [
+    {
+     "text": "UFC.com says he began wrestling at age six, and that his high school had no wrestling program. A local paper says he joined the Lynbrook Titans youth wrestling club around age 8.",
+     "source_url": "https://www.ufc.com/athlete/charlie-campbell",
+     "source_name": "UFC.com / Long Island Herald",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "youth",
+     "display": "claimed"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
      "checked": "2026-11-24",
      "url": "https://www.ufc.com/athlete/charlie-campbell"
+    },
+    {
+     "name": "Long Island Herald",
+     "checked": "2026-11-24",
+     "url": "https://www.liherald.com/lynbrook/stories/mma-fighter-from-east-rockaway-sets-sights-on-ufc,141524"
     }
    ],
-   "note": "UFC Q&A says he began wrestling at six and his high school had no wrestling program; no college wrestling found."
+   "note": "Youth wrestling only; no college wrestling found. No NCAA source checked."
   },
   "grappling": {
    "status": "unknown",
@@ -71,7 +89,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.545Z",
+   "at": "2026-11-24T09:12:38.934Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

@@ -6,7 +6,7 @@
  "name": "Victor Henry",
  "identity": {
   "status": "confirmed",
-  "note": "UFC page name matches."
+  "note": "UFC.com page: age 37, bantamweight, California"
  },
  "researched": {
   "date": "2026-11-24",
@@ -17,9 +17,23 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "UFC.com lists catch wrestling titles: Billy Robinson Invitational 2018 (weight class and open) and King of Catch 2021 (weight class and open). Self-reported bio; titles not independently confirmed.",
+     "source_url": "https://www.ufc.com/athlete/victor-henry",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2021,
+     "level": "other",
+     "level_note": "catch wrestling",
+     "display": "claimed"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
@@ -27,7 +41,7 @@
      "url": "https://www.ufc.com/athlete/victor-henry"
     }
    ],
-   "note": "No college wrestling found; his background is catch wrestling, outside this scope."
+   "note": "Catch wrestling titles only; no NCAA or freestyle/folkstyle background found. No NCAA source checked."
   },
   "grappling": {
    "status": "unknown",
@@ -71,7 +85,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.618Z",
+   "at": "2026-11-24T09:12:38.954Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,
