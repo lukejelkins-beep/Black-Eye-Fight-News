@@ -175,3 +175,42 @@ test('every saved fighter file in the repo validates against the approved roster
   const res = validateDirectory(path.join(root, 'data/ufc-credentials'), {rosterSlugs: new Set(approval.approvedFighters)});
   assert.deepEqual(res.failures, []);
 });
+
+// ---- NCAA claims and college athletics sites (owner, 24 Nov 2026) ----
+test('a college athletics page is Tier A for NCAA team participation only', () => {
+  const base = {text: 'On the wrestling roster for the 2016-17 season.', source_name: 'School athletics', tier: 'B',
+    retrieved: '2026-11-24', year: 2016, level: 'ncaa_other', ncaa_division: 'II', ncaa_result: 'participant'};
+  const ok = validateClaim({...base, source_url: 'https://athletics.example.edu/roster/x'}, {today: '2026-11-24'});
+  assert.equal(ok.claim.tier, 'A');
+  assert.equal(ok.claim.ncaa_division, 'II');
+  const reviewed = validateClaim({...base, source_url: 'https://gopsusports.com/roster/x'}, {today: '2026-11-24', schoolHosts: ['gopsusports.com']});
+  assert.equal(reviewed.claim.tier, 'A');
+  const unreviewed = validateClaim({...base, source_url: 'https://someschoolsports.com/roster/x'}, {today: '2026-11-24'});
+  assert.equal(unreviewed.claim.tier, 'B', 'an unreviewed non-.edu host is not upgraded');
+  for (const result of ['all_american', 'finalist', 'champion'])
+    assert.equal(validateClaim({...base, ncaa_result: result, source_url: 'https://athletics.example.edu/x'}, {today: '2026-11-24'}).claim.tier, 'B', result);
+  assert.equal(validateClaim({...base, tier: 'A', source_url: 'https://www.wikipedia.org/wiki/X'}, {today: '2026-11-24'}).claim.tier, 'C');
+  assert.equal(validateClaim({...base, ncaa_division: undefined, source_url: 'https://athletics.example.edu/x'}, {today: '2026-11-24'}).claim.tier, 'B',
+    'Division II/III participation must name its division');
+});
+
+test('NCAA fields are checked against the level', () => {
+  const c = o => validateClaim({text: 'Wrestled in college.', source_url: 'https://www.ncaa.com/x', source_name: 'NCAA', tier: 'A',
+    retrieved: '2026-11-24', year: 2016, ...o}, {today: '2026-11-24'});
+  assert.equal(c({level: 'ncaa_d1', ncaa_division: 'II'}).drop, 'ncaa_d1_with_other_division');
+  assert.equal(c({level: 'ncaa_other', ncaa_division: 'I'}).drop, 'ncaa_other_with_division_I');
+  assert.equal(c({level: 'ncaa_d1', ncaa_result: 'gold'}).drop, 'invalid_ncaa_result');
+  assert.equal(c({level: 'ncaa_d1', ncaa_result: 'champion'}).claim.ncaa_result, 'champion');
+  assert.equal(c({level: 'ncaa_d1'}).claim.ncaa_division, undefined, 'Division I is implied, not written');
+  assert.equal(c({level: 'high_school', ncaa_result: 'champion'}).claim.ncaa_result, undefined, 'NCAA fields only on NCAA levels');
+  assert.equal(c({level: 'other', level_note: 'NJCAA'}).claim.level, 'other');
+});
+
+test('a Division I participation claim from a school site verifies; a title from it alone does not', () => {
+  const rec = claims => validateRecord({schema: SCHEMA_VERSION, scope: SCOPE, nonproduction: true, slug: 'x-y', identity: {status: 'confirmed'},
+    disciplines: {wrestling: {status: 'verified', claims, sources_checked: []}}}, {today: '2026-11-24'}).record.disciplines.wrestling.status;
+  const roster = {text: 'Wrestled for the team.', source_url: 'https://athletics.example.edu/r', source_name: 'School', tier: 'B',
+    retrieved: '2026-11-24', year: 2015, level: 'ncaa_d1', ncaa_result: 'participant'};
+  assert.equal(rec([roster]), 'verified');
+  assert.equal(rec([{...roster, ncaa_result: 'champion'}]), 'claimed');
+});

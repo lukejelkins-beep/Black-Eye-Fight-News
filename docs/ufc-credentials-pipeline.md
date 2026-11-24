@@ -25,6 +25,12 @@ Level list: `youth`, `high_school`, `ncaa_d1`, `ncaa_other`, `national_team`, `n
 - All seven disciplines are always present; a missing one is `unknown`.
 - `npm`-free check of saved files: `node scripts/ufc-credentials-schema.mjs` fails if a file is hand-edited, misnamed, outside the approved roster, or not in normalised form.
 
+## NCAA wrestling and college athletics sites (owner, 24 Nov 2026)
+- An NCAA claim (`ncaa_d1` or `ncaa_other`) can carry `ncaa_division` (I, II, III; implied I for `ncaa_d1`) and `ncaa_result`: `participant` (on the team), `all_american`, `finalist`, `champion`. Junior college (NJCAA) and NAIA are not NCAA: level `other` with `level_note` "NJCAA" or "NAIA".
+- A college's own athletics site (a `.edu` host, or a reviewed host in `data/ufc-credentials/_school-athletics-hosts.json`, e.g. gopsusports.com) is Tier A for `participant` only. All-American, finalist and champion still need ncaa.com / ncaa.org or two independent Tier B outlets. Add a host to that file only after checking it is the school's official athletics site.
+- The roster is every certified profile fighter: the frozen 783, the 24 Nov extension cohort and the weekly rolling cohort. Duplicate identities are skipped only where certification has not settled them; the three confirmed alias slugs (`bruno-silva`, `hyunsung-park`, `carlos-hernandez-7`) are researched under their certified slug.
+- `--disciplines wrestling` limits a run to wrestling; the other disciplines stay `unknown`. A plan-only run (`--emit-prompts` / `--from-dir`) makes no model call, so the 25-fighter API budget guard does not apply to it.
+
 ## Running
 ```bash
 export PATH=~/.local/opt/node-v22.23.5-darwin-arm64/bin:$PATH

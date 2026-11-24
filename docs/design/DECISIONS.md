@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+
+## 2026-11-24 (NCAA wrestling credentials, Americans first)
+- **Research NCAA wrestling credentials for every certified profile fighter, Americans first, in this session with research sub-agents (no API spend).** Owner selectors (24 Nov): "Here, no API cost", "NCAA wrestling only", "Yes, for participation", "Yes, all profiles". Pipeline changes (`scripts/ufc-credentials-schema.mjs`, `scripts/ufc-credentials-run.mjs`): NCAA claims carry `ncaa_division` and `ncaa_result` (participant, All-American, finalist, champion); a college's own athletics site counts as Tier A proof of being on that NCAA team and nothing more (placings and titles still need ncaa.com or two independent outlets); NJCAA and NAIA are recorded as "other", never as NCAA; the roster is all certified profile fighters (783 + extension + rolling), skipping only the three confirmed alias slugs; `--disciplines wrestling` scopes a run; plan-only runs skip the API budget guard. First batch: the 198 Americans (by the flags file) not in the 25-fighter pilot. Research only: nothing is shown on a page until a separate decision. — Owner (selectors, 24 Nov) — PR for branch claude/lucid-clarke-fgst1o.
+
 ## 2026-11-24 (Flags: Korean and Polish spellings)
 - **10 more cutout fighters get a flag** (owner picked "Add the 8 matches"; two more turned up with the same rule). The Wikipedia page writes Korean names surname first ("Lee Jeong-yeong") and Polish names with "ł" ("Ruchała"), while our data writes "JeongYeong Lee" and "Ruchala", so the folded names never met. `scripts/build-ufc-fighter-countries.py` now also files a South Korean fighter given-name-first, and every name with letters like "ł" made plain. Added: DongHun Choi, Dooho Choi, HyunSung Park, JeongYeong Lee, Seokhyeon Ko, SuYoung You, Yi Sak Lee (South Korea); Jakub Wiklacz, Michal Oleksiejczuk, Robert Ruchala (Poland). Left as before: Ilia Topuria (two flags on the page, Georgia and Spain; no country stored for the band) and 150 cutout fighters not on the page, mostly retired or released. — Owner — awaiting owner "Merge N".
 

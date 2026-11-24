@@ -30,6 +30,13 @@ export const LEVELS = ['youth', 'high_school', 'ncaa_d1', 'ncaa_other', 'nationa
 export const TIER_A_HOSTS = ['ijf.org', 'judoinside.com', 'uww.org', 'unitedworldwrestling.org', 'ncaa.com', 'ncaa.org',
   'sambo.sport', 'fias.sport', 'ibjjf.com', 'ibjjfdb.com', 'boxrec.com', 'adcombat.com', 'olympics.com', 'olympedia.org',
   'worldboxing.org', 'wako.sport', 'muaythai.sport', 'immaf.org', 'usawrestling.org', 'teamusa.org', 'usajudo.com'];
+/** NCAA claims (owner, 24 Nov 2026). `ncaa_result` separates being on a team from placing at the championships. */
+export const NCAA_DIVISIONS = ['I', 'II', 'III'];
+export const NCAA_RESULTS = ['participant', 'all_american', 'finalist', 'champion'];
+/** A college's own athletics site (a .edu host, or a reviewed official athletics host such as gopsusports.com) is
+ * Tier A proof of being on that NCAA team (ncaa_result "participant") and nothing more (owner, 24 Nov 2026). Placings
+ * and titles still need ncaa.com / ncaa.org or two independent Tier B sources. */
+export const isSchoolAthleticsHost = (host, reviewed = []) => Boolean(host) && (/\.edu$/.test(host) || hostIn(host, reviewed));
 /** Hosts that are never better than Tier C, whatever the model says. */
 export const TIER_C_HOSTS = ['wikipedia.org', 'wikidata.org', 'fandom.com', 'reddit.com', 'facebook.com', 'instagram.com',
   'x.com', 'twitter.com', 'tiktok.com', 'youtube.com', 'youtu.be', 'quora.com', 'threads.net', 'bestfightodds.com'];
@@ -54,7 +61,7 @@ export const hasLongQuote = t => /["“”]([^"“”]*)["“”]/g.test(t) &&
   [...t.matchAll(/["“]([^"“”]+)["”]/g)].some(m => m[1].trim().split(/\s+/).length >= 5);
 
 /** Validate one claim. Returns {claim} or {drop: reason}; `notes` collects non-fatal adjustments. */
-export function validateClaim(raw, {today, notes = []} = {}) {
+export function validateClaim(raw, {today, notes = [], schoolHosts = []} = {}) {
   if (!isPlain(raw)) return {drop: 'not_an_object'};
   const text = str(raw.text);
   if (!text) return {drop: 'missing_text'};
@@ -77,14 +84,31 @@ export function validateClaim(raw, {today, notes = []} = {}) {
   if (audit !== null && !AUDIT_VERDICTS.includes(audit)) return {drop: 'invalid_audit_verdict'};
   if (audit === 'refuted') return {drop: 'refuted_by_audit'};
 
+  const ncaa = level === 'ncaa_d1' || level === 'ncaa_other';
+  let division = raw.ncaa_division ?? null, result = raw.ncaa_result ?? null;
+  if (!ncaa && (division !== null || result !== null)) { notes.push('ncaa_fields_cleared_on_non_ncaa_level'); division = result = null; }
+  if (ncaa) {
+    if (division !== null && !NCAA_DIVISIONS.includes(division)) return {drop: 'invalid_ncaa_division'};
+    if (result !== null && !NCAA_RESULTS.includes(result)) return {drop: 'invalid_ncaa_result'};
+    if (level === 'ncaa_d1' && division !== null && division !== 'I') return {drop: 'ncaa_d1_with_other_division'};
+    if (level === 'ncaa_other' && division === 'I') return {drop: 'ncaa_other_with_division_I'};
+  }
+  const effectiveDivision = level === 'ncaa_d1' ? 'I' : division;   // implied for Division I, never written for it
+
   let tier = raw.tier;
   if (hostIn(host, TIER_C_HOSTS) && tier !== 'C') { notes.push('tier_held_at_C_for_host:' + host); tier = 'C'; }
+  else if (ncaa && result === 'participant' && effectiveDivision && isSchoolAthleticsHost(host, schoolHosts) && tier !== 'C') {
+    if (tier !== 'A') notes.push('tier_A_school_athletics_participation:' + host);
+    tier = 'A';
+  }
   else if (tier === 'A' && !hostIn(host, TIER_A_HOSTS)) { notes.push('tier_A_held_at_B_unlisted_host:' + host); tier = 'B'; }
   const thisYear = Number((today || new Date().toISOString().slice(0, 10)).slice(0, 4));
   let year = raw.year ?? null;
   if (year !== null && !(Number.isInteger(year) && year >= 1950 && year <= thisYear)) { notes.push('invalid_year_cleared'); year = null; }
   const claim = {text, source_url: url, source_name: name, tier, retrieved: raw.retrieved, year, level};
   if (levelNote) claim.level_note = levelNote;
+  if (ncaa && division) claim.ncaa_division = division;
+  if (ncaa && result) claim.ncaa_result = result;
   if (audit) claim.audit = audit;
   claim.display = tier === 'C' ? 'claimed' : 'sourced';
   return {claim};
@@ -121,7 +145,7 @@ function validateSourcesChecked(list, today, notes) {
  * Validate and normalise a whole fighter record.
  * @returns {{ok:boolean, errors:string[], record?:object, dropped:object[], adjustments:string[]}}
  */
-export function validateRecord(raw, {today = new Date().toISOString().slice(0, 10), rosterSlugs = null, skipSlugs = null} = {}) {
+export function validateRecord(raw, {today = new Date().toISOString().slice(0, 10), rosterSlugs = null, skipSlugs = null, schoolHosts = []} = {}) {
   const errors = [], dropped = [], adjustments = [];
   if (!isPlain(raw)) return {ok: false, errors: ['record_not_an_object'], dropped, adjustments};
   if (raw.schema !== SCHEMA_VERSION) errors.push('schema_version_mismatch');
@@ -154,7 +178,7 @@ export function validateRecord(raw, {today = new Date().toISOString().slice(0, 1
     }
     const claims = [], seen = new Set();
     for (const c of Array.isArray(rd.claims) ? rd.claims : []) {
-      const r = validateClaim(c, {today, notes});
+      const r = validateClaim(c, {today, notes, schoolHosts});
       if (r.drop) { dropped.push({discipline: d, reason: r.drop, source_url: str(c?.source_url) || null}); continue; }
       const key = r.claim.source_url + '|' + r.claim.text.toLowerCase();
       if (seen.has(key)) { dropped.push({discipline: d, reason: 'duplicate_claim', source_url: r.claim.source_url}); continue; }
@@ -233,9 +257,10 @@ export function validateDirectory(dir, opts = {}) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
   const dir = path.resolve(process.argv[2] || path.join(root, 'data', 'ufc-credentials'));
-  const approval = JSON.parse(fs.readFileSync(path.join(root, 'data', 'ufc-36-month-roster-approval.json'), 'utf8'));
-  const res = validateDirectory(dir, {rosterSlugs: new Set(approval.approvedFighters)});
-  for (const f of res.failures) console.error(f.file + ': ' + f.errors.join(', '));
-  console.log(`${res.files} fighter files, ${res.failures.length} failing`);
-  process.exit(res.failures.length ? 1 : 0);
+  import('./ufc-credentials-run.mjs').then(({loadRoster, loadSchoolHosts}) => {
+    const res = validateDirectory(dir, {rosterSlugs: loadRoster(root).set, schoolHosts: loadSchoolHosts(root)});
+    for (const f of res.failures) console.error(f.file + ': ' + f.errors.join(', '));
+    console.log(`${res.files} fighter files, ${res.failures.length} failing`);
+    process.exit(res.failures.length ? 1 : 0);
+  });
 }
