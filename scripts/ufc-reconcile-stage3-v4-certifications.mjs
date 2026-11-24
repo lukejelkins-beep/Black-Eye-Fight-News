@@ -9,7 +9,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
 const invariant=(test,message)=>{if(!test)throw Error('BEFN_UNIFIED_CERTIFICATION_RECONCILIATION_BLOCKED: '+message);};
 
-export function reconcileStage3V4(approval,stage3,evidence,manifest){
+export function reconcileStage3V4(approval,stage3,allEvidence,manifest,extension=null){
  invariant(approval?.status==='approved'&&Array.isArray(approval.approvedFighters)&&
   approval.approvedFighters.length===783&&new Set(approval.approvedFighters).size===783,
   'immutable_783_roster_missing');
@@ -21,10 +21,16 @@ export function reconcileStage3V4(approval,stage3,evidence,manifest){
  const bySlug=new Map(rows.map(x=>[x.slug,x]));
  invariant(bySlug.size===783&&[...bySlug.keys()].every(slug=>approved.has(slug)),
   'stage3_decision_keys_invalid');
- invariant(evidence?.schema===1&&evidence?.scope==='ufc-independent-full-career-verification'&&
-  evidence.rosterAsOf===approval.rosterAsOf&&
-  Object.keys(evidence.fighters||{}).every(slug=>approved.has(slug)),
+ // The register also holds entries for the owner-approved extension cohort (24 Nov 2026), each tagged with that
+ // cohort and listed in its approval. They are audited separately; this reconciliation covers the 783 only.
+ const extSlugs=new Set(extension?.scope==='ufc-extension-cohort'&&extension?.status==='approved'&&
+  Array.isArray(extension.approvedFighters)?extension.approvedFighters:[]);
+ invariant(allEvidence?.schema===1&&allEvidence?.scope==='ufc-independent-full-career-verification'&&
+  allEvidence.rosterAsOf===approval.rosterAsOf&&
+  Object.entries(allEvidence.fighters||{}).every(([slug,e])=>approved.has(slug)||
+   (extSlugs.has(slug)&&!approved.has(slug)&&e?.cohort===extension.cohort)),
   'canonical_evidence_registry_invalid');
+ const evidence={...allEvidence,fighters:Object.fromEntries(Object.entries(allEvidence.fighters).filter(([slug])=>approved.has(slug)))};
  invariant(manifest?.scope==='ufc-stage3-v4-evidence-consolidation'&&
   manifest.rosterAsOf===approval.rosterAsOf,'migration_manifest_missing');
  const original=Object.keys(manifest.originalMainFighterFingerprintsFnv32||{});
@@ -98,7 +104,8 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
   read('data/ufc-36-month-roster-approval.json'),
   read('qa/ufc-36-month-stage3-progress.json'),
   read('data/ufc-independent-full-career-verification.json'),
-  read('data/ufc-stage3-v4-consolidation-manifest-20261114.json'));
+  read('data/ufc-stage3-v4-consolidation-manifest-20261114.json'),
+  read('data/ufc-extension-cohort-approval-20261124.json'));
  const qa=path.join(root,'qa');fs.mkdirSync(qa,{recursive:true});
  fs.writeFileSync(path.join(qa,'ufc-stage3-v4-reconciliation.json'),JSON.stringify(result,null,2)+'\n');
  console.log('BEFN_STAGE3_V4_RECONCILIATION='+JSON.stringify({

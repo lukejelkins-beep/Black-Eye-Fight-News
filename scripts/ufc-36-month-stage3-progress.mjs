@@ -50,10 +50,18 @@ export const isAttestedOfficialUfcShowcase=(entry,row)=>{
 /** Owner-approved 2026-11-17: a proof may list a no-contest or draw that official
  * sources show but saved UFCalendar history lacks. Only when it is explicitly flagged,
  * is a no_contest/draw, cites ufc.com or UFCStats, and truly has no saved counterpart.
- * Wins and losses missing from saved history are never accepted here. */
+ * Wins and losses missing from saved history are never accepted here, with ONE exception:
+ * owner-approved 2026-11-24 (reopening the 23 Nov ruling that a Road to UFC tournament
+ * final counts as a UFC career bout): a Road to UFC tournament final flagged
+ * roadToUfcFinal, won or lost, cited to a ufc.com page with the quoted result line.
+ * It is result-only: no native ID, corners or rounds are claimed or invented. */
+const isRoadToUfcFinalGap=bout=>
+  bout?.roadToUfcFinal===true&&['win','loss'].includes(normalizedOutcome(bout?.result))&&
+  /^https:\/\/www\.ufc\.com\//i.test(String(bout?.officialUfcSourceUrl||''))&&
+  typeof bout?.officialUfcSourceQuote==='string'&&bout.officialUfcSourceQuote.length>10&&!bout?.nativeBoutId;
 const isApprovedSavedGap=(bout,saved)=>
   bout?.savedHistoryGap===true&&
-  ['no_contest','draw'].includes(normalizedOutcome(bout?.result))&&
+  (['no_contest','draw'].includes(normalizedOutcome(bout?.result))||isRoadToUfcFinalGap(bout))&&
   /^https:\/\/(www\.ufc\.com|ufcstats\.com)\//i.test(String(bout?.officialUfcSourceUrl||bout?.fightUrl||''))&&
   date(bout?.date)&&tokens(bout?.opponent)&&
   !arr(saved).some(row=>date(row?.date)&&nearSourceDay(date(bout.date),date(row.date))&&
@@ -286,10 +294,24 @@ const sameAthleteName=(a,b)=>normal(a)===normal(b)||Boolean(tokens(a)&&tokens(a)
 const nearSourceDay=(a,b)=>date(a)&&date(b)&&
  Math.abs(Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))<=86400000;
 
-/** Flag all frozen identities sharing a single official UFC athlete URL. */
+/** Flag all frozen identities sharing a single official UFC athlete URL.
+ * Owner-resolved duplicates (2026-11-24): an entry marked ownerConfirmedDuplicateOf another
+ * approved slug with the SAME official URL is the alias. The alias is always flagged (it can
+ * never certify) and no longer blocks its canonical slug. Anything else sharing a URL stays blocked. */
 export function sharedOfficialUfcIdentitySlugs(approved,registry){
  const officialUrlOwners=new Map(),conflicts=new Set();
+ const urlOf=row=>String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
+   .trim().toLowerCase().replace(/\/$/,'');
+ const resolvedAlias=slug=>{
+   const row=registry?.[slug],canonical=row?.ownerConfirmedDuplicateOf;
+   return typeof canonical==='string'&&canonical!==slug&&approved.includes(canonical)&&
+     urlOf(registry?.[canonical])===urlOf(row)&&!registry?.[canonical]?.ownerConfirmedDuplicateOf;
+ };
  for(const slug of approved){
+   if(registry?.[slug]?.ownerConfirmedDuplicateOf!=null){
+     conflicts.add(slug);
+     if(resolvedAlias(slug))continue;   // only a well-formed alias stops counting against its canonical's URL
+   }
    const row=registry?.[slug];
    const url=String(row?.officialFighterUrl||row?.officialUfcFighterUrl||'')
      .trim().toLowerCase().replace(/\/$/,'');

@@ -27,12 +27,14 @@ function isUfcStatsProof(proof) {
     proof.bouts.every(b => !b?.nativeBoutId && !b?.nativeFighterId);
 }
 
-function validEntries(document, label, approved) {
+function validEntries(document, label, approved, extension = null) {
   if (!document || !document.fighters || typeof document.fighters !== 'object' ||
       Array.isArray(document.fighters)) throw Error(label + ': invalid fighter register');
   const entries = Object.entries(document.fighters);
   for (const [slug, proof] of entries) {
-    if (!approved.has(slug)) throw Error(label + ': unapproved fighter ' + slug);
+    // An owner-approved extension-cohort entry (24 Nov 2026) must carry that cohort's tag.
+    const inExtension = !approved.has(slug) && extension?.slugs.has(slug) && proof?.cohort === extension.cohort;
+    if (!approved.has(slug) && !inExtension) throw Error(label + ': unapproved fighter ' + slug);
     if (proof?.sourceCoverageAttested !== true ||
         !['complete_official_ufc_career', 'full_ufc_career_from_debut_to_snapshot'].includes(proof?.scope) ||
         !Array.isArray(proof?.bouts) || !proof.bouts.length)
@@ -60,6 +62,17 @@ function validEntries(document, label, approved) {
         const fingerprint=date+'|'+opponent;
         if (ids.has(fingerprint)) throw Error(label + ': duplicated official bout ' + slug + '/' + fingerprint);
         ids.add(fingerprint);
+      } else if (ufcstats && bout?.roadToUfcFinal === true && bout?.savedHistoryGap === true && !bout?.fightUrl) {
+        // Owner, 24 Nov 2026: a Road to UFC final is a result-only gap bout with no UFCStats page; it is
+        // identified by its UFC.com source, date and opponent instead.
+        const opponent=String(bout?.opponent||'').trim();
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(String(bout?.date||'')) || !opponent ||
+            !['win','loss'].includes(String(bout?.result||'').toLowerCase()) ||
+            !/^https:\/\/www\.ufc\.com\//i.test(String(bout?.officialUfcSourceUrl||'')))
+          throw Error(label + ': missing Road to UFC final source for ' + slug);
+        const key='rtu:'+bout.date+'|'+opponent.toLowerCase();
+        if (ids.has(key)) throw Error(label + ': duplicated Road to UFC final ' + slug);
+        ids.add(key);
       } else if (ufcstats) {
         const opponent=String(bout?.opponent||'').trim(),url=String(bout?.fightUrl||'');
         if (!/^\d{4}-\d{2}-\d{2}$/.test(String(bout?.date||'')) || !opponent ||
@@ -89,7 +102,7 @@ export function sourceNativeSignature(proof) {
     ].join('|')).sort().join(';;');
   if(isUfcStatsProof(proof))
     return 'ufcstats:' + proof.bouts.map(b=>[
-      String(b.fightUrl), String(b.result).toLowerCase()
+      String(b.fightUrl || ('rtu:' + b.date + '|' + b.opponent)), String(b.result).toLowerCase()
     ].join('|')).sort().join(';;');
   return 'native:' + proof.bouts.map(b => [
     String(b.nativeBoutId), String(b.nativeFighterId),
@@ -97,12 +110,15 @@ export function sourceNativeSignature(proof) {
   ].join('|')).sort().join(';;');
 }
 
-export function preflight(canonical, approvedSlugs, candidates = []) {
+export function preflight(canonical, approvedSlugs, candidates = [], extensionApproval = null) {
   if (!Array.isArray(approvedSlugs) || approvedSlugs.length !== 783 ||
       new Set(approvedSlugs).size !== 783)
     throw Error('Refusing preflight: immutable 783 approved fighter list required');
   const approved = new Set(approvedSlugs);
-  const current = new Map(validEntries(canonical, 'canonical', approved));
+  const ext = extensionApproval?.scope === 'ufc-extension-cohort' && extensionApproval?.status === 'approved' &&
+    Array.isArray(extensionApproval.approvedFighters) && extensionApproval.approvedFighters.every(s => !approved.has(s))
+    ? { cohort: extensionApproval.cohort, slugs: new Set(extensionApproval.approvedFighters) } : null;
+  const current = new Map(validEntries(canonical, 'canonical', approved, ext));
   const seenNew = new Map();
   const result = {
     schema: 1,
@@ -152,7 +168,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const roster = read('data/ufc-36-month-roster-approval.json');
   if (roster.status !== 'approved') throw Error('Unapproved roster');
   const candidates = process.argv.slice(2).map(p => ({ label: p, document: read(p) }));
-  const result = preflight(read(canonicalPath), roster.approvedFighters, candidates);
+  const result = preflight(read(canonicalPath), roster.approvedFighters, candidates,
+    read('data/ufc-extension-cohort-approval-20261124.json'));
   console.log('BEFN_CERTIFICATION_CONSOLIDATION=' + JSON.stringify(result));
   if (!result.safeToReview) {
     console.error('BLOCKED: overlapping histories contradict canonical native/source evidence; resolve manually. Nothing imported.');

@@ -118,8 +118,12 @@
  // fights on record, never as a full career. Pure: callers pass the two small data files.
  function careerState(stats,certified,flags){
   if(flags?.verifiedCareerView!==true)return {view:"off"};
-  const all=stats?.fights||[],key=certified?.statsAliases?.[stats?.slug]||stats?.slug,want=certified?.certified?.[key],through=certified?.certifiedThrough;
-  if(certified?.schema!==1||certified.approved!==783||!/^\d{4}-\d{2}-\d{2}$/.test(through||""))return {view:"on",verified:false,reason:"no_certified_list"};
+  const all=stats?.fights||[],key=certified?.statsAliases?.[stats?.slug]||stats?.slug;
+  if(certified?.schema!==1||certified.approved!==783||!/^\d{4}-\d{2}-\d{2}$/.test(certified?.certifiedThrough||""))return {view:"on",verified:false,reason:"no_certified_list"};
+  // The owner-approved extension cohort (24 Nov 2026) has its own list and its own evidence cutoff.
+  const ext=certified.extension,inExt=certified.certified?.[key]==null&&ext?.certified?.[key]!=null&&
+   Number.isSafeInteger(ext.approved)&&/^\d{4}-\d{2}-\d{2}$/.test(ext.certifiedThrough||"");
+  const want=inExt?ext.certified[key]:certified.certified?.[key],through=inExt?ext.certifiedThrough:certified.certifiedThrough;
   if(!Number.isSafeInteger(want))return {view:"on",verified:false,reason:"not_certified"};
   // The certificate covers the official fights up to its evidence cutoff. A fight after that day is newer, not a gap.
   const covered=all.filter(f=>String(f.date)<=through),later=all.length-covered.length;
