@@ -22,8 +22,12 @@ import argparse
 import datetime as dt
 import json
 import re
+import sys
 import unicodedata
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ufc_card_aliases import with_aliases  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -121,7 +125,7 @@ def main() -> int:
         path = DATA / "ufc-stats" / "fighters" / f"{slug}.json"
         return json.loads(path.read_text()) if path.exists() else None
 
-    result = build(cards, index.get("names", {}), load, today, index.get("asOf"))
+    result = build(cards, with_aliases(index.get("names", {})), load, today, index.get("asOf"))
     text = json.dumps(result, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
     out = Path(args.out)
     if not out.exists() or out.read_text() != text:

@@ -30,9 +30,12 @@ test('six distinct wave5 full UFC careers have source-linked paired native ident
    assert.ok(attest.verifiedNumericFighterIds.includes(matching[0].nativeFighterId));
   }
  }
- // Official UFC.com lists the missing May 2025 RTU final, but pinned Greco
- // and saved native caches do not support full strict source certification.
- assert.equal(proof.fighters['zhu-kangjie'],undefined);
+ // Official UFC.com lists the May 2025 RTU final; pinned Greco and saved native caches do not. Owner, 24 Nov 2026:
+ // it is certified result-only (roadToUfcFinal gap bout), never with an invented native ID, UFCStats link or rounds.
+ const zhuFinal=proof.fighters['zhu-kangjie'].bouts.filter(b=>b.roadToUfcFinal===true);
+ assert.equal(zhuFinal.length,1);
+ assert.equal(zhuFinal[0].opponent,'Bin Xie');assert.equal(zhuFinal[0].date,'2025-05-23');
+ for(const key of ['nativeBoutId','nativeFighterId','fightUrl','rounds'])assert.equal(Object.hasOwn(zhuFinal[0],key),false,key);
  assert.equal(source.fighters['zhu-kangjie'].officialUfcCareerCount,2);
  assert.equal(source.fighters['zhu-kangjie'].bouts[0].opponent,'Bin Xie');
 });

@@ -1,0 +1,120 @@
+#!/usr/bin/env node
+/** Writes data/ufc-v4-certified-careers.json from the offline Stage 3 certification queue (R2, verified career view).
+ *
+ * Offline and read-only: no provider call, no collector write. Run the same steps CI runs first:
+ *   node scripts/ufc-36-month-stage3-progress.mjs && node scripts/ufc-v4-certification-queue.mjs &&
+ *   node scripts/ufc-extension-stage3-audit.mjs && node scripts/ufc-rolling-certification-audit.mjs
+ * then this script. `--check` rebuilds in memory and fails if the committed file differs (use in review).
+ *
+ * The file lists ONLY fighters in the queue's `certified` lane (independently verified full UFC career), with the
+ * number of official UFC bouts that certificate covers up to `certifiedThrough` (the evidence cutoff). A fight dated
+ * after that day is not covered and is shown as newer. A fighter in `fastLane` or `exceptions` is never listed.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const OUT=path.join(root,'data/ufc-v4-certified-careers.json');
+const read=f=>JSON.parse(fs.readFileSync(path.join(root,f),'utf8'));
+/* Two certified fighters are filed under a different slug in the stats build (the collector names them "Bruno Silva" and
+ * "HyunSung Park"). stats slug -> certified slug. Each is verified bout for bout against the register before it is written;
+ * a mismatch stops the build rather than attaching a certificate to the wrong fighter. */
+export const STATS_ALIASES={'bruno-silva':'bruno-gustavo-da-silva','hyunsung-park':'park-hyun-sung'};
+const fold=t=>String(t||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const RESULT={win:'W',loss:'L',no_contest:'NC',draw:'D'};
+export function verifyAlias(statsFile,registerEntry,cutoff){
+ const stats=(statsFile.fights||[]).filter(f=>f.date<=cutoff);
+ const bouts=registerEntry?.bouts||[];
+ if(!bouts.length||stats.length!==bouts.length)return false;
+ return bouts.every(b=>stats.some(f=>fold(f.opponent)===fold(b.opponent)&&f.outcome===RESULT[b.result]&&
+  Math.abs(Date.parse(f.date)-Date.parse(b.date))<=86400000));
+}
+export function buildCertifiedCareers(queue,approval,progress,aliases){
+ const lanes=queue?.lanes||{};
+ const through=progress?.summary?.certificationEvidenceCutoff;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(through||''))throw new Error('no certification evidence cutoff in the Stage 3 report');
+ const certified=Array.isArray(lanes.certified)?lanes.certified:[];
+ const total=(lanes.certified?.length||0)+(lanes.fastLane?.length||0)+(lanes.exceptions?.length||0);
+ if(queue?.schema!==1||queue?.scope!=='ufc-v4-certification-attempt-and-exception-queue')throw new Error('not a certification queue');
+ if(total!==783||queue.totals?.approved!==783)throw new Error('queue does not partition the 783 approved fighters');
+ const seen=new Set(),careers={};
+ for(const c of certified){
+  if(typeof c?.slug!=='string'||seen.has(c.slug))throw new Error('duplicate or invalid certified slug');
+  seen.add(c.slug);
+  if(!Number.isSafeInteger(c.knownUfcBouts)||c.knownUfcBouts<1)throw new Error('no bout count for '+c.slug);
+  careers[c.slug]=c.knownUfcBouts;
+ }
+ for(const lane of ['fastLane','exceptions'])for(const c of lanes[lane]||[])if(seen.has(c.slug))throw new Error(c.slug+' is in two lanes');
+ return {
+  schema:1,scope:'ufc-v4-certified-careers',
+  note:'Fighters whose full UFC career is independently verified (Stage 3 certified lane), with the number of official UFC bouts certified. Feeds the R2 verified career view, which is OFF by default (data/ufc-v4-flags.json). Rebuild with scripts/build-ufc-v4-certified-careers.mjs.',
+  approvalHash:approval?.approvedRosterSha256,approved:783,certifiedCount:Object.keys(careers).length,
+  queueAsOf:queue.asOf,certifiedThrough:through,
+  statsAliases:aliases||{},
+  certified:Object.fromEntries(Object.entries(careers).sort(([a],[b])=>a<b?-1:a>b?1:0))
+ };
+}
+/* Owner-approved extension cohort (24 Nov 2026): profile fighters outside the 783, certified by
+ * scripts/ufc-extension-stage3-audit.mjs with their own evidence cutoff. Kept in a separate block so the 783 fields
+ * (approved, certified, certifiedThrough) mean exactly what they did. */
+export function buildExtension(audit,approval,base){
+ if(audit?.schema!==1||audit?.scope!=='ufc-extension-stage3-audit')throw new Error('not an extension audit');
+ if(audit.cohort!==approval?.cohort||audit.approvalHash!==approval?.approvedRosterSha256||
+    audit.evidenceCutoff!==approval?.evidenceCutoff||!/^\d{4}-\d{2}-\d{2}$/.test(audit.evidenceCutoff||''))
+  throw new Error('extension audit does not match its approval');
+ const slugs=new Set(approval.approvedFighters||[]);
+ const lanes=[...(audit.lanes?.certified||[]),...(audit.lanes?.exceptions||[])].map(x=>x.slug);
+ if(lanes.length!==slugs.size||new Set(lanes).size!==lanes.length||lanes.some(s=>!slugs.has(s)))
+  throw new Error('extension lanes do not partition the extension cohort');
+ const careers={};
+ for(const c of audit.lanes.certified){
+  if(base.certified[c.slug]!=null)throw new Error(c.slug+' is certified in both cohorts');
+  if(!Number.isSafeInteger(c.knownUfcBouts)||c.knownUfcBouts<1)throw new Error('no bout count for '+c.slug);
+  careers[c.slug]=c.knownUfcBouts;
+ }
+ return {cohort:approval.cohort,approved:slugs.size,approvalHash:approval.approvedRosterSha256,
+  certifiedCount:Object.keys(careers).length,certifiedThrough:audit.evidenceCutoff,
+  certified:Object.fromEntries(Object.entries(careers).sort(([a],[b])=>a<b?-1:a>b?1:0))};
+}
+/* Weekly rolling certification (owner standing rule, 24 Nov 2026): newcomers certified by the weekly job and
+ * certified fighters rolled forward after a new fight. Each slug carries its own count and cutoff, which override the
+ * 783 and extension figures for that fighter. Only the audit's certified lane is listed; any exception blocks the build. */
+export function buildRolling(audit,state,out){
+ if(audit?.schema!==1||audit?.scope!=='ufc-rolling-certification-audit')throw new Error('not a rolling audit');
+ if(audit.lastRun!==state?.lastRun||audit.evidenceCutoff!==state?.evidenceCutoff)throw new Error('rolling audit is not for the committed state');
+ if((audit.lanes?.exceptions||[]).length)throw new Error('rolling audit has exceptions: '+audit.lanes.exceptions.map(e=>e.slug).join(', '));
+ const certified={},through={};
+ for(const c of audit.lanes?.certified||[]){
+  if(!Number.isSafeInteger(c.count)||c.count<1||!/^\d{4}-\d{2}-\d{2}$/.test(c.through||''))throw new Error('bad rolling row '+c.slug);
+  const base=out.certified[c.slug]??out.extension?.certified?.[c.slug];
+  if(base!=null&&c.count<base)throw new Error(c.slug+' rolled forward to fewer fights');
+  certified[c.slug]=c.count;through[c.slug]=c.through;
+ }
+ const sort=o=>Object.fromEntries(Object.entries(o).sort(([a],[b])=>a<b?-1:a>b?1:0));
+ // No run date here: the certified list changes only when a certificate does, so a quiet week opens no PR.
+ return {cohort:state.cohort,certifiedCount:Object.keys(certified).length,certified:sort(certified),
+  certifiedThrough:sort(through)};
+}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+ const progress=read('qa/ufc-36-month-stage3-progress.json'),register=read('data/ufc-independent-full-career-verification.json').fighters;
+ const aliases={};
+ for(const [statsSlug,certSlug] of Object.entries(STATS_ALIASES)){
+  const p=path.join(root,'data/ufc-stats/fighters/'+statsSlug+'.json');
+  if(!fs.existsSync(p)||!verifyAlias(JSON.parse(fs.readFileSync(p,'utf8')),register[certSlug],progress.summary.certificationEvidenceCutoff))
+   throw new Error('alias '+statsSlug+' -> '+certSlug+' does not match the register bout for bout');
+  aliases[statsSlug]=certSlug;
+ }
+ const out=buildCertifiedCareers(read('qa/ufc-v4-certification-queue.json'),read('data/ufc-36-month-roster-approval.json'),progress,aliases);
+ // Run node scripts/ufc-extension-stage3-audit.mjs first.
+ out.extension=buildExtension(read('qa/ufc-extension-stage3-audit.json'),read('data/ufc-extension-cohort-approval-20261124.json'),out);
+ // Run node scripts/ufc-rolling-certification-audit.mjs first.
+ out.rolling=buildRolling(read('qa/ufc-rolling-certification-audit.json'),read('data/ufc-rolling-certification.json'),out);
+ const text=JSON.stringify(out,null,1)+'\n';
+ if(process.argv.includes('--check')){
+  if(!fs.existsSync(OUT)||fs.readFileSync(OUT,'utf8')!==text){console.error('data/ufc-v4-certified-careers.json is out of date');process.exit(1);}
+  console.log('certified careers up to date: '+out.certifiedCount+' + extension '+out.extension.certifiedCount+' + rolling '+out.rolling.certifiedCount);
+ }else{
+  if(!fs.existsSync(OUT)||fs.readFileSync(OUT,'utf8')!==text)fs.writeFileSync(OUT,text);
+  console.log('certified careers: '+out.certifiedCount+' of 783, extension '+out.extension.certifiedCount+' of '+out.extension.approved+', rolling '+out.rolling.certifiedCount);
+ }
+}

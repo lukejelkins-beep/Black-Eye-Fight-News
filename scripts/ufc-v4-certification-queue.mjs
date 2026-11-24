@@ -18,6 +18,17 @@ const weights={
   source_search_partial:8,
   source_search_retry:9
 };
+/** Explicitly documented unresolved source cases remain in their original audit lane.
+ * Only the source-research ATTEMPT order changes; no certificates or classifications do.
+ */
+const knownDeferredSourceResearch=Object.freeze({
+  'zhu-kangjie':'Road to UFC final identity/source coverage unresolved',
+  'dan-argueta':'Official UFC no-contest chronology needs reconciliation',
+  'rei-tsuruya':'Road to UFC final and original numeric bout identities unresolved',
+  'yizha':'Road to UFC final versus qualifier scope unresolved',
+  'victor-henry':'Official no-contest chronology needs reconciliation',
+  'edgar-chairez':'Official no-contest chronology needs reconciliation'
+});
 /**
  * Every approved fighter goes into exactly one lane. Merely having all KNOWN
  * measured bouts never qualifies an athlete for a full-career certificate.
@@ -51,8 +62,7 @@ export function buildCertificationQueue(report,registry={}){
       sourceMissing.has(slug))add('source_confirmed_missing_history');
    if(sourceConflicts.has(slug))add('source_result_conflict');
    if(ambiguous.has(slug))add('native_identity_ambiguous');
-   if(!x.allKnownFightsIndexed||!x.allKnownFightsMeasured||
-      x.status==='known_fight_coverage_gap')add('known_fight_coverage_gap');
+   if(x.status==='known_fight_coverage_gap')add('known_fight_coverage_gap');
    if(x.providerHistoryDiscrepancy===true||
       x.status==='provider_history_discrepancy'||
       rosterGaps.has(slug))add('provider_history_discrepancy');
@@ -83,11 +93,20 @@ export function buildCertificationQueue(report,registry={}){
  if(totals.certified+totals.fastLane+totals.exceptions!==783||
     totals.certified!==s.independentlyVerifiedFullCareerTimelines)
    throw Error('Refusing triage: stale/nonconserving certification audit');
+ const deferredKnown=lanes.fastLane.filter(x=>knownDeferredSourceResearch[x.slug])
+   .map(x=>({...x,unresolvedSourceResearch:knownDeferredSourceResearch[x.slug]}));
+ const nextSourceAttestation=lanes.fastLane
+   .filter(x=>!knownDeferredSourceResearch[x.slug]).slice(0,40);
  return {schema:1,scope:'ufc-v4-certification-attempt-and-exception-queue',
    asOf:s.asOf,approvedSnapshotAsOf:s.approvedSnapshotAsOf,
    source:'qa/ufc-36-month-stage3-progress.json',
-   certificationRule:'Only the independent Stage3 source gate may certify; fast lane remains uncertified until exhaustive source-attested UFC fight URLs match saved numeric fights and measured statistics.',
-   totals,lanes};
+   certificationRule:'Only the independent Stage3 source gate may certify; fast lane remains uncertified until exhaustive official UFC chronology and identity/outcome evidence matches saved career history; native numeric IDs and optional round measurements are not required.',
+   totals,lanes,
+   researchPriority:{
+     nextSourceAttestation,
+     deferredKnown,
+     note:'Research priority only: known unresolved cases are not reclassified or certified; every candidate still needs independent exhaustive source coverage and a passing 783-person strict Stage3 audit.'
+   }};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
@@ -98,6 +117,8 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
    JSON.stringify(queue,null,2)+'\n');
  console.log('BEFN_UFC_V4_CERTIFICATION_TRIAGE='+JSON.stringify({
    ...queue.totals,nextFastLane:queue.lanes.fastLane.slice(0,8).map(x=>x.slug),
+   nextSourceAttestation:queue.researchPriority.nextSourceAttestation.map(x=>x.slug),
+   deferredKnownSourceCases:queue.researchPriority.deferredKnown.map(x=>({slug:x.slug,reason:x.unresolvedSourceResearch})),
    nextExceptions:queue.lanes.exceptions.slice(0,8).map(x=>({slug:x.slug,reasons:x.reasonCodes}))
  }));
 }

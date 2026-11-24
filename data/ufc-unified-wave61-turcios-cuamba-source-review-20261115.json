@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "scope": "ufc-unified-wave61-independent-source-review",
+  "rosterAsOf": "2026-11-14",
+  "reviewedOn": "2026-11-15",
+  "frozenApprovedCohort": 783,
+  "nonproduction": true,
+  "certificationGranted": false,
+  "purpose": "Research-only complete official UFC career crosschecks; no certificate until full 783 strict Stage 3 success.",
+  "pinnedSource": {
+    "repository": "https://github.com/Greco1899/scrape_ufc_stats",
+    "sourceCommit": "c742842f29466758fedc3906dbad28d6d320a8da",
+    "fightResultsBlobSha": "699c9b6cebb542bf458807563d93ed2406d8728f",
+    "fighterDetailsBlobSha": "7141332f0b319edbc10d006b229050ee947e7336",
+    "eventDetailsBlobSha": "00cee85291a014d1d65e3f638129bac0a6d50f61",
+    "cutoffLastEvent": "2026-11-07",
+    "evidenceCutoff": "2026-11-14"
+  },
+  "fighters": {
+    "ricky-turcios": {
+      "fighterName": "Ricky Turcios",
+      "officialFighterUrl": "https://www.ufc.com/athlete/ricky-turcios",
+      "extraOfficialSources": [],
+      "ufcStatsFighterId": "cd3d7e37ff2d679c",
+      "nativeFighterId": "461",
+      "officialUfcCareerBoutCount": 6,
+      "sourceReviewStatus": "source_reconciled_pending_full_cohort_stage3",
+      "scopeNotes": "Dated official UFC.com athlete career narrative confirms exactly six UFC Octagon bouts, including 2021 TUF29 bantamweight FINAL vs Brady Hiestand, and excludes earlier TUF QF/SF and 2017 Dana White Contender Series fight. Official 2026 UFC 326 Montes narrative uses local Mar 8, cache+Greco use UTC Mar 7; ±1 calendar date shift documented.",
+      "bouts": [
+        {
+          "date": "2026-03-07",
+          "opponent": "Alberto Montes",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/6feb49a6b7e8433c",
+          "nativeBoutId": "60693",
+          "nativeFighterId": "461",
+          "originalOpponentNumericId": "460"
+        },
+        {
+          "date": "2025-01-18",
+          "opponent": "Benardo Sopaj",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/95ba27bea09cd84e",
+          "nativeBoutId": "60952",
+          "nativeFighterId": "461",
+          "originalOpponentNumericId": "290"
+        },
+        {
+          "date": "2024-06-08",
+          "opponent": "Raul Rosas Jr.",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/b34abcfe4c2e8a57",
+          "nativeBoutId": "61029",
+          "nativeFighterId": "461",
+          "originalOpponentNumericId": "463"
+        },
+        {
+          "date": "2022-11-19",
+          "opponent": "Kevin Natividad",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/0f2983fe7753403f",
+          "nativeBoutId": "59786",
+          "nativeFighterId": "461",
+          "originalOpponentNumericId": "2746"
+        },
+        {
+          "date": "2022-07-09",
+          "opponent": "Aiemann Zahabi",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/c58b3223b5caa18a",
+          "nativeBoutId": "61496",
+          "nativeFighterId": "461",
+          "originalOpponentNumericId": "104"
+        },
+        {
+          "date": "2021-08-28",
+          "opponent": "Brady Hiestand",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/ed64e42263bf50bf",
+          "nativeBoutId": "66292",
+          "nativeFighterId": "461",
+          "originalOpponentNumericId": "759"
+        }
+      ],
+      "excludedFeederBout": {
+        "nativeBoutId": "83970",
+        "date": "2017-07-11",
+        "opponent": "Boston Salmon",
+        "classification": "Dana White's Contender Series"
+      }
+    },
+    "timmy-cuamba": {
+      "fighterName": "Timmy Cuamba",
+      "officialFighterUrl": "https://www.ufc.com/athlete/timmy-cuamba",
+      "extraOfficialSources": [
+        "https://www.ufc.com/news/ufc-edmonton-results-buckley-vs-malott",
+        "https://www.ufc.com/event/ufc-fight-night-october-17-2026"
+      ],
+      "ufcStatsFighterId": "0e46690e55a8df75",
+      "nativeFighterId": "289",
+      "officialUfcCareerBoutCount": 6,
+      "sourceReviewStatus": "source_reconciled_pending_full_cohort_stage3",
+      "scopeNotes": "UFC.com athlete official results and dated Oct 17, 2026 UFC Edmonton event-results article independently establish sixth Octagon bout: rear-naked choke win over Louis Jourdain at R2 2:48; all six from UFC debut 2024-02-10 to 2026-10-17 matched to pinned Greco UFCStats-derived unique bout URLs and native paired corners, DWCS Mateo Vogel separate.",
+      "bouts": [
+        {
+          "date": "2026-10-17",
+          "opponent": "Louis Jourdain",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/5192be72d199804c",
+          "nativeBoutId": "83624",
+          "nativeFighterId": "289",
+          "originalOpponentNumericId": "52123"
+        },
+        {
+          "date": "2026-05-16",
+          "opponent": "Benardo Sopaj",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/a6ec8573a9d38c51",
+          "nativeBoutId": "66118",
+          "nativeFighterId": "289",
+          "originalOpponentNumericId": "290"
+        },
+        {
+          "date": "2025-11-01",
+          "opponent": "ChangHo Lee",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/58f6248da3cdf3ce",
+          "nativeBoutId": "60425",
+          "nativeFighterId": "289",
+          "originalOpponentNumericId": "417"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "Roberto Romero",
+          "result": "win",
+          "fightUrl": "https://ufcstats.com/fight-details/23201d09a78d446d",
+          "nativeBoutId": "60886",
+          "nativeFighterId": "289",
+          "originalOpponentNumericId": "2859"
+        },
+        {
+          "date": "2024-06-15",
+          "opponent": "Lucas Almeida",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/78a7bf038e56881d",
+          "nativeBoutId": "61056",
+          "nativeFighterId": "289",
+          "originalOpponentNumericId": "169"
+        },
+        {
+          "date": "2024-02-10",
+          "opponent": "Bolaji Oki",
+          "result": "loss",
+          "fightUrl": "https://ufcstats.com/fight-details/edf46d6962be7e8d",
+          "nativeBoutId": "59907",
+          "nativeFighterId": "289",
+          "originalOpponentNumericId": "257"
+        }
+      ],
+      "excludedFeederBout": {
+        "nativeBoutId": "84166",
+        "date": "2023-08-29",
+        "opponent": "Mateo Vogel",
+        "classification": "Dana White's Contender Series"
+      }
+    }
+  }
+}

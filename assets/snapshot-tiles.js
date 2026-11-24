@@ -71,8 +71,10 @@
    * Scores are 1-99 percentiles of the last five fights, ranked against the fighter's division when both fighters
    * share one; otherwise against the division the bout is contracted at, when that is known; otherwise against all
    * UFC fighters. Numbers come from data/ufc-card-scores.json; nothing is calculated here. */
-  const SCORE_MAIN = [['power', 'Power'], ['defence', 'Defence'], ['wrestling', 'Wrestling'], ['durability', 'Durability']];
-  const SCORE_MORE = [['striking', 'Striking'], ['grappling', 'Grappling']];
+  // Same striking, wrestling and grappling as the fighter profiles, each including its own defence (owner, 2026-11-24),
+  // so there is no separate Defence row. Power and Durability are the card's rare-event views.
+  const SCORE_MAIN = [['striking', 'Striking'], ['wrestling', 'Wrestling'], ['grappling', 'Grappling'], ['power', 'Power']];
+  const SCORE_MORE = [['durability', 'Durability']];
 
   // Scores are ON for readers (owner approved the release, 2026-11-21). Kill switch: BEFN_FEATURES.snapshotScores = false,
   // or ?snapshotScores=off on the address, hides them and stops the scores file being requested.

@@ -1,19 +1,19 @@
 {
-  "attemptedAt": "2026-11-22T08:33:02.545Z",
-  "checkedAt": "2026-11-22T08:33:02.545Z",
-  "updatedAt": "2026-11-22T01:08:40.095265Z",
+  "attemptedAt": "2026-11-24T07:45:22.342Z",
+  "checkedAt": "2026-11-24T07:45:22.342Z",
+  "updatedAt": "2026-11-24T05:03:09Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,34 +55,59 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
-      "Bluesky": 6,
+      "Threads": 12,
       "X": 27,
-      "Threads": 8
+      "Instagram": 39,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ugj5izxx2c",
-      "cid": "bafyreihkd42bmsnrm3y6o2lv7dwmpppurozygpmsoj5tdynlvwk4i3yofi",
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2zukajrpj2a",
+      "cid": "bafyreifm3tram7s6ulzbavm4pifdwbks64vvosdwx3czspqze2mlqpklqu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Two UFC Qatar stars jump into the top 3 of the rankings following impressive wins",
+      "postedAt": "2026-11-24T05:03:09Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2zukajrpj2a",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2zfcfu7td2t",
+      "cid": "bafyreiakjw7eogussudhiupksfgmubpxkbivceadocs4usakkanfu5pkbe",
       "platform": "Bluesky",
       "sport": "mma",
       "type": "post",
       "name": "MMA Fighting",
       "handle": "@mmafighting.bsky.social",
       "role": "media",
-      "quote": "Jiri Prochazka releases statement following UFC Qatar loss www.mmafighting.com/ufc/522901/j...",
-      "postedAt": "2026-11-22T01:08:40.095265Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ugj5izxx2c",
+      "quote": "The winner of Taylor Lapilus vs. Mitch McKee will be automatically crowned the inaugural MVP MMA bantamweight champion at #PFLLyon\n\n📰 mma-fighting.visitlink.me/Vv7hYb",
+      "postedAt": "2026-11-24T00:30:18.394228Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2zfcfu7td2t",
       "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
@@ -91,46 +116,22 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ue2mn6u32b",
-      "cid": "bafyreibv7mtwzlta5fnng5ggewcms3mlp7ov5zeb67zhotxjs4zf24dvpu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Tim Bradley strikes again! 🥊\n\nThe former world champion believes David Benavidez would “beat the brakes off” Oleksandr Usyk if the two meet in the ring next year.\n\nBradley is backing the Mexican Monster against the undefeated heavyweight king. \n🇲🇽🇺🇸🇺🇦",
-      "postedAt": "2026-11-22T00:24:46Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2ue2mn6u32b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2u7gtpylu2p",
-      "cid": "bafyreicd67i726wauepg57e6o5depk5dejz6o4x4od4jlhdkoboyhceuv4",
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2zdqdxigo2c",
+      "cid": "bafyreic73aeaycouvucb7mkdvrbganh5sqalbxcejylz6sd5oy3v2j56ma",
       "platform": "Bluesky",
       "sport": "mma",
       "type": "post",
       "name": "MMA Fighting",
       "handle": "@mmafighting.bsky.social",
       "role": "media",
-      "quote": "Aljamain Sterling reacts to controversial loss to Kevin Vallejos at UFC Qatar: ‘What can you do?’ www.mmafighting.com/ufc/522835/a...",
-      "postedAt": "2026-11-21T23:02:05.791355Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2u7gtpylu2p",
+      "quote": "14 fights official for PFL’s last card before MVP MMA transition in 2027 www.mmafighting.com/pfl/523032/1...",
+      "postedAt": "2026-11-24T00:02:18.571196Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2zdqdxigo2c",
       "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
@@ -139,22 +140,70 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2u22jrggz2m",
-      "cid": "bafyreiflx6vt27rbfa2os5e74do4p5bcoh4grj3hnniets5bzo5igs4i6e",
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2zch2ftj62h",
+      "cid": "bafyreihf5g2cgzmmf4drdpbjzdchoaplbprvj64so5l6c7t7vl3o7akfoa",
       "platform": "Bluesky",
       "sport": "boxing",
       "type": "post",
       "name": "World Boxing News",
       "handle": "@worldboxingnews.com",
       "role": "media",
-      "quote": "Unbeaten Lightweight Bids for 45-0 After Landing World Ranking #boxing #boxingnews",
-      "postedAt": "2026-11-21T21:25:46Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2u22jrggz2m",
+      "quote": "Jake Paul gets absolutely cooked in GTA 6! 🎮\n\nThe game appears to mock his Mike Tyson fight, portraying him as a 22-year-old influencer facing an 86-year-old former heavyweight champion. The punchline? A joke about the veteran's dialysis machine!🥊",
+      "postedAt": "2026-11-23T23:39:14Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2zch2ftj62h",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 2,
+        "comments": 0,
+        "shares": 2
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2zaex6ss725",
+      "cid": "bafyreicustc6rf5tp5dp6qd6l62fg2wbduo3hx6ir5wwhgqfqg3rsfllk4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Tyson Fury’s 15-year-old son set to make boxing debut on PPV this Saturday",
+      "postedAt": "2026-11-23T23:02:16Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2zaex6ss725",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2z5xowajn2k",
+      "cid": "bafyreic6kg5pdi2nbefyzbiot5lwwmrck6gwvq76dpyx44oorq4orb3dem",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Vergil Ortiz Jr. has signed to fight Jermell Charlo! 🥊\n\nThe December 5 offer is reportedly on the table after Keith Thurman's withdrawal, but the former undisputed champion has yet to sign and promoters are casting doubt on the fight despite a verbal agreement. 🇺🇸",
+      "postedAt": "2026-11-23T22:19:04Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2z5xowajn2k",
       "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
@@ -163,7 +212,823 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2z52dyzb62t",
+      "cid": "bafyreickaetlhjypmwyyowkpvvdgxoilp7yui7m63hekeljwq4nhc554zi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "On To the Next One: Matches to make after UFC Qatar www.mmafighting.com/ufc/522903/o...",
+      "postedAt": "2026-11-23T22:02:37.960592Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2z52dyzb62t",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2z2gngn3w2m",
+      "cid": "bafyreigafy7xdf7mlr4nulhrhbgdlfaz2dpph7tcdthvsbixqpfwfvrgji",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Floyd Mayweather could jump straight into a WBC title fight with Ryan Garcia after nine years away. 🥊 \n\nNo. 1 contender Souleymane Cissokho responds exclusively to WBN after waiting more than 18 months for his chance. 🇫🇷",
+      "postedAt": "2026-11-23T21:15:51Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2z2gngn3w2m",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2yzse3gpa2u",
+      "cid": "bafyreie2p7n4jsau4imdk2wbxcyabapph45qg2fyhawhbthqrh5wwwed5a",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Mo Deen announces fight with streamer Beavo as Tommy Robinson appears to avoid Unhinged Promotions fight",
+      "postedAt": "2026-11-23T21:04:30Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2yzse3gpa2u",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yzqkjv5p2y",
+      "cid": "bafyreihbyi7kyp4mjbb7v2nhk62qovgyjoelqaik4putw5274ltb6kby5m",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Tyson Fury reveals he was diagnosed with schizophrenia after Wladimir Klitschko win www.mmafighting.com/boxing/52304...",
+      "postedAt": "2026-11-23T21:03:26.797602Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yzqkjv5p2y",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2yycpygos2e",
+      "cid": "bafyreierpku337yxnv4ob5qzwabuawakdo5gmrp3iorndbwhoz6nyo6mza",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Floyd Mayweather Cuts WBC Line, Number One Contender Responds #boxing #boxingnews",
+      "postedAt": "2026-11-23T20:37:52Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2yycpygos2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2yycpmany24",
+      "cid": "bafyreib4i2bzil2skfa3zqjos7dg7ohwem3djbfg7n5kt7cl5rmluq6u2a",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Floyd Mayweather Cuts WBC Line, Number One Contender Responds #boxing #boxingnews",
+      "postedAt": "2026-11-23T20:37:51Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2yycpmany24",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yxvywr572t",
+      "cid": "bafyreidhnus5olrvh5rgzr6drfw4oqnkhk66xd7ux7vcrdnbmr2ir5tcpy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Conor McGregor teases he’s ‘fully back in the gym’ following injury suffered at UFC 329\n\n📰 mma-fighting.visitlink.me/3OU1G8",
+      "postedAt": "2026-11-23T20:30:43.844320Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yxvywr572t",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2ywfcsta62h",
+      "cid": "bafyreiho6fcop7bmbes2mfsmhzcx4gnw3cks4gnq3a3sjg3kdlxo5x4egi",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Conor McGregor teases he’s ‘fully back in the gym’ following injury suffered at UFC 329 www.mmafighting.com/ufc/523065/c...",
+      "postedAt": "2026-11-23T20:03:30.038927Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2ywfcsta62h",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:f76vbneie4u7bnnaokjno7i2/app.bsky.feed.post/3n2yvhbke5c2k",
+      "cid": "bafyreieazdluiyu4xleq326xti4gj74fowr7czmrwledc25dper5tquutu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Luke Thomas",
+      "handle": "@lukethomas.bsky.social",
+      "role": "commentator",
+      "quote": "This lady is a traitor. She’s a former fighter who somehow introduced TKO’s bill to destroy protections for athletes in federal law so the UFC’s parent company can monopolize boxing like they did with MMA. She deserves nothing other than condemnation and scorn.",
+      "postedAt": "2026-11-23T19:46:43.790Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/lukethomas.bsky.social/post/3n2yvhbke5c2k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:f76vbneie4u7bnnaokjno7i2/bafkreidbwenc66zn62rzl43bb2id2vkzy5eohgc6pgu5zwjdqsfz3ocuyu",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:f76vbneie4u7bnnaokjno7i2",
+      "engagement": {
+        "likes": 38,
+        "comments": 4,
+        "shares": 9
+      },
+      "engagementCheckedAt": "2026-11-24T06:10:12.734Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yukpm52s2l",
+      "cid": "bafyreigbdlmoqc2r3lv2a3rqk6nt3kcvne2j5kp4xs5itzuzd3anbgieau",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Christian Lee responds to ONE Championship stripping him of the welterweight title\n\n📰 mma-fighting.visitlink.me/NOfw1m",
+      "postedAt": "2026-11-23T19:30:43.639628Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yukpm52s2l",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yt3evu7l2z",
+      "cid": "bafyreihtzibelk72oy6khnndkl2iqaimmyxahbrj53bfeb4xpkmyogp5xq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Christian Lee responds to ONE Championship stripping his welterweight title: ‘I’m far from finished’ www.mmafighting.com/one/522934/c...",
+      "postedAt": "2026-11-23T19:04:15.739848Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yt3evu7l2z",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ysdlw3dq2o",
+      "cid": "bafyreibehwdqg7n6z6ctur74w6qlrmphbcz4bxpax7azkafioek4lewoti",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "WBN remembers Vanes Martirosyan, one year after his passing on November 23, 2025, aged 39. 🥊\n\nThe proud Armenian-American finished with 36 wins, including 21 KOs, earning respect throughout boxing.\n\nSaluting a talented fighter and, above all, a family man. 🇦🇲🕊️",
+      "postedAt": "2026-11-23T18:50:59Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2ysdlw3dq2o",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yrd3idon2q",
+      "cid": "bafyreicec6qk2xbanjd4ka4b5ja4cf7jcrnkirdqjxu7wzy2ylcbfwc4l4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Ilia Topuria pitches TUF coaching gig with Paddy Pimblett, mocks Justin Gaethje and Conor McGregor www.mmafighting.com/ufc/523055/i...",
+      "postedAt": "2026-11-23T18:32:43.188446Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yrd3idon2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2yqtar5al2q",
+      "cid": "bafyreig3so5wgelnnwejylpwygwuaj7bvdp2fg7ohqpx2ges3gz36i444e",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Ilia Topuria pitches UFC super card with Conor McGregor on the prelims",
+      "postedAt": "2026-11-23T18:23:56Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2yqtar5al2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2yp5mxipf2c",
+      "cid": "bafyreigruytsrv7c42kyju2s6h6lhshugplvzjncd3tqm7oynunk2rfzta",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "What do you think of Ilia Toupria's proposed fight card? ",
+      "postedAt": "2026-11-23T17:53:56.087748Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2yp5mxipf2c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2yofg6qcc2k",
+      "cid": "bafyreifuz7jrljdqle7lmukq46lfbrj2qoo36wvchfwtbteik7pwrgp7lq",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Devin Haney vs Paro Drug Test Row Erupts, Ryan Garcia Steams In #boxing #boxingnews",
+      "postedAt": "2026-11-23T17:40:25Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2yofg6qcc2k",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2yoffq77j2w",
+      "cid": "bafyreicapspmopoda4uqtrxch65y5qdz3n5d6taop53pv37ecbba3cxh3a",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Devin Haney vs Paro Drug Test Row Erupts, Ryan Garcia Steams In #boxing #boxingnews",
+      "postedAt": "2026-11-23T17:40:24Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2yoffq77j2w",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ymc6iqcm2f",
+      "cid": "bafyreibrcjeywckfosfelxkurqpkc3y5rzpovlphdvdxk3ci3a3twokutm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Stephen Thompson keen to continue working with UFC after Dana White’s TV offer",
+      "postedAt": "2026-11-23T17:02:48Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ymc6iqcm2f",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2yismzwh52d",
+      "cid": "bafyreifllnwokwe6psfrfnuqjj2cupujy4n5i6dgziv2h54drmxka7c5vu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC should strip Islam Makhachev of welterweight title after Carlos Prates snub, says former champion",
+      "postedAt": "2026-11-23T16:00:26Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2yismzwh52d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2yewoyuph2b",
+      "cid": "bafyreifa22tu742rvpanoqx4xbhw2qesnmhlcvj6estdubo4i3af7crm4i",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Wilder vs Bakole official! ✅\n\nDeontay Wilder went from headlining three fights against Tyson Fury to facing Martin Bakole on Fury's undercard. 🥊🇺🇸🇨🇩\n\nNetflix has officially confirmed Bakole as Jai Opetaia's replacement for December 11.\n\n#DeontayWilder #MartinBakole #TysonFury #Boxing",
+      "postedAt": "2026-11-23T14:51:07Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2yewoyuph2b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2yej3vbuh2h",
+      "cid": "bafyreicukdotyrjql3vpbnv7g657oswuh7hxborqjkltt7du22ryf5q5ri",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Tyson Fury’s Sons, 15 and 10, to Make Boxing Debuts on PPV #boxing #boxingnews",
+      "postedAt": "2026-11-23T14:43:31Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2yej3vbuh2h",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2yej3qt5u2e",
+      "cid": "bafyreicukdotyrjql3vpbnv7g657oswuh7hxborqjkltt7du22ryf5q5ri",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Tyson Fury’s Sons, 15 and 10, to Make Boxing Debuts on PPV #boxing #boxingnews",
+      "postedAt": "2026-11-23T14:43:31Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2yej3qt5u2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ydkp4iij2o",
+      "cid": "bafyreihjgiq2rtpusspfbvvuffb6jpq2ieqxs4ozj3vslsd5qz2kpyvyce",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Dana White reveals Deontay Wilder’s new opponent for fight on Fury vs Joshua card",
+      "postedAt": "2026-11-23T14:26:31Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ydkp4iij2o",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ycdabopy2r",
+      "cid": "bafyreiedjs3537twm22hlopokhdpdetca3e5q3f6o6tn6gestzmytotgbq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC Dallas update: Yair Rodriguez card complete with 13 fights confirmed",
+      "postedAt": "2026-11-23T14:04:26Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ycdabopy2r",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2y6s54yyp25",
+      "cid": "bafyreiejs4kj7lltyd5q7yx3frdtv5ogot334mxj5ey6mxp4ib3pnz5h4a",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Magomed Ankalaev responds to Navajo Stirling callout after stunning Jiri Prochazka KO at UFC Qatar",
+      "postedAt": "2026-11-23T13:01:12Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2y6s54yyp25",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2y3kdjxu32s",
+      "cid": "bafyreig66o2u7i5mrv7aoz6jsgjgj4sa2muajurdv3esw7fj4tx3n2otry",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Tai Tuivasa reportedly set for chance to snap 8-fight losing streak at UFC Sydney",
+      "postedAt": "2026-11-23T12:03:09Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2y3kdjxu32s",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2y2mcnzqk2z",
+      "cid": "bafyreic7gnh22uvn6ejk2vqkjoebbdpnmf7r3alr7hywybrasddyobzh7i",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Mike Tyson Refuses to Hand Tank Davis His Boxing Crown #boxing #boxingnews",
+      "postedAt": "2026-11-23T11:46:21Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2y2mcnzqk2z",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2y2mbmzir26",
+      "cid": "bafyreiaauqbpzzchvtvpqrqc2j7wjrbdk37wkdc4kfypk2sgxwvqlwfue4",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Mike Tyson Refuses to Hand Tank Davis His Boxing Crown #boxing #boxingnews",
+      "postedAt": "2026-11-23T11:46:20Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2y2mbmzir26",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2y2jmp3xw2s",
+      "cid": "bafyreigjvsbfysbemkvagsonmazb7o3l6aybrzcz5bvdntei2ppwwj5wu4",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Mike Tyson refuses to hand Tank Davis his boxing crown. 🥊👑 Tyson says Davis must face more elite fighters, naming Shakur Stevenson, before earning his place among the greats.\n\nFull story on WBN.",
+      "postedAt": "2026-11-23T11:44:51Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2y2jmp3xw2s",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2xby4muls2v",
+      "cid": "bafyreicgusxy2kmpqhiubjtnkuvx74f63elge2jxrjcsl4vnlb2qxk3chi",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Dan Rafael",
+      "handle": "@danrafael1.bsky.social",
+      "role": "commentator",
+      "quote": "New podcast!! 40-year anniversary of Mike Tyson winning heavyweight title; recaps of #JonesPettus card, Price becomes undisputed, David Morrell returns; Wilder-Bakole in play; Thurman out vs. Ortiz; more news of the week! Listen, rate, subscribe, enjoy! www.spreaker.com/episode/mike... #boxing",
+      "postedAt": "2026-11-23T04:25:34.483Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n2xby4muls2v",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2x7oijux22j",
+      "cid": "bafyreib3qqbqra3e4bueusgvfkybanxcekghbznmvd44dgu3zc4hoerk44",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Dan Rafael",
+      "handle": "@danrafael1.bsky.social",
+      "role": "commentator",
+      "quote": "Sunday was the 40th anniversary of when legendary Mike Tyson KO'd Trevor Berbick to become the youngest heavyweight champion at age 20 as he ushered in a new era of #boxing. We discussed this most memorable KO. Check out the video here: www.youtube.com/watch?v=yyGC...",
+      "postedAt": "2026-11-23T03:44:23.940Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n2x7oijux22j",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
+      "engagement": {
+        "likes": 2,
+        "comments": 0,
+        "shares": 1
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2wj7jpsru2u",
+      "cid": "bafyreigpf22pqbwjl5y5wn5dvla3t7zjeyuqtnwpsd7afw46lzqvll3rxm",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Tank Davis, Haney ‘Fought to the Death’ as Floyd, Broner Watched #boxing #boxingnews",
+      "postedAt": "2026-11-22T21:02:19Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2wj7jpsru2u",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2w7ccletm2l",
+      "cid": "bafyreiabguzvih74su3xxaceow7rfglhyyhjxvhlzglyfkxjxi5g4xwhoq",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Muhammad Ali’s Grandson Trashed for Celebrating Boxing Bill Pass #boxing #boxingnews",
+      "postedAt": "2026-11-22T18:04:55Z",
+      "date": "23 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2w7ccletm2l",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2vlja3pdv2x",
+      "cid": "bafyreidounqjaq42wolcvbyzcou6y7pag5hysrwcbdvzg2pynexqpfgema",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "‘New Mike Tyson’ Refuels for Return at 21 After World Title KO #boxing #boxingnews",
+      "postedAt": "2026-11-22T12:10:52Z",
+      "date": "22 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2vlja3pdv2x",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -187,199 +1052,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2tztz3cnx2a",
-      "cid": "bafyreibx3g7ezjdomy2ozve73r7r46p2u4fyfo3w2iap3s2buul6gvcquq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "‘Need to go to 185’: Pros react to Jiri Prochazka suffering disappointing knockout to Navajo Stirling at UFC Qatar www.mmafighting.com/ufc/522822/n...",
-      "postedAt": "2026-11-21T21:22:05.085715Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2tztz3cnx2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2tyy7xuk62h",
-      "cid": "bafyreigcl6xggscveq57njwx7kx5c23g6ekmd2v5mepwh4s42jiiheec3a",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "#UFC pros — past and present — REACT to Navajo Stirling's NASTY knockout of Jiri Prochazka in the main event of #UFCQatar ",
-      "postedAt": "2026-11-21T21:06:33.513592Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2tyy7xuk62h",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2tyq7rp3b2q",
-      "cid": "bafyreihhwkhb7podopwyghak3auja6qdryzkvhg4ipnjvnj4j2aoxmgzka",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Navajo Stirling delivers devastating knockout to beat Jiri Prochazka in UFC Qatar main event www.mmafighting.com/ufc/522771/n...",
-      "postedAt": "2026-11-21T21:02:04.970442Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2tyq7rp3b2q",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2tyli5jo62p",
-      "cid": "bafyreihzvzsecnql6llhxlsk4pkcslnwfdm2f5abm4nd5evauvga37zyli",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "🚨 Navajo Stirling KNOCKS OUT Jiri Prochazka in the main event of #UFCQatar \n\nTitle fight next — perhaps, against teammate Carlos Ulberg? 🤔",
-      "postedAt": "2026-11-21T20:59:25.035236Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2tyli5jo62p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2txmhilbk2y",
-      "cid": "bafyreibqbcqnlf2aicrqbo3jgb2sppgc56d5esz74bwtx5zz4icfsegsa4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "‘Robbery’: Pros react to Kevin Vallejos’ narrow win over Aljamain Sterling at UFC Qatar www.mmafighting.com/ufc/522768/r...",
-      "postedAt": "2026-11-21T20:42:05.154695Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2txmhilbk2y",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 1
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2txeh7byk2z",
-      "cid": "bafyreigp7ecpf76lltorfkzuqvrauzowwmrkh6quq2e7gdrr3tsks5qn5i",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Abel Mendoza is 44-0 and finally ranked No. 15 at lightweight by the WBA. 📈🥊\n\nThe unbeaten Texan confirms his December 5 return as he targets a world title and 45-0.",
-      "postedAt": "2026-11-21T20:37:37Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2txeh7byk2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2txdljwss2y",
-      "cid": "bafyreia4yzac2zbto7b4hlrqsgvbdt4w75xt323sxuie3fzb4rwgbz5hkm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "UFC Qatar live blog: Jiri Prochazka vs. Navajo Stirling www.mmafighting.com/ufc/522610/u...",
-      "postedAt": "2026-11-21T20:37:04.947313Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2txdljwss2y",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2twtculro2b",
-      "cid": "bafyreibzzduth4sui75wesbmd4adkr5lhmy3xizxlwvficwgxkmyojob4q",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "UFC Qatar results: Kevin Vallejos calls for title shot after winning decision over Aljamain Sterling www.mmafighting.com/ufc/522743/u...",
-      "postedAt": "2026-11-21T20:28:00.884361Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2twtculro2b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -403,7 +1076,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -427,31 +1100,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n2tv24qo2u2f",
-      "cid": "bafyreiam2gekpmw3ekaquqght6yzskjzfjj74zwovfn6fwveuchylhtzfi",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "UFC Qatar results: Dan Hooker calls out Max Holloway after win, Brian Ortega announces retirement www.mmafighting.com/ufc/522721/u...",
-      "postedAt": "2026-11-21T19:56:00.999370Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n2tv24qo2u2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -475,55 +1124,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2tusumnbx2s",
-      "cid": "bafyreig3zphygosongsuqx3ezw2tybcnsok2kp6b3vgftxwqng3n5fkvo4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Brian Ortega retires after losing every round against Dan Hooker at UFC Qatar",
-      "postedAt": "2026-11-21T19:52:00Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2tusumnbx2s",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2tuh2piv42n",
-      "cid": "bafyreia6egidfiihra75ldt4p2qxz2nfrf2zrzl6a6dfazhcf7vnkds5py",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Abel Mendoza is 44-0 and finally ranked No. 15 by the WBA. 🥊🇺🇸 \n\nThe unbeaten Texan confirms his December 5 return as he targets a world title and 45-0.",
-      "postedAt": "2026-11-21T19:45:24Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2tuh2piv42n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:24:59.742Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -547,7 +1148,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -571,7 +1172,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -595,55 +1196,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2tq6r3di72e",
-      "cid": "bafyreihqpmr7qvayengueios6zsilogzqrs6p25nb5q552u7p4qg3gj4zm",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Charlo vs Charlo: Jermell Turns on Twin Over Family Name #boxing #boxingnews",
-      "postedAt": "2026-11-21T18:29:10Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2tq6r3di72e",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2tpkdmw4b2r",
-      "cid": "bafyreihrcmoqhff2vgkw5goinkmgolivzz2gqjpguy7m476hbjfv6hjobq",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ilia Topuria watches as his brother suffers first loss in 11 years at UFC Qatar",
-      "postedAt": "2026-11-21T18:17:45Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2tpkdmw4b2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -667,79 +1220,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2tojdmgbm2a",
-      "cid": "bafyreihtddjgjz4rjdukeg3h3xd6ng5jn3fjnzirl6ygmw5a6wmfho42zi",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "‘Cut them both’… Fans rage about Shamil Gaziev vs. Tallison Teixeira snoozefest at UFC Qatar",
-      "postedAt": "2026-11-21T17:59:18Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2tojdmgbm2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2tiz3xp3v2x",
-      "cid": "bafyreidlvaucubextwrcjf5phgcddm64g6a2cvjzbcshdk5mu5wbacdgzm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Chris Leben ends 13-year MMA layoff with win over retiring UFC rival",
-      "postedAt": "2026-11-21T16:20:44Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2tiz3xp3v2x",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2thzhjnpt2s",
-      "cid": "bafyreiajirfnl73oyqygf75cynmbd7sad4k3a25dzklb4enppnwch45q3m",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Why aren’t there any ring girls at UFC Qatar? Octagon girls’ absence explained",
-      "postedAt": "2026-11-21T16:03:02Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2thzhjnpt2s",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -763,79 +1244,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2tgbs6dht2b",
-      "cid": "bafyreihuve5gv4zqyvh2iacollgoz7gz3dhal7kdyxf4dvamyh6fowsdae",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Nathan Cleverly, 39, Rules Out Return: ‘Boxing Sad and Pathetic’ #boxing #boxingnews",
-      "postedAt": "2026-11-21T15:31:54Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2tgbs6dht2b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2tg2nyfdt2b",
-      "cid": "bafyreieofr6at77ndb45bylzrbwyzmuef722hcjpwchsxzyjigns2q7d74",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Boxing is sad and pathetic! 🥊😎\n\nNathan Cleverly has no regrets, no comeback plans and some brutal words for his former sport.\n\nThe two-time world champion speaks exclusively to WBN about life at 39, having retired at just 30.",
-      "postedAt": "2026-11-21T15:27:55Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2tg2nyfdt2b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2ter6dkpy2a",
-      "cid": "bafyreiasihtkrh3jsgippu6ts7o5iku7fsveh35ncwyftakfp2nic35xra",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Jiri Prochazka is ‘surprised’ UFC let Carlos Ulberg stay champ after telling him to vacate in 2022",
-      "postedAt": "2026-11-21T15:04:43Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2ter6dkpy2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -863,198 +1272,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2tbafehyi22",
-      "cid": "bafyreicqs4ycxl3val4mfahhjklom7b3axxvj7n5gvretca7epjnq3udo4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Watch UFC veteran Derek Brunson land three knockdowns in his BKFC debut before Darren Till callout",
-      "postedAt": "2026-11-21T14:01:39Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2tbafehyi22",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2t5xtyo732a",
-      "cid": "bafyreigrscfkxgeis4bgwmsanzhsw422wdoetszembyqhjix3lkdwbgdhi",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ilia Topuria predicts timeline for his 7-1 brother to become UFC bantamweight champion",
-      "postedAt": "2026-11-21T13:03:11Z",
-      "date": "22 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2t5xtyo732a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2t4ezyxou2u",
-      "cid": "bafyreihdekg3h3sujylahh5vuosusncjzerzibuwbus3kz2vnpdv3kbcci",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Ryan Garcia’s Power Ball Monday: Floyd or Teofimo #boxing #boxingnews",
-      "postedAt": "2026-11-21T12:34:46Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2t4ezyxou2u",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2t4ezvpli2z",
-      "cid": "bafyreihdekg3h3sujylahh5vuosusncjzerzibuwbus3kz2vnpdv3kbcci",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Ryan Garcia’s Power Ball Monday: Floyd or Teofimo #boxing #boxingnews",
-      "postedAt": "2026-11-21T12:34:46Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2t4ezvpli2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2t2hp4hqj2i",
-      "cid": "bafyreif5erlqa4hysb4priemcgqk5h7vw7ywb7du3cefsvua7raviyp6ee",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Bruce Buffer looks unimpressed as UFC fan recreates Josh Hokit’s middle finger jab in public",
-      "postedAt": "2026-11-21T12:00:28Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2t2hp4hqj2i",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2szuv3i3i2h",
-      "cid": "bafyreihilt6uwlxjf5hfmtbww62lzu7flcydycqsx4ecgfgpuro4d6an7m",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Ryan Garcia's Power Ball Monday! 🥊💰 Floyd Mayweather or Teofimo Lopez? \n\nGarcia promises his next opponent on November 23, with a welterweight unification in the works and Mayweather facing the prospect of being overlooked.",
-      "postedAt": "2026-11-21T11:49:56Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2szuv3i3i2h",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n2stxatant2s",
-      "cid": "bafyreiao3w2ludyhhbgmmcyagunz7r2nqtzjq6js6qagi44vakttg2lv2q",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Two-time UFC main event star among three victims in the promotion’s latest roster purge",
-      "postedAt": "2026-11-21T10:03:53Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n2stxatant2s",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2ssigyhif2s",
-      "cid": "bafyreicuvbpohvaegofxrtzlxaam3eyybhw6q3zkdgfttstffyc5rsruay",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Amari Jones moves to 18-0 (16 KOs) after stopping DeAundre Pettus in round eight. 🥊🔥 \n\nThe IBF No. 1 middleweight contender has now recorded three stoppage wins in 2026 and wants his world title shot next.",
-      "postedAt": "2026-11-21T09:37:43Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2ssigyhif2s",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T01:53:50.410Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2spdwi6ls2f",
       "cid": "bafyreievdx5m5hn4eu3k7lkrodehcjeaqi5wj4x7u45eojdfmomz3al7x4",
       "platform": "Bluesky",
@@ -1075,79 +1292,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2rkvnbm6u2w",
-      "cid": "bafyreig3mutfhnt3cipxh2nrxkwgym564cwgxskzxjixg3ibm3g6qzdovi",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Stephanie Piñeiro Talks Triple Title Fight, Lauren Price Rematch #boxing #boxingnews",
-      "postedAt": "2026-11-20T21:49:16Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2rkvnbm6u2w",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2qx52vthr24",
-      "cid": "bafyreigkva2ma5efcqqbb45q6rmsyzc7xsetwf7zffy6piazst3xh7rliu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "DAZN Prices Rise Again After 250% Surge, US Boxing Fans Brace #boxing #boxingnews",
-      "postedAt": "2026-11-20T15:55:30Z",
-      "date": "21 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2qx52vthr24",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2qnb3ojz225",
-      "cid": "bafyreigmu2yyu7wlh5uksduodetuq57mlotxzctqtangrfk4anursxycbe",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "‘Boy or Girl’ Sex-Test Blunder Costs Teen World Championships #boxing #boxingnews",
-      "postedAt": "2026-11-20T12:58:48Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2qnb3ojz225",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1171,31 +1316,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2p3s5qolf2y",
-      "cid": "bafyreib7ys5id5aypwx5s6pvnaenplffvwkvxiyhg53dftltggjnhexhda",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "KO’d by Mike Tyson in One, Murdered 3 People 3 Months Later #boxing #boxingnews",
-      "postedAt": "2026-11-19T22:13:33Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2p3s5qolf2y",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1219,7 +1340,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1243,7 +1364,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1267,55 +1388,7 @@
         "comments": 2,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2ohzantkp2b",
-      "cid": "bafyreie5egbloq2x4njuiszhjagcgb4m3nyb7vkdlp3phbmr6ryoz7qbfu",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Deontay Wilder’s Grim Threat as Jarrell Miller Eyes Dec 11 #boxing #boxingnews",
-      "postedAt": "2026-11-19T16:19:36Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2ohzantkp2b",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2o64s2puh2a",
-      "cid": "bafyreiglagdcdsyyqvotoynxohxecyti52xqg7y73du373ihugjjmppjkm",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Gervonta Davis March Comeback Faces Threat of Prison Time #boxing #boxingnews",
-      "postedAt": "2026-11-19T13:22:38Z",
-      "date": "20 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2o64s2puh2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1339,7 +1412,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1363,7 +1436,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-23T02:00:11.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1387,7 +1460,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-22T10:30:33.915Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1435,7 +1508,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1459,7 +1532,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1483,7 +1556,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1507,55 +1580,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2iilgwgu224",
-      "cid": "bafyreigssk425z3lsabvl5oli2uajh43e73wx4vnu5fbbooy336ihcmmy4",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Dan Rafael",
-      "handle": "@danrafael1.bsky.social",
-      "role": "commentator",
-      "quote": "WBC lays out mandatories & eliminators at annual convention. A division-by-division look at rulings issued it in Acapulco, Mexico. Read & sign up for my #boxing Substack: danrafael.substack.com/p/wbc-lays-o...",
-      "postedAt": "2026-11-17T07:13:49.191Z",
-      "date": "17 Nov 2026",
-      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n2iilgwgu224",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n2i4m7kz4k2j",
-      "cid": "bafyreibbdflwstuksjuhowezl6xryzlqvho5ldqrefigs34s7767vs2dpa",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Dan Rafael",
-      "handle": "@danrafael1.bsky.social",
-      "role": "commentator",
-      "quote": "Inoue-Bam is one of the biggest fights that can be made in #boxing. What's the latest and it will it happen? We discuss. Check out our video here: www.youtube.com/watch?v=EC6K...",
-      "postedAt": "2026-11-17T03:39:30.130Z",
-      "date": "17 Nov 2026",
-      "url": "https://bsky.app/profile/danrafael1.bsky.social/post/3n2i4m7kz4k2j",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukajoiyhrbbiiu7qpcz43aha/bafkreifun33dacusv726vgtqm3jhyo44mqkzgax2esadqlh67jcvwz5hga",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:ukajoiyhrbbiiu7qpcz43aha",
-      "engagement": {
-        "likes": 2,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-22T08:33:02.545Z",
+      "engagementCheckedAt": "2026-11-24T07:31:10.622Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1651,7 +1676,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1819,7 +1844,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1843,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1867,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1891,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1915,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1939,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1963,7 +1988,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2431,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-21T20:15:10.962Z",
+      "engagementCheckedAt": "2026-11-24T07:45:22.342Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4463,7 +4488,7 @@
         "comments": 0,
         "shares": 2
       },
-      "engagementCheckedAt": "2026-11-22T06:10:28.823Z",
+      "engagementCheckedAt": "2026-11-24T06:10:12.734Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -5621,21 +5646,6 @@
       "postedAt": "2026-11-09T03:00:07+0000",
       "url": "https://www.instagram.com/reel/DfgUPZbhy9t/",
       "photo": "https://scontent-iad6-1.xx.fbcdn.net/v/t51.2885-15/448026757_957767332812053_2539398052466278408_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=7d201b&_nc_ohc=MoJWqMx-Bb0Q7kNvwF_IWWT&_nc_oc=AdpFuDe9_e2OgBziJlGWItfgdc8bs8Wxd8NtJc6FRS6butlpONCFG1PrqED7AtXZcCU&_nc_zt=23&_nc_ht=scontent-iad6-1.xx&edm=AL-3X8kEAAAA&oh=00_AQToa-uieqyjiNVjNQ3fs9jkKC0ghbOY2xa2zIVDkTaWyQ&oe=6AFABEEA",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "platform": "Instagram",
-      "sport": "mma",
-      "type": "post",
-      "name": "Valentina Shevchenko",
-      "handle": "@bulletvalentina",
-      "role": "fighter",
-      "source": "Instagram original author API",
-      "id": "18187697800421031",
-      "quote": "Exploring the lush landscapes of Ogimi village in Okinawa 🌿 \nStopped for a quick workout to soak up the local energy 👊\nThey say the #Bunagaya nature-loving sprites live in these forests and rivers 🤗 ✨🇯🇵\n\n#Okinawa #Japan #Travel #MMA",
-      "postedAt": "2026-11-09T02:09:16+0000",
-      "url": "https://www.instagram.com/reel/DfgNl7zitMU/",
-      "photo": "https://scontent-iad3-1.xx.fbcdn.net/v/t51.82787-15/658880614_18581573713040484_1143507505193568169_n.jpg?_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=7d201b&_nc_ohc=aHAD_fl2gg0Q7kNvwHvZ3bd&_nc_oc=AdqLk5kL0RSIbR1bWoNGFG7PW70uYyLZaSebs651En9G4_JJcRJHtzcFuoQtHgr8WF8&_nc_zt=23&_nc_ht=scontent-iad3-1.xx&edm=AL-3X8kEAAAA&_nc_gid=O776ep0GShzfPsT_KnkW6Q&oh=00_AQT2F9PloJa5_bFprEFSEsh8SVmjJOuEgol7_A45qeJwRw&oe=6AFAC529",
       "topic": "Original source post · claims may need confirmation"
     }
   ],

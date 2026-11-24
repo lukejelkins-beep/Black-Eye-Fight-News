@@ -302,12 +302,19 @@ test('strict Stage3 wave17-18: ten distinct full careers retain 30 exact sourced
   assert.ok(x?.sourceCoverageAttested===true,slug);
   assert.equal(x.scope,'complete_official_ufc_career',slug);
   assert.equal(x.verificationMethod,'full_official_ufc_fight_listing_crosscheck',slug);
-  assert.equal(x.sourceSnapshot?.sourceCommit,'c742842f29466758fedc3906dbad28d6d320a8da',slug);
+  assert.equal(x.sourceSnapshot?.sourceCommit,slug==='bia-mesquita'?'96adace863c0a793579cc06d27d468797545607f':'c742842f29466758fedc3906dbad28d6d320a8da',slug);
   assert.equal(x.fighterUrl,'https://ufcstats.com/fighter-details/'+c.sid,slug);
   assert.deepEqual(x.verifiedNumericFighterIds,[c.id],slug);
-  assert.equal(x.officialUfcCareerBoutCount,c.b.length,slug);
-  assert.equal(x.bouts.length,c.b.length,slug);
-  assert.equal(new Set(x.bouts.map(b=>b.nativeBoutId)).size,c.b.length,slug);
+  const added=slug==='bia-mesquita'?1:0;
+  assert.equal(x.officialUfcCareerBoutCount,c.b.length+added,slug);
+  assert.equal(x.bouts.length,c.b.length+added,slug);
+  assert.equal(new Set(x.bouts.map(b=>b.nativeBoutId)).size,c.b.length+added,slug);
+  if(added){
+   const newBout=x.bouts.at(-1);
+   assert.equal(newBout.nativeBoutId,'93111');
+   assert.equal(newBout.result,'win');
+   assert.equal(newBout.fightUrl,'https://ufcstats.com/fight-details/f24ca8e51be2ba77');
+  }
   for(let i=0;i<c.b.length;i++){
    const [id,opponent,result,sid]=c.b[i],b=x.bouts[i],n=native.bouts[id];
    assert.deepEqual([b.nativeBoutId,b.opponent,b.result,b.nativeFighterId],[id,opponent,result,c.id],slug);

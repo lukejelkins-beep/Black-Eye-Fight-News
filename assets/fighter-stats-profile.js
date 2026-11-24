@@ -9,6 +9,7 @@
  const norm=s=>String(s||"").normalize("NFKD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
  const eventTitle=t=>(scope.BEFNEventTitle||(x=>x))(t);
  const WINDOWS=[["last5","Last 5"],["l12","12 months"],["l36","36 months"],["career","Career"]];
+ const PERIOD_VIEWS=[["last5","Last 5"],["last10","Last 10"],["career","Career"]];
  const METHOD={ko:"KO/TKO",sub:"Submission",dec:"Decision",draw:"Draw",nc:"No contest",dq:"DQ"};
  const cache=new Map();      // slug -> stats file (for the window switcher)
  const selected=new Map();   // slug -> chosen window
@@ -111,11 +112,45 @@
  }
 
  // ---- Full UFC history ----
- function history(stats,skipBoutIds){
+ // R2 verified career view (release tracker #171). Fail closed and OFF by default: only when the flag is on, the
+ // fighter is in the independently certified list, and the fights BEFN holds are exactly the certified number
+ // (no fight missing, none extra) is the history called a verified career. Anyone else is labelled as the
+ // fights on record, never as a full career. Pure: callers pass the two small data files.
+ function careerState(stats,certified,flags){
+  if(flags?.verifiedCareerView!==true)return {view:"off"};
+  const all=stats?.fights||[],key=certified?.statsAliases?.[stats?.slug]||stats?.slug;
+  if(certified?.schema!==1||certified.approved!==783||!/^\d{4}-\d{2}-\d{2}$/.test(certified?.certifiedThrough||""))return {view:"on",verified:false,reason:"no_certified_list"};
+  // The owner-approved extension cohort (24 Nov 2026) has its own list and its own evidence cutoff.
+  const ext=certified.extension,inExt=certified.certified?.[key]==null&&ext?.certified?.[key]!=null&&
+   Number.isSafeInteger(ext.approved)&&/^\d{4}-\d{2}-\d{2}$/.test(ext.certifiedThrough||"");
+  let want=inExt?ext.certified[key]:certified.certified?.[key],through=inExt?ext.certifiedThrough:certified.certifiedThrough;
+  // The weekly rolling certification (owner standing rule, 24 Nov 2026) carries its own count and cutoff per fighter:
+  // a newcomer it certified, or a certified fighter rolled forward after a new fight.
+  const roll=certified.rolling,rn=roll?.certified?.[key],rt=roll?.certifiedThrough?.[key];
+  if(Number.isSafeInteger(rn)&&/^\d{4}-\d{2}-\d{2}$/.test(rt||"")){want=rn;through=rt;}
+  if(!Number.isSafeInteger(want))return {view:"on",verified:false,reason:"not_certified"};
+  // The certificate covers the official fights up to its evidence cutoff. A fight after that day is newer, not a gap.
+  const covered=all.filter(f=>String(f.date)<=through),later=all.length-covered.length;
+  if(covered.length!==want)return {view:"on",verified:false,reason:"count_mismatch"};
+  const ids=new Set(all.map(f=>String(f.boutId)));
+  if(ids.size!==all.length||all.some(f=>!f.date||!f.opponent||!["W","L","D","NC"].includes(f.outcome)))
+   return {view:"on",verified:false,reason:"invalid_bouts"};
+  return {view:"on",verified:true,count:want,later,through};
+ }
+ function history(stats,skipBoutIds,career){
   const skip=new Set((skipBoutIds||[]).map(String));
   const rows=(stats.fights||[]).filter(f=>!skip.has(String(f.boutId)));
-  if(!rows.length)return "";
-  return '<details class="bsp-history"><summary>Full UFC history <small>'+(stats.fights||[]).length+' fights</small></summary><ul>'+
+  const n=(stats.fights||[]).length;
+  if(!rows.length){
+   // Every fight is already in the recent list above; the career status still has to be said, in one line.
+   return career?.view==="on"&&n?'<p class="bsp-career-note'+(career.verified?' is-verified':'')+'">'+
+    (career.verified?'Verified UFC career · '+career.count+' official '+(career.count===1?'fight':'fights')+' · independently verified to '+career.through+(career.later?' · '+career.later+' newer':''):
+     'UFC fights on record · '+n+' · full career not yet independently verified')+'</p>':"";
+  }
+  const title=career?.view!=="on"?'Full UFC history <small>'+n+' fights</small>':
+   career.verified?'Verified UFC career <small>'+career.count+' official fights · independently verified to '+career.through+(career.later?' · '+career.later+' newer':'')+'</small>':
+   'UFC fights on record <small>'+n+' · full career not yet independently verified</small>';
+  return '<details class="bsp-history'+(career?.verified?' is-verified':'')+'"><summary>'+title+'</summary><ul>'+
    rows.map(f=>{
     const klass=f.outcome==="W"?"is-win":f.outcome==="L"?"is-loss":"is-draw";
     return '<li class="'+klass+'"><div class="bsp-history-row"><span class="befn-power-result '+klass+'">'+esc(f.outcome)+'</span>'+
@@ -125,14 +160,43 @@
  }
 
  // ---- Stats with a window switcher (keeps the nine tiles) ----
- function statsPanel(stats){
+ // R3 period views (release tracker #171), OFF by default (periodViews in data/ufc-v4-flags.json). Only for a fighter
+ // whose full UFC career is independently verified and matches the certificate (the R2 rule): the switcher is then
+ // Last 5 / Last 10 / Career, a "Last N" view only when the fighter has N official fights (never a shorter window under
+ // a longer name, never an older fight substituted), and a no-contest holds its chronological slot. Anyone else keeps
+ // the existing switcher unchanged.
+ const periods=new Map();    // slug -> period mode
+ function periodMode(stats,certified,flags){
+  if(flags?.periodViews!==true)return {on:false};
+  const c=careerState(stats,certified,{verifiedCareerView:true});
+  return c.verified?{on:true,total:(stats.fights||[]).length}:{on:false,reason:c.reason};
+ }
+ function views(stats,period){
+  if(!period?.on)return WINDOWS;
+  const n=(stats.fights||[]).length;
+  return PERIOD_VIEWS.filter(([k])=>k==="career"||n>=(k==="last10"?10:5));
+ }
+ function statsPanel(stats,period){
   cache.set(stats.slug,stats);
+  periods.set(stats.slug,period||{on:false});
   return '<div class="bsp-stats" data-bsp-stats="'+esc(stats.slug)+'">'+statsInner(stats)+'</div>';
  }
+ // Head, body and legs, like distance, clinch and ground, must add up to the
+ // strikes landed. Some archived rounds do not, so their shares would be false.
+ function breakdownsSound(stats){
+  const i=fieldIndex(stats),parts=[["headLanded","bodyLanded","legLanded"],["distanceLanded","clinchLanded","groundLanded"]];
+  return (stats.fights||[]).every(f=>(f.rounds||[]).every(r=>[r[2],r[3]].every(side=>parts.every(keys=>{
+   const v=keys.map(k=>side[i[k]]);
+   return !v.every(Number.isInteger)||v[0]+v[1]+v[2]===side[i.sigLanded];
+  }))));
+ }
  function statsInner(stats){
-  const key=selected.get(stats.slug)||"last5";
+  const period=periods.get(stats.slug),list=views(stats,period);
+  const chosen=selected.get(stats.slug);
+  const key=list.some(([k])=>k===chosen)?chosen:list[0][0];
   const w=stats.windows?.[key]||{};const r=w.rates||{};
-  const sample=w.statFights?w.statFights+" fight"+(w.statFights===1?"":"s")+" with stats":"No fights in this window";
+  const sample=w.statFights?(period?.on&&w.fights>w.statFights?w.statFights+" of "+w.fights+" fights measured":
+   w.statFights+" fight"+(w.statFights===1?"":"s")+" with stats"):"No fights in this window";
   const tiles=[
    [record(w),"Record",w.fights?w.fights+" fights":""],
    [w.fights?String(w.winsBy?.ko??0):"—","KO/TKO wins",""],
@@ -150,7 +214,7 @@
   const pace=Number.isFinite(r.paceRetention)?'<div class="bsp-pace"><span class="bsp-tag">Pace</span><strong>'+
    Math.round(r.paceRetention*100)+'%</strong><small>Output after round 1, compared with round 1'+
    (r.paceRetention>=1?' (keeps or raises the pace)':' (slows after round 1)')+'</small></div>':"";
-  return '<div class="bsp-windows" role="group" aria-label="Time window">'+WINDOWS.map(([k,l])=>
+  return '<div class="bsp-windows" role="group" aria-label="Time window">'+list.map(([k,l])=>
    '<button type="button" data-bsp-window="'+k+'" aria-pressed="'+(k===key)+'">'+esc(l)+'</button>').join("")+'</div>'+
    '<div class="befn-pro-tiles">'+tiles.map(([v,l,s])=>'<div><strong>'+esc(v)+'</strong><span>'+esc(l)+'</span>'+
     (s?'<small>'+esc(s)+'</small>':'')+'</div>').join("")+'</div>'+
@@ -178,7 +242,8 @@
  function compare(stats,divisions){
   const div=divisions?.divisions?.[stats.divisionSlug];
   const w=stats.windows?.l36;
-  if(!div||!w||(w.statFights||0)<(divisions.minFights||3))return "";
+  if(!div||!w||(w.statFights||0)<1)return "";
+  const few=(w.statFights||0)<(divisions.minFights||3);
   const fields=divisions.rateFields||[];
   const avg=k=>div.rates[fields.indexOf(k)];
   const rows=COMPARE.filter(([k])=>Number.isFinite(w.rates?.[k])&&Number.isFinite(avg(k)));
@@ -192,11 +257,11 @@
      (lowerBetter?' <small>lower is better</small>':'')+'</span>'+
      '<div class="bsp-compare-bars"><span class="bsp-bar is-own'+(better?' is-better':'')+'"><span style="width:'+Math.round(100*me/max)+'%"></span></span><b>'+show(me)+'</b>'+
      '<span class="bsp-bar is-avg"><span style="width:'+Math.round(100*them/max)+'%"></span></span><b>'+show(them)+'</b></div></div>';
-   }).join("")+'<small class="bsp-note">Last 36 months. Average of '+div.fighters+' '+esc(div.label)+
-   ' fighters with 3+ UFC fights in that time.</small></div>';
+   }).join("")+'<small class="bsp-note">'+(few?'Based on '+w.statFights+' measured UFC '+(w.statFights===1?'fight':'fights')+' in the last 36 months: a small sample. ':'Last 36 months. ')+
+   'Average of '+div.fighters+' '+esc(div.label)+' fighters with 3+ UFC fights in that time.</small></div>';
  }
 
- const api={glance,fightDetail,history,statsPanel,compare,findFight,methodText};
+ const api={periodMode,careerState,breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
  scope.BEFNStatsProfile=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);

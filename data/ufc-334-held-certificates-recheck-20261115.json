@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "scope": "ufc-334-held-certificate-new-bout-research",
+  "reviewedOn": "2026-11-15",
+  "event": "Polymarket UFC 334: Gane vs Hokit",
+  "eventDate": "2026-11-14",
+  "cohortSize": 783,
+  "readOnlyResearch": true,
+  "certificationGranted": false,
+  "purpose": "Independent event/outcome corroboration for the eight held complete-career certificates. This is NOT complete UFCStats-source identity verification and MUST NOT promote a fighter through Stage 3.",
+  "savedCacheBlobShas": {
+    "nativeRichProgress": "38f879c168dba60641d2360e39b11a0d513358f7",
+    "independentCareerRegistry": "0a1efceda2ed172bca00fb112947a6f360c0f532"
+  },
+  "sourceReferences": {
+    "officialEvent": "https://www.ufc.com/event/ufc-334",
+    "officialScorecards": "https://www.ufc.com/news/polymarket-ufc-334-gane-vs-hokit-official-scorecards",
+    "reportedResults": "https://www.mmafighting.com/ufc/520939/ufc-334-results-gane-vs-hokit"
+  },
+  "heldFighterSlugs": [
+    "bia-mesquita",
+    "cesar-almeida",
+    "chris-duncan",
+    "donte-johnson",
+    "evan-elder",
+    "heili-alateng",
+    "juan-diaz",
+    "melquizael-costa"
+  ],
+  "uniqueNewBouts": 6,
+  "newBouts": [
+    {
+      "nativeBoutId": "93621",
+      "eventDate": "2026-11-14",
+      "a": {
+        "slug": "evan-elder",
+        "nativeFighterId": "982"
+      },
+      "b": {
+        "slug": "samuel-sanches",
+        "nativeFighterId": "33315"
+      },
+      "winnerSlug": "evan-elder",
+      "winnerNumericFighterId": "982",
+      "method": "decision_unanimous",
+      "savedMeasuredRoundCount": 3,
+      "sourceCheckedOutcome": true,
+      "independentUfcStatsFightUrl": null,
+      "strictFullCareerCertified": false
+    },
+    {
+      "nativeBoutId": "93780",
+      "eventDate": "2026-11-14",
+      "a": {
+        "slug": "heili-alateng",
+        "nativeFighterId": "7566"
+      },
+      "b": {
+        "slug": "juan-diaz",
+        "nativeFighterId": "32"
+      },
+      "winnerSlug": "juan-diaz",
+      "winnerNumericFighterId": "32",
+      "method": "decision_unanimous",
+      "savedMeasuredRoundCount": 3,
+      "sourceCheckedOutcome": true,
+      "independentUfcStatsFightUrl": null,
+      "strictFullCareerCertified": false
+    },
+    {
+      "nativeBoutId": "93111",
+      "eventDate": "2026-11-14",
+      "a": {
+        "slug": "macy-chiasson",
+        "nativeFighterId": "190"
+      },
+      "b": {
+        "slug": "bia-mesquita",
+        "nativeFighterId": "174"
+      },
+      "winnerSlug": "bia-mesquita",
+      "winnerNumericFighterId": "174",
+      "method": "submission",
+      "savedMeasuredRoundCount": 1,
+      "sourceCheckedOutcome": true,
+      "independentUfcStatsFightUrl": null,
+      "strictFullCareerCertified": false
+    },
+    {
+      "nativeBoutId": "93620",
+      "eventDate": "2026-11-14",
+      "a": {
+        "slug": "jared-gordon",
+        "nativeFighterId": "18"
+      },
+      "b": {
+        "slug": "melquizael-costa",
+        "nativeFighterId": "28"
+      },
+      "winnerSlug": "melquizael-costa",
+      "winnerNumericFighterId": "28",
+      "method": "decision_unanimous",
+      "savedMeasuredRoundCount": 3,
+      "sourceCheckedOutcome": true,
+      "independentUfcStatsFightUrl": null,
+      "strictFullCareerCertified": false
+    },
+    {
+      "nativeBoutId": "93616",
+      "eventDate": "2026-11-14",
+      "a": {
+        "slug": "donte-johnson",
+        "nativeFighterId": "418"
+      },
+      "b": {
+        "slug": "cesar-almeida",
+        "nativeFighterId": "348"
+      },
+      "winnerSlug": "cesar-almeida",
+      "winnerNumericFighterId": "348",
+      "method": "ko_tko",
+      "savedMeasuredRoundCount": 1,
+      "sourceCheckedOutcome": true,
+      "independentUfcStatsFightUrl": null,
+      "strictFullCareerCertified": false
+    },
+    {
+      "nativeBoutId": "93108",
+      "eventDate": "2026-11-14",
+      "a": {
+        "slug": "drew-dober",
+        "nativeFighterId": "148"
+      },
+      "b": {
+        "slug": "chris-duncan",
+        "nativeFighterId": "368"
+      },
+      "winnerSlug": "chris-duncan",
+      "winnerNumericFighterId": "368",
+      "method": "decision_unanimous",
+      "savedMeasuredRoundCount": 3,
+      "sourceCheckedOutcome": true,
+      "independentUfcStatsFightUrl": null,
+      "strictFullCareerCertified": false
+    }
+  ],
+  "releaseGatesRemaining": [
+    "Independently retrieve and pin unique UFCStats fight-details URLs for all six newly finished bouts, not merely the UFCalendar native numeric bout IDs",
+    "Reconcile the complete independent career for all eight fighter slugs against all newly saved eligible UFC bouts and both native fight corners, exact dates/outcomes and rounds",
+    "Add source-attested updated fighter evidence to the one canonical register without modifying earlier proof or duplicating any bout",
+    "Run the entire frozen 783-fighter Stage 3 audit and all preservation regression tests; only the passing audit may count certificates"
+  ],
+  "notes": [
+    "Eight affected fighters share six new fights, because Johnson vs Almeida and Alateng vs Diaz are intra-cohort pairs.",
+    "UFC 334 is live during this review; event and fighter source pages may update. Do not infer outcomes for bouts outside these six.",
+    "Existing 429 count is a historical passing snapshot, not a new certification result. No production or scoring change."
+  ]
+}

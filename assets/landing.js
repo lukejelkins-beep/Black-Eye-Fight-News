@@ -12,7 +12,31 @@
   /* A picture BEFN holds itself (poster cache, fighter cutout, fighter portrait) is drawn
      borderless: no frame, no plate, edges faded into the card. A publisher's press photo
      keeps its own crop. `cached` decides which of the two an <img> gets. */
-  const ourFighter = url => /^assets\/img\/(?:ufc|ufc-cutouts)\//.test(String(url || ''));
+  const ourFighter = url => /^assets\/img\/(?:ufc|ufc-cutouts|boxing-cutouts)\//.test(String(url || ''));
+
+  /* Where a cut-out file lives. Each cut-out register carries its own folder, so a boxer's
+     cut-out is read from the boxing folder and a UFC fighter's from the UFC one. UFC is the
+     default, so a register written before boxing cut-outs existed still resolves. */
+  const cutURL = (key, entry) => (entry && entry.dir ? entry.dir : 'assets/img/ufc-cutouts/') + key + '.webp';
+
+  /* Cut-outs come from one register per sport. Each entry is tagged with the folder its file
+     sits in, so a boxer's cut-out is read from assets/img/boxing-cutouts/ and a UFC fighter's
+     from assets/img/ufc-cutouts/. A slug held in both sports is dropped, the same rule the
+     local image map uses: a name alone cannot pick the right face. */
+  function mergeCutouts(registers) {
+    const out = {}, from = {};
+    for (const pair of (Array.isArray(registers) ? registers : [])) {
+      const dir = pair && pair[0], rows = pair && pair[1] && pair[1].cutouts;
+      if (!dir || !rows) continue;
+      for (const key of Object.keys(rows)) {
+        if (!rows[key]) continue;
+        if (from[key] && from[key] !== dir) { out[key] = { ok: false, reason: 'name held in two sports' }; continue; }
+        from[key] = dir;
+        out[key] = Object.assign({}, rows[key], { dir: dir });
+      }
+    }
+    return Object.keys(out).length ? out : null;
+  }
   const pictureHTML = (url, alt, cls, h, eager) => !url ? '' :
     '<span class="' + cls + (ourFighter(url) ? ' is-cached' : '') + '">' +
     '<img src="' + h.safeURL(url) + '" alt="' + h.esc(alt || '') + '" loading="' + (eager ? 'eager' : 'lazy') +
@@ -26,14 +50,33 @@
     return pick && pick.url ? pick.url : '';
   }
 
-  /* A cut-out of someone on the card, when one has been cleared for this fighter. */
+  /* The fighters a card's own title names, which are the only ones whose picture may stand
+     for that card. A fighter matches on their full name or on their surname, because a UFC
+     title carries surnames only ("UFC Fight Night: Procházka vs Stirling") while a boxing
+     one usually carries both ("Conah Walker vs Alexis Rocha"). A surname under four letters
+     is ignored, as too easy to hit inside another word. Without it a tile can lead with
+     someone further down the bill, which reads as though the card is theirs. */
+  function billed(event) {
+    const hay = '-' + slug(event && event.title) + '-';
+    const names = [];
+    for (const bout of (Array.isArray(event && event.bouts) ? event.bouts : [])) {
+      for (const name of (Array.isArray(bout && bout.fighters) ? bout.fighters : [])) names.push(name);
+    }
+    return names.filter(name => {
+      const key = slug(name);
+      if (!key) return false;
+      if (hay.indexOf('-' + key + '-') >= 0) return true;
+      const last = key.split('-').pop();
+      return last.length >= 4 && hay.indexOf('-' + last + '-') >= 0;
+    });
+  }
+
+  /* A cut-out of a fighter this card is billed on, when one has been cleared for them. */
   function cutoutFor(event, cutouts) {
     if (!cutouts || !event || !Array.isArray(event.bouts)) return null;
-    for (const bout of event.bouts) {
-      for (const name of (Array.isArray(bout && bout.fighters) ? bout.fighters : [])) {
-        const key = slug(name);
-        if (key && cutouts[key] && cutouts[key].ok === true) return { url: 'assets/img/ufc-cutouts/' + key + '.webp', name: name };
-      }
+    for (const name of billed(event)) {
+      const key = slug(name);
+      if (cutouts[key] && cutouts[key].ok === true) return { url: cutURL(key, cutouts[key]), name: name };
     }
     return null;
   }
@@ -47,7 +90,7 @@
     const hit = Object.keys(cutouts)
       .filter(k => cutouts[k] && cutouts[k].ok === true && k.indexOf('-') > 0 && hay.indexOf('-' + k + '-') >= 0)
       .sort((a, b) => b.length - a.length)[0];
-    return hit ? { url: 'assets/img/ufc-cutouts/' + hit + '.webp', name: '' } : null;
+    return hit ? { url: cutURL(hit, cutouts[hit]), name: '' } : null;
   }
 
   /* Last resort, so no slot is ever empty: the house weave in the sport's own colour.
@@ -91,7 +134,7 @@
     return {
       eventName: pick.event.name || pick.bout.event || '', date: pick.event.date,
       winner: w, loser: l, method: pick.bout.method || '', round: pick.bout.round || null,
-      cutout: hasCutout(pick) ? 'assets/img/ufc-cutouts/' + slug(w) + '.webp' : ''
+      cutout: hasCutout(pick) ? cutURL(slug(w), cutouts[slug(w)]) : ''
     };
   }
 
@@ -102,6 +145,31 @@
       '<p class="lp-result-title">' + h.esc(r.winner) + ' beats ' + h.esc(r.loser) + h.esc(how) + '</p>' +
       '<a class="lp-button" href="#results">Full result ›</a></div>' +
       (r.cutout ? '<img class="lp-cutout" src="' + h.safeURL(r.cutout) + '" alt="' + h.esc(r.winner) + '" loading="lazy" decoding="async">' : '') + '</div>';
+  }
+
+  /* Film from the card the latest result came from: a video whose title names one of
+     the two fighters, finishes first, newest first. Nothing is matched on the event name
+     because the film feed rarely carries one. At most three, and none if none match. */
+  function cardFilm(result, videos, h) {
+    if (!result || !Array.isArray(videos) || !videos.length) return '';
+    const names = [result.winner, result.loser].map(n => slug(n)).filter(Boolean);
+    const last = n => n.split('-').slice(-1)[0];
+    const hit = v => {
+      const title = '-' + slug(v.title) + '-';
+      return names.some(n => title.includes('-' + n + '-') || (last(n).length > 4 && title.includes('-' + last(n) + '-')));
+    };
+    const picked = videos
+      .filter(v => v && v.url && v.title && v.thumbnail && v.verified === true && hit(v))
+      .sort((a, b) => (b.isFinish === true) - (a.isFinish === true) || String(b.date || '').localeCompare(String(a.date || '')))
+      .slice(0, 3);
+    if (!picked.length) return '';
+    const row = v => '<a class="lp-film-row" href="' + h.safeURL(v.url) + '" target="_blank" rel="noopener noreferrer">' +
+      '<span class="lp-film-thumb"><img src="' + h.safeURL(v.thumbnail) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="lp-film-play" aria-hidden="true">▶</span></span>' +
+      '<span class="lp-film-copy"><span class="lp-film-title">' + h.esc(v.title) + '</span>' +
+      '<span class="lp-meta">' + h.esc(v.kind || (v.isFinish ? 'Finish' : 'Highlights')) + ' · ' + h.esc(v.publisher || 'Publisher') + '</span></span></a>';
+    return '<section class="lp-film" aria-label="Film from this card"><div class="lp-kicker">Film from this card</div>' +
+      picked.map(row).join('') +
+      '<a class="lp-film-all" href="#highlights">All fight film ›</a></section>';
   }
 
   function leadHTML(a, h) {
@@ -118,8 +186,7 @@
     const sport = String(e.sport).toLowerCase();
     const poster = posterFor(e, ctx && ctx.posters);
     const cut = poster ? null : cutoutFor(e, ctx && ctx.cutouts);
-    const named = poster || cut ? null : (e.bouts || []).reduce((found, b) =>
-      found || (Array.isArray(b && b.fighters) ? b.fighters.reduce((f, n) => f || localPhoto(h, n, 'portrait'), null) : null), null);
+    const named = poster || cut ? null : billed(e).reduce((found, n) => found || localPhoto(h, n, 'portrait'), null);
     const art = poster ? pictureHTML(poster, e.title, 'lp-fixture-art', h)
       : cut ? pictureHTML(cut.url, cut.name, 'lp-fixture-art lp-fixture-cutout', h)
       : named ? pictureHTML(named.url, named.name, 'lp-fixture-art', h)
@@ -145,7 +212,7 @@
       : (upcoming.length ? '<div class="lp-col-foot"><b>Next up</b>' + upcoming.map(e => '<a href="#fights">' + h.esc(e.title) + ' · ' + Number(e.date.slice(8, 10)) + ' ' + MONTH[Number(e.date.slice(5, 7)) - 1] + '</a>').join('') + '</div>' : '');
     const link = (a, cls) => '<a class="' + cls + '" href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener noreferrer">' + h.esc(a.title) + '</a>';
     return '<section class="lp-col lp-' + key + '" aria-label="' + SPORT[key] + ' news"><header class="lp-col-head"><h3>' + SPORT[key] + '</h3>' +
-      (key === 'sumo' ? '<a href="' + h.safeURL(opts.sumoHref) + '">Hub ›</a>' : '<a href="#fights">Fights ›</a>') + '</header><div class="lp-col-body">' + img +
+      (key === 'sumo' ? '<a href="' + h.safeURL(opts.sumoHref) + '">Hub ›</a>' : '<a href="#home" data-area="' + key + '">All ' + SPORT[key] + ' ›</a>') + '</header><div class="lp-col-body">' + img +
       link(lead, 'lp-col-lead') + '<span class="lp-meta">' + h.meta(lead) + '</span>' + rest.map(a => link(a, 'lp-col-item')).join('') + foot +
       (key === 'sumo' ? '<span class="lp-note">Headlines translated by DeepL</span>' : '') + '</div></section>';
   }
@@ -164,7 +231,9 @@
     ['boxing', 'mma'].forEach(k => others.filter(a => a.sport === k).sort((a, b) => time(b) - time(a)).slice(0, 3).forEach(a => inCols.add(a.url)));
     const latest = others.filter(a => !inCols.has(a.url)).slice(0, 5);
     return '<div class="lp">' +
-      '<section class="lp-top" aria-label="Lead story">' + leadHTML(lead, h) + '<div class="lp-side">' + resultTileHTML(latestResult(ctx.results, ctx.cutouts, now), h) + '</div></section>' +
+      (() => { const result = latestResult(ctx.results, ctx.cutouts, now);
+        return '<section class="lp-top" aria-label="Lead story">' + leadHTML(lead, h) + '<div class="lp-side">' +
+          resultTileHTML(result, h) + cardFilm(result, ctx.videos, h) + '</div></section>'; })() +
       (fx.length ? '<section class="lp-section" aria-label="This week and next"><div class="lp-head"><h2>This week and next</h2><a href="#fights">Full schedule ›</a></div><div class="lp-fixtures">' + fx.map(e => fixtureHTML(e, h, ctx)).join('') + '</div></section>' : '') +
       (cols.length ? '<section class="lp-section" aria-label="By sport"><div class="lp-head"><h2>By sport</h2></div><div class="lp-cols">' + cols.join('') + '</div></section>' : '') +
       '<section class="lp-section lp-bottom"><div><div class="lp-head"><h2>Latest news</h2><a href="#news">All stories ›</a></div><div class="lp-latest">' +
@@ -181,7 +250,7 @@
       '</div></div><aside class="lp-talk"><div class="lp-kicker">Fight Talk</div><p>What fighters and promoters are posting, each with its source and date.</p><a class="lp-button" href="#social">Open Fight Talk ›</a></aside></section></div>';
   }
 
-  const api = { fixtures, latestResult, build, slug, posterFor, cutoutFor, cutoutForTitle };
+  const api = { fixtures, latestResult, build, slug, posterFor, cutoutFor, cutoutForTitle, cardFilm, mergeCutouts, billed };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.BEFNLanding = api;
 })(typeof window !== 'undefined' ? window : globalThis);

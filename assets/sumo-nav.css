@@ -2,20 +2,3 @@
 .befn-global-sports a.befn-sumo-link{display:flex;align-items:center;justify-content:center;text-decoration:none;color:#f3c332;font:900 35px/1 serif}
 .befn-global-sports a.befn-sumo-link:hover,.befn-global-sports a.befn-sumo-link:focus-visible{border-color:#cf1824;background:#442128;color:#fff0ac}
 @media(max-width:760px){.befn-global-sports a.befn-sumo-link{font-size:30px}}
-
-/* Main-site header on the Sumo pages: plain links, no underline. */
-.sh a{text-decoration:none}
-
-/* Phone navigation on the Sumo pages: compact brand bar and the main site's five tabs at the bottom. */
-.sumo-dock{display:none}
-@media(max-width:760px){
-  .sh .sh-brand{display:flex;align-items:center;padding:0 16px;height:48px;font-size:20px;letter-spacing:.02em;white-space:nowrap}
-  .sh .sh-brand br{display:none}
-  .sh .navrail,.sh .navrail .mainnav,.sh .mainnav{display:none!important}
-  .sh{min-height:48px}
-  body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
-  .sumo-dock{position:fixed;left:0;right:0;bottom:0;z-index:1100;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));min-height:calc(64px + env(safe-area-inset-bottom));padding:5px 5px calc(5px + env(safe-area-inset-bottom));background:#111013;border-top:3px solid #cf1824}
-  .sumo-dock a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;border-radius:10px;color:#f3e8e2;text-decoration:none;font:700 10px 'DM Sans',system-ui,sans-serif}
-  .sumo-dock a svg{height:19px;width:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .sumo-dock a:focus-visible{outline:3px solid #f3c332}
-}

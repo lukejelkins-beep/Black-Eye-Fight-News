@@ -21,8 +21,11 @@ test('keep frozen, uniquely approved 783-fighter roster; do not silently add a n
   assert.equal(evidence.rosterAsOf,roster.rosterAsOf);
   assert.equal(manifest.rosterAsOf,roster.rosterAsOf);
   assert.equal(manifest.productionReleaseAuthorized,false);
-  const known=new Set(roster.approvedFighters);
-  assert.ok(Object.keys(evidence.fighters).every(slug=>known.has(slug)));
+  // A register entry belongs to the frozen 783 or, tagged with its cohort, to the owner-approved extension (24 Nov 2026).
+  const extension=read('data/ufc-extension-cohort-approval-20261124.json');
+  const known=new Set(roster.approvedFighters),ext=new Set(extension.approvedFighters);
+  assert.ok(Object.entries(evidence.fighters).every(([slug,e])=>known.has(slug)||
+    (ext.has(slug)&&e.cohort===extension.cohort)));
 });
 
 test('reconcile 66 original and 147 V4 records into 153 distinct nonduplicated fighter proofs',()=>{
@@ -58,15 +61,18 @@ test('all preexisting 66 main Stage3 source proofs remain byte-equivalent in JSO
 test('each of the 87 V4-only source proofs is individually cross-gated; no silent certification',()=>{
   const all=manifest.importedV4OnlySlugs;
   const greco=manifest.sourceGrecoCommit;
+  const refreshed=new Set(['caio-borralho','cesar-almeida','chris-duncan','melquizael-costa',
+   'kayla-harrison','juan-diaz','bia-mesquita','donte-johnson','yousri-belgaroui',
+   'evan-elder','luis-gurule','heili-alateng']);
   for(const slug of all){
     const item=evidence.fighters[slug];
     assert.equal(item.sourceCoverageAttested,true,slug);
     assert.equal(item.scope,'complete_official_ufc_career',slug);
-    assert.equal(item.verifiedAt,'2026-11-14',slug);
+    assert.equal(item.verifiedAt,refreshed.has(slug)?'2026-11-16':'2026-11-14',slug);
     assert.equal(item.verificationMethod,'full_official_ufc_fight_listing_crosscheck',slug);
     assert.match(item.officialFighterUrl,/^https:\/\/www\.ufc\.com\/athlete\//,slug);
     assert.match(item.fighterUrl,/^https:\/\/ufcstats\.com\/fighter-details\/[a-f0-9]{16}$/i,slug);
-    assert.equal(item.sourceSnapshot.sourceCommit,greco,slug);
+    assert.equal(item.sourceSnapshot.sourceCommit,refreshed.has(slug)?'96adace863c0a793579cc06d27d468797545607f':greco,slug);
     assert.match(item.sourceSnapshot.fightResultsBlobSha,/^[a-f0-9]{40}$/i,slug);
     assert.match(item.sourceSnapshot.fighterDetailsBlobSha,/^[a-f0-9]{40}$/i,slug);
     assert.ok(['requires_independent_main_stage3_gate','passed_independent_main_stage3_gate'].includes(item.importedV4Evidence.status),slug);

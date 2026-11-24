@@ -3,6 +3,13 @@
  * missing profile content, broken navigation or horizontal clipping.
  * Fighter-photo network failures are reported separately: external CDNs may
  * block CI, and a passing test must never imply that reuse rights are cleared.
+ *
+ * Run locally the way CI does (.github/workflows/validate-ufc-profiles.yml): build the inputs, make Playwright
+ * importable, then run this file. It serves the repository root itself.
+ *   node scripts/build-ufc-last-five-coverage.mjs && node scripts/build-ufc-fighter-v3.mjs
+ *   npm install --no-save --no-package-lock playwright@1.56.1 && npx playwright install chromium
+ *   node tests/test-ufc-profile-visual.mjs
+ * Without Playwright in node_modules it stops with ERR_MODULE_NOT_FOUND, which is not a test failure.
  */
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -35,6 +42,41 @@ if(fs.existsSync(profileStatsSource)){
   for(const f of Object.values(raw.fighters||{}))
    if(f?.name&&f.trackedBouts>0)expectedPostfight.add(normalized(f.name));
  }
+}
+// Stats-build files, resolved the way the page does (data/ufc-stats/names.json: normalised name to slug).
+const statsNames=JSON.parse(fs.readFileSync(path.join(root,"data/ufc-stats/names.json"),"utf8")).names||{};
+// The page replaces a reviewed record with the overall record (data/ufc-overall-records.json: the saved record plus
+// UFC fights since) once the stats names have loaded (applyOverall in assets/fighter-insights.js). For a fighter with a
+// fight newer than their reviewed file (Ciryl Gane and Kayla Harrison, 14 Nov 2026) the two differ - Gane 14-2 (1 NC)
+// reviewed, 15-2 (1 NC) overall - so a check that accepted only the reviewed record timed out whenever the swap came
+// first (caught by the hydration-state message on 2026-11-24). Both records are correct; either is accepted.
+const overallFile=JSON.parse(fs.readFileSync(path.join(root,"data/ufc-overall-records.json"),"utf8"));
+const overallShared=new Set((overallFile.sharedNames||[]).map(normalized));
+const overallRecordText=r=>r.W+"–"+r.L+(r.D?"–"+r.D:"")+(r.NC?" ("+r.NC+" NC)":"");
+function acceptedRecords(profile){
+ const key=normalized(profile.name),slug=statsNames[key],o=slug&&!overallShared.has(key)?overallFile.records?.[slug]:null;
+ return [...new Set([profile.record,...(o?[overallRecordText(o)]:[])])];
+}
+function statsFileFor(name){
+ const slug=statsNames[normalized(name)];
+ const file=slug&&path.join(root,"data/ufc-stats/fighters",slug+".json");
+ return file&&fs.existsSync(file)?JSON.parse(fs.readFileSync(file,"utf8")):null;
+}
+const nameWords=x=>String(x||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"")
+ .replace(/ł/g,"l").replace(/Ł/g,"L").replace(/ø/g,"o").replace(/Ø/g,"O").replace(/đ/g,"d").replace(/ß/g,"ss")
+ .toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>1);
+const sharesNameWord=(a,b)=>{const w=new Set(nameWords(a));return nameWords(b).some(x=>w.has(x))};
+const STATS_METHOD_LABEL={ko:"KO/TKO",sub:"Submission",dec:"Decision",draw:"Draw",nc:"No contest",dq:"DQ"};
+// The kind of finish in a reviewed profile's wording ("TKO R1 3:11", "Split decision R3"), or "" when unclear.
+function reviewedMethodKind(text){
+ const t=String(text||"").toLowerCase();
+ if(/no contest/.test(t))return "nc";
+ if(/submission/.test(t))return "sub";
+ if(/decision/.test(t))return "dec";
+ if(/draw/.test(t))return "draw";
+ if(/disqualif|\bdq\b/.test(t))return "dq";
+ if(/\bt?ko\b/.test(t))return "ko";
+ return "";
 }
 const profiles=[];
 for(const cohort of cohorts){
@@ -91,6 +133,15 @@ async function checkProfile(page,profile,screen){
   // The initial HTML contains legacy fighter cards. Reviewed UFC cohorts
   // hydrate asynchronously; never open a stale legacy profile while
   // the reviewed record is still being loaded.
+  // If the reviewed record never arrives, say which field differs instead of a bare timeout.
+  const hydrationState=expected=>page.evaluate(expected=>{
+   const f=window.COMBAT_DATA?.fighters?.find(x=>x.id===expected.id);
+   if(!f)return {missing:true};
+   const pick=x=>JSON.stringify((x||[]).map(y=>[y.date,y.opponent,y.outcome,y.method]));
+   return {reviewed:!!(f.reviewedUfcProfile||f.championReview),record:[f.record,expected.record],
+    division:[f.division,expected.division],category:[f.category,expected.category],
+    latest:pick(f.latest)===pick(expected.latest)?"same":[pick(f.latest).slice(0,160),pick(expected.latest).slice(0,160)]};
+  },expected);
   await page.waitForFunction(expected=>{
    const f=window.COMBAT_DATA?.fighters?.find(x=>x.id===expected.id);
    const ur=expected.ufcRecord||{};
@@ -98,11 +149,13 @@ async function checkProfile(page,profile,screen){
    const category=expected.category==="Roster"&&
     (!ur.complete||bouts<2||(expected.latest||[]).length<2)?
     "Unassessed":expected.category;
-   return !!(f?.reviewedUfcProfile||f?.championReview)&&f.record===expected.record&&
+   return !!(f?.reviewedUfcProfile||f?.championReview)&&expected.records.includes(f.record)&&
     f.division===expected.division&&f.category===category&&
     JSON.stringify((f.latest||[]).map(x=>[x.date,x.opponent,x.outcome,x.method]))===
     JSON.stringify(expected.latest.map(x=>[x.date,x.opponent,x.outcome,x.method]));
-  },profile,{timeout:18000});
+  },{...profile,records:acceptedRecords(profile)},{timeout:18000}).catch(async e=>{
+   throw new Error(e.message+" | hydration state: "+JSON.stringify(await hydrationState(profile).catch(()=>"unavailable")));
+  });
   await page.evaluate(id=>{
    const hash="#fighter/"+encodeURIComponent(id);
    if(location.hash!==hash)location.hash=hash;
@@ -122,9 +175,16 @@ async function checkProfile(page,profile,screen){
     !!d?.querySelector(".befn-pro-ratings .befn-pro-meters")&&
     !!d?.querySelector(".befn-pro-stats .befn-pro-tiles");
   },null,{timeout:12000});
+  // A fighter in the stats build first shows a placeholder ("—") while their stats file loads; count the rating
+  // bars only once the real card is in (rating model 2026-11, PR #453: the live site is slower than a local server).
+  if(statsFileFor(profile.name))await page.waitForFunction(()=>{
+   const t=document.querySelector("#fighterDialog .befn-pro-score .befn-v3-score")?.textContent?.trim();
+   return !!t&&t!=="—";
+  },null,{timeout:12000});
   // Wait briefly for portrait requests to settle. A cached or slow image
-  // must not be declared broken just because it was read instantly.
-  if(isLive)await page.waitForFunction(()=>{
+  // must not be declared broken just because it was read instantly. This applies to local runs too: many
+  // portraits are hotlinked, and on a slow network a mid-load frame was reported as "neither image nor fallback".
+  await page.waitForFunction(()=>{
     const img=document.querySelector("#fighterDialog .befn-pro-photo img");
     return !img||img.complete;
    },null,{timeout:2500}).catch(()=>{});
@@ -153,7 +213,10 @@ async function checkProfile(page,profile,screen){
     recentFiveCount:historyRows.length,historyV3:!!ins?.classList.contains("befn-pro-insights"),
     noProvisionalRanks:!d?.querySelector(".befn-performance-highlights,.befn-v3-top-ten"),
     noLegacyTable:!d?.querySelector("table[data-befn-recent-results]"),
-    publicLinks:[...(d?.querySelectorAll("a[href]")||[])].map(a=>a.getAttribute("href")),
+    // Related news (assets/related-news.js, .rn-block) links out to the stories by design (owner, 2026-11-24); every
+    // other link in the dialog must still be absent.
+    publicLinks:[...(d?.querySelectorAll("a[href]")||[])].filter(a=>!a.closest(".rn-block")).map(a=>a.getAttribute("href")),
+    relatedNewsLinks:[...(d?.querySelectorAll(".rn-block a[href]")||[])].map(a=>a.getAttribute("href")),
     provenanceText:d?.querySelector(".befn-pro-body")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
     rootWidth,viewportOverflow,
@@ -164,8 +227,10 @@ async function checkProfile(page,profile,screen){
      const im=frame?.querySelector("img");
      const fallback=frame?.querySelector(".befn-portrait-fallback");
      const styles=fallback?getComputedStyle(fallback):null;
+     // "Painted" also needs the frame on screen: an image inside a hidden frame keeps its own display and opacity.
+     const frameBox=frame?.getBoundingClientRect();
      const imagePainted=!!im&&getComputedStyle(im).display!=="none"&&
-      Number(getComputedStyle(im).opacity)>.05;
+      Number(getComputedStyle(im).opacity)>.05&&!!frameBox&&frameBox.width>0&&frameBox.height>0;
      const shown=!!fallback&&styles?.display!=="none"&&styles?.visibility!=="hidden"&&
       Number(styles?.opacity)>0.9&&!imagePainted&&
       fallback.getBoundingClientRect().width>0&&fallback.getBoundingClientRect().height>0;
@@ -177,6 +242,7 @@ async function checkProfile(page,profile,screen){
     })(),
     closeVisible:!!d?.querySelector("button#closeFighter"),
     renderedClassification:d?.querySelector(".befn-v3-status")?.textContent||"",
+    formStage:d?.querySelector(".befn-pro-score .befn-form-chip")?.textContent||"",
     championshipBelt:!!d?.querySelector(".befn-title-belts"),
     clippedElements:[...(d?.querySelectorAll(".befn-pro-card h3,.befn-pro-hero h2,.befn-pro-meter-head,.befn-profile-block h3,.befn-classifier-indices strong")||[])]
       .filter(x=>{const c=getComputedStyle(x);return (x.scrollWidth>x.clientWidth+5&&c.overflowX==="hidden")||
@@ -186,7 +252,7 @@ async function checkProfile(page,profile,screen){
   },profile.id);
   assert(details.identity,"profile did not hydrate in shared data");
   assert.equal(details.title,profile.name,"dialog title wrong");
-  assert.equal(details.record,profile.record,"record mismatch");
+  assert(acceptedRecords(profile).includes(details.record),"record mismatch: "+details.record+" not in "+acceptedRecords(profile).join(" / "));
   assert.equal(details.division,profile.division,"division mismatch");
   // Incomplete reviewed roster entries remain visible but must NOT receive
   // an unsourced prospect/contender label. Their UI category is Unassessed.
@@ -197,7 +263,10 @@ async function checkProfile(page,profile,screen){
    "Unassessed":profile.category;
   assert.equal(details.category,expectedCategory,"classification display mismatch");
   assert(details.historyV3,"UFC profile is not using the sumo-style profile design");
-  assert.equal(details.metrics,5,"Ratings card requires exactly five rating bars");
+  // Rating model 2026-11: a fighter rated by the stats build shows Results, Striking, Wrestling, Grappling and Recent
+  // form (each skill includes its own defence since 2026-11-24); one the build cannot rate keeps the older five bars.
+  const expectedBars=5;
+  assert.equal(details.metrics,expectedBars,"Ratings card requires exactly "+expectedBars+" rating bars");
   assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
   const saved=verifiedV3?.schema===4?verifiedV3.fighters?.[normalized(profile.name)]:null;
   const vettedPerformance=Object.values(saved?.metrics||{}).some(m=>
@@ -207,11 +276,39 @@ async function checkProfile(page,profile,screen){
   assert(details.noProvisionalRanks||vettedPerformance,
    "provisional rankings must not appear without qualifying V3 metric evidence");
   assert(details.noLegacyTable,"duplicated legacy fight table must not appear in V3");
-  assert.equal(details.recentFiveCount,Math.min(profile.latest.length,5),
-   "V3 recent fights must contain up to five verified UFC results");
-  const sourcedRows=profile.latest.slice(0,5).map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
-  assert.deepEqual(details.recentRows,sourcedRows,
-   "V3 fight rows differ from the individually reviewed UFC results");
+  // Since #433 the five recent fights come from the fighter's stats file wherever the stats build holds the fighter
+  // (kept current by the results import; a reviewed profile is only as new as the day it was checked, and words a
+  // method differently). So for those fighters the dialog must show exactly the stats file's rows, and every reviewed
+  // fight inside that window must still be there, with the same outcome, opponent and kind of finish. A fighter the
+  // stats build does not hold keeps the original rule: the reviewed rows, exactly.
+  const statsFile=statsFileFor(profile.name);
+  if(!statsFile){
+   assert.equal(details.recentFiveCount,Math.min(profile.latest.length,5),
+    "V3 recent fights must contain up to five verified UFC results");
+   const sourcedRows=profile.latest.slice(0,5).map(x=>[x.date,x.opponent,x.outcome,x.method].map(String));
+   assert.deepEqual(details.recentRows,sourcedRows,
+    "V3 fight rows differ from the individually reviewed UFC results");
+  }else{
+   const shown=statsFile.fights.slice(0,5);
+   assert.equal(details.recentFiveCount,shown.length,
+    "V3 recent fights must contain up to five UFC results from the stats file");
+   assert.deepEqual(details.recentRows.map(r=>r.slice(0,3)),shown.map(f=>[f.date,f.opponent,f.outcome]),
+    "V3 fight rows differ from the fighter's stats file");
+   details.recentRows.forEach((r,i)=>assert(
+    String(r[3]).startsWith(STATS_METHOD_LABEL[shown[i].method]||"\u0000"),
+    "method text '"+r[3]+"' does not match the stats file's "+shown[i].method+" for "+shown[i].opponent));
+   const oldestShown=shown.at(-1)?.date||"";
+   for(const r of profile.latest.slice(0,5)){
+    if(Date.parse(r.date)<Date.parse(oldestShown)-86400000)continue;   // pushed out of the five by newer fights
+    // One opponent per fighter per date, so date and outcome pin the bout; the names must still share a word, which
+    // allows "Jose Miguel Delgado" / "Jose Delgado" and an accent ("Błachowicz") but not a different opponent.
+    const hit=statsFile.fights.find(f=>f.outcome===r.outcome&&sharesNameWord(f.opponent,r.opponent)&&
+     Math.abs(Date.parse(f.date)-Date.parse(r.date))<=86400000);
+    assert(hit,"reviewed fight is not in the stats file: "+r.date+" "+r.opponent+" "+r.outcome);
+    const kind=reviewedMethodKind(r.method);
+    if(kind)assert.equal(hit.method,kind,"reviewed and stats methods disagree for "+r.date+" "+r.opponent);
+   }
+  }
   // On mobile all outcome/method fields must fit within the dialog itself,
   // not merely exist in the DOM beyond the right-hand edge of the viewport.
   if(screen==="mobile"&&profile.latest.length){
@@ -244,8 +341,14 @@ async function checkProfile(page,profile,screen){
   if(isLive){
    assert.deepEqual(details.clippedElements,[],"important profile labels visibly clipped");
    assert.deepEqual(details.publicLinks,[],"fighter dialog must not show external research links");
+   assert(details.relatedNewsLinks.every(h=>/^https:\/\//.test(h)),"related-news links must be https: "+details.relatedNewsLinks.join(" "));
    if(expectedCategory==="Champion")
     assert(details.championshipBelt,"verified UFC champion belt missing");
+   // Since the Fighters hub (2026-11-24) the stage chip from data/ufc-fighter-form.json is the one classification
+   // where a Form entry exists; the older label shows only without one.
+   else if(details.formStage)
+    assert(/^(Champion|Title contender|Contender|Slipping|Rising star|Prospect|Breakout|Inactive|Established)$/.test(details.formStage),
+     "unknown Fighters hub stage: "+details.formStage);
    else if(["Contender","Prospect"].includes(expectedCategory))
     assert(details.renderedClassification.includes(expectedCategory),
      "algorithmically assigned contender/prospect label missing");
@@ -337,7 +440,8 @@ try{
    const board=page.locator("[data-befn-v3-leaderboards]");
    await board.waitFor({state:"visible",timeout:12000});
    await page.waitForFunction(()=>document.querySelector("[data-befn-v3-leaderboards]")?.dataset.ready==="true",null,{timeout:12000});
-   // Stage 5 boards: 6 rating boards + 16 statistic boards, one picker.
+   // Stage 5 boards: 6 rating boards (Results added by #453, Defence folded into the skills on 2026-11-24)
+   // + 16 statistic boards, one picker.
    const options=await page.locator("#befn-board-metric option").count();
    assert.equal(options,22,"UFC leaderboard choices incomplete");
    const rows=await page.locator(".befn-board-list > li").count();

@@ -105,32 +105,50 @@
    rev15:finite(stats.revAvg,0,12),controlShare:finite(stats.controlShare,0,1),
    controlAgainst:finite(stats.controlAgainst,0,1),
    kd15:finite(stats.kdAvg,0,7),kdAgainst15:finite(stats.kdAgainstAvg,0,7),
-   koRate:finite(stats.koTkoWinRate,0,1),subFinishRate:finite(stats.submissionWinRate,0,1)
+   koRate:finite(stats.koTkoWinRate,0,1),subFinishRate:finite(stats.submissionWinRate,0,1),
+   subLossRate:finite(stats.submissionLossRate,0,1),subAgainst15:finite(stats.subAgainstAvg,0,12),
+   koLossRate:finite(stats.koTkoLossRate,0,1),tdAgainst15:finite(stats.tdAgainstAvg,0,20)
   };
  }
+ const WW={td15:.25,tdAcc:.12,ctrlShare:.23,tdDef:.05,tdAbs15:.06,ctrlAgainstShare:.24,rev15:.05};
+ const GW={sub15:.20,subWinShare:.28,ctrlShare:.12,subLossShare:.15,subAbs15:.10,rev15:.08,ctrlAgainstShare:.07};
+ const SW={slpm:.10,diffPm:.17,strAcc:.08,kd15:.11,koWinShare:.14,strDef:.12,sapm:.09,kdAbs15:.12,koLossShare:.07};
  function metricSpecs(d){
   if(!d)return null;
   const diff=d.slpm!==null&&d.sapm!==null?d.slpm-d.sapm:null;
   return {
+    // Striking is landing and not getting hit (2026-11-24): output 60%, defence 40% including KO/TKO losses.
+    // Weights must equal STRIKING_WEIGHTS in scripts/ufc_ratings.py (CI parity check).
     striking:[
-      [between(d.slpm,.8,6.5),.18,"Significant strikes landed/min"],
-      [between(diff,-2.0,3.0),.22,"Significant-strike differential/min"],
-      [between(d.strAcc,25,65),.15,"Striking accuracy"],
-      [between(d.kd15,0,1.0),.20,"Knockdowns/15"],
-      [between(d.koRate,0,.50),.25,"KO/TKO finishes per recorded fight"]
+      [between(d.slpm,.8,6.5),SW.slpm,"Significant strikes landed/min"],
+      [between(diff,-2.0,3.0),SW.diffPm,"Significant-strike differential/min"],
+      [between(d.strAcc,25,65),SW.strAcc,"Striking accuracy"],
+      [between(d.kd15,0,1.0),SW.kd15,"Knockdowns/15"],
+      [between(d.koRate,0,.50),SW.koWinShare,"KO/TKO finishes per recorded fight"],
+      [between(d.strDef,35,75),SW.strDef,"Significant-strike avoidance"],
+      [between(d.sapm,6.0,1.2),SW.sapm,"Strikes absorbed/min (lower is better)"],
+      [between(d.kdAgainst15,1.0,0),SW.kdAbs15,"Knockdowns received/15"],
+      [between(d.koLossRate,.25,0),SW.koLossShare,"KO/TKO losses per recorded fight (lower is better)"]
     ],
+    // Offence 60%, defence 40%, like striking (2026-11-24). Weights must equal GRAPPLING_WEIGHTS and
+    // WRESTLING_WEIGHTS in scripts/ufc_ratings.py (CI parity check). Grappling's gate reads the first three entries.
     grappling:[
-      [between(d.sub15,0,3.0),.30,"Submission attempts/15"],
-      [between(d.subFinishRate,0,.35),.50,"Submission finishes per recorded fight"],
-      [between(d.rev15,0,2),.15,"Reversals/15"],
-      [between(d.controlShare,0,.50),.05,"Control-time share (secondary context)"]
+      [between(d.sub15,0,3.0),GW.sub15,"Submission attempts/15"],
+      [between(d.subFinishRate,0,.35),GW.subWinShare,"Submission finishes per recorded fight"],
+      [between(d.subLossRate,.25,0),GW.subLossShare,"Submission losses per recorded fight (lower is better)"],
+      [between(d.controlShare,0,.50),GW.ctrlShare,"Control-time share"],
+      [between(d.subAgainst15,2.0,0),GW.subAbs15,"Opponent submission attempts/15 (lower is better)"],
+      [between(d.rev15,0,2),GW.rev15,"Reversals/15"],
+      [between(d.controlAgainst,.50,0),GW.ctrlAgainstShare,"Opponent control-time share (lower is better)"]
     ],
     wrestling:[
-      [between(d.td15,0,5.5),.34,"Takedowns landed/15"],
-      [between(d.tdAcc,20,65),.21,"Takedown completion rate"],
-      [between(d.controlShare,0,.55),.28,"Control-time share"],
-      [between(d.tdDef,40,95),.12,"Takedown defence"],
-      [between(d.rev15,0,2),.05,"Reversals/15"]
+      [between(d.td15,0,5.5),WW.td15,"Takedowns landed/15"],
+      [between(d.tdAcc,20,65),WW.tdAcc,"Takedown completion rate"],
+      [between(d.controlShare,0,.50),WW.ctrlShare,"Control-time share"],
+      [between(d.tdDef,40,95),WW.tdDef,"Takedown defence"],
+      [between(d.tdAgainst15,4.0,0),WW.tdAbs15,"Taken down/15 (lower is better)"],
+      [between(d.controlAgainst,.50,0),WW.ctrlAgainstShare,"Opponent control-time share (lower is better)"],
+      [between(d.rev15,0,2),WW.rev15,"Reversals/15"]
     ],
     defence:[
       [between(d.sapm,6.0,1.2),.31,"Strikes absorbed/min (lower is better)"],
@@ -142,9 +160,9 @@
   };
  }
  const LABELS=[
-  ["striking","Striking","Significant-strike output and differential, accuracy, knockdowns, KO/TKO evidence"],
-  ["grappling","Grappling","Submission threats and finishes, reversals and secondary control"],
-  ["wrestling","Wrestling","Takedowns, completion rate, top control and takedown defence"],
+  ["striking","Striking","Significant-strike output and differential, accuracy, knockdowns, KO/TKO evidence, and strike defence"],
+  ["grappling","Grappling","Submission threats and finishes, submissions avoided, reversals, control won and conceded"],
+  ["wrestling","Wrestling","Takedowns landed and stopped, completion rate, control won and conceded"],
   ["defence","Defence","Strikes absorbed, strike/takedown defence, damage and opponent control"],
   ["form","Recent form","Recency-weighted results from up to five recorded fights, with NC excluded"]
  ];

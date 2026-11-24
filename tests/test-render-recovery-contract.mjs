@@ -14,7 +14,9 @@ test("unvalidated code, truncated comparisons and missing CI cannot deploy",()=>
  assert.match(file,/file_count" -ge 300/);
  assert.match(file,/Unvalidated non-collector change/);
  assert.match(file,/No successful release-readiness commit/);
- assert.doesNotMatch(file,/data\/\*/);
+ // Only machine-written collector output (JSON under data/ or qa/) may follow a checked commit; anything else blocks.
+ assert.match(file,/data\/\*\.json\|qa\/\*\.json\)/);
+ assert.match(file,/Code, workflows, tests and non-JSON files are never auto-validated here/);
 });
 test("only drift and checked source permit existing private hook",()=>{
  assert.match(file,/steps\.drift\.outputs\.differences != '0'/);
@@ -48,12 +50,13 @@ test("new commits during the grace window are strictly data-only before using th
  assert.doesNotMatch(file,/Main advanced again while verifying/);
 });
 
-test("UFC V3 offline snapshot is guarded at both release gates and monitored only once created",()=>{
- const marker="data/ufc-postfight-metrics.json|data/ufc-fighter-v3.json|data/news-live.json";
- assert.equal(file.split(marker).length-1,2,"source and grace gates both restrict V3 snapshot changes");
+test("both release gates accept only collector-written data JSON, and the V3 snapshot is monitored once created",()=>{
+ const pattern="data/*.json|qa/*.json)";
+ assert.equal(file.split(pattern).length-1,2,"the source gate and the grace gate both use the same collector-only JSON rule");
+ assert.match(file,/Unvalidated non-collector change/);
+ assert.match(file,/Code or unvalidated data changed during grace/);
  assert.match(file,/if \[\[ -f data\/ufc-fighter-v3\.json \]\]; then/);
  assert.match(file,/files\+=\(data\/ufc-fighter-v3\.json\)/);
- assert.doesNotMatch(file,/data\/ufc-fighter-v3\.json\|data\/\*/);
 });
 test("the offline V3 builder requests guarded recovery only for successfully published changes",()=>{
  const builder=fs.readFileSync(".github/workflows/build-ufc-fighter-v3.yml","utf8");

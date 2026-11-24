@@ -2,7 +2,7 @@
   "schema": 1,
   "scope": "ufc-official-career-bout-inventory",
   "rosterAsOf": "2026-11-14",
-  "checkedOn": "2026-11-14",
+  "checkedOn": "2026-11-16",
   "status": "source_corroborated_list_not_independent_career_certification",
   "note": "These are source-confirmed official UFC bouts with opponent/date/result evidence, not automatically authenticated provider native IDs or proof there are no other UFC contests. Preserve UFC TUF Finals, exclude Road-to-UFC qualifier bouts. Do not publish derived UFC career completeness from this manifest.",
   "fighters": {
@@ -144,6 +144,100 @@
           "date": "2025-10-18",
           "opponent": "Bruno Silva",
           "result": "loss"
+        }
+      ]
+    },
+    "giga-chikadze": {
+      "fighterName": "Giga Chikadze",
+      "sourceUrl": "https://www.ufc.com/athlete/giga-chikadze",
+      "reviewNote": "Source-only fast-lane preparation, NOT an independent full-career certificate. UFC's dated athlete chronology lists these 13 Octagon contests from debut 2019-09-28 through 2026-09-19. The 2018-06-19 DWCS Austin Springer loss (cached native ID 84005) is explicitly excluded. Event-local UFC source dates may be one calendar day earlier than original cached native dates. Original numeric native identity and measured-round evidence are preserved, not rewritten. Pinned independent UFCStats/Greco per-fight source IDs must still be exhaustively reconciled before any strict Stage3 certification.",
+      "feederExclusions": [
+        {
+          "date": "2018-06-19",
+          "opponent": "Austin Springer",
+          "source": "Dana White's Contender Series Season 2 Episode 2",
+          "cachedNativeBoutId": "84005",
+          "result": "loss"
+        }
+      ],
+      "bouts": [
+        {
+          "date": "2026-09-19",
+          "opponent": "Joanderson Brito",
+          "result": "loss",
+          "cachedNativeBoutId": "83420"
+        },
+        {
+          "date": "2025-12-13",
+          "opponent": "Kevin Vallejos",
+          "result": "loss",
+          "cachedNativeBoutId": "60648"
+        },
+        {
+          "date": "2025-04-26",
+          "opponent": "David Onama",
+          "result": "loss",
+          "cachedNativeBoutId": "60876"
+        },
+        {
+          "date": "2024-07-27",
+          "opponent": "Arnold Allen",
+          "result": "loss",
+          "cachedNativeBoutId": "61081"
+        },
+        {
+          "date": "2023-08-26",
+          "opponent": "Alex Caceres",
+          "result": "win",
+          "cachedNativeBoutId": "52435"
+        },
+        {
+          "date": "2022-01-15",
+          "opponent": "Calvin Kattar",
+          "result": "loss",
+          "cachedNativeBoutId": "61529"
+        },
+        {
+          "date": "2021-08-28",
+          "opponent": "Edson Barboza",
+          "result": "win",
+          "cachedNativeBoutId": "66290"
+        },
+        {
+          "date": "2021-05-01",
+          "opponent": "Cub Swanson",
+          "result": "win",
+          "cachedNativeBoutId": "61563"
+        },
+        {
+          "date": "2020-11-07",
+          "opponent": "Jamey Simmons",
+          "result": "win",
+          "cachedNativeBoutId": "66283"
+        },
+        {
+          "date": "2020-10-10",
+          "opponent": "Omar Morales",
+          "result": "win",
+          "cachedNativeBoutId": "61803"
+        },
+        {
+          "date": "2020-05-16",
+          "opponent": "Irwin Rivera",
+          "result": "win",
+          "cachedNativeBoutId": "66339"
+        },
+        {
+          "date": "2020-03-07",
+          "opponent": "Jamall Emmers",
+          "result": "win",
+          "cachedNativeBoutId": "59162"
+        },
+        {
+          "date": "2019-09-28",
+          "opponent": "Brandon Davis",
+          "result": "win",
+          "cachedNativeBoutId": "59234"
         }
       ]
     }

@@ -7,6 +7,7 @@
 - Discovery listing: https://www.freepublicapis.com/sumo-api
 - Authentication: none advertised. There is no key to store.
 - Important: The provider explicitly asks sites using its API to contact webmaster@sumo-api.com. Get in touch before public deployment or large-scale ingestion. No commercial-use or bulk-republication permission has been inferred.
+- **Update 2026-11-24:** the owner confirmed BEFN has the provider's permission to collect as needed (see `docs/design/DECISIONS.md`). Keep requests paced and low-volume.
 - API health/directory status does **not** certify real-time accuracy or guarantee future access.
 - CORS is not consistently reported by directories; the integration deliberately makes **server-side build/CI calls only**.
 - **No automatic publication, scheduled refresh, data replication, navigation changes, or production deployment is enabled in this PR.** No effect on existing MMA, boxing, grappling or UFC certification flows.

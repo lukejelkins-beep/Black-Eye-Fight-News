@@ -95,3 +95,36 @@ assert.ok(B.analysisHTML([], { esc }).includes('No large gaps'));
 assert.ok(B.analysisHTML([{ text: 'x <y>' }], { esc }).includes('x &lt;y&gt;'));
 assert.ok(B.tabsHTML([['stats', 'Stats'], ['fights', 'Fights']], 'fights', { esc }).includes('aria-selected="true" class="is-active">Fights'));
 console.log('snapshot-b: ok');
+
+// Face-off layout (owner chose option B, 24 Nov 2026)
+{
+  const r = B.tapeRows(fighter({}, { heightIn: 65, reachIn: 65 }), fighter({}, { heightIn: 65, reachIn: 68 }), today);
+  const reach = r.find(x => x.key === 'reach');
+  assert.deepStrictEqual(B.barWidths(reach), [96, 100], 'bars start at zero: no exaggerated gap');
+  assert.strictEqual(B.barWidths(r.find(x => x.key === 'age')), null, 'no bars for age');
+  assert.strictEqual(B.barWidths({ n: [70, null] }), null, 'no bars when a side is missing');
+  const html = B.tapeHTML([{ name: 'A One', record: '7-0', tags: ['#3'], fig: null }, { name: 'B Two', record: '9-1', fig: { cutout: 'c.webp' } }],
+    fighter({}, { reachIn: 65 }), fighter({}, { reachIn: 68 }), { esc, today, billing: 'Main event', division: 'Flyweight', rounds: '5 rounds', status: 'Reported' });
+  assert.ok(html.includes('<p class="sb-chip">Main event · Flyweight · 5 rounds · Reported</p>'), 'billing said once');
+  assert.ok(html.includes('class="sb-vs"') && html.includes('<em>#3</em>'));
+  assert.ok(html.includes('sb-row has-bars') && html.includes('style="width:100%"'));
+  // a photo that fails to load leaves the initials showing, not an empty disc
+  const photo = B.figureHTML({ photo: 'x.webp' }, 'Mairon Santos', esc);
+  assert.ok(photo.indexOf('<b>MS</b>') < photo.indexOf('<img') && photo.indexOf('<b>MS</b>') > photo.indexOf('sb-disc'));
+}
+console.log('snapshot-b face-off: ok');
+
+// Result face-off (finished bouts on Results, owner 24 Nov 2026)
+{
+  const html = B.tapeHTML([{ name: 'Jiri Prochazka', record: '32-7-1', note: 'after the fight', tags: [], fig: { cutout: 'a.webp' } },
+    { name: 'Navajo Stirling', record: '12-0-0', note: 'after the fight', tags: ['Won'], fig: { cutout: 'b.webp' } }],
+    fighter({}, { reachIn: 80 }), fighter({}, { reachIn: 79 }), { esc, today, winner: 1, result: 'KO/TKO · R2 · 4:58', billing: 'Main event' });
+  assert.ok(html.includes('<p class="sb-result"><b>Final</b> KO/TKO · R2 · 4:58</p>'));
+  assert.ok(html.includes('sb-stage sb-won-b'), 'stage knows the winner');
+  assert.ok(html.includes('sb-fighter sb-a is-loser') && html.includes('sb-fighter sb-b is-winner'));
+  assert.ok(html.includes('12-0-0 <small>after the fight</small>'));
+  assert.strictEqual((html.match(/class="sb-tags"/g) || []).length, 2, 'both sides get the tag line so records stay level');
+  const upcoming = B.tapeHTML([{ name: 'A', record: '1-0', fig: null }, { name: 'B', record: '2-0', fig: null }], fighter(), fighter(), { esc, today });
+  assert.ok(!upcoming.includes('sb-tags') && !upcoming.includes('sb-result') && !upcoming.includes('is-winner'), 'no result parts on an upcoming bout');
+}
+console.log('snapshot-b result: ok');

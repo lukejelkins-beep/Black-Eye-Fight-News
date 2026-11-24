@@ -49,3 +49,46 @@
 .film-featured-head h3{font:900 clamp(24px,2.5vw,30px)/1.1 'Barlow Condensed',Impact,sans-serif;color:#16343b;margin:5px 0 8px}
 .film-featured-head p{margin:0;max-width:780px;font-size:12px;color:#536762;line-height:1.55}
 .film-access-note{display:block;margin-top:4px;font-size:10px;line-height:1.4;color:#7a6859;font-weight:650}
+
+/* Design D (2026-11-22): the film page was still on the old teal palette and Barlow
+   headings while the rest of the site moved to cream, red and Unbounded. Colour and
+   type only — the sourcing rules, the markup and the AU-availability notes are
+   untouched. The first card in a grid leads at double width, so the page opens on a
+   picture rather than a wall of equal tiles. */
+.film-page{--f-ink:#111013;--f-red:#cf1824;--f-gold:#f3c332;--f-cream:#f8f4ed;--f-mute:#5b565d;--f-line:#e5e1d8;
+ --f-display:'Unbounded','Arial Black',system-ui,sans-serif;font-family:'DM Sans',system-ui,sans-serif;color:var(--f-ink)}
+.film-page .film-section-head h2,.film-page .film-featured-head h3,.film-page .film-copy h3{
+ font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;text-transform:none;color:var(--f-ink);
+ -webkit-text-fill-color:var(--f-ink);background:none;transform:none;font-style:normal}
+.film-page .film-section-head{border-bottom:3px solid var(--f-ink);padding-bottom:10px}
+.film-page .film-section-head h2{font-size:clamp(20px,2.4vw,28px);line-height:1.15}
+.film-page .film-section-head .eyebrow{color:var(--f-red);letter-spacing:.12em}
+.film-page .film-section-head p{color:var(--f-mute)}
+.film-page .film-total{background:var(--f-ink);color:#fff}
+.film-page .film-card{border:0;border-radius:12px;box-shadow:none;background:#fff}
+.film-page .film-copy h3{font-size:16px;line-height:1.3}
+.film-page .film-meta{color:var(--f-mute);font-size:10px}
+.film-page .film-publisher{border-top:1px solid var(--f-line);color:var(--f-mute);min-height:44px;align-items:center}
+.film-page .film-publisher strong{color:var(--f-red);font-size:12px}
+.film-page .film-card-link:hover .film-copy h3{text-decoration-color:var(--f-red)}
+.film-page .film-thumbnail{background:#1b1419}
+.film-page .film-play{background:rgba(17,16,19,.72);border:0;width:52px;height:52px}
+.film-page .film-kind{background:var(--f-ink);color:#fff;border-radius:4px;letter-spacing:.08em}
+.film-page .film-card[data-kind-finish] .film-kind{background:var(--f-red)}
+.film-page .film-refresh-note{border-left:3px solid var(--f-red);background:#fff;color:var(--f-mute)}
+.film-page .film-refresh-note span{color:var(--f-red)}
+.film-page .film-featured-head{border-left:4px solid var(--f-red);background:#fff;border-radius:0 12px 12px 0}
+.film-page .film-featured-head .eyebrow{color:var(--f-red)}
+.film-page .film-featured-head h3{font-size:clamp(18px,2.2vw,24px)}
+.film-page .film-empty,.film-page .film-loading{background:#fff;border:1px dashed var(--f-line);color:var(--f-mute);border-radius:12px}
+.film-page .film-switch{background:var(--f-ink);border:0;border-radius:12px}
+.film-page .film-switch-tab{color:#d9d2d5}
+.film-page .film-switch-tab.is-active{background:var(--f-gold);color:var(--f-ink);border-bottom-color:var(--f-red)}
+.film-page .film-switch-tab:hover{background:#2c262b;color:#fff}
+.film-page .film-disclosure{color:var(--f-mute)}
+
+/* The newest clip in a section leads. */
+@media(min-width:1051px){
+ .film-page .film-grid>.film-card:first-child{grid-column:span 2}
+ .film-page .film-grid>.film-card:first-child .film-copy h3{font-size:22px}
+}

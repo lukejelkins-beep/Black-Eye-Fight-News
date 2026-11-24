@@ -86,6 +86,37 @@ METHODS = {
 }
 
 
+FEEDER_EVENT = re.compile(r"contender\s+series|\bdwcs\b|road\s+to\s+ufc", re.I)
+
+
+def is_feeder_event(title) -> bool:
+    """Dana White's Contender Series and Road to UFC are not UFC roster fights.
+
+    Same rule as isFeederUfcEvent in scripts/ufc-official-event-scope.mjs. The
+    title needs no "UFC" word, so The Ultimate Fighter finales still count.
+    """
+    return bool(FEEDER_EVENT.search(str(title or "")))
+
+
+def attested_showcase_ids() -> set[str]:
+    """Native bout ids the evidence register independently proves were official UFC showcases."""
+    try:
+        register = load("ufc-independent-full-career-verification.json")
+    except FileNotFoundError:
+        return set()
+    out = set()
+    for entry in (register.get("fighters") or {}).values():
+        for item in entry.get("officialShowcaseBouts") or []:
+            if (item.get("independentlyOfficial") is True and item.get("nativeBoutId")
+                    and str(item.get("officialUfcSourceUrl", "")).startswith("https://www.ufc.com/news/")):
+                out.add(str(item["nativeBoutId"]))
+    return out
+
+
+def out_of_scope(bout: dict, showcases: set[str]) -> bool:
+    return is_feeder_event(bout.get("event")) and str(bout.get("id")) not in showcases
+
+
 def result_method(text) -> str | None:
     """The provider's method code for the free text on a results.json row."""
     low = re.sub(r"\s+", " ", str(text or "")).strip().lower()
@@ -113,6 +144,26 @@ def norm(text: str) -> str:
 
 def load(name: str):
     return json.loads((DATA / name).read_text(encoding="utf-8"))
+
+
+def apply_display_names(fights: list) -> int:
+    """Spell a fighter as UFC.com does where the archive's name differs (data/ufc-display-names.json).
+
+    The slug never changes. The name is replaced on the fighter's own side of every fight, which is also how an
+    opponent is named in other fighters' rows and how names.json is keyed, so one spelling is used everywhere.
+    """
+    try:
+        table = load("ufc-display-names.json").get("names") or {}
+    except (OSError, ValueError):
+        return 0
+    changed = 0
+    for fight in fights:
+        for corner in ("a", "b"):
+            entry = table.get(fight[corner].get("slug") or "")
+            if entry and entry.get("name") and fight[corner].get("name") != entry["name"]:
+                fight[corner]["name"] = entry["name"]
+                changed += 1
+    return changed
 
 
 def results_rows() -> list:
@@ -279,7 +330,8 @@ def free_rounds() -> dict:
         return {}
 
 
-def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None, skipped: dict) -> list[dict]:
+def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None, skipped: dict,
+                       showcases: set[str] = frozenset()) -> list[dict]:
     """Fights the retired paid collector never recorded, taken from data/results.json.
 
     Only cards after the last fight the collector recorded are read, so nothing
@@ -301,6 +353,9 @@ def results_only_fights(rows, bouts: dict, archive: dict, after: dt.date | None,
         if (row.get("status") != "completed" or row.get("sport") != "MMA"
                 or not str(row.get("eventId", "")).startswith("ufc")
                 or not day or (after is not None and day <= after)):
+            continue
+        if is_feeder_event(row.get("event")):
+            skipped["feederSeries"] += 1
             continue
         bout = bout_from_result(row, people)
         if bout is None:
@@ -383,12 +438,17 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     own, opp, seconds, stat_fights = {}, {}, 0.0, 0
     pace = {"r1": [0.0, 0.0], "later": [0.0, 0.0]}  # [sig attempts, minutes]
     rounds_scored = rounds_won = rounds_10_8 = 0
-    w_fights, w_wins = 0.0, {"ko": 0.0, "sub": 0.0}
+    unsound = set()  # "target" / "position": a round whose parts do not add up to the strikes landed
+    w_fights, w_wins, w_sub_losses, w_ko_losses = 0.0, {"ko": 0.0, "sub": 0.0}, 0.0, 0.0
     for fight, w in zip(fights, weights):
         if fight["outcome"] != "NC":
             w_fights += w
             if fight["outcome"] == "W" and fight["method"] in w_wins:
                 w_wins[fight["method"]] += w
+            if fight["outcome"] == "L" and fight["method"] == "sub":
+                w_sub_losses += w
+            if fight["outcome"] == "L" and fight["method"] == "ko":
+                w_ko_losses += w
         out[fight["outcome"]] += 1
         out["titleFights"] += 1 if fight["titleFight"] else 0
         if fight["outcome"] == "W" and fight["method"] in out["winsBy"]:
@@ -398,6 +458,12 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
         if fight["statsComplete"] and fight["rounds"]:
             stat_fights += 1
             for r in fight["rounds"]:
+                for name, parts in (("target", ("head", "body", "leg")), ("position", ("distance", "clinch", "ground"))):
+                    landed_parts = [r["own"].get(k + "Landed") for k in parts]
+                    total = r["own"].get("sigLanded")
+                    if (None in landed_parts and total is not None) or total is None or \
+                            (None not in landed_parts and sum(landed_parts) != total):
+                        unsound.add(name)
                 seconds += r["seconds"] * w
                 for key in COUNTS:
                     _add(own, key, r["own"][key], w)
@@ -421,6 +487,8 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
     # Recency-weighted finish shares (equal to plain shares when unweighted).
     out["koWinShare"] = round(w_wins["ko"] / w_fights, 4) if w_fights else None
     out["subWinShare"] = round(w_wins["sub"] / w_fights, 4) if w_fights else None
+    out["subLossShare"] = round(w_sub_losses / w_fights, 4) if w_fights else None
+    out["koLossShare"] = round(w_ko_losses / w_fights, 4) if w_fights else None
     out["effectiveFights"] = round(sum(w for f, w in zip(fights, weights) if f["statsComplete"] and f["rounds"]), 3)
 
     def known(side, key):
@@ -446,19 +514,23 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
             "totalPm": per(own, "totalLanded", 60),
             "kd15": per(own, "knockdowns", 900), "kdAbs15": per(opp, "knockdowns", 900),
             "td15": per(own, "takedowns", 900), "tdAtt15": per(own, "takedownAttempts", 900),
+            "tdAbs15": per(opp, "takedowns", 900),   # taken down per 15 min (wrestling defence, 2026-11-24)
             "tdAcc": ratio(own, "takedowns", own, "takedownAttempts", minimum=3),
             "tdDef": ratio(opp, "takedowns", opp, "takedownAttempts", invert=True, minimum=3),
-            "sub15": per(own, "subAttempts", 900), "rev15": per(own, "reversals", 900),
+            "sub15": per(own, "subAttempts", 900), "subAbs15": per(opp, "subAttempts", 900),
+            "rev15": per(own, "reversals", 900),
             "ctrlShare": round(own["controlSec"] / seconds, 3) if known(own, "controlSec") else None,
             "ctrlAgainstShare": round(opp["controlSec"] / seconds, 3) if known(opp, "controlSec") else None,
             "diffPm": (round((own["sigLanded"] - opp["sigLanded"]) / minutes, 3)
                        if known(own, "sigLanded") and known(opp, "sigLanded") else None),
         }
         landed = [own.get(k + "Landed") if known(own, k + "Landed") else None for k in ("head", "body", "leg")]
-        if None not in landed and sum(landed):
+        # Head, body and legs (and distance, clinch and ground) must add up to the strikes landed in every round
+        # of the window. Some archived rounds do not, so their shares would be false: leave them out, never repair.
+        if None not in landed and sum(landed) and "target" not in unsound:
             rates["target"] = {k: round(v / sum(landed), 3) for k, v in zip(("head", "body", "leg"), landed)}
         spots = [own.get(k + "Landed") if known(own, k + "Landed") else None for k in ("distance", "clinch", "ground")]
-        if None not in spots and sum(spots):
+        if None not in spots and sum(spots) and "position" not in unsound:
             rates["position"] = {k: round(v / sum(spots), 3) for k, v in zip(("distance", "clinch", "ground"), spots)}
         r1, later = pace["r1"], pace["later"]
         if r1[1] >= 10 and later[1] >= 10 and r1[0]:
@@ -484,6 +556,7 @@ def windows_for(history: list[dict], as_of: dt.date) -> dict:
         weights.append(round(math.pow(0.5, max(age, 0) / HALF_LIFE_DAYS), 6))
     return {
         "last5": aggregate(history[:5]),
+        "last10": aggregate(history[:10]),   # R3 period view; a no-contest holds its chronological slot
         "l12": aggregate(within(12)),
         "l36": aggregate(within(36)),
         "career": aggregate(history),
@@ -587,7 +660,215 @@ def known_divisions() -> dict[str, str]:
     return out
 
 
-def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict:
+REPAIRS = DATA / "ufc-round-breakdown-repairs.json"
+REPAIR_FIELDS = ("headLanded", "headAttempted", "bodyLanded", "bodyAttempted", "legLanded", "legAttempted",
+                 "distanceLanded", "distanceAttempted", "clinchLanded", "clinchAttempted",
+                 "groundLanded", "groundAttempted")
+
+
+def load_repairs(path: Path | None = None) -> dict:
+    """slug -> boutId -> round -> the twelve breakdown figures (see scripts/build-ufc-round-breakdown-repairs.py)."""
+    try:
+        return json.loads((path or REPAIRS).read_text(encoding="utf-8")).get("repairs") or {}
+    except (OSError, ValueError):
+        return {}
+
+
+def apply_breakdown_repairs(fights: list, repairs: dict) -> int:
+    """Replace a round's head/body/leg and distance/clinch/ground figures with the saved UFCStats ones, for the fighter
+    they were saved for. The repair file only holds rounds whose archived parts did not add up and whose strikes
+    landed and attempted agree with UFCStats, so nothing else in the round is touched. Returns rounds repaired."""
+    done = 0
+    for fight in fights:
+        for corner in ("a", "b"):
+            saved = (repairs.get(fight[corner]["slug"] or "") or {}).get(str(fight["boutId"]))
+            if not saved:
+                continue
+            for r in fight["rounds"]:
+                vals = saved.get(str(r["round"]))
+                if vals and len(vals) == len(REPAIR_FIELDS):
+                    r[corner] = {**r[corner], **dict(zip(REPAIR_FIELDS, vals))}
+                    done += 1
+    return done
+
+
+CERTIFIED_CAREERS = DATA / "ufc-v4-certified-careers.json"
+REGISTER = DATA / "ufc-independent-full-career-verification.json"
+
+
+def certified_no_contests(fights: list, skipped: dict) -> list:
+    """Official no-contests from the independent career register that the archive could not carry.
+
+    The archive/collector path drops a bout with no recorded result (skipped["noResult"]), but a certified career
+    (Stage 3) lists these as official no-contests with a UFCStats fight link. For FIGHTERS IN THE CERTIFIED LANE ONLY,
+    a register no-contest that is not already among the fights (same opponent, date within a day) is added as a
+    result-only NC: no rounds, no statistics, no winner, never rated. Nothing is estimated. Both fighters of a pair
+    get the same record when both are certified. Returns the new fights.
+    """
+    try:
+        listed = json.loads(CERTIFIED_CAREERS.read_text(encoding="utf-8"))
+        register = json.loads(REGISTER.read_text(encoding="utf-8")).get("fighters") or {}
+    except (OSError, ValueError):
+        return []
+    certified = (set(listed.get("certified") or {}) | set((listed.get("extension") or {}).get("certified") or {})
+                 | set((listed.get("rolling") or {}).get("certified") or {}))
+    by_name = {norm(e.get("fighterName")): slug for slug, e in register.items() if slug in certified}
+
+    def have(slug_name: str, opponent: str, day: dt.date) -> bool:
+        for f in fights:
+            if f["method"] != "nc":
+                continue
+            names = {norm(f["a"]["name"]): f["b"]["name"], norm(f["b"]["name"]): f["a"]["name"]}
+            d = parse_date(f["date"])
+            if names.get(norm(slug_name)) is not None and norm(names[norm(slug_name)]) == norm(opponent) \
+                    and d and abs((d - day).days) <= 1:
+                return True
+        return False
+
+    out, seen = [], set()
+    for slug in sorted(certified):
+        entry = register.get(slug) or {}
+        for bout in entry.get("bouts") or []:
+            if bout.get("result") != "no_contest" or not bout.get("date"):
+                continue
+            day = parse_date(bout["date"])
+            if day is None or have(entry["fighterName"], bout["opponent"], day):
+                continue
+            # A UFCStats fight link where the register has one; otherwise (a gap bout certified from the fighter's
+            # official UFC.com page) a key from the date and the two names, the same for both fighters.
+            fid = (str(bout["fightUrl"]).rstrip("/").rsplit("/", 1)[-1] if bout.get("fightUrl") else
+                   bout["date"] + "-" + "-".join(sorted((norm(entry["fighterName"]), norm(bout["opponent"])))))
+            if fid in seen:
+                continue
+            other = by_name.get(norm(bout["opponent"]))
+            # The same no-contest can come from both fighters' entries under different keys (one with a UFCStats
+            # link, one without): one fight per pair and day.
+            pair = {slug, other or norm(bout["opponent"])}
+            if any({o["a"]["slug"] or norm(o["a"]["name"]), o["b"]["slug"] or norm(o["b"]["name"])} == pair
+                   and abs((parse_date(o["date"]) - day).days) <= 1 for o in out):
+                continue
+            seen.add(fid)
+            out.append({
+                "boutId": "ufcstats-" + fid, "date": bout["date"], "event": None, "titleFight": False, "mainEvent": False,
+                "a": {"slug": slug, "name": entry["fighterName"], "id": None},
+                "b": {"slug": other, "name": (register.get(other) or {}).get("fighterName") or bout["opponent"], "id": None},
+                "winner": None, "method": "nc", "methodDetail": None, "endRound": None, "endTime": None, "seconds": None,
+                "rounds": [], "statsComplete": False, "scorecards": None, "resultSource": "certified-register",
+            })
+    skipped["certifiedNoContest"] = len(out)
+    return out
+
+
+
+def source_method(text) -> str | None:
+    """UFCStats method text (as the register keeps it in sourceMethod) -> the build's method code; unknown -> None."""
+    t = str(text or "").lower()
+    return ("ko" if t.startswith("ko") or "tko" in t else "sub" if t.startswith("sub") else
+            "dec" if t.startswith("decision") else "dq" if t.startswith("dq") or "disqualif" in t else None)
+
+
+def certified_result_only_bouts(fights: list, skipped: dict) -> list:
+    """Wins, losses and draws of a certified career that the archive does not hold (result only, never rated).
+
+    For FIGHTERS IN THE CERTIFIED LISTS ONLY (data/ufc-v4-certified-careers.json: the 783 lane and the owner-approved
+    extension cohort), a register bout that is not among the fights (same opponent, date within a day) is added with
+    its official result and, where the register keeps the UFCStats method, its method. No rounds, no statistics, no
+    round or time: nothing is estimated. These fights count in the record and career totals but are left out of every
+    rating input (see build), so no published rating moves. A Road to UFC final (roadToUfcFinal) is carried the same
+    way. No-contests stay with certified_no_contests. Both fighters of a pair get one fight when both are certified.
+    """
+    try:
+        listed = json.loads(CERTIFIED_CAREERS.read_text(encoding="utf-8"))
+        register = json.loads(REGISTER.read_text(encoding="utf-8")).get("fighters") or {}
+    except (OSError, ValueError):
+        return []
+    certified = (set(listed.get("certified") or {}) | set((listed.get("extension") or {}).get("certified") or {})
+                 | set((listed.get("rolling") or {}).get("certified") or {}))
+    by_name = {norm(e.get("fighterName")): slug for slug, e in register.items() if slug in certified}
+    # A certified slug may be filed under another slug in the stats build (statsAliases: stats slug -> certified slug).
+    stats_slugs = {}
+    for stats_slug, cert_slug in (listed.get("statsAliases") or {}).items():
+        stats_slugs.setdefault(cert_slug, set()).add(stats_slug)
+
+    def have(slug: str, bout: dict) -> bool:
+        """A UFC fighter has at most one fight a day, so the fighter's own slug and the date (within a day) identify
+        the bout; names are not compared (the register and the archive spell some names differently)."""
+        own = {slug} | stats_slugs.get(slug, set())
+        days = [d for d in (parse_date(bout.get("date")), parse_date(bout.get("independentEventSourceDate"))) if d]
+        for f in fights:
+            d = parse_date(f["date"])
+            if d and (f["a"]["slug"] in own or f["b"]["slug"] in own) and any(abs((d - x).days) <= 1 for x in days):
+                return True
+        return False
+
+    out, seen = [], set()
+    for slug in sorted(certified):
+        entry = register.get(slug) or {}
+        for bout in entry.get("bouts") or []:
+            result = bout.get("result")
+            if result not in ("win", "loss", "draw") or not parse_date(bout.get("date")) or have(slug, bout):
+                continue
+            pair = sorted((norm(entry["fighterName"]), norm(bout["opponent"])))
+            fid = (str(bout["fightUrl"]).rstrip("/").rsplit("/", 1)[-1] if bout.get("fightUrl") else
+                   bout["date"] + "-" + "-".join(pair))
+            if fid in seen:
+                continue
+            seen.add(fid)
+            other = by_name.get(norm(bout["opponent"]))
+            if other and have(other, bout):   # the opponent's file already holds this fight under another spelling
+                other = None
+            method = "draw" if result == "draw" else source_method(bout.get("sourceMethod"))
+            out.append({
+                "boutId": ("ufcstats-" if bout.get("fightUrl") else "certified-") + fid, "date": bout["date"],
+                "event": None, "titleFight": False, "mainEvent": False,
+                "a": {"slug": slug, "name": entry["fighterName"], "id": None},
+                "b": {"slug": other, "name": (register.get(other) or {}).get("fighterName") or bout["opponent"], "id": None},
+                "winner": None if result == "draw" else "a" if result == "win" else "b",
+                "method": method, "methodDetail": None, "endRound": None, "endTime": None, "seconds": None,
+                "rounds": [], "statsComplete": False, "scorecards": None, "resultSource": "certified-register",
+            })
+    skipped["certifiedResultOnly"] = len(out)
+    return out
+
+
+def is_rated(fight: dict) -> bool:
+    """False for a certified result-only win, loss or draw (certified_result_only_bouts): it never feeds a rating."""
+    return not (fight.get("resultSource") == "certified-register" and fight.get("outcome") != "NC")
+
+
+def pre_ufc_priors() -> dict:
+    """Starting ratings from each fighter's pre-UFC record: overall record (data/ufc-overall-records.json, all
+    promotions) minus the UFC record. That difference does not change when a new UFC fight is added, so reading the
+    committed file here (it is built from this build's output) causes no churn. Fighters without one start at 1500."""
+    path = DATA / "ufc-overall-records.json"
+    if not path.exists():
+        return {}
+    records = {}
+    for slug, r in (json.loads(path.read_text(encoding="utf-8")).get("records") or {}).items():
+        u = r.get("ufc") or {}
+        w, l = r.get("W", 0) - u.get("W", 0), r.get("L", 0) - u.get("L", 0)
+        if w >= 0 and l >= 0:
+            records[slug] = (w, l)
+    return ufc_ratings.pre_ufc_priors(records)
+
+
+def results_bouts(per_fighter: dict) -> list[dict]:
+    """Every archived UFC bout once, from one corner, for the results rating. Uses all fighters, including those
+    who have left the UFC, so a win over a since-retired fighter still counts."""
+    out, seen = [], set()
+    for slug, entry in per_fighter.items():
+        for f in entry["history"]:
+            if f["boutId"] in seen or not f.get("opponentSlug") or not f.get("date") or not is_rated(f):
+                continue
+            seen.add(f["boutId"])
+            out.append({"boutId": f["boutId"], "date": f["date"], "a": slug, "b": f["opponentSlug"],
+                        "outcome": f["outcome"], "method": f["method"], "methodDetail": f.get("methodDetail"),
+                        "titleFight": bool(f.get("titleFight"))})
+    return out
+
+
+def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs: bool = True,
+          before: dt.date | None = None) -> dict:
     archive = load("ufc-research-archive.json")["fights"]
     bouts = load("ufcalendar-rich-progress.json")["bouts"]
     judging = load("ufcalendar-judging-research.json").get("decisions", {})
@@ -595,7 +876,8 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
     official = official_divisions()
     weight = weight_class_divisions()
 
-    fights, skipped = [], {"noResult": 0, "unaligned": 0, "unresolved": 0}
+    showcases = attested_showcase_ids()
+    fights, skipped = [], {"noResult": 0, "unaligned": 0, "unresolved": 0, "feederSeries": 0}
     for record in archive.values():
         if str(record.get("promotion", "")).upper() != "UFC":
             continue
@@ -603,13 +885,22 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         if not bout or bout.get("org") != "ufc":
             skipped["noResult"] += 1
             continue
+        if out_of_scope(bout, showcases):
+            skipped["feederSeries"] += 1
+            continue
         fight = build_fight(record, bout, judging.get(str(bout["id"])))
         if fight is None:
             skipped["unaligned"] += 1
             continue
         fights.append(fight)
     collected_to = max((d for d in (parse_date(f["date"]) for f in fights) if d), default=None)
-    fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped)
+    fights += results_only_fights(results_rows(), bouts, archive, collected_to, skipped, showcases)
+    fights += certified_no_contests(fights, skipped)
+    fights += certified_result_only_bouts(fights, skipped)
+    skipped["breakdownRoundsRepaired"] = apply_breakdown_repairs(fights, load_repairs()) if repairs else 0
+    apply_display_names(fights)
+    if before is not None:   # research only (R4 calibration): the stats as they stood on this day, fights from it on left out
+        fights = [f for f in fights if (parse_date(f["date"]) or before) < before]
 
     per_fighter: dict[str, dict] = {}
     for fight in fights:
@@ -639,18 +930,26 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         computed[slug] = {"entry": entry, "history": history, "windows": windows_for(history, as_of),
                           "listed": listed, "division": division["label"],
                           "divisionSlug": division["slug"], "divisionSource": division["source"]}
-    ratings = ufc_ratings.rate_roster({slug: {"window": c["windows"]["weighted"], "history": c["history"],
-                                              "divisionSlug": c["divisionSlug"]}
-                                       for slug, c in computed.items()})
+    # Ratings read only rated fights: a certified result-only win/loss/draw counts in the record, never in a rating.
+    rate_inputs = {}
+    for slug, c in computed.items():
+        h = [f for f in c["history"] if is_rated(f)]
+        w = c["windows"]["weighted"] if len(h) == len(c["history"]) else windows_for(h, as_of)["weighted"]
+        rate_inputs[slug] = {"window": w, "history": h, "divisionSlug": c["divisionSlug"]}
+    ratings = ufc_ratings.rate_roster(rate_inputs,
+                                      results_bouts(per_fighter), as_of.isoformat(), pre_ufc_priors())
 
     if parity_out:  # inputs + Python raw composites for tests/ufc-ratings-parity.cjs
         rows = []
         for slug, c in computed.items():
-            w = c["windows"]["weighted"]
+            w = rate_inputs[slug]["window"]
             if w.get("statFights", 0) >= ufc_ratings.MIN_STAT_FIGHTS and w.get("rates"):
                 rows.append({"slug": slug, "statFights": w["statFights"], "rates": w["rates"],
-                             "window": {"koWinShare": w.get("koWinShare"), "subWinShare": w.get("subWinShare")},
-                             "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k) for k in ufc_ratings.SKILLS}})
+                             "window": {"koWinShare": w.get("koWinShare"), "subWinShare": w.get("subWinShare"),
+                                        "subLossShare": w.get("subLossShare"), "koLossShare": w.get("koLossShare")},
+                             # defence too: no longer a rated skill, but the fight-card tiles still use it
+                             "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k)
+                                     for k in (*ufc_ratings.SKILLS, "defence")}})
         parity_out.write_text(json.dumps(rows), encoding="utf-8")
 
     index_rows = {}
@@ -677,11 +976,13 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
             "rates": {k: [windows[k]["rates"].get(m) for m in INDEX_RATES] for k in WINDOWS},
             "finishRate": windows["career"]["finishRate"],
             "roundWinRate": (windows["career"]["judging"] or {}).get("roundWinRate"),
-            # [overall, striking, grappling, wrestling, defence, form] roster percentiles (form /100)
-            # and the same four skills as division percentiles.
-            "rating": None if not rating else [rating["overall"]] + [rating["skills"][k]["roster"] for k in ufc_ratings.SKILLS]
-                      + [rating["form"]["score"]],
-            "divisionRating": None if not rating else [rating["skills"][k]["division"] for k in ufc_ratings.SKILLS],
+            # [overall, striking, grappling, wrestling, form]: overall is the BEFN score out of 100 (50 = median
+            # established fighter), the three skills are roster percentiles, form is out of 100; then the same three
+            # skills as division percentiles.
+            "rating": None if not rating else [None] * (1 + len(ufc_ratings.SKILLS)) + [rating["form"]["score"]] if rating.get("provisional") else
+                      [rating["overall"]] + [rating["skills"][k]["roster"] for k in ufc_ratings.SKILLS] + [rating["form"]["score"]],
+            "divisionRating": None if not rating else [None] * len(ufc_ratings.SKILLS) if rating.get("provisional") else
+                              [rating["skills"][k]["division"] for k in ufc_ratings.SKILLS],
         }
 
     index = {
@@ -693,7 +994,9 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
         "activeMonths": ACTIVE_MONTHS, "rateFields": list(INDEX_RATES),
         "ratingFields": ["overall", *ufc_ratings.SKILLS, "form"],
         "ratingRules": {"window": "weighted", "minStatFights": ufc_ratings.MIN_STAT_FIGHTS,
-                        "minDivisionPeers": ufc_ratings.MIN_DIVISION_PEERS, "scale": "percentile"},
+                        "minDivisionPeers": ufc_ratings.MIN_DIVISION_PEERS, "scale": "percentile",
+                        "overallScale": "score-100", "overallCentre": 50, "scoreDivisor": ufc_ratings.SCORE_DIVISOR,
+                        "model": ufc_ratings.MODEL},
         "divisionCoverage": {"withDivision": sum(1 for r in index_rows.values() if r["divisionSlug"]),
                              "officialRoster": sum(1 for c in computed.values() if c["divisionSource"] == "official-roster"),
                              "latestBout": sum(1 for c in computed.values() if c["divisionSource"] == "latest-bout"),
@@ -705,7 +1008,8 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None) -> dict
     names = {}
     for slug, row in index_rows.items():
         names.setdefault(norm(row["name"]), slug)
-    rated = sum(1 for row in index_rows.values() if row["rating"] and any(v is not None for v in row["rating"][1:5]))
+    rated = sum(1 for row in index_rows.values()  # skill slots only, not form (Defence left the skills on 2026-11-24)
+                if row["rating"] and any(v is not None for v in row["rating"][1:1 + len(ufc_ratings.SKILLS)]))
     (out_dir / "names.json").write_text(json.dumps({"schema": SCHEMA, "asOf": as_of.isoformat(), "rated": rated,
                                                     "names": names},
                                                    separators=(",", ":"), sort_keys=True), encoding="utf-8")
@@ -777,7 +1081,8 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         r = ratings.get(slug)
         if r and r.get("eligible"):
             rated.append([position[slug], r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
-                          r["form"]["score"], r["sample"]["statFights"]])
+                          r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"],
+                          r.get("overallRank")])
     labels = {}
     for c in computed.values():
         if c["divisionSlug"] and c["division"]:
@@ -792,7 +1097,7 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         "fighters": fighters,
         "rowFields": ["fighter", "statFights", *[b[0] for b in BOARD_STATS]],
         "rows": windows,
-        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "statFights"],
+        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank"],
         "ratings": rated,
     }
 

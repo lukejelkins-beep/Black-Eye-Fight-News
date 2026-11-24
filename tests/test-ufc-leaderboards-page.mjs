@@ -7,9 +7,10 @@ const html=readIndex();
 const js=fs.readFileSync("assets/fighter-insights.js","utf8");
 const css=fs.readFileSync("assets/ufc-stat-leaderboards.css","utf8");
 test("dedicated UFC statistics route is navigable with a responsive standalone page",()=>{
- // Five-item navigation (PR #329, owner approved): UFC stats is a sub-link
- // inside Fighters, and the #leaderboards route itself still works.
- assert.match(html,/\['#leaderboards','UFC stats','leaderboards'\]/);
+ // Owner, 24 Nov 2026: the UFC stats leaderboards are MMA's Analysis section (they were a sub-link
+ // inside Fighters, PR #329). The #leaderboards route itself still works and belongs to Analysis.
+ assert.match(html,/function renderAnalysis\(\)\{if\(activeSport\(\)==='mma'\)return renderLeaderboards\(\);/);
+ assert.match(html,/leaderboards:'analysis'/);
  assert.match(html,/const all=\[[^\]]*'leaderboards'/);
  assert.match(html,/leaderboards:renderLeaderboards/);
  assert.match(html,/function renderLeaderboards\(\)/);
@@ -31,7 +32,7 @@ function sandbox({data=null,fail=false}={}){
   norm:v=>String(v).toLowerCase().replace(/[^a-z0-9]/g,""),
   opponentPhoto:()=>"",ordinal:n=>n+"th",encodeURIComponent,Math,Number,String,Object,Array
  };
- const api=vm.runInNewContext(block+"\n({renderV3Boards,boardRows,boardValue,boardRowHTML,state:boardState,set:d=>{boardData=d}})",ctx);
+ const api=vm.runInNewContext(block+"\n({renderV3Boards,boardRows,boardValue,boardRowHTML,searchRows,searchHTML,state:boardState,set:d=>{boardData=d}})",ctx);
  return {root,api};
 }
 const data={schema:1,asOf:"2026-11-14",minFights:3,minCageSeconds:900,
@@ -82,13 +83,20 @@ test("rating boards ask for five full-stat fights and ignore the window",()=>{
 test("rows link to profiles internally and show sample and tags",()=>{
  const {api}=sandbox();api.set(data);
  const html=api.boardRowHTML({f:0,v:6.5,n:4,rank:1},"rate");
- assert.match(html,/<a href="#fighter\/mma-ufc--verified-athlete">Verified Athlete<\/a>/);
+ assert.match(html,/<a href="#fighter\/ufc--verified-athlete">Verified Athlete<\/a>/);
  assert.match(html,/4 UFC fights with full stats · Welterweight/);
  assert.match(html,/#3/);
  assert.match(api.boardRowHTML({f:2,v:5,n:6,rank:1},"rate"),/Champion/);
  assert.equal(api.boardValue(.555,"pct"),"56%");
  assert.equal(api.boardValue(-1.2,"signed"),"−1.20");
  assert.doesNotMatch(block,/<a\s+href=["'](?:https?:|\/\/)/,"no external links");
+});
+test("search finds fighters below the board minimum and links every one",()=>{
+ const {api}=sandbox();api.set(data);
+ const found=api.searchRows("inelig");
+ assert.deepEqual(found.map(f=>[f.slug,f.score]),[["ineligible",null]]);
+ assert.match(api.searchHTML(found),/#fighter\/ufc--ineligible[\s\S]*Unrated/);
+ assert.equal(api.searchRows("i"),null,"one letter is not a search");
 });
 test("only the top thirty rows are displayed",()=>{
  assert.match(block,/view\.rows\.slice\(0,30\)/);

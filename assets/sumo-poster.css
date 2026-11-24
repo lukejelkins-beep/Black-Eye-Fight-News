@@ -38,3 +38,36 @@
   .sumo-poster-body{padding:12px 0 8px}
   .sumo-poster-stats b{font-size:48px}
 }
+
+/* Landmark cut-out, top-left slot of the hero (RU, UA, MN, KZ). Replaces the kanji where present;
+   the kanji stays in the grid (hidden) so the columns do not shift. Edges that were cropped in the
+   source photo are faded, never left as hard cuts. */
+.sumo-poster-landmark{position:absolute;z-index:1;left:0;top:24px;width:calc(clamp(104px,11vw,150px)*var(--lm-scale,1));pointer-events:none;--ml:linear-gradient(#000,#000);--mb:linear-gradient(#000,#000);-webkit-mask-image:var(--ml),var(--mb);mask-image:var(--ml),var(--mb);-webkit-mask-composite:source-in;mask-composite:intersect}
+.sumo-poster-landmark.fade-l{--ml:linear-gradient(90deg,transparent 0,#000 16%)}
+.sumo-poster-landmark.fade-b{--mb:linear-gradient(180deg,#000 58%,transparent 100%)}
+.sumo-poster-landmark img{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 9px rgba(17,16,19,.22))}
+.sumo-poster.has-landmark .sumo-poster-kanji{visibility:hidden}
+@media(max-width:900px){
+  .sumo-poster-landmark{top:8px;width:calc(104px*var(--lm-scale,1))}
+}
+
+/* Phone poster (owner chose layout B, 2026-11-24): a smaller photo stage so the name, record and
+   next bout sit higher on a 390 px screen (poster 806 px -> about 680 px). */
+@media(max-width:600px){
+  .sumo-poster-stage{min-height:300px}
+  .sumo-poster-stage:before{width:min(60%,230px)}
+  .sumo-poster-stage.is-cutout img{height:96%}
+  .sumo-poster-stage.is-photo img{width:min(56%,210px)}
+  .sumo-poster h1{font-size:52px;margin:6px 0 4px}
+  .sumo-poster-body{gap:14px;padding-top:10px}
+  .sumo-poster-stats{margin-top:14px;gap:24px}
+  .sumo-poster-stats b{font-size:40px}
+}
+
+/* 360 px and below: the Last bout / Next bout block must fit a 288 px column even with a long
+   technique name and a long opponent name (profile 16 at 320 px overflowed by 1 px). */
+@media(max-width:360px){
+  .sumo-poster-bout{padding:16px 12px;gap:8px}
+  .sumo-poster-bout strong{font-size:22px}
+  .sumo-poster-bout .h2h .kim{font-size:18px}
+}

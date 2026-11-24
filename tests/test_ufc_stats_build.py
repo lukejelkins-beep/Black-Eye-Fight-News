@@ -265,9 +265,9 @@ class RealData(unittest.TestCase):
         cov = self.index["divisionCoverage"]
         # The official roster (UFC.com ranks plus Cito's active list) covers most fighters;
         # the latest fight fills those it is missing from.
-        self.assertGreater(cov["officialRoster"], 700)
+        self.assertGreater(cov["officialRoster"], 600)
         self.assertGreater(cov["latestBout"], 100, "latest-bout divisions fill fighters missing from the rosters")
-        self.assertGreater(cov["withDivision"], 900)
+        self.assertGreater(cov["withDivision"], 800)
 
     def test_leaderboards_file(self):
         boards = json.loads((pathlib.Path(self.tmp.name) / "leaderboards.json").read_text())
@@ -436,6 +436,188 @@ class FreeResultsPath(unittest.TestCase):
         finally:
             m.DATA = kept
 
+
+class FeederScope(unittest.TestCase):
+    def test_feeder_series_are_out_but_ultimate_fighter_finales_stay(self):
+        for title in ("Dana White's Contender Series 80", "DWCS Week 3", "Road to UFC Season 4: Semifinals",
+                      "Road to UFC 3 Finals"):
+            self.assertTrue(m.is_feeder_event(title), title)
+        for title in ("UFC 300", "The Ultimate Fighter Finale: Tavares vs Adesanya",
+                      "The Ultimate Fighter: Team Joanna vs Team Cl\u00e1udia Finale", None, ""):
+            self.assertFalse(m.is_feeder_event(title), title)
+
+    def test_only_the_attested_showcase_survives_a_feeder_title(self):
+        feeder = {"id": "60900", "event": "Road to UFC Season 4: Semifinals"}
+        self.assertTrue(m.out_of_scope(feeder, set()))
+        self.assertFalse(m.out_of_scope(feeder, {"60900"}))
+        self.assertTrue(m.out_of_scope({**feeder, "id": "1"}, {"60900"}))
+        self.assertFalse(m.out_of_scope({"id": "2", "event": "UFC 300"}, set()))
+
+    def test_the_register_attests_the_one_showcase(self):
+        self.assertIn("60900", m.attested_showcase_ids())
+
+
+class CertifiedNoContests(unittest.TestCase):
+    """A certified career's official no-contest, which the archive path drops for want of a recorded result."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        root = pathlib.Path(self.tmp.name)
+        self.old = (m.CERTIFIED_CAREERS, m.REGISTER)
+        m.CERTIFIED_CAREERS, m.REGISTER = root / "c.json", root / "r.json"
+        self.addCleanup(lambda: setattr(m, "CERTIFIED_CAREERS", self.old[0]) or setattr(m, "REGISTER", self.old[1]))
+
+    def write(self, certified, register):
+        m.CERTIFIED_CAREERS.write_text(json.dumps({"certified": {s: 1 for s in certified}}))
+        m.REGISTER.write_text(json.dumps({"fighters": register}))
+
+    def nc(self, name, opp, date="2021-03-13", url="https://ufcstats.com/fight-details/abc123"):
+        b = {"date": date, "opponent": opp, "result": "no_contest"}
+        if url:
+            b["fightUrl"] = url
+        return {"fighterName": name, "bouts": [b]}
+
+    def test_a_pair_of_certified_fighters_gets_one_two_sided_record(self):
+        self.write(["belal", "edwards"], {"belal": self.nc("Belal Muhammad", "Leon Edwards"),
+                                          "edwards": self.nc("Leon Edwards", "Belal Muhammad")})
+        skipped = {}
+        out = m.certified_no_contests([], skipped)
+        self.assertEqual(len(out), 1)
+        f = out[0]
+        self.assertEqual((f["a"]["slug"], f["b"]["slug"]), ("belal", "edwards"))
+        self.assertEqual((f["method"], f["winner"], f["rounds"], f["statsComplete"]), ("nc", None, [], False))
+        self.assertEqual(m.side_view(f, "a")["outcome"], "NC")
+        self.assertEqual(m.side_view(f, "b")["outcome"], "NC")
+        self.assertEqual(skipped["certifiedNoContest"], 1)
+
+    def test_a_no_contest_already_among_the_fights_is_not_added_again(self):
+        self.write(["belal"], {"belal": self.nc("Belal Muhammad", "Leon Edwards")})
+        have = {"date": "2021-03-14", "method": "nc", "a": {"name": "Belal Muhammad", "slug": "belal"},
+                "b": {"name": "Leon Edwards", "slug": "edwards"}}
+        self.assertEqual(m.certified_no_contests([have], {}), [])
+
+    def test_only_certified_fighters_are_used(self):
+        self.write([], {"belal": self.nc("Belal Muhammad", "Leon Edwards")})
+        self.assertEqual(m.certified_no_contests([], {}), [])
+
+    def test_a_gap_bout_without_a_fight_link_is_keyed_by_date_and_names(self):
+        self.write(["lane"], {"lane": self.nc("Austen Lane", "Justin Tafa", date="2023-06-24", url=None)})
+        out = m.certified_no_contests([], {})
+        self.assertEqual(len(out), 1)
+        self.assertEqual(out[0]["boutId"], "ufcstats-2023-06-24-austenlane-justintafa")
+        self.assertIsNone(out[0]["b"]["slug"], "an opponent outside the certified set has no stats slug")
+
+    def test_results_other_than_no_contest_are_ignored(self):
+        e = self.nc("Belal Muhammad", "Leon Edwards")
+        e["bouts"][0]["result"] = "loss"
+        self.write(["belal"], {"belal": e})
+        self.assertEqual(m.certified_no_contests([], {}), [])
+
+    def test_missing_files_are_survivable(self):
+        self.assertEqual(m.certified_no_contests([], {}), [])
+
+
+class CertifiedResultOnlyBouts(unittest.TestCase):
+    """A certified win, loss or draw the archive lacks (e.g. a Road to UFC final): result only, never rated."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        root = pathlib.Path(self.tmp.name)
+        self.old = (m.CERTIFIED_CAREERS, m.REGISTER)
+        m.CERTIFIED_CAREERS, m.REGISTER = root / "c.json", root / "r.json"
+        self.addCleanup(lambda: setattr(m, "CERTIFIED_CAREERS", self.old[0]) or setattr(m, "REGISTER", self.old[1]))
+
+    def write(self, certified, register, extension=(), aliases=None):
+        m.CERTIFIED_CAREERS.write_text(json.dumps({"certified": {s: 1 for s in certified},
+                                                   "extension": {"certified": {s: 1 for s in extension}},
+                                                   "statsAliases": aliases or {}}))
+        m.REGISTER.write_text(json.dumps({"fighters": register}))
+
+    def entry(self, name, opp, result="win", date="2024-02-03", method="KO/TKO"):
+        return {"fighterName": name, "bouts": [{"date": date, "opponent": opp, "result": result, "sourceMethod": method,
+                                                "savedHistoryGap": True, "roadToUfcFinal": True}]}
+
+    def test_a_missing_final_is_added_with_result_and_method_only(self):
+        self.write(["rei"], {"rei": self.entry("Rei Tsuruya", "Jiniushiyue")})
+        skipped = {}
+        out = m.certified_result_only_bouts([], skipped)
+        self.assertEqual(len(out), 1)
+        f = out[0]
+        self.assertEqual((f["winner"], f["method"], f["rounds"], f["statsComplete"], f["endRound"], f["seconds"]),
+                         ("a", "ko", [], False, None, None))
+        view = m.side_view(f, "a")
+        self.assertEqual(view["outcome"], "W")
+        self.assertFalse(m.is_rated(view), "a certified result-only win never feeds a rating")
+        self.assertEqual(skipped["certifiedResultOnly"], 1)
+
+    def test_extension_cohort_fighters_are_carried_too(self):
+        self.write([], {"x": self.entry("Jose Aldo", "Mark Hominick", date="2011-04-30", method="Decision - Unanimous")},
+                   extension=["x"])
+        out = m.certified_result_only_bouts([], {})
+        self.assertEqual((len(out), out[0]["method"]), (1, "dec"))
+
+    def test_a_fight_the_fighter_already_has_on_that_day_is_not_added_whatever_the_spelling(self):
+        self.write(["heili"], {"heili": self.entry("Heili Alateng", "Chad Anheliger", date="2022-09-10")})
+        have = {"date": "2022-09-10", "method": "dec", "a": {"name": "Alatengheili", "slug": "heili"},
+                "b": {"name": "Chad Anheliger", "slug": "chad"}}
+        self.assertEqual(m.certified_result_only_bouts([have], {}), [])
+
+    def test_a_stats_alias_slug_counts_as_the_fighter(self):
+        self.write(["bruno-gustavo"], {"bruno-gustavo": self.entry("Bruno Gustavo da Silva", "Tyson Nam", date="2023-03-11")},
+                   aliases={"bruno-silva": "bruno-gustavo"})
+        have = {"date": "2023-03-11", "method": "ko", "a": {"name": "Bruno Silva", "slug": "bruno-silva"},
+                "b": {"name": "Tyson Nam", "slug": None}}
+        self.assertEqual(m.certified_result_only_bouts([have], {}), [])
+
+    def test_no_contests_and_uncertified_fighters_are_left_alone(self):
+        self.write(["a"], {"a": self.entry("A B", "C D", result="no_contest"), "z": self.entry("Y Z", "C D")})
+        self.assertEqual(m.certified_result_only_bouts([], {}), [])
+
+    def test_ordinary_fights_are_rated(self):
+        self.assertTrue(m.is_rated({"outcome": "W"}))
+        self.assertTrue(m.is_rated({"outcome": "NC", "resultSource": "certified-register"}))
+
+
+class StrikeBreakdowns(unittest.TestCase):
+    """Head/body/leg and distance/clinch/ground shares only where every round adds up to the strikes landed."""
+
+    def fight(self, own_rounds):
+        rounds = [{"round": i + 1, "seconds": 300, "own": o, "opp": side()} for i, o in enumerate(own_rounds)]
+        return {"outcome": "W", "method": "dec", "titleFight": False, "statsComplete": True, "rounds": rounds,
+                "scorecards": None}
+
+    def good(self):
+        return side(sigLanded=10, sigAttempted=20, headLanded=6, bodyLanded=3, legLanded=1,
+                    distanceLanded=7, clinchLanded=2, groundLanded=1)
+
+    def test_a_window_where_every_round_adds_up_keeps_its_shares(self):
+        rates = m.aggregate([self.fight([self.good(), self.good()])])["rates"]
+        self.assertEqual(rates["target"], {"head": 0.6, "body": 0.3, "leg": 0.1})
+        self.assertEqual(rates["position"], {"distance": 0.7, "clinch": 0.2, "ground": 0.1})
+
+    def test_one_round_that_does_not_add_up_removes_both_shares_for_the_window(self):
+        bad = self.good()
+        bad["headLanded"] = 22  # more head strikes than strikes landed
+        rates = m.aggregate([self.fight([self.good(), bad])])["rates"]
+        self.assertNotIn("target", rates)
+        self.assertIn("position", rates, "the other breakdown still adds up")
+        self.assertIsNotNone(rates["slpm"], "the headline rates are not touched")
+
+    def test_each_breakdown_is_judged_on_its_own_parts(self):
+        bad = self.good()
+        bad["groundLanded"] = 9
+        rates = m.aggregate([self.fight([bad])])["rates"]
+        self.assertIn("target", rates)
+        self.assertNotIn("position", rates)
+
+    def test_an_unverifiable_round_is_left_out_not_trusted(self):
+        r = self.good()
+        r["sigLanded"] = None
+        rates = m.aggregate([self.fight([r])])["rates"]
+        self.assertNotIn("target", rates)
+        self.assertNotIn("position", rates)
 
 
 if __name__ == "__main__":

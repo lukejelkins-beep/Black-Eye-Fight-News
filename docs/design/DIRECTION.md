@@ -16,7 +16,7 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 6. **Reader content only.** Research queues, review priorities, verification notes and audit text are staff tools. They never lead a public page.
 7. **Fast.** Images sized to their slot and lazy-loaded. No page loads data it does not show.
 
-## Tokens (current, from the Sumo preview)
+## Tokens (current)
 - Red `#cf1824` (accent, active states) · Gold `#f3c332` (secondary highlight) · Cream `#f8f4ed` (page) · Ink `#111013` (text, dark bands) · Dark band `#151115`.
 - Headlines and big numbers: **Unbounded** 700–900, sentence case (owner's choice from the options, 22 Nov). Body and UI: **DM Sans**. Two families only. **Barlow Condensed** is being phased out of headings: until the site-wide theme ships, existing pages keep it. Russo One is still imported in `index.html` and is probably unused; remove it once confirmed.
 - Sport colours: boxing red, MMA amber `#e0a400`, sumo blue `#2a4a8f`.
@@ -25,7 +25,7 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 ## Patterns
 - **Page header:** dark top bar and sport row with a red edge; below it a light page head with the h1 and one grey context line. (Earlier rule: dark band with a 4 px red left edge and uppercase h1; applies until the site-wide theme ships.)
 - **Home:** lead story, latest-result tile, this week and next, By sport columns (boxing, MMA, sumo), latest news, Fight Talk box (design D, #382; owner: "A structurally, B's font, C's sport columns", then "Love it").
-- **Navigation:** four to five primary items, same on phone and desktop, red underline on the active item. Sport filters are labelled text, never icon-only.
+- **Navigation (sport first, owner 23 Nov 2026):** the sport is the area you are in. Desktop: the top bar lists the sports (Boxing, MMA, Sumo; red underline, amber for MMA, on the current one) and the logo opens the all-sports front page; the row below names the area and holds its five sections (Overview, Fights, Fighters, Analysis, Fight Talk). Phone (option B, owner 24 Nov 2026): one slim 52 px top bar holds "BEFN" (opens the front page), the Boxing / MMA / Sumo tabs and a menu icon. It slides away while scrolling down and comes back on any scroll up. The sections stay in the bottom tab bar, under the thumb, with the active tab marked in the sport's colour (red Boxing, amber MMA, blue Sumo). Alerts and Install live in the menu. Choosing a sport opens that sport's Overview. Grappling is left out of the navigation until it is ready (owner: a separate project). Sumo uses the same header with four sections (Overview, Fights, Fighters, Analysis; no Fight Talk until a source covers sumo), its pages in a pill row under the section they belong to. Sport choices are labelled text, never icon-only.
 - **Result / matchup row:** compact. Two names, two small portraits, result or time, one line of context. Target five or more rows per phone screen.
 - **Athlete profile:** dark hero band with photo faded into it, rank and status chips, uppercase name, record, three large stat numbers, "latest bout" panel, "full history" button.
 - **Event card:** poster or key art as the image, headline bout as the title, date and local start time, venue.
@@ -42,4 +42,4 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 - Whether Unbounded replaces Barlow everywhere or only on the pages the owner names. This file assumes everywhere. The phone masthead is still Barlow Condensed (it sits in the dark top bar, which the site-wide theme does not restyle).
 
 ## Where the new look is tried first
-The Sumo preview (`befn-sumo-preview`) is the pilot for this direction. Patterns proven there are ported to the main site one page at a time.
+Sumo, formerly the preview pilot for this direction, is live on `main` and is built and deployed there like every other sport (the separate preview site is retired, 23 Nov 2026). Patterns proven on Sumo are ported to the other pages one at a time.

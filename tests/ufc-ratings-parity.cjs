@@ -12,7 +12,8 @@ for(const row of rows){
  const d=engine.careerData({stats:{source:"BEFN stats build",observedOn:"parity",sampleBouts:Math.max(2,row.statFights),
   slpm:r.slpm,sapm:r.sapm,strAcc:r.strAcc,strDef:r.strDef,tdAvg:r.td15,tdAcc:r.tdAcc,tdDef:r.tdDef,
   subAvg:r.sub15,revAvg:r.rev15,controlShare:r.ctrlShare,controlAgainst:r.ctrlAgainstShare,
-  kdAvg:r.kd15,kdAgainstAvg:r.kdAbs15,koTkoWinRate:w.koWinShare,submissionWinRate:w.subWinShare}});
+  kdAvg:r.kd15,kdAgainstAvg:r.kdAbs15,koTkoWinRate:w.koWinShare,submissionWinRate:w.subWinShare,
+  submissionLossRate:w.subLossShare,subAgainstAvg:r.subAbs15,koTkoLossRate:w.koLossShare,tdAgainstAvg:r.tdAbs15}});
  for(const skill of ["striking","grappling","wrestling","defence"]){
   const js=engine.rawSkill(d,skill),py=row.raw[skill];
   if(js===null||py===null)assert.equal(js,py,row.slug+" "+skill+" gate differs: js="+js+" py="+py);

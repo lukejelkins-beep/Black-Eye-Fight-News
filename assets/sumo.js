@@ -5,14 +5,25 @@ import {
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs?v=20261116-ranked-matchups';
-import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261117-clean-profile-charts';
+import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261124-label-edge';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
 import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailySelectedDate, dailyWinPercentage, heightFeetInches, highestRecordedDivision } from './sumo-daily.mjs?v=20261117-day-flow';
 import { ordinalRank } from './sumo-career.mjs';
-import { bestMatchupFact, rivalryFacts, factText } from './sumo-fact-engine.mjs?v=20261121-first-short';
+import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
+import { buildHome, bashoStart, bashoFinished } from './sumo-home-data.mjs?v=20261124-banzuke2';
+import { renderHome as renderOverview, exploreBlock } from './sumo-home.mjs?v=20261124-live1';
+import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
+import { renderReview } from './sumo-review.mjs?v=20261124-review1';
+import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
+import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-next1';
+import { fromArchive, fromDetails, runs, stables, rivalries, records, sizeExtremes } from './sumo-insights-data.mjs?v=20261124-size1';
+import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261124-size1';
+import { completedDay, recap as liveRecap, asOfDay } from './sumo-live-data.mjs?v=20261124-live1';
+import { renderLiveHome, dayByDay } from './sumo-live.mjs?v=20261124-live1';
+import { asDetails } from './sumo-review-data.mjs?v=20261124-live1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -446,8 +457,8 @@ function wrestlerLink(row,small=false) {
 }
 function divisionTabs(active, attr, all=false) {
   return '<div class="division-tabs" role="group" aria-label="Choose division">' +
-    (all?'<button type="button" class="pill '+(active==='All'?'active':'')+'" '+attr+'="All">All 3 divisions</button>':'') +
-    DIVS.map(d=>'<button type="button" class="pill '+(active===d?'active':'')+'" '+attr+'="'+d+'">'+e(d)+(all?'<span class="count">'+(counts()[d]||0)+'</span>':'')+'</button>').join('') +
+    (all?'<button type="button" class="pill '+(active==='All'?'active':'')+'" aria-pressed="'+(active==='All')+'" '+attr+'="All">All 3 divisions</button>':'') +
+    DIVS.map(d=>'<button type="button" class="pill '+(active===d?'active':'')+'" aria-pressed="'+(active===d)+'" '+attr+'="'+d+'">'+e(d)+(all?'<span class="count">'+(counts()[d]||0)+'</span>':'')+'</button>').join('') +
     '</div>';
 }
 function standingsTable(rows,limit=10) {
@@ -900,6 +911,17 @@ function lastBoutFor(w){
   const done=currentProfileBouts(w).filter(x=>x.outcome==='win'||x.outcome==='loss');
   return done.length?done[done.length-1]:null;
 }
+/** Landmark cut-out for the hero's top-left slot (RU, UA, MN, KZ). Shown to readers only when the
+ * record is approved; ?landmarks=preview shows unapproved ones for owner review. Else the kanji stays. */
+function landmarkHtml(w){
+  const cc=originCountry(w.birthplace)?.code,m=cc&&STATE.landmarks?.[cc];
+  if(!m||!/^assets\/sumo-landmarks\/[a-z]{2}\.webp$/.test(String(m.path||'')))return '';
+  const preview=typeof location!=='undefined'&&new URLSearchParams(location.search).get('landmarks')==='preview';
+  if(m.approved!==true&&!preview)return '';
+  const fade=(Array.isArray(m.fade)?m.fade:[]).filter(x=>x==='left'||x==='bottom').map(x=>' fade-'+x[0]).join('');
+  const wide=Number(m.width)/Number(m.height)>1.4?' style="--lm-scale:1.5"':'';
+  return '<div class="sumo-poster-landmark'+fade+'" data-country="'+e(cc)+'"'+wide+'><img src="'+e(m.path)+'" alt="'+e(m.alt||'')+'" width="'+Number(m.width)+'" height="'+Number(m.height)+'" decoding="async"></div>';
+}
 /** Poster hero figure: a clean full-body cut-out in front of the red disc, otherwise the
  * approved photo cropped into the disc. No photo: the disc alone. */
 function posterFigure(w){
@@ -932,9 +954,10 @@ function posterHero(w,{r,wins,losses,careerPercent}){
       '<strong>'+(last.outcome==='win'?'Beat ':'Lost to ')+e(last.opponent)+'</strong></div>'+
       (last.kimarite?'<div class="h2h"><strong class="kim">'+e(techniqueText(last.kimarite))+'</strong><span>Technique</span></div>':'')+'</a>';
   }
-  const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h],['Weight · undated',current.mass==='—'?null:current.mass]]
+  const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h+(Number.isFinite(current.heightCm)&&current.heightCm>0?' ('+heightFeetInches(current.heightCm)+')':'')],['Weight · undated',current.mass==='—'?null:current.mass]]
     .filter(([,v])=>v!==null&&v!==undefined).map(([k,v])=>'<span>'+e(k)+' <strong>'+e(v)+'</strong></span>').join('');
-  return '<section class="sumo-poster">'+
+  const landmark=landmarkHtml(w);
+  return '<section class="sumo-poster'+(landmark?' has-landmark':'')+'">'+landmark+
     (kanji?'<div class="sumo-poster-kanji" aria-hidden="true" style="--kanji-count:'+[...kanji].length+'">'+e(kanji)+'</div>':'')+
     posterFigure(w)+
     '<div class="sumo-poster-body"><div>'+
@@ -970,7 +993,7 @@ function renderProfile(id) {
     '<p>Current tournament record not available.</p>';
   return '<a class="back-link" href="#rikishi">← Rikishi directory</a>'+
     posterHero(w,{r,wins,losses,careerPercent})+
-    sectionNav(w.sourceId)+recentTenStrip(w)+
+    sectionNav(w.sourceId)+recentTenStrip(w)+didYouKnowMarkup(w)+
     sectionHead('results','Tournament and career ledger','Results')+resultDesk(w)+'</section>'+
     sectionHead('career','Historical context','Career')+
     '<div class="sumo-career-strip" aria-label="Career tournament and championship totals"><div><span>Basho</span><strong>'+e(s?.basho??'Not available')+'</strong></div>'+
@@ -1257,12 +1280,24 @@ function stageFacts(w) {
 }
 /* Fact engine (Phase 1): one scored, scoped fact per matchup and a short
  * rivalry panel on head-to-heads. Nothing shows when nothing clears the bar. */
-function factLineMarkup(f){
+/* A small face beside a fact, only where the page doesn't already show that
+ * wrestler. Uses the approved head crop, else the approved portrait; never a placeholder. */
+function factFace(id){
+  const w=wrestler(id);if(!w)return '';
+  const h=STATE.heads?.[String(w.sourceId)],photo=STATE.photoIndex?.[String(w.sourceId)];
+  if(h&&photo?.approved===true&&h.sourceSha256===photo.sha256&&/^assets\/sumo-photos\/head\/[a-zA-Z0-9_-]+\.webp$/.test(String(h.path||'')))
+    return '<a class="sumo-fact-face" href="#profile/'+Number(w.sourceId)+'" aria-label="'+e(w.shikonaEn)+' profile"><img src="'+e(h.path)+'" alt="" width="96" height="96" loading="lazy" decoding="async"></a>';
+  if(photo?.approved===true&&/^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(photo.path||'')))
+    return '<a class="sumo-fact-face is-portrait" href="#profile/'+Number(w.sourceId)+'" aria-label="'+e(w.shikonaEn)+' profile"><img src="'+e(photo.path)+'" alt="" loading="lazy" decoding="async"></a>';
+  return '';
+}
+function factLineMarkup(f,faceId=null){
   const t=factText(f,id=>wrestler(id)?.shikonaEn||null);
   if(!t)return '';
-  return '<div class="sumo-fact-line"><span class="sumo-fact-tag">'+e(t.tag)+'</span>'+
+  const face=faceId?factFace(faceId):'';
+  return '<div class="sumo-fact-line'+(face?' has-face':'')+'">'+face+'<div class="sumo-fact-body"><span class="sumo-fact-tag">'+e(t.tag)+'</span>'+
     '<p class="sumo-fact-text"><b>'+e(t.lead)+'</b>'+(t.rest?' '+e(t.rest):'')+
-    '<span class="sumo-fact-scope">'+e(t.scope)+'</span></p></div>';
+    '<span class="sumo-fact-scope">'+e(t.scope)+'</span></p></div></div>';
 }
 function matchupFactMarkup(match){
   if(!STATE.roster||!STATE.details)return '';
@@ -1276,6 +1311,34 @@ function rivalryPanelMarkup(a,b){
   return '<section class="sumo-fact-panel" aria-label="Story of the rivalry"><h2>Story of the rivalry</h2>'+
     '<p>Facts from BEFN’s stored bout records and listed roster data.</p>'+
     '<ul>'+facts.map(f=>'<li>'+factLineMarkup(f)+'</li>').join('')+'</ul></section>';
+}
+function didYouKnowMarkup(w){
+  if(!STATE.details||!w)return '';
+  const facts=profileFacts(STATE.details,w.sourceId);
+  if(!facts.length)return '';
+  return '<section class="sumo-fact-panel" aria-label="Did you know"><h2>Did you know?</h2>'+
+    '<p>From BEFN’s stored bout records.</p><ul>'+facts.map(f=>{
+      // The profile already shows this wrestler; show the opponent's face on pair facts.
+      const p=factPeople(f),me=String(w.sourceId);
+      return '<li>'+factLineMarkup(f,p.other?(p.main===me?p.other:p.main):null)+'</li>';
+    }).join('')+'</ul></section>';
+}
+function techniqueFactsMarkup(){
+  const term=new URLSearchParams(location.hash.split('?')[1]||'').get('term');
+  const item=term?KIMARITE.find(x=>x.slug===term):null;
+  if(!item||!STATE.details)return '';
+  const t=techniqueFacts(STATE.details,item.name.toLowerCase().replace(/[^a-z]/g,''));
+  if(!t)return '<section class="sumo-fact-panel"><h2>Who wins with this</h2><p>No '+e(item.name)+' wins in BEFN’s records since January 2021.</p></section>';
+  const leaders=t.top.filter(([id])=>wrestler(id));
+  const lead=t.t===1?'Just one '+item.name+' win in BEFN’s records since January 2021.':
+    t.t<=5?'Only '+t.t+' '+item.name+' wins in BEFN’s records since January 2021.':
+    number(t.t)+' '+item.name+' wins in BEFN’s records since January 2021.';
+  return '<section class="sumo-fact-panel" aria-label="Who wins with this"><h2>Who wins with this</h2>'+
+    '<div class="sumo-fact-line"><div class="sumo-fact-body"><span class="sumo-fact-tag">'+(t.t<=2?'Rare move':'Technique')+'</span><p class="sumo-fact-text"><b>'+e(lead)+'</b>'+
+    '<span class="sumo-fact-scope">BEFN bout records · bouts involving at least one tracked wrestler</span></p></div></div>'+
+    (leaders.length?'<h3 class="sumo-fact-subhead">Most wins by tracked wrestlers</h3><ol class="sumo-fact-leaders">'+leaders.map(([id,c])=>
+      '<li>'+factFace(id)+'<a href="#profile/'+Number(id)+'">'+e(wrestler(id).shikonaEn)+'</a><b>'+c+'</b></li>').join('')+'</ol>':'')+
+    '</section>';
 }
 function headlineBout(match,label) {
   const a=wrestler(match.rikishiId),b=wrestler(match.opponentId);
@@ -1458,13 +1521,127 @@ function renderBasho() {
     sourceFooter();
 }
 function renderKimarite() {
-  return renderKimariteGallery();
+  return renderKimariteGallery()+techniqueFactsMarkup();
 }
 
+/* Verified photo paths for the Sumo home: only approved photographs whose derivative matches
+   the approved source (the same checks as cutoutFor and headFor). */
+function verifiedDerivative(map,id,dir){
+  const d=map?.[String(id)],photo=STATE.photoIndex?.[String(id)];
+  return d&&photo?.approved===true&&d.sourceSha256===photo.sha256&&new RegExp('^assets/sumo-photos/'+dir+'/[a-zA-Z0-9_-]+\\.webp$').test(String(d.path||''))?d.path:'';
+}
+function homeHelpers(){
+  const known=new Set((STATE.roster?.rikishi||[]).map(w=>Number(w.sourceId)));
+  return {e,head:id=>verifiedDerivative(STATE.heads,id,'head'),cutout:id=>verifiedDerivative(STATE.cutouts,id,'cutout'),known:id=>known.has(Number(id))};
+}
+function renderSumoHome(){
+  /* Live basho mode while the basho is on; #home?liveday=N replays a finished basho as of day N (labelled preview). */
+  const q=new URLSearchParams(location.hash.split('?')[1]||'');
+  const previewDay=Number(q.get('liveday'));
+  const preview=Number.isInteger(previewDay)&&previewDay>=1&&previewDay<=15;
+  if(preview||!bashoFinished(STATE.details))return renderSumoLive(preview?asOfDay(STATE.details,previewDay):STATE.details,preview);
+  const home=buildHome({details:STATE.details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
+  let extra='';
+  try{
+    const two=fromDetails(STATE.details);
+    extra=insightsTeaser(homeHelpers(),{runs:runs(two),rivalries:rivalries(STATE.h2hSummary,STATE.roster,{limit:1}),stables:stables(two[1],STATE.roster)});
+  }catch(_){extra='';}
+  return renderOverview(home,{...homeHelpers(),afterHero:nextBanzukeCard(home.headline.next),extra});
+}
+function renderSumoLive(details,preview){
+  const day=completedDay(details);
+  const home=buildHome({details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
+  let extra='';
+  try{const two=fromDetails(details);extra=insightsTeaser(homeHelpers(),{runs:runs(two),rivalries:rivalries(STATE.h2hSummary,STATE.roster,{limit:1}),stables:[]});}catch(_){extra='';}
+  return renderLiveHome({bashoId:details.bashoId,preview,recap:day?liveRecap(details,day):null,sanyakuView:home},
+    {...homeHelpers(),extra,explore:exploreBlock(homeHelpers()),afterHero:day?'':nextBanzukeCard(home.headline.next)});
+}
+/* Countdown to the next banzuke, or a link once it is out (data/sumo/banzuke-release/YYYYMM.json). */
+function nextBanzukeCard(next){
+  if(!next?.id)return '';
+  if(!(next.id in RELEASES.files))loadRelease(next.id);
+  const dates=RELEASES.dates?.releases?.[next.id];
+  const y=Number(next.id.slice(0,4)),m=Number(next.id.slice(4));
+  return '<section class="shome-block">'+releaseCard(homeHelpers(),{next,released:!!RELEASES.files[next.id],date:dates?.date||null,status:dates?.status||null,
+    day1:bashoStart(y,m),latest:STATE.details?.bashoId,now:Date.now()})+'</section>';
+}
+const RELEASES={dates:null,files:{},loading:new Set()};
+function loadRelease(id){
+  if(RELEASES.loading.has(id))return;
+  RELEASES.loading.add(id);
+  loadJson('data/sumo/banzuke-release/'+id+'.json').then(x=>{RELEASES.files[id]=x;}).catch(()=>{RELEASES.files[id]=null;})
+    .finally(()=>{RELEASES.loading.delete(id);const page=location.hash.slice(1).split('/')[0];
+      /* The changes page waits for this answer either way; the home only changes if it is out. */
+      if(page==='changes'||(RELEASES.files[id]&&(page===''||page==='home')))render();});
+}
+/* Basho review: the archive index and each tournament file load on demand, then the page re-renders. */
+const ARCHIVE={index:null,files:{},failed:false,loading:new Set()};
+function loadArchive(id){
+  const want=[];
+  if(!ARCHIVE.index)want.push(loadJson('data/sumo/basho-archive/index.json').then(x=>{ARCHIVE.index=x;}));
+  for(const b of [id,prevBashoId(id)])if(b&&!(b in ARCHIVE.files)&&!ARCHIVE.loading.has(b)){
+    ARCHIVE.loading.add(b);
+    want.push(loadJson('data/sumo/basho-archive/'+b+'.json').then(x=>{ARCHIVE.files[b]=x;}).catch(()=>{ARCHIVE.files[b]=null;}).finally(()=>ARCHIVE.loading.delete(b)));
+  }
+  if(want.length)Promise.all(want).catch(()=>{ARCHIVE.failed=true;}).finally(()=>{if(/^#(review|changes|insights)/.test(location.hash))render();});
+}
+function prevBashoId(id){
+  if(!/^\d{6}$/.test(String(id||'')))return null;
+  let y=Number(id.slice(0,4)),m=Number(id.slice(4))-2;if(m<1){m=11;y-=1;}
+  return String(y)+String(m).padStart(2,'0');
+}
+/* Banzuke changes: the newest five releases that have the basho before saved. A released banzuke
+   for the next basho (no bouts yet) is included once the release watch has saved it. */
+function changeIds(){
+  const saved=(ARCHIVE.index?.basho||[]).map(b=>b.bashoId).sort();
+  const ids=saved.filter(id=>saved.includes(prevBashoId(id)));
+  const next=saved.length?nextBashoFrom(saved[saved.length-1]):null;
+  if(next&&RELEASES.files[next])ids.push(next);
+  return ids.reverse().slice(0,5);
+}
+function nextBashoFrom(id){let y=Number(id.slice(0,4)),m=Number(id.slice(4))+2;if(m>11){m=1;y+=1;}return String(y)+String(m).padStart(2,'0');}
+function renderBanzukeChanges(id){
+  if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
+  if(!ARCHIVE.index){loadArchive(null);return '<div class="sumo-home"><p class="srev-loading">Loading banzuke changes…</p></div>';}
+  const saved=ARCHIVE.index.basho.map(b=>b.bashoId);
+  const next=nextBashoFrom(saved[saved.length-1]);
+  if(!(next in RELEASES.files)){loadRelease(next);return '<div class="sumo-home"><p class="srev-loading">Loading banzuke changes…</p></div>';}
+  const ids=changeIds();
+  const want=/^\d{6}$/.test(String(id||''))&&ids.includes(id)?id:ids[0];
+  if(!want)return '<div class="sumo-home"><p class="srev-loading">No banzuke changes saved yet.</p></div>';
+  const fromRelease=!saved.includes(want);
+  if(!fromRelease&&!(want in ARCHIVE.files)||!(prevBashoId(want) in ARCHIVE.files)||ARCHIVE.loading.size){loadArchive(fromRelease?prevBashoId(want)+'':want);return '<div class="sumo-home"><p class="srev-loading">Loading banzuke changes…</p></div>';}
+  const newFile=fromRelease?RELEASES.files[want]:ARCHIVE.files[want],prevFile=ARCHIVE.files[prevBashoId(want)];
+  if(!newFile||!prevFile)return '<div class="sumo-home"><p class="srev-loading">That banzuke is not saved. <a href="#changes">See the latest</a>.</p></div>';
+  const released=fromRelease?'Published ahead of the '+(newFile.bashoId?'basho':'')+'; first seen by BEFN '+new Date(newFile.firstSeenAt).toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})+'.':'';
+  return renderChanges(buildChanges(newFile,prevFile,STATE.careerHistory),{...homeHelpers(),releases:ids},{released});
+}
+/* Insights: every saved basho (loaded on this page only), the rank history and the head-to-head summary. */
+function renderSumoInsights(){
+  if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
+  if(!ARCHIVE.index){loadArchive(null);return '<div class="sumo-home"><p class="srev-loading">Loading insights…</p></div>';}
+  const ids=ARCHIVE.index.basho.map(b=>b.bashoId).sort();
+  const missing=ids.filter(id=>!(id in ARCHIVE.files));
+  if(missing.length){missing.forEach(id=>loadArchive(id));return '<div class="sumo-home"><p class="srev-loading">Loading insights…</p></div>';}
+  const basho=ids.filter(id=>ARCHIVE.files[id]).map(id=>fromArchive(ARCHIVE.files[id]));
+  const latest=basho[basho.length-1];
+  return renderInsights({runs:runs(basho),rivalries:rivalries(STATE.h2hSummary,STATE.roster),stables:stables(latest,STATE.roster),records:records(basho,STATE.careerHistory,STATE.roster),size:sizeExtremes(basho,STATE.careerHistory,STATE.roster),latestId:latest.bashoId},homeHelpers());
+}
+function renderBashoReview(id){
+  if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
+  const latest=ARCHIVE.index?.basho?.length?ARCHIVE.index.basho[ARCHIVE.index.basho.length-1].bashoId:null;
+  const want=/^\d{6}$/.test(String(id||''))?id:latest;
+  if(!ARCHIVE.index||!want||!(want in ARCHIVE.files)||ARCHIVE.loading.has(prevBashoId(want))){loadArchive(want||null);return '<div class="sumo-home"><p class="srev-loading">Loading the basho review…</p></div>';}
+  const file=ARCHIVE.files[want];
+  if(!file)return '<div class="sumo-home"><p class="srev-loading">No saved review for that tournament. <a href="#review">See the latest basho</a>.</p></div>';
+  const det=asDetails(file,null);
+  const recaps=[];for(let day=1;day<=Math.min(15,completedDay(det));day++)recaps.push(liveRecap(det,day));
+  const hh={...homeHelpers(),index:ARCHIVE.index};
+  return renderReview(buildReview(file,ARCHIVE.files[prevBashoId(want)]||null,STATE.careerHistory),file,{...hh,dayByDay:dayByDay(hh,recaps)});
+}
 function render() {
-  const hash=decodeURIComponent(location.hash.slice(1)||'basho').split('?')[0];
+  const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
   let [page,id]=hash.split('/');
-  if(page==='home')page='basho';
   tabs.forEach(a=>{
     const active=(page==='profile'?'rikishi':page==='matchups'?'basho':page==='headtohead'?'h2h':page)===a.dataset.page;
     a.classList.toggle('active',active);
@@ -1484,10 +1661,15 @@ function render() {
     case 'banzuke': ROOT.innerHTML=renderBanzuke();break;
     case 'h2h': ROOT.innerHTML=renderBoard(id);
       if(STATE.boardRecent&&!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();break;
+    case 'home': ROOT.innerHTML=renderSumoHome();break;
+    case 'review': ROOT.innerHTML=renderBashoReview(id);break;
+    case 'changes': ROOT.innerHTML=renderBanzukeChanges(id);break;
+    case 'insights': ROOT.innerHTML=renderSumoInsights();
+      if(id)requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({block:'start'}));break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'matchups': ROOT.innerHTML=renderDailyMatchups();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
-    default: ROOT.innerHTML=renderBasho();
+    default: ROOT.innerHTML=renderSumoHome();
   }
   if(page==='h2h')markCachedHeads();
   if(page==='kimarite')hydrateKimariteGallery();
@@ -1645,6 +1827,41 @@ document.addEventListener('click',ev=>{
   }
 });
 let lastRoute=location.hash.slice(1).split('?')[0];
+/* Live mode: day picker on the Basho review, and copy/share on recap cards. */
+document.addEventListener('click',ev=>{
+  const dayBtn=ev.target.closest&&ev.target.closest('[data-recap-day]');
+  if(dayBtn){
+    const d=dayBtn.dataset.recapDay;
+    document.querySelectorAll('[data-recap-day]').forEach(b=>b.setAttribute('aria-pressed',String(b===dayBtn)));
+    document.querySelectorAll('[data-recap-panel]').forEach(p=>{p.hidden=p.dataset.recapPanel!==d;});
+    return;
+  }
+  const copy=ev.target.closest&&ev.target.closest('[data-recap-copy],[data-recap-share]');
+  if(!copy)return;
+  const card=copy.closest('.slive-recap'),text=card?.querySelector('[data-recap-text]')?.textContent||'',ok=card?.querySelector('.slive-recap-ok');
+  const done=msg=>{if(ok)ok.textContent=msg;};
+  const doCopy=()=>navigator.clipboard?.writeText(text+' '+location.href.split('#')[0]+'#home').then(()=>done('Copied'),()=>done('Copy not available'))||done('Copy not available');
+  if(copy.hasAttribute('data-recap-share')&&navigator.share)navigator.share({title:'BEFN Sumo',text,url:location.href.split('#')[0]+'#home'}).catch(()=>{});
+  else doCopy();
+});
+/* Banzuke changes list filters (All, Up, Down, Crossed a line, Winning record). */
+document.addEventListener('click',ev=>{
+  const btn=ev.target.closest&&ev.target.closest('[data-bz-filter]');
+  if(!btn)return;
+  const list=document.querySelector('.sbz-list');
+  if(!list)return;
+  list.dataset.filter=btn.dataset.bzFilter;
+  document.querySelectorAll('[data-bz-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+  /* Empty only if no row matches anywhere, including the folded Juryo section. */
+  const f=btn.dataset.bzFilter,match=r=>f==='all'||(f==='up'&&r.dataset.dir==='up')||(f==='dn'&&r.dataset.dir==='dn')||(f==='cross'&&r.dataset.cross==='1')||(f==='win'&&r.dataset.win==='1');
+  list.classList.toggle('is-empty',![...list.querySelectorAll('.sbz-row')].some(match));
+});
+document.addEventListener('change',ev=>{
+  const sel=ev.target.closest&&ev.target.closest('[data-review-select]');
+  if(sel)location.hash='#review/'+sel.value;
+  const pick=ev.target.closest&&ev.target.closest('[data-changes-select]');
+  if(pick)location.hash='#changes/'+pick.value;
+});
 window.addEventListener('hashchange',()=>{
   const sheet=document.getElementById('h2h-sheet');if(sheet?.open)sheet.close();
   const route=location.hash.slice(1).split('?')[0];
@@ -1721,6 +1938,12 @@ async function init(){
     // Optional cut-out derivatives; the page works without them.
     STATE.cutouts=(await loadJson('data/sumo/cutouts.json').catch(()=>null))?.bySourceId||null;
     STATE.heads=(await loadJson('data/sumo/heads.json').catch(()=>null))?.bySourceId||null;
+    // Optional landmark cut-outs (top-left of the profile hero); the page works without them.
+    STATE.landmarks=(await loadJson('data/sumo/landmarks.json').catch(()=>null))?.byCountry||null;
+    // Verified family links for the home page's fact of the basho; the page works without them.
+    STATE.editorial=await loadJson('data/sumo/fun-facts-editorial.json').catch(()=>null);
+    // Publication dates for the next banzuke (Sumo home countdown); the page works without them.
+    RELEASES.dates=await loadJson('data/sumo/banzuke-release-dates.json').catch(()=>null);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
@@ -1734,7 +1957,7 @@ async function init(){
     setKimariteMediaManifest(kimariteMedia);
     render();
   } catch(error){
-    STATE.error=error.message || 'Unable to load the preview dataset';
+    STATE.error=error.message || 'Unable to load the sumo data';
     render();
   }
 }

@@ -17,11 +17,13 @@ import re
 
 import ufc_ratings as ur
 
-ATTRIBUTES = ("striking", "power", "defence", "wrestling", "grappling", "durability")
+# Striking, wrestling and grappling are the profile formulas, each with its own defence (owner, 2026-11-24, "align
+# with profiles"), so the separate Defence attribute is gone. Power and Durability stay: the card's rare-event views.
+ATTRIBUTES = ("striking", "power", "wrestling", "grappling", "durability")
 MIN_STAT_FIGHTS = ur.MIN_STAT_FIGHTS
 MIN_ROSTER = ur.MIN_ROSTER
 MIN_DIVISION_PEERS = ur.MIN_DIVISION_PEERS
-SHRINK_K = {"striking": 4, "defence": 4, "wrestling": 4, "grappling": 4, "power": 8, "durability": 8}
+SHRINK_K = {"striking": 4, "wrestling": 4, "grappling": 4, "power": 8, "durability": 8}
 BANDS = ((75, "green"), (55, "gold"), (35, "orange"), (0, "red"))   # same cut points as the profile engine
 
 

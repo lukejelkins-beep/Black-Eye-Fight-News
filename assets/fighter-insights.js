@@ -28,7 +28,7 @@
  let v3Population=null;
  let v3Opponents=null;
  const isUfcProfile=f=>f?.sport==="MMA"&&(f?.organisation==="UFC"||f?.organization==="UFC"||f?.championReview===true||f?.reviewedUfcProfile===true||(typeof f?.meta==="string"&&/\bUFC\s*:|\bPromotion:\s*UFC\b/.test(f.meta)));
- const v3For=f=>isUfcProfile(f)&&ufcV3?.schema>=4?ufcV3.fighters[norm(f.name)]:null;
+ const v3For=f=>!f?.statsSlug&&isUfcProfile(f)&&ufcV3?.schema>=4?ufcV3.fighters[norm(f.name)]:null;
  const stats=new Map();
  const trackedUfcStats=new Map();
  const openSnapshots=new Set();
@@ -253,7 +253,8 @@
  function renderUfcStructure(f){
   const fights=latestRows(f);
   const reviewed=isReviewedUfc(f);
-  const verifiedTag=reviewed&&["Contender","Prospect"].includes(f.category)&&f.classification?.label===f.category?
+  // The Fighters hub stage chip (formTagsHTML) replaces the older classifier label wherever a Form entry exists.
+  const verifiedTag=!formEntry(statsFor(f))&&reviewed&&["Contender","Prospect"].includes(f.category)&&f.classification?.label===f.category?
    '<div class="befn-v3-status befn-scout-classification"><span>'+escapeHTML(f.category)+'</span></div>':'';
   const decided=fights.filter(x=>!['NC','NO CONTEST'].includes(String(x.outcome||x.result||'').toUpperCase()));
   const win=decided.filter(x=>['W','WIN'].includes(String(x.outcome||x.result||'').toUpperCase())).length;
@@ -264,7 +265,7 @@
     /KO|TKO|SUB|CHOKE|ARMBAR|DEC|UD|SD|MD/i.test(x.method||''));
   const countFinish=pattern=>methodsComplete?decided.filter(x=>
     ['W','WIN'].includes(String(x.outcome||x.result||'').toUpperCase())&&pattern.test(x.method||'')).length:'—';
-  const recentRecord=reviewed&&decided.length?win+'–'+loss+(draw?'–'+draw:''):'—';
+  const recentRecord=(reviewed||f.statsSlug)&&decided.length?win+'–'+loss+(draw?'–'+draw:''):'—';
   const metric=[['Record',recentRecord,reviewed?decided.length+' fights':'Awaiting review'],
     ['KO/TKO wins',countFinish(/KO|TKO/i),reviewed?decided.length+' fights':'Awaiting review'],
     ['Submission wins',countFinish(/SUB|CHOKE|ARMBAR/i),reviewed?decided.length+' fights':'Awaiting review'],
@@ -285,43 +286,49 @@
   const pills=fights.map(x=>{const [s,k]=resultSymbol(x.outcome||x.result);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
   // UFC fighters outside the old V3 snapshot use the stats build directly when
   // their file exists: v2 ratings (if eligible) and the stats sections.
-  const stats=statsFor(f),SP=window.BEFNStatsProfile,v2=stats?.ratings?.eligible?stats.ratings:null;
+  const stats=statsFor(f),SP=window.BEFNStatsProfile,v2=(stats?.ratings?.eligible||stats?.ratings?.provisional)?stats.ratings:null;
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
-   if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
+   if(id==='form'){const e=formEntry(stats);return Number.isFinite(e?.form)?e.form:null;}
+   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
   };
   const v2Overall=Number.isFinite(v2?.overall)?v2.overall:null;
-  const v2Meters=v2?[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']].map(([id,label])=>{
-   const sc=v2Score(id),d=id==='form'?null:v2.skills?.[id]?.division;
-   const hint=id==='form'?'Weighted to recent fights and opponent strength':
+  const v2Meters=v2?V2_METERS.map(([id,label])=>{
+   const sc=v2Score(id),d=SKILL_IDS.includes(id)?v2.skills?.[id]?.division:null;
+   const hint=id==='form'?formHint(stats):id==='results'?RESULTS_HINT:
     Number.isFinite(d)&&stats.division?ordinal(d)+' in '+stats.division:null;
-   return proMeter(label,sc,id!=='form',scoreTier(sc),hint,id==='form'?'':driversHTML(v2.skills?.[id]?.drivers));
+   return proMeter(label,sc,id==='form'?'plain':true,scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
   }).join(''):'';
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
-  const tier=scoreTier(v2Overall);
+  const tier=scoreTier(headlineBar(v2));
   return '<section class="befn-profile-insights befn-pro-insights'+(v2?'':' befn-v3-pending')+'" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
-   '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating</span>'+
-   '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):v2Overall+'<small>/100</small>')+'</strong>'+
-   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(v2Overall||0)+'%"></span></span>'+
+   '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
+   '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):headlineHTML(v2Overall))+'</strong>'+
+   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(headlineBar(v2)||0)+'%"></span></span>'+
+   (v2Overall===null?'':rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>')+formTagsHTML(stats)+
    verifiedTag+
-   (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
+   (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC'+' · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>'+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
-   proSection('ratings','Ratings',v2?'Percentile vs. UFC roster':'UFC statistics pending','<div class="befn-pro-meters">'+
-    (v2?v2Meters:(ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
-    (v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
-     ' rated UFC fighters, using the whole UFC career with recent fights counting most. Recent form is out of 100.</p>':''))+
+   proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC roster'):stats?.ratings?'Not enough measured fights yet':'UFC statistics pending','<div class="befn-pro-meters">'+
+    // While the stats file is still loading, show the same six empty bars the rated card will have, so the card
+    // does not grow a bar when the rating arrives.
+    (v2?v2Meters:(ratedByBuild(f)&&!stats?V2_METERS.map(([,label])=>({label,score:null})):
+     ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
+    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':
+     stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
+     ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
    proSection('fights','Recent fights','Up to five recorded UFC fights',
     (history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'<p class="befn-pro-note">Fight history awaiting verification</p>')+
-    (SP&&stats?SP.history(stats,matched):''))+
+    (SP&&stats?SP.history(stats,matched,careerFor(stats)):''))+
    '</div>'+
    proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages appear once UFC statistics are recorded',
-    SP&&stats?SP.statsPanel(stats):
+    SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags)):
     '<div class="befn-pro-tiles">'+metric.map(([label,value,note])=>'<div><strong>'+escapeHTML(String(value))+'</strong>'+
     '<span>'+escapeHTML(label)+'</span><small>'+escapeHTML(note)+'</small></div>').join('')+'</div>')+
    (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
@@ -350,6 +357,44 @@
    '<section class="befn-profile-block" data-pro-section="profile"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>Championship history</h3><div class="befn-profile-body"><p>'+escapeHTML(title)+'</p></div></section></section>';
  }
+ // Rating model 2026-11: the headline is a rating (1500 = median established UFC fighter), not out of 100. Its bar
+ // and colour use the fighter's percentile on that rating; the number itself is shown as is.
+ const RATING_HINT="50 is the average UFC fighter. Built from results against opponent strength, plus measured skills.";
+ const RESULTS_HINT="Who they beat and how: stronger opponents and finishes count more";
+ // Each skill includes its own defence (2026-11-24), so there is no separate Defence bar for rated fighters.
+ const SKILL_IDS=['striking','wrestling','grappling'];
+ const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['form','Form']];
+ function ratingsNote(){
+  return 'Results and skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+' rated UFC fighters. '+
+   'Results come from every UFC fight, weighting wins over strong opponents and finishes. Skills use the whole UFC career, '+
+   'recent fights counting most, and each includes its own defence: what a fighter stops counts as well as what they land. Recent form is out of 100.';
+ }
+ // Display option A (owner, 2026-11-24): a score out of 100 (50 = average) and the overall rank under it.
+ const formEntry=stats=>(stats&&formData?.fighters?.[stats.slug])||null;
+ const formHint=stats=>{
+  const e=formEntry(stats);
+  if(!e)return 'Recent results, not a prediction';
+  if(e.form===null)return 'Limited data: fewer than 2 UFC fights in 36 months';
+  return 'Going better right now than '+e.form+'% of active UFC fighters. Recent results, not a prediction';
+ };
+ const STAGE_CLASS={"Champion":"champ","Title contender":"title","Contender":"contender","Slipping":"slipping",
+  "Rising star":"rising","Prospect":"prospect","Breakout":"breakout","Inactive":"inactive","Established":"established"};
+ const BADGE_CLASS={"On fire":"fire","Cooling":"cooling","Inactive risk":"risk","Out injured":"injured"};
+ // Stage chip, badges and "UFC #n · form #m", the same as the Fighters hub (handover section 7).
+ function formTagsHTML(stats){
+  const e=formEntry(stats);
+  if(!e)return '';
+  const chips=['<span class="befn-form-chip is-'+(STAGE_CLASS[e.stage]||'established')+'">'+escapeHTML(e.stage)+'</span>']
+   .concat((e.badges||[]).map(b=>'<span class="befn-form-chip is-'+(BADGE_CLASS[b]||'risk')+'">'+escapeHTML(b)+'</span>'));
+  const ranks=Number.isInteger(e.rank)&&e.rank>=1&&e.rank<=15&&Number.isInteger(e.formRank)?
+   '<p class="befn-form-ranks">UFC #'+e.rank+' · form #'+e.formRank+'</p>':'';
+  const why=(e.why||[]).length?'<p class="befn-form-why">'+escapeHTML(e.why.join(' · '))+'</p>':'';
+  return '<div class="befn-form-tags">'+chips.join('')+'</div>'+ranks+why;
+ }
+ const headlineBar=r=>Number.isFinite(r?.overall)?r.overall:null;
+ const headlineHTML=v=>String(v)+'<small>/100</small>';
+ const rankHTML=r=>Number.isInteger(r?.overallRank)&&Number.isInteger(r?.rankOf)?
+  '<p class="befn-pro-standing"><strong>#'+r.overallRank+'</strong> of '+r.rankOf+' rated UFC fighters</p>':'';
  function scoreTier(value){
   return value===null?'unrated':value>=90?'legendary':value>=80?'emerald':value>=70?'lime':value>=50?'amber':'red';
  }
@@ -407,7 +452,7 @@
   const valid=Number.isFinite(score);
   return '<div class="befn-pro-meter is-'+tier+'">'+
    '<div class="befn-pro-meter-head"><span>'+escapeHTML(label)+'</span><b'+(valid?'':' class="is-unrated"')+'>'+
-   (valid?(percentile?ordinal(score)+' <small>pct</small>':score+' <small>/ 100</small>'):'Not rated')+'</b></div>'+
+   (valid?(percentile==='plain'?String(score):percentile?ordinal(score)+' <small>pct</small>':score+' <small>/ 100</small>'):'Not rated')+'</b></div>'+
    '<span class="befn-pro-track" '+(valid?'role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+score+'"':
     'role="img" aria-label="Not rated: insufficient evidence"')+' title="'+escapeHTML(label)+'"><span style="width:'+
    (valid?Math.max(2,Math.min(100,score)):0)+'%"></span></span>'+
@@ -460,21 +505,21 @@
   if(!d?.cutouts)return;
   cutoutRegister=d.cutouts;
   for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-cuts])"))el.remove();
-  schedule();
+  schedule();heroCutout();
  }).catch(()=>{});
  // Flag on the cutout disc. Optional: a fighter with no country keeps the red disc. Re-render when it arrives.
  fetch("data/ufc-fighter-countries.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.fighters)return;
   fighterCountries=d.fighters;
   for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-flags])"))el.remove();
-  schedule();
+  schedule();heroCutout(true);
  }).catch(()=>{});
  function figureFor(entry,name){
   const slug=entry?.slug;
   if(!slug)return null;
   if(cutoutRegister?.[slug]?.ok===true){
    const cc=fighterCountries?.[window.BEFNSnapshotTiles.fold(name||entry?.name||"")];
-   return {cutout:"assets/img/ufc-cutouts/"+slug+".webp",flag:/^[a-z]{2}$/.test(cc||"")?"assets/img/flags/"+cc+".svg":""};
+   return {cutout:"assets/img/ufc-cutouts/"+slug+".webp",flag:/^[a-z]{2}(-[a-z]{3})?$/.test(cc||"")?"assets/img/flags/"+cc+".svg":""};
   }
   return {photo:"assets/img/ufc/"+slug+"-thumb.webp"};
  }
@@ -489,18 +534,64 @@
  fetch("data/ufc-stats/divisions.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema===1&&d.divisions){statsDivisions=d;update();}
  }).catch(()=>{});
- fetch("data/ufc-stats/names.json").then(r=>r.ok?r.json():null).then(d=>{
+ // One Form score for the profile and the Fighters hub (docs/design/FIGHTERS-HUB-FORM.md, owner 2026-11-24):
+ // data/ufc-fighter-form.json, built by scripts/build-ufc-fighter-form.py. Form is a percentile among active UFC
+ // fighters; it is shown beside the BEFN rating (Overall), never compared with it.
+ let formData=null;
+ fetch("data/ufc-fighter-form.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.fighters)return;
+  formData=d;update();
+ }).catch(()=>{});
+ const namesLoading=fetch("data/ufc-stats/names.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.names)return;
   statsMeta=d;
   for(const [k,v] of Object.entries(d.names))statsNames.set(k,v);
-  update();
+  applyOverall();update();
  }).catch(()=>{});
+ // R2 verified career view: both files are tiny; the flag is OFF in the repository.
+ let careerFlags=null,careerList=null;
+ fetch("data/ufc-v4-flags.json").then(r=>r.ok?r.json():null).then(d=>{careerFlags=d;}).catch(()=>{})
+  .then(()=>(careerFlags?.verifiedCareerView===true||careerFlags?.periodViews===true)?fetch("data/ufc-v4-certified-careers.json").then(r=>r.ok?r.json():null).then(d=>{careerList=d;}).catch(()=>{}):null)
+  .then(()=>update());
+ const careerFor=stats=>window.BEFNStatsProfile.careerState(stats,careerList,careerFlags);
+ // Overall (all-promotion) records from scripts/build-ufc-overall-records.py. A fighter without one
+ // keeps showing the UFC record, labelled as that.
+ const overallRecords=new Map();
+ let overallLoaded=false;
+ const sharedNames=new Set();
+ const overallLoading=fetch("data/ufc-overall-records.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.records)return;
+  for(const [k,v] of Object.entries(d.records))overallRecords.set(k,v);
+  for(const n of d.sharedNames||[])sharedNames.add(n);
+ }).catch(()=>{}).then(()=>{overallLoaded=true;applyOverall();update();});
+ const recordText=r=>r.W+"–"+r.L+(r.D?"–"+r.D:"")+(r.NC?" ("+r.NC+" NC)":"");
+ // The saved profile records (the reviewed files and the older roster) are from the day each was checked and go stale
+ // after the next fight. Where the stats build holds the fighter, the header and cards use the overall record
+ // instead (saved record plus UFC fights since). A name two fighters share is never matched on the name alone.
+ function applyOverall(){
+  if(!overallLoaded||!statsMeta)return;
+  for(const f of profiles){
+   if(!isUfcProfile(f)||f.recordLabel==="Overall record")continue;
+   const key=norm(f.name);
+   if(sharedNames.has(key))continue;
+   const o=overallRecords.get(f.statsSlug||statsNames.get(key));
+   if(o){f.record=recordText(o);f.recordLabel="Overall record";}
+  }
+  const open=document.querySelector("#fighterDialog .befn-pro-record");
+  const cur=open&&document.querySelector("#fighterDialog .befn-profile-insights[data-befn-profile]");
+  const pf=cur&&byId.get(cur.dataset.befnProfile);
+  if(pf&&pf.recordLabel==="Overall record"){open.querySelector("strong").textContent=pf.record;open.querySelector("span").textContent=pf.recordLabel;}
+ }
  // A fighter the stats build holds takes a rating from that build or from
  // nowhere; until names.json has loaded we do not yet know, so show no number.
- const ratedByBuild=f=>!statsMeta||statsNames.has(norm(f?.name));
+ const ratedByBuild=f=>!!f?.statsSlug||!statsMeta||statsNames.has(norm(f?.name));
  const noScore=stats=>stats?'Unrated':'—';
+ // A fighter with one or two measured fights is rated provisionally (scripts/ufc_ratings.py): the same percentiles,
+ // placed against the established roster, and clearly tagged. They are never counted in the roster or a leaderboard.
+ const provisionalNote=r=>'Provisional: based on '+r.sample.statFights+' measured UFC '+(r.sample.statFights===1?'fight':'fights')+
+  '. A full rating needs '+(r.sample.minimum||3)+'. Percentiles are placed against the '+(statsMeta?.rated||'rated')+' established UFC fighters and do not change theirs.';
  function statsFor(f){
-  const slug=statsNames.get(norm(f?.name));
+  const slug=f?.statsSlug||statsNames.get(norm(f?.name));
   if(!slug)return null;
   if(statsCache.has(slug))return statsCache.get(slug);
   if(!statsPending.has(slug)){
@@ -509,6 +600,35 @@
     .then(d=>{statsCache.set(slug,d?.schema===1?d:null);update();})
     .catch(()=>statsCache.set(slug,null));
   }
+  return null;
+ }
+ // #fighter/ufc--<slug> reaches every fighter in the stats build. The reviewed
+ // profile opens where one exists and the name is unambiguous; otherwise the
+ // page is made from that fighter's own stats file and nothing else. These are
+ // not added to the Fighters directory, and certify nothing.
+ const statsProfiles=new Map();
+ const STATS_METHOD={ko:"KO/TKO",sub:"Submission",dec:"Decision",draw:"Draw",nc:"No contest",dq:"DQ"};
+ function statsProfile(id,ready){
+  const slug=/^ufc--([a-z0-9-]+)$/.exec(id||"")?.[1];
+  if(!slug)return null;
+  if(statsMeta&&overallLoaded&&statsCache.get(slug)){
+   const d=statsCache.get(slug),known=byName.get(norm(d.name));
+   if(known&&isUfcProfile(known)&&statsNames.get(norm(d.name))===slug)return known;
+   if(!statsProfiles.has(slug)){
+    const c=d.windows?.career||{},ranked=Number.isInteger(d.officialRank)&&d.officialRank>0;
+    const f={id,statsSlug:slug,noPortrait:statsNames.get(norm(d.name))!==slug,name:d.name,sport:"MMA",organisation:"UFC",division:d.division||"",credentials:[],
+     category:d.champion?"Champion":ranked?"Ranked #"+d.officialRank:"UFC fighter",
+     recordLabel:overallRecords.has(slug)?"Overall record":"UFC record",
+     record:overallRecords.has(slug)?recordText(overallRecords.get(slug)):c.fights?recordText(c):"",
+     latest:(d.fights||[]).slice(0,5).map(b=>({date:b.date,opponent:b.opponent,outcome:b.outcome,method:STATS_METHOD[b.method]||""}))};
+    statsProfiles.set(slug,f);byId.set(id,f);
+   }
+   return statsProfiles.get(slug);
+  }
+  Promise.all([namesLoading,overallLoading,fetch("data/ufc-stats/fighters/"+slug+".json").then(r=>r.ok?r.json():null)]).then(([,,d])=>{
+   if(d?.schema!==1||!statsMeta)return;
+   statsCache.set(slug,d);ready?.();
+  }).catch(()=>{});
   return null;
  }
  function driverValue(d){
@@ -524,6 +644,8 @@
    '</ul></details>';
  }
  function renderV3Profile(f,v3,kind){
+  const fresh=freshRows(f);
+  if(fresh)v3={...v3,recent:fresh};
   // The V3 build ships metrics only; ratings come from the shared engine
   // unless a reviewed score has been stored in the data file.
   const ctx=v3Context();
@@ -536,22 +658,24 @@
   const isPercentileV1=id=>!stored(id)&&computedById[id]?.scale==="percentile";
   // Ratings v2 (whole UFC career, recency-weighted, roster + division percentiles)
   // replace the last-five V3 ratings as soon as the fighter's stats file loads.
-  const stats=statsFor(f),v2=stats?.ratings?.eligible?stats.ratings:null;
+  const stats=statsFor(f),v2=(stats?.ratings?.eligible||stats?.ratings?.provisional)?stats.ratings:null;
   const SP=window.BEFNStatsProfile;
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
-   if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
+   if(id==='form'){const e=formEntry(stats);return Number.isFinite(e?.form)?e.form:null;}
+   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
   };
   const technicalScoreV1=technicalScore;
   const built=ratedByBuild(f);
   const ratingScore=id=>v2?v2Score(id):built?null:technicalScoreV1(id);
-  const isPercentile=id=>v2?id!=='form':!built&&isPercentileV1(id);
+  const isPercentile=id=>v2?(id==='form'?'plain':true):!built&&isPercentileV1(id);
   const score=v2?(Number.isFinite(v2.overall)?v2.overall:null):built?null:Number.isFinite(v3.power)?v3.power:computed.overall;
-  const tier=scoreTier(score);
-  const ratings=[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
+  const tier=scoreTier(v2?headlineBar(v2):score);
+  // Six bars once rated, and also while the stats file is still loading (same layout, empty), so nothing jumps.
+  const ratings=v2||(built&&!stats)?V2_METERS:[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
   const readableLabels={
    slpm:'Significant strikes landed per minute',sapm:'Significant strikes absorbed per minute',
    diff:'Net significant strikes per 15 min',kd:'Knockdowns per 15 min',
@@ -609,27 +733,27 @@
   const rosterSize=ctx.population?.skills?.striking?.values?.length;
   const pills=v3.recent.map(b=>{const [s,k]=resultSymbol(b.outcome);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
   const scorePanel='<aside class="befn-pro-score is-'+tier+'" aria-label="Overall fighter rating">'+
-   '<span class="befn-pro-tag">BEFN rating</span>'+
-   '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):score+'<small>/100</small>')+'</strong>'+
-   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
+   '<span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
+   '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):v2?headlineHTML(score):score+'<small>/100</small>')+'</strong>'+
+   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:v2?headlineBar(v2)||0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
+   (v2&&score!==null?rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>':'')+(v2?formTagsHTML(stats):'')+
+   // One classification: the Fighters hub stage chip replaces the older label wherever a Form entry exists.
    '<div class="befn-v3-status befn-scout-classification">'+
-   (v3.category!=='Champion'?'<span>'+escapeHTML(v3.category)+'</span>':'')+
-   (v3.officialRank?'<small>UFC division #'+v3.officialRank+'</small>':'')+'</div>'+
+   (v3.category!=='Champion'&&!formEntry(stats)?'<span>'+escapeHTML(v3.category)+'</span>':'')+
+   (v3.officialRank&&!(formEntry(stats)?.formRank)?'<small>UFC division #'+v3.officialRank+'</small>':'')+'</div>'+
    (pills?'<div class="befn-pro-form"><span>Last '+v3.recent.length+' UFC · '+escapeHTML(recordText)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>';
   const divisionLabel=stats?.division||null;
   const ratingsBody='<div class="befn-pro-meters">'+ratings.map(([id,label])=>{
     const s=ratingScore(id);
-    let hint=id==='form'&&(v2||ctx.opponents)?'Weighted to recent fights and opponent strength':null;
-    if(v2&&id!=='form'){
+    let hint=id==='form'&&v2?formHint(stats):id==='form'&&ctx.opponents?'Weighted to recent fights and opponent strength':id==='results'?RESULTS_HINT:null;
+    if(v2&&SKILL_IDS.includes(id)){
      const d=v2.skills?.[id]?.division;
      if(Number.isFinite(d)&&divisionLabel)hint=ordinal(d)+' in '+divisionLabel;
     }
-    return proMeter(label,s,isPercentile(id),scoreTier(s),hint,v2&&id!=='form'?driversHTML(v2.skills?.[id]?.drivers):'');
+    return proMeter(label,s,isPercentile(id),scoreTier(s),hint,v2&&SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
    }).join('')+'</div>'+
-   (v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
-    ' rated UFC fighters, using the whole UFC career with recent fights counting most. A rating needs at least '+
-    (v2.sample?.minimum||3)+' fights with full round statistics. Recent form is out of 100.</p>':
+   (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':
    built?(stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
     ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''):
    computed.scale==="percentile"?'<p class="befn-pro-note">Skill ratings are percentiles against '+
@@ -645,8 +769,8 @@
     '<div class="befn-pro-fight-side"><span class="befn-power-result '+klass+'">'+symbol+'</span>'+
     (band?'<small class="befn-pro-opp is-'+band.toLowerCase()+'" title="Opponent strength: '+Math.round(q*100)+'th percentile">'+band+' opp.</small>':'')+
     '</div>'+(SP&&stats?SP.fightDetail(stats,{boutId:b.boutId,date:b.date,opponent:b.opponent}):'')+'</li>';
-  }).join('')+'</ul>'+(SP&&stats?SP.history(stats,v3.recent.map(b=>b.boutId)):'');
-  const statsBody=SP&&stats?SP.statsPanel(stats):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
+  }).join('')+'</ul>'+(SP&&stats?SP.history(stats,v3.recent.map(b=>b.boutId),careerFor(stats)):'');
+  const statsBody=SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags)):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
    '<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small>'+
    (rank?'<b class="befn-pro-rank">'+escapeHTML(rank)+'</b>':'')+'</div>').join('')+'</div>';
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
@@ -688,7 +812,9 @@
   root.dataset.ready="true";
   const groups={};
   for(const s of boardData.stats)(groups[s.group]=groups[s.group]||[]).push(s);
-  root.innerHTML='<div class="befn-board-controls">'+
+  root.innerHTML='<label class="befn-board-field befn-board-search"><span>Find a fighter</span>'+
+   '<input id="befn-board-search" class="field" type="search" autocomplete="off" placeholder="Search '+boardData.fighters.length+' UFC fighters"></label>'+
+   '<div class="befn-board-controls">'+
    '<label class="befn-board-field"><span>Leaderboard</span><select id="befn-board-metric" class="field" aria-label="Choose UFC leaderboard">'+
    '<optgroup label="Ratings">'+BOARD_RATINGS.map(([id,l])=>'<option value="'+id+'">'+escapeHTML(l)+'</option>').join("")+'</optgroup>'+
    Object.entries(groups).map(([g,list])=>'<optgroup label="'+escapeHTML(g)+'">'+list.map(s=>
@@ -702,17 +828,20 @@
    '</div><div class="befn-v3-board-results" aria-live="polite"></div>';
   const metric=root.querySelector("#befn-board-metric"),division=root.querySelector("#befn-board-division");
   metric.value=boardState.metric;division.value=boardState.division;
+  const search=root.querySelector("#befn-board-search");
+  search.value=boardState.query;
+  search.addEventListener("input",()=>{boardState.query=search.value;showBoard(root);});
   metric.addEventListener("change",()=>{boardState.metric=metric.value;showBoard(root);});
   division.addEventListener("change",()=>{boardState.division=division.value;showBoard(root);});
   root.querySelectorAll("[data-board-window]").forEach(b=>b.addEventListener("click",()=>{boardState.window=b.dataset.boardWindow;showBoard(root);}));
   showBoard(root);
  }
  let boardData=null,boardLoading=false,boardFailed=false;
- const boardState={metric:"overall",window:"l36",division:"all"};
+ const boardState={metric:"overall",window:"l36",division:"all",query:""};
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
- const BOARD_RATINGS=[["overall","BEFN rating","score"],["striking","Striking rating","pct"],["grappling","Grappling rating","pct"],
-  ["wrestling","Wrestling rating","pct"],["defence","Defence rating","pct"],["form","Recent form","score"]];
+ const BOARD_RATINGS=[["overall","BEFN rating","score"],["results","Results rating","pct"],["striking","Striking rating","pct"],
+  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["form","Form","score"]];
  function boardValue(v,unit){
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";
@@ -728,7 +857,11 @@
   if(rating){
    const col=d.ratingFields.indexOf(st.metric);
    sampleIndex=d.ratingFields.indexOf("statFights");
-   rows=d.ratings.map(r=>({f:r[0],v:r[col],n:r[sampleIndex]}));
+   const rankCol=d.ratingFields.indexOf("overallRank");
+   // The score out of 100 is rounded, so the overall board is ordered by the stored rank (full-precision rating).
+   // Form is the one Form score (data/ufc-fighter-form.json), the same number as the profile and the hub.
+   const formOf=i=>{const e=formData?.fighters?.[d.fighters[i][0]];return Number.isFinite(e?.form)?e.form:null;};
+   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"&&formData?formOf(r[0]):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null}));
    unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
   }else{
    const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];
@@ -739,20 +872,41 @@
   const minimum=rating?Math.max(d.minFights,BOARD_RATING_MIN_FIGHTS):d.minFights;
   rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&
    (st.division==="all"||fighters[r.f][2]===st.division));
-  rows.sort((a,b)=>(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
+  const ranked=rows.length&&rows.every(r=>Number.isInteger(r.k));
+  rows.sort((a,b)=>(ranked?a.k-b.k:0)||(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
   let rank=0,prev=null;
-  rows.forEach((r,i)=>{if(prev===null||r.v!==prev)rank=i+1;r.rank=rank;prev=r.v;});
+  rows.forEach((r,i)=>{const key=ranked?r.k:r.v;if(prev===null||key!==prev)rank=i+1;r.rank=rank;prev=key;});
   return {rows,unit,lower,label,total:rows.length,isRating:!!rating,minimum};
+ }
+ // Photos are matched on name, so two fighters with one name get initials.
+ const boardPhoto=name=>boardData.fighters.filter(f=>norm(f[1])===norm(name)).length>1?
+  '<span class="befn-pro-opp-photo" aria-hidden="true"><b>'+escapeHTML(name.split(/\s+/).map(x=>x[0]).slice(0,2).join(""))+'</b></span>':opponentPhoto(name);
+ const boardLink=(slug,name)=>'<a href="#fighter/ufc--'+encodeURIComponent(slug)+'">'+escapeHTML(name)+'</a>';
+ // Name search covers everyone in the build, including those below a board's minimum.
+ function searchRows(query){
+  const q=norm(query);
+  if(q.length<2)return null;
+  const col=boardData.ratingFields.indexOf("overall"),rated=new Map(boardData.ratings.map(r=>[r[0],r[col]]));
+  return boardData.fighters.map((f,i)=>({slug:f[0],name:f[1],div:f[2],score:rated.get(i)??null}))
+   .filter(f=>norm(f.name).includes(q)).sort((a,b)=>a.name.localeCompare(b.name));
+ }
+ function searchHTML(found){
+  return '<div class="befn-board-result-head"><h3>Fighter search</h3><p>'+found.length+(found.length===1?' fighter':' fighters')+
+   ' · All divisions · BEFN rating'+(found.length>30?' · Showing 30, type more of the name':'')+'</p></div>'+
+   (found.length?'<ol class="befn-board-list is-search">'+found.slice(0,30).map(f=>'<li><span class="befn-board-place"></span>'+
+    boardPhoto(f.name)+'<span class="befn-board-name">'+boardLink(f.slug,f.name)+
+    (boardData.divisions[f.div]?'<small>'+escapeHTML(boardData.divisions[f.div])+'</small>':'')+'</span>'+
+    '<strong class="befn-board-value">'+(Number.isFinite(f.score)?f.score:'Unrated')+'</strong></li>').join("")+'</ol>':
+    '<p class="befn-board-placeholder">No UFC fighter with statistics matches that name.</p>');
  }
  function boardRowHTML(r,unit){
   const [slug,name,div,officialRank,champion]=boardData.fighters[r.f];
-  const profile=byName.get(norm(name));
-  const who=profile?.id?'<a href="#fighter/'+encodeURIComponent(profile.id)+'">'+escapeHTML(name)+'</a>':'<span>'+escapeHTML(name)+'</span>';
+  const who=boardLink(slug,name);
   const division=boardData.divisions[div]||"";
   const tag=champion?'<b class="befn-board-tag is-champ">Champion</b>':Number.isInteger(officialRank)&&officialRank>0?
    '<b class="befn-board-tag">#'+officialRank+'</b>':'';
   return '<li class="'+(r.rank<=3?'befn-board-podium':r.rank<=10?'befn-board-topten':'')+'">'+
-   '<span class="befn-board-place">'+r.rank+'</span>'+opponentPhoto(name)+
+   '<span class="befn-board-place">'+r.rank+'</span>'+boardPhoto(name)+
    '<span class="befn-board-name">'+who+tag+'<small>'+r.n+' UFC fights with full stats'+(division?' · '+escapeHTML(division):'')+'</small></span>'+
    '<strong class="befn-board-value">'+escapeHTML(boardValue(r.v,unit))+'</strong></li>';
  }
@@ -760,13 +914,16 @@
   const results=root.querySelector(".befn-v3-board-results");
   const windows=root.querySelector(".befn-board-windows");
   const view=boardRows();
-  if(windows)windows.hidden=view.isRating;
+  const found=searchRows(boardState.query);
+  if(windows)windows.hidden=!!found||view.isRating;
+  if(found){results.innerHTML=searchHTML(found);return;}
   root.querySelectorAll("[data-board-window]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.boardWindow===boardState.window)));
   const scope=boardState.division==="all"?"All divisions":boardData.divisions[boardState.division]||"Division";
   const when=view.isRating?"Whole UFC career, recent fights count most":boardData.windows[boardState.window];
   const display=view.rows.slice(0,30);
   results.innerHTML='<div class="befn-board-result-head"><h3>'+escapeHTML(view.label)+'</h3><p>'+
-   escapeHTML(scope)+' · '+escapeHTML(when)+' · '+view.total+' qualifying fighters'+(view.lower?' · Lower is better':'')+'</p></div>'+
+   escapeHTML(scope)+' · '+escapeHTML(when)+' · '+view.total+' qualifying fighters'+(view.lower?' · Lower is better':'')+'</p>'+
+   (boardState.metric==="overall"?'<p>'+RATING_HINT+'</p>':'')+'</div>'+
    (display.length?'<ol class="befn-board-list">'+display.map(r=>boardRowHTML(r,view.unit)).join("")+'</ol>':
     '<p class="befn-board-placeholder">No fighters qualify for this board yet.</p>')+
    '<p class="befn-board-rule">A fighter needs '+view.minimum+' UFC fights with full round-by-round statistics'+
@@ -805,7 +962,20 @@
  const secTime=s=>Number.isInteger(s)&&s>=0?
   Math.floor(s/60)+":"+String(s%60).padStart(2,"0"):"—";
  const plainDate=str=>String(str||"").replace(/^\s+/,"");
+ // Last five UFC fights. Where the stats build holds the fighter, they come from its file (kept current by the
+ // results import); the reviewed profile's "latest" and the V3 snapshot are from the day each was checked and miss
+ // a fight since. A name two fighters share is never matched on the name alone.
+ function isSharedName(key){try{return sharedNames.has(key)}catch(e){return false}}   // sharedNames is declared further down
+ function freshRows(f){
+  if(!f||!isUfcProfile(f)||(!f.statsSlug&&isSharedName(norm(f.name))))return null;
+  const s=statsFor(f),SP=window.BEFNStatsProfile;
+  if(!s?.fights?.length)return null;
+  return s.fights.slice(0,5).map(b=>({date:b.date,opponent:b.opponent,outcome:b.outcome,boutId:b.boutId,
+   method:SP?.methodText?SP.methodText(b):""}));
+ }
  function latestRows(f){
+  const fresh=freshRows(f);
+  if(fresh)return fresh;
   if(!f||!Array.isArray(f.latest))return [];
   return f.latest.filter(x=>x&&x.opponent&&/^(W|L|D|NC|WIN|LOSS|DRAW|NO CONTEST)$/i.test(String(x.outcome||x.result||"")))
     .slice(0,5);
@@ -963,11 +1133,21 @@
   const key=matchupKey(article,names);
   const tapeFor=i=>fighterTape?.fighters?.[T.fold(names[i])]||{};
   const side=i=>({...(pair[i]||{}),tape:tapeFor(i)});
-  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):"—",form:formLetters(f[i]),fig:figureFor(pair[i],n)}));
+  // Record: the profile's, else the one the card row already shows, so a fighter without a profile still has one.
+  const rowRecord=i=>article.querySelectorAll(".result-contender-info .upcoming-fighter-record")[i]?.textContent.trim()||"";
+  // Rank, champion and tier tags from the card row travel with the name, since the open snapshot hides that row.
+  const rowTags=i=>{const c=article.querySelectorAll(".result-contender-info")[i];return c?[...c.querySelectorAll(".result-fighter-rank,.result-fighter-tier")].map(x=>x.textContent.trim()).filter(Boolean):[]};
+  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):rowRecord(i)||"—",form:formLetters(f[i]),fig:figureFor(pair[i],n),tags:rowTags(i)}));
+  upgradeRowPhotos(article,sides);
   const shared=pair[0]?.division&&pair[0].division===pair[1]?.division?pair[0].division:"";
   const tabs=bTabs(article,names),stored=selectedTabs.get(key);
   const active=tabs.some(t=>t[0]===stored)?stored:"stats";
-  const h={esc:escapeHTML,today:new Date(),division:shared};
+  const label=article.querySelector(".result-featured-bout-label")?.textContent.trim()||"";
+  const billing=label?label.charAt(0).toUpperCase()+label.slice(1).toLowerCase():"";
+  const division=shared||article.querySelector(".result-bout-division")?.textContent.trim()||"";
+  const rounds=article.querySelector(".result-bout-rounds")?.textContent.trim()||"";
+  const reported=/reported/i.test(article.querySelector(".upcoming-matchup-status")?.textContent||"")?"Reported":"";
+  const h={esc:escapeHTML,today:new Date(),division,billing,rounds,status:reported};
   const buttons=f.map(p=>p?
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
    '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
@@ -978,8 +1158,51 @@
    B.analysisHTML(B.analysisLines(side(0),side(1),names,h.today),h)+
    B.tabsHTML(tabs,active,h)+
    '<div class="sb-panel">'+bPanel(active,article,names,f)+'</div>'+
-   '<div class="befn-snapshot-links">'+buttons+'</div>'+
+   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
+ }
+ // Finished UFC bout on the Results page: the same face-off (owner, 24 Nov 2026), led by the result. Records are the
+ // records after the fight, age is age on fight night. No pre-fight analysis or last-five form: we hold no numbers
+ // frozen at fight time, and today's last five can include later fights.
+ function slugOf(name){return String(name||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");}
+ function renderResultB(article,names,f){
+  const B=window.BEFNSnapshotB,T=window.BEFNSnapshotTiles;
+  const key=matchupKey(article,names);
+  const day=/(\d{4}-\d{2}-\d{2})$/.exec(article.closest("[data-result-event]")?.dataset?.resultEvent||"");
+  const today=day?new Date(day[1]+"T12:00:00Z"):new Date();
+  const contenders=[...article.querySelectorAll(".result-matchup .result-contender")];
+  const winner=contenders.findIndex(c=>c.classList.contains("is-winner"));
+  const record=i=>{const el=contenders[i]?.querySelector(".result-bout-record");return el?[...el.childNodes].filter(x=>x.nodeType===3).map(x=>x.textContent).join("").trim():"";};
+  const side=i=>({tape:(T&&fighterTape?.fighters?.[T.fold(names[i])])||{}});
+  const sides=names.map((n,i)=>({name:n,record:record(i)||"—",note:record(i)?"after the fight":"",fig:figureFor({slug:slugOf(n)},n),tags:i===winner?["Won"]:[]}));
+  const label=article.querySelector(".result-featured-bout-label")?.textContent.trim()||"";
+  const h={esc:escapeHTML,today,winner,
+   billing:label?label.charAt(0).toUpperCase()+label.slice(1).toLowerCase():"",
+   division:article.querySelector(".result-bout-division")?.textContent.trim()||"",
+   rounds:article.querySelector(".result-bout-rounds")?.textContent.trim()||"",
+   result:article.querySelector(".result-matchup-result strong")?.textContent.trim()||""};
+  const buttons=f.map(p=>p?
+   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
+   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  return '<details class="befn-fight-snapshot sb-result-snap" data-snapshot-key="'+escapeHTML(key)+'" data-b="1"'+
+   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+   '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
+   B.tapeHTML(sides,side(0),side(1),h)+historyHTML(f,names,key)+
+   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
+   '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
+ }
+ // Closed card row (layout B): a fighter with a cutout is shown as that cutout on their flag disc, the same picture
+ // the open snapshot shows, instead of the square-cropped photo. Others keep the photo.
+ function upgradeRowPhotos(article,sides){
+  article.querySelectorAll(".result-contender .upcoming-photo").forEach((slot,i)=>{
+   const fig=sides[i]?.fig;
+   if(!fig?.cutout||slot.dataset.sbCut===fig.cutout)return;
+   slot.dataset.sbCut=fig.cutout;
+   slot.classList.add("sb-row-cut");
+   slot.querySelector(":scope > .sb-row-fig")?.remove();
+   slot.insertAdjacentHTML("afterbegin",'<span class="sb-row-fig" aria-hidden="true">'+(fig.flag?'<img class="sb-row-flag" src="'+escapeHTML(fig.flag)+'" alt="" loading="lazy" decoding="async" onerror="this.remove()">':'')+
+    '<img class="sb-row-cutimg" src="'+escapeHTML(fig.cutout)+'" alt="" loading="lazy" decoding="async" onerror="this.closest(\'.upcoming-photo\')?.classList.remove(\'sb-row-cut\');this.parentNode.remove()"></span>');
+  });
  }
  function renderSnapshot(article){
   const names=[getName(article,0),getName(article,1)];
@@ -988,6 +1211,7 @@
   if(window.BEFNSnapshotB&&sport==="MMA"){
    const pair=tilePair(article,names);
    if(pair&&tilesFor(article,names))return renderSnapshotB(article,names,f,pair);
+   if(article.matches(".is-completed")&&article.closest("#results-content [data-result-event]"))return renderResultB(article,names,f);
   }
   const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
   const metricHTML=labels.map((label,i)=>{
@@ -1005,16 +1229,8 @@
   const buttons=f.map((p,i)=>p?
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
    '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
-  const key=matchupKey(article,names),active=selectedTabs.get(key)==="stats"?"stats":"fights";
-  const tabOptions=[["fights","Last 5 Fights"],["stats","Stats"]];
-  const historyTab='<section class="befn-recent-history" aria-label="Recent fight history">'+
-   '<h3 class="befn-comparison-heading">Recent fight history</h3>'+
-   '<div class="befn-history-tabs" role="tablist" aria-label="Choose fight history view">'+
-   tabOptions.map(([id,label])=>
-    '<button type="button" role="tab" data-befn-history-tab="'+id+
-    '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
-   ).join("")+'</div>'+
-   '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
+  const key=matchupKey(article,names);
+  const historyTab=historyHTML(f,names,key);
   const tiles=tilesFor(article,names),scores=scoresFor(article,names);
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'"'+(tiles?' data-tiles="1"':'')+(scores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
@@ -1025,9 +1241,22 @@
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
    historyTab+talePanel(f,names)+
-   '<div class="befn-snapshot-links">'+buttons+'</div>'+
+   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p>'+
    '</div></details>';
+ }
+ // Recent fight history (last five fights / stats tabs), shared by the older snapshot and the result face-off.
+ function historyHTML(f,names,key){
+  const active=selectedTabs.get(key)==="stats"?"stats":"fights";
+  const tabOptions=[["fights","Last 5 Fights"],["stats","Stats"]];
+  return '<section class="befn-recent-history" aria-label="Recent fight history">'+
+   '<h3 class="befn-comparison-heading">Recent fight history</h3>'+
+   '<div class="befn-history-tabs" role="tablist" aria-label="Choose fight history view">'+
+   tabOptions.map(([id,label])=>
+    '<button type="button" role="tab" data-befn-history-tab="'+id+
+    '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
+   ).join("")+'</div>'+
+   '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
  }
  let timer=null;
  function hydrate(){
@@ -1044,10 +1273,34 @@
  }
  // Sumo-style profile shell: lift the rating panel into the hero slot and
  // show only the section tabs whose sections exist for this fighter.
+ // Profile hero, option P2 "dark band" (owner, 24 Nov 2026): a UFC fighter with a cutout stands in a dark band over a
+ // faded half of their flag. The cutout is shown through the profile's own portrait frame (its image is swapped for the
+ // cutout), so the frame's loaded / "Photo unavailable" fallback states keep working as before. Everyone else keeps the
+ // photo hero. `force` redraws once the country list arrives.
+ function heroCutout(force){
+  const hero=document.querySelector('#fighterDialog.befn-pro-dialog .befn-pro-hero');
+  const name=hero?.querySelector('.befn-pro-id h2')?.textContent.trim()||"";
+  const frame=hero?.querySelector('.befn-pro-photo [data-fighter-portrait]');
+  if(!hero||!name||!frame)return;
+  const slug=/^UFC\b/.test(hero.querySelector('.befn-pro-eyebrow')?.textContent||"")?slugOf(name):"";
+  if(!slug||cutoutRegister?.[slug]?.ok!==true){hero.classList.remove('has-cut');hero.querySelector(':scope > .befn-hero-cut')?.remove();return;}
+  if(hero.dataset.cut===slug&&!force)return;
+  hero.dataset.cut=slug;
+  const cc=fighterCountries?.[window.BEFNSnapshotTiles?.fold(name)||""];
+  hero.querySelector(':scope > .befn-hero-cut')?.remove();
+  hero.classList.add('has-cut');
+  hero.insertAdjacentHTML('afterbegin','<div class="befn-hero-cut" aria-hidden="true">'+
+   (/^[a-z]{2}(-[a-z]{3})?$/.test(cc||"")?'<img class="befn-hero-flag" src="assets/img/flags/'+cc+'.svg" alt="" onerror="this.remove()">':'')+'</div>');
+  let img=frame.querySelector('img');
+  if(!img){img=document.createElement('img');img.alt='Photograph of '+name;frame.appendChild(img);}
+  const src='assets/img/ufc-cutouts/'+slug+'.webp';
+  if(img.getAttribute('src')!==src){frame.classList.remove('is-loaded');img.classList.remove('is-error');img.removeAttribute('referrerpolicy');img.src=src;}
+ }
  function layoutProDialog(){
   const dialog=document.querySelector('#fighterDialog.befn-pro-dialog');
   const slot=dialog?.querySelector('[data-befn-pro-rating]');
   if(!slot)return false;
+  heroCutout();
   const panel=dialog.querySelector('.befn-pro-body .befn-pro-score, .befn-pro-body .befn-v3-hero');
   if(panel)slot.replaceChildren(panel);
   else if(!slot.children.length)slot.innerHTML=heroFallback(byId.get(dialog.querySelector('[data-befn-profile]')?.dataset.befnProfile));
@@ -1165,7 +1418,9 @@
   }
   if(added)update();
  });
- window.BEFNFighterInsights={renderProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,layoutV3Dialog,heroFallback,topCredentials:f=>credentialsFor(f).length?credentialsHTML(f):"",hasV3:isUfcProfile};
+ window.BEFNFighterInsights={renderProfile,statsProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,layoutV3Dialog,heroFallback,topCredentials:f=>credentialsFor(f).length?credentialsHTML(f):"",hasV3:isUfcProfile};
+ // The router runs before this deferred file, so replay a shared profile link.
+ if(String(window.location?.hash||"").startsWith("#fighter/ufc--"))window.dispatchEvent(new Event("hashchange"));
  schedule();
 
  fetch("data/fighter-comparison-sample.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{
