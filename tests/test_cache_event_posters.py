@@ -63,6 +63,20 @@ class PosterCacheTest(unittest.TestCase):
         posters.run(self.fetch, self.root)
         self.assertEqual(self.calls, [])
 
+    def test_reads_eye_checked_intake_without_touching_the_schedule(self):
+        intake = {'events': {'ksw-124-2026-12-19': [
+            {'url': 'https://example.com/ksw124-wide.jpg', 'source': 'https://www.kswmma.com/gala/xtb-ksw-124',
+             'credit': 'KSW event artwork', 'orientation': 'landscape', 'width': 1920, 'height': 1080}]},
+            'rejected': [{'eventId': 'ksw-124-2026-12-19', 'url': 'https://example.com/fan-edit.jpg'}]}
+        (self.root / 'data/poster-intake.json').write_text(json.dumps(intake))
+        before = (self.root / 'data/upcoming-cards.json').read_text()
+        report = posters.run(self.fetch, self.root)
+        self.assertIn('cached: ksw-124-2026-12-19 landscape 1280x640', report)
+        self.assertNotIn('https://example.com/fan-edit.jpg', self.calls)
+        self.assertEqual((self.root / 'data/upcoming-cards.json').read_text(), before)
+        reg = json.loads((self.root / 'data/poster-register.json').read_text())
+        self.assertEqual(reg['events']['ksw-124-2026-12-19']['landscape']['credit'], 'KSW event artwork')
+
     def test_rejects_tiny_images(self):
         with self.assertRaises(ValueError):
             posters.process(png(120, 120), 'portrait')

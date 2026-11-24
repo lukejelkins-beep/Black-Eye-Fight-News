@@ -9,6 +9,7 @@ on:
     paths:
       - 'scripts/cache-event-posters.py'
       - 'tests/test_cache_event_posters.py'
+      - 'data/poster-intake.json'
       - '.github/workflows/cache-event-posters.yml'
 permissions:
   contents: write
