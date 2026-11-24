@@ -32,7 +32,7 @@ Verified = a Tier A record (NCAA results, or the school's own reviewed athletics
 | Terrance McKinney | D-II | on the team | A, B |
 | Thomas Gantt | D-I | on the team, All-American | A, B |
 | Tim Elliott | D-II | on the team, All-American | A, B |
-| Torrez Finney | D-I | on the team | B |
+| Torrez Finney | D-I | on the team | A, B |
 | Tyrell Fortune | D-II | on the team, NCAA champion | A, B |
 
 ## Americans: NCAA claimed, not yet verified (3)
@@ -59,4 +59,4 @@ Other wrestling (provincial / national, from their UFC profiles only): Aiemann Z
 
 ## Reviewed official athletics hosts
 
-A college roster counts as Tier A for team participation only when its host is in [`_school-athletics-hosts.json`](_school-athletics-hosts.json) (19 hosts, each homepage checked 24 Nov; King University added 24 Nov with the owner's approval). Pending (blocked automated checks): Fresno State (gobulldogs.com), Chattanooga (gomocs.com).
+A college roster counts as Tier A for team participation only when its host is in [`_school-athletics-hosts.json`](_school-athletics-hosts.json): 21 hosts, each homepage checked 24 Nov. King University was added with the owner's approval. Fresno State (gobulldogs.com) and Chattanooga (gomocs.com) were added in the overnight run, because each homepage title names it as the school's official athletics website. That raised the roster claims of Josh Hokit and Torrez Finney to Tier A. No host is pending.
