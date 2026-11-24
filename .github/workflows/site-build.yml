@@ -1,12 +1,12 @@
 name: Check the published site build
 on:
   workflow_dispatch:
+  # No path filter: any change can add or drop a data reference (a page, a
+  # script, a feed), so every PR builds dist/ exactly as Render does.
   pull_request:
     branches: [main]
-    paths:
-      - 'scripts/build-site.mjs'
-      - 'tests/test-build-site.mjs'
-      - '.github/workflows/site-build.yml'
+  push:
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
