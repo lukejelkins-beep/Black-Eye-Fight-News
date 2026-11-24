@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Make transparent fighter cutouts for fighters on announced UFC cards: assets/img/ufc-cutouts/<slug>.webp.
+"""Make transparent fighter cutouts for UFC fighters: assets/img/ufc-cutouts/<slug>.webp.
+
+Default: fighters on announced cards. --all: every fighter in data/ufc-image-register.json (Fighters hub, 24 Nov 2026).
 
 Source: the owner-cleared portrait already in assets/img/ufc/<slug>-portrait.webp (see data/ufc-image-register.json).
 Background removal runs offline with rembg (isnet-general-use model, the same model as the Sumo cutouts, DECISIONS PR #323).
@@ -99,10 +101,35 @@ def frame(im):
     return canvas.resize((FRAME_W, FRAME_H), Image.LANCZOS)
 
 
+def check_framed(im):
+    """Second check on the finished 400x500 cutout (added 24 Nov 2026 after reviewing a full-roster run).
+
+    Catches what the first check misses: a floating head where the body was lost (shoulder band under 60% filled),
+    one shoulder cut away (left and right halves of the lower body differ by more than 20%), and hair or background
+    left as a grey halo (more than 10% of the frame semi-transparent). Returns (ok, reason).
+    """
+    import numpy as np
+    a = np.array(im)[:, :, 3]
+    m = a > 128
+    h, w = m.shape
+    band = m[int(h * 0.85):].mean()
+    if band < 0.6:
+        return False, f"shoulders missing (bottom band {band:.2f} filled)"
+    left, right = m[int(h * 0.7):, : w // 2].mean(), m[int(h * 0.7):, w // 2:].mean()
+    asym = abs(left - right) / max(left + right, 1e-6)
+    if asym > 0.2:
+        return False, f"lopsided figure ({asym:.2f})"
+    semi = float(((a > 20) & (a < 235)).mean())
+    if semi > 0.1:
+        return False, f"soft halo ({semi:.2f} semi-transparent)"
+    return True, ""
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--only", help="comma-separated slugs (default: every card fighter)")
     ap.add_argument("--reframe", action="store_true", help="re-crop the existing cutouts to the common framing (no model needed)")
+    ap.add_argument("--all", action="store_true", help="every fighter in the image register, not only card fighters (Fighters hub)")
     args = ap.parse_args()
     from PIL import Image
     import numpy as np
@@ -118,8 +145,12 @@ def main() -> int:
     fold = lambda t: re.sub(r"[^a-z0-9]", "", unicodedata.normalize("NFKD", str(t or "")).encode("ascii", "ignore").decode().lower())
     by_name = {fold(i["name"]): i["id"] for i in images.values()}
     # The snapshot slug can be missing; the image register id matched on the folded name is the fallback.
-    wanted = [s.strip() for s in args.only.split(",")] if args.only else sorted(
-        {v.get("slug") or by_name.get(k) or "unmatched-" + k for k, v in snaps.items()})
+    if args.only:
+        wanted = [s.strip() for s in args.only.split(",")]
+    elif args.all:
+        wanted = sorted(images)
+    else:
+        wanted = sorted({v.get("slug") or by_name.get(k) or "unmatched-" + k for k, v in snaps.items()})
     reg = json.loads(REGISTER.read_text()) if REGISTER.exists() else {"version": 1, "cutouts": {}}
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     session = None
@@ -141,7 +172,12 @@ def main() -> int:
         ok, reason, cleaned = judge(arr[:, :, 3])
         if ok:
             arr[:, :, 3] = cleaned
-            frame(Image.fromarray(arr)).save(OUT_DIR / f"{slug}.webp", quality=88, method=6)
+            framed = frame(Image.fromarray(arr))
+            ok2, why = check_framed(framed)
+            if ok2:
+                framed.save(OUT_DIR / f"{slug}.webp", quality=88, method=6)
+            else:
+                ok, reason = False, why
         reg["cutouts"][slug] = {"ok": ok, "reason": reason}
     reg["cutouts"] = dict(sorted(reg["cutouts"].items()))
     reg["note"] = ("Derived from the owner-cleared portraits in data/ufc-image-register.json (rights owner-cleared, credit ESPN). "
