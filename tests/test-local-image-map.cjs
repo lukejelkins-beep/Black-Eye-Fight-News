@@ -55,7 +55,12 @@ for (const r of boxing.images) {
   assert(/^[a-f0-9]{64}$/.test(r.sha256), 'no checksum for ' + r.name);
   if (r.rights === 'promoter-press-kit') {
     assert(r.promoter && r.credit, 'no promoter credit for ' + r.name);
-    assert(r.attestation && r.attestation === boxing.rightsNote, 'row attestation must match the register');
+    // Each promoter's row carries the attestation it falls under (2026-11-22, or Top Rank's of
+    // 2026-11-24), one the register records and its rights note repeats.
+    const attested = Object.values(boxing.attestations || { only: boxing.rightsNote });
+    assert(r.attestation && attested.includes(r.attestation) && boxing.rightsNote.includes(r.attestation),
+      'row attestation must be one the register records: ' + r.name);
+    if (r.promoter === 'Top Rank') assert(/2026-11-24/.test(r.attestation), 'Top Rank rows fall under the 2026-11-24 attestation');
   } else {
     // A Creative Commons photograph is only usable with its photographer and licence named.
     assert.strictEqual(r.rights, 'wikimedia-cc', 'unknown rights for ' + r.name + ': ' + r.rights);

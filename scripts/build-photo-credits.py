@@ -55,8 +55,8 @@ def main():
     if press:
         promoters = sorted({r.get("promoter", "") for r in press if r.get("promoter")})
         parts.append("<h2>Promoter press kits</h2>"
-                     f"<p>Published under the BEFN operator's attestation of 22 November 2026 that these photographs "
-                     f"may be republished with the promoter credited: {e(', '.join(promoters))}. "
+                     f"<p>Published under the BEFN operator's attestations (22 November 2026; Top Rank 24 November 2026) "
+                     f"that these photographs may be republished with the promoter credited: {e(', '.join(promoters))}. "
                      "They are not claimed to be Creative Commons licensed.</p><ul>")
         for r in press:
             page = (f"<a href=\"{e(r['sourcePage'])}\">Source page</a>" if r.get("sourcePage") else "Source page")
