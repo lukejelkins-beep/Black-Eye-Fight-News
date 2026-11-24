@@ -353,3 +353,20 @@
 .befn-pro-rating,.befn-pro-score{min-width:0;max-width:100%}
 .befn-pro-score .befn-v3-score{max-width:100%;overflow-wrap:anywhere}
 .befn-pro-score.is-unrated .befn-v3-score{font-size:clamp(34px,3.6vw,48px);line-height:1}
+/* Stage chips and badges shared with the Fighters hub (docs/design/FIGHTERS-HUB-FORM.md section 7). */
+.befn-form-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.befn-form-chip{display:inline-flex;align-items:center;min-height:24px;padding:2px 10px;border-radius:999px;font:700 12px/1.2 'DM Sans',system-ui,sans-serif;letter-spacing:.02em;background:#efe9de;color:#111013}
+.befn-form-chip.is-champ{background:#111013;color:#f3c332}
+.befn-form-chip.is-title{background:#111013;color:#fff}
+.befn-form-chip.is-contender{background:#efe9de;color:#111013}
+.befn-form-chip.is-slipping{background:#3b5b9a;color:#fff}
+.befn-form-chip.is-rising{background:#7a5a12;color:#fff}
+.befn-form-chip.is-prospect{background:#f6edd2;color:#5f4609}
+.befn-form-chip.is-breakout{background:#f6edd2;color:#5f4609}
+.befn-form-chip.is-established,.befn-form-chip.is-inactive{background:#efe9de;color:#4a4246}
+.befn-form-chip.is-fire{background:#cf1824;color:#fff}
+.befn-form-chip.is-cooling{background:#dfe6f2;color:#2d4675}
+.befn-form-chip.is-risk{background:#efe9de;color:#4a4246}
+.befn-form-chip.is-injured{background:#4a4246;color:#fff}
+.befn-pro-score .befn-form-ranks{margin:8px 0 0;font-size:14px;font-weight:700;color:var(--pro-ink)}
+.befn-pro-score .befn-form-why{margin:4px 0 0;font-size:13px;color:var(--pro-muted)}

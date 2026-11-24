@@ -253,7 +253,8 @@
  function renderUfcStructure(f){
   const fights=latestRows(f);
   const reviewed=isReviewedUfc(f);
-  const verifiedTag=reviewed&&["Contender","Prospect"].includes(f.category)&&f.classification?.label===f.category?
+  // The Fighters hub stage chip (formTagsHTML) replaces the older classifier label wherever a Form entry exists.
+  const verifiedTag=!formEntry(statsFor(f))&&reviewed&&["Contender","Prospect"].includes(f.category)&&f.classification?.label===f.category?
    '<div class="befn-v3-status befn-scout-classification"><span>'+escapeHTML(f.category)+'</span></div>':'';
   const decided=fights.filter(x=>!['NC','NO CONTEST'].includes(String(x.outcome||x.result||'').toUpperCase()));
   const win=decided.filter(x=>['W','WIN'].includes(String(x.outcome||x.result||'').toUpperCase())).length;
@@ -289,7 +290,7 @@
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
-   if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
+   if(id==='form'){const e=formEntry(stats);return Number.isFinite(e?.form)?e.form:null;}
    if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
@@ -297,9 +298,9 @@
   const v2Overall=Number.isFinite(v2?.overall)?v2.overall:null;
   const v2Meters=v2?V2_METERS.map(([id,label])=>{
    const sc=v2Score(id),d=SKILL_IDS.includes(id)?v2.skills?.[id]?.division:null;
-   const hint=id==='form'?'Weighted to recent fights and opponent strength':id==='results'?RESULTS_HINT:
+   const hint=id==='form'?formHint(stats):id==='results'?RESULTS_HINT:
     Number.isFinite(d)&&stats.division?ordinal(d)+' in '+stats.division:null;
-   return proMeter(label,sc,id!=='form',scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
+   return proMeter(label,sc,id==='form'?'plain':true,scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
   }).join(''):'';
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
@@ -308,7 +309,7 @@
    '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):headlineHTML(v2Overall))+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(headlineBar(v2)||0)+'%"></span></span>'+
-   (v2Overall===null?'':rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>')+
+   (v2Overall===null?'':rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>')+formTagsHTML(stats)+
    verifiedTag+
    (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC'+' · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>'+
@@ -362,13 +363,34 @@
  const RESULTS_HINT="Who they beat and how: stronger opponents and finishes count more";
  // Each skill includes its own defence (2026-11-24), so there is no separate Defence bar for rated fighters.
  const SKILL_IDS=['striking','wrestling','grappling'];
- const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['form','Recent Form']];
+ const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['form','Form']];
  function ratingsNote(){
   return 'Results and skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+' rated UFC fighters. '+
    'Results come from every UFC fight, weighting wins over strong opponents and finishes. Skills use the whole UFC career, '+
    'recent fights counting most, and each includes its own defence: what a fighter stops counts as well as what they land. Recent form is out of 100.';
  }
  // Display option A (owner, 2026-11-24): a score out of 100 (50 = average) and the overall rank under it.
+ const formEntry=stats=>(stats&&formData?.fighters?.[stats.slug])||null;
+ const formHint=stats=>{
+  const e=formEntry(stats);
+  if(!e)return 'Recent results, not a prediction';
+  if(e.form===null)return 'Limited data: fewer than 2 UFC fights in 36 months';
+  return 'Going better right now than '+e.form+'% of active UFC fighters. Recent results, not a prediction';
+ };
+ const STAGE_CLASS={"Champion":"champ","Title contender":"title","Contender":"contender","Slipping":"slipping",
+  "Rising star":"rising","Prospect":"prospect","Breakout":"breakout","Inactive":"inactive","Established":"established"};
+ const BADGE_CLASS={"On fire":"fire","Cooling":"cooling","Inactive risk":"risk","Out injured":"injured"};
+ // Stage chip, badges and "UFC #n · form #m", the same as the Fighters hub (handover section 7).
+ function formTagsHTML(stats){
+  const e=formEntry(stats);
+  if(!e)return '';
+  const chips=['<span class="befn-form-chip is-'+(STAGE_CLASS[e.stage]||'established')+'">'+escapeHTML(e.stage)+'</span>']
+   .concat((e.badges||[]).map(b=>'<span class="befn-form-chip is-'+(BADGE_CLASS[b]||'risk')+'">'+escapeHTML(b)+'</span>'));
+  const ranks=Number.isInteger(e.rank)&&e.rank>=1&&e.rank<=15&&Number.isInteger(e.formRank)?
+   '<p class="befn-form-ranks">UFC #'+e.rank+' · form #'+e.formRank+'</p>':'';
+  const why=(e.why||[]).length?'<p class="befn-form-why">'+escapeHTML(e.why.join(' · '))+'</p>':'';
+  return '<div class="befn-form-tags">'+chips.join('')+'</div>'+ranks+why;
+ }
  const headlineBar=r=>Number.isFinite(r?.overall)?r.overall:null;
  const headlineHTML=v=>String(v)+'<small>/100</small>';
  const rankHTML=r=>Number.isInteger(r?.overallRank)&&Number.isInteger(r?.rankOf)?
@@ -430,7 +452,7 @@
   const valid=Number.isFinite(score);
   return '<div class="befn-pro-meter is-'+tier+'">'+
    '<div class="befn-pro-meter-head"><span>'+escapeHTML(label)+'</span><b'+(valid?'':' class="is-unrated"')+'>'+
-   (valid?(percentile?ordinal(score)+' <small>pct</small>':score+' <small>/ 100</small>'):'Not rated')+'</b></div>'+
+   (valid?(percentile==='plain'?String(score):percentile?ordinal(score)+' <small>pct</small>':score+' <small>/ 100</small>'):'Not rated')+'</b></div>'+
    '<span class="befn-pro-track" '+(valid?'role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+score+'"':
     'role="img" aria-label="Not rated: insufficient evidence"')+' title="'+escapeHTML(label)+'"><span style="width:'+
    (valid?Math.max(2,Math.min(100,score)):0)+'%"></span></span>'+
@@ -511,6 +533,14 @@
  let statsMeta=null,statsDivisions=null;
  fetch("data/ufc-stats/divisions.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema===1&&d.divisions){statsDivisions=d;update();}
+ }).catch(()=>{});
+ // One Form score for the profile and the Fighters hub (docs/design/FIGHTERS-HUB-FORM.md, owner 2026-11-24):
+ // data/ufc-fighter-form.json, built by scripts/build-ufc-fighter-form.py. Form is a percentile among active UFC
+ // fighters; it is shown beside the BEFN rating (Overall), never compared with it.
+ let formData=null;
+ fetch("data/ufc-fighter-form.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.fighters)return;
+  formData=d;update();
  }).catch(()=>{});
  const namesLoading=fetch("data/ufc-stats/names.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.names)return;
@@ -633,7 +663,7 @@
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
-   if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
+   if(id==='form'){const e=formEntry(stats);return Number.isFinite(e?.form)?e.form:null;}
    if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
@@ -641,7 +671,7 @@
   const technicalScoreV1=technicalScore;
   const built=ratedByBuild(f);
   const ratingScore=id=>v2?v2Score(id):built?null:technicalScoreV1(id);
-  const isPercentile=id=>v2?id!=='form':!built&&isPercentileV1(id);
+  const isPercentile=id=>v2?(id==='form'?'plain':true):!built&&isPercentileV1(id);
   const score=v2?(Number.isFinite(v2.overall)?v2.overall:null):built?null:Number.isFinite(v3.power)?v3.power:computed.overall;
   const tier=scoreTier(v2?headlineBar(v2):score);
   // Six bars once rated, and also while the stats file is still loading (same layout, empty), so nothing jumps.
@@ -706,16 +736,17 @@
    '<span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):v2?headlineHTML(score):score+'<small>/100</small>')+'</strong>'+
    '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:v2?headlineBar(v2)||0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
-   (v2&&score!==null?rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>':'')+
+   (v2&&score!==null?rankHTML(v2)+'<p class="befn-pro-hint">'+RATING_HINT+'</p>':'')+(v2?formTagsHTML(stats):'')+
+   // One classification: the Fighters hub stage chip replaces the older label wherever a Form entry exists.
    '<div class="befn-v3-status befn-scout-classification">'+
-   (v3.category!=='Champion'?'<span>'+escapeHTML(v3.category)+'</span>':'')+
-   (v3.officialRank?'<small>UFC division #'+v3.officialRank+'</small>':'')+'</div>'+
+   (v3.category!=='Champion'&&!formEntry(stats)?'<span>'+escapeHTML(v3.category)+'</span>':'')+
+   (v3.officialRank&&!(formEntry(stats)?.formRank)?'<small>UFC division #'+v3.officialRank+'</small>':'')+'</div>'+
    (pills?'<div class="befn-pro-form"><span>Last '+v3.recent.length+' UFC · '+escapeHTML(recordText)+'</span><div>'+pills+'</div></div>':'')+
    '</aside>';
   const divisionLabel=stats?.division||null;
   const ratingsBody='<div class="befn-pro-meters">'+ratings.map(([id,label])=>{
     const s=ratingScore(id);
-    let hint=id==='form'&&(v2||ctx.opponents)?'Weighted to recent fights and opponent strength':id==='results'?RESULTS_HINT:null;
+    let hint=id==='form'&&v2?formHint(stats):id==='form'&&ctx.opponents?'Weighted to recent fights and opponent strength':id==='results'?RESULTS_HINT:null;
     if(v2&&SKILL_IDS.includes(id)){
      const d=v2.skills?.[id]?.division;
      if(Number.isFinite(d)&&divisionLabel)hint=ordinal(d)+' in '+divisionLabel;
@@ -810,7 +841,7 @@
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
  const BOARD_RATINGS=[["overall","BEFN rating","score"],["results","Results rating","pct"],["striking","Striking rating","pct"],
-  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["form","Recent form","score"]];
+  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["form","Form","score"]];
  function boardValue(v,unit){
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";
@@ -828,7 +859,9 @@
    sampleIndex=d.ratingFields.indexOf("statFights");
    const rankCol=d.ratingFields.indexOf("overallRank");
    // The score out of 100 is rounded, so the overall board is ordered by the stored rank (full-precision rating).
-   rows=d.ratings.map(r=>({f:r[0],v:r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null}));
+   // Form is the one Form score (data/ufc-fighter-form.json), the same number as the profile and the hub.
+   const formOf=i=>{const e=formData?.fighters?.[d.fighters[i][0]];return Number.isFinite(e?.form)?e.form:null;};
+   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"&&formData?formOf(r[0]):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null}));
    unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
   }else{
    const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];

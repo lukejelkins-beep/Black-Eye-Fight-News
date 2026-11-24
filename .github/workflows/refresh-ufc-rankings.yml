@@ -56,7 +56,8 @@ jobs:
           set -euo pipefail
           git config user.name 'BEFN rankings refresh'
           git config user.email 'befn-rankings-refresh@users.noreply.github.com'
-          git add data/ufc-divisions.json
+          python scripts/save-ufc-rankings-history.py
+          git add data/ufc-divisions.json data/ufc-rankings-history
           if git diff --cached --quiet; then echo 'Rankings unchanged'; exit 0; fi
           git commit -q -m 'Refresh UFC official rankings from ufc.com/rankings'
           git push -q origin "HEAD:${GITHUB_REF_NAME}"
