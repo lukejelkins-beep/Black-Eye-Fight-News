@@ -487,10 +487,10 @@ function renderNewsFeed(){
   +more+sourceHealth()+'</div>';
 }
 document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo,.lp-fixture-art,.lp-latest-photo');if(w){const row=w.parentElement;w.remove();if(row&&row.classList)row.classList.remove('has-art');}}},true);
-const landing={results:null,cutouts:null,events:[],videos:[],started:false};
+const landing={results:null,cutouts:null,featured:null,events:[],videos:[],started:false};
 function loadLandingExtras(){
  if(landing.started)return;landing.started=true;
- Promise.all([deskJSON('data/upcoming-cards.json').catch(()=>null),deskJSON('data/results.json').catch(()=>null),fetch('data/ufc-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/fight-film.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/boxing-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([u,r,c,f,bx])=>{
+ Promise.all([deskJSON('data/upcoming-cards.json').catch(()=>null),deskJSON('data/results.json').catch(()=>null),fetch('data/ufc-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/fight-film.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/boxing-cutout-register.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('data/sport-overview-featured.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([u,r,c,f,bx,ft])=>{landing.featured=ft;
   landing.events=u&&Array.isArray(u.events)?u.events:[];landing.results=r;landing.cutouts=window.BEFNLanding.mergeCutouts([['assets/img/ufc-cutouts/',c],['assets/img/boxing-cutouts/',bx]]);landing.videos=f&&Array.isArray(f.videos)?f.videos:[];
   const target=document.getElementById('main');if((!location.hash||location.hash==='#home')&&target)target.innerHTML=renderLanding(true);
  });
@@ -499,6 +499,10 @@ function renderLanding(skipLoad){
  if(!skipLoad)loadLandingExtras();
  const leads=newsLeads(),h=newsPageHelpers();
  const stories=newsFeedItems().concat(leads.map(l=>l.story)).sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
+ if(['boxing','mma'].includes(activeSport())&&window.BEFNSportOverview){
+  /* A sport's Overview (owner, 24 Nov 2026). News comes from the same verified desk as the front page. */
+  return renderFrame(window.BEFNSportOverview.build({area:activeSport(),now:Date.now(),events:landing.events,results:landing.results,cutouts:landing.cutouts,featured:landing.featured,champions:window.COMBAT_DATA&&window.COMBAT_DATA.champions,stories},{esc,safeURL,localImage:(n,k)=>window.BEFNLocalImages?window.BEFNLocalImages.url(n,k):''})+updatedLine());
+ }
  if(!stories.length)return renderFrame('<div class="np"><header class="np-head"><h1>Home</h1></header><p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>');
  const sumo=['all','sumo'].includes(activeSport())?window.BEFNNewsPage.usableLanguageStories(desk.language,'sumo'):[];
  return renderFrame(window.BEFNLanding.build({lead:leads[0]&&leads[0].story,stories,sumo,sumoHref:'sumo.html',events:landing.events,results:landing.results,cutouts:landing.cutouts,posters:window.BEFNLocalPosters||null,videos:landing.videos,now:Date.now()},h)+updatedLine());

@@ -2,6 +2,14 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Boxing and MMA Overviews)
+- **Each sport's first section is now its own Overview** (owner chose "build as mocked"): next fight night strip, a hero, latest results, coming up, champions, latest news and explore cards. Built in `assets/sport-overview.js` and `assets/sport-overview.css`; the mixed front page from the logo is unchanged.
+- **The hero picks itself** (owner chose "automatic"): the latest main event's result for 3 days after it, otherwise the biggest upcoming fight with a countdown. "Biggest" is a fight on the owner's headline list in `data/sport-overview-featured.json` within 45 days (Fury vs Joshua today), else the strongest title fight in the next 3 weeks. Eliminators don't count as world titles. The result paragraph is the event's own sourced takeaway where there is one.
+- **MMA covers every promotion we hold** (owner chose "all promotions"): UFC, PFL, ONE, RIZIN, KSW and Cage Warriors results and cards. The champions block is the UFC's only and is labelled "UFC champions".
+- **Boxing champions:** whoever holds the most of the WBA, WBC, IBF and WBO belts in each division, from the site's champion data. Regular and interim titles are left out. A gold edge marks undisputed.
+- **Photos:** a cut-out or an approved local photo is used where we hold one, and initials are shown otherwise. Press-kit photos for champions and coming-up boxers are being added under the owner's existing attestation (owner chose "add press-kit photos").
+- **Service worker** cache bumped (`-ov1`) and the two new assets added to its shell. `tests/test-sport-overview.cjs` was added to the release readiness gate.
+
 ## 2026-11-24 (Sumo housekeeping)
 - **Old Sumo header styles removed:** the masthead, utility bar, seven-link bar, site menu and logo rules left over from the Sumo pages' old header (replaced by the shared header in #458), 62 selectors from `assets/sumo.css`, `assets/sumo-editorial.css` and `assets/sumo-main-font.css` (about 4 KB). Nothing in the Sumo pages or scripts uses those classes; `index.html` uses two of the same names but does not load these files. Checked by pixel-comparing all 14 Sumo views at 390 and 1280 px against the old stylesheets: identical, apart from Banzuke changes at 1280 px, which also differs between two loads of the old build (photos loading at different moments).
 - **2027 banzuke dates completed** in `data/sumo/banzuke-release-dates.json`, all "reported" (third-party calendars, not checked on sumo.or.jp): March 1 March (three sources), May 26 April (ozumo.jp, japan-event.info), July 28 June (ozumo.jp only), September 30 August (tokyocheapo.com, sumostats.com), November 1 November (ozumo.jp only). Single-source dates are flagged to check again. — Owner chose "Remove old sumo CSS" and "Recheck 2027 dates" 2026-11-24 — awaiting owner "Merge N".
