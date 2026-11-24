@@ -14,11 +14,11 @@ import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
 import { buildHome, bashoStart } from './sumo-home-data.mjs?v=20261124-banzuke2';
-import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-banzuke2';
+import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-next1';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview } from './sumo-review.mjs?v=20261124-review1';
 import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
-import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-banzuke3';
+import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-next1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');

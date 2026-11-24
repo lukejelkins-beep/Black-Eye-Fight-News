@@ -134,7 +134,8 @@ export function releaseCard(h, info) {
     const days = Math.ceil((Date.parse(info.date + 'T00:00:00+09:00') - info.now) / 86400000);
     const when = new Date(info.date + 'T12:00:00+09:00').toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Asia/Tokyo' });
     const big = days > 1 ? days + ' days' : days === 1 ? 'Tomorrow' : 'Due now';
-    return '<div class="sbz-card"><span class="shome-kicker">Next banzuke</span><strong><b>' + h.e(big) + '</b> until the ' + h.e(name) + ' banzuke</strong><span>Expected ' + h.e(when) + ' (Japan time)' +
+    const short = new Date(info.date + 'T12:00:00+09:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', timeZone: 'Asia/Tokyo' });
+    return '<div class="sbz-card"><span class="shome-kicker">Next banzuke</span><strong><b>' + h.e(big) + '</b> until the ' + h.e(name) + ' banzuke<span class="sbz-card-date"> · ' + h.e(short) + '</span></strong><span class="sbz-card-more">Expected ' + h.e(when) + ' (Japan time)' +
       (info.status === 'confirmed' ? '' : ', as listed by sumo calendars; the Japan Sumo Association confirms on the day') + '. BEFN checks for it every day.</span>' + latest + '</div>';
   }
   return '<div class="sbz-card"><span class="shome-kicker">Next banzuke</span><strong>The ' + h.e(name) + ' banzuke</strong><span>Published by the Japan Sumo Association before day 1' + (info.day1 ? ' (' + h.e(new Date(info.day1 + 'T12:00:00Z').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', timeZone: 'UTC' })) + ')' : '') + '. BEFN checks for it every day.</span>' + latest + '</div>';

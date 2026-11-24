@@ -252,3 +252,17 @@
 .sbz-card.is-out{border-left-color:var(--sh-gold);background:var(--sh-ink);color:#fff}
 .sbz-card.is-out strong{color:#fff}
 .sbz-card.is-out span{color:var(--sh-gold)}
+
+/* Next-banzuke card: under the hero on desktop, a slim line above it on phones (owner, 24 Nov 2026). */
+.sumo-home:has(.shome-next){display:flex;flex-direction:column}
+.sumo-home>.shome-hero{order:-2}
+.shome-next{order:-1}
+.shome-next .shome-block{padding-top:16px}
+.sbz-card-date{font-weight:700;color:var(--sh-muted)}
+@media(max-width:760px){
+  .shome-next{order:-3}
+  .shome-next .shome-block{padding:0 0 12px}
+  .shome-next .sbz-card{padding:10px 14px;gap:2px}
+  .shome-next .sbz-card strong{font-size:15px}
+  .shome-next .sbz-card-more,.shome-next .sbz-card a{display:none}
+}
