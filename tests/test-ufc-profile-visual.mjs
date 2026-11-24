@@ -38,6 +38,18 @@ if(fs.existsSync(profileStatsSource)){
 }
 // Stats-build files, resolved the way the page does (data/ufc-stats/names.json: normalised name to slug).
 const statsNames=JSON.parse(fs.readFileSync(path.join(root,"data/ufc-stats/names.json"),"utf8")).names||{};
+// The page replaces a reviewed record with the overall record (data/ufc-overall-records.json: the saved record plus
+// UFC fights since) once the stats names have loaded (applyOverall in assets/fighter-insights.js). For a fighter with a
+// fight newer than their reviewed file (Ciryl Gane and Kayla Harrison, 14 Nov 2026) the two differ - Gane 14-2 (1 NC)
+// reviewed, 15-2 (1 NC) overall - so a check that accepted only the reviewed record timed out whenever the swap came
+// first (caught by the hydration-state message on 2026-11-24). Both records are correct; either is accepted.
+const overallFile=JSON.parse(fs.readFileSync(path.join(root,"data/ufc-overall-records.json"),"utf8"));
+const overallShared=new Set((overallFile.sharedNames||[]).map(normalized));
+const overallRecordText=r=>r.W+"–"+r.L+(r.D?"–"+r.D:"")+(r.NC?" ("+r.NC+" NC)":"");
+function acceptedRecords(profile){
+ const key=normalized(profile.name),slug=statsNames[key],o=slug&&!overallShared.has(key)?overallFile.records?.[slug]:null;
+ return [...new Set([profile.record,...(o?[overallRecordText(o)]:[])])];
+}
 function statsFileFor(name){
  const slug=statsNames[normalized(name)];
  const file=slug&&path.join(root,"data/ufc-stats/fighters",slug+".json");
@@ -130,11 +142,11 @@ async function checkProfile(page,profile,screen){
    const category=expected.category==="Roster"&&
     (!ur.complete||bouts<2||(expected.latest||[]).length<2)?
     "Unassessed":expected.category;
-   return !!(f?.reviewedUfcProfile||f?.championReview)&&f.record===expected.record&&
+   return !!(f?.reviewedUfcProfile||f?.championReview)&&expected.records.includes(f.record)&&
     f.division===expected.division&&f.category===category&&
     JSON.stringify((f.latest||[]).map(x=>[x.date,x.opponent,x.outcome,x.method]))===
     JSON.stringify(expected.latest.map(x=>[x.date,x.opponent,x.outcome,x.method]));
-  },profile,{timeout:18000}).catch(async e=>{
+  },{...profile,records:acceptedRecords(profile)},{timeout:18000}).catch(async e=>{
    throw new Error(e.message+" | hydration state: "+JSON.stringify(await hydrationState(profile).catch(()=>"unavailable")));
   });
   await page.evaluate(id=>{
@@ -193,7 +205,10 @@ async function checkProfile(page,profile,screen){
     recentFiveCount:historyRows.length,historyV3:!!ins?.classList.contains("befn-pro-insights"),
     noProvisionalRanks:!d?.querySelector(".befn-performance-highlights,.befn-v3-top-ten"),
     noLegacyTable:!d?.querySelector("table[data-befn-recent-results]"),
-    publicLinks:[...(d?.querySelectorAll("a[href]")||[])].map(a=>a.getAttribute("href")),
+    // Related news (assets/related-news.js, .rn-block) links out to the stories by design (owner, 2026-11-24); every
+    // other link in the dialog must still be absent.
+    publicLinks:[...(d?.querySelectorAll("a[href]")||[])].filter(a=>!a.closest(".rn-block")).map(a=>a.getAttribute("href")),
+    relatedNewsLinks:[...(d?.querySelectorAll(".rn-block a[href]")||[])].map(a=>a.getAttribute("href")),
     provenanceText:d?.querySelector(".befn-pro-body")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
     rootWidth,viewportOverflow,
@@ -226,7 +241,7 @@ async function checkProfile(page,profile,screen){
   },profile.id);
   assert(details.identity,"profile did not hydrate in shared data");
   assert.equal(details.title,profile.name,"dialog title wrong");
-  assert.equal(details.record,profile.record,"record mismatch");
+  assert(acceptedRecords(profile).includes(details.record),"record mismatch: "+details.record+" not in "+acceptedRecords(profile).join(" / "));
   assert.equal(details.division,profile.division,"division mismatch");
   // Incomplete reviewed roster entries remain visible but must NOT receive
   // an unsourced prospect/contender label. Their UI category is Unassessed.
@@ -315,6 +330,7 @@ async function checkProfile(page,profile,screen){
   if(isLive){
    assert.deepEqual(details.clippedElements,[],"important profile labels visibly clipped");
    assert.deepEqual(details.publicLinks,[],"fighter dialog must not show external research links");
+   assert(details.relatedNewsLinks.every(h=>/^https:\/\//.test(h)),"related-news links must be https: "+details.relatedNewsLinks.join(" "));
    if(expectedCategory==="Champion")
     assert(details.championshipBelt,"verified UFC champion belt missing");
    else if(["Contender","Prospect"].includes(expectedCategory))
