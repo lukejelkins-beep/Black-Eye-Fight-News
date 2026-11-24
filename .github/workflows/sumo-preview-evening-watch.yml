@@ -21,7 +21,10 @@ permissions:
   contents: write
 
 concurrency:
-  group: publish-live-data
+  # Sumo-only lock (was publish-live-data, shared with news). This job holds it for
+  # hours while it sleeps between refreshes; it now delays only other Sumo writers,
+  # which it supersedes during a basho, not the news (QA audit A03).
+  group: publish-sumo
   cancel-in-progress: false
 
 jobs:
