@@ -85,60 +85,74 @@ export function extensionHistory(slug,profile,statsFile,cutoff,feederDates,curat
  return rows;
 }
 
-export function auditExtension({approval,base,research,progress,register,feeder,stats}){
- const slugs=validateExtensionApproval(approval,base);
- const cutoff=approval.evidenceCutoff;
- const feederDates=feederDatesFrom(progress?.bouts);
- const curated=arr(feeder?.schema===1?feeder.bouts:[]);
+/** Shared context for judging careers against the saved caches. */
+export function gateContext({research,progress,register,feeder,stats}){
  const fighters=register?.fighters||{};
  const pageOwners=new Map();
  for(const [s,e] of Object.entries(fighters)){
   const u=String(e?.fighterUrl||'').toLowerCase();
   if(u){if(!pageOwners.has(u))pageOwners.set(u,new Set());pageOwners.get(u).add(s);}
  }
+ return {research,progress,fighters,stats,pageOwners,feederDates:feederDatesFrom(progress?.bouts),
+  curated:arr(feeder?.schema===1?feeder.bouts:[])};
+}
+
+/** Reasons one fighter's career is NOT certified ([] = certified) for a cohort and its evidence cutoff.
+ * requireResearch: the 24 Nov extension was built on saved UFCalendar research; the rolling cohort (weekly job) may
+ * hold debutants with none, whose every fight then needs the Wikipedia second source. */
+export function judgeCareer(slug,{cohort,cutoff,requireResearch=true},ctx){
+ const reasons=[];
+ const profile=ctx.research?.profiles?.[slug],entry=ctx.fighters[slug],file=ctx.stats(slug);
+ if(requireResearch&&!profile)reasons.push('no_saved_research_history');
+ if(!file)reasons.push('no_stats_file');
+ if(!entry)reasons.push('no_register_entry');
+ else{
+  if(entry.cohort!==cohort||entry.evidenceCutoff!==cutoff)reasons.push('register_entry_not_for_this_cohort');
+  const owners=ctx.pageOwners.get(String(entry.fighterUrl||'').toLowerCase());
+  if(owners&&owners.size>1)reasons.push('ufcstats_page_shared_with_another_entry');
+ }
+ if(reasons.length)return reasons;
+ const history=extensionHistory(slug,profile,file,cutoff,ctx.feederDates,ctx.curated,entry);
+ const shown=arr(file.fights).filter(f=>f.date<=cutoff);
+ // The latest fight the profile shows, leaving out a no-contest or draw that only UFCStats carries (a savedHistoryGap
+ // bout): saved history cannot hold a bout it never recorded, so that bout cannot anchor the latest-fight check.
+ const gapDays=arr(entry.bouts).filter(b=>b.savedHistoryGap===true).map(b=>b.date);
+ const latest=shown.filter(f=>!(['NC','D'].includes(f.outcome)&&gapDays.some(d=>dayGap(d,f.date)<=1)))
+  .map(f=>f.date).sort().at(-1)||null;
+ const fp=new Set();
+ const malformed=history.some(r=>{
+  const k=date(r.date)+'|'+tokens(r.opponent);
+  if(!date(r.date)||!tokens(r.opponent)||fp.has(k))return true;
+  fp.add(k);return false;});
+ if(malformed)reasons.push('malformed_saved_history');
+ const proof=evaluateCareerEvidence(profile||{name:entry.fighterName},history,latest,cutoff,entry,ctx.progress?.bouts||{},cutoff);
+ if(!proof.independentlyVerified)reasons.push(proof.rosterLatestPresent?'source_proof_fails_certification_gate':'latest_fight_not_in_saved_history');
+ const bouts=arr(entry.bouts);
+ // Owner, 24 Nov 2026: a fight only the free results importer holds (it reads UFCStats, the same source as the
+ // register) needs a second source, the event's Wikipedia article, recorded on the matching register bout.
+ const unconfirmed=history.filter(r=>r.source==='results-importer').filter(r=>!bouts.some(b=>
+  dayGap(b.date,r.date)<=1&&b.result===r.result&&sameName(b.opponent,r.opponent)&&hasWikipedia(b)));
+ if(unconfirmed.length)reasons.push('new_fight_without_second_source');
+ const unlisted=shown.filter(f=>!bouts.some(b=>b.result===OUTCOME[f.outcome]&&
+  (dayGap(b.date,f.date)<=1||(b.independentEventSourceDate&&dayGap(b.independentEventSourceDate,f.date)<=1))&&
+  (sameName(b.opponent,f.opponent)||sameName(b.sourceOpponentName,f.opponent))));
+ if(unlisted.length)reasons.push('profile_fight_not_in_register');
+ return reasons;
+}
+
+export const hasWikipedia=b=>b?.secondSource==='wikipedia-event-article'&&
+ /^https:\/\/en\.wikipedia\.org\/wiki\/\S+$/.test(String(b?.secondSourceUrl||''))&&Boolean(date(b?.secondSourceCheckedOn));
+
+export function auditExtension(inputs){
+ const {approval,base}=inputs;
+ const slugs=validateExtensionApproval(approval,base);
+ const cutoff=approval.evidenceCutoff;
+ const ctx=gateContext(inputs);
  const certified=[],exceptions=[];
  for(const slug of slugs){
-  const reasons=[];
-  const profile=research?.profiles?.[slug],entry=fighters[slug],file=stats(slug);
-  if(!profile)reasons.push('no_saved_research_history');
-  if(!file)reasons.push('no_stats_file');
-  if(!entry)reasons.push('no_register_entry');
-  else{
-   if(entry.cohort!==approval.cohort||entry.evidenceCutoff!==cutoff)reasons.push('register_entry_not_for_this_cohort');
-   const owners=pageOwners.get(String(entry.fighterUrl||'').toLowerCase());
-   if(owners&&owners.size>1)reasons.push('ufcstats_page_shared_with_another_entry');
-  }
-  if(!reasons.length){
-   const history=extensionHistory(slug,profile,file,cutoff,feederDates,curated,entry);
-   const shown=arr(file.fights).filter(f=>f.date<=cutoff);
-   // The latest fight the profile shows, leaving out a no-contest or draw that only UFCStats carries (a savedHistoryGap
-   // bout): saved history cannot hold a bout it never recorded, so that bout cannot anchor the latest-fight check.
-   const gapDays=arr(entry.bouts).filter(b=>b.savedHistoryGap===true).map(b=>b.date);
-   const latest=shown.filter(f=>!(['NC','D'].includes(f.outcome)&&gapDays.some(d=>dayGap(d,f.date)<=1)))
-    .map(f=>f.date).sort().at(-1)||null;
-   const fp=new Set();
-   const malformed=history.some(r=>{
-    const k=date(r.date)+'|'+tokens(r.opponent);
-    if(!date(r.date)||!tokens(r.opponent)||fp.has(k))return true;
-    fp.add(k);return false;});
-   if(malformed)reasons.push('malformed_saved_history');
-   const proof=evaluateCareerEvidence(profile,history,latest,cutoff,entry,progress?.bouts||{},cutoff);
-   if(!proof.independentlyVerified)reasons.push(proof.rosterLatestPresent?'source_proof_fails_certification_gate':'latest_fight_not_in_saved_history');
-   const bouts=arr(entry.bouts);
-   // Owner, 24 Nov 2026: a fight only the free results importer holds (it reads UFCStats, the same source as the
-   // register) needs a second source, the event's Wikipedia article, recorded on the matching register bout.
-   const wiki=b=>b?.secondSource==='wikipedia-event-article'&&
-    /^https:\/\/en\.wikipedia\.org\/wiki\/\S+$/.test(String(b?.secondSourceUrl||''))&&date(b?.secondSourceCheckedOn);
-   const unconfirmed=history.filter(r=>r.source==='results-importer').filter(r=>!bouts.some(b=>
-    dayGap(b.date,r.date)<=1&&b.result===r.result&&sameName(b.opponent,r.opponent)&&wiki(b)));
-   if(unconfirmed.length)reasons.push('new_fight_without_second_source');
-   const unlisted=shown.filter(f=>!bouts.some(b=>b.result===OUTCOME[f.outcome]&&
-    (dayGap(b.date,f.date)<=1||(b.independentEventSourceDate&&dayGap(b.independentEventSourceDate,f.date)<=1))&&
-    (sameName(b.opponent,f.opponent)||sameName(b.sourceOpponentName,f.opponent))));
-   if(unlisted.length)reasons.push('profile_fight_not_in_register');
-  }
+  const reasons=judgeCareer(slug,{cohort:approval.cohort,cutoff},ctx);
   if(reasons.length)exceptions.push({slug,reasons});
-  else certified.push({slug,knownUfcBouts:arr(entry.bouts).length});
+  else certified.push({slug,knownUfcBouts:arr(ctx.fighters[slug].bouts).length});
  }
  if(certified.length+exceptions.length!==slugs.length)throw Error('lanes do not partition the extension cohort');
  return {schema:1,scope:'ufc-extension-stage3-audit',cohort:approval.cohort,evidenceCutoff:cutoff,

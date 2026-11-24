@@ -710,7 +710,8 @@ def certified_no_contests(fights: list, skipped: dict) -> list:
         register = json.loads(REGISTER.read_text(encoding="utf-8")).get("fighters") or {}
     except (OSError, ValueError):
         return []
-    certified = set(listed.get("certified") or {}) | set((listed.get("extension") or {}).get("certified") or {})
+    certified = (set(listed.get("certified") or {}) | set((listed.get("extension") or {}).get("certified") or {})
+                 | set((listed.get("rolling") or {}).get("certified") or {}))
     by_name = {norm(e.get("fighterName")): slug for slug, e in register.items() if slug in certified}
 
     def have(slug_name: str, opponent: str, day: dt.date) -> bool:
@@ -781,7 +782,8 @@ def certified_result_only_bouts(fights: list, skipped: dict) -> list:
         register = json.loads(REGISTER.read_text(encoding="utf-8")).get("fighters") or {}
     except (OSError, ValueError):
         return []
-    certified = set(listed.get("certified") or {}) | set((listed.get("extension") or {}).get("certified") or {})
+    certified = (set(listed.get("certified") or {}) | set((listed.get("extension") or {}).get("certified") or {})
+                 | set((listed.get("rolling") or {}).get("certified") or {}))
     by_name = {norm(e.get("fighterName")): slug for slug, e in register.items() if slug in certified}
     # A certified slug may be filed under another slug in the stats build (statsAliases: stats slug -> certified slug).
     stats_slugs = {}
