@@ -7,7 +7,7 @@
   "lanes": {
     "national": {
       "state": "seed",
-      "checkedOn": "2026-11-24",
+      "checkedOn": "2026-11-25",
       "checks": [
         {
           "type": "federation_or_team",
@@ -25,6 +25,30 @@
           "type": "federation_or_team",
           "name": "Moldova education ministry national squad list",
           "url": "https://edu.gov.md/sites/default/files/lista_lotului_national_2025_2.pdf",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "UWW results, 2021 U20 European Championships (Dortmund)",
+          "url": "https://cdn.uww.org/2021-07/junior_european_championships_dortmund2021.pdf",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "UWW results, 2021 U20 World Championships (Ufa)",
+          "url": "https://cdn.uww.org/2021-08/results_08_ufa.pdf",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "UWW result book, 2022 U23 European Championships (Plovdiv)",
+          "url": "https://cdn.uww.org/2022-03/final_book_for_2022_senior_u23_european_championship.pdf",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "UWW results, 2022 U20 World Championships (Sofia)",
+          "url": "https://cdn.uww.org/2022-08/results_08_sofia.pdf",
           "outcome": "supports_claim"
         }
       ],
@@ -67,8 +91,77 @@
               "authority": "delegation"
             }
           ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2021 U20 European Wrestling Championships (Dortmund)",
+          "sport": "Wrestling",
+          "event": "Men's freestyle 61 kg",
+          "delegation": "MDA",
+          "category": "junior",
+          "result": "3rd",
+          "medal": "bronze",
+          "sources": [
+            {
+              "name": "UWW results, 2021 U20 European Championships (Dortmund)",
+              "url": "https://cdn.uww.org/2021-07/junior_european_championships_dortmund2021.pdf",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2021 U20 World Wrestling Championships (Ufa)",
+          "sport": "Wrestling",
+          "event": "Men's freestyle 61 kg",
+          "delegation": "MDA",
+          "category": "junior",
+          "result": "7th",
+          "medal": "none",
+          "sources": [
+            {
+              "name": "UWW results, 2021 U20 World Championships (Ufa)",
+              "url": "https://cdn.uww.org/2021-08/results_08_ufa.pdf",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2022 U23 European Wrestling Championships (Plovdiv)",
+          "sport": "Wrestling",
+          "event": "Men's freestyle 65 kg",
+          "delegation": "MDA",
+          "category": "under_23",
+          "result": "10th",
+          "medal": "none",
+          "sources": [
+            {
+              "name": "UWW result book, 2022 U23 European Championships (Plovdiv)",
+              "url": "https://cdn.uww.org/2022-03/final_book_for_2022_senior_u23_european_championship.pdf",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2022 U20 World Wrestling Championships (Sofia)",
+          "sport": "Wrestling",
+          "event": "Men's freestyle 70 kg",
+          "delegation": "MDA",
+          "category": "junior",
+          "result": "10th",
+          "medal": "none",
+          "sources": [
+            {
+              "name": "UWW results, 2022 U20 World Championships (Sofia)",
+              "url": "https://cdn.uww.org/2022-08/results_08_sofia.pdf",
+              "authority": "federation"
+            }
+          ]
         }
-      ]
+      ],
+      "note": "The wide UWW screen (25 Nov 2026) adds his second U20 European bronze (2021, 61 kg), which matches the UFC bio's 'Bronze twice at the U20 European Wrestling Championships', plus three more appearances."
     }
   }
 }
