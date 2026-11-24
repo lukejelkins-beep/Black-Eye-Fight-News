@@ -787,6 +787,36 @@ function postCard(p){
   +'</article>';
 }
 
+/* Fight Talk cards (owner, 24 Nov 2026, design A): BEFN's own card from data already held (face, name, role,
+   platform, time, the post's text, engagement). The platform's own embed loads only when the reader taps
+   "Show post", so the page no longer waits on two dozen iframes. */
+const talkShown=[];
+const talkRoleLabel=p=>p.role==='fighter'?({champion:'Champion',contender:'Contender',prospect:'Prospect'}[p.fighterTier]||'Fighter'):({promoter:'Promoter',media:'Media',commentator:'Commentator',manager:'Manager',trainer:'Coach',team:'Fight team',meme:'Meme page',fan:'Fan'}[p.role]||'Account');
+const talkText=q=>String(q||'').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/https?:\/\/t\.co\/\S+/g,'').replace(/\s+\n/g,'\n').trim();
+const talkCount=n=>!Number.isFinite(n)?'':n>=1e6?(n/1e6).toFixed(1)+'m':n>=1e4?Math.round(n/1e3)+'k':n>=1e3?(n/1e3).toFixed(1)+'k':String(n);
+function talkCard(p,hot){
+ if(p.type==='thread')return postCard(p);
+ const i=talkShown.push(p)-1;
+ const local=p.role==='fighter'&&window.BEFNLocalImages?window.BEFNLocalImages.url(p.name,'thumb'):'';
+ /* Only the post's own words: a reporter's or collector's summary never stands in for it. */
+ const text=talkText(p.quote),limit=hot?300:240,link=/t\.co\//.test(String(p.quote||''))&&text.length<80;
+ const e=p.engagement||{};
+ const when=p.postedAt?'<time datetime="'+esc(p.postedAt)+'">'+esc(humanTalkTime(p.postedAt))+'</time>':'';
+ const direct=talkDirectSource(p)&&['Instagram','Threads','X','Bluesky'].includes(p.platform);
+ return '<article class="tk-card'+(hot?' is-hot':'')+' tk-r-'+esc(p.role||'account')+'" data-platform="'+esc(p.platform)+'"><header class="tk-head">'+thumb(local||p.photo||(p.role==='fighter'&&typeof portraitURL==='function'?portraitURL(p.name):''),p.name,'thumb tk-av')+
+  '<span class="tk-who"><strong>'+esc(p.name)+'</strong>'+(p.handle?'<small>'+esc(p.handle)+'</small>':'')+'</span><span class="tk-role">'+esc(talkRoleLabel(p))+'</span></header>'+
+  '<div class="tk-body" data-talk-body="'+i+'">'+(text?'<p class="tk-text">'+esc(text.slice(0,limit))+(text.length>limit?'…':'')+'</p>':'')+(link?'<span class="tk-link">Link or video in the post</span>':'')+(!text&&!link?'<p class="tk-text tk-quiet">Tap Show post to read it on '+esc(p.platform)+'.</p>':'')+'</div>'+
+  '<footer class="tk-foot"><span class="tk-plat" aria-label="'+esc(p.platform)+'">'+talkPlatformIcon(p.platform)+'</span>'+when+
+  (Number.isFinite(e.likes)?'<span>♥ '+talkCount(e.likes)+'</span>':'')+(Number.isFinite(e.comments)?'<span>💬 '+talkCount(e.comments)+'</span>':'')+
+  (direct?'<button type="button" class="tk-show" data-talk-show="'+i+'">Show post ▸</button>':'')+
+  (p.url?'<a class="tk-open'+(direct?'':' tk-show')+'" href="'+safeURL(p.url)+'" target="_blank" rel="noopener noreferrer" aria-label="Open post on '+esc(p.platform)+'">Open ↗</a>':'')+'</footer></article>';
+}
+if(typeof document!=='undefined')document.addEventListener('click',e=>{
+ const b=e.target.closest&&e.target.closest('button[data-talk-show]');if(!b)return;
+ const p=talkShown[Number(b.dataset.talkShow)],body=document.querySelector('[data-talk-body="'+b.dataset.talkShow+'"]');if(!p||!body)return;
+ body.innerHTML='<div class="talk-native-card">'+originalTalkPost(p)+'</div>';b.remove();hydrateTalkEmbeds();
+});
+
 
 const liveTalk={updatedAt:null,posts:[],primaryPosts:[],embedPosts:[],paidXPosts:[],paidXCheckedAt:null,embedCheckedAt:null,selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
 function rebuildTalkPosts(){
@@ -1085,32 +1115,43 @@ function renderSocial(){
  const mode='<div class="segment" role="group" aria-label="Fight Talk view">'+[['latest','Latest posts'],['highlights','Last 4 weeks']].map(([value,label])=>'<button type="button" id="talk-'+value+'" data-segment="socialMode" data-value="'+value+'" aria-pressed="'+String(value===state.socialMode)+'">'+label+'</button>').join('')+'</div>';
  const promotionFilter=state.social==='mma'&&window.BEFNTalkFilters?talkFilter('talkPromotion','Promotion',window.BEFNTalkFilters.PROMOTIONS):'';
  const fighterFilter='<div class="talk-filter talk-filter-fighter"><label for="talkFighter">Fighter</label><input type="search" id="talkFighter" data-talk-search value="'+esc(state.talkFighter)+'" placeholder="Search by fighter" autocomplete="off" aria-label="Search posts by fighter"></div>';
- const filters=talkFilter('socialPlatform','Platform',options)+promotionFilter+fighterFilter
-  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans',memes:'Meme pages'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Balanced feed'});
- const toolbar='<div class="talk-toolbar"><div class="talk-toolbar-top">'+mode+'<p class="talk-freshness">'+esc(freshness)+'</p></div><div class="talk-filters">'+filters+'</div></div>';
+ const sportName={boxing:'Boxing',mma:'MMA',grappling:'Grappling'}[state.social];
+ /* One slim bar: who (Fighters / Everyone), platform chips and search; the rest sits under "More filters". */
+ const who='<div class="tk-seg segment" role="group" aria-label="Posts from">'+[['fighters','Fighters'],['all','Everyone']].map(([value,label])=>'<button type="button" data-segment="talkRole" data-value="'+value+'" aria-pressed="'+String(state.talkRole===value)+'">'+label+'</button>').join('')+'</div>';
+ const chips='<div class="tk-chips" role="group" aria-label="Platform">'+Object.entries(options).map(([value,label])=>'<button type="button" data-segment="socialPlatform" data-value="'+esc(value)+'" aria-pressed="'+String(state.socialPlatform===value)+'">'+esc(value==='all'?'All':label)+'</button>').join('')+'</div>';
+ const more='<details class="tk-more-filters"'+(state.talkMoreOpen?' open':'')+'><summary>More filters</summary><div class="talk-toolbar-top">'+mode+'</div><div class="talk-filters">'+promotionFilter
+  +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans',memes:'Meme pages'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Balanced feed'})+'</div></details>';
+ const toolbar='<div class="talk-toolbar tk-bar">'+who+chips+'<div class="tk-search">'+fighterFilter+'</div>'+more+'</div>';
  const platformNeedsConnection=liveTalk.platformStatus.some(p=>p.platform===state.socialPlatform&&p.state==='not-connected')&&!current.some(p=>p.platform===state.socialPlatform);
  const empty='<div class="talk-empty"><h2>'+esc(window.BEFNTalkStatus.emptyHeading(talkState))+'</h2><p>'+
   (!highlights&&(!liveTalk.lastAttempt||liveTalk.loading)?'Checking for original posts from the past seven days.':!highlights&&platformNeedsConnection?'Automatic updates from '+esc(state.socialPlatform)+' need an approved source connection.':'Try a different sport, promotion, fighter or platform filter.')+'</p></div>';
- const pages=total>1?'<div class="pagination"><button type="button" data-page="prev" '+(state.socialPage===1?'disabled':'')+'>← Previous</button><span>Page '+state.socialPage+' of '+total+'</span><button type="button" data-page="next" '+(state.socialPage===total?'disabled':'')+'>Next →</button></div>':'';
- const count=total>1?(start+1)+'–'+Math.min(start+pageSize,list.length)+' of '+list.length+' posts':list.length+' post'+(list.length===1?'':'s');
- const title=highlights?'The last four weeks':'Latest fighter & promoter posts';
- const description=highlights?'Original fighter reactions and exchanges from the past 28 days.':'Original posts from fighters, champions, contenders, media and promoters.';
- const resultHead='<div class="talk-section-head"><div><h2>'+title+'</h2></div></div>';
- const mainSection='<section class="talk-section" aria-label="'+title+'">'+resultHead+(list.length?'<div class="social-grid">'+list.slice(start,start+pageSize).map(postCard).join('')+'</div>':empty)+pages+'</section>';
- const highlighted=highlights?[]:highlightedTalkPosts().filter(visible);
- const onPage=new Set(list.slice(start,start+pageSize).map(p=>p.url));
- const featured=highlighted.filter(p=>!onPage.has(p.url)).slice(0,4);
- const preview=featured.length?'<section class="talk-section" aria-label="Four-week Fight Talk highlights"><div class="talk-section-head"><div><div class="talk-section-eyebrow">BOXING · MMA · GRAPPLING</div><h2>Highlights · last 4 weeks</h2></div><button type="button" class="btn" data-segment="socialMode" data-value="highlights">All highlights ↗</button></div><div class="social-grid">'+featured.map(postCard).join('')+'</div></section>':'';
- return renderFrame(viewTitle('','Fight Talk')+toolbar+
-  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1"><div class="talk-results-head"><p class="talk-count" aria-live="polite">'+esc(count)+'</p>' +talkCoverage(current)+talkAccountDirectory()+'</div>'+mainSection+preview+'</section>');
+ talkShown.length=0;
+ /* Hottest right now: the three most-engaged posts in view, on the first page when nothing is searched. */
+ const score=p=>{const e=p.engagement||{};return (e.likes||0)+3*(e.comments||0)+2*(e.shares||0)};
+ const hot=state.socialPage===1&&!state.talkFighter?list.filter(p=>p.type!=='thread'&&score(p)>0).slice().sort((a,b)=>score(b)-score(a)).slice(0,3):[];
+ const rest=list.filter(p=>!hot.includes(p));
+ const totalRest=Math.max(1,Math.ceil(rest.length/pageSize));
+ if(state.socialPage>totalRest)state.socialPage=totalRest;
+ const pageRows=rest.slice((state.socialPage-1)*pageSize,state.socialPage*pageSize);
+ const pages=totalRest>1?'<div class="pagination"><button type="button" data-page="prev" '+(state.socialPage===1?'disabled':'')+'>← Previous</button><span>Page '+state.socialPage+' of '+totalRest+'</span><button type="button" data-page="next" '+(state.socialPage===totalRest?'disabled':'')+'>Next →</button></div>':'';
+ const count=list.length+' post'+(list.length===1?'':'s');
+ const title=highlights?'The last four weeks':state.talkRole==='fighters'?'Latest from the fighters':'Latest fighter & promoter posts';
+ const hotSection=hot.length?'<section class="talk-section tk-hot-section" aria-label="Hottest right now"><div class="talk-section-head"><div><h2>Hottest right now</h2></div></div><div class="tk-hot">'+hot.map(p=>talkCard(p,true)).join('')+'</div></section>':'';
+ const mainSection='<section class="talk-section" aria-label="'+title+'"><div class="talk-section-head"><div><h2>'+title+'</h2></div><p class="talk-count" aria-live="polite">'+esc(count)+'</p></div>'+(list.length?'<div class="tk-grid">'+pageRows.map(p=>talkCard(p)).join('')+'</div>':empty)+pages+'</section>';
+ /* Feed details are staff information: they live at the foot of the page, not above the posts. */
+ const about='<details class="tk-about"><summary>About this feed</summary><p class="talk-freshness">'+esc(freshness)+'</p>'+talkCoverage(current)+talkAccountDirectory()+'</details>';
+ return renderFrame(viewTitle('',sportName?sportName+' fight talk':'Fight Talk')+toolbar+
+  '<section id="talk-results" aria-label="Fight Talk posts" tabindex="-1">'+hotSection+mainSection+about+'</section>');
 }
 
 
 function refreshTalkView(focusId=document.activeElement?.id,showResults=false){
  const coverageOpen=document.getElementById('talk-coverage')?.open;
+ state.talkMoreOpen=!!document.querySelector('.tk-more-filters')?.open;const aboutOpen=document.querySelector('.tk-about')?.open;
  main.innerHTML=renderSocial();
  hydrateTalkEmbeds();
  if(coverageOpen)document.getElementById('talk-coverage')?.setAttribute('open','');
+ if(aboutOpen)document.querySelector('.tk-about')?.setAttribute('open','');
  const focus=showResults?document.getElementById('talk-results'):document.getElementById(focusId);
  focus?.focus({preventScroll:true});
  if(showResults)focus?.scrollIntoView({block:'start'});
@@ -1225,6 +1266,7 @@ document.addEventListener('click',e=>{
    if(Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});
    return;
   }
+  if(name==='talkRole'||name==='socialPlatform')state.socialPage=1;
   if(name==='newsSort'){state.newsPage=1;const feed=document.getElementById('news-feed');if(feed){feed.innerHTML=renderNewsFeed();return;}}
   
   navigate();

@@ -2,6 +2,19 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fight Talk: talk cards)
+- **Fight Talk posts are BEFN's own cards** (owner picked design A, "Talk cards", from two mock-ups). Each card shows the face, name, role (Champion, Contender, Prospect, Fighter, Promoter, Media and so on), platform, time, the post's own text and likes and replies. Desktop shows 3 columns; phones show 1.
+- **The platform's embed loads only when the reader taps "Show post".** Before this, the page loaded every X, Instagram, Threads and Bluesky widget up front. Every card also keeps a direct "Open ↗" link to the original post.
+- **"Hottest right now"** is the three most-engaged posts in view: likes, plus replies ×3, plus shares ×2. It shows on page one and is hidden while a search is active.
+- **One slim bar:**
+  - a Fighters / Everyone switch (Everyone stays the default);
+  - platform chips;
+  - fighter search;
+  - "More filters", which holds Latest / Last 4 weeks, the detailed "Posts from", the order and the promotion.
+- **"About this feed" is at the foot of the page.** It holds the freshness line (#520), the post sources and the tracked fighter profiles. This follows DIRECTION rule 6: staff details never lead a public page.
+- **Only the post's own words are shown.** A collector's or reporter's summary never stands in for them; a card with no text says "Tap Show post to read it on <platform>". The "Link or video in the post" tag shows only on short posts.
+- The code is `talkCard` in `assets/app-inline-2.js`, with styles in `assets/fight-talk-cards.css`, which loads after `fight-talk.css`. `tests/test-fight-talk.cjs` now loads `assets/talk-status.js`; it had failed on main since #520. It also checks the new layout.
+
 ## 2026-11-25 (UFC profiles: BJJ and ADCC added to the amateur career)
 - **BJJ and ADCC results now appear in the same "Amateur career" card and badges** (owner chose "Add BJJ/ADCC to profiles"). New badges: *ADCC world champion / titles ×N / medallist*, *ADCC Worlds competitor*, and IBJJF black-belt titles (*BJJ world*, else *BJJ Pan* / *BJJ European*). Badge priority: Olympic, World, ADCC, BJJ, continental, national team; three at most. BJJ rows carry a small belt-colour bar. Lists longer than eight results fold behind "Show all N results".
   - **Gate:** `research/ufc-bjj-credentials/profile-verified.json` names the fighters whose identity is corroborated for each results file. Only those, only adult or juvenile divisions (no masters, teens or kids), only names that start and end like the fighter's, and only rows with an https source are shown. ADCC entries count only where a bout is documented ("Competed").

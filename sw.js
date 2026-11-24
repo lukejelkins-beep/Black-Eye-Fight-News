@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1-ov1-bxh1-nav1-front1-d02-sw1-bxfo1-lf1-kb1-kb2-fx1-trap1-rx1-c01-a05-am1-fa1-am2-am3-am4-am5';
+const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1-ov1-bxh1-nav1-front1-d02-sw1-bxfo1-lf1-kb1-kb2-fx1-trap1-rx1-c01-a05-am1-fa1-am2-am3-am4-am5-tk1';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -11,7 +11,7 @@ const SHELL = [
   '/data/ufc334-fighter-evidence.json',
   '/assets/fighter-hover.js', '/assets/scout-intelligence.js', '/assets/ufcalendar-evidence.js',
   '/assets/local-time.js', '/assets/local-images.js', '/assets/upcoming-cards.js',
-  '/assets/upcoming-cards.css', '/assets/related-news.css', '/assets/snapshot-tiles.css', '/assets/snapshot-tiles.js', '/assets/related-news.js', '/assets/fight-talk-filters.js', '/assets/fight-talk.css',
+  '/assets/upcoming-cards.css', '/assets/related-news.css', '/assets/snapshot-tiles.css', '/assets/snapshot-tiles.js', '/assets/related-news.js', '/assets/fight-talk-filters.js', '/assets/fight-talk.css', '/assets/fight-talk-cards.css',
   '/assets/fight-film.css', '/assets/fight-film.js',
   '/assets/results.css', '/assets/results.js', '/assets/talk-status.js', '/assets/fights-route.js', '/assets/fights-hub.css', '/assets/event-status.js', '/assets/fighter-power-index.js', '/assets/form-rule.js', '/assets/fighter-insights.js', '/assets/fighter-power.css', '/assets/fighter-profile-pro.css', '/assets/fighters-hub.css', '/assets/fighters-hub.js'
 ];
