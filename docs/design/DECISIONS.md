@@ -2,6 +2,8 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fights tab URLs)
+- **Each Fights tab has its own URL**: `#fights` is Upcoming and `#fights/results` is Results. `#results` and `#calendar` still work and redirect to these. Before, every route was rewritten to `#fights`, so reloading or sharing Results opened Upcoming (QA audit D02). Claude, at the owner's request. Shows up in `assets/fights-route.js` and the Fights tabs.
 
 ## 2026-11-24 (NCAA wrestling credentials, Americans first)
 - **Research NCAA wrestling credentials for every certified profile fighter, Americans first, in this session with research sub-agents (no API spend).** Owner selectors (24 Nov): "Here, no API cost", "NCAA wrestling only", "Yes, for participation", "Yes, all profiles". Pipeline changes (`scripts/ufc-credentials-schema.mjs`, `scripts/ufc-credentials-run.mjs`): NCAA claims carry `ncaa_division` and `ncaa_result` (participant, All-American, finalist, champion); a college's own athletics site counts as Tier A proof of being on that NCAA team and nothing more (placings and titles still need ncaa.com or two independent outlets); NJCAA and NAIA are recorded as "other", never as NCAA; the roster is all certified profile fighters (783 + extension + rolling), skipping only the three confirmed alias slugs; `--disciplines wrestling` scopes a run; plan-only runs skip the API budget guard. First batch: the 198 Americans (by the flags file) not in the 25-fighter pilot. Research only: nothing is shown on a page until a separate decision. — Owner (selectors, 24 Nov) — PR for branch claude/lucid-clarke-fgst1o.
