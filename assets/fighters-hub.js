@@ -22,7 +22,7 @@
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
  const url=f=>"#fighter/ufc--"+encodeURIComponent(f.slug);
  const ovr=f=>f.overall==null?"new":f.overall;
- const form=f=>f.form==null?"–":f.form;
+ const form=f=>(window.BEFNFormRule?window.BEFNFormRule.shown(f):(f.certified===true&&Number.isFinite(f.form)))?f.form:"–";
  const rec=f=>{const r=f.record;if(!r)return "";return r[0]+"–"+r[1]+(r[2]?"–"+r[2]:"")+(r[3]?" ("+r[3]+" NC)":"");};
  const dateText=d=>d?new Date(d+"T12:00:00Z").toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}):"";
 
@@ -51,7 +51,8 @@
   return all.filter(f=>f.women===(st.sex==="women"));
  }
  const byForm=(a,b)=>(b.points??-1)-(a.points??-1)||a.name.localeCompare(b.name);
- const scored=f=>f.form!=null&&!f.injured&&f.stage!=="Inactive";
+ const formShown=f=>window.BEFNFormRule?window.BEFNFormRule.shown(f):(f.certified===true&&Number.isFinite(f.form));
+ const scored=f=>formShown(f)&&!f.injured&&f.stage!=="Inactive";
 
  function overall(){
   const P=pool().filter(f=>!f.champion);
