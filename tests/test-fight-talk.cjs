@@ -56,6 +56,9 @@ vm.createContext(ctx);
 // The Fight Talk view uses the same visitor-local clock as the website.
 // Exercise the actual helper in the browser-like VM rather than mocking it.
 vm.runInContext(fs.readFileSync('assets/local-time.js','utf8'),ctx,{filename:'assets/local-time.js'});
+// Fight Talk's freshness and empty-state wording come from assets/talk-status.js (#520); load it as the page does.
+vm.runInContext(fs.readFileSync('assets/talk-status.js','utf8'),ctx,{filename:'assets/talk-status.js'});
+ctx.window.BEFNTalkStatus=ctx.BEFNTalkStatus;
 vm.runInContext(fn,ctx);
 const posts=Array.from({length:12},(_,i)=>({name:i<8?'Busy author':'Other '+i,quote:'Distinct post '+i,postedAt:new Date(Date.UTC(2026,10,7,12,i)).toISOString()}));
 const nativeEmbeds=Array.from({length:7},(_,i)=>({name:'Original Threads post',platform:'Threads',sport:'mma',role:'media',nativeEmbed:true,sourceLinkedAt:'2026-11-08T08:28:40Z',summary:'Original social post linked on official UFC homepage.',url:'https://www.threads.com/t/uniqueOriginal'+i+'/'}));
@@ -100,6 +103,15 @@ assert(!ctx.postCard(media).includes('<iframe'),'Source-linked X posts render re
 assert(ctx.postCard(media).includes('Open post'),'X cards link directly to original source');
 assert(ctx.renderSocial().includes('href="https://x.com/media/status/200"'),'Display original-source links for X posts');
 assert(!ctx.renderSocial().includes('Selected post'));
+// Design A (owner, 24 Nov 2026): BEFN talk cards; the platform embed waits for "Show post"; feed details at the foot.
+{const page=ctx.renderSocial();
+ assert(page.includes('class="tk-card'),'Posts render as BEFN talk cards');
+ assert(page.includes('data-talk-show='),'Original embeds load only when the reader taps Show post');
+ assert(!page.includes('class="twitter-tweet"')&&!page.includes('class="instagram-media"'),'No platform embed is on the page before Show post');
+ assert(page.includes('Hottest right now'),'Most-engaged posts lead page one');
+ assert(page.indexOf('About this feed')>page.indexOf('tk-grid'),'Feed and staff details sit below the posts');
+ assert(page.indexOf('talk-freshness')>page.indexOf('tk-grid'),'Freshness line no longer leads the page');
+ assert(page.includes('data-segment="talkRole" data-value="fighters"'),'Fighters / Everyone switch');}
 assert(!ctx.renderSocial().includes('talk-card-meta'));
 assert(ctx.postCard(champion).includes('instagram.com/'));
 assert(ctx.postCard(champion).includes('Champion training update'),'Display the original social post text when available');

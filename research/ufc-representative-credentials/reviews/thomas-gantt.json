@@ -2,28 +2,69 @@
   "slug": "thomas-gantt",
   "identity": {
     "url": "https://www.ufc.com/athlete/thomas-gantt",
-    "summary": "UFC lists Tommy Gantt, an unbeaten lightweight from Belleville, Illinois, who began wrestling at 12. UWW lists Thomas GANTT JR (USA) at freestyle 79 kg."
+    "summary": "UFC lists Tommy Gantt, an unbeaten lightweight from Belleville, Illinois, who started wrestling at 12. NC State's roster lists wrestler Tommy Gantt from Cahokia, Illinois (Cahokia HS), next to Belleville. UWW lists him as Thomas GANTT JR (USA), freestyle 79 kg."
   },
   "lanes": {
     "national": {
-      "state": "needs_review",
+      "state": "seed",
       "checkedOn": "2026-11-25",
       "checks": [
         {
           "type": "federation_or_team",
           "name": "UWW result book, 2021 Pan-American Championships (Guatemala City)",
           "url": "https://cdn.uww.org/2022-12/final-book-db660c8e-be33-11eb-803a-06b1e9be04dc.pdf",
-          "outcome": "ambiguous"
+          "outcome": "supports_claim"
         },
         {
           "type": "federation_or_team",
           "name": "UWW result book, 2019 Freestyle World Cup (Yakutsk)",
           "url": "https://cdn.uww.org/2019-03/2019_freestyle_world_cup_final-book_0.pdf",
-          "outcome": "ambiguous"
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "discovery",
+          "name": "NC State Athletics roster, Tommy Gantt (hometown Cahokia, Ill.)",
+          "url": "https://gopack.com/sports/wrestling/roster/tommy-gantt/2911",
+          "outcome": "supports_claim"
         }
       ],
-      "claims": [],
-      "note": "UWW lists Thomas Gantt Jr (USA) as the 2021 Pan-American 79 kg champion (rank 1) and in the USA team at the 2019 Freestyle World Cup (79 kg). The name and country fit, and a 79 kg wrestler could plausibly fight at lightweight, but nothing yet ties the wrestler to the UFC fighter, such as a college, a hometown or a bio mention. To resolve, find a USA Wrestling or college profile naming Belleville, IL, or an MMA profile mentioning the Pan-Am title."
+      "claims": [
+        {
+          "kind": "team_appearance",
+          "edition": "2021 Pan-American Wrestling Championships (Guatemala City)",
+          "sport": "Wrestling",
+          "event": "Men's freestyle 79 kg",
+          "delegation": "USA",
+          "category": "senior",
+          "result": "1st",
+          "medal": "gold",
+          "sources": [
+            {
+              "name": "UWW result book, 2021 Pan-American Championships (Guatemala City)",
+              "url": "https://cdn.uww.org/2022-12/final-book-db660c8e-be33-11eb-803a-06b1e9be04dc.pdf",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2019 Freestyle Wrestling World Cup (Yakutsk)",
+          "sport": "Wrestling",
+          "event": "Men's freestyle 79 kg",
+          "delegation": "USA",
+          "category": "senior",
+          "result": "Competed for the USA team",
+          "medal": null,
+          "sources": [
+            {
+              "name": "UWW result book, 2019 Freestyle World Cup (Yakutsk)",
+              "url": "https://cdn.uww.org/2019-03/2019_freestyle_world_cup_final-book_0.pdf",
+              "authority": "federation"
+            }
+          ]
+        }
+      ],
+      "note": "Identity resolved 25 Nov 2026. The UFC profile's hometown (Belleville, IL) and NC State's roster (Cahokia, IL, Cahokia HS) are neighbouring towns in St Clair County, and the name, sport and era agree. The 2021 Pan-American gold is rank 1 in the UWW ranking table. NC State lists him as an All-American and ACC champion, which belongs to the NCAA research lane and isn't recorded here."
     }
   }
 }

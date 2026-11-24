@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-24T20:44:23.256Z",
-  "checkedAt": "2026-11-24T20:44:23.256Z",
+  "attemptedAt": "2026-11-24T22:41:44.971Z",
+  "checkedAt": "2026-11-24T22:41:44.971Z",
   "windowDays": 28,
-  "articlesChecked": 29,
+  "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 43,
-  "publisherSourcesConfigured": 32,
-  "linksFound": 14,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 33,
+  "linksFound": 12,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -95,6 +95,25 @@
       "embedVerified": true,
       "linkPriority": 12,
       "url": "https://www.threads.com/t/DgGM3fsAYsA/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-24T21:22:16+00:00",
+      "discoveredAt": "2026-11-24T22:41:44.971Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/news/joshua-van-still-growing-ufc-336",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/reel/Df0PIHeE4dl/"
     },
     {
       "type": "post",
@@ -2323,25 +2342,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/BgY8Ipbg6is/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-19T02:25:33+00:00",
-      "discoveredAt": "2026-11-19T04:57:08.507Z",
-      "sourcePublisher": "ONE Championship",
-      "evidenceUrl": "https://www.onefc.com/news/its-my-city-aslamjon-ortikov-carries-spirit-of-samarkands-little-thailand-into-one-world-title-rematch/",
-      "summary": "Original social post linked in ONE Championship coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/reel/DRwBFRikbqT/"
     }
   ],
   "seenOriginals": [
@@ -3656,6 +3656,10 @@
     {
       "url": "https://www.instagram.com/p/Df401GPvqHF/",
       "firstSeen": "2026-11-24T19:47:43.987Z"
+    },
+    {
+      "url": "https://www.instagram.com/reel/Df0PIHeE4dl/",
+      "firstSeen": "2026-11-24T22:41:44.971Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."

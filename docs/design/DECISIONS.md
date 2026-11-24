@@ -2,6 +2,24 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fight Talk: talk cards)
+- **Fight Talk posts are BEFN's own cards** (owner picked design A, "Talk cards", from two mock-ups). Each card shows the face, name, role (Champion, Contender, Prospect, Fighter, Promoter, Media and so on), platform, time, the post's own text and likes and replies. Desktop shows 3 columns; phones show 1.
+- **The platform's embed loads only when the reader taps "Show post".** Before this, the page loaded every X, Instagram, Threads and Bluesky widget up front. Every card also keeps a direct "Open ↗" link to the original post.
+- **"Hottest right now"** is the three most-engaged posts in view: likes, plus replies ×3, plus shares ×2. It shows on page one and is hidden while a search is active.
+- **One slim bar:**
+  - a Fighters / Everyone switch (Everyone stays the default);
+  - platform chips;
+  - fighter search;
+  - "More filters", which holds Latest / Last 4 weeks, the detailed "Posts from", the order and the promotion.
+- **"About this feed" is at the foot of the page.** It holds the freshness line (#520), the post sources and the tracked fighter profiles. This follows DIRECTION rule 6: staff details never lead a public page.
+- **Only the post's own words are shown.** A collector's or reporter's summary never stands in for them; a card with no text says "Tap Show post to read it on <platform>". The "Link or video in the post" tag shows only on short posts.
+- The code is `talkCard` in `assets/app-inline-2.js`, with styles in `assets/fight-talk-cards.css`, which loads after `fight-talk.css`. `tests/test-fight-talk.cjs` now loads `assets/talk-status.js`; it had failed on main since #520. It also checks the new layout.
+
+## 2026-11-25 (UFC profiles: BJJ and ADCC added to the amateur career)
+- **BJJ and ADCC results now appear in the same "Amateur career" card and badges** (owner chose "Add BJJ/ADCC to profiles"). New badges: *ADCC world champion / titles ×N / medallist*, *ADCC Worlds competitor*, and IBJJF black-belt titles (*BJJ world*, else *BJJ Pan* / *BJJ European*). Badge priority: Olympic, World, ADCC, BJJ, continental, national team; three at most. BJJ rows carry a small belt-colour bar. Lists longer than eight results fold behind "Show all N results".
+  - **Gate:** `research/ufc-bjj-credentials/profile-verified.json` names the fighters whose identity is corroborated for each results file. Only those, only adult or juvenile divisions (no masters, teens or kids), only names that start and end like the fighter's, and only rows with an https source are shown. ADCC entries count only where a bout is documented ("Competed").
+  - Result: 117 fighters, 465 results (30 with BJJ or ADCC rows). — owner — UFC profiles, #524
+
 ## 2026-11-24 (Analysis pages)
 - **Boxing's Analysis tab is a real page** (owner chose all four section groups from a mock-up). The page has:
   - **The title picture:** every division by WBA, WBC, IBF and WBO, with faces. A gold row marks undisputed and tinted cells mark one boxer holding several belts. WBA "Regular" holders are shown in grey as "(regular)" (owner's choice), not as Vacant. Counts sit above: undisputed, unified, and split (no one holds two).
@@ -22,6 +40,12 @@ Format: date — decision — who — where it shows up.
 - **The two long-failing tests were not real bugs.** CI runs both and they are green there.
   - `tests/ufc-ratings-parity.cjs` needed its fixture path as an argument. Run without one, it now builds the fixture itself, as CI does.
   - `test-ufc-profile-visual.mjs` needs Playwright, which CI installs and the repo doesn't list. It is left as is; adding it to devDependencies would need the owner's decision.
+
+## 2026-11-25 (UFC profiles: amateur career and medals)
+- **Verified amateur results now show on UFC profiles** (owner picked option A from a mock, then asked for "shiny gold for gold medals ... something that pops", then "I like it"). Up to three badges sit under the record: *Olympic champion / medallist / Olympian*, *World champion / titles ×N / medallist* (age-group Worlds say "Junior world"), a continental or Commonwealth title or medal, and the national team (or "youth team" / "junior team" when every appearance is age-group). Lower down, an "Amateur career" card lists one row per result: medal or place, event, year, division, country, and a "Source" link.
+  - **Medals:** metallic gold, silver and bronze discs with a slow light sweep; places outside the top three are plain cream discs. An Olympic gold badge is a polished gold pill. The sweep stops when the reader has reduced motion on.
+  - **What qualifies:** only `seed` or `reviewed` lanes in `research/ufc-representative-credentials/reviews`, and only Games, youth Games and national-team appearances with an https source from a games body, federation or delegation. Selections, squads, trials, qualifiers, `needs_review` records and leads never show. BJJ/ADCC screens are not included yet.
+  - **How:** `scripts/build-amateur-credentials.mjs` writes `data/ufc-amateur-credentials.json` (88 fighters, 171 results); `assets/amateur-credentials.js` and `.css` add the badges and card when a profile opens. Not used in ratings or certificates. — owner — UFC profiles, #521
 
 ## 2026-11-24/25 (Overnight credentials research run)
 Owner-approved plan (`Befn Research Runner/WORK-PLAN-20261124.md`). The owner delegated in-run decisions; merges wait for "Merge N". The full log is `Befn Research Runner/RESEARCH-LOG.md` (local).
