@@ -446,8 +446,8 @@ function wrestlerLink(row,small=false) {
 }
 function divisionTabs(active, attr, all=false) {
   return '<div class="division-tabs" role="group" aria-label="Choose division">' +
-    (all?'<button type="button" class="pill '+(active==='All'?'active':'')+'" '+attr+'="All">All 3 divisions</button>':'') +
-    DIVS.map(d=>'<button type="button" class="pill '+(active===d?'active':'')+'" '+attr+'="'+d+'">'+e(d)+(all?'<span class="count">'+(counts()[d]||0)+'</span>':'')+'</button>').join('') +
+    (all?'<button type="button" class="pill '+(active==='All'?'active':'')+'" aria-pressed="'+(active==='All')+'" '+attr+'="All">All 3 divisions</button>':'') +
+    DIVS.map(d=>'<button type="button" class="pill '+(active===d?'active':'')+'" aria-pressed="'+(active===d)+'" '+attr+'="'+d+'">'+e(d)+(all?'<span class="count">'+(counts()[d]||0)+'</span>':'')+'</button>').join('') +
     '</div>';
 }
 function standingsTable(rows,limit=10) {
