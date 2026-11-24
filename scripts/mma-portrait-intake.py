@@ -151,8 +151,10 @@ def pfl(person):
             host_ok(photo)
             # PFL's bodyshot is labelled "fighter" on the athlete's own page, whose title
             # names them (scripts/enrich-pfl-official-portraits.py checks both).
-            return labelled(person["name"], photo, title.group(1).strip() if title else "", person["name"]), page, \
-                "pflmma.com athlete page: title names the fighter; the page's fighter bodyshot; file name carries the name"
+            # Owner, 2026-11-24 ("Yes, same rule for PFL"): PFL names its photographs by a hash, like RIZIN, so
+            # the athlete page's title naming the fighter and the page's own bodyshot replace the file-name check.
+            return labelled(person["name"], photo, title.group(1).strip() if title else "", person["name"], hashed_file_ok=True), page, \
+                "pflmma.com athlete page: title names the fighter; the page's own fighter bodyshot (hashed file name; owner decision 2026-11-24)"
     return None
 
 
