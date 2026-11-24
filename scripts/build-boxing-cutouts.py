@@ -45,6 +45,8 @@ BY_EYE = {
     "conah-walker": "full-length pose with the arms across the chest, the head too small to read",
     "hassan-azim": "full-length boxing pose: the head is a fraction of the frame",
     "ishmael-davis": "the forearm covers the face",
+    "naoya-inoue": "award-ceremony still: the trophy in front of him leaves shards in the cutout and holes in the jacket",
+    "teofimo-lopez": "video still in a gym: a dark object behind his head is kept as part of the figure",
     "lauren-price": "the belts fill the frame and the head sits small above them",
     "ryan-garcia": "a weigh-in face-off: two other people in the frame, both masked, the subject not told apart",
     "teremoana-teremoana": "mid-punch, the torso fills the frame and the head is small",

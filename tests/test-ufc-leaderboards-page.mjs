@@ -7,9 +7,10 @@ const html=readIndex();
 const js=fs.readFileSync("assets/fighter-insights.js","utf8");
 const css=fs.readFileSync("assets/ufc-stat-leaderboards.css","utf8");
 test("dedicated UFC statistics route is navigable with a responsive standalone page",()=>{
- // Five-item navigation (PR #329, owner approved): UFC stats is a sub-link
- // inside Fighters, and the #leaderboards route itself still works.
- assert.match(html,/\['#leaderboards','UFC stats','leaderboards'\]/);
+ // Owner, 24 Nov 2026: the UFC stats leaderboards are MMA's Analysis section (they were a sub-link
+ // inside Fighters, PR #329). The #leaderboards route itself still works and belongs to Analysis.
+ assert.match(html,/function renderAnalysis\(\)\{if\(activeSport\(\)==='mma'\)return renderLeaderboards\(\);/);
+ assert.match(html,/leaderboards:'analysis'/);
  assert.match(html,/const all=\[[^\]]*'leaderboards'/);
  assert.match(html,/leaderboards:renderLeaderboards/);
  assert.match(html,/function renderLeaderboards\(\)/);

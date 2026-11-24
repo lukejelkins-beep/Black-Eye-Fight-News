@@ -1,10 +1,10 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1';
+const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1-ov1-bxh1-nav1';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
   '/assets/app-install.css', '/assets/app-install.js',
-  '/assets/brand-theme.css', '/assets/editorial-compact.css', '/assets/news-list.css', '/assets/news-page.css', '/assets/landing-page.css', '/assets/site-theme.css', '/assets/site-header.css', '/assets/fights-page.css', '/assets/fighters-page.css', '/assets/news-page.js', '/assets/landing.js', '/assets/global-sport-v1.0.3.css', '/assets/global-sport-v1.0.3.js', '/assets/compact-discipline-logos.css', '/assets/promotion-coverage.js', '/assets/promotion-coverage.css',
+  '/assets/brand-theme.css', '/assets/editorial-compact.css', '/assets/news-list.css', '/assets/news-page.css', '/assets/landing-page.css', '/assets/site-theme.css', '/assets/site-header.css', '/assets/fights-page.css', '/assets/fighters-page.css', '/assets/news-page.js', '/assets/landing.js', '/assets/sport-overview.js', '/assets/sport-overview.css', '/assets/phone-nav.css', '/assets/phone-nav.js', '/assets/global-sport-v1.0.3.css', '/assets/global-sport-v1.0.3.js', '/assets/compact-discipline-logos.css', '/assets/promotion-coverage.js', '/assets/promotion-coverage.css',
   '/assets/mobile-app.css', '/assets/mobile-app.js',
   '/assets/notifications.css', '/assets/notifications.js', '/assets/push-config.js',
   '/assets/ufcalendar-fights-enrichment.js',

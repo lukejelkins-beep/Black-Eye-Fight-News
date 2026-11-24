@@ -2,6 +2,39 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Phone navigation: option B)
+- **One slim top bar on phones** (owner chose option B from four mock-ups drawn on the real pages; the others were today's layout, sections moved under the sports at the top, and a "Boxing ▾" switcher). The bar is 52 px: "BEFN" (opens the all-sports front page), the Boxing / MMA / Sumo tabs and a menu icon. The big sport buttons under the old masthead are gone. Before, the sport row scrolled away and the bar that stayed only had Alerts and Menu; now a sport is one tap away at any time, and the first screen shows about 70 px more content. Sections stay in the bottom tab bar, under the thumb. Owner extras, all four chosen:
+  - **Sumo uses the same bars.** `assets/phone-nav.js` builds the top bar on `index.html` and the three Sumo pages. On Sumo its menu lists the sports, the Sumo sections and the current section's pages.
+  - **The top bar hides on scroll down** and comes back on any scroll up, near the top, on a route change, or when something in it has focus. There is no animation for readers who ask for reduced motion.
+  - **The active bottom tab shows the sport's colour**: an icon and top marker in red (Boxing), amber (MMA), blue (Sumo) or gold (front page). It replaces the yellow pill.
+  - **Desktop is unchanged.** Everything new is hidden above 760 px.
+- **Alerts and Install moved into the menu** ("Alerts: notification preferences", "Install the app"). The menu sheet now uses the site's cream and ink instead of the old teal.
+- `scripts/sumo-browser-qa.mjs` now reads the sports from the new bar, with the same rules: three labelled sports, no clipping or overlap, 44 px tap height, and BEFN opens the front page. It passed locally at 1440, 1280, 768, 390 and 320 px, run with the files served from disk.
+
+## 2026-11-24 (Fighters cleanup and boxing photos)
+- **The Fighters page starts with the hub** (owner selector, from phone screenshots). The Fighter scout / Champions / UFC stats pills, the "Archive verification note" and the "Fighter profiles" title are gone from Boxing and MMA. DIRECTION rule 6 says verification notes never lead a public page.
+- **Boxing has a hub in the MMA hub's style** (`assets/boxing-hub.js`, `assets/boxing-hub.css`, reusing the `.fh` styles):
+  - **Overall:** every division's champion, with a gold edge for undisputed, then Unbeaten, Contenders and Prospects rails.
+  - **A division tab:** the champion and the other belt holders, then that division's contenders and prospects.
+  - **Search:** a "Find a boxer" box.
+  - **What it leaves out:** no Form score (we hold no fight-by-fight boxing statistics), and no Men/Women switch (the boxing roster and title data are men only).
+  - **Records:** the scouting roster is from 7 November. Records and last-five results are brought up to date from later verified results in `data/results.json`, using the post-fight record each result carries. Diego Pacheco reads 26–1 and isn't on the Unbeaten rail; Teremoana reads 13–0.
+- **Champions are inside each hub** (owner's choice). The Champions page still works and is linked from each Overview's "All divisions".
+- **The UFC stats leaderboards are MMA's Analysis section** (owner's choice). Boxing and the front page keep the Analysis placeholder. The `#leaderboards` route still works, belongs to Analysis, and is where the MMA hub's "Find a fighter" goes. The phone menu reads "Fighters" and "Analysis: UFC stats" (MMA).
+- **Boxing photos added** (owner: "add press-kit photos"). 13 boxers got an approved photo, each registered with its credit, rights and SHA-256, and 10 of them got a cut-out.
+  - From Matchroom: Medina, Dalton Smith, Pacheco, Ennis, Jesse Rodríguez and Josh Kelly.
+  - From Commons: Mason, Canelo, Hrgović, Munguía, Naoya Inoue, Usyk and Teófimo López.
+  - Dropped by eye: the Dubois and Foster photos, and the Inoue and López cut-outs.
+  - 48 boxers on the list still have no photo. The PBC site answers 403, MVP's robots.txt disallows us, Queensberry has no press site, and many have no free Wikipedia photo. Kabayel, Fundora, Russell and the other PBC and Queensberry champions would need photos from the owner.
+
+## 2026-11-24 (Boxing and MMA Overviews)
+- **Each sport's first section is now its own Overview** (owner chose "build as mocked"): next fight night strip, a hero, latest results, coming up, champions, latest news and explore cards. Built in `assets/sport-overview.js` and `assets/sport-overview.css`; the mixed front page from the logo is unchanged.
+- **The hero picks itself** (owner chose "automatic"): the latest main event's result for 3 days after it, otherwise the biggest upcoming fight with a countdown. "Biggest" is a fight on the owner's headline list in `data/sport-overview-featured.json` within 45 days (Fury vs Joshua today), else the strongest title fight in the next 3 weeks. Eliminators don't count as world titles. The result paragraph is the event's own sourced takeaway where there is one.
+- **MMA covers every promotion we hold** (owner chose "all promotions"): UFC, PFL, ONE, RIZIN, KSW and Cage Warriors results and cards. The champions block is the UFC's only and is labelled "UFC champions".
+- **Boxing champions:** whoever holds the most of the WBA, WBC, IBF and WBO belts in each division, from the site's champion data. Regular and interim titles are left out. A gold edge marks undisputed.
+- **Photos:** a cut-out or an approved local photo is used where we hold one, and initials are shown otherwise. Press-kit photos for champions and coming-up boxers are being added under the owner's existing attestation (owner chose "add press-kit photos").
+- **Service worker** cache bumped (`-ov1`) and the two new assets added to its shell. `tests/test-sport-overview.cjs` was added to the release readiness gate.
+
 ## 2026-11-24 (Flags for the whole UFC roster)
 - **Country flags for 710 UFC fighters, up from 58** (owner picked "Same Wikipedia list"). `data/ufc-fighter-countries.json` already named Wikipedia's "List of current UFC fighters" (the ISO column shown on UFC telecasts, not a statement of citizenship) as its source but held only card fighters. New `scripts/build-ufc-fighter-countries.py` reads a saved copy of that page's wikitext (fetched once, raw page text; the API was rate-limited) and adds every fighter with no country yet; the 58 existing entries are unchanged. Names come from the cell right after the flag ({{sortname}}, a link, or plain text in the signings, departures and injury tables). Left out rather than guessed: rows with two flags (e.g. Ilia Topuria, Georgia and Spain; his existing entry stays), any name listed with different countries, and cells holding a date (the champions table). The page mixes Olympic and ISO three-letter codes, so the script maps each one explicitly and fails on an unknown code. England, Scotland and Wales use flag-icons' own flags (`gb-eng`, `gb-sct`, `gb-wls`), so the flag-code check in `fighter-insights.js` now accepts those as well as two-letter codes. 51 flag files were added from flag-icons 7.6.0, the same MIT set already held (byte-identical 1x1 files); none contain scripts, styles or embedded images. Of the 729 fighters with a cutout, 566 now have a country (51 before), so their fight-snapshot disc and profile band show the flag. — Owner (chose the source) — awaiting owner "Merge N".
 
