@@ -116,12 +116,16 @@
   const netCtrl=d.controlShare!==null&&d.controlShare!==undefined&&d.controlAgainst!==null&&d.controlAgainst!==undefined?
    Math.round((d.controlShare-d.controlAgainst)*1000)/1000:null;
   return {
+    // Striking is landing and not getting hit (2026-11-24): output 70%, strike defence 30%.
     striking:[
-      [between(d.slpm,.8,6.5),.18,"Significant strikes landed/min"],
-      [between(diff,-2.0,3.0),.22,"Significant-strike differential/min"],
-      [between(d.strAcc,25,65),.15,"Striking accuracy"],
-      [between(d.kd15,0,1.0),.20,"Knockdowns/15"],
-      [between(d.koRate,0,.50),.25,"KO/TKO finishes per recorded fight"]
+      [between(d.slpm,.8,6.5),.12,"Significant strikes landed/min"],
+      [between(diff,-2.0,3.0),.20,"Significant-strike differential/min"],
+      [between(d.strAcc,25,65),.10,"Striking accuracy"],
+      [between(d.kd15,0,1.0),.13,"Knockdowns/15"],
+      [between(d.koRate,0,.50),.15,"KO/TKO finishes per recorded fight"],
+      [between(d.strDef,35,75),.12,"Significant-strike avoidance"],
+      [between(d.sapm,6.0,1.2),.08,"Strikes absorbed/min (lower is better)"],
+      [between(d.kdAgainst15,1.0,0),.10,"Knockdowns received/15"]
     ],
     // Effectiveness, not volume (rating model 2026-11): what a fighter stops counts as well as what they land.
     grappling:[
@@ -149,7 +153,7 @@
   };
  }
  const LABELS=[
-  ["striking","Striking","Significant-strike output and differential, accuracy, knockdowns, KO/TKO evidence"],
+  ["striking","Striking","Significant-strike output and differential, accuracy, knockdowns, KO/TKO evidence, and strike defence"],
   ["grappling","Grappling","Submission threats and finishes, submissions avoided, reversals and net control"],
   ["wrestling","Wrestling","Takedowns landed and stopped, completion rate and control won minus conceded"],
   ["defence","Defence","Strikes absorbed, strike/takedown defence, damage and opponent control"],

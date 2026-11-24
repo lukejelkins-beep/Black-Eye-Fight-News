@@ -68,7 +68,9 @@ def raw_attribute(window: dict, name: str):
         return power_raw(window)
     if name == "durability":
         return durability_raw(window)
-    return ur.raw_skill(window.get("rates") or {}, window, name)
+    # The card tiles show Defence and Durability separately, so their Striking stays output only (the profile's
+    # striking includes strike defence since 2026-11-24).
+    return ur.raw_skill(window.get("rates") or {}, window, "strikeOutput" if name == "striking" else name)
 
 
 def eligible(window) -> bool:

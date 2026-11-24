@@ -226,10 +226,9 @@ async function checkProfile(page,profile,screen){
    "Unassessed":profile.category;
   assert.equal(details.category,expectedCategory,"classification display mismatch");
   assert(details.historyV3,"UFC profile is not using the sumo-style profile design");
-  // Rating model 2026-11 (PR #453): a fighter rated by the stats build shows Results, the four skills and Recent
-  // form; one the build cannot rate keeps the older five bars.
-  const builtRating=statsFileFor(profile.name)?.ratings;
-  const expectedBars=builtRating&&(builtRating.eligible||builtRating.provisional)?6:5;
+  // Rating model 2026-11: a fighter rated by the stats build shows Results, Striking, Wrestling, Grappling and Recent
+  // form (each skill includes its own defence since 2026-11-24); one the build cannot rate keeps the older five bars.
+  const expectedBars=5;
   assert.equal(details.metrics,expectedBars,"Ratings card requires exactly "+expectedBars+" rating bars");
   assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
   const saved=verifiedV3?.schema===4?verifiedV3.fighters?.[normalized(profile.name)]:null;
@@ -398,9 +397,10 @@ try{
    const board=page.locator("[data-befn-v3-leaderboards]");
    await board.waitFor({state:"visible",timeout:12000});
    await page.waitForFunction(()=>document.querySelector("[data-befn-v3-leaderboards]")?.dataset.ready==="true",null,{timeout:12000});
-   // Stage 5 boards: 7 rating boards (Results added by rating model 2026-11, PR #453) + 16 statistic boards, one picker.
+   // Stage 5 boards: 6 rating boards (Results added by #453, Defence folded into the skills on 2026-11-24)
+   // + 16 statistic boards, one picker.
    const options=await page.locator("#befn-board-metric option").count();
-   assert.equal(options,23,"UFC leaderboard choices incomplete");
+   assert.equal(options,22,"UFC leaderboard choices incomplete");
    const rows=await page.locator(".befn-board-list > li").count();
    assert(rows>=1&&rows<=30,"Expected 1–30 qualified leaderboard athletes");
    // Default board is the BEFN rating, which needs 5 fights with full stats.

@@ -33,7 +33,10 @@ from __future__ import annotations
 import datetime as _dt
 import math
 
-SKILLS = ("striking", "grappling", "wrestling", "defence")
+# Rated skills. Since 2026-11-24 (owner) each skill includes its own defence, so there is no separate Defence skill:
+# striking counts strikes absorbed, strike defence and knockdowns absorbed; wrestling counts takedown defence and control
+# conceded; grappling counts submissions conceded. "defence" stays in specs() for the fight-card tiles only.
+SKILLS = ("striking", "grappling", "wrestling")
 OVERALL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25, "form": .15}
 MIN_STAT_FIGHTS = 3          # complete-stat UFC fights needed before any skill is rated
 MIN_ROSTER = 20              # a skill needs this many rated fighters to rank anyone
@@ -48,22 +51,33 @@ RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "
 RESULTS_MEAN = 1500          # an idle rating drifts back toward this
 RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as established
 # Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Owner's mix: results carry
-# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 68/32), same total spread as the fit.
+# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 71/29 with the 2026-11-24 skills), same total
+# spread as the fit.
 # The four skills keep their old relative weights.
-BLEND = {"results": 1.843, "skills": 1.354}
-SKILL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25}
+BLEND = {"results": 1.769, "skills": 1.228}
+# Old weights were striking 25, defence 25, wrestling 20, grappling 15; striking now carries the strike defence.
+SKILL_WEIGHTS = {"striking": .55, "grappling": .20, "wrestling": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
 HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit of log-odds
 # What readers see (owner's choice, display option A, 2026-11-24): a score out of 100 where 50 is the median rated
-# fighter, 50 + (rating - 1500) / SCORE_DIVISOR, clamped to 1-99. With the rating's spread (sd about 134) the divisor 11
-# gives a spread of about 12 points and puts the best fighter in the high 90s. The full rating is kept as
+# fighter, 50 + (rating - 1500) / SCORE_DIVISOR, clamped to 1-99. With the rating's spread (sd about 134) the divisor 8
+# (owner, 2026-11-24, was 11) puts the top ten at about 88 or higher and only the very best at the 99 cap. The full rating is kept as
 # "overallRating" and orders the ranks, so two fighters with the same rounded score still have distinct ranks.
-SCORE_DIVISOR = 11
+SCORE_DIVISOR = 8
 MODEL = "results+skills 2026-11"
 
 # (key, label, unit) for the "what drives this rating" view.
 COMPONENTS = {
     "striking": [("slpm", "Significant strikes landed per min", "rate"),
+                 ("diffPm", "Strike differential per min", "rate"),
+                 ("strAcc", "Significant strike accuracy", "pct"),
+                 ("kd15", "Knockdowns per 15 min", "rate"),
+                 ("koWinShare", "KO/TKO wins per fight", "pct"),
+                 ("strDef", "Significant strike defence", "pct"),
+                 ("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
+                 ("kdAbs15", "Knockdowns absorbed per 15 min (lower is better)", "rate")],
+    # Output only (the pre-2026-11-24 striking formula), for the fight-card tiles, which show defence separately.
+    "strikeOutput": [("slpm", "Significant strikes landed per min", "rate"),
                  ("diffPm", "Strike differential per min", "rate"),
                  ("strAcc", "Significant strike accuracy", "pct"),
                  ("kd15", "Knockdowns per 15 min", "rate"),
@@ -140,9 +154,14 @@ def specs(rates: dict, window: dict) -> dict:
     slpm, sapm = r.get("slpm"), r.get("sapm")
     diff = slpm - sapm if slpm is not None and sapm is not None else None
     return {
-        "striking": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
-                     (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
-                     (_between(window.get("koWinShare"), 0, .50), .25)],
+        # Striking is landing and not getting hit: output 70%, strike defence 30% (owner, 2026-11-24).
+        "striking": [(_between(slpm, .8, 6.5), .12), (_between(diff, -2.0, 3.0), .20),
+                     (_between(_pct(r.get("strAcc")), 25, 65), .10), (_between(r.get("kd15"), 0, 1.0), .13),
+                     (_between(window.get("koWinShare"), 0, .50), .15), (_between(_pct(r.get("strDef")), 35, 75), .12),
+                     (_between(sapm, 6.0, 1.2), .08), (_between(r.get("kdAbs15"), 1.0, 0), .10)],
+        "strikeOutput": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
+                         (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
+                         (_between(window.get("koWinShare"), 0, .50), .25)],
         # Effectiveness, not volume: what a fighter stops counts as well as what they land.
         "grappling": [(_between(r.get("sub15"), 0, 3.0), .20), (_between(window.get("subWinShare"), 0, .35), .30),
                       (_between(window.get("subLossShare"), .25, 0), .20), (_between(r.get("subAbs15"), 2.0, 0), .10),
@@ -159,7 +178,7 @@ def specs(rates: dict, window: dict) -> dict:
 def raw_skill(rates: dict, window: dict, skill: str):
     """Weighted composite before shrinkage, with the JS engine's evidence gates."""
     s = specs(rates, window)[skill]
-    if skill == "striking":
+    if skill in ("striking", "strikeOutput"):
         return _sum_parts(s, .50)
     if skill == "grappling":
         return _sum_parts(s, .45) if any(v is not None for v, _ in s[:3]) else None
@@ -270,9 +289,9 @@ def results_as_of(bouts: list[dict], as_of: str, p: dict | None = None) -> dict:
 
 
 def skills_composite(pcts: dict):
-    """Weighted average of the skill percentiles (needs three of the four)."""
+    """Weighted average of the skill percentiles (needs two of the three)."""
     have = [k for k in SKILLS if pcts.get(k) is not None]
-    if len(have) < 3:
+    if len(have) < 2:
         return None
     return sum(pcts[k] * SKILL_WEIGHTS[k] for k in have) / sum(SKILL_WEIGHTS[k] for k in have)
 

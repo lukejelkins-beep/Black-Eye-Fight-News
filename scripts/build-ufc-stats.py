@@ -838,7 +838,9 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
                 rows.append({"slug": slug, "statFights": w["statFights"], "rates": w["rates"],
                              "window": {"koWinShare": w.get("koWinShare"), "subWinShare": w.get("subWinShare"),
                                         "subLossShare": w.get("subLossShare")},
-                             "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k) for k in ufc_ratings.SKILLS}})
+                             # defence too: no longer a rated skill, but the fight-card tiles still use it
+                             "raw": {k: ufc_ratings.raw_skill(w["rates"], w, k)
+                                     for k in (*ufc_ratings.SKILLS, "defence")}})
         parity_out.write_text(json.dumps(rows), encoding="utf-8")
 
     index_rows = {}
@@ -865,12 +867,12 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
             "rates": {k: [windows[k]["rates"].get(m) for m in INDEX_RATES] for k in WINDOWS},
             "finishRate": windows["career"]["finishRate"],
             "roundWinRate": (windows["career"]["judging"] or {}).get("roundWinRate"),
-            # [overall, striking, grappling, wrestling, defence, form]: overall is the BEFN score out of 100 (50 = median
-            # established fighter), the four skills are roster percentiles, form is out of 100; then the same four
+            # [overall, striking, grappling, wrestling, form]: overall is the BEFN score out of 100 (50 = median
+            # established fighter), the three skills are roster percentiles, form is out of 100; then the same three
             # skills as division percentiles.
-            "rating": None if not rating else [None] * 5 + [rating["form"]["score"]] if rating.get("provisional") else
+            "rating": None if not rating else [None] * (1 + len(ufc_ratings.SKILLS)) + [rating["form"]["score"]] if rating.get("provisional") else
                       [rating["overall"]] + [rating["skills"][k]["roster"] for k in ufc_ratings.SKILLS] + [rating["form"]["score"]],
-            "divisionRating": None if not rating else [None] * 4 if rating.get("provisional") else
+            "divisionRating": None if not rating else [None] * len(ufc_ratings.SKILLS) if rating.get("provisional") else
                               [rating["skills"][k]["division"] for k in ufc_ratings.SKILLS],
         }
 

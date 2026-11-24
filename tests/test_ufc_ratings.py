@@ -15,12 +15,22 @@ WEAK = {"slpm": 2.0, "sapm": 5.0, "strAcc": .35, "strDef": .45, "kd15": 0.0, "td
 
 
 class Formulas(unittest.TestCase):
-    def test_striking_matches_engine_weights_by_hand(self):
+    def test_strike_output_matches_engine_weights_by_hand(self):
+        # The pre-2026-11-24 striking formula, kept as "strikeOutput" for the fight-card tiles.
         rates = {"slpm": 3.65, "sapm": 3.0, "strAcc": .45, "kd15": .5}
         window = {"koWinShare": .25}
         # between: slpm (3.65-.8)/5.7=50, diff .65 -> (2.65)/5=53, acc 50, kd 50, ko 50
         expected = (50 * .18 + 53 * .22 + 50 * .15 + 50 * .20 + 50 * .25) / 1.0
+        self.assertAlmostEqual(r.raw_skill(rates, window, "strikeOutput"), expected, places=6)
+
+    def test_striking_includes_strike_defence_by_hand(self):
+        rates = {"slpm": 3.65, "sapm": 3.0, "strAcc": .45, "kd15": .5, "strDef": .55, "kdAbs15": .25}
+        window = {"koWinShare": .25}
+        # output as above; strDef (55-35)/40=50, sapm (3.0-6.0)/(1.2-6.0)=62.5, knockdowns absorbed (.25-1)/(0-1)=75
+        expected = 50 * .12 + 53 * .20 + 50 * .10 + 50 * .13 + 50 * .15 + 50 * .12 + 62.5 * .08 + 75 * .10
         self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), expected, places=6)
+        hittable = r.raw_skill({**rates, "strDef": .40, "kdAbs15": .9}, window, "striking")
+        self.assertLess(hittable, expected - 8, "being hit and dropped lowers striking")
 
     def test_evidence_gates(self):
         no_grappling = {"slpm": 3, "sapm": 3, "ctrlShare": .2}
@@ -34,7 +44,7 @@ class Formulas(unittest.TestCase):
         rates = {"slpm": 5.324, "sapm": 1.921, "strAcc": .67, "kd15": 8.289}
         window = {"koWinShare": .6314}
         with_kd = (79.368 * .18 + 100 * .22 + 100 * .15 + 100 * .25) / (.18 + .22 + .15 + .25)
-        self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), with_kd, places=2)
+        self.assertAlmostEqual(r.raw_skill(rates, window, "strikeOutput"), with_kd, places=2)
         self.assertIsNone(next(d for d in r.drivers(rates, window, "striking") if d["key"] == "kd15")["value"])
 
     def test_lower_is_better_components(self):
@@ -44,7 +54,7 @@ class Formulas(unittest.TestCase):
 
     def test_drivers_explain_each_component(self):
         d = r.drivers(STRONG, {"koWinShare": .3, "subWinShare": .1}, "striking")
-        self.assertEqual([x["key"] for x in d], ["slpm", "diffPm", "strAcc", "kd15", "koWinShare"])
+        self.assertEqual([x["key"] for x in d], ["slpm", "diffPm", "strAcc", "kd15", "koWinShare", "strDef", "sapm", "kdAbs15"])
         self.assertEqual(sum(x["weight"] for x in d), 1.0)
         self.assertEqual(d[0]["value"], 5.0)
         self.assertTrue(all(0 <= x["score"] <= 100 for x in d if x["score"] is not None))

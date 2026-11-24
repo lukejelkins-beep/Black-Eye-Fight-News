@@ -360,12 +360,13 @@
  // and colour use the fighter's percentile on that rating; the number itself is shown as is.
  const RATING_HINT="50 is the average UFC fighter. Built from results against opponent strength, plus measured skills.";
  const RESULTS_HINT="Who they beat and how: stronger opponents and finishes count more";
- const SKILL_IDS=['striking','wrestling','grappling','defence'];
- const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
+ // Each skill includes its own defence (2026-11-24), so there is no separate Defence bar for rated fighters.
+ const SKILL_IDS=['striking','wrestling','grappling'];
+ const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['form','Recent Form']];
  function ratingsNote(){
   return 'Results and skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+' rated UFC fighters. '+
    'Results come from every UFC fight, weighting wins over strong opponents and finishes. Skills use the whole UFC career, '+
-   'recent fights counting most, and credit what a fighter stops as well as what they land. Recent form is out of 100.';
+   'recent fights counting most, and each includes its own defence: what a fighter stops counts as well as what they land. Recent form is out of 100.';
  }
  // Display option A (owner, 2026-11-24): a score out of 100 (50 = average) and the overall rank under it.
  const headlineBar=r=>Number.isFinite(r?.overall)?r.overall:null;
@@ -809,7 +810,7 @@
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
  const BOARD_RATINGS=[["overall","BEFN rating","score"],["results","Results rating","pct"],["striking","Striking rating","pct"],
-  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["defence","Defence rating","pct"],["form","Recent form","score"]];
+  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["form","Recent form","score"]];
  function boardValue(v,unit){
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";

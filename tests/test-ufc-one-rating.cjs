@@ -25,7 +25,7 @@ function load(fighters){
 function expectedRating(slug,row){
  const own=read("data/ufc-stats/fighters/"+slug+".json").ratings;
  if(!own.provisional)return row.rating;
- return [own.overall??null,...["striking","grappling","wrestling","defence"].map(k=>own.skills[k].roster??null),own.form.score??null];
+ return [own.overall??null,...["striking","grappling","wrestling"].map(k=>own.skills[k].roster??null),own.form.score??null];
 }
 
 test("profile rating and skills equal the stats build, with no credential points",async()=>{
@@ -47,7 +47,7 @@ test("profile rating and skills equal the stats build, with no credential points
   const shown=/class="befn-v3-score">(\d+|Unrated|—)/.exec(html)?.[1];
   const want=expectedRating(slug,row);
   assert.equal(shown,want[0]===null?"Unrated":String(want[0]),slug+" headline");
-  for(const [i,label] of ["Striking","Grappling","Wrestling","Defence"].entries()){
+  for(const [i,label] of ["Striking","Grappling","Wrestling"].entries()){
    const value=want[i+1],meter=html.slice(html.indexOf(">"+label+"<"));
    const got=/<b[^>]*>(Not rated|\d+)/.exec(meter)?.[1];
    assert.equal(got,value===null?"Not rated":String(value),slug+" "+label);
@@ -81,7 +81,7 @@ test("a provisional rating is tagged and stays out of the index",()=>{
   if(!own.provisional)continue;
   n++;
   assert.equal(own.eligible,false,slug+" is not a full rating");
-  assert(row.rating.slice(0,5).every(v=>v===null),slug+" index row keeps the percentiles blank");
+  assert(row.rating.slice(0,row.rating.length-1).every(v=>v===null),slug+" index row keeps the percentiles blank");
  }
  assert(n>=100,"provisional fighters are covered");
 });
