@@ -198,7 +198,7 @@
   const d=st.data;
   if(!d){mount.innerHTML='<p class="fh-note">'+(st.loading?"Loading Form…":"Form data is unavailable right now.")+"</p>";return;}
   const pills=[["overall","Overall"],...DIVS.filter(([s])=>Object.values(d.fighters).some(f=>f.division===s&&(f.champion||f.rank)))];
-  let h='<div class="fh-top"><h2>Fighters hub</h2><span>MMA · Form and Overall</span></div>'+
+  let h='<div class="fh-top"><h2>Fighters hub</h2><a class="fh-find" href="#leaderboards">Find a fighter ›</a></div>'+
    '<nav class="fh-pills" aria-label="Divisions">'+pills.map(([s,n])=>'<button type="button" data-fh-div="'+s+'" aria-pressed="'+(st.view===s)+'">'+esc(n)+"</button>").join("")+"</nav>";
   if(st.view==="overall"){
    const o=overall();
