@@ -212,7 +212,7 @@
       : (upcoming.length ? '<div class="lp-col-foot"><b>Next up</b>' + upcoming.map(e => '<a href="#fights">' + h.esc(e.title) + ' · ' + Number(e.date.slice(8, 10)) + ' ' + MONTH[Number(e.date.slice(5, 7)) - 1] + '</a>').join('') + '</div>' : '');
     const link = (a, cls) => '<a class="' + cls + '" href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener noreferrer">' + h.esc(a.title) + '</a>';
     return '<section class="lp-col lp-' + key + '" aria-label="' + SPORT[key] + ' news"><header class="lp-col-head"><h3>' + SPORT[key] + '</h3>' +
-      (key === 'sumo' ? '<a href="' + h.safeURL(opts.sumoHref) + '">Hub ›</a>' : '<a href="#fights">Fights ›</a>') + '</header><div class="lp-col-body">' + img +
+      (key === 'sumo' ? '<a href="' + h.safeURL(opts.sumoHref) + '">Hub ›</a>' : '<a href="#home" data-area="' + key + '">All ' + SPORT[key] + ' ›</a>') + '</header><div class="lp-col-body">' + img +
       link(lead, 'lp-col-lead') + '<span class="lp-meta">' + h.meta(lead) + '</span>' + rest.map(a => link(a, 'lp-col-item')).join('') + foot +
       (key === 'sumo' ? '<span class="lp-note">Headlines translated by DeepL</span>' : '') + '</div></section>';
   }
