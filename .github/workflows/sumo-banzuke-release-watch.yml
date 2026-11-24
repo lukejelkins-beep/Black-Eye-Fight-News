@@ -1,0 +1,68 @@
+name: Sumo banzuke release watch and basho archive
+# Once a day: save any newly finished basho to data/sumo/basho-archive (two days after day 15),
+# then check whether the next basho's banzuke has been published and, if so, save it to
+# data/sumo/banzuke-release. 1-5 Sumo API requests a day. Owner decision 2026-11-24: BEFN has the
+# provider's permission (docs/design/DECISIONS.md).
+on:
+  schedule:
+    # 22:17 UTC = 07:17 Japan time, after the JSA's morning publication.
+    - cron: '17 22 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-live-data
+  cancel-in-progress: false
+jobs:
+  watch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check archive and banzuke rules
+        run: node --test tests/test-sumo-basho-archive.mjs tests/test-sumo-banzuke-changes.mjs
+      - name: Save newly finished basho
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest=$(ls data/sumo/basho-archive | grep -E '^[0-9]{6}\.json$' | sort | tail -1 | cut -c1-6)
+          y=${latest:0:4}; m=$((10#${latest:4:2} + 2)); if [ "$m" -gt 11 ]; then m=1; y=$((y + 1)); fi
+          next=$(printf '%04d%02d' "$y" "$m")
+          node scripts/sumo-collect-basho-archive.mjs --from "$next" --to "$next"
+      - name: Check for the next banzuke
+        run: node scripts/sumo-check-banzuke-release.mjs
+      - name: Re-run archive checks on anything saved
+        run: node --test tests/test-sumo-basho-archive.mjs tests/test-sumo-banzuke-changes.mjs
+      - name: Commit data to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "BEFN Sumo preview"
+          git config user.email "sumo-preview@users.noreply.github.com"
+          git add data/sumo/basho-archive data/sumo/banzuke-release 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No new basho or banzuke"
+            exit 0
+          fi
+          git commit -m "Save new Sumo basho or published banzuke"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "Concurrent data commit conflict, leaving main unchanged" >&2
+              exit 1
+            fi
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Could not push without overwriting concurrent work" >&2
+          exit 1

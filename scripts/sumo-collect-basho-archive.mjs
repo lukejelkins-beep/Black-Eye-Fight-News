@@ -90,7 +90,8 @@ export async function collect({ from, to, force = false, client = createSumoClie
     const path = `${ARCHIVE_DIR}/${id}.json`;
     if (!force && existsSync(path)) { skipped.push(id); continue; }
     const meta = await client.basho(id);
-    if (!meta?.endDate || new Date(meta.endDate) > now()) { skipped.push(id + ' (not finished)'); continue; }
+    /* Saved once and then kept, so wait two days after the last day for final results to settle. */
+    if (!meta?.endDate || meta.endDate.startsWith('0001') || new Date(meta.endDate).getTime() + 2 * 86400e3 > now().getTime()) { skipped.push(id + ' (not finished)'); continue; }
     const banzuke = {};
     for (const div of DIVISIONS) {
       await new Promise(r => setTimeout(r, pauseMs));
@@ -112,6 +113,9 @@ export async function collect({ from, to, force = false, client = createSumoClie
     done.push(id);
     await new Promise(r => setTimeout(r, pauseMs));
   }
+  /* Rewrite the index only when a tournament was added (or it is missing), so a daily run that
+     finds nothing new changes no files. */
+  if (!done.length && existsSync(`${ARCHIVE_DIR}/index.json`)) return { done, skipped, total: (await readdir(ARCHIVE_DIR)).filter(f => /^\d{6}\.json$/.test(f)).length };
   const ids = (await readdir(ARCHIVE_DIR)).filter(f => /^\d{6}\.json$/.test(f)).map(f => f.slice(0, 6)).sort();
   const index = { schemaVersion: 1, source: SUMO_API_BASE, updatedAt: now().toISOString(), basho: [] };
   for (const id of ids) {
