@@ -1,0 +1,51 @@
+{
+  "slug": "robert-whittaker",
+  "identity": {
+    "url": "https://www.ufc.com/athlete/robert-whittaker",
+    "summary": "Commonwealth Games Australia identifies the Australian UFC champion in the named wrestling team and withdrawal announcement."
+  },
+  "lanes": {
+    "commonwealth": {
+      "state": "seed",
+      "checkedOn": "2026-11-24",
+      "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "Commonwealth Games Australia team selection",
+          "url": "https://commonwealthgames.com.au/wrestling-team-for-gold-coast-2018-announced/",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "Commonwealth Games Australia withdrawal",
+          "url": "https://commonwealthgames.com.au/whittaker-withdraws-from-gc2018/",
+          "outcome": "supports_claim"
+        }
+      ],
+      "claims": [
+        {
+          "kind": "selected_no_start",
+          "edition": "Gold Coast 2018",
+          "sport": "Wrestling",
+          "event": "Men’s freestyle 97 kg",
+          "delegation": "AUS",
+          "category": "senior",
+          "result": "Selected, then withdrew before competing",
+          "medal": null,
+          "sources": [
+            {
+              "name": "Commonwealth Games Australia team selection",
+              "url": "https://commonwealthgames.com.au/wrestling-team-for-gold-coast-2018-announced/",
+              "authority": "delegation"
+            },
+            {
+              "name": "Commonwealth Games Australia withdrawal",
+              "url": "https://commonwealthgames.com.au/whittaker-withdraws-from-gc2018/",
+              "authority": "delegation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
