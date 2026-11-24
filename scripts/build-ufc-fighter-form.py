@@ -252,6 +252,27 @@ def percentile_in(values, x):
 
 
 # ---------- main build ----------
+def rank_moves():
+    """Rank change since the previous saved UFC rankings (data/ufc-rankings-history). Positive = moved up.
+
+    Needs two saved weeks; with one there is nothing to compare, so every move is None and the hub shows no arrows.
+    A fighter new to a division's top 15 gets "new". Returns (rankingDate, previousDate, {slug: move}).
+    """
+    days = sorted((DATA / "ufc-rankings-history").glob("*.json"))
+    if not days:
+        return None, None, {}
+    now = json.loads(days[-1].read_text(encoding="utf-8"))
+    if len(days) < 2:
+        return now["rankingDate"], None, {}
+    before = json.loads(days[-2].read_text(encoding="utf-8"))
+    moves = {}
+    for div, rows in now["divisions"].items():
+        old = {slug: rank for rank, slug in before["divisions"].get(div) or []}
+        for rank, slug in rows:
+            moves[slug] = "new" if slug not in old else old[slug] - rank
+    return now["rankingDate"], before["rankingDate"], moves
+
+
 def build_form(as_of_str=None, previous=None, status=None, news=None):
     stats_dir = DATA / "ufc-stats"
     as_of = as_of_str or json.loads((stats_dir / "index.json").read_text())["asOf"]
@@ -268,6 +289,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     status = status if status is not None else (load_json(STATUS, {}) or {})
     injuries = status.get("fighters") or {}
     prev = ((previous or {}).get("fighters") or {})
+    ranking_date, ranking_prev, moves = rank_moves()
 
     # division: roster division, else the most common division of the last 3 opponents
     division = {}
@@ -309,6 +331,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
                      "age": age, "debutAge": debut_age, "preUfcFights": pre_ufc.get(slug),
                      "injured": None if not inj else {k: inj.get(k) for k in ("since", "detail", "source", "checked")},
                      "limited": pts is None, "ufcFights": career["fights"], "losses": career["L"],
+                     "record": [career["W"], career["L"], career["D"], career["NC"]], "rankMove": moves.get(slug),
                      "lastFight": last_date, "monthsOut": round(gap, 1), "debut": first,
                      "last5": [f["outcome"] for f in history[:5]],
                      "overall": (d.get("ratings") or {}).get("overall"),
@@ -342,7 +365,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for f in out.values():
         f.pop("_dec", None)
         f.pop("_ratings", None)
-    return {"schema": 1, "asOf": as_of,
+    return {"schema": 1, "asOf": as_of, "rankingDate": ranking_date, "previousRankingDate": ranking_prev,
             "source": "scripts/build-ufc-fighter-form.py (Fighters hub handover, 24 Nov 2026)",
             "note": "Form describes recent UFC results; it is not a prediction. Form 90 means going better right now "
                     "than 90% of active UFC fighters (a UFC fight in the last 24 months).",
