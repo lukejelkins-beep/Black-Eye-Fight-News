@@ -99,7 +99,7 @@ export function badgesFor(rows) {
     badges.push({ label: titleLabel(pool, senior.length ? 'World' : 'Junior world'), medal: best(pool), highlight: false });
   }
   // Grappling: ADCC Worlds, then IBJJF black-belt titles (Worlds, then Pan or European).
-  const adcc = grap.filter(r => r.org === 'ADCC');
+  const adcc = grap.filter(r => r.org === 'ADCC' && r.kind !== 'grappling_trials');
   if (adcc.length) badges.push({ label: titleLabel(adcc, 'ADCC world'), medal: best(adcc), highlight: best(adcc) === 'gold' && !badges.some(b => b.highlight) });
   const black = grap.filter(r => r.org === 'IBJJF' && r.belt === 'black' && r.category === 'senior');
   const bjjWorlds = black.filter(r => /Worlds/.test(r.edition));
@@ -121,7 +121,11 @@ export function badgesFor(rows) {
     const team = rep.find(r => r.kind === 'team_appearance' && r.category === 'senior') || rep.find(r => r.kind === 'team_appearance');
     if (team) badges.push({ label: `${team.country} ${TEAM_LEVEL[team.category] || 'national team'}`, medal: null, highlight: false });
   }
-  if (!badges.length && rows.some(r => r.org === 'ADCC')) badges.push({ label: 'ADCC Worlds competitor', medal: null, highlight: false });
+  if (!badges.some(b => b.label.startsWith('ADCC')) && badges.length < 3) {
+    const trials = rows.filter(r => r.kind === 'grappling_trials' && r.medal === 'gold');
+    if (trials.length) badges.push({ label: 'ADCC Trials champion', medal: 'gold', highlight: false });
+    else if (rows.some(r => r.org === 'ADCC' && r.kind === 'grappling_entry')) badges.push({ label: 'ADCC Worlds competitor', medal: null, highlight: false });
+  }
   return badges.slice(0, 3);
 }
 
@@ -155,7 +159,17 @@ export function grapplingRows(names, dir = BJJ_DIR) {
   const add = (slug, row) => (rows[slug] ||= []).push(row);
   const adcc = tables(readFileSync(join(dir, 'adcc-results.md'), 'utf8'));
   for (const t of adcc) {
-    if (t.header.includes('Placement')) {
+    if (t.header.includes('Placement') && t.header.includes('Event')) {
+      // ADCC Trials wins (a separate table): shown as results, with a trials badge when nothing bigger exists.
+      for (const r of t.rows) {
+        const slug = r['Fighter slug']; const src = link(r.Source);
+        if (!(verified['adcc-results.md'].trials || []).includes(slug) || !src) continue;
+        const place = PLACE_WORDS[String(r.Placement).toLowerCase()] || null;
+        add(slug, { lane: 'grappling', org: 'ADCC', kind: 'grappling_trials', year: yearOf(r.Event), edition: r.Event,
+          sport: 'Submission grappling', event: r.Division, country: null, category: 'senior', result: r.Placement,
+          medal: medalOf(place), place, belt: null, source: src });
+      }
+    } else if (t.header.includes('Placement')) {
       for (const r of t.rows) {
         const slug = r['Fighter slug']; const src = link(r.Source);
         if (!verified['adcc-results.md'].placements.includes(slug) || !src) continue;

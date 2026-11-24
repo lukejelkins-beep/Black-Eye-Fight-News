@@ -52,9 +52,22 @@ A second pass, with no placements. It screened 19 public FloGrappling and Wikipe
 | mateusz-gamrot | 2026 Worlds | Men -77 kg | Invited (POL). Competed: lost in the round of 16 to Elijah Dorsey by submission | [ADCC 2026 list](https://adcombat.com/official-competitor-list-for-the-adcc-world-championship-2026-updated/) · [FloGrappling 2026 results](https://www.flograppling.com/articles/16172111-adcc-2026-brackets-results-schedule-how-to-watch) |
 | jakub-wiklacz | 2026 Worlds | Men -66 kg | Invited (POL, listed as "Jakub Wikłacz"). Competed: lost in the round of 16 to Diego Pato by submission | [ADCC 2026 list](https://adcombat.com/official-competitor-list-for-the-adcc-world-championship-2026-updated/) · [FloGrappling 2026 results](https://www.flograppling.com/articles/16172111-adcc-2026-brackets-results-schedule-how-to-watch) |
 | roman-dolidze | 2017 Worlds | Men -99 kg | Qualified as 1st Asian Trial winner (Georgia). Competed: lost on points to Yuri Simões in the round of 16 | [ADCC 2017 -99 kg preview](https://adcombat.com/kid-peligro-jiu-jitsu-news-adcc-2017-under-99kg-division/) · [Jiu-Jitsu Reference 2017 results](https://www.jiu-jitsu-reference.com/events/2017-adcc-worlds) |
-| stephanie-egger | 2019 Worlds | Women +60 kg | Qualified as 2nd European Trial winner (Switzerland, Buddy Gym); bout not yet checked | [ADCC 2019 list](https://adcombat.com/the-list-of-who-is-in-and-who-is-out-for-adcc-2019-world-championship/) |
-| max-gimenis | 2019 Worlds | Men +99 kg | Invited (Brazil, GF Team); bout not yet checked | [ADCC 2019 list](https://adcombat.com/the-list-of-who-is-in-and-who-is-out-for-adcc-2019-world-championship/) |
+| stephanie-egger | 2019 Worlds | Women +60 kg | Qualified as 2nd European Trial winner (Switzerland, Buddy Gym). Competed: lost to Gabi Garcia on points | [ADCC 2019 list](https://adcombat.com/the-list-of-who-is-in-and-who-is-out-for-adcc-2019-world-championship/) · [Digitsu 2019 results](https://digitsu.com/events/2019-adcc-world-championship) |
+| max-gimenis | 2019 Worlds | Men +99 kg | Invited (Brazil, GF Team). Competed: lost to John Hansen by decision | [ADCC 2019 list](https://adcombat.com/the-list-of-who-is-in-and-who-is-out-for-adcc-2019-world-championship/) · [Digitsu 2019 results](https://digitsu.com/events/2019-adcc-world-championship) |
 | max-gimenis | 2022 Worlds | Men +99 kg | Injury replacement. Competed: bouts against Orlando Sanchez and Felipe Pena | [FloGrappling 2022 results](https://www.flograppling.com/articles/7974080-live-updates-results-2022-adcc-world-championships) · [Wikipedia, ADCC 2022](https://en.wikipedia.org/wiki/2022_ADCC_World_Championship) |
+
+## ADCC Trials wins (confirmed 25 Nov 2026)
+
+These trials winners are confirmed on ADCC's own pages. A trials win earns a place at the Worlds.
+
+| Fighter slug | Event | Division | Placement | Source |
+| --- | --- | --- | --- | --- |
+| jacob-malkoun | 2019 ADCC Asia & Oceania Trials (Tokyo) | Men -99 kg | Gold | [ADCC official results](https://adcombat.com/adcc-events/adcc-asia-oceania-trials-2019/) |
+| mateusz-gamrot | 2019 ADCC European Trials (2nd trial) | Men -77 kg | Gold | [ADCC 2019 list: "2nd European Trial winner"](https://adcombat.com/the-list-of-who-is-in-and-who-is-out-for-adcc-2019-world-championship/) |
+| stephanie-egger | 2019 ADCC European Trials (2nd trial) | Women +60 kg | Gold | [ADCC 2019 list: "2nd European Trial winner"](https://adcombat.com/the-list-of-who-is-in-and-who-is-out-for-adcc-2019-world-championship/) |
+| roman-dolidze | 2016 ADCC Asian Trials (1st trial, for ADCC 2017) | Men -99 kg | Gold | [ADCC 2017 -99 kg preview: "1st Asian Trial winner"](https://adcombat.com/kid-peligro-jiu-jitsu-news-adcc-2017-under-99kg-division/) |
+
+Gamrot's 2014 and Egger's 2016 trials wins are still recorded only on Wikipedia and aren't listed here. Dolidze's trial year (2016, Almaty) comes from Wikipedia; ADCC's page confirms the win.
 
 **Trials leads (Wikipedia's lists of European and Asia & Oceania championship winners; not yet confirmed on ADCC pages):** Gamrot (2014 Sofia, 2019 Poznań), Egger (2016 Mainz, 2019 Poznań), Dolidze (2016 Almaty, which ADCC's 2017 list supports), Jacob Malkoun (2019 Tokyo, -99 kg; ADCC's 2019 Asia & Oceania Trials list has his entry, but not his result).
 

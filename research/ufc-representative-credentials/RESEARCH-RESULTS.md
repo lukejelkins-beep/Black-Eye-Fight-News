@@ -131,7 +131,7 @@ The owner has permission from the IJF and UWW (25 Nov). The runner's wide screen
 
 **Ruled out (same names):** Jesse Butler (a -81 to -100 kg judoka still competing in 2025; the UFC fighter is a bantamweight), Javier Reyes (Ecuadorian judoka; the UFC fighter is Colombian), José Henrique (the match was a Cuban "Jose Souza"), Gabriel Santos (+100 kg judoka), and wrestlers Alex Pérez Cimarra (ESP), Charles Johnson Calawen (PHI), Esteban David Martínez (COL), Daniel Felipe dos Santos (BRA, 2026), Julia da Silva Joaquim, Lázaro Daniel Hernández Luis (CUB), Jodalys Santiago Luna (PUR) and Manuel Torres (VEN).
 
-**Unresolved:** Daniel Santos (a BRA -66 kg judoka who medalled at 2013-14 Pan-American Opens; the UFC fighter is a Brazilian featherweight, but nothing links them), Irina Alekseeva (RUS U17 wrestling 2015-16; identity open), José Daniel Medina (ARG U20 wrestling 2014) and Luana Santos (a 40 kg U17 Pan-American entry in 2014).
+**Ruled out (25 Nov):** Daniel Santos. The IJF judoka (person 12141, BRA -66 kg, medals at 2013-14 Pan-American Opens) has no link to the UFC fighter, whose profile gives Muay Thai as his style, Chute Boxe as his gym and pro MMA since 2013, the same years, with no mention of judo. **Unresolved:** Irina Alekseeva (RUS U17 wrestling 2015-16; identity open), José Daniel Medina (ARG U20 wrestling 2014) and Luana Santos (a 40 kg U17 Pan-American entry in 2014).
 
 ## Bio claims checked (25 Nov 2026)
 
@@ -142,3 +142,10 @@ These are UFC bio claims to amateur titles in judo, wrestling and sambo, checked
 - **Ketlen Souza** ("2014 World Wrestling Championship"): not in any screened UWW book. She was born in 1995, so this may have been the 2014 Junior Worlds, but the matching would have found "Souza Ketlen" there too. Unresolved.
 - **Muin Gafurov, Nurullo Aliev, Irina Alekseeva:** only namesakes in the IJF and FIAS data (Mirzoiusuf Gafurov, Marjona Nurulloeva), and Alekseeva's FIAS entry is still identity-open.
 - **Not searchable in the saved data:** Caio Borralho, Kevin Jousset, Nyamjargal Tumendemberel (judo); Steve Erceg, Lerryan Douglas, Michael Morales, Yuneisy Duben (national wrestling titles, which are domestic, not representative); Rafael Fiziev (national sambo). National titles alone don't qualify as national-team results.
+
+### Striking bio claims (25 Nov 2026)
+
+- **Professional or promotion belts, which don't count as representative:** Cesar Almeida (WKN), Cory Sandhagen (WKA), Andrea Lee and Ricky Turcios (IKF/TBA), Ce Liu and Lone'er Kavanagh (K-1), Michael Page, Jhonata Diniz, Melsik Baghdasaryan and Hector Santiago (unnamed sanctioning bodies).
+- **WAKO claims checked against the text of 75 WAKO result books (2006 on):** Diana Belbita, Yousri Belgaroui, Junior Tafa, Marwan Rahiki, Lucas Fernando, Marcos Rogério de Lima, Viacheslav Borshchev and Bruna Brasil. None appear; there are only namesakes (Alexandre Diniz Goulart, Gevorg Baghdasaryan). About 17 older books are scans with no text, and South American and Pan-American results are mostly not in the archive, so these stay open.
+- **Muay Thai (IFMA) claims** (Joanne Wood, Istela Nunes, Shanelle Dyer, Gaston Bolanos, Tainara Lisboa): IFMA's robots.txt blocks Anthropic bots, so these wait for an IFMA export (see the runner's `EXPORT-REQUESTS-DRAFT.md`).
+- **Amateur boxing** (Fatima Kline, Blake Bilder, Islam Dulatov, Cody Haddon and others): Golden Gloves and national titles are domestic. World Boxing and IBA results aren't published as listable text.
