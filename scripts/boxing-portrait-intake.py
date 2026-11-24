@@ -2,9 +2,10 @@
 """Cache boxer photographs from promoter press kits into assets/img/boxing/.
 
 Rights: the owner attested on 2026-11-22 that BEFN may republish fighter photographs
-from the promoters listed in SOURCES, with the promoter credited. That attestation is
-the only basis for this script; it covers nobody else, so a promoter that is not in
-SOURCES is never fetched. See docs/design/IMAGE-GUIDE.md.
+from Matchroom, Queensberry, BOXXER, PBC, MVP and Salita, and on 2026-11-24 the same for
+Top Rank, with the promoter credited. Those attestations are the only basis for this
+script; they cover nobody else, so a promoter that is not in SOURCES is never fetched.
+Each row records the attestation its promoter falls under. See docs/design/IMAGE-GUIDE.md.
 
 What it will not do:
   * fetch from a site whose robots.txt disallows us or ClaudeBot (fail closed);
@@ -41,6 +42,13 @@ ROBOTS_AGENTS = ("befn-image-intake", "claudebot", "*")
 ATTESTATION = ("Owner attested 2026-11-22 that BEFN may republish fighter photographs "
                "from Matchroom, Queensberry, BOXXER, PBC, MVP and Salita press kits, "
                "with the promoter credited.")
+# The owner's answer of 24 Nov 2026 ("Yes, I attest Top Rank") to: "You confirm BEFN may
+# republish Top Rank's press-kit fighter photos with credit". Same terms as the above.
+TOP_RANK_ATTESTATION = ("Owner attested 2026-11-24 that BEFN may republish Top Rank's press-kit "
+                        "fighter photographs, with Top Rank credited.")
+# Every attestation a row may carry, by date; the register keeps the same map.
+ATTESTATIONS = {"2026-11-22": ATTESTATION, "2026-11-24": TOP_RANK_ATTESTATION}
+RIGHTS_NOTE = ATTESTATION + " " + TOP_RANK_ATTESTATION
 AGENCY = re.compile(r"\b(getty|gettyimages|associated[-_ ]?press|\bap\b|reuters|afp|pa[-_ ]?images|shutterstock|alamy|imago)\b", re.I)
 SPECS = {"portrait": (4, 5, 480), "card": (16, 9, 800), "thumb": (1, 1, 240)}
 
@@ -138,11 +146,51 @@ def parse_salita(html, base):
     return out
 
 
-def salita_photo(page_url):
+class Refused(Exception):
+    """A photograph looked for and refused, with the reason recorded in the skip list."""
+
+
+def salita_photo(page_url, name=None):
     html, _ = get(page_url)
     html = html.decode("utf-8", "replace")
     m = re.search(r'(https://[a-z0-9]+\.supabase\.co/storage/v1/object/public/[^"\'\\ )]+\.(?:jpg|jpeg|png|webp))', html)
     return m.group(1) if m else None
+
+
+def parse_toprank(xml, base):
+    """Top Rank's roster is the fighter pages its sitemap lists (the /fighters page shows
+    eleven at a time); each page carries the fighter's press-kit photograph."""
+    out = {}
+    for slug in sorted(set(re.findall(r"<loc>https://(?:www\.)?toprank\.com/fighters/([a-z0-9-]+)/?</loc>", xml))):
+        out.setdefault(norm(slug.replace("-", " ")), (None, f"https://toprank.com/fighters/{slug}"))
+    return out
+
+
+def toprank_photo(page_url, name):
+    """The profile photograph on a Top Rank fighter page (the hero image, served from
+    api.toprank.com). Taken only when the page's own heading and the image's alt text
+    both print the boxer's name and the file name carries it too."""
+    for site, path in (("toprank.com", urlparse(page_url).path), ("api.toprank.com", "/storage/uploads/")):
+        ok, why = robots_allows(site, path)
+        if not ok:
+            raise Refused(f"{site}: {why}")
+    html = get(page_url)[0].decode("utf-8", "replace")
+    return toprank_hero(html, name)
+
+
+def toprank_hero(html, name):
+    hero = re.search(r'class="fighter-hero__img"[^>]*>\s*<img\b([^>]*)>', html)
+    src = hero and re.search(r'\bsrc="(https://api\.toprank\.com/storage/uploads/[^"]+)"', hero.group(1))
+    if not src:
+        return None
+    alt = re.search(r'\balt="([^"]*)"', hero.group(1))
+    h1 = re.search(r"<h1[^>]*>(?:<!--\[-->)?\s*([^<]+?)\s*(?:<!--\]-->)?</h1>", html)
+    printed = {norm(alt.group(1)) if alt else "", norm(h1.group(1)) if h1 else ""}
+    if printed != {norm(name)}:
+        raise Refused(f"the page prints {sorted(printed)}, not {name}")
+    if not name_in_file(name, src.group(1)):
+        raise Refused(f"the file name does not carry the boxer's name: {src.group(1)}")
+    return src.group(1)
 
 
 # --- event pages: the same promoter's fight-card photographs ------------------------
@@ -155,10 +203,11 @@ def salita_photo(page_url):
 # is then refused rather than guessed at.
 
 def name_in_file(name, url):
-    """True when the file name carries one of the boxer's names, or a 4+ letter start of
-    one (Salita names files by first name: "litzy", "steph" for Stephanie)."""
+    """True when the file name carries one of the boxer's names whole ("Leo-thumb.webp"
+    for Angelo Leo), or a 4+ letter start of one (Salita names files by first name:
+    "litzy", "steph" for Stephanie)."""
     words = norm(urllib.parse.unquote(urlparse(url).path.rsplit("/", 1)[-1])).split()
-    return any(len(w) >= 4 and t.startswith(w) for t in norm(name).split() for w in words)
+    return any(w == t or (len(w) >= 4 and t.startswith(w)) for t in norm(name).split() for w in words)
 
 
 @functools.lru_cache(maxsize=None)
@@ -232,6 +281,11 @@ SOURCES = [
     {"id": "salita", "promoter": "Salita Promotions", "site": "www.salitapromotions.com",
      "roster": "https://www.salitapromotions.com/boxers", "parse": parse_salita,
      "photo": salita_photo},
+    # Owner attestation of 2026-11-24. Top Rank's event pages carry only the event's key
+    # art, no photograph per fighter, so it has no event-page adapter.
+    {"id": "toprank", "promoter": "Top Rank", "site": "toprank.com",
+     "roster": "https://toprank.com/sitemap.xml", "parse": parse_toprank,
+     "photo": toprank_photo, "attestation": TOP_RANK_ATTESTATION},
 ]
 # Promoters covered by the attestation but not fetched, with the reason. Their photos
 # need the owner to supply them by hand until the reason changes.
@@ -268,6 +322,10 @@ REVIEWED_OUT = {
 
 # Press-kit photographs fetched, looked at and not used (same reasons as above).
 REVIEWED_OUT_PRESS = {
+    # 2026-11-24 (Top Rank run): clear studio portraits, but the roster's file name does
+    # not name the boxer, so nothing but the roster's link ties the photograph to him.
+    "andy-cruz": "the roster's file name (PJAF6801-copy.jpeg) does not name him",
+    "shakhram-giyasov": "the roster's file name (EM1_9245) does not name him",
 }
 
 # Commons beyond the lead photograph (2026-11-24): `--commons-candidates DIR` lists every
@@ -537,7 +595,9 @@ def main():
         return review_commons(wanted_names(args.limit, args.names), Path(args.commons_candidates))
     register = json.loads(REGISTER.read_text(encoding="utf-8")) if REGISTER.exists() else {
         "version": 1, "sport": "boxing", "basePath": "assets/img/boxing/",
-        "rights": "promoter-press-kit, wikimedia-cc", "rightsNote": ATTESTATION, "images": [], "skipped": []}
+        "rights": "promoter-press-kit, wikimedia-cc", "images": [], "skipped": []}
+    register["rightsNote"] = RIGHTS_NOTE
+    register["attestations"] = dict(ATTESTATIONS)
     have = {r["id"] for r in register["images"]}
     want = wanted_names(args.limit, args.names)
     want_keys = {norm(n): n for n in want}
@@ -561,7 +621,11 @@ def main():
             slug = slugify(name)
             try:
                 if photo is None and src.get("photo"):
-                    photo = src["photo"](page)
+                    try:
+                        photo = src["photo"](page, name)
+                    except Refused as e:
+                        skipped.append({"name": name, "promoter": src["promoter"], "reason": str(e)})
+                        return
                 if not photo:
                     skipped.append({"name": name, "promoter": src["promoter"], "reason": "no photo on the page"})
                     return
@@ -585,7 +649,7 @@ def main():
                     files, centred, size = process(raw, slug, report)
                 row = {"id": slug, "name": name, "files": files, "credit": src["promoter"],
                        "promoter": src["promoter"], "sourceUrl": photo, "sourcePage": page,
-                       "rights": "promoter-press-kit", "attestation": ATTESTATION,
+                       "rights": "promoter-press-kit", "attestation": src.get("attestation", ATTESTATION),
                        "sha256": hashlib.sha256(data).hexdigest(),
                        "originalSize": f"{size[0]}x{size[1]}",
                        "fetchedAt": datetime.now(timezone.utc).isoformat(timespec="seconds")}

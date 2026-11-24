@@ -45,6 +45,7 @@ BY_EYE = {
     "conah-walker": "full-length pose with the arms across the chest, the head too small to read",
     "hassan-azim": "full-length boxing pose: the head is a fraction of the frame",
     "ishmael-davis": "the forearm covers the face",
+    "omari-jones": "a low-key photograph: the dark hair merges with the dark backdrop, so the crown is cut away and the crop is a face filling the frame",
     "naoya-inoue": "award-ceremony still: the trophy in front of him leaves shards in the cutout and holes in the jacket",
     "teofimo-lopez": "video still in a gym: a dark object behind his head is kept as part of the figure",
     "litzy-vazquez": "mid-jab: the fist sits in front of the chin and the crop comes out as a torso with a small head",
