@@ -1,0 +1,313 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "israel-adesanya",
+ "name": "Israel Adesanya",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page: Israel Adesanya, middleweight, hometown Lagos, Nigeria, age 37, 24-6-0, trains at City Kickboxing. Glory profile lists the same fighter as a retired New Zealand middleweight."
+ },
+ "researched": {
+  "date": "2026-11-22",
+  "pass": 2
+ },
+ "flags": [
+  "conflict"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/israel-adesanya"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Israel_Adesanya"
+    },
+    {
+     "name": "UWW athlete search (page did not render results)",
+     "checked": "2026-11-22",
+     "url": "https://uww.org/athletes-results?search=adesanya"
+    }
+   ],
+   "note": "No wrestling competition record found. Wikipedia says only that he trains wrestling under Andrei Pauleț, which is training, not a credential. The UWW athlete search page returned no usable results, so no authority was effectively checked."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/israel-adesanya"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Israel_Adesanya"
+    }
+   ],
+   "note": "No submission grappling tournament results found in web searches or bios. The ADCC and IBJJF databases were not checked directly, so this is not a confirmed none."
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "JudoInside search (failed to load)",
+     "checked": "2026-11-22",
+     "url": "https://www.judoinside.com/search?q=adesanya"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Israel_Adesanya"
+    }
+   ],
+   "note": "No judo record is mentioned in his bios. The JudoInside search failed with a redirect loop and IJF was not reached, so the earlier none_found is not supported."
+  },
+  "kickboxing": {
+   "status": "verified",
+   "levels": [
+    "pro",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "The GLORY profile lists him as a retired middleweight with an overall kickboxing record of 75 wins, 4 losses and 27 knockouts, and a GLORY record of 2 wins and 2 losses.",
+     "source_url": "https://glorykickboxing.com/fighters/israel-adesanya",
+     "source_name": "GLORY Kickboxing",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2017,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "The UFC athlete page reports a professional kickboxing record of 75 wins and 4 losses, with 29 knockouts.",
+     "source_url": "https://www.ufc.com/athlete/israel-adesanya",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2026,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "He won the GLORY 34 Denver middleweight contender tournament on 21 October 2016, beating Robert Thomas by unanimous decision and Yousri Belgaroui by split decision.",
+     "source_url": "https://glorykickboxing.com/news/adesanya-triumphs-in-middleweight-contender-tournament",
+     "source_name": "GLORY Kickboxing",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2016,
+     "level": "other",
+     "level_note": "Glory middleweight contender tournament winner (one-night, four-man tournament)",
+     "display": "sourced"
+    },
+    {
+     "text": "He lost a GLORY middleweight world title fight to champion Jason Wilnis by unanimous decision at GLORY 37 Los Angeles in January 2017.",
+     "source_url": "https://glorykickboxing.com/events/glory-37-los-angeles",
+     "source_name": "GLORY Kickboxing",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2017,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "Wikipedia lists a 75-5 record with 27 knockouts, three King in the Ring tournament wins in 2014 and 2015, and a 32-1 amateur record; these are not confirmed by a primary record.",
+     "source_url": "https://en.wikipedia.org/wiki/Israel_Adesanya",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-22",
+     "year": 2017,
+     "level": "pro",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "GLORY fighter profile",
+     "checked": "2026-11-22",
+     "url": "https://glorykickboxing.com/fighters/israel-adesanya"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/israel-adesanya"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Israel_Adesanya"
+    }
+   ],
+   "note": "Pro kickboxing career confirmed by the Glory promotion profile and the UFC page. They disagree with Wikipedia on the record: Glory says 75-4 with 27 KOs, UFC says 75-4 with 29 KOs, and Wikipedia says 75-5 with 27 KOs. The extra Wikipedia loss is likely the 2017 Glory of Heroes KO loss to Alex Pereir"
+  },
+  "boxing": {
+   "status": "verified",
+   "levels": [
+    "pro"
+   ],
+   "claims": [
+    {
+     "text": "The UFC athlete page reports a professional boxing record of 5 wins and 1 loss, with 1 knockout.",
+     "source_url": "https://www.ufc.com/athlete/israel-adesanya",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2026,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "In March 2015 he won a Super 8 cruiserweight boxing tournament in New Zealand, taking the final over Brian Minto by split decision after an extra round; his only prior pro bout was a decision loss to Daniel Ammann.",
+     "source_url": "https://www.butlereagle.com/20150330/minto-bested-in-finals",
+     "source_name": "Butler Eagle",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2015,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "A 2015 Rotorua Daily Post report called him the reigning Super 8 cruiserweight boxing champion, entered in a further four-man Super 8 tournament in Auckland.",
+     "source_url": "https://nzherald.co.nz/rotorua-daily-post/news/kickboxing-adesanya-joins-the-super-8-fight/GDWHNBYSGRZTY57CUSKDWBDH4Q",
+     "source_name": "Rotorua Daily Post (NZ Herald)",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2015,
+     "level": "pro",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "BoxRec (HTTP 403, not readable)",
+     "checked": "2026-11-22",
+     "url": "https://boxrec.com/en/proboxer/703721"
+    },
+    {
+     "name": "Boxerbook",
+     "checked": "2026-11-22",
+     "url": "https://boxerbook.com/boxers/israel-adesanya-q27050195"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/israel-adesanya"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Israel_Adesanya"
+    }
+   ],
+   "note": "Pro boxing record of 5-1 (1 KO) per UFC and Wikipedia, backed by contemporary reports of the 2015 Super 8 cruiserweight win. BoxRec (boxer 703721) returned HTTP 403 and could not be read. Boxerbook shows 9-1, but its bout list duplicates the same bouts and opponents, so 5-1 is preferred."
+  },
+  "bjj": {
+   "status": "claimed",
+   "levels": [
+    "belt_purple"
+   ],
+   "claims": [
+    {
+     "text": "The UFC athlete page lists him as a BJJ purple belt under Andre Galvao.",
+     "source_url": "https://www.ufc.com/athlete/israel-adesanya",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2026,
+     "level": "belt_purple",
+     "display": "sourced"
+    },
+    {
+     "text": "Sherdog reported in December 2020 that Andre Galvao of Atos Jiu-Jitsu promoted him from blue to purple belt during a training visit in San Diego.",
+     "source_url": "https://www.sherdog.com/news/news/UFC-Middleweight-Champ-Israel-Adesanya-Awarded-BJJ-Purple-Belt-176703",
+     "source_name": "Sherdog",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2020,
+     "level": "belt_purple",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/israel-adesanya"
+    },
+    {
+     "name": "Sherdog",
+     "checked": "2026-11-22",
+     "url": "https://www.sherdog.com/news/news/UFC-Middleweight-Champ-Israel-Adesanya-Awarded-BJJ-Purple-Belt-176703"
+    },
+    {
+     "name": "1News",
+     "checked": "2026-11-22",
+     "url": "https://www.1news.co.nz/2020/12/10/watch-israel-adesanya-moved-to-tears-as-he-receives-jiu-jitsu-belt"
+    },
+    {
+     "name": "BJJ Heroes search (HTTP 403)",
+     "checked": "2026-11-22",
+     "url": "https://www.bjjheroes.com/?s=adesanya"
+    }
+   ],
+   "note": "The purple belt from Andre Galvao is reported consistently by the UFC, Sherdog and 1News, but no federation or lineage record was read. BJJ Heroes returned HTTP 403 and IBJJF was not checked, so the belt stays claimed under the rule that needs a lineage record."
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Israel_Adesanya"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/israel-adesanya"
+    }
+   ],
+   "note": "No sambo record is mentioned in any bio read. The FIAS database was not checked, so the earlier none_found is not supported."
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-22T10:07:57.817Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-22T10:13:19.316Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

@@ -1,0 +1,351 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "valentina-shevchenko",
+ "name": "Valentina Shevchenko",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page: Valentina Shevchenko, women's flyweight, Bishkek, Kyrgyzstan, age 38. Boxing records match by name, Kyrgyz nationality, Peru-based bouts 2010-2011; the 2007 Russian women's boxing bracket also lists sister Antonina Shevchenko at 60 kg, consistent with identity."
+ },
+ "researched": {
+  "date": "2026-11-22",
+  "pass": 2
+ },
+ "flags": [
+  "conflict",
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/valentina-shevchenko"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Valentina_Shevchenko"
+    }
+   ],
+   "note": "UFC page says she trained wrestling under coach Pavel Fedotov; no competitive wrestling record found. Wikipedia mentions only a 2013 TV exhibition, not a credential. UWW database not searched."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Valentina_Shevchenko"
+    }
+   ],
+   "note": "No submission-grappling results found in the sources read; ADCC records not searched."
+  },
+  "judo": {
+   "status": "claimed",
+   "levels": [
+    "youth",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "A 2002 Kyrgyz news report lists her among the successful girls at the national youth judo championship in Tokmak, without stating her placing or weight class.",
+     "source_url": "https://mail.msn.kg/ru/news/2735/",
+     "source_name": "MSN (Kyrgyzstan)",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2002,
+     "level": "youth",
+     "display": "sourced"
+    },
+    {
+     "text": "Sherdog lists judo among five disciplines in which she holds the Master of Sport designation; no event or year is given.",
+     "source_url": "https://www.sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Valentina-Shevchenko-131665",
+     "source_name": "Sherdog",
+     "tier": "C",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "other",
+     "level_note": "Master of Sport rank, self-reported style biography claim",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "JudoInside judoka search",
+     "checked": "2026-11-22",
+     "url": "https://www.judoinside.com/judoka/search"
+    },
+    {
+     "name": "MSN.kg news archive",
+     "checked": "2026-11-22",
+     "url": "https://mail.msn.kg/ru/news/2735/"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Valentina_Shevchenko"
+    },
+    {
+     "name": "Sherdog",
+     "checked": "2026-11-22",
+     "url": "https://www.sherdog.com/news/articles/5-Things-You-Might-Not-Know-About-Valentina-Shevchenko-131665"
+    }
+   ],
+   "note": "Wikipedia's 2002 Kyrgyz national judo title at 58 kg is not supported by its own cited source: that article (msn.kg, Dec 2002) covers a national youth (18 and under) championship in Tokmak and only says she succeeded in her weight class, with no placing or weight given. Black belt claim rests on MMA"
+  },
+  "kickboxing": {
+   "status": "verified",
+   "levels": [
+    "national_champion",
+    "continental_medal",
+    "world_medal",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "IFMA credits her with seven Muay Thai world championship titles: 2003, 2006, 2007, 2008 (57 kg), 2009 and 2012 (60 kg), and 2010 (63.5 kg).",
+     "source_url": "https://muaythai.sport/valentina-shevchenko/",
+     "source_name": "IFMA",
+     "tier": "A",
+     "retrieved": "2026-11-22",
+     "year": 2003,
+     "level": "world_medal",
+     "audit": "confirmed",
+     "display": "sourced"
+    },
+    {
+     "text": "IFMA lists her as Muay Thai gold medallist at 60 kg at the SportAccord World Combat Games in 2010 (China) and 2013 (Russia).",
+     "source_url": "https://muaythai.sport/valentina-shevchenko/",
+     "source_name": "IFMA",
+     "tier": "A",
+     "retrieved": "2026-11-22",
+     "year": 2010,
+     "level": "world_medal",
+     "audit": "confirmed",
+     "display": "sourced"
+    },
+    {
+     "text": "IFMA lists her as 2010 Pan American champion and 2011 South American champion in Muay Thai at 60 kg.",
+     "source_url": "https://muaythai.sport/valentina-shevchenko/",
+     "source_name": "IFMA",
+     "tier": "A",
+     "retrieved": "2026-11-22",
+     "year": 2010,
+     "level": "continental_medal",
+     "audit": "confirmed",
+     "display": "sourced"
+    },
+    {
+     "text": "A Kyrgyz news report says she won the women's sparring event at the first Kyrgyzstan kickboxing championship in Sokuluk in 2002.",
+     "source_url": "https://mail.msn.kg/ru/news/2548/",
+     "source_name": "MSN (Kyrgyzstan)",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2002,
+     "level": "national_champion",
+     "display": "sourced"
+    },
+    {
+     "text": "24.kg reported that she won gold at the 2007 Russian Thai boxing championship in Yekaterinburg, competing as a Kyrgyz athlete.",
+     "source_url": "https://24.kg/archive/ru/sport/25438-2007/10/09/64529.html/",
+     "source_name": "24.kg",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2007,
+     "level": "other",
+     "level_note": "Russian national Muay Thai championship won as a foreign (Kyrgyz) entrant",
+     "display": "sourced"
+    },
+    {
+     "text": "Wikipedia credits her with a 2003 WAKO world kickboxing bronze and a 2004 WAKO world title in Italy at 56 kg; no WAKO record could be opened to confirm either.",
+     "source_url": "https://en.wikipedia.org/wiki/Valentina_Shevchenko",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-22",
+     "year": 2004,
+     "level": "world_medal",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "IFMA (muaythai.sport)",
+     "checked": "2026-11-22",
+     "url": "https://muaythai.sport/valentina-shevchenko/"
+    },
+    {
+     "name": "WAKO official results page",
+     "checked": "2026-11-22",
+     "url": "http://wako.sport/en/page/official-wako-results/34/"
+    },
+    {
+     "name": "MSN.kg news archive",
+     "checked": "2026-11-22",
+     "url": "https://mail.msn.kg/ru/news/2548/"
+    },
+    {
+     "name": "24.kg archive",
+     "checked": "2026-11-22",
+     "url": "https://24.kg/archive/ru/sport/25438-2007/10/09/64529.html/"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Valentina_Shevchenko"
+    }
+   ],
+   "note": "Verified via Muay Thai (IFMA, the sport's world governing body); Muay Thai has no separate discipline slot here. WAKO 2003 bronze and 2004 world title remain unverified: Wikipedia's cited WAKO results page returns 404 and the Tapology bout page could not be opened; a search for a 2004 WAKO event in"
+  },
+  "boxing": {
+   "status": "verified",
+   "levels": [
+    "pro",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "At the 2007 Russian women's national amateur boxing championships in Odintsovo she reached the 57 kg final and lost it on points to Elena Gorshkova, finishing runner-up.",
+     "source_url": "http://amateur-boxing.strefa.pl/Nationalchamps/Russia2007w.html",
+     "source_name": "Amateur Boxing Results (strefa.pl)",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2007,
+     "level": "other",
+     "level_note": "national championship runner-up (silver), not champion",
+     "display": "sourced"
+    },
+    {
+     "text": "She boxed professionally twice in Peru and won both: a 10-round decision over Halanna dos Santos in May 2010 and a stoppage of Nurys Rincon in December 2011.",
+     "source_url": "https://boxerbook.com/boxers/valentina-shevchenko-q4522047",
+     "source_name": "Boxerbook",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2010,
+     "level": "pro",
+     "display": "sourced"
+    },
+    {
+     "text": "WomenBoxing.com records her pro boxing record as 2-0, with wins in Callao in 2010 and Lima in 2011.",
+     "source_url": "http://www.womenboxing.com/biog/vshevchenko.htm",
+     "source_name": "WomenBoxing.com",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2011,
+     "level": "pro",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Amateur Boxing Results (strefa.pl), 9th Russian Women's Championships 2007",
+     "checked": "2026-11-22",
+     "url": "http://amateur-boxing.strefa.pl/Nationalchamps/Russia2007w.html"
+    },
+    {
+     "name": "Boxerbook",
+     "checked": "2026-11-22",
+     "url": "https://boxerbook.com/boxers/valentina-shevchenko-q4522047"
+    },
+    {
+     "name": "WomenBoxing.com biography",
+     "checked": "2026-11-22",
+     "url": "http://www.womenboxing.com/biog/vshevchenko.htm"
+    },
+    {
+     "name": "BoxRec",
+     "checked": "2026-11-22",
+     "url": "https://boxrec.com"
+    }
+   ],
+   "note": "Conflict resolved against Wikipedia: Wikipedia calls her 2007 Russian women's national amateur champion at 57 kg, but its own cited source (amateur-boxing.strefa.pl, based on Russian Boxing Federation data) shows she reached the 57 kg final and lost it 23:5 to Elena Gorshkova. Pro record 2-0 confirm"
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-22",
+     "url": "https://en.wikipedia.org/wiki/Valentina_Shevchenko"
+    },
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/valentina-shevchenko"
+    }
+   ],
+   "note": "No BJJ belt or result found in the sources read; IBJJF records not searched."
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/valentina-shevchenko"
+    },
+    {
+     "name": "Web search of Kyrgyz news for sambo results",
+     "checked": "2026-11-22"
+    }
+   ],
+   "note": "UFC page says she trained sambo as a youth; a Russian-language news search found no sambo competition result. FIAS records not searched."
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-22T10:07:57.817Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-22T10:13:19.330Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 3,
+   "model": "claude-opus-5-5",
+   "at": "2026-11-22T10:16:27.150Z"
+  }
+ ],
+ "audit": {
+  "pass": 3,
+  "model": "claude-opus-5-5",
+  "at": "2026-11-22T10:16:27.150Z",
+  "date": "2026-11-22",
+  "sampled": false,
+  "hasTierA": true,
+  "confirmed": 3,
+  "partial": 0,
+  "refuted": 0,
+  "unreachable": 0,
+  "audited": 3
+ },
+ "rejected_claims": [],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}
