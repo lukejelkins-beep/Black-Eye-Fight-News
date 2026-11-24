@@ -5,8 +5,7 @@
  "slug": "jeremy-stephens",
  "name": "Jeremy Stephens",
  "identity": {
-  "status": "confirmed",
-  "note": "Matched by name, weight class and school context from search results; UFC athlete page not separately fetched."
+  "status": "confirmed"
  },
  "researched": {
   "date": "2026-11-24",
@@ -17,17 +16,35 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wikipedia says he wrestled and played baseball at Norwalk High School in Iowa, returning to wrestling as a senior.",
+     "source_url": "https://en.wikipedia.org/wiki/Jeremy_Stephens",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
      "checked": "2026-11-24",
      "url": "https://www.ufc.com/athlete/jeremy-stephens"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Jeremy_Stephens"
     }
    ],
-   "note": "Search found high school wrestling at Norwalk High (Iowa) but no college wrestling; no citable page captured."
+   "note": "High school wrestling only, at Norwalk High School, Iowa, per Wikipedia; no college found. No NCAA database checked."
   },
   "grappling": {
    "status": "unknown",
@@ -71,7 +88,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.572Z",
+   "at": "2026-11-24T09:46:00.343Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

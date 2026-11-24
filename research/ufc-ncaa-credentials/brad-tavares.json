@@ -6,22 +6,26 @@
  "name": "Brad Tavares",
  "identity": {
   "status": "confirmed",
-  "note": "Hawaii middleweight; search results consistent."
+  "note": "Hawaii middleweight"
  },
  "researched": {
   "date": "2026-11-24",
   "pass": 1
  },
- "flags": [
-  "thin_sources"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
    "status": "unknown",
    "levels": [],
    "claims": [],
-   "sources_checked": [],
-   "note": "Reportedly never wrestled in high school or college per his own UFC interview; no NCAA source checked."
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/brad-tavares"
+    }
+   ],
+   "note": "Prior pass reported he said in a UFC interview that he never wrestled in high school or college; not re-searched. No wrestling found. No NCAA or governing-body database page was checked, so status stays unknown."
   },
   "grappling": {
    "status": "unknown",
@@ -65,7 +69,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.541Z",
+   "at": "2026-11-24T09:46:00.329Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

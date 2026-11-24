@@ -6,7 +6,7 @@
  "name": "Rose Namajunas",
  "identity": {
   "status": "confirmed",
-  "note": "UFC page name matches."
+  "note": "Matched on UFC.com athlete page (name, division, hometown)."
  },
  "researched": {
   "date": "2026-11-24",
@@ -17,9 +17,22 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled in her senior year at Milwaukee High School of the Arts, where she also ran cross-country; no college wrestling.",
+     "source_url": "https://en.wikipedia.org/wiki/Rose_Namajunas",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
@@ -32,7 +45,7 @@
      "url": "https://en.wikipedia.org/wiki/Rose_Namajunas"
     }
    ],
-   "note": "Secondary sources mention high school wrestling only; no page confirmed it, no college wrestling found."
+   "note": "Wikipedia says she graduated from Milwaukee High School of the Arts, ran cross-country, and wrestled in her senior year (citing MixedMartialArts.com and Fightland). No college attended per sources seen; no college wrestling."
   },
   "grappling": {
    "status": "unknown",
@@ -76,7 +89,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.605Z",
+   "at": "2026-11-24T09:46:00.350Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

@@ -10,6 +10,7 @@ Research only, outside the site build. Nothing here is shown on a page, used in 
   - `us-ncaa-1`: 198 Americans not in the pilot.
   - `us-ncaa-2`: 26 priority re-checks.
   - `us-ncaa-3a`: 31 unknowns.
+  - `us-ncaa-3b`: the other 90 American unknowns (round 2, 24 Nov).
   - `ca-ncaa-1`: 20 Canadians.
   - Three small follow-ups (`us-ncaa-1-blaydes-rehost`, `us-ncaa-2-romero`, `us-ncaa-lorenz`).
 - `_school-athletics-hosts.json` is the reviewed list of official college athletics sites. Each homepage was checked to call itself the school's official athletics website. `pendingReview` lists hosts that blocked the check.

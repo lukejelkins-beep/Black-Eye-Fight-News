@@ -5,8 +5,7 @@
  "slug": "mackenzie-stiller",
  "name": "Mackenzie Stiller",
  "identity": {
-  "status": "confirmed",
-  "note": "Matched by name and UFC division/bout details from search results."
+  "status": "confirmed"
  },
  "researched": {
   "date": "2026-11-24",
@@ -17,17 +16,35 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Her UFC profile says she was a Wisconsin high school state wrestling champion for Wilmot High School.",
+     "source_url": "https://www.ufc.com/athlete/mackenzie-stiller",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
    "sources_checked": [
     {
-     "name": "Shaw Local",
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/mackenzie-stiller"
+    },
+    {
+     "name": "Shaw Local / Northwest Herald",
      "checked": "2026-11-24",
      "url": "https://www.shawlocal.com/northwest-herald/2026/04/25/mackenzie-mack-judo-stiller-selected-to-compete-on-tv-series-the-ultimate-fighter/"
     }
    ],
-   "note": "Background reported as judo; no wrestling background found."
+   "note": "UFC page reports a Wisconsin high school state title at Wilmot; not confirmed in WIAA results in one search. No college named. No NCAA database checked."
   },
   "grappling": {
    "status": "unknown",
@@ -71,7 +88,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.592Z",
+   "at": "2026-11-24T09:46:00.347Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

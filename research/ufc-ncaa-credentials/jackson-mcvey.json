@@ -5,8 +5,7 @@
  "slug": "jackson-mcvey",
  "name": "Jackson McVey",
  "identity": {
-  "status": "confirmed",
-  "note": "UFC middleweight, MMA Lab."
+  "status": "confirmed"
  },
  "researched": {
   "date": "2026-11-24",
@@ -18,8 +17,14 @@
    "status": "unknown",
    "levels": [],
    "claims": [],
-   "sources_checked": [],
-   "note": "No college wrestling found; no NCAA source checked."
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/jackson-mcvey"
+    }
+   ],
+   "note": "UFC page lists only jiu-jitsu and amateur MMA, no college; targeted search found nothing. No NCAA database checked."
   },
   "grappling": {
    "status": "unknown",
@@ -63,7 +68,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.568Z",
+   "at": "2026-11-24T09:46:00.341Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

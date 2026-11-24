@@ -6,7 +6,7 @@
  "name": "Mitch Raposo",
  "identity": {
   "status": "confirmed",
-  "note": "Matched by UFC.com athlete page"
+  "note": "Matched on UFC.com athlete page (name, division, hometown)."
  },
  "researched": {
   "date": "2026-11-24",
@@ -17,9 +17,22 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "His UFC profile says he was a high school wrestler ranked in New England and a state champion; no school or year given, self-reported.",
+     "source_url": "https://www.ufc.com/athlete/mitch-raposo",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
@@ -27,7 +40,7 @@
      "url": "https://www.ufc.com/athlete/mitch-raposo"
     }
    ],
-   "note": "No college wrestling found."
+   "note": "UFC page (self-reported Q&A) calls him a state champion and New England ranked high school wrestler; no school named and no independent record found. No college listed."
   },
   "grappling": {
    "status": "unknown",
@@ -71,7 +84,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.599Z",
+   "at": "2026-11-24T09:46:00.349Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,
