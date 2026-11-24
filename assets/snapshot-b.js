@@ -103,7 +103,7 @@
   // One fighter's figure: a cutout over a red disc, else the photo in the disc, else initials.
   function figureHTML(fig, name, esc) {
     if (fig && fig.cutout) return '<span class="sb-fig" aria-hidden="true"><span class="sb-disc' + (fig.flag ? ' has-flag' : '') + '">' + (fig.flag ? '<img class="sb-flag" src="' + esc(fig.flag) + '" alt="" width="132" height="132" loading="lazy" decoding="async" onerror="this.remove()">' : '') + '</span><img class="sb-cut" src="' + esc(fig.cutout) + '" alt="" width="120" height="150" loading="lazy" decoding="async" onerror="this.remove()"></span>';
-    if (fig && fig.photo) return '<span class="sb-fig sb-fig-photo" aria-hidden="true"><span class="sb-disc"><b>' + esc(initialsOf(name)) + '</b><img src="' + esc(fig.photo) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span></span>';
+    if (fig && fig.photo) return '<span class="sb-fig sb-fig-photo" aria-hidden="true"><span class="sb-disc"><b>' + esc(initialsOf(name)) + '</b><img src="' + esc(fig.photo) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()"></span></span>';
     return '<span class="sb-fig sb-fig-initials" aria-hidden="true"><span class="sb-disc"><b>' + esc(initialsOf(name)) + '</b></span></span>';
   }
 
@@ -139,7 +139,8 @@
         '<span class="sb-lab">' + esc(r.label) + '</span>' +
         bar(w, 1, r.lead === 1) + '<span class="sb-val' + (r.lead === 1 ? ' is-lead' : '') + '">' + esc(r.v[1]) + '</span></div>';
     }).join('');
-    const chip = h ? [h.billing, h.division, h.rounds, h.status].filter(Boolean).join(' · ') : '';
+    // A long chip ("Main event · Cruiserweight · 12 rounds") wraps on a phone: keep each part whole, break only at the dots.
+    const chip = h ? [h.billing, h.division, h.rounds, h.status].filter(Boolean).map(p => String(p).replace(/ /g, ' ')).join(' · ') : '';
     return '<section class="sb-tape" aria-label="Tale of the tape"><h3 class="sb-title sb-title-hidden">Tale of the tape</h3>' +
       (chip ? '<p class="sb-chip">' + esc(chip) + '</p>' : '') +
       (h && h.result ? '<p class="sb-result"><b>Final</b> ' + esc(h.result) + '</p>' : '') +
@@ -166,7 +167,39 @@
       '<button type="button" role="tab" data-befn-history-tab="' + esc(id) + '" aria-selected="' + String(active === id) + '" class="' + (active === id ? 'is-active' : '') + '">' + esc(label) + '</button>').join('') + '</div>';
   }
 
-  const api = { GAP, inchesText, ageOn, shortNames, tapeRows, barWidths, analysisLines, figureHTML, tapeHTML, analysisHTML, tabsHTML, initialsOf };
+  // Boxing face-off helpers (24 Nov 2026). The boxer's figure: their cutout when data/boxing-cutout-register.json keeps
+  // it, else the photo the card row already shows, else null (initials). The register id is read from the row's
+  // BEFN-held photo (assets/img/boxing/<id>-thumb.webp) when there is one, so a name written differently on the card
+  // still finds its cutout; otherwise the name's slug is used.
+  function boxingFigure(slug, register, rowSrc) {
+    const src = String(rowSrc || '');
+    const held = /^assets\/img\/boxing\/([a-z0-9-]+)-(?:thumb|card|portrait)\.webp$/.exec(src);
+    const id = held ? held[1] : String(slug || '');
+    if (id && register && register[id] && register[id].ok === true) return { cutout: 'assets/img/boxing-cutouts/' + id + '.webp', flag: '' };
+    if (/^(https:\/\/|assets\/img\/)/.test(src) && !/\.\./.test(src)) return { photo: src };
+    return null;
+  }
+  // Stance as a BEFN profile's meta line states it ("Stance: Orthodox Promotion: ..."); '' when not stated.
+  function stanceOf(meta) {
+    const m = /\bStance:\s*(orthodox|southpaw|switch)\b/i.exec(String(meta || ''));
+    return m ? m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase() : '';
+  }
+  // "32-0 (26 KOs)" -> { record: '32-0', kos: '26 KOs' }.
+  function splitKOs(text) {
+    const s = String(text || '').trim(), m = /\s*\(\s*(\d+\s*KOs?)\s*\)\s*$/i.exec(s);
+    return m ? { record: s.slice(0, m.index).trim(), kos: m[1].replace(/\s+/g, ' ') } : { record: s, kos: '' };
+  }
+  // Older boxing rows prefix the opponent with their initials ("DS DeAndre Savage"); drop the prefix only when it matches.
+  function dropInitials(name) {
+    const s = String(name || '').trim(), m = /^([A-Z]{2,3})\s+(.+)$/.exec(s);
+    if (!m) return s;
+    const ini = m[2].split(/\s+/).map(w => w.normalize('NFKD').replace(/[^A-Za-z]/g, '').charAt(0).toUpperCase()).join('');
+    // "DS DeAndre Savage" (first letters) or "GM German Garcia Montes" (first and last name only).
+    return ini.startsWith(m[1]) || (m[1].length === 2 && ini.length > 2 && m[1] === ini[0] + ini[ini.length - 1]) ? m[2] : s;
+  }
+
+  const api = { GAP, inchesText, ageOn, shortNames, tapeRows, barWidths, analysisLines, figureHTML, tapeHTML, analysisHTML, tabsHTML, initialsOf,
+    boxingFigure, stanceOf, splitKOs, dropInitials };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.BEFNSnapshotB = api;
 })(typeof window !== 'undefined' ? window : globalThis);
