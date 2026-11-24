@@ -131,6 +131,34 @@ def build(card_names: dict, index: dict) -> dict:
     }
 
 
+def guard_problem(before: dict, out: dict) -> str | None:
+    """Why the new tape must not replace the old one, or None if it may.
+
+    Judged on coverage of the current card pool, not on the raw count: when the
+    card rolls over to a smaller event (60 fighters -> 42) the matched count falls
+    with it even though nearly every fighter still matches (QA audit A04, 24 Nov
+    2026: 59/60 -> 41/42 was wrongly refused). Two checks:
+      - the match rate must not fall below 70% of the previous rate;
+      - fighters on both the old and the new card must not lose their match
+        en masse (a corrupt or truncated export), checked when 5+ overlap.
+    """
+    old_cov, new_cov = before.get("coverage", {}), out["coverage"]
+    old_pool, new_pool = old_cov.get("cardFighters") or 0, new_cov["cardFighters"] or 0
+    if old_pool and new_pool and old_cov.get("matched"):
+        old_rate = old_cov["matched"] / old_pool
+        new_rate = new_cov["matched"] / new_pool
+        if new_rate < old_rate * 0.7:
+            return (f"match rate fell from {old_cov['matched']}/{old_pool} ({old_rate:.0%}) "
+                    f"to {new_cov['matched']}/{new_pool} ({new_rate:.0%})")
+    old_matched = set(before.get("fighters", {}))
+    still_on_card = old_matched & set(out.get("cardKeys", []))
+    if len(still_on_card) >= 5:
+        lost = still_on_card - set(out["fighters"])
+        if len(lost) > 0.3 * len(still_on_card):
+            return f"{len(lost)} of {len(still_on_card)} fighters still on the card lost their match"
+    return None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--csv", help="local ufc_fighter_tott.csv (default: download)")
@@ -145,12 +173,13 @@ def main() -> int:
     card_names = {k: v["name"] for k, v in snaps.items()}
     out = build(card_names, index_export(text))
     path = Path(args.out)
-    # Never replace a good file with a bad download.
+    # Never replace a good file with a bad download. Exit 3 means "kept the previous
+    # file": the workflow warns and still publishes the other, independently built outputs.
     if path.exists():
-        before = json.loads(path.read_text()).get("coverage", {}).get("matched", 0)
-        if before and out["coverage"]["matched"] < before * 0.7:
-            print(f"refusing to write: matched fighters fell from {before} to {out['coverage']['matched']}")
-            return 1
+        problem = guard_problem(json.loads(path.read_text()), {**out, "cardKeys": list(card_names)})
+        if problem:
+            print(f"refusing to write, previous tape kept: {problem}")
+            return 3
     body = json.dumps(out, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
     if not path.exists() or path.read_text() != body:
         path.write_text(body)

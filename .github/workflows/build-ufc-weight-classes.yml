@@ -57,7 +57,11 @@ jobs:
             git fetch -q origin "$branch"
             git reset -q --hard "origin/$branch"
             python scripts/build-ufc-weight-classes.py
-            python scripts/build-ufc-fighter-tape.py
+            # The tape guard exits 3 when it keeps the previous file (e.g. a suspicious
+            # export). That must not stop the weight classes and round stats, which are
+            # validated by their own builders. Any other failure still stops the run.
+            rc=0; python scripts/build-ufc-fighter-tape.py || rc=$?
+            if [ "$rc" = 3 ]; then echo '::warning::Tale of the tape kept the previous file (see log above); other outputs still published'; elif [ "$rc" != 0 ]; then exit "$rc"; fi
             python scripts/build-ufc-free-round-stats.py
             git add -A data/ufc-bout-weight-classes.json data/ufc-fighter-tape.json data/ufc-free-round-stats.json
             if git diff --cached --quiet; then echo 'Nothing changed in the free export'; exit 0; fi
