@@ -142,3 +142,10 @@ These are UFC bio claims to amateur titles in judo, wrestling and sambo, checked
 - **Ketlen Souza** ("2014 World Wrestling Championship"): not in any screened UWW book. She was born in 1995, so this may have been the 2014 Junior Worlds, but the matching would have found "Souza Ketlen" there too. Unresolved.
 - **Muin Gafurov, Nurullo Aliev, Irina Alekseeva:** only namesakes in the IJF and FIAS data (Mirzoiusuf Gafurov, Marjona Nurulloeva), and Alekseeva's FIAS entry is still identity-open.
 - **Not searchable in the saved data:** Caio Borralho, Kevin Jousset, Nyamjargal Tumendemberel (judo); Steve Erceg, Lerryan Douglas, Michael Morales, Yuneisy Duben (national wrestling titles, which are domestic, not representative); Rafael Fiziev (national sambo). National titles alone don't qualify as national-team results.
+
+### Striking bio claims (25 Nov 2026)
+
+- **Professional or promotion belts, which don't count as representative:** Cesar Almeida (WKN), Cory Sandhagen (WKA), Andrea Lee and Ricky Turcios (IKF/TBA), Ce Liu and Lone'er Kavanagh (K-1), Michael Page, Jhonata Diniz, Melsik Baghdasaryan and Hector Santiago (unnamed sanctioning bodies).
+- **WAKO claims checked against the text of 75 WAKO result books (2006 on):** Diana Belbita, Yousri Belgaroui, Junior Tafa, Marwan Rahiki, Lucas Fernando, Marcos Rogério de Lima, Viacheslav Borshchev and Bruna Brasil. None appear; there are only namesakes (Alexandre Diniz Goulart, Gevorg Baghdasaryan). About 17 older books are scans with no text, and South American and Pan-American results are mostly not in the archive, so these stay open.
+- **Muay Thai (IFMA) claims** (Joanne Wood, Istela Nunes, Shanelle Dyer, Gaston Bolanos, Tainara Lisboa): IFMA's robots.txt blocks Anthropic bots, so these wait for an IFMA export (see the runner's `EXPORT-REQUESTS-DRAFT.md`).
+- **Amateur boxing** (Fatima Kline, Blake Bilder, Islam Dulatov, Cody Haddon and others): Golden Gloves and national titles are domestic. World Boxing and IBA results aren't published as listable text.
