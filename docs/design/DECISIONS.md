@@ -2,6 +2,17 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24/25 (Overnight credentials research run)
+Owner-approved plan (`Befn Research Runner/WORK-PLAN-20261124.md`). The owner delegated in-run decisions; merges wait for "Merge N". The full log is `Befn Research Runner/RESEARCH-LOG.md` (local).
+- **Terms rule for automated collection:** scripts collect only from sources whose terms of use don't forbid it and whose robots.txt allows it. IJF (Terms 3.1.4 and 3.1.5) and UWW (Terms 3(e)) forbid automated collection or downloading, and IBJJF bans bots and scripts. Their screens were stopped, and `ijf_screen.py` now needs an explicit permission flag. IFMA and WKF block Anthropic bots in robots.txt and are skipped. FIAS, World Taekwondo and WAKO have no prohibiting terms and are used, slowly and with caching. ADCC and IMMAF result pages sit behind Cloudflare checks and aren't read; only IMMAF's sitemaps are used. — Claude, delegated — runner README, #503 comment
+- **Single-page checks are allowed; bulk collection is not:** research agents may read individual athlete or event pages (including IJF and UWW) to confirm a specific fighter, as a person would. — Claude, delegated — #506
+- **Fresno State and Chattanooga are reviewed athletics hosts.** Each homepage title names it as the school's official athletics site. Hokit's and Finney's roster claims become Tier A for participation. — Claude, delegated — #504
+- **Entry lists are selection, not appearances:** a name in a championship entry list is recorded as `team_selected`, not `team_appearance` (Peričić, WAKO 2019). — Claude, delegated — #506
+- **WCSF/ECSF combat sambo is recorded as a separate body from FIAS,** with archived ecsambo.org pages as sources (Amosov, Cutelaba, Aliskerov). — Claude, delegated — #506
+- **Same-name matches stay `needs_review` or are ruled out, never guessed.** Da Woon Jung's IJF match was a woman judoka and is removed. — Claude, delegated — #503, #506
+- **For the owner:** whether to ask IJF, UWW and IBJJF for permission, and whether UFC's own terms allow the runner's fetching of ufc.com athlete pages (not checked). — open
+- **Follow-up, 25 Nov (owner):** #504 and #506 merged, then #509, #513, #516, #517 and #503 (owner's selection). Later work: manual leads, ADCC Worlds entries, wide IJF and UWW screens, and a new IBJJF majors screen. The owner has permission to collect from the IJF, UWW, IBJJF and ufc.com, which lifts those terms limits. The robots.txt blocks (IFMA, WKF) and the Cloudflare checks (ADCC, IMMAF results, Smoothcomp) still stand and are not worked around.
+
 ## 2026-11-24 (Judo results from the IJF data)
 - **Judo credentials come from the IJF's published results data** (owner approved recording the strong leads, 24 Nov). The ijf.org event pages load their results by script, so page screens found no names. The entrant lists and places at data.ijf.org are the federation's own data and count as a `federation` source. A same-name match with no other link stays `needs_review`, because the data hides birth dates. — Owner — `research/ufc-representative-credentials/` (Mahjoub, Baraniewski, Barbosa added; Egger unresolved; Jung ruled out overnight because the IJF judoka competed in women's categories)
 - **IJF permission (owner, 25 Nov 2026):** the owner has permission to collect the IJF's information, which resolves the terms question raised on this PR.
