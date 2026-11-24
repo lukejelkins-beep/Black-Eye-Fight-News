@@ -518,6 +518,68 @@ class CertifiedNoContests(unittest.TestCase):
         self.assertEqual(m.certified_no_contests([], {}), [])
 
 
+class CertifiedResultOnlyBouts(unittest.TestCase):
+    """A certified win, loss or draw the archive lacks (e.g. a Road to UFC final): result only, never rated."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        root = pathlib.Path(self.tmp.name)
+        self.old = (m.CERTIFIED_CAREERS, m.REGISTER)
+        m.CERTIFIED_CAREERS, m.REGISTER = root / "c.json", root / "r.json"
+        self.addCleanup(lambda: setattr(m, "CERTIFIED_CAREERS", self.old[0]) or setattr(m, "REGISTER", self.old[1]))
+
+    def write(self, certified, register, extension=(), aliases=None):
+        m.CERTIFIED_CAREERS.write_text(json.dumps({"certified": {s: 1 for s in certified},
+                                                   "extension": {"certified": {s: 1 for s in extension}},
+                                                   "statsAliases": aliases or {}}))
+        m.REGISTER.write_text(json.dumps({"fighters": register}))
+
+    def entry(self, name, opp, result="win", date="2024-02-03", method="KO/TKO"):
+        return {"fighterName": name, "bouts": [{"date": date, "opponent": opp, "result": result, "sourceMethod": method,
+                                                "savedHistoryGap": True, "roadToUfcFinal": True}]}
+
+    def test_a_missing_final_is_added_with_result_and_method_only(self):
+        self.write(["rei"], {"rei": self.entry("Rei Tsuruya", "Jiniushiyue")})
+        skipped = {}
+        out = m.certified_result_only_bouts([], skipped)
+        self.assertEqual(len(out), 1)
+        f = out[0]
+        self.assertEqual((f["winner"], f["method"], f["rounds"], f["statsComplete"], f["endRound"], f["seconds"]),
+                         ("a", "ko", [], False, None, None))
+        view = m.side_view(f, "a")
+        self.assertEqual(view["outcome"], "W")
+        self.assertFalse(m.is_rated(view), "a certified result-only win never feeds a rating")
+        self.assertEqual(skipped["certifiedResultOnly"], 1)
+
+    def test_extension_cohort_fighters_are_carried_too(self):
+        self.write([], {"x": self.entry("Jose Aldo", "Mark Hominick", date="2011-04-30", method="Decision - Unanimous")},
+                   extension=["x"])
+        out = m.certified_result_only_bouts([], {})
+        self.assertEqual((len(out), out[0]["method"]), (1, "dec"))
+
+    def test_a_fight_the_fighter_already_has_on_that_day_is_not_added_whatever_the_spelling(self):
+        self.write(["heili"], {"heili": self.entry("Heili Alateng", "Chad Anheliger", date="2022-09-10")})
+        have = {"date": "2022-09-10", "method": "dec", "a": {"name": "Alatengheili", "slug": "heili"},
+                "b": {"name": "Chad Anheliger", "slug": "chad"}}
+        self.assertEqual(m.certified_result_only_bouts([have], {}), [])
+
+    def test_a_stats_alias_slug_counts_as_the_fighter(self):
+        self.write(["bruno-gustavo"], {"bruno-gustavo": self.entry("Bruno Gustavo da Silva", "Tyson Nam", date="2023-03-11")},
+                   aliases={"bruno-silva": "bruno-gustavo"})
+        have = {"date": "2023-03-11", "method": "ko", "a": {"name": "Bruno Silva", "slug": "bruno-silva"},
+                "b": {"name": "Tyson Nam", "slug": None}}
+        self.assertEqual(m.certified_result_only_bouts([have], {}), [])
+
+    def test_no_contests_and_uncertified_fighters_are_left_alone(self):
+        self.write(["a"], {"a": self.entry("A B", "C D", result="no_contest"), "z": self.entry("Y Z", "C D")})
+        self.assertEqual(m.certified_result_only_bouts([], {}), [])
+
+    def test_ordinary_fights_are_rated(self):
+        self.assertTrue(m.is_rated({"outcome": "W"}))
+        self.assertTrue(m.is_rated({"outcome": "NC", "resultSource": "certified-register"}))
+
+
 class StrikeBreakdowns(unittest.TestCase):
     """Head/body/leg and distance/clinch/ground shares only where every round adds up to the strikes landed."""
 

@@ -60,6 +60,17 @@ function validEntries(document, label, approved) {
         const fingerprint=date+'|'+opponent;
         if (ids.has(fingerprint)) throw Error(label + ': duplicated official bout ' + slug + '/' + fingerprint);
         ids.add(fingerprint);
+      } else if (ufcstats && bout?.roadToUfcFinal === true && bout?.savedHistoryGap === true && !bout?.fightUrl) {
+        // Owner, 24 Nov 2026: a Road to UFC final is a result-only gap bout with no UFCStats page; it is
+        // identified by its UFC.com source, date and opponent instead.
+        const opponent=String(bout?.opponent||'').trim();
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(String(bout?.date||'')) || !opponent ||
+            !['win','loss'].includes(String(bout?.result||'').toLowerCase()) ||
+            !/^https:\/\/www\.ufc\.com\//i.test(String(bout?.officialUfcSourceUrl||'')))
+          throw Error(label + ': missing Road to UFC final source for ' + slug);
+        const key='rtu:'+bout.date+'|'+opponent.toLowerCase();
+        if (ids.has(key)) throw Error(label + ': duplicated Road to UFC final ' + slug);
+        ids.add(key);
       } else if (ufcstats) {
         const opponent=String(bout?.opponent||'').trim(),url=String(bout?.fightUrl||'');
         if (!/^\d{4}-\d{2}-\d{2}$/.test(String(bout?.date||'')) || !opponent ||
@@ -89,7 +100,7 @@ export function sourceNativeSignature(proof) {
     ].join('|')).sort().join(';;');
   if(isUfcStatsProof(proof))
     return 'ufcstats:' + proof.bouts.map(b=>[
-      String(b.fightUrl), String(b.result).toLowerCase()
+      String(b.fightUrl || ('rtu:' + b.date + '|' + b.opponent)), String(b.result).toLowerCase()
     ].join('|')).sort().join(';;');
   return 'native:' + proof.bouts.map(b => [
     String(b.nativeBoutId), String(b.nativeFighterId),

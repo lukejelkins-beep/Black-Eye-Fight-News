@@ -125,3 +125,19 @@ test('UFCStats-sourced proof rejects bad fight URL, missing fields and duplicate
   const noFighterUrl = ufcstatsProof(); delete noFighterUrl.fighterUrl;
   assert.throws(() => preflight(register({ 'fighter-0': noFighterUrl }), approved), /native\/source bout identity/);
 });
+
+test('a sourced Road to UFC final in a UFCStats proof is accepted; an unsourced one is refused', () => {
+  const ufcstats = extra => ({
+    sourceCoverageAttested: true, scope: 'complete_official_ufc_career', fighterName: 'Rei Tsuruya',
+    fighterUrl: 'https://ufcstats.com/fighter-details/2f43a3e82661fa99',
+    bouts: [{ date: '2024-06-29', opponent: 'Carlos Hernandez', result: 'win',
+      fightUrl: 'https://ufcstats.com/fight-details/1234567890abcdef' }, extra]
+  });
+  const final = { date: '2024-02-03', opponent: 'Jiniushiyue', result: 'win', savedHistoryGap: true, roadToUfcFinal: true,
+    officialUfcSourceUrl: 'https://www.ufc.com/news/road-ufc-final-results-scorecards-season-2-finals-winner-interviews' };
+  assert.equal(preflight(register({ 'fighter-0': ufcstats(final) }), approved, []).safeToReview, true);
+  assert.throws(() => preflight(register({ 'fighter-0': ufcstats({ ...final, officialUfcSourceUrl: '' }) }), approved, []),
+    /Road to UFC final source/);
+  const { roadToUfcFinal, ...plainGap } = final;
+  assert.throws(() => preflight(register({ 'fighter-0': ufcstats(plainGap) }), approved, []), /missing UFCStats bout identity/);
+});
