@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "note": "Publication dates for upcoming banzuke, used by the Sumo home countdown. 'reported' means third-party sumo calendars agree but the Japan Sumo Association's own page could not be read automatically; 'confirmed' means checked on sumo.or.jp. Dates are Japan time. Add each upcoming basho when its date is known. May, July and November 2027 had no published date when checked (24 Nov 2026); the card then says the banzuke comes before day 1.",
+  "note": "Publication dates for upcoming banzuke, used by the Sumo home countdown. 'reported' means third-party sumo calendars agree but the Japan Sumo Association's own page could not be read automatically; 'confirmed' means checked on sumo.or.jp. Dates are Japan time. Add each upcoming basho when its date is known.",
   "releases": {
     "202701": {
       "date": "2026-12-21",
@@ -18,16 +18,44 @@
       "checkedAt": "2026-11-24",
       "sources": [
         "https://japan-event.info/en/articles/sumo-haru-basho-osaka-2027",
-        "https://japancheapo.com/events/march-grand-sumo-tournament/"
+        "https://japancheapo.com/events/march-grand-sumo-tournament/",
+        "https://sumostats.com/basho/202703"
+      ]
+    },
+    "202705": {
+      "date": "2027-04-26",
+      "status": "reported",
+      "checkedAt": "2026-11-24",
+      "sources": [
+        "https://ozumo.jp/en/sumo-schedule/",
+        "https://japan-event.info/en/articles/sumo-natsu-basho-tokyo-2027"
+      ]
+    },
+    "202707": {
+      "date": "2027-06-28",
+      "status": "reported",
+      "note": "Single source; check again closer to the date.",
+      "checkedAt": "2026-11-24",
+      "sources": [
+        "https://ozumo.jp/en/sumo-schedule/"
       ]
     },
     "202709": {
       "date": "2027-08-30",
       "status": "reported",
+      "checkedAt": "2026-11-24",
+      "sources": [
+        "https://tokyocheapo.com/events/sumo-wrestling-september-grand-tournament/",
+        "https://sumostats.com/basho/202709"
+      ]
+    },
+    "202711": {
+      "date": "2027-11-01",
+      "status": "reported",
       "note": "Single source; check again closer to the date.",
       "checkedAt": "2026-11-24",
       "sources": [
-        "https://tokyocheapo.com/events/sumo-wrestling-september-grand-tournament/"
+        "https://ozumo.jp/en/sumo-schedule/"
       ]
     }
   }
