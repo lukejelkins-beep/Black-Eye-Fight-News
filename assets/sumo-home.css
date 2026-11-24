@@ -333,3 +333,52 @@
 @media(max-width:900px){.sin-recs{grid-template-columns:1fr 1fr}.sin-teasers{grid-template-columns:1fr}}
 @media(max-width:760px){.sin-recs{grid-template-columns:1fr}.sin-runs,.sin-rvs{grid-template-columns:1fr}.sin-run-ph{width:96px}.sin-table{font-size:13px}.sin-table th:nth-child(4),.sin-table td:nth-child(4),.sin-table th:nth-child(7),.sin-table td:nth-child(7){display:none}}
 .sin-scroll{overflow-x:auto;max-width:100%}
+
+/* Sumo live basho mode (home during a basho, #home?liveday=N preview) and the review's day by day. */
+.slive-hero{position:relative}
+.slive-preview{position:absolute;top:10px;right:12px;z-index:2;background:var(--sh-gold);color:var(--sh-ink);font:800 12px 'DM Sans',sans-serif;padding:4px 8px;border-radius:6px}
+.slive-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e53935;margin-right:8px;vertical-align:middle;box-shadow:0 0 0 3px rgba(229,57,53,.3)}
+@media(prefers-reduced-motion:no-preference){.slive-dot{animation:slive-pulse 1.6s ease-in-out infinite}}
+@keyframes slive-pulse{50%{box-shadow:0 0 0 7px rgba(229,57,53,0)}}
+.slive-cast{display:flex;align-items:flex-end;justify-content:center;align-self:end;height:300px;margin-top:24px}
+.slive-cast img{height:100%;margin-left:-40px;filter:drop-shadow(0 10px 24px #0008)}
+.slive-cast img:first-child{margin-left:0}
+.slive-recap{background:var(--sh-ink);color:#fff;border-radius:12px;padding:16px 18px;border-left:6px solid var(--sh-gold)}
+.slive-recap .shome-kicker{color:var(--sh-gold)}
+.slive-recap p{margin:6px 0 10px;font-size:15px;line-height:1.5}
+.slive-recap-act{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.slive-recap-act button{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid #5a5156;background:#231c22;color:#fff;font:700 13px 'DM Sans',sans-serif;cursor:pointer}
+.slive-recap-act button:focus-visible{outline:3px solid var(--sh-gold);outline-offset:2px}
+.slive-recap-ok{font-size:13px;color:var(--sh-gold)}
+.slive-row{margin-bottom:14px}
+.slive-row h3{font:700 15px Unbounded,sans-serif;margin:0 0 8px}
+.slive-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;align-items:stretch}
+.slive-c{display:flex;background:#fff;border:1px solid var(--sh-line);border-radius:12px;overflow:hidden;min-height:96px}
+.slive-c-ph{width:70px;flex:none;object-fit:contain;object-position:bottom;background:linear-gradient(160deg,#2a4a8f,#151115)}
+.slive-c.is-lead{border:2px solid var(--sh-gold)}
+.slive-c.is-lead .slive-c-ph{background:linear-gradient(160deg,#8a6a00,#151115)}
+.slive-c-bd{padding:8px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.slive-c-bd strong{font:700 14px Unbounded,sans-serif}
+.slive-c-bd strong a{text-decoration:none}
+.slive-c-bd span{font-size:12.5px;color:var(--sh-muted)}
+.slive-c-bd b{font:800 18px Unbounded,sans-serif}
+.slive-c-bd small{font-size:12px;color:var(--sh-muted)}
+.slive-more{align-self:center;color:var(--sh-muted);font-size:13px}
+.slive-ups{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.slive-up{display:flex;background:#fff;border:1px solid var(--sh-line);border-radius:12px;overflow:hidden}
+.slive-up-ph{width:110px;flex:none;background:linear-gradient(160deg,#2a4a8f,#151115);display:flex;align-items:flex-end;justify-content:center;min-height:150px}
+.slive-up.is-gold .slive-up-ph{background:linear-gradient(160deg,#8a6a00,#151115)}
+.slive-up-img{height:142px}
+.slive-up-bd{padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.slive-up-bd strong{font:700 16px Unbounded,sans-serif}
+.slive-up-bd strong a,.slive-up-bd span a{text-decoration:none}
+.slive-up-bd small{font:800 12px 'DM Sans',sans-serif;color:var(--sh-muted)}
+.slive-up-bd span{display:flex;align-items:center;gap:6px;font-size:13.5px}
+.slive-up-bd .shome-face{width:28px;height:28px}
+.slive-up-bd>a{font:700 13px 'DM Sans',sans-serif;color:var(--sh-red)!important}
+.slive-daypick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.slive-daypick button{min-width:44px;min-height:44px;border-radius:10px;border:1px solid var(--sh-line);background:#fff;font:800 14px 'DM Sans',sans-serif;cursor:pointer}
+.slive-daypick button[aria-pressed="true"]{background:var(--sh-ink);color:#fff;border-color:var(--sh-ink)}
+.slive-daylead{font-size:14px;margin:10px 0 0}
+.slive-days .shome-block{padding-top:16px}
+@media(max-width:760px){.slive-cast{height:180px;margin-top:12px;order:0}.slive-cast img{margin-left:-28px}.slive-cards{grid-template-columns:1fr}.slive-ups{grid-template-columns:1fr}.slive-preview{position:static;display:inline-block;margin:12px 0 0}}

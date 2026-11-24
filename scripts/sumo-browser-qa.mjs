@@ -92,6 +92,15 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
     assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on Insights: '+JSON.stringify(widths));
   }
+  // Live basho mode, previewed by replaying the latest basho as of day 10 (#home?liveday=10).
+  await open(page,'home?liveday=10','.sumo-live');
+  assertContains(await page.locator('#sumo-main').innerText(),'Day 10 of 15','Live header shows the day');
+  assert.ok(await page.locator('.slive-c.is-lead').count()>=1,'Title race leaders shown');
+  assert.ok(await page.locator('[data-recap-copy]').count()===1,'Recap card with copy button');
+  {
+    const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow in live mode: '+JSON.stringify(widths));
+  }
   // The results desk is #basho, under Fights.
   await open(page,'basho','.sumo-page-head');
   const home=await page.locator('#sumo-main').innerText();
