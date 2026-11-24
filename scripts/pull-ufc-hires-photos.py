@@ -54,6 +54,10 @@ USER_AGENT = "BEFN-photo-pull/1.0 (static site maintenance)"
 # The same spelling differences scripts/enrich-espn-headshots.py already knows about.
 ALIASES = {"oliver schmid": "ollie schmid", "gabriel lourenco": "gabriel lorenco", "seok hyeon ko": "seokhyeon ko",
            "jose mauro delano": "jose delano", "nina nikolija milosevic": "nina milosevic"}
+# Headshots fetched, looked at by eye and not used (slug -> reason), so a later fetch does not take
+# them back. Written by `scripts/photo-runner.py approve --reject`.
+REVIEWED_OUT = {
+}
 
 
 def normal(name: str) -> str:
@@ -77,8 +81,22 @@ def portrait_from(w: int, h: int) -> int:
     return min(w, round(h * 4 / 5), 480)
 
 
-def targets(register: dict, only: list[str] | None = None) -> list[dict]:
-    """Fighters whose portrait is too small for a cutout (or the slugs named with --only)."""
+def new_fighters(path: str) -> list[dict]:
+    """Fighters with no photo at all, one "slug<TAB>name" per line (scripts/photo-runner.py writes it)."""
+    out = []
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        slug, _, name = line.partition("\t")
+        if slug.strip() and name.strip():
+            out.append({"id": slug.strip(), "name": name.strip(), "new": True})
+    return out
+
+
+def targets(register: dict, only: list[str] | None = None, new_file: str = "") -> list[dict]:
+    """Fighters whose portrait is too small for a cutout (or the slugs named with --only), or, with
+    --new-fighters, fighters the register does not hold yet."""
+    if new_file:
+        held = {r["id"] for r in register["images"]}
+        return [r for r in new_fighters(new_file) if r["id"] not in held and r["id"] not in REVIEWED_OUT]
     rows = register["images"]
     if only:
         wanted = set(only)
@@ -155,7 +173,7 @@ def cmd_plan(args) -> int:
 def cmd_fetch(args) -> int:
     from PIL import Image
     reg, ids = load_register(), known_ids()
-    rows = targets(reg, args.only)[: args.limit or None]
+    rows = targets(reg, args.only, getattr(args, "new_fighters", ""))[: args.limit or None]
     raw = WORK / "raw"
     raw.mkdir(parents=True, exist_ok=True)
     report_path = WORK / "fetch-report.json"
@@ -166,6 +184,9 @@ def cmd_fetch(args) -> int:
             continue
         espn_id = id_for(r, ids)
         try:
+            if not espn_id and getattr(args, "no_search", False):
+                report[slug] = {"status": "no known ESPN id (search not used: --no-search)", "name": name}
+                continue
             if not espn_id:
                 time.sleep(args.delay)
                 hits = search_hits(json.loads(get(SEARCH.format(q=urllib.parse.quote(name)))))
@@ -187,6 +208,8 @@ def cmd_fetch(args) -> int:
                 continue
             report[slug] = {"status": "downloaded", "name": name, "espnId": espn_id, "url": url, "width": w,
                             "height": h, "sha256": hashlib.sha256(data).hexdigest()}
+            if r.get("new"):
+                report[slug]["new"] = True
         except Exception as e:  # network or parse errors: record and move on; a later run retries
             report[slug] = {"status": f"{'search' if not espn_id else 'download'} failed: {e}", "name": name}
         finally:
@@ -216,24 +239,40 @@ def cmd_apply(args) -> int:
                                               "rights_status", "sha256", "download_status"])
             w.writeheader()
             for slug, v in ok.items():
-                w.writerow({"roster_slug": slug, "fighter_name": by_id[slug]["name"], "jpeg_filename": f"{slug}.png",
+                w.writerow({"roster_slug": slug, "fighter_name": (by_id.get(slug) or v)["name"], "jpeg_filename": f"{slug}.png",
                             "image_source_url": v["url"], "rights_status": "owner-cleared", "sha256": v["sha256"],
                             "download_status": "downloaded"})
         out = Path(tmp) / "out"
         subprocess.run([sys.executable, str(ROOT / "scripts/process-fighter-images.py"), str(WORK / "raw"),
                         str(manifest), str(out)], check=True)
         processed = {p["id"]: p for p in json.loads((out / "_processed.json").read_text(encoding="utf-8"))}
+        added = []
         for slug, p in processed.items():
             for kind, fn in p["files"].items():
                 (IMG_DIR / fn).write_bytes((out / fn).read_bytes())
-            entry = by_id[slug]
-            entry.setdefault("previousSourceUrl", entry.get("sourceUrl"))
+            entry = by_id.get(slug)
+            if entry is None:
+                # A fighter the register did not hold (fetch --new-fighters): a new row, same fields.
+                entry = {"id": slug, "name": p["name"], "originalSha256": ok[slug]["sha256"]}
+                reg["images"].append(entry)
+                added.append(slug)
+            else:
+                entry.setdefault("previousSourceUrl", entry.get("sourceUrl"))
             entry.update({"files": p["files"], "sourceUrl": p["sourceUrl"], "credit": "ESPN",
                           "sourceWidth": p["sourceWidth"], "sourceHeight": p["sourceHeight"], "lowRes": p["lowRes"],
                           "rights": "owner-cleared"})
-    reg["rightsNote"] = (reg.get("rightsNote", "") + f" On {date.today().isoformat()} the owner stated that "
-                         f"{len(processed)} ESPN headshots replacing smaller UFC.com photos (scripts/pull-ufc-hires-"
-                         f"photos.py, previous source URL kept per entry) are cleared for use on BEFN on the same basis.")
+    replaced = len(processed) - len(added)
+    if replaced:
+        reg["rightsNote"] = (reg.get("rightsNote", "") + f" On {date.today().isoformat()} the owner stated that "
+                             f"{replaced} ESPN headshots replacing smaller UFC.com photos (scripts/pull-ufc-hires-"
+                             f"photos.py, previous source URL kept per entry) are cleared for use on BEFN on the same basis.")
+    if added:
+        reg["rightsNote"] = (reg.get("rightsNote", "") + f" On {date.today().isoformat()} the owner stated that "
+                             f"{len(added)} ESPN headshots of UFC fighters the register did not hold"
+                             + (f" ({args.context})" if getattr(args, "context", "") else "") +
+                             " are cleared for use on BEFN on the same basis.")
+        reg["missing"] = [m for m in reg.get("missing", []) if m not in added]
+        reg["images"].sort(key=lambda r: r["id"])
     REGISTER.write_text(json.dumps(reg, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     slugs = ",".join(sorted(processed))
     print(f"{len(processed)} photos swapped in and recorded. Next, make their cutouts (needs rembg):")
@@ -242,7 +281,10 @@ def cmd_apply(args) -> int:
 
 
 def main(argv=None) -> int:
+    global WORK
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("--work", default="", help="working folder instead of .photo-pulls/ufc-hires "
+                    "(scripts/photo-runner.py stages here)")
     sub = ap.add_subparsers(dest="cmd", required=True)
     for name in ("plan", "fetch", "apply"):
         p = sub.add_parser(name)
@@ -250,9 +292,18 @@ def main(argv=None) -> int:
                        help="comma-separated register slugs instead of every too-small photo")
     sub.choices["fetch"].add_argument("--limit", type=int, default=0, help="stop after this many fighters")
     sub.choices["fetch"].add_argument("--delay", type=float, default=1.0, help="seconds between requests")
+    sub.choices["fetch"].add_argument("--new-fighters", default="", metavar="FILE",
+                                      help="fighters the register does not hold, one 'slug<TAB>name' per line")
+    sub.choices["fetch"].add_argument("--no-search", action="store_true",
+                                      help="use only ESPN ids already in repository data; never call the search API")
     sub.choices["apply"].add_argument("--owner-cleared", action="store_true",
                                       help="confirm the downloaded ESPN headshots are cleared for use on BEFN")
+    sub.choices["apply"].add_argument("--context", default="", help="recorded in the rights note with new fighters")
     args = ap.parse_args(argv)
+    if args.work:
+        WORK = Path(args.work)
+    if not hasattr(args, "new_fighters"):
+        args.new_fighters = ""
     return {"plan": cmd_plan, "fetch": cmd_fetch, "apply": cmd_apply}[args.cmd](args)
 
 

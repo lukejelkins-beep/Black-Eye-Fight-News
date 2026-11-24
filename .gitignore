@@ -25,3 +25,7 @@ HANDOFF-*.md
 # Local output of scripts/sumo-browser-qa.mjs (CI uploads it as an artifact instead)
 qa/sumo-previews/
 .photo-pulls/
+
+# Photo runner staging (scripts/photo-runner.py fetch/drop): looked at before approval, never committed.
+# Approved results, the review contact sheets and the run state are committed by approve.
+qa/photo-runner/staging/

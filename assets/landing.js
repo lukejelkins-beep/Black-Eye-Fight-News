@@ -12,7 +12,7 @@
   /* A picture BEFN holds itself (poster cache, fighter cutout, fighter portrait) is drawn
      borderless: no frame, no plate, edges faded into the card. A publisher's press photo
      keeps its own crop. `cached` decides which of the two an <img> gets. */
-  const ourFighter = url => /^assets\/img\/(?:ufc|ufc-cutouts|boxing-cutouts)\//.test(String(url || ''));
+  const ourFighter = url => /^assets\/img\/(?:ufc|ufc-cutouts|boxing-cutouts|mma|mma-cutouts)\//.test(String(url || ''));
 
   /* Where a cut-out file lives. Each cut-out register carries its own folder, so a boxer's
      cut-out is read from the boxing folder and a UFC fighter's from the UFC one. UFC is the

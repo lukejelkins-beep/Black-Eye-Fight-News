@@ -417,9 +417,10 @@ window.UpcomingCards=(()=>{
   if(loading)return loading;
   loading=(async()=>{
    const json=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
-   Promise.all([json('data/ufc-cutout-register.json'),json('data/boxing-cutout-register.json'),json('data/sport-overview-featured.json')]).then(([u,b,f])=>{
+   Promise.all([json('data/ufc-cutout-register.json'),json('data/boxing-cutout-register.json'),json('data/sport-overview-featured.json'),json('data/mma-cutout-register.json')]).then(([u,b,f,m])=>{
     const next={};
-    for(const [dir,reg] of [['assets/img/ufc-cutouts/',u],['assets/img/boxing-cutouts/',b]])for(const [k,v] of Object.entries(reg?.cutouts||{}))if(v)next[k]=next[k]&&next[k].dir!==dir?{ok:false}:{...v,dir};
+    /* PFL, ONE, KSW, RIZIN and Cage Warriors cut-outs (photo runner, 24 Nov 2026) sit in their own folder. */
+    for(const [dir,reg] of [['assets/img/ufc-cutouts/',u],['assets/img/boxing-cutouts/',b],['assets/img/mma-cutouts/',m]])for(const [k,v] of Object.entries(reg?.cutouts||{}))if(v)next[k]=next[k]&&next[k].dir!==dir?{ok:false}:{...v,dir};
     cutouts=next;featured=f;
     if(feed&&location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view!=='results'){const root=document.getElementById('upcoming-cards-root');if(root)root.innerHTML=listing(root.dataset.upcomingSport||'all');}
    });

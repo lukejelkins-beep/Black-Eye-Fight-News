@@ -1,0 +1,107 @@
+name: Weekly photo runner (draft PR)
+# Owner request, 24 Nov 2026: find every fighter on the site without an approved photo, try every
+# approved source (scripts/photo-runner.py; rights and rules in docs/design/IMAGE-GUIDE.md, "Photo runner"),
+# and put what it finds in front of the owner to look at by eye. This job never writes to main: it
+# stages, registers the staged photos on a NEW branch (auto/photo-runner-<run>) and opens a draft PR
+# whose body shows the contact sheets and lists every photo with its source and credit. Merging the PR
+# ("Merge N") is the approval; closing it discards the run. If nothing new is found, no PR is opened.
+on:
+  workflow_dispatch:
+  schedule:
+    # Thursdays 02:43 UTC: a quiet hour, clear of the Monday certification job and the sumo jobs.
+    - cron: '43 2 * * 4'
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: befn-photo-runner
+  cancel-in-progress: false
+jobs:
+  photos:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Cache the segmentation model
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use-v1
+      - name: Install and test (offline)
+        run: |
+          python -m pip install --quiet "rembg[cpu]==2.0.61" onnxruntime==1.19.2 pillow==11.3.0 numpy==2.0.2 \
+            scipy==1.14.1 beautifulsoup4==4.12.3
+          python -m unittest tests/test_photo_runner.py tests/test_pull_ufc_hires_photos.py tests/test_ufc_cutouts.py
+      - name: Who is missing, and stage what the approved sources have
+        id: stage
+        run: |
+          python scripts/photo-runner.py missing --sport all
+          python scripts/photo-runner.py fetch --sport all --limit 120 | tee "$RUNNER_TEMP/fetch.txt"
+          run=$(python -c "import json;print(json.load(open('qa/photo-runner/state.json'))['lastRun'])")
+          staged=$(python -c "import json,sys;print(len(json.load(open('qa/photo-runner/staging/$run/manifest.json'))['entries']))")
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "staged=$staged" >> "$GITHUB_OUTPUT"
+          { echo "Photo runner $run: $staged staged."; echo '```'; cat "$RUNNER_TEMP/fetch.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Register on a new branch and open a draft PR for the owner to look at
+        if: steps.stage.outputs.staged != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ steps.stage.outputs.run }}
+        run: |
+          set -euo pipefail
+          BRANCH="auto/photo-runner-$RUN"
+          git switch -c "$BRANCH"
+          # --owner-cleared writes the UFC register's rights-note sentence for any ESPN headshots in the run.
+          # It becomes the owner's statement only if the owner merges this PR; the PR body says so.
+          python scripts/photo-runner.py approve "$RUN" --all --owner-cleared
+          python scripts/photo-runner.py missing --sport all
+          git add assets/img/boxing assets/img/boxing-cutouts assets/img/ufc assets/img/ufc-cutouts \
+            data/boxing-image-register.json data/boxing-cutout-register.json \
+            data/ufc-image-register.json data/ufc-cutout-register.json \
+            assets/local-images.js boxing-photo-credits.html mma-photo-credits.html \
+            qa/photo-runner/missing.json qa/photo-runner/missing.md qa/photo-runner/state.json \
+            "qa/photo-runner/reviews/$RUN"
+          for p in assets/img/mma assets/img/mma-cutouts data/mma-image-register.json data/mma-cutout-register.json \
+                   assets/sumo-photos data/sumo/approved-photos.json data/sumo/cutouts.json; do
+            [ -e "$p" ] && git add "$p"
+          done
+          if git diff --cached --quiet; then echo "Nothing to commit."; exit 0; fi
+          git config user.name 'befn-photo-runner'
+          git config user.email 'befn-photo-runner@users.noreply.github.com'
+          git commit -q -m "Photo runner $RUN: photos staged for the owner's review"
+          git push -q origin "HEAD:refs/heads/$BRANCH"
+          raw="https://github.com/${{ github.repository }}/blob/$BRANCH/qa/photo-runner/reviews/$RUN"
+          {
+            echo "Weekly photo runner, run **$RUN**. Look at every photograph before merging: merging is the approval."
+            echo
+            echo "![Contact sheet]($raw/contact.png?raw=true)"
+            echo
+            echo "Cut-outs made from them:"
+            echo
+            echo "![Cut-outs]($raw/cutouts.png?raw=true)"
+            echo
+            cat "qa/photo-runner/reviews/$RUN/summary.md"
+            echo
+            echo "To leave a photograph out, say which and why in this PR: it is removed from this branch (files and"
+            echo "register row) and named, with the reason, in its pipeline's reviewed-out list so it is not fetched again."
+            echo "A cut-out alone can be dropped with \`python3 scripts/photo-runner.py reject-cutout \"Name:reason\"\`."
+            echo "Closing the PR discards the whole run."
+            echo
+            echo "A UFC ESPN headshot in this run adds a sentence to the UFC register's rights note recording that it is"
+            echo "cleared on the same basis as the UFC library: merging is that statement."
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/fetch.txt"
+            echo '```'
+          } > "$RUNNER_TEMP/body.md"
+          gh pr create --draft --base main --head "$BRANCH" \
+            --title "Photo runner $RUN: new fighter photos for review" --body-file "$RUNNER_TEMP/body.md" || {
+            echo "::error::Could not open the draft PR. Allow GitHub Actions to create pull requests (Settings > Actions > General), or open one from branch $BRANCH."
+            exit 1; }
+          cat "$RUNNER_TEMP/body.md" >> "$GITHUB_STEP_SUMMARY"

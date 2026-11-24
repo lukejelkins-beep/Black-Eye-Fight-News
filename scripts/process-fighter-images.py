@@ -29,7 +29,14 @@ def main(src, manifest, out):
             report.append({"slug": r["roster_slug"], "status": "no source photo"}); continue
         f = src / r["jpeg_filename"]
         try:
-            im = ImageOps.exif_transpose(Image.open(f)).convert("RGB")
+            im = ImageOps.exif_transpose(Image.open(f))
+            if "A" in im.getbands() or "transparency" in im.info:
+                # ESPN headshots are PNGs on transparency, and the colour left under transparent pixels is
+                # arbitrary: a plain convert("RGB") shows it as streaks. Lay them on white, as UFC.com's are.
+                flat = Image.new("RGBA", im.size, (255, 255, 255, 255))
+                flat.alpha_composite(im.convert("RGBA"))
+                im = flat
+            im = im.convert("RGB")
         except Exception as e:
             report.append({"slug": r["roster_slug"], "status": f"unreadable: {e}"}); continue
         w, h = im.size

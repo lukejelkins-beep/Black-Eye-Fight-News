@@ -2,6 +2,25 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Photo runner)
+- **A photo runner finds fighters with no photo and stages photos for the owner to approve** (owner's choices: all four sports, "Stage, then approve", a drop folder for the owner's own photos, a weekly GitHub run that opens a draft PR, and a missing-photo report). It is `scripts/photo-runner.py`, with `missing`, `fetch`, `approve`, `drop`, `reject-cutout` and `report`.
+  - Nothing is registered until `approve`.
+  - Every photo and cut-out is looked at by eye on contact sheets kept in `qa/photo-runner/reviews/`.
+  - The weekly job, `.github/workflows/photo-runner.yml`, runs on Thursdays and only ever opens a draft PR.
+- **MMA promoters:** the owner attested PFL, ONE Championship, KSW, RIZIN and Cage Warriors press photos on 2026-11-24. Each photo is credited to its promoter on `mma-photo-credits.html`.
+- **Sources the owner opened on 2026-11-24, each for one host only:**
+  - PFL's S3 bucket answers robots.txt with 403;
+  - RIZIN's CloudFront photo host answers robots.txt with 404;
+  - PFL and RIZIN photos have hashed file names, so the athlete page naming the fighter replaces the file-name check.
+  Everything else still fails closed: PBC 403, MVP robots, Cage Warriors 403, and ESPN search robots.
+- **Approved:** 232 new photos.
+  - Run 1: 48 (boxing 3, UFC 10, KSW 14, ONE 21). Safar and Suarez were rejected.
+  - ONE: 2.
+  - PFL: 182. 18 PFL placeholder silhouettes were rejected, and the runner now refuses any image file staged for more than one fighter.
+  - 8 RIZIN photos are staged and waiting for the owner.
+- **137 UFC ESPN headshots from 24 Nov were re-processed** to remove colour streaks. Their cut-outs were rebuilt, and 11 that failed before now pass, checked by eye. The cut-outs the owner dropped stay dropped.
+- **The pages now read the MMA cut-out register** (`data/mma-cutout-register.json`, with files in `assets/img/mma-cutouts/`) wherever UFC and boxing cut-outs are merged: the front page, the Overviews and the Fights cards. For example, Chihiro Sawada's cut-out shows on the ONE Samurai 6 card.
+
 ## 2026-11-24 (Fight Talk: talk cards)
 - **Fight Talk posts are BEFN's own cards** (owner picked design A, "Talk cards", from two mock-ups). Each card shows the face, name, role (Champion, Contender, Prospect, Fighter, Promoter, Media and so on), platform, time, the post's own text and likes and replies. Desktop shows 3 columns; phones show 1.
 - **The platform's embed loads only when the reader taps "Show post".** Before this, the page loaded every X, Instagram, Threads and Bluesky widget up front. Every card also keeps a direct "Open ↗" link to the original post.
