@@ -140,12 +140,13 @@ def reconcile(slug, profile, stats_name, greco, cutoff, fdates, curated, showcas
         if i is None:
             if r["result"] in ("no_contest", "draw"):
                 bouts.append({"date": r["date"], "opponent": r["opponent"], "result": r["result"],
-                              "fightUrl": r["fightUrl"], "savedHistoryGap": True})
+                              "fightUrl": r["fightUrl"], "sourceMethod": r["method"], "savedHistoryGap": True})
                 continue
             return None, f"UFCStats bout not in saved history: {r['date']} {r['opponent']} {r['result']}"
         used.add(i)
         s = saved[i]
-        b = {"date": s["date"], "opponent": s["opponent"], "result": r["result"], "fightUrl": r["fightUrl"]}
+        b = {"date": s["date"], "opponent": s["opponent"], "result": r["result"], "fightUrl": r["fightUrl"],
+             "sourceMethod": r["method"]}
         if s["date"] != r["date"]:
             b["independentEventSourceDate"] = r["date"]
         if s["opponent"] != r["opponent"]:

@@ -28,7 +28,8 @@ test('Stage3 preserves strict certified careers across midnight without fabricat
  const liveSlugs=new Set(census.fighters.map(f=>f.slug));
  assert.equal(afterMidnight.frozenApprovedCohortAnchorFallbacks,
   approval.approvedFighters.filter(slug=>!liveSlugs.has(slug)).length);
- const evidenceEntries=Object.keys(independentlyVerified.fighters).length;
+ // Extension-cohort entries (owner-approved 24 Nov 2026) are judged by their own audit, not the frozen 783 audit.
+ const evidenceEntries=Object.keys(independentlyVerified.fighters).filter(s=>approval.approvedFighters.includes(s)).length;
  const pending=next.careerVerificationDecisions.filter(d=>
   independentlyVerified.fighters[d.slug]&&!d.independentlyVerifiedFullCareer);
  assert.equal(afterMidnight.independentlyVerifiedFullCareerTimelines+pending.length,evidenceEntries);

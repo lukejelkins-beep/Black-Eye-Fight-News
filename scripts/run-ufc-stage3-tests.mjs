@@ -14,7 +14,8 @@ const patterns=[
  /^test-ufc-stage3-revised-.*\.mjs$/,
  /^test-ufc-36-month-stage3-progress\.mjs$/,
  /^test-ufc-v4-stage3-import\.mjs$/,
- /^test-ufc-stage3-rtu-final-and-duplicate-rules-20261124\.mjs$/
+ /^test-ufc-stage3-rtu-final-and-duplicate-rules-20261124\.mjs$/,
+ /^test-ufc-extension-stage3-20261124\.mjs$/
 ];
 
 export function stage3TestFiles(names){

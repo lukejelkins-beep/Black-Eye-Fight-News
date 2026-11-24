@@ -23,6 +23,8 @@ on:
       - 'scripts/run-ufc-stage3-tests.mjs'
       - 'scripts/ufc-36-month-stage3-progress.mjs'
       - 'scripts/ufc-v4-certification-queue.mjs'
+      - 'scripts/ufc-extension-stage3-audit.mjs'
+      - 'data/ufc-extension-cohort-approval-20261124.json'
       - 'tests/test-ufc-v4-certification-queue.mjs'
       - 'tests/test-ufc-research-pipeline.mjs'
       - 'tests/test-ufc-36-month-stage3-progress.mjs'
@@ -75,6 +77,11 @@ jobs:
           node --test tests/test-ufc-v4-certification-queue.mjs
           test -s qa/ufc-36-month-stage3-progress.json
           node scripts/ufc-v4-certification-queue.mjs
+      - name: Audit the owner-approved extension cohort (24 Nov 2026) and check the certified list
+        if: always()
+        run: |
+          node scripts/ufc-extension-stage3-audit.mjs
+          node scripts/build-ufc-v4-certified-careers.mjs --check
       - name: Save report
         if: always()
         uses: actions/upload-artifact@v4
@@ -87,6 +94,7 @@ jobs:
             qa/ufc-36-month-stage3-progress.json
             qa/ufc-36-month-stage3-progress.md
             qa/ufc-v4-certification-queue.json
+            qa/ufc-extension-stage3-audit.json
             qa/ufc-stage3-v4-reconciliation.json
             qa/ufc-v4-stage3-blocker-diagnostics.json
           retention-days: 14

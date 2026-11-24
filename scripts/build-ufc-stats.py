@@ -706,10 +706,11 @@ def certified_no_contests(fights: list, skipped: dict) -> list:
     get the same record when both are certified. Returns the new fights.
     """
     try:
-        certified = set(json.loads(CERTIFIED_CAREERS.read_text(encoding="utf-8")).get("certified") or {})
+        listed = json.loads(CERTIFIED_CAREERS.read_text(encoding="utf-8"))
         register = json.loads(REGISTER.read_text(encoding="utf-8")).get("fighters") or {}
     except (OSError, ValueError):
         return []
+    certified = set(listed.get("certified") or {}) | set((listed.get("extension") or {}).get("certified") or {})
     by_name = {norm(e.get("fighterName")): slug for slug, e in register.items() if slug in certified}
 
     def have(slug_name: str, opponent: str, day: dt.date) -> bool:
@@ -738,8 +739,14 @@ def certified_no_contests(fights: list, skipped: dict) -> list:
                    bout["date"] + "-" + "-".join(sorted((norm(entry["fighterName"]), norm(bout["opponent"])))))
             if fid in seen:
                 continue
-            seen.add(fid)
             other = by_name.get(norm(bout["opponent"]))
+            # The same no-contest can come from both fighters' entries under different keys (one with a UFCStats
+            # link, one without): one fight per pair and day.
+            pair = {slug, other or norm(bout["opponent"])}
+            if any({o["a"]["slug"] or norm(o["a"]["name"]), o["b"]["slug"] or norm(o["b"]["name"])} == pair
+                   and abs((parse_date(o["date"]) - day).days) <= 1 for o in out):
+                continue
+            seen.add(fid)
             out.append({
                 "boutId": "ufcstats-" + fid, "date": bout["date"], "event": None, "titleFight": False, "mainEvent": False,
                 "a": {"slug": slug, "name": entry["fighterName"], "id": None},
