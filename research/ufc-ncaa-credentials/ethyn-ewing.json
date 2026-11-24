@@ -5,7 +5,8 @@
  "slug": "ethyn-ewing",
  "name": "Ethyn Ewing",
  "identity": {
-  "status": "confirmed"
+  "status": "confirmed",
+  "note": "UFC page (bantamweight, Orange County CA, age 28) itself names King University; roster hometown Anaheim Hills and Canyon HS are in Orange County."
  },
  "researched": {
   "date": "2026-11-24",
@@ -16,17 +17,60 @@
  ],
  "disciplines": {
   "wrestling": {
-   "status": "unknown",
-   "levels": [],
-   "claims": [],
+   "status": "verified",
+   "levels": [
+    "high_school",
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "Listed on the King University men's wrestling roster for 2016-17 at 149 lb as a redshirt; the bio gives a 13-14 season record.",
+     "source_url": "https://kingtornado.com/sports/wrestling/roster/ethyn-ewing/3133",
+     "source_name": "King University Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "His UFC bio says he wrestled for one year at Division II King University.",
+     "source_url": "https://www.ufc.com/athlete/ethyn-ewing",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "UFC bio says he placed 8th at the California high school state wrestling tournament.",
+     "source_url": "https://www.ufc.com/athlete/ethyn-ewing",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
    "sources_checked": [
     {
      "name": "UFC.com athlete page",
      "checked": "2026-11-24",
      "url": "https://www.ufc.com/athlete/ethyn-ewing"
+    },
+    {
+     "name": "King University wrestling roster",
+     "checked": "2026-11-24",
+     "url": "https://kingtornado.com/sports/wrestling/roster/ethyn-ewing/3133"
     }
    ],
-   "note": "UFC page only says one year of college; no wrestling found."
+   "note": "athletics host not yet reviewed: kingtornado.com. King University roster (2016-17, 149 lb, redshirt, Canyon HS, Anaheim Hills) matches UFC page saying he wrestled one year at D-II King University. NCAA bracket not checked."
   },
   "grappling": {
    "status": "unknown",
@@ -70,7 +114,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.563Z",
+   "at": "2026-11-24T09:46:00.339Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,

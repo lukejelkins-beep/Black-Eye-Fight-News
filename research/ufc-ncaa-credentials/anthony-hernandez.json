@@ -5,16 +5,14 @@
  "slug": "anthony-hernandez",
  "name": "Anthony Hernandez",
  "identity": {
-  "status": "confirmed"
+  "status": "confirmed",
+  "note": "Anthony Fluffy Hernandez, UFC middleweight, matched on UFC.com"
  },
  "researched": {
   "date": "2026-11-24",
   "pass": 1
  },
- "flags": [
-  "conflict",
-  "thin_sources"
- ],
+ "flags": [],
  "disciplines": {
   "wrestling": {
    "status": "unknown",
@@ -27,12 +25,17 @@
      "url": "https://www.ufc.com/athlete/anthony-hernandez"
     },
     {
-     "name": "UFC Q&A",
+     "name": "UFC.com Q&A (older athlete node)",
      "checked": "2026-11-24",
      "url": "https://m.ufc.com/node/28700"
+    },
+    {
+     "name": "Wikipedia: UTSA Roadrunners (sports sponsored)",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/UTSA_Roadrunners"
     }
    ],
-   "note": "Sources say he wrestled in high school and attended college only briefly; no college wrestling found. One UFC Q&A from 2018 conflicts and could not be tied to him."
+   "note": "UFC Q&A and Wikipedia describe high school wrestling only (Wikipedia: removed from team over grades). College accounts conflict (UTSA degree vs. a month or two of college); UTSA sponsors no varsity wrestling per its athletics page. No college wrestling found. No NCAA or governing-body database page"
   },
   "grappling": {
    "status": "unknown",
@@ -76,7 +79,7 @@
    "pass": 1,
    "model": "claude-sonnet-5-5",
    "effort": "medium",
-   "at": "2026-11-24T08:55:43.536Z",
+   "at": "2026-11-24T09:46:00.326Z",
    "requests": 0,
    "input_tokens": 0,
    "output_tokens": 0,
