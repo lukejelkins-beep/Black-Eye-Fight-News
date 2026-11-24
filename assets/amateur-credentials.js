@@ -49,18 +49,41 @@
    medalHTML('bronze',3,true)+'Bronze'+medalHTML(null,8,true)+'Placed</div>'+
    '<p class="befn-am-note">Only results checked against the official source appear here.</p></section>';
  }
+ // The badges and card sit BESIDE the areas fighter-insights.js rebuilds when its own data
+ // arrives (it rewrites [data-befn-top-credentials] and replaces .befn-profile-insights), never
+ // inside them, so a late rebuild cannot wipe them. An observer re-adds them if anything else
+ // re-renders the open profile.
+ let watched=null;
+ function place(dialog,entry){
+  let changed=false;
+  const top=dialog.querySelector('[data-befn-top-credentials]');
+  if(top&&entry.badges.length&&!dialog.querySelector('[data-befn-amateur-badges]')){
+   top.insertAdjacentHTML('beforebegin',badgesHTML(entry));changed=true;
+  }
+  const body=dialog.querySelector('.befn-pro-body');
+  if(body&&!dialog.querySelector('[data-befn-amateur]')){
+   const insights=body.querySelector(':scope > .befn-profile-insights');
+   if(insights)insights.insertAdjacentHTML('afterend',sectionHTML(entry));
+   else body.insertAdjacentHTML('beforeend',sectionHTML(entry));
+   changed=true;
+  }
+  return changed;
+ }
  function apply(dialog,f){
   const entry=entryFor(f);
-  if(!dialog||!entry)return false;
+  watched?.observer.disconnect();watched=null;
+  if(!dialog)return false;
   dialog.querySelectorAll('[data-befn-amateur],[data-befn-amateur-badges]').forEach(n=>n.remove());
-  const top=dialog.querySelector('[data-befn-top-credentials]');
-  if(top&&entry.badges.length)top.insertAdjacentHTML('afterbegin',badgesHTML(entry));
-  const body=dialog.querySelector('.befn-pro-body');
-  if(body){
-   const anchor=body.querySelector('[data-pro-section="profile"]');
-   if(anchor)anchor.insertAdjacentHTML('beforebegin',sectionHTML(entry));
-   else body.insertAdjacentHTML('beforeend',sectionHTML(entry));
-  }
+  if(!entry)return false;
+  place(dialog,entry);
+  const content=dialog.querySelector('#fighter-dialog-content')||dialog;
+  const name=f?.name;
+  const observer=new MutationObserver(()=>{
+   if(!dialog.open||dialog.querySelector('.befn-pro-id h2')?.textContent!==name){observer.disconnect();watched=null;return}
+   place(dialog,entry);
+  });
+  observer.observe(content,{childList:true,subtree:true});
+  watched={observer};
   return true;
  }
  // Called right after a profile renders. If the data is still loading, applies it once it
