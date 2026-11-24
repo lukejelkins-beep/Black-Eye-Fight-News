@@ -7,7 +7,7 @@
 #main :is(#upcoming-cards-root,#results-content) .sb-tape,#main :is(#upcoming-cards-root,#results-content) .sb-analysis{margin:0 0 14px;padding:4px 0 14px;border-bottom:1px solid #ece6dc;color:#111013}
 #main :is(#upcoming-cards-root,#results-content) .sb-title-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 #main :is(#upcoming-cards-root,#results-content) .sb-title{margin:0!important;color:#111013!important;-webkit-text-fill-color:#111013!important;font-family:Unbounded,"Barlow Condensed",sans-serif;font-size:18px!important;font-weight:800;line-height:1.2}
-#main :is(#upcoming-cards-root,#results-content) .sb-chip{display:table;margin:0 auto 8px!important;padding:4px 12px;border-radius:999px;background:#cf1824;color:#fff!important;-webkit-text-fill-color:#fff!important;font:700 12px "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+#main :is(#upcoming-cards-root,#results-content) .sb-chip{display:table;max-width:100%;margin:0 auto 8px!important;padding:4px 12px;border-radius:14px;text-align:center;background:#cf1824;color:#fff!important;-webkit-text-fill-color:#fff!important;font:700 12px "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;line-height:1.35;text-wrap:balance}
 #main :is(#upcoming-cards-root,#results-content) .sb-stage{position:relative;display:flex;justify-content:space-between;align-items:flex-end;max-width:420px;margin:0 auto}
 #main :is(#upcoming-cards-root,#results-content) .sb-vs{position:absolute;left:50%;bottom:38px;transform:translateX(-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;border:3px solid #fff;background:#111013;color:#f3c332!important;-webkit-text-fill-color:#f3c332!important;font:900 14px Unbounded,sans-serif}
 #main :is(#upcoming-cards-root,#results-content) .sb-fig{position:relative;display:block;flex:none;width:128px;height:146px;clip-path:inset(0 round 0 0 64px 64px)}
@@ -100,5 +100,7 @@
 #main #results-content .sb-won-a>.sb-fig:last-of-type :is(.sb-cut,.sb-disc img),#main #results-content .sb-won-b>.sb-fig:first-child :is(.sb-cut,.sb-disc img){filter:grayscale(1);opacity:.6}
 #main #results-content .sb-fighter.is-loser .sb-record,#main #results-content .sb-fighter.is-loser .sb-name{opacity:.7}
 #main #results-content .sb-fighter.is-winner .sb-tags em{padding:1px 8px;border-radius:6px;background:#2f8f2b;color:#fff!important;-webkit-text-fill-color:#fff!important}
-#main #results-content .sb-record small{display:block;margin-top:2px;font:700 12px "DM Sans",sans-serif;color:#6b6468;letter-spacing:0}
+#main :is(#upcoming-cards-root,#results-content) .sb-record small{display:block;margin-top:2px;font:700 12px "DM Sans",sans-serif;color:#6b6468;letter-spacing:0}
 #main #results-content .sb-result-snap .befn-comparison-heading{color:#111013!important;-webkit-text-fill-color:#111013!important}
+/* Boxing face-off (24 Nov 2026): same face-off; its "Last five fights" heading sits on the light card, so it needs ink. */
+#main :is(#upcoming-cards-root,#results-content) .sb-boxing .befn-comparison-heading{margin:4px 0 8px!important;color:#111013!important;-webkit-text-fill-color:#111013!important}
