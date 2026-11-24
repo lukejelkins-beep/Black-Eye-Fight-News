@@ -47,11 +47,24 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
    assert.equal(new Set(roster.rikishi.map(w=>w.sourceId)).size,roster.count,'Stable IDs are unique');
   assert.equal(research.profileCount,roster.count,'Full tracked roster has corresponding research records');
   assert.equal(research.certified,false,'Research cache must not imply JSA certification');
-  // #home opens Results, the Sumo landing page. (The old Overview dashboard, with its five-leaders panel,
-  // was removed when the preview design reached main; leaders now live in the Standings view.)
-  await open(page,'home','.sumo-page-head');
+  // #home is the Sumo Overview (owner, 24 Nov 2026): the latest basho, champions and prizes, gold stars, the sanyaku
+  // scorecard, rising stars, movers, the next-banzuke watch list, a fact and links to every Sumo page.
+  await open(page,'home','.sumo-home');
+  const overview=await page.locator('#sumo-main').innerText();
+  assert.ok(await page.locator('.shome-hero h1').count()===1,'Overview has one headline');
+  assertContains(overview,'Sanyaku scorecard','Sanyaku scorecard shown');
+  assert.ok(await page.locator('.shome-srow').count()>=4,'Sanyaku rows listed');
+  assert.equal(await page.locator('.shome-ex').count(),8,'Explore links to every Sumo page');
+  assert.ok(await page.locator('.shome-hero-photo img, .shome-face[src]').count()>0,'Overview shows wrestler photographs');
+  {
+    const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on the Overview: '+JSON.stringify(widths));
+  }
+  await snap(page,label+'-overview',{fullPage:false});
+  // The results desk is #basho, under Fights.
+  await open(page,'basho','.sumo-page-head');
   const home=await page.locator('#sumo-main').innerText();
-  assertContains(home,'Results','Results landing page');
+  assertContains(home,'Results','Results page');
   assertContains(home,'Day','tournament day shown');
   assert.equal(await page.locator('.sumo-basho-views [data-basho-view]').count(),3,'Results, Matchups and Standings views');
   assert.equal(await page.locator('[data-basho-view="results"]').getAttribute('aria-pressed'),'true','Results is the selected view');
@@ -91,7 +104,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
         'No overlapping, clipped, off-screen or undersized mobile navigation: '+JSON.stringify(row));
     }
   }
-  await snap(page,label+'-home',{fullPage:false});
+  await snap(page,label+'-results',{fullPage:false});
 
   await open(page,'rikishi','#directory-results .directory-card');
   assert.equal(await page.locator('#directory-results .directory-card').count(),24);
@@ -829,8 +842,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // pills of the current section's Sumo pages. Starts on a profile, which sits under Fighters.
   for(const [selector,route] of [
     ['.sh-sub [data-sumo-page="banzuke"]','banzuke'],['.sh-sub [data-sumo-page="rikishi"]','rikishi'],
-    ['[data-sumo-section="fights"]','matchups'],['.sh-sub [data-sumo-page="h2h"]','h2h'],
-    ['[data-sumo-section="overview"]','basho']]){
+    ['[data-sumo-section="fights"]','basho'],['.sh-sub [data-sumo-page="h2h"]','h2h'],
+    ['[data-sumo-section="overview"]','home']]){
     await page.locator(selector+':visible').first().press('Enter');
     await page.waitForURL('**#'+route);
     const active=page.locator(selector+'[aria-current="page"]:visible').first();
