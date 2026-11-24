@@ -116,22 +116,36 @@ export async function collect({ from, to, force = false, client = createSumoClie
   /* Rewrite the index only when a tournament was added (or it is missing), so a daily run that
      finds nothing new changes no files. */
   if (!done.length && existsSync(`${ARCHIVE_DIR}/index.json`)) return { done, skipped, total: (await readdir(ARCHIVE_DIR)).filter(f => /^\d{6}\.json$/.test(f)).length };
+  const total = await writeIndex(now);
+  return { done, skipped, total };
+}
+
+/* One index row per saved tournament. The champion's id, rank and record let small pages (the
+   all-sports front page) show the latest champion without loading a whole tournament file. */
+export function indexEntry(f) {
+  const y = (f.yusho || []).find(x => x.type === 'Makuuchi');
+  const row = y ? ((f.banzuke?.Makuuchi?.rows) || []).find(r => r.rikishiID === y.rikishiId) : null;
+  return { bashoId: f.bashoId, startDate: f.startDate, endDate: f.endDate, location: f.location,
+    makuuchiChampion: y?.shikonaEn || null,
+    makuuchiChampionId: y?.rikishiId ?? null,
+    makuuchiChampionRank: row?.rank || null,
+    makuuchiChampionRecord: row && Number.isInteger(row.wins) && Number.isInteger(row.losses) ? { wins: row.wins, losses: row.losses } : null };
+}
+
+export async function writeIndex(now = () => new Date()) {
   const ids = (await readdir(ARCHIVE_DIR)).filter(f => /^\d{6}\.json$/.test(f)).map(f => f.slice(0, 6)).sort();
   const index = { schemaVersion: 1, source: SUMO_API_BASE, updatedAt: now().toISOString(), basho: [] };
-  for (const id of ids) {
-    const f = JSON.parse(await readFile(`${ARCHIVE_DIR}/${id}.json`, 'utf8'));
-    index.basho.push({ bashoId: id, startDate: f.startDate, endDate: f.endDate, location: f.location,
-      makuuchiChampion: f.yusho.find(y => y.type === 'Makuuchi')?.shikonaEn || null });
-  }
+  for (const id of ids) index.basho.push(indexEntry(JSON.parse(await readFile(`${ARCHIVE_DIR}/${id}.json`, 'utf8'))));
   await writeJson(`${ARCHIVE_DIR}/index.json`, index);
-  return { done, skipped, total: ids.length };
+  return ids.length;
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
   const arg = k => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : undefined; };
   const from = arg('--from'), to = arg('--to');
-  if (!/^\d{6}$/.test(from || '') || !/^\d{6}$/.test(to || '')) { console.error('Use --from YYYYMM --to YYYYMM'); process.exit(2); }
-  collect({ from, to, force: process.argv.includes('--force') })
+  if (process.argv.includes('--index-only')) { writeIndex().then(n => console.log(JSON.stringify({ indexed: n }))); }
+  else if (!/^\d{6}$/.test(from || '') || !/^\d{6}$/.test(to || '')) { console.error('Use --from YYYYMM --to YYYYMM, or --index-only'); process.exit(2); }
+  else collect({ from, to, force: process.argv.includes('--force') })
     .then(r => console.log(JSON.stringify(r)))
     .catch(e => { console.error(e.message); process.exit(1); });
 }

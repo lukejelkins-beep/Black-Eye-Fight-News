@@ -2,6 +2,20 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (All-sports front page in the Overview design)
+- **The front page keeps its place and gets the new design** (owner: keep it; design A from two mock-ups). The BEFN logo still opens it. The page has:
+  - the next fight night in each sport (Boxing, MMA, Sumo);
+  - one hero;
+  - "Pick a sport" photo cards leading into each sport's Overview;
+  - mixed latest results with sport tags, including the latest basho champion;
+  - mixed news, taking each sport in turn, with translated sumo headlines marked "translated".
+  The old design-D front page (`assets/landing.js`) now renders only if the new module fails to load.
+- **The hero rotates by sport, one step per visit** (owner's choice): Boxing, then MMA, then Sumo, stored in `befn-front-hero-v1`. Each sport's hero follows that sport's own rule. Boxing and MMA use the Overview rule. Sumo shows the latest champion for 14 days after the basho, then the countdown to the next one. A sport with nothing to show hands over to the next. A card never repeats its sport's hero: if the hero is the headline fight, the card shows the latest result.
+- **Sumo on the front page loads small files only.** `data/sumo/basho-archive/index.json` now carries each champion's id, rank and record (`indexEntry` in `scripts/sumo-collect-basho-archive.mjs`; `--index-only` rebuilds it from the saved files). `banzuke-release-dates.json` gives the next banzuke. The champion's cut-out is used only when it derives from an approved photo, the rule `sumo.js` uses. The 1.9 MB `preview-details.json` is not loaded.
+- **MMA headline fights:** at equal title weight, a UFC fight now edges out other promotions. This puts Oliveira–Lopes (BMF title) ahead of KSW 124, and it also applies to the MMA Overview hero when no result is fresh.
+- **Fixed: dead links on the Boxing and MMA Overviews.** The page's `safeURL` only allows https links and `assets/img` photos, so "All results ›", "Full schedule ›", "All divisions ›" and "All news ›" pointed to `#` on the live site since #478. The module now vets its own links (site routes and `sumo*.html` pages) and photos (BEFN-held `.webp` under `assets/img` or `assets/sumo-photos`, never `..`). A test now fails on any `href="#"`.
+
+
 ## 2026-11-24 (Flags: Korean and Polish spellings)
 - **10 more cutout fighters get a flag** (owner picked "Add the 8 matches"; two more turned up with the same rule). The Wikipedia page writes Korean names surname first ("Lee Jeong-yeong") and Polish names with "ł" ("Ruchała"), while our data writes "JeongYeong Lee" and "Ruchala", so the folded names never met. `scripts/build-ufc-fighter-countries.py` now also files a South Korean fighter given-name-first, and every name with letters like "ł" made plain. Added: DongHun Choi, Dooho Choi, HyunSung Park, JeongYeong Lee, Seokhyeon Ko, SuYoung You, Yi Sak Lee (South Korea); Jakub Wiklacz, Michal Oleksiejczuk, Robert Ruchala (Poland). Left as before: Ilia Topuria (two flags on the page, Georgia and Spain; no country stored for the band) and 150 cutout fighters not on the page, mostly retired or released. — Owner — awaiting owner "Merge N".
 
