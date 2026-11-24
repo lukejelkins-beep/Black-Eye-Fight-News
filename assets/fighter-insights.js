@@ -1161,6 +1161,36 @@
    '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
  }
+ // Finished UFC bout on the Results page: the same face-off (owner, 24 Nov 2026), led by the result. Records are the
+ // records after the fight, age is age on fight night. No pre-fight analysis or last-five form: we hold no numbers
+ // frozen at fight time, and today's last five can include later fights.
+ function slugOf(name){return String(name||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");}
+ function renderResultB(article,names,f){
+  const B=window.BEFNSnapshotB,T=window.BEFNSnapshotTiles;
+  const key=matchupKey(article,names);
+  const day=/(\d{4}-\d{2}-\d{2})$/.exec(article.closest("[data-result-event]")?.dataset?.resultEvent||"");
+  const today=day?new Date(day[1]+"T12:00:00Z"):new Date();
+  const contenders=[...article.querySelectorAll(".result-matchup .result-contender")];
+  const winner=contenders.findIndex(c=>c.classList.contains("is-winner"));
+  const record=i=>{const el=contenders[i]?.querySelector(".result-bout-record");return el?[...el.childNodes].filter(x=>x.nodeType===3).map(x=>x.textContent).join("").trim():"";};
+  const side=i=>({tape:(T&&fighterTape?.fighters?.[T.fold(names[i])])||{}});
+  const sides=names.map((n,i)=>({name:n,record:record(i)||"—",note:record(i)?"after the fight":"",fig:figureFor({slug:slugOf(n)},n),tags:i===winner?["Won"]:[]}));
+  const label=article.querySelector(".result-featured-bout-label")?.textContent.trim()||"";
+  const h={esc:escapeHTML,today,winner,
+   billing:label?label.charAt(0).toUpperCase()+label.slice(1).toLowerCase():"",
+   division:article.querySelector(".result-bout-division")?.textContent.trim()||"",
+   rounds:article.querySelector(".result-bout-rounds")?.textContent.trim()||"",
+   result:article.querySelector(".result-matchup-result strong")?.textContent.trim()||""};
+  const buttons=f.map(p=>p?
+   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
+   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  return '<details class="befn-fight-snapshot sb-result-snap" data-snapshot-key="'+escapeHTML(key)+'" data-b="1"'+
+   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+   '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
+   B.tapeHTML(sides,side(0),side(1),h)+historyHTML(f,names,key)+
+   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
+   '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
+ }
  // Closed card row (layout B): a fighter with a cutout is shown as that cutout on their flag disc, the same picture
  // the open snapshot shows, instead of the square-cropped photo. Others keep the photo.
  function upgradeRowPhotos(article,sides){
@@ -1181,6 +1211,7 @@
   if(window.BEFNSnapshotB&&sport==="MMA"){
    const pair=tilePair(article,names);
    if(pair&&tilesFor(article,names))return renderSnapshotB(article,names,f,pair);
+   if(article.matches(".is-completed")&&article.closest("#results-content [data-result-event]"))return renderResultB(article,names,f);
   }
   const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
   const metricHTML=labels.map((label,i)=>{
@@ -1198,16 +1229,8 @@
   const buttons=f.map((p,i)=>p?
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
    '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
-  const key=matchupKey(article,names),active=selectedTabs.get(key)==="stats"?"stats":"fights";
-  const tabOptions=[["fights","Last 5 Fights"],["stats","Stats"]];
-  const historyTab='<section class="befn-recent-history" aria-label="Recent fight history">'+
-   '<h3 class="befn-comparison-heading">Recent fight history</h3>'+
-   '<div class="befn-history-tabs" role="tablist" aria-label="Choose fight history view">'+
-   tabOptions.map(([id,label])=>
-    '<button type="button" role="tab" data-befn-history-tab="'+id+
-    '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
-   ).join("")+'</div>'+
-   '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
+  const key=matchupKey(article,names);
+  const historyTab=historyHTML(f,names,key);
   const tiles=tilesFor(article,names),scores=scoresFor(article,names);
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'"'+(tiles?' data-tiles="1"':'')+(scores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary>'+
@@ -1218,9 +1241,22 @@
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
    historyTab+talePanel(f,names)+
-   '<div class="befn-snapshot-links">'+buttons+'</div>'+
+   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p>'+
    '</div></details>';
+ }
+ // Recent fight history (last five fights / stats tabs), shared by the older snapshot and the result face-off.
+ function historyHTML(f,names,key){
+  const active=selectedTabs.get(key)==="stats"?"stats":"fights";
+  const tabOptions=[["fights","Last 5 Fights"],["stats","Stats"]];
+  return '<section class="befn-recent-history" aria-label="Recent fight history">'+
+   '<h3 class="befn-comparison-heading">Recent fight history</h3>'+
+   '<div class="befn-history-tabs" role="tablist" aria-label="Choose fight history view">'+
+   tabOptions.map(([id,label])=>
+    '<button type="button" role="tab" data-befn-history-tab="'+id+
+    '" aria-selected="'+String(active===id)+'" class="'+(active===id?'is-active':'')+'">'+label+'</button>'
+   ).join("")+'</div>'+
+   '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
  }
  let timer=null;
  function hydrate(){

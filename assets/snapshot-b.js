@@ -122,10 +122,13 @@
     const esc = h && h.esc ? h.esc : String;
     const today = (h && h.today) || new Date();
     const rows = tapeRows(a, b, today);
-    const info = (s, i) => '<div class="sb-fighter sb-' + (i ? 'b' : 'a') + '">' +
+    const won = h && (h.winner === 0 || h.winner === 1) ? h.winner : null;
+    // When either side has a tag (rank, tier, "Won"), both get the tag line, so the records stay level.
+    const tagLine = sides.some(s => s && s.tags && s.tags.length);
+    const info = (s, i) => '<div class="sb-fighter sb-' + (i ? 'b' : 'a') + (won === null ? '' : won === i ? ' is-winner' : ' is-loser') + '">' +
       '<strong class="sb-name">' + esc(s.name) + '</strong>' +
-      (s.tags && s.tags.length ? '<span class="sb-tags">' + s.tags.map(t => '<em>' + esc(t) + '</em>').join('') + '</span>' : '') +
-      '<span class="sb-record">' + esc(s.record || '—') + '</span>' +
+      (tagLine ? '<span class="sb-tags">' + (s.tags || []).map(t => '<em>' + esc(t) + '</em>').join('') + '</span>' : '') +
+      '<span class="sb-record">' + esc(s.record || '—') + (s.note ? ' <small>' + esc(s.note) + '</small>' : '') + '</span>' +
       (s.form && s.form.length ? '<span class="sb-form" aria-label="Last ' + s.form.length + ' fights, newest first: ' + esc(s.form.join(', ')) + '">' +
         s.form.map(x => '<i class="' + (FORM_CLASS[x] || 'is-draw') + '">' + esc(x) + '</i>').join('') + '</span>' : '') + '</div>';
     const bar = (w, i, lead) => w ? '<span class="sb-bar sb-bar-' + (i ? 'b' : 'a') + (lead ? ' is-lead' : '') + '" aria-hidden="true"><i style="width:' + w[i] + '%"></i></span>' : '<span class="sb-bar" aria-hidden="true"></span>';
@@ -139,7 +142,8 @@
     const chip = h ? [h.billing, h.division, h.rounds, h.status].filter(Boolean).join(' · ') : '';
     return '<section class="sb-tape" aria-label="Tale of the tape"><h3 class="sb-title sb-title-hidden">Tale of the tape</h3>' +
       (chip ? '<p class="sb-chip">' + esc(chip) + '</p>' : '') +
-      '<div class="sb-stage">' + figureHTML(sides[0] && sides[0].fig, sides[0] && sides[0].name, esc) +
+      (h && h.result ? '<p class="sb-result"><b>Final</b> ' + esc(h.result) + '</p>' : '') +
+      '<div class="sb-stage' + (won === null ? '' : won ? ' sb-won-b' : ' sb-won-a') + '">' + figureHTML(sides[0] && sides[0].fig, sides[0] && sides[0].name, esc) +
       '<span class="sb-vs" aria-hidden="true">VS</span>' + figureHTML(sides[1] && sides[1].fig, sides[1] && sides[1].name, esc) + '</div>' +
       '<div class="sb-head">' + sides.map(info).join('') + '</div>' +
       (rowHTML ? '<div class="sb-rows">' + rowHTML + '</div>' +

@@ -113,3 +113,18 @@ console.log('snapshot-b: ok');
   assert.ok(photo.indexOf('<b>MS</b>') < photo.indexOf('<img') && photo.indexOf('<b>MS</b>') > photo.indexOf('sb-disc'));
 }
 console.log('snapshot-b face-off: ok');
+
+// Result face-off (finished bouts on Results, owner 24 Nov 2026)
+{
+  const html = B.tapeHTML([{ name: 'Jiri Prochazka', record: '32-7-1', note: 'after the fight', tags: [], fig: { cutout: 'a.webp' } },
+    { name: 'Navajo Stirling', record: '12-0-0', note: 'after the fight', tags: ['Won'], fig: { cutout: 'b.webp' } }],
+    fighter({}, { reachIn: 80 }), fighter({}, { reachIn: 79 }), { esc, today, winner: 1, result: 'KO/TKO · R2 · 4:58', billing: 'Main event' });
+  assert.ok(html.includes('<p class="sb-result"><b>Final</b> KO/TKO · R2 · 4:58</p>'));
+  assert.ok(html.includes('sb-stage sb-won-b'), 'stage knows the winner');
+  assert.ok(html.includes('sb-fighter sb-a is-loser') && html.includes('sb-fighter sb-b is-winner'));
+  assert.ok(html.includes('12-0-0 <small>after the fight</small>'));
+  assert.strictEqual((html.match(/class="sb-tags"/g) || []).length, 2, 'both sides get the tag line so records stay level');
+  const upcoming = B.tapeHTML([{ name: 'A', record: '1-0', fig: null }, { name: 'B', record: '2-0', fig: null }], fighter(), fighter(), { esc, today });
+  assert.ok(!upcoming.includes('sb-tags') && !upcoming.includes('sb-result') && !upcoming.includes('is-winner'), 'no result parts on an upcoming bout');
+}
+console.log('snapshot-b result: ok');
