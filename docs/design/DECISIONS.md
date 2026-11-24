@@ -2,6 +2,14 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Sumo insights)
+- **Insights page** (owner chose all four extras on one page): `sumo.html#insights`, under Analysis as "Insights", photo-led, with jump links and a teaser of three cards on the Sumo home (closest promotion run, top rivalry, top stable).
+  - **Promotion watch:** each Sekiwake or Komusubi whose two latest basho were in sanyaku, with a winning record in the latest, shows wins so far and wins needed next basho to reach about 33 over three, stated as the usual benchmark the JSA applies with judgement, not a rule. Runs needing more than 15 are left out. Yokozuna watch: an Ozeki who won the latest title. November 2026: Atamifuji, 8 + 11, needs 14 in January; no Yokozuna watch.
+  - **Rivalries:** most-fought all-time pairings between two wrestlers in Makuuchi now (at least 8 meetings), from the saved head-to-head summary, leader first; links to every meeting. Top: Tamawashi v Takayasu 21-21 in 42.
+  - **Stable leaderboard:** the latest basho, Makuuchi to Makushita, by each wrestler's current stable (roster): wrestlers, sekitori, record, winning records and top wrestler; ranked by wins.
+  - **Records and milestones:** most Makuuchi titles, most kinboshi and longest straight-win runs in one basho, all across the saved archive (Nov 2024 to Nov 2026); fastest to Makuuchi (basho from debut, wrestlers in Makuuchi now, only where rank history starts within one basho of the debut), longest way back to Makuuchi, youngest sekitori, from the rank history and roster.
+  - Files: `assets/sumo-insights-data.mjs`, `assets/sumo-insights.mjs`, styles in `assets/sumo-home.css`; tests `tests/test-sumo-insights.mjs`; the Sumo QA opens it. All 13 archive files load on this page only. — Owner 2026-11-24 — awaiting owner "Merge N".
+
 ## 2026-11-24 (Sumo deploy and countdown)
 - **Sumo changes now trigger a deploy.** `befn-render-deploy-recovery.yml` only redeploys when one of a fixed list of public files differs from the live site, and no Sumo file was on it: Sumo merges (#458, #465) went live only because a watched news or results file changed soon after, and #466 sat undeployed. Added the three Sumo pages, their scripts and styles, `data/sumo/basho-archive/index.json`, `data/sumo/banzuke-release-dates.json`, and every saved `data/sumo/banzuke-release/*.json` (a new one returns 404 on release day, which the workflow already treats as drift), so the release watch's banzuke deploys the same morning. No other workflow logic changed; the contract test passes.
 - **Countdown above the hero on phones** (owner chose it): a slim card ("27 days until the January 2027 banzuke · 21 Dec") at the top of the Sumo home on phones; desktop keeps the fuller card under the hero.
