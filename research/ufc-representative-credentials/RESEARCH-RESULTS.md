@@ -12,7 +12,7 @@
 | Commonwealth selection without a start | 1 | Robert Whittaker was selected for Australia and withdrew. |
 | National teams | 74 | 73 verified competitors and one verified squad member without an event start in the reviewed evidence. Senior, youth and age-group events are recorded separately. |
 
-The three lanes overlap. **78 distinct fighters** have evidence files, with **154 sourced claims** across the folder. Each file identifies the sport, edition, delegation, event and source. An athlete can have a verified result while other parts of their competitive history remain open.
+The three lanes overlap. **78 distinct fighters** have evidence files, with **158 sourced claims** across the folder. Each file identifies the sport, edition, delegation, event and source. An athlete can have a verified result while other parts of their competitive history remain open.
 
 ## Olympic Games
 
@@ -34,6 +34,18 @@ The records include world and continental events in amateur MMA, wrestling, judo
 - Screened the entire roster against an independent senior Olympic results index from 1984 to 2026, eight Youth Olympic results indexes, the Olympedia MMA crossover directory and selected wrestling trials and qualifying material. The detailed reports record the edition coverage, method and name collisions. [Senior index](screening/senior-olympic-index.md) · [Youth index](screening/youth-olympic-index.md)
 - Screened all 921 against 25 official Commonwealth Games documents, covering 7,110 pages after excluding overlaps. The files include all sports at Glasgow 2014 and Gold Coast 2018, combat-sport results at Birmingham 2022, and Glasgow 2026 judo and boxing draws. Draws and final results support different claims. [Commonwealth source ledger](screening/commonwealth-coverage.json)
 - Screened the cohort against 28 IMMAF, WMMAA and FIAS sources, plus a second group of federation books covering wrestling, Wushu, Muay Thai, kickboxing and related events. The second group had 24 usable books, including three Games wrestling books. Source URLs, file hashes where available, parsed scope and exclusions are archived. [IMMAF and FIAS coverage](screening/immaf-fias-coverage.json) · [Other federation books](screening/federation-books.json)
+
+## IJF judo data screen (24 Nov)
+
+The ijf.org event pages load their results by script, so earlier page screens saw no judo names. The same results are published as data by the IJF (data.ijf.org). Entrant lists for 131 Olympic Games, senior World Championships and Grand Slams from 2005 to 2026 were screened for all 921 names, with each entrant's place.
+- Added from that data:
+  - Javad Mahjoub: 2013 World Championships (Iran, lost first contest) and 2013 Moscow Grand Slam gold.
+  - Iwo Baraniewski: 2019 senior World Championships (Poland, lost first contest).
+  - Dione Barbosa: 2012 Rio Grand Slam bronze.
+- Kayla Harrison's IJF placings match her existing record.
+- Unresolved (`needs_review`): Stephanie Egger. Her identity is now confirmed through the UFC bio's 2010 U23 European title, but the 2011 entries conflict (Paris Grand Slam in the entrant data, a Prague World Cup on her IJF page) and the EJU report couldn't be opened.
+- Ruled out (overnight check): the Korean judoka Da Woon JUNG competed in women's categories (−78 kg and −63 kg), so this is not the UFC fighter. The file was removed.
+- Ruled out by weight or person: a Slovenian judoka Nina Milosevic (the UFC fighter is the Swedish-Serbian Nina Nikolija Milošević) and a Brazilian over-100 kg Gabriel Santos (the UFC fighter is a featherweight).
 
 ## Coverage remaining
 
@@ -77,15 +89,46 @@ WCSF/ECSF is a combat sambo body separate from FIAS, and the records say so.
 
 **Checked, not recorded:**
 - Supported only by news or databases:
-  - Mason Jones (2012 Commonwealth Judo bronze per JudoInside)
+  - Mason Jones: now recorded (see the 25 Nov browser pass below)
   - Puja Tomar (World Wushu, edition unknown)
   - Tofiq Musayev (sanda title, body unknown)
   - Giga Chikadze (2008 karate world title, style body)
   - Diana Belbita (2012 WAKO World Cup, open event)
   - Shanelle Dyer (2013 youth title)
   - Irina Alekseeva (2017 FIAS European silver, identity open)
-  - Marcin Prachnio (2012 European Kyokushin Open, placing unseen)
-  - Rei Tsuruya (2019 U17 Worlds, profile unreadable)
+  - Marcin Prachnio: now recorded (see the 25 Nov browser pass below)
+  - Rei Tsuruya: now recorded (see the 25 Nov browser pass below)
 - Pro or other-body titles: Joanne Wood, Istela Nunes, Tainara Lisboa, Viacheslav Borshchev.
 - Not found: Satybaldiev, Ketlen Souza, Santiago Luna, Daniel Barez, William Gomis, Uros Medić, Bruna Brasil, Muin Gafurov, Nurullo Aliev, Daria Zhelezniakova, Norma Dumont, Kai Kara-France.
 
+## Browser pass on unrecorded leads (25 Nov 2026)
+
+Four leads from the overnight run were checked by hand in a browser, one page at a time.
+
+| Fighter | Result | Status | Source |
+|---|---|---|---|
+| Mason Jones | 2012 Commonwealth Judo Championships (Cardiff), men's -60 kg, Wales | Bronze, `seed` | Official medal winners list (EJU / Fighting Films); JudoInside agrees |
+| Rei Tsuruya | 2019 Cadet World Wrestling Championships (Sofia), Greco-Roman 55 kg, JPN | Competed, 21st, `seed` | UWW athlete page |
+| Marcin Prachnio | 2012 IKO European Weight Category Championships (Budapest), +90 kg, POL | Silver, `seed` | IKO official results (listed as "Marchin Prachino"); a 2011 -90 kg bronze is in the almanac only |
+| Stephanie Egger | 2010 European U23 Judo Championships (Sarajevo), women's -70 kg, SUI | Gold per JudoInside; not recorded here | Her record is in PR #503. JudoInside's event results and the NZZ report agree. EJU's own results page is still missing (404) |
+
+The Commonwealth Judo Championships are a domestic championship, not the Commonwealth Games, so Jones's medal is in the national lane.
+
+## Wide judo and wrestling screens (25 Nov 2026)
+
+The owner has permission from the IJF and UWW (25 Nov). The runner's wide screens covered 556 IJF competitions from 2005 to 2026 (Olympics, Worlds at every age, Grand Slams, Grand Prix, continental championships and opens) and 220 UWW result books from 2014 to 2026 (senior, U23, U20 and U17 Worlds, continental championships and World Cups). Matches were checked against each fighter's UFC profile before recording.
+
+| Fighter | New evidence | Status |
+|---|---|---|
+| Luana Pinheiro | 2013 IJF Grand Prix Qingdao, women's -52 kg, BRA, 7th | `seed` |
+| Alexander Romanov | 2018, 2020 and 2023 European Championships, and 2019 Worlds, freestyle 125 kg, MDA (8th to 12th); 2014 World University Championships, 5th; 2021 Olympic qualifier, 12th | `seed` (national and Olympic qualifier) |
+| Gable Steveson | 2015 and 2016 Cadet World champion (100 kg); 2017 Junior World champion (120 kg); 2018 Junior Worlds, 8th; 2021 Pan-American champion (125 kg), USA | added to his record |
+| Pavel Andrusca | 2021 U20 European bronze (61 kg), his second, as his UFC bio says; 2021 and 2022 U20 Worlds; 2022 U23 Europeans, MDA | added to his record |
+| Muhammad Mokaev | 2018 Junior Europeans (12th) and 2021 U23 Worlds (9th), freestyle 61 kg, GBR | added to his record |
+| Thomas Gantt | "Thomas Gantt Jr" (USA), 2021 Pan-American champion at 79 kg and 2019 World Cup team | `needs_review` (identity) |
+
+**Already recorded:** Kayla Harrison, Aaron Pico, Rinya Nakamura, Tyrell Fortune, Rei Tsuruya, Javad Mahjoub, Dione Barbosa, Iwo Baraniewski and Stephanie Egger.
+
+**Ruled out (same names):** Jesse Butler (a -81 to -100 kg judoka still competing in 2025; the UFC fighter is a bantamweight), Javier Reyes (Ecuadorian judoka; the UFC fighter is Colombian), José Henrique (the match was a Cuban "Jose Souza"), Gabriel Santos (+100 kg judoka), and wrestlers Alex Pérez Cimarra (ESP), Charles Johnson Calawen (PHI), Esteban David Martínez (COL), Daniel Felipe dos Santos (BRA, 2026), Julia da Silva Joaquim, Lázaro Daniel Hernández Luis (CUB), Jodalys Santiago Luna (PUR) and Manuel Torres (VEN).
+
+**Unresolved:** Daniel Santos (a BRA -66 kg judoka who medalled at 2013-14 Pan-American Opens; the UFC fighter is a Brazilian featherweight, but nothing links them), Irina Alekseeva (RUS U17 wrestling 2015-16; identity open), José Daniel Medina (ARG U20 wrestling 2014) and Luana Santos (a 40 kg U17 Pan-American entry in 2014).

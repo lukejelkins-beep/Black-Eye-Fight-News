@@ -1,0 +1,41 @@
+{
+  "slug": "luana-pinheiro",
+  "identity": {
+    "url": "https://www.ufc.com/athlete/luana-pinheiro",
+    "summary": "UFC lists the strawweight from João Pessoa, Brazil, aged 32, with judo as her fighting style. The IJF's Luana PINHEIRO (BRA, women's -52 kg) competed in 2013, when she would have been about 19."
+  },
+  "lanes": {
+    "national": {
+      "state": "seed",
+      "checkedOn": "2026-11-25",
+      "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "IJF results data (data.ijf.org), Grand Prix Qingdao 2013 competitors",
+          "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=1126",
+          "outcome": "supports_claim"
+        }
+      ],
+      "claims": [
+        {
+          "kind": "team_appearance",
+          "edition": "IJF Grand Prix Qingdao 2013 (31 Oct 2013)",
+          "sport": "Judo",
+          "event": "Women's -52 kg",
+          "delegation": "BRA",
+          "category": "senior",
+          "result": "7th; won 1 contest, lost 2",
+          "medal": "none",
+          "sources": [
+            {
+              "name": "IJF results data (data.ijf.org), Grand Prix Qingdao 2013 competitors",
+              "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=1126",
+              "authority": "federation"
+            }
+          ]
+        }
+      ],
+      "note": "Found by the wide IJF screen on 25 Nov 2026 (owner has IJF permission). An IJF Grand Prix entry is made through the national federation, so it is recorded as a Brazil appearance. This is her only match among 556 IJF competitions from 2005 to 2026; national and continental results outside IJF events weren't searched."
+    }
+  }
+}
