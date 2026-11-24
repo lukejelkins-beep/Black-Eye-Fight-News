@@ -752,6 +752,22 @@ def certified_no_contests(fights: list, skipped: dict) -> list:
 
 
 
+def pre_ufc_priors() -> dict:
+    """Starting ratings from each fighter's pre-UFC record: overall record (data/ufc-overall-records.json, all
+    promotions) minus the UFC record. That difference does not change when a new UFC fight is added, so reading the
+    committed file here (it is built from this build's output) causes no churn. Fighters without one start at 1500."""
+    path = DATA / "ufc-overall-records.json"
+    if not path.exists():
+        return {}
+    records = {}
+    for slug, r in (json.loads(path.read_text(encoding="utf-8")).get("records") or {}).items():
+        u = r.get("ufc") or {}
+        w, l = r.get("W", 0) - u.get("W", 0), r.get("L", 0) - u.get("L", 0)
+        if w >= 0 and l >= 0:
+            records[slug] = (w, l)
+    return ufc_ratings.pre_ufc_priors(records)
+
+
 def results_bouts(per_fighter: dict) -> list[dict]:
     """Every archived UFC bout once, from one corner, for the results rating. Uses all fighters, including those
     who have left the UFC, so a win over a since-retired fighter still counts."""
@@ -832,7 +848,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
     ratings = ufc_ratings.rate_roster({slug: {"window": c["windows"]["weighted"], "history": c["history"],
                                               "divisionSlug": c["divisionSlug"]}
                                        for slug, c in computed.items()},
-                                      results_bouts(per_fighter), as_of.isoformat())
+                                      results_bouts(per_fighter), as_of.isoformat(), pre_ufc_priors())
 
     if parity_out:  # inputs + Python raw composites for tests/ufc-ratings-parity.cjs
         rows = []

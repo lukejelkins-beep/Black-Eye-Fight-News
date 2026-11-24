@@ -247,6 +247,18 @@ class Results(unittest.TestCase):
         self.assertGreater(title, plain)
         self.assertAlmostEqual(title - r.RESULTS["start"], (plain - r.RESULTS["start"]) * r.RESULTS["title"])
 
+    def test_pre_ufc_record_sets_the_starting_rating(self):
+        pri = r.pre_ufc_priors({"unbeaten": (16, 1), "middling": (8, 4), "poor": (3, 5)})
+        self.assertGreater(pri["unbeaten"], pri["middling"])
+        self.assertGreater(pri["middling"], pri["poor"])
+        self.assertEqual(pri["middling"], r.RESULTS_MEAN, "the median pre-UFC record starts at 1500")
+        self.assertEqual(r.pre_ufc_priors({}), {})
+        self.assertEqual(r.pre_ufc_priors({"x": (5, 0)}, scale=0), {})
+        # a debut win over the poor-record opponent gains less than the same win over the unbeaten one
+        beat_poor = r.results_as_of([bout("a", "poor")], "2025-02-01", prior=pri)["a"]["rating"]
+        beat_best = r.results_as_of([bout("a", "unbeaten")], "2025-02-01", prior=pri)["a"]["rating"]
+        self.assertGreater(beat_best, beat_poor)
+
     def test_draw_and_no_contest(self):
         draw = r.results_as_of([bout("a", "b", "D")], "2025-02-01")
         self.assertAlmostEqual(draw["a"]["rating"], draw["b"]["rating"])
