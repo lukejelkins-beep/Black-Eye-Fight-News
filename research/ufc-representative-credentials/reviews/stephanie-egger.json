@@ -1,0 +1,35 @@
+{
+  "slug": "stephanie-egger",
+  "identity": {
+    "url": "https://www.ufc.com/athlete/stephanie-egger",
+    "summary": "UFC lists the St. Gallen bantamweight (judo black belt) with the title 'U23 European champion 2010', which matches Swiss judoka Stephanie EGGER (IJF person 4115, women's −70 kg)."
+  },
+  "lanes": {
+    "national": {
+      "state": "needs_review",
+      "checkedOn": "2026-11-25",
+      "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "IJF results data (data.ijf.org) entrant lists: 945",
+          "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=945",
+          "outcome": "ambiguous"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "International Judo Federation athlete page (judoka 4115)",
+          "url": "https://www.ijf.org/judoka/4115",
+          "outcome": "ambiguous"
+        },
+        {
+          "type": "index",
+          "name": "JudoInside event results, European Championships U23 Sarajevo 2010 (women's U70: 1 Stephanie Egger SUI, 2 Laura Vargas Koch GER)",
+          "url": "https://www.judoinside.com/event/6553/judo-results",
+          "outcome": "supports_claim"
+        }
+      ],
+      "claims": [],
+      "note": "Identity confirmed through the UFC bio's 'U23 European champion 2010'. JudoInside's event results (25 Nov) list her as the women's -70 kg winner at the 2010 European U23 Championships in Sarajevo, for Switzerland, beating Laura Vargas Koch in the final. NZZ reported the same at the time. It isn't a claim yet because the European Judo Union's own results page still returns 404. IJF entrant data lists her at the 2011 Paris Grand Slam (-70 kg, lost her first contest), but her IJF athlete page shows a 2011 Prague World Cup contest instead. To resolve, find an EJU results document for Sarajevo 2010, and the IJF results for both 2011 events."
+    }
+  }
+}

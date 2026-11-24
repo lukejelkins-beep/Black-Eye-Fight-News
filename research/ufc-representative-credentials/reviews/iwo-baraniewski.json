@@ -20,6 +20,12 @@
           "name": "Polish Judo Federation results database",
           "url": "https://mistrzjudo.pl/athlete/33454",
           "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "IJF results data (data.ijf.org) entrant lists: 1751",
+          "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=1751",
+          "outcome": "supports_claim"
         }
       ],
       "claims": [
@@ -55,6 +61,28 @@
           "result": "Fifth place",
           "medal": "none",
           "sources": [
+            {
+              "name": "International Judo Federation athlete results",
+              "url": "https://www.ijf.org/judoka/18096/results?results_rank_group=all",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2019 World Judo Championships",
+          "sport": "Judo",
+          "event": "Men’s −100 kg",
+          "delegation": "POL",
+          "category": "senior",
+          "result": "Competed for Poland and lost his first contest",
+          "medal": "none",
+          "sources": [
+            {
+              "name": "IJF results data, competition entrant list",
+              "url": "https://data.ijf.org/api/get_json?params%5Baction%5D=competition.competitors&params%5Bid_competition%5D=1751",
+              "authority": "federation"
+            },
             {
               "name": "International Judo Federation athlete results",
               "url": "https://www.ijf.org/judoka/18096/results?results_rank_group=all",
