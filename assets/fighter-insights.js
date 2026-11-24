@@ -1100,11 +1100,21 @@
   const key=matchupKey(article,names);
   const tapeFor=i=>fighterTape?.fighters?.[T.fold(names[i])]||{};
   const side=i=>({...(pair[i]||{}),tape:tapeFor(i)});
-  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):"—",form:formLetters(f[i]),fig:figureFor(pair[i],n)}));
+  // Record: the profile's, else the one the card row already shows, so a fighter without a profile still has one.
+  const rowRecord=i=>article.querySelectorAll(".result-contender-info .upcoming-fighter-record")[i]?.textContent.trim()||"";
+  // Rank, champion and tier tags from the card row travel with the name, since the open snapshot hides that row.
+  const rowTags=i=>{const c=article.querySelectorAll(".result-contender-info")[i];return c?[...c.querySelectorAll(".result-fighter-rank,.result-fighter-tier")].map(x=>x.textContent.trim()).filter(Boolean):[]};
+  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):rowRecord(i)||"—",form:formLetters(f[i]),fig:figureFor(pair[i],n),tags:rowTags(i)}));
+  upgradeRowPhotos(article,sides);
   const shared=pair[0]?.division&&pair[0].division===pair[1]?.division?pair[0].division:"";
   const tabs=bTabs(article,names),stored=selectedTabs.get(key);
   const active=tabs.some(t=>t[0]===stored)?stored:"stats";
-  const h={esc:escapeHTML,today:new Date(),division:shared};
+  const label=article.querySelector(".result-featured-bout-label")?.textContent.trim()||"";
+  const billing=label?label.charAt(0).toUpperCase()+label.slice(1).toLowerCase():"";
+  const division=shared||article.querySelector(".result-bout-division")?.textContent.trim()||"";
+  const rounds=article.querySelector(".result-bout-rounds")?.textContent.trim()||"";
+  const reported=/reported/i.test(article.querySelector(".upcoming-matchup-status")?.textContent||"")?"Reported":"";
+  const h={esc:escapeHTML,today:new Date(),division,billing,rounds,status:reported};
   const buttons=f.map(p=>p?
    '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
    '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
@@ -1115,8 +1125,21 @@
    B.analysisHTML(B.analysisLines(side(0),side(1),names,h.today),h)+
    B.tabsHTML(tabs,active,h)+
    '<div class="sb-panel">'+bPanel(active,article,names,f)+'</div>'+
-   '<div class="befn-snapshot-links">'+buttons+'</div>'+
+   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
+ }
+ // Closed card row (layout B): a fighter with a cutout is shown as that cutout on their flag disc, the same picture
+ // the open snapshot shows, instead of the square-cropped photo. Others keep the photo.
+ function upgradeRowPhotos(article,sides){
+  article.querySelectorAll(".result-contender .upcoming-photo").forEach((slot,i)=>{
+   const fig=sides[i]?.fig;
+   if(!fig?.cutout||slot.dataset.sbCut===fig.cutout)return;
+   slot.dataset.sbCut=fig.cutout;
+   slot.classList.add("sb-row-cut");
+   slot.querySelector(":scope > .sb-row-fig")?.remove();
+   slot.insertAdjacentHTML("afterbegin",'<span class="sb-row-fig" aria-hidden="true">'+(fig.flag?'<img class="sb-row-flag" src="'+escapeHTML(fig.flag)+'" alt="" loading="lazy" decoding="async" onerror="this.remove()">':'')+
+    '<img class="sb-row-cutimg" src="'+escapeHTML(fig.cutout)+'" alt="" loading="lazy" decoding="async" onerror="this.closest(\'.upcoming-photo\')?.classList.remove(\'sb-row-cut\');this.parentNode.remove()"></span>');
+  });
  }
  function renderSnapshot(article){
   const names=[getName(article,0),getName(article,1)];
