@@ -2,6 +2,17 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fight film: film wall)
+- **The Fight film tab is a film wall** (owner chose design A, "Film wall", with all four extras). Under the Fights heading and the Upcoming / Results / Fight film switch there is no second "Fight film" heading or kicker.
+  - **Top:** the big latest clip (two thirds) and a "Latest finishes" column of three (one third); stacked on phones. The big clip is worked out from the data: the newest finish from the last 7 days, else the newest clip. The hard-coded "7 November 2026 · UFC Vegas 124" block is gone.
+  - **Bar:** All / Finishes / Full fights / Highlights, and promotion chips (All plus the top five publishers for the sport). On the all-sports page the chips start with Boxing and MMA (a sport chip, not separate groups) followed by the top four publishers. Grappling is not shown, matching the navigation.
+  - **Wall:** 4 columns on desktop, 2 on phones, 12 cards, then "More film" adds 12.
+  - **Tags:** Finish (red), Full fight (yellow), Highlights (dark). Finish means the feed marks it a finish, or the publisher's own title says KO, knockout, submission, finish or stoppage (not media days, reactions or previews).
+- **YouTube clips play in the page** through the privacy-enhanced youtube-nocookie.com player. The iframe is created only on tap. Every card keeps a visible "Watch on YouTube ↗" link. Publisher-site clips (UFC.com, MMA Fighting) still open on the publisher's site. There is no CSP in `index.html` or the Render config, so no frame-src change was needed.
+- **Titles are tidied for display:** emojis, hashtags and shouting go, the "X vs Y" part leads and the hook is a subtitle. The original title stays in the label and tooltip. YouTube Shorts (#shorts) never show.
+- **Staff notes moved to a closed "About this film" panel** at the foot (DIRECTION rule 6): the AU playback check, sources and update time. "Publisher clip · AU playback not verified" is no longer on every card. The availability rules themselves are unchanged.
+- Code: `assets/fight-film.js` and `assets/fight-film.css`; `tests/test-fight-film.cjs` was added to the release readiness gate. — owner — Fights › Fight film
+
 ## 2026-11-24 (Fight Talk: talk cards)
 - **Fight Talk posts are BEFN's own cards** (owner picked design A, "Talk cards", from two mock-ups). Each card shows the face, name, role (Champion, Contender, Prospect, Fighter, Promoter, Media and so on), platform, time, the post's own text and likes and replies. Desktop shows 3 columns; phones show 1.
 - **The platform's embed loads only when the reader taps "Show post".** Before this, the page loaded every X, Instagram, Threads and Bluesky widget up front. Every card also keeps a direct "Open ↗" link to the original post.
