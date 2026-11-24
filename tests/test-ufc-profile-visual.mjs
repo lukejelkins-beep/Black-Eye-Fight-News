@@ -145,6 +145,12 @@ async function checkProfile(page,profile,screen){
     !!d?.querySelector(".befn-pro-ratings .befn-pro-meters")&&
     !!d?.querySelector(".befn-pro-stats .befn-pro-tiles");
   },null,{timeout:12000});
+  // A fighter in the stats build first shows a placeholder ("—") while their stats file loads; count the rating
+  // bars only once the real card is in (rating model 2026-11, PR #453: the live site is slower than a local server).
+  if(statsFileFor(profile.name))await page.waitForFunction(()=>{
+   const t=document.querySelector("#fighterDialog .befn-pro-score .befn-v3-score")?.textContent?.trim();
+   return !!t&&t!=="—";
+  },null,{timeout:12000});
   // Wait briefly for portrait requests to settle. A cached or slow image
   // must not be declared broken just because it was read instantly.
   if(isLive)await page.waitForFunction(()=>{
