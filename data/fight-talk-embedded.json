@@ -1,15 +1,15 @@
 {
-  "attemptedAt": "2026-11-24T16:42:00.339Z",
-  "checkedAt": "2026-11-24T16:42:00.339Z",
+  "attemptedAt": "2026-11-24T17:36:37.440Z",
+  "checkedAt": "2026-11-24T17:36:37.440Z",
   "windowDays": 28,
-  "articlesChecked": 30,
+  "articlesChecked": 26,
   "publisherFeedsChecked": 3,
-  "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 42,
+  "publisherFeedsFailed": 1,
+  "rssArticleCandidates": 15,
   "publisherSourcesConfigured": 32,
-  "linksFound": 21,
+  "linksFound": 22,
   "newEmbedsVerified": 0,
-  "newPublisherLinksDiscovered": 0,
+  "newPublisherLinksDiscovered": 1,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
   "xApiEstimatedSpendUsd": 0,
@@ -38,6 +38,25 @@
       "embedVerified": true,
       "linkPriority": 60,
       "url": "https://x.com/jakepaul/status/2124903789270294881"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-24T15:31:28+00:00",
+      "discoveredAt": "2026-11-24T17:36:37.440Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/523170/nikolas-motta-shows-off-ghastly-facial-injuries-following-ufc-qatar-loss",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Trusted publisher permalink (embed unconfirmed)",
+      "verification": "trusted-publisher-link",
+      "embedVerified": false,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DgIMuGajoh7/"
     },
     {
       "type": "post",
@@ -2327,25 +2346,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/Df4Kvj_EpSF/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-18T07:45:00+00:00",
-      "discoveredAt": "2026-11-18T20:00:35.588Z",
-      "sourcePublisher": "MMA Junkie",
-      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/18/ufc-releases-virna-jandiroba-caught-by-surprise/92842788007/",
-      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/Df4uo14NtjX/"
     }
   ],
   "seenOriginals": [
@@ -3640,6 +3640,10 @@
     {
       "url": "https://www.instagram.com/p/DgBa5zwoA-l/",
       "firstSeen": "2026-11-24T15:32:12.098Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DgIMuGajoh7/",
+      "firstSeen": "2026-11-24T17:36:37.440Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
