@@ -32,7 +32,7 @@ The owner stated on 2026-11-22 that **every image held in this repository is app
 | Set | Files | Where | Record | Status |
 | --- | --- | --- | --- | --- |
 | UFC fighter photos | 2,703 (901 fighters × 3 crops) | `assets/img/ufc/` | `data/ufc-image-register.json` | `owner-cleared` |
-| UFC cutouts | 52 | `assets/img/ufc-cutouts/` | `data/ufc-cutout-register.json` | derivative of the cleared portraits, same status |
+| UFC cutouts | 729 | `assets/img/ufc-cutouts/` | `data/ufc-cutout-register.json` | derivative of the cleared portraits, same status |
 | Event posters | 88 | `assets/img/posters/` | `data/poster-register.json` | `owner-cleared`, official promotional posters |
 | Sumo JSA portraits, heads and cutouts | 478 (190 rikishi) | `assets/sumo-photos/` | `data/sumo/approved-photos.json` | `approved: true`, owner's attested JSA permission (2026-11-16) |
 | Sumo kimarite clips and posters | 31 | `assets/sumo-kimarite/` | `data/sumo/kimarite-media.json` (`clips`) | NHK permission confirmed by the owner |
@@ -52,7 +52,7 @@ The owner extended the same statement to the hotlinked portraits on 2026-11-22, 
 The owner holds permission to republish official event posters. `scripts/cache-event-posters.py` (workflow "Cache official event posters", twice a day) downloads each poster link recorded in `data/upcoming-cards.json` and `data/historical-posters.json` once, saves `assets/img/posters/<event-id>-portrait.webp` or `-landscape.webp` (900 or 1280 px wide), and records image URL, source page, credit, rights, size and checksum in `data/poster-register.json`. `assets/local-posters.js` tells the Upcoming and Results pages to use these copies first. Failed downloads are retried up to three times. Originals are not committed.
 
 ## UFC cutouts (added 2026-11-21)
-Fighters on announced UFC cards get a transparent cutout made offline from their owner-cleared portrait in `assets/img/ufc/` by `scripts/build-ufc-cutouts.py` (rembg, no web fetch, no new photo). Results and reasons are in `data/ufc-cutout-register.json`; a failed check means the page shows the original photo in a disc. Cutouts are derivatives of the cleared portraits and carry the same credit (ESPN) and rights status.
+Fighters on announced UFC cards (and, since 2026-11-24 with `--all`, every fighter in the image register) get a transparent cutout made offline from their owner-cleared portrait in `assets/img/ufc/` by `scripts/build-ufc-cutouts.py` (rembg, no web fetch, no new photo). Results and reasons are in `data/ufc-cutout-register.json`; a failed check means the page shows the original photo in a disc. Cutouts are derivatives of the cleared portraits and carry the same credit (ESPN) and rights status.
 
 ## Boxing cutouts (added 2026-11-22)
 The boxers BEFN holds photographs of get the same treatment as the UFC fighters: a transparent cutout made offline from the photograph already in `assets/img/boxing/` by `scripts/build-boxing-cutouts.py` (rembg `isnet-general-use`, no web fetch, no new photograph). The background removal, the keep/drop checks and the head-and-shoulders crop are imported from `scripts/build-ufc-cutouts.py` rather than copied, so the two sports cannot drift apart. Results and reasons are in `data/boxing-cutout-register.json`, and every kept row repeats the credit and rights of the photograph it came from, so a cutout can never be shown with less provenance than its source. A boxer who fails keeps the photograph in a disc.
