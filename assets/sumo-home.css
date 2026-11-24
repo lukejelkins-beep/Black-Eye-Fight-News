@@ -213,6 +213,32 @@
 .sbz-ob li{font-size:13px;padding:3px 0}
 .sbz-ob li a{font-weight:700;text-decoration:none}
 .sbz-ob li span{color:var(--sh-muted)}
+/* More photographs (owner, 24 Nov 2026: "make sure there are more pictures of the rikishi"). */
+.sbz-hero-in{position:relative}
+.sbz-cast{display:flex;align-items:flex-end;align-self:stretch;margin-left:auto;padding-right:8px}
+.sbz-cast img{height:150px;margin-left:-34px;filter:drop-shadow(0 6px 14px #0009)}
+.sbz-cast img:first-child{margin-left:0;height:170px}
+.sbz-rail-wrap{margin-bottom:14px}
+.sbz-rail-h{font:700 16px Unbounded,sans-serif;margin:0 0 8px}
+.sbz-rail-h.is-up{color:var(--sh-up)}.sbz-rail-h.is-dn{color:var(--sh-down)}
+.sbz-rail{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.sbz-sw{background:#fff;border:1px solid var(--sh-line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.sbz-sw-ph{position:relative;height:150px;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(160deg,#2a4a8f,#151115);color:#8ea6dc;font-size:36px}
+.sbz-sw.is-dn .sbz-sw-ph{background:linear-gradient(160deg,#5a2a2a,#151115)}
+.sbz-sw-ph img{height:140px}
+.sbz-sw-mv{position:absolute;top:8px;right:8px;background:#fff;border-radius:6px;padding:2px 7px;font-size:13px}
+.sbz-sw-bd{padding:10px 12px;display:flex;flex-direction:column;gap:3px}
+.sbz-sw-bd strong{font:700 14px Unbounded,sans-serif}
+.sbz-sw-bd strong a{text-decoration:none}
+.sbz-sw-bd span{font-size:12.5px;color:var(--sh-muted)}
+.sbz-sw-bd .sbz-rc{align-self:flex-start;padding:2px 8px;font-size:12px}
+.sbz-row{grid-template-columns:46px 40px minmax(0,1fr) 84px 64px 44px}
+.sbz-row .shome-face{width:40px;height:40px}
+.sbz-ob li{display:flex;align-items:center;gap:8px}
+.sbz-ob li .shome-face{width:30px;height:30px}
+.sbz-ob-t{min-width:0}
+@media(max-width:1100px){.sbz-rail{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:minmax(150px,1fr);overflow-x:auto;scroll-snap-type:x mandatory}.sbz-sw{scroll-snap-align:start}}
+@media(max-width:760px){.sbz-cast{order:-1;width:100%;justify-content:center;margin:0}.sbz-cast img{height:104px;margin-left:-26px}.sbz-cast img:first-child{height:118px}.sbz-rail{grid-auto-columns:44%}.sbz-row{grid-template-columns:40px 34px minmax(0,1fr) 56px 40px}.sbz-row .shome-face{width:34px;height:34px}}
 /* The slope chart needs width: desktop only; phones get the same moves in the list. */
 @media(max-width:900px){.sbz-chart-wrap{display:none}.sbz-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.sbz-hero{padding:18px 16px}.sbz-stories{grid-auto-columns:80%}.sbz-row{grid-template-columns:40px 28px minmax(0,1fr) 56px 40px;gap:6px;padding:4px 10px}.sbz-row .shome-face{width:28px;height:28px}.sbz-was{display:none}.sbz-nm em{display:block;margin:0}}

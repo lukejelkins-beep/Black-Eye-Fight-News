@@ -26,6 +26,14 @@ function tags(c) {
   return t;
 }
 
+/* The wrestlers behind the headline moves, as overlapping cut-outs in the hero. */
+function cast(h, c) {
+  const H = c.headline, seen = new Set(), people = [];
+  for (const m of [...H.yokozuna, ...H.ozekiUp, ...H.ozekiDown, ...H.kadoban, ...H.intoSanyaku, ...H.intoMakuuchi.filter(x => /debut/.test(x.note)), ...c.climbs])
+    if (!seen.has(m.id) && h.cutout(m.id)) { seen.add(m.id); people.push(m); }
+  if (!people.length) return '';
+  return '<div class="sbz-cast" aria-hidden="true">' + people.slice(0, 5).map((m, i) => '<img src="' + h.e(h.cutout(m.id)) + '" alt="" style="z-index:' + (10 - i) + '">').join('') + '</div>';
+}
 function hero(h, c, released) {
   const H = c.headline;
   const tiles = [[H.yokozuna.length + H.ozekiUp.length, 'Promoted to Ozeki or above'], [H.ozekiDown.length, 'Ozeki demoted'], [H.kadoban.length, 'Kadoban Ozeki'],
@@ -34,6 +42,7 @@ function hero(h, c, released) {
   return '<section class="sbz-hero"><div class="sbz-hero-in"><div><div class="shome-kicker">Banzuke changes · ' + h.e(c.name) + '</div><h1>' + h.e(c.name) + ' banzuke</h1>' +
     '<p>Each move read against the wrestler’s record at the ' + h.e(c.previousName) + ' basho.</p>' + (released ? '<p class="sbz-released">' + h.e(released) + '</p>' : '') +
     '<div class="sbz-tiles">' + tiles.map(([n, l]) => '<div class="sbz-tile"><b>' + n + '</b><span>' + h.e(l) + '</span></div>').join('') + '</div></div>' +
+    cast(h, c) +
     (ids.length > 1 ? '<div class="sbz-pick"><label for="sbz-pick">Banzuke</label><select id="sbz-pick" data-changes-select>' + ids.map(id => '<option value="' + h.e(id) + '"' + (id === c.bashoId ? ' selected' : '') + '>' + h.e(bashoName(id)) + '</option>').join('') + '</select></div>' : '') +
     '</div></section>';
 }
@@ -57,7 +66,7 @@ function slope(h, c, tagMap) {
   const people = c.moves.filter(m => m.levelFrom >= 3 || m.levelTo >= 3);
   if (people.length < 10) return '';
   const left = people.slice().sort((a, b) => position(a.from) - position(b.from)), right = people.slice().sort((a, b) => position(a.to) - position(b.to));
-  const row = 19, top = 34, W = 820, x1 = 230, x2 = W - 230;
+  const row = 21, top = 34, W = 860, x1 = 250, x2 = W - 250;
   const yL = new Map(left.map((m, i) => [m.id, top + i * row])), yR = new Map(right.map((m, i) => [m.id, top + i * row]));
   const H = top + people.length * row + 6;
   const strong = m => tagMap.has(m.id) || Math.abs(m.change) >= 10;
@@ -69,11 +78,24 @@ function slope(h, c, tagMap) {
     '<text x="' + x1 + '" y="18" text-anchor="end" class="sbz-ax">' + esc(c.previousName) + '</text><text x="' + x2 + '" y="18" class="sbz-ax">' + esc(c.name) + '</text>' +
     (sanyakuEnd > 0 ? '<line x1="' + (x2 - 4) + '" x2="' + W + '" y1="' + (top + (sanyakuEnd - .5) * row + 4) + '" y2="' + (top + (sanyakuEnd - .5) * row + 4) + '" class="sbz-sep"/><text x="' + (W - 4) + '" y="' + (top + (sanyakuEnd - .5) * row) + '" text-anchor="end" class="sbz-sept">sanyaku</text>' : '') +
     left.filter(m => !strong(m)).concat(left.filter(strong)).map(m => '<line x1="' + (x1 + 6) + '" y1="' + yL.get(m.id) + '" x2="' + (x2 - 6) + '" y2="' + yR.get(m.id) + '" stroke="' + col(m) + '" stroke-width="' + (strong(m) ? 3 : 1.2) + '" opacity="' + (strong(m) ? 1 : .45) + '"/>').join('') +
-    left.map(m => '<text x="' + x1 + '" y="' + (yL.get(m.id) + 4) + '" text-anchor="end" class="sbz-lb' + (strong(m) ? ' is-s' : '') + '">' + esc(m.name) + ' <tspan class="sbz-rk">' + esc(shortRank(m.from)) + ' · ' + esc(m.record) + '</tspan></text>').join('') +
-    right.map(m => '<text x="' + x2 + '" y="' + (yR.get(m.id) + 4) + '" class="sbz-lb' + (strong(m) ? ' is-s' : '') + '"><tspan class="sbz-rk">' + esc(shortRank(m.to)) + '</tspan> ' + esc(m.name) + '</text>').join('') +
+    left.map(m => (strong(m) && h.head(m.id) ? '<image href="' + esc(h.head(m.id)) + '" x="' + (x1 - 20) + '" y="' + (yL.get(m.id) - 9) + '" width="18" height="18"/>' : '') +
+      '<text x="' + (strong(m) && h.head(m.id) ? x1 - 24 : x1) + '" y="' + (yL.get(m.id) + 4) + '" text-anchor="end" class="sbz-lb' + (strong(m) ? ' is-s' : '') + '">' + esc(m.name) + ' <tspan class="sbz-rk">' + esc(shortRank(m.from)) + ' · ' + esc(m.record) + '</tspan></text>').join('') +
+    right.map(m => (strong(m) && h.head(m.id) ? '<image href="' + esc(h.head(m.id)) + '" x="' + (x2 + 2) + '" y="' + (yR.get(m.id) - 9) + '" width="18" height="18"/>' : '') +
+      '<text x="' + (strong(m) && h.head(m.id) ? x2 + 24 : x2) + '" y="' + (yR.get(m.id) + 4) + '" class="sbz-lb' + (strong(m) ? ' is-s' : '') + '"><tspan class="sbz-rk">' + esc(shortRank(m.to)) + '</tspan> ' + esc(m.name) + '</text>').join('') +
     '</svg></div></section>';
 }
 
+/* Biggest climbs and falls in Makuuchi and Juryo, as photo cards. */
+function swings(h, c) {
+  if (!c.climbs.length && !c.falls.length) return '';
+  const card = (m, dir) => {
+    const img = h.cutout(m.id);
+    return '<article class="sbz-sw is-' + dir + '"><div class="sbz-sw-ph">' + (img ? '<img src="' + h.e(img) + '" alt="" loading="lazy">' : '<span aria-hidden="true">相</span>') + '<span class="sbz-sw-mv">' + moveLabel(m) + '</span></div>' +
+      '<div class="sbz-sw-bd"><strong>' + who(h, m.id, m.name) + '</strong><span>' + h.e(shortRank(m.from)) + ' → ' + h.e(shortRank(m.to)) + '</span><span class="sbz-rc ' + (m.winning ? 'is-w' : 'is-l') + '">' + h.e(m.record) + '</span></div></article>';
+  };
+  const rail = (title, list, dir) => list.length ? '<div class="sbz-rail-wrap"><h3 class="sbz-rail-h is-' + dir + '">' + title + '</h3><div class="sbz-rail">' + list.map(m => card(m, dir)).join('') + '</div></div>' : '';
+  return '<section class="shome-block">' + rail('▲ Biggest climbs', c.climbs, 'up') + rail('▼ Biggest falls', c.falls, 'dn') + '</section>';
+}
 function list(h, c, tagMap) {
   const row = m => {
     const t = tagMap.get(m.id);
@@ -93,13 +115,13 @@ function list(h, c, tagMap) {
 function sidebar(h, c) {
   if (!c.observations.length) return '<aside class="sbz-side"></aside>';
   return '<aside class="sbz-side"><h2 class="sbz-side-h">Worth noticing</h2><p class="shome-note">Plain rules applied to the records; the Japan Sumo Association does not publish its reasons.</p>' +
-    c.observations.map(o => '<div class="shome-card sbz-ob"><h3>' + h.e(o.title) + '</h3><p>' + h.e(o.text) + '</p>' + (o.list.length ? '<ul>' + o.list.map(m => '<li>' + who(h, m.id, m.name) + ' <span>' + h.e(shortRank(m.from)) + ' → ' + h.e(shortRank(m.to)) + ' · ' + h.e(m.record) + '</span></li>').join('') + '</ul>' : '') + '</div>').join('') + '</aside>';
+    c.observations.map(o => '<div class="shome-card sbz-ob"><h3>' + h.e(o.title) + '</h3><p>' + h.e(o.text) + '</p>' + (o.list.length ? '<ul>' + o.list.map(m => '<li>' + face(h, m.id) + '<span class="sbz-ob-t">' + who(h, m.id, m.name) + ' <span>' + h.e(shortRank(m.from)) + ' → ' + h.e(shortRank(m.to)) + ' · ' + h.e(m.record) + '</span></span></li>').join('') + '</ul>' : '') + '</div>').join('') + '</aside>';
 }
 
 export function renderChanges(c, h, { released } = {}) {
   const tagMap = tags(c);
   return '<div class="sumo-home sumo-banzuke">' + hero(h, c, released) + stories(h, c) + slope(h, c, tagMap) +
-    '<section class="shome-block sbz-grid">' + list(h, c, tagMap) + sidebar(h, c) + '</section>' +
+    swings(h, c) + '<section class="shome-block sbz-grid">' + list(h, c, tagMap) + sidebar(h, c) + '</section>' +
     '<p class="shome-source">From the saved Sumo API banzuke for ' + h.e(c.name) + ' and the ' + h.e(c.previousName) + ' results. Wins are counted from each wrestler’s bouts; absences count as losses for a winning or losing record.</p></div>';
 }
 

@@ -18,7 +18,7 @@ import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-banzuke
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview } from './sumo-review.mjs?v=20261124-review1';
 import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
-import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-banzuke2';
+import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-banzuke3';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
