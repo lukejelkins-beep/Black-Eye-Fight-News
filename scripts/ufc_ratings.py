@@ -54,7 +54,7 @@ RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as 
 # 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 70/30 with the 2026-11-24 skills), same total
 # spread as the fit.
 # The four skills keep their old relative weights.
-BLEND = {"results": 1.781, "skills": 1.223}
+BLEND = {"results": 1.763, "skills": 1.214}
 # Old weights were striking 25, defence 25, wrestling 20, grappling 15; striking now carries the strike defence.
 SKILL_WEIGHTS = {"striking": .55, "grappling": .20, "wrestling": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
@@ -75,8 +75,11 @@ SCORE_DIVISOR = 8
 # who stops most attempts but faces many; "taken down per 15" counts how often it actually happens. Walk-forward test on
 # 2024+ fights (wrestling-only Brier at 0, .06, .12, .18: .2434, .2436, .2439, .2443): more weight never tracked results
 # better, since defence % and control conceded carry most of it, so .06 keeps it counted at no measurable cost.
+# Control conceded weighs .24 and takedown defence % .05 (owner, 2026-11-24): being taken down and getting straight
+# back up costs little, being held down costs a lot. Tested at .12/.18/.24/.29 control: wrestling-only Brier .2436,
+# .2438, .2442, .2445 and accuracy 58.2/58.6/58.7/57.3% - level up to .24, worse with no takedown defence at all.
 WRESTLING_WEIGHTS = {"td15": .25, "tdAcc": .12, "ctrlShare": .23,
-                     "tdDef": .17, "tdAbs15": .06, "ctrlAgainstShare": .12, "rev15": .05}
+                     "tdDef": .05, "tdAbs15": .06, "ctrlAgainstShare": .24, "rev15": .05}
 # Grappling (owner, 2026-11-24): offence 60% (submission attempts 20, submission wins 28, control won 12), defence 40%
 # (submission losses, opponents' submission attempts, reversals, control conceded). Submission losses weigh .15: on
 # 2024+ fights grappling-only Brier at 0, .07, .15, .22 was .2466, .2459, .2458, .2458 (leaving them out is worse; the
