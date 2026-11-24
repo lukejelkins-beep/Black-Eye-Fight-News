@@ -126,15 +126,15 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   screenshotCount++;
   await page.locator('[data-basho-view="results"]').click();
   if(isMobile){
-    // Shared site navigation (sport first, then section; 24 Nov 2026): on a phone the sports sit in the row
-    // under the masthead and the four Sumo sections in the bottom tab bar.
+    // Shared site navigation (sport first, then section; 24 Nov 2026): on a phone the sports sit in the slim
+    // top bar (phone nav option B, assets/phone-nav.js) and the four Sumo sections in the bottom tab bar.
     const nav=await page.evaluate(()=>{
       const read=sel=>[...document.querySelectorAll(sel)].filter(el=>getComputedStyle(el).display!=='none')
         .map(el=>({label:el.innerText.trim().replace(/\s+/g,' '),client:el.clientWidth,scroll:el.scrollWidth,
           top:Math.round(el.getBoundingClientRect().top),left:el.getBoundingClientRect().left,
           right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height,
           viewport:document.documentElement.clientWidth}));
-      return {sports:read('.sh-areas-phone a'),tabs:read('.befn-mobile-tabs a')};
+      return {sports:read('.befn-phonebar-sports a'),tabs:read('.befn-mobile-tabs a')};
     });
     assert.deepEqual(nav.sports.map(n=>n.label),['Boxing','MMA','Sumo'],'Phone sports row: '+JSON.stringify(nav.sports));
     assert.deepEqual(nav.tabs.map(n=>n.label),['Overview','Fights','Fighters','Analysis'],'Phone section tabs: '+JSON.stringify(nav.tabs));
@@ -792,9 +792,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // Exercise the redesigned controls, including native keyboard disclosures.
   await open(page,'profile/28','.sumo-poster');
   if(isMobile){
-    // Other sports and the all-sports front page stay one tap away: the sports row and the masthead link.
-    assert.equal(await page.locator('.sh-areas-phone a[href="index.html#home"]:visible').count(),2,'Boxing and MMA are reachable');
-    assert.equal(await page.locator('.befn-mobile-title[href="index.html#home"]:visible').count(),1,'The masthead opens the front page');
+    // Other sports and the all-sports front page stay one tap away: the sport tabs and the BEFN link in the top bar.
+    assert.equal(await page.locator('.befn-phonebar-sports a[href="index.html#home"]:visible').count(),2,'Boxing and MMA are reachable');
+    assert.equal(await page.locator('.befn-phonebar-brand[href="index.html#home"]:visible').count(),1,'The masthead opens the front page');
   }
   const currentRows=await page.locator('.sumo-ed-row').count();
   await page.locator('[data-results-mode="tournaments"]').click();

@@ -2,6 +2,15 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Phone navigation: option B)
+- **One slim top bar on phones** (owner chose option B from four mock-ups drawn on the real pages; the others were today's layout, sections moved under the sports at the top, and a "Boxing ▾" switcher). The bar is 52 px: "BEFN" (opens the all-sports front page), the Boxing / MMA / Sumo tabs and a menu icon. The big sport buttons under the old masthead are gone. Before, the sport row scrolled away and the bar that stayed only had Alerts and Menu; now a sport is one tap away at any time, and the first screen shows about 70 px more content. Sections stay in the bottom tab bar, under the thumb. Owner extras, all four chosen:
+  - **Sumo uses the same bars.** `assets/phone-nav.js` builds the top bar on `index.html` and the three Sumo pages. On Sumo its menu lists the sports, the Sumo sections and the current section's pages.
+  - **The top bar hides on scroll down** and comes back on any scroll up, near the top, on a route change, or when something in it has focus. There is no animation for readers who ask for reduced motion.
+  - **The active bottom tab shows the sport's colour**: an icon and top marker in red (Boxing), amber (MMA), blue (Sumo) or gold (front page). It replaces the yellow pill.
+  - **Desktop is unchanged.** Everything new is hidden above 760 px.
+- **Alerts and Install moved into the menu** ("Alerts: notification preferences", "Install the app"). The menu sheet now uses the site's cream and ink instead of the old teal.
+- `scripts/sumo-browser-qa.mjs` now reads the sports from the new bar, with the same rules: three labelled sports, no clipping or overlap, 44 px tap height, and BEFN opens the front page. It passed locally at 1440, 1280, 768, 390 and 320 px, run with the files served from disk.
+
 ## 2026-11-24 (Fighters cleanup and boxing photos)
 - **The Fighters page starts with the hub** (owner selector, from phone screenshots). The Fighter scout / Champions / UFC stats pills, the "Archive verification note" and the "Fighter profiles" title are gone from Boxing and MMA. DIRECTION rule 6 says verification notes never lead a public page.
 - **Boxing has a hub in the MMA hub's style** (`assets/boxing-hub.js`, `assets/boxing-hub.css`, reusing the `.fh` styles):

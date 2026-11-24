@@ -3,7 +3,7 @@
    - saves the sport when Boxing, MMA or the logo is chosen, so the main site opens in that area;
    - marks the current section (Overview, Fights, Fighters, Analysis) and shows only that
      section's sumo pages in the row below it;
-   - builds the phone masthead link and bottom tab bar, matching the main site.
+   - builds the phone bottom tab bar, matching the main site (the top bar is assets/phone-nav.js).
    Sumo has no Fight Talk posts yet, so that section is left out here. */
 (() => {
   'use strict';
@@ -68,19 +68,7 @@
   });
 
   function phone() {
-    const rail = document.querySelector('.sh .navrail');
-    if (rail && !rail.querySelector('.befn-mobile-topbar')) {
-      const bar = document.createElement('div');
-      bar.className = 'befn-mobile-topbar';
-      const name = document.createElement('a');
-      name.className = 'befn-mobile-title';
-      name.href = 'index.html#home';
-      name.dataset.area = 'all';
-      name.setAttribute('aria-label', 'Black Eye Fight News home, all sports');
-      name.append('BLACK EYE ', document.createElement('br'), 'FIGHT NEWS');
-      bar.append(name);
-      rail.append(bar);
-    }
+    /* The phone top bar (logo, sport tabs, menu icon) comes from assets/phone-nav.js, as on the main site. */
     if (!document.querySelector('.befn-mobile-tabs')) {
       const dock = document.createElement('nav');
       dock.className = 'befn-mobile-tabs befn-mobile-tabs-four';
