@@ -118,7 +118,7 @@ export function pass1User({slug, name, lastUfcFight, today, only = null}) {
   return `Today is ${today}. Fighter: ${name} (roster slug ${slug})${lastUfcFight ? `, last UFC bout ${lastUfcFight}` : ''}. ${scope} and return the JSON object.`;
 }
 export function pass2User({slug, name, today, record}) {
-  const keep = {identity: record.identity, flags: record.flags, disciplines: Object.fromEntries(DISCIPLINES.map(d => [d, {status: record.disciplines[d].status, claims: record.disciplines[d].claims.map(({text, source_url, source_name, tier, level, year}) => ({text, source_url, source_name, tier, level, year}))}]))};
+  const keep = {identity: record.identity, flags: record.flags, disciplines: Object.fromEntries(DISCIPLINES.map(d => [d, {status: record.disciplines[d].status, claims: record.disciplines[d].claims.map(({text, source_url, source_name, tier, level, level_note, year, ncaa_division, ncaa_result}) => ({text, source_url, source_name, tier, level, level_note, year, ncaa_division, ncaa_result}))}]))};
   return `Today is ${today}. Fighter: ${name} (roster slug ${slug}). The first pass flagged: ${record.flags.join(', ') || 'nothing'}. First-pass result:\n${JSON.stringify(keep)}\nResolve the flags and return the full JSON object.`;
 }
 export function pass3System() {
