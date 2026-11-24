@@ -2,6 +2,22 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fighters cleanup and boxing photos)
+- **The Fighters page starts with the hub** (owner selector, from phone screenshots). The Fighter scout / Champions / UFC stats pills, the "Archive verification note" and the "Fighter profiles" title are gone from Boxing and MMA. DIRECTION rule 6 says verification notes never lead a public page.
+- **Boxing has a hub in the MMA hub's style** (`assets/boxing-hub.js`, `assets/boxing-hub.css`, reusing the `.fh` styles):
+  - **Overall:** every division's champion, with a gold edge for undisputed, then Unbeaten, Contenders and Prospects rails.
+  - **A division tab:** the champion and the other belt holders, then that division's contenders and prospects.
+  - **Search:** a "Find a boxer" box.
+  - **What it leaves out:** no Form score (we hold no fight-by-fight boxing statistics), and no Men/Women switch (the boxing roster and title data are men only).
+  - **Records:** the scouting roster is from 7 November. Records and last-five results are brought up to date from later verified results in `data/results.json`, using the post-fight record each result carries. Diego Pacheco reads 26–1 and isn't on the Unbeaten rail; Teremoana reads 13–0.
+- **Champions are inside each hub** (owner's choice). The Champions page still works and is linked from each Overview's "All divisions".
+- **The UFC stats leaderboards are MMA's Analysis section** (owner's choice). Boxing and the front page keep the Analysis placeholder. The `#leaderboards` route still works, belongs to Analysis, and is where the MMA hub's "Find a fighter" goes. The phone menu reads "Fighters" and "Analysis: UFC stats" (MMA).
+- **Boxing photos added** (owner: "add press-kit photos"). 13 boxers got an approved photo, each registered with its credit, rights and SHA-256, and 10 of them got a cut-out.
+  - From Matchroom: Medina, Dalton Smith, Pacheco, Ennis, Jesse Rodríguez and Josh Kelly.
+  - From Commons: Mason, Canelo, Hrgović, Munguía, Naoya Inoue, Usyk and Teófimo López.
+  - Dropped by eye: the Dubois and Foster photos, and the Inoue and López cut-outs.
+  - 48 boxers on the list still have no photo. The PBC site answers 403, MVP's robots.txt disallows us, Queensberry has no press site, and many have no free Wikipedia photo. Kabayel, Fundora, Russell and the other PBC and Queensberry champions would need photos from the owner.
+
 ## 2026-11-24 (Boxing and MMA Overviews)
 - **Each sport's first section is now its own Overview** (owner chose "build as mocked"): next fight night strip, a hero, latest results, coming up, champions, latest news and explore cards. Built in `assets/sport-overview.js` and `assets/sport-overview.css`; the mixed front page from the logo is unchanged.
 - **The hero picks itself** (owner chose "automatic"): the latest main event's result for 3 days after it, otherwise the biggest upcoming fight with a countdown. "Biggest" is a fight on the owner's headline list in `data/sport-overview-featured.json` within 45 days (Fury vs Joshua today), else the strongest title fight in the next 3 weeks. Eliminators don't count as world titles. The result paragraph is the event's own sourced takeaway where there is one.
