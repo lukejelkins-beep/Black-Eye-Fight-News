@@ -1,0 +1,26 @@
+/* Sumo pages use the main site's header (assets/site-header.css): sports in the top bar,
+   the area's sections below. This file adds what the main site gets from its own scripts
+   and stylesheets: the sumo colour, the row of sumo pages inside a section, and the phone
+   masthead and bottom tab bar (four sections; Sumo has no Fight Talk yet). */
+html[data-befn-area="sumo"]{--area-colour:#2a4a8f}
+html[data-befn-area="sumo"] .sh-area-name{color:#8ea6dc}
+.sh-sub[hidden],.sh-sub a[hidden]{display:none}
+.sh-sub{max-width:none}
+.befn-mobile-topbar,.befn-mobile-tabs{display:none}
+.sh a,.sh-sports a,.sh-sub a,.befn-mobile-tabs a{text-decoration:none}
+@media(max-width:760px){
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  /* site-header.css re-shows the desktop sports bar after its phone rule; the main site hides it in mobile-app.css. */
+  .sh .mainnav.sh-areas{display:none}
+  .sh .befn-mobile-topbar{display:flex;align-items:center;width:100%}
+  .befn-mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));left:0;right:0;bottom:0;z-index:1100;min-height:calc(64px + env(safe-area-inset-bottom));padding:5px 5px calc(5px + env(safe-area-inset-bottom));background:#171315;border-top:3px solid var(--area-colour);box-shadow:0 -7px 25px rgba(15,8,9,.25)}
+  .befn-mobile-tabs.befn-mobile-tabs-four{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .befn-mobile-tabs a{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:44px;text-align:center;text-decoration:none;color:#f3e8e2;font:800 12px 'DM Sans',system-ui,sans-serif;border-radius:6px;padding:6px 1px}
+  .befn-mobile-tabs a svg{height:19px;width:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .befn-mobile-tabs a[aria-current="page"]{background:#f3c332;color:#211417}
+  .befn-mobile-tabs a:focus-visible{outline:2px solid #fff}
+  /* One row of pills on phones, so a profile's name stays on the first screen at 320 px
+     (scripts/sumo-browser-qa.mjs); pills keep the 44 px tap height. */
+  .sh-sub{flex-wrap:nowrap;gap:6px;padding:10px 12px 0}
+  .sh-sub a{flex:1 1 0;justify-content:center;min-width:0;padding:0 8px;font-size:12px;letter-spacing:.04em}
+}

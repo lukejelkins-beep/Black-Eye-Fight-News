@@ -5,7 +5,7 @@ import {
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs?v=20261116-ranked-matchups';
-import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261117-clean-profile-charts';
+import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261124-label-edge';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
@@ -13,6 +13,8 @@ import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailyS
 import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
+import { buildHome } from './sumo-home-data.mjs?v=20261124-home1';
+import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-home1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -943,7 +945,7 @@ function posterHero(w,{r,wins,losses,careerPercent}){
       '<strong>'+(last.outcome==='win'?'Beat ':'Lost to ')+e(last.opponent)+'</strong></div>'+
       (last.kimarite?'<div class="h2h"><strong class="kim">'+e(techniqueText(last.kimarite))+'</strong><span>Technique</span></div>':'')+'</a>';
   }
-  const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h],['Weight · undated',current.mass==='—'?null:current.mass]]
+  const facts=[['Age',age===null?null:age],['Height',current.h==='—'?null:current.h+(Number.isFinite(current.heightCm)&&current.heightCm>0?' ('+heightFeetInches(current.heightCm)+')':'')],['Weight · undated',current.mass==='—'?null:current.mass]]
     .filter(([,v])=>v!==null&&v!==undefined).map(([k,v])=>'<span>'+e(k)+' <strong>'+e(v)+'</strong></span>').join('');
   const landmark=landmarkHtml(w);
   return '<section class="sumo-poster'+(landmark?' has-landmark':'')+'">'+landmark+
@@ -1513,10 +1515,19 @@ function renderKimarite() {
   return renderKimariteGallery()+techniqueFactsMarkup();
 }
 
+/* Verified photo paths for the Sumo home: only approved photographs whose derivative matches
+   the approved source (the same checks as cutoutFor and headFor). */
+function verifiedDerivative(map,id,dir){
+  const d=map?.[String(id)],photo=STATE.photoIndex?.[String(id)];
+  return d&&photo?.approved===true&&d.sourceSha256===photo.sha256&&new RegExp('^assets/sumo-photos/'+dir+'/[a-zA-Z0-9_-]+\\.webp$').test(String(d.path||''))?d.path:'';
+}
+function renderSumoHome(){
+  const home=buildHome({details:STATE.details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
+  return renderOverview(home,{e,head:id=>verifiedDerivative(STATE.heads,id,'head'),cutout:id=>verifiedDerivative(STATE.cutouts,id,'cutout')});
+}
 function render() {
-  const hash=decodeURIComponent(location.hash.slice(1)||'basho').split('?')[0];
+  const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
   let [page,id]=hash.split('/');
-  if(page==='home')page='basho';
   tabs.forEach(a=>{
     const active=(page==='profile'?'rikishi':page==='matchups'?'basho':page==='headtohead'?'h2h':page)===a.dataset.page;
     a.classList.toggle('active',active);
@@ -1536,10 +1547,11 @@ function render() {
     case 'banzuke': ROOT.innerHTML=renderBanzuke();break;
     case 'h2h': ROOT.innerHTML=renderBoard(id);
       if(STATE.boardRecent&&!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();break;
+    case 'home': ROOT.innerHTML=renderSumoHome();break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'matchups': ROOT.innerHTML=renderDailyMatchups();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
-    default: ROOT.innerHTML=renderBasho();
+    default: ROOT.innerHTML=renderSumoHome();
   }
   if(page==='h2h')markCachedHeads();
   if(page==='kimarite')hydrateKimariteGallery();
@@ -1775,6 +1787,8 @@ async function init(){
     STATE.heads=(await loadJson('data/sumo/heads.json').catch(()=>null))?.bySourceId||null;
     // Optional landmark cut-outs (top-left of the profile hero); the page works without them.
     STATE.landmarks=(await loadJson('data/sumo/landmarks.json').catch(()=>null))?.byCountry||null;
+    // Verified family links for the home page's fact of the basho; the page works without them.
+    STATE.editorial=await loadJson('data/sumo/fun-facts-editorial.json').catch(()=>null);
     if(!Array.isArray(roster?.rikishi)||!Array.isArray(details?.featured)||roster?.count!==roster.rikishi.length) throw new Error('Sumo cache schema or roster total not valid');
     if((roster?.trackedDivisions||[]).join(',')!==DIVS.join(','))throw new Error('Sumo cache does not match the approved three-division scope');
     if(roster.rikishi.some(x=>!DIVS.includes(divisionOf(x.currentRank))))throw new Error('Out-of-scope division in Sumo index');
