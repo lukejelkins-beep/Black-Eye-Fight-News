@@ -290,7 +290,7 @@
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
-   if(id==='form'){const e=formEntry(stats);return Number.isFinite(e?.form)?e.form:null;}
+   if(id==='form'){const e=formEntry(stats);return formShown(e)?e.form:null;}
    if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
@@ -371,10 +371,13 @@
  }
  // Display option A (owner, 2026-11-24): a score out of 100 (50 = average) and the overall rank under it.
  const formEntry=stats=>(stats&&formData?.fighters?.[stats.slug])||null;
+ // One rule for every surface (assets/form-rule.js, QA audit C01).
+ const formShown=e=>window.BEFNFormRule?window.BEFNFormRule.shown(e):(!!e&&e.certified===true&&Number.isFinite(e.form));
  const formHint=stats=>{
   const e=formEntry(stats);
   if(!e)return 'Recent results, not a prediction';
-  if(e.form===null)return 'Limited data: fewer than 2 UFC fights in 36 months';
+  if(e.certified!==true)return 'Form not shown until this record is certified';
+  if(!formShown(e))return 'Limited data: fewer than 2 UFC fights in 36 months';
   return 'Going better right now than '+e.form+'% of active UFC fighters. Recent results, not a prediction';
  };
  const STAGE_CLASS={"Champion":"champ","Title contender":"title","Contender":"contender","Slipping":"slipping",
@@ -671,7 +674,7 @@
   // The stats build's own numbers, unaltered: the UFC stats page shows the same
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
-   if(id==='form'){const e=formEntry(stats);return Number.isFinite(e?.form)?e.form:null;}
+   if(id==='form'){const e=formEntry(stats);return formShown(e)?e.form:null;}
    if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
@@ -868,8 +871,8 @@
    const rankCol=d.ratingFields.indexOf("overallRank");
    // The score out of 100 is rounded, so the overall board is ordered by the stored rank (full-precision rating).
    // Form is the one Form score (data/ufc-fighter-form.json), the same number as the profile and the hub.
-   const formOf=i=>{const e=formData?.fighters?.[d.fighters[i][0]];return Number.isFinite(e?.form)?e.form:null;};
-   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"&&formData?formOf(r[0]):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null}));
+   const formOf=i=>{const e=formData?.fighters?.[d.fighters[i][0]];return formShown(e)?e.form:null;};
+   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"?(formData?formOf(r[0]):null):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null}));
    unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
   }else{
    const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];
@@ -884,7 +887,7 @@
   rows.sort((a,b)=>(ranked?a.k-b.k:0)||(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
   let rank=0,prev=null;
   rows.forEach((r,i)=>{const key=ranked?r.k:r.v;if(prev===null||key!==prev)rank=i+1;r.rank=rank;prev=key;});
-  return {rows,unit,lower,label,total:rows.length,isRating:!!rating,minimum};
+  return {rows,unit,lower,label,total:rows.length,isRating:!!rating,minimum,formLoading:!!rating&&st.metric==="form"&&!formData};
  }
  // Photos are matched on name, so two fighters with one name get initials.
  const boardPhoto=name=>boardData.fighters.filter(f=>norm(f[1])===norm(name)).length>1?
@@ -933,7 +936,7 @@
    escapeHTML(scope)+' · '+escapeHTML(when)+' · '+view.total+' qualifying fighters'+(view.lower?' · Lower is better':'')+'</p>'+
    (boardState.metric==="overall"?'<p>'+RATING_HINT+'</p>':'')+'</div>'+
    (display.length?'<ol class="befn-board-list">'+display.map(r=>boardRowHTML(r,view.unit)).join("")+'</ol>':
-    '<p class="befn-board-placeholder">No fighters qualify for this board yet.</p>')+
+    (view.formLoading?'<p class="befn-board-placeholder">Loading Form…</p>':'<p class="befn-board-placeholder">No fighters qualify for this board yet.</p>'))+
    '<p class="befn-board-rule">A fighter needs '+view.minimum+' UFC fights with full round-by-round statistics'+
    (view.isRating?'':' and '+Math.round(boardData.minCageSeconds/60)+' minutes in the cage in this window')+'. Updated '+escapeHTML(boardData.asOf)+'.</p>';
  }
