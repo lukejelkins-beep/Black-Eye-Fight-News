@@ -61,6 +61,12 @@ class Parse(unittest.TestCase):
         with self.assertRaises(SystemExit):
             countries.parse("|-\n|{{#invoke:flag|icon|XYZ}}\n|[[A Person]]\n")
 
+    def test_korean_names_and_plain_letters_get_extra_keys(self):
+        found = countries.parse("|-\n|{{#invoke:flag|icon|KOR}}\n|Lee Jeong-yeong\n|-\n|{{#invoke:flag|icon|POL}}\n|{{sortname|Robert|Ruchała}}\n")
+        self.assertEqual(found["leejeongyeong"], {"kr"})
+        self.assertEqual(found["jeongyeonglee"], {"kr"})
+        self.assertEqual(found["robertruchala"], {"pl"})
+
     def test_fold_matches_the_site(self):
         self.assertEqual(countries.fold("Jiří Procházka"), "jiriprochazka")
 

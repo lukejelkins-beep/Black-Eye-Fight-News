@@ -52,6 +52,24 @@ LINK_RE = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 PLAIN_NAME_RE = re.compile(r"[^\W\d_][^\W\d_ .'\-]*(?:[ .'\-]+[^\W\d_][^\W\d_.'\-]*)*\.?")
 
 
+# Letters NFKD does not split into a base letter, written the way our other data spells them.
+PLAIN_LETTERS = str.maketrans({"ł": "l", "Ł": "L", "ø": "o", "Ø": "O", "đ": "d", "Đ": "D", "ß": "ss"})
+
+
+def keys_for(name: str, code: str) -> set[str]:
+    """Every folded key a fighter may be looked up by on the site.
+
+    Besides the name as written: with letters like "ł" made plain (our register writes "Ruchala" for "Ruchała"),
+    and for South Korean fighters also given-name-first, since the page writes Korean names surname first
+    ("Lee Jeong-yeong") and our data the other way round ("JeongYeong Lee").
+    """
+    keys = {fold(name), fold(name.translate(PLAIN_LETTERS))}
+    words = name.split()
+    if code == "kr" and len(words) >= 2:
+        keys.add(fold(" ".join(words[1:] + words[:1])))
+    return {k for k in keys if k}
+
+
 def fold(text: str) -> str:
     """Same as BEFNSnapshotTiles.fold in assets/snapshot-tiles.js."""
     t = unicodedata.normalize("NFKD", str(text or ""))
@@ -96,7 +114,8 @@ def parse(wikitext: str) -> dict[str, set[str]]:
         cells = after.split("\n|")
         name = cell_name(cells[1]) if len(cells) > 1 else ""
         if name:
-            found.setdefault(fold(name), set()).add(code)
+            for key in keys_for(name, code):
+                found.setdefault(key, set()).add(code)
     return found
 
 
