@@ -73,21 +73,23 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   screenshotCount++;
   await page.locator('[data-basho-view="results"]').click();
   if(isMobile){
+    // Shared site navigation (sport first, then section; 24 Nov 2026): on a phone the sports sit in the row
+    // under the masthead and the four Sumo sections in the bottom tab bar.
     const nav=await page.evaluate(()=>{
-      const links=[...document.querySelector('.subnav-inner').children]
-        .filter(el=>getComputedStyle(el).display!=='none');
-      return links.map(el=>({label:el.innerText.trim(),
-        client:el.clientWidth,scroll:el.scrollWidth,
-        top:Math.round(el.getBoundingClientRect().top),
-        left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,
-        viewport:document.documentElement.clientWidth}));
+      const read=sel=>[...document.querySelectorAll(sel)].filter(el=>getComputedStyle(el).display!=='none')
+        .map(el=>({label:el.innerText.trim().replace(/\s+/g,' '),client:el.clientWidth,scroll:el.scrollWidth,
+          top:Math.round(el.getBoundingClientRect().top),left:el.getBoundingClientRect().left,
+          right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height,
+          viewport:document.documentElement.clientWidth}));
+      return {sports:read('.sh-areas-phone a'),tabs:read('.befn-mobile-tabs a')};
     });
-    assert.equal(nav.length,7,'Mobile navigation has the seven Sumo destinations: '+JSON.stringify(nav.map(n=>n.label)));
-    // The seven destinations may wrap onto a second row. Within a row they must not overlap, and no label may be
-    // clipped or run off the screen.
-    assert.ok(nav.every((item,i)=>item.scroll<=item.client+2&&item.left>=-1&&item.right<=item.viewport+1&&
-      (i===0||item.top!==nav[i-1].top||item.left>=nav[i-1].right-2)),
-      'No overlapping, clipped or off-screen mobile navigation text: '+JSON.stringify(nav));
+    assert.deepEqual(nav.sports.map(n=>n.label),['Boxing','MMA','Sumo'],'Phone sports row: '+JSON.stringify(nav.sports));
+    assert.deepEqual(nav.tabs.map(n=>n.label),['Overview','Fights','Fighters','Analysis'],'Phone section tabs: '+JSON.stringify(nav.tabs));
+    for(const row of [nav.sports,nav.tabs]){
+      assert.ok(row.every((item,i)=>item.scroll<=item.client+2&&item.left>=-1&&item.right<=item.viewport+1&&item.height>=44&&
+        (i===0||item.left>=row[i-1].right-2)),
+        'No overlapping, clipped, off-screen or undersized mobile navigation: '+JSON.stringify(row));
+    }
   }
   await snap(page,label+'-home',{fullPage:false});
 
@@ -737,12 +739,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // Exercise the redesigned controls, including native keyboard disclosures.
   await open(page,'profile/28','.sumo-poster');
   if(isMobile){
-    // (The old "more" disclosure is gone: all seven Sumo destinations are visible in the sub-navigation,
-    // which the home steps check for overlap and clipping.)
-    await page.locator('.befn-site-menu summary').press('Enter');
-    assert.equal(await page.locator('.befn-site-menu').getAttribute('open'),'');
-    assert.equal(await page.locator('.befn-site-menu nav a').count(),7,'Other sports and site pages remain accessible');
-    await page.locator('.befn-site-menu summary').press('Enter');
+    // Other sports and the all-sports front page stay one tap away: the sports row and the masthead link.
+    assert.equal(await page.locator('.sh-areas-phone a[href="index.html#home"]:visible').count(),2,'Boxing and MMA are reachable');
+    assert.equal(await page.locator('.befn-mobile-title[href="index.html#home"]:visible').count(),1,'The masthead opens the front page');
   }
   const currentRows=await page.locator('.sumo-ed-row').count();
   await page.locator('[data-results-mode="tournaments"]').click();
@@ -826,12 +825,16 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.waitForSelector('.sumo-poster h1');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
-  // Keyboard navigation through the sub-navigation. All Sumo destinations are visible on phones too (the old
-  // "more" disclosure and the Overview/home tab are gone; #home opens Results).
-  for(const route of ['kimarite','banzuke','basho','rikishi','h2h']){
-    await page.locator('.subnav-inner>[data-page="'+route+'"]').press('Enter');
+  // Keyboard navigation through the shared header: section links (top row on desktop, tab bar on phones) and the
+  // pills of the current section's Sumo pages. Starts on a profile, which sits under Fighters.
+  for(const [selector,route] of [
+    ['.sh-sub [data-sumo-page="banzuke"]','banzuke'],['.sh-sub [data-sumo-page="rikishi"]','rikishi'],
+    ['[data-sumo-section="fights"]','matchups'],['.sh-sub [data-sumo-page="h2h"]','h2h'],
+    ['[data-sumo-section="overview"]','basho']]){
+    await page.locator(selector+':visible').first().press('Enter');
     await page.waitForURL('**#'+route);
-    const active=page.locator('.subnav [data-page="'+route+'"][aria-current="page"]').first();
+    const active=page.locator(selector+'[aria-current="page"]:visible').first();
+    await active.waitFor();
     assert.equal(await active.getAttribute('aria-current'),'page','Destination is announced as current');
   }
   // Data-integrity fixture: the first Day 10 matchup in the current data. (This used to be one fixed November 2026
