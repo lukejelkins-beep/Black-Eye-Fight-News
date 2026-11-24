@@ -161,7 +161,16 @@ window.ResultsDesk=(()=>{
  const eventFoot='<footer class="befn-result-event-foot">'+(validVenue?'<div><strong>Location</strong><span>'+esc(venue)+'</span></div>':'')+(e.source?'<div><strong>Results</strong>'+(/^https:\/\/boxerbook\.com\//.test(e.source)?link('https://boxerbook.com','Data from Boxerbook')+' · '+link(e.source,'View source'):link(e.source,'View source'))+'</div>':'')+(poster?.source?'<div><strong>Artwork</strong>'+link(poster.source,'Image source')+'</div>':'')+'</footer>';
  const winner=featured?.status==='completed'&&[0,1].includes(featured.winner)?featured.fighters[featured.winner]?.name:'';
  const opponent=winner?featured.fighters[1-featured.winner]?.name:'';
- const outcome=winner?(winner+' defeated '+(opponent||'opponent')+' · '+boutMethod(featured.method)) : '';
+ /* Results card front (owner, 24 Nov 2026): the event poster we hold, otherwise both fighters' faces with the
+    winner first; then "Winner beat Loser", method, round and division. The full card opens on tap, as before. */
+ const rxcFace=(f,cls)=>{const src=(window.BEFNLocalImages?window.BEFNLocalImages.url(f?.name,'thumb'):'')||f?.photo||'';const ini=String(f?.name||'?').trim().split(/\s+/).slice(0,2).map(p=>p[0]?.toUpperCase()||'').join('');
+  return '<span class="rxc-face '+cls+'"><span class="rxc-ini" aria-hidden="true">'+esc(ini)+'</span>'+(src?'<img src="'+url(src)+'" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">':'')+'</span>';};
+ const ownPoster=(()=>{const own=(window.BEFNLocalPosters||{})[e.id];const p=own&&(own.portrait||own.landscape);return p&&p.url?p:null})();
+ const pairNames=featured?(winner?[featured.fighters[featured.winner],featured.fighters[1-featured.winner]]:featured.fighters):[];
+ const rxcMedia=ownPoster?'<span class="rxc-media is-poster"><img src="'+url(ownPoster.url)+'" alt="'+esc('Event poster for '+r.event)+'" loading="lazy" decoding="async"></span>'
+  :'<span class="rxc-media is-pair">'+(pairNames.length===2?rxcFace(pairNames[0],winner?'is-win':'')+rxcFace(pairNames[1],winner?'is-lose':''):'')+'</span>';
+ const rxcLine=winner?'<b>'+esc(winner)+'</b> beat '+esc(opponent||'opponent'):featured?esc(featured.fighters.map(f=>f.name).join(' and ')):esc((globalThis.BEFNEventTitle||(x=>x))(r.event));
+ const rxcMeta=featured?[String(boutMethod(featured.method)).replace(/\s*\(.*\)\s*$/,''),winner&&featured.round?'Round '+featured.round:'',featured.division].filter(Boolean).join(' · '):'';
  const main=rows.filter(x=>cardSection(x)==='main');
  const prelims=rows.filter(x=>cardSection(x)==='prelims');
  // Determine the source's main-card direction using the COMPLETE event, not
@@ -204,30 +213,21 @@ window.ResultsDesk=(()=>{
  const active=available.find(x=>x.key===requested)||available[0];
  const shown=active?active.bouts:[];
  const tabs=available.length>1?`<div class="result-card-tabs" role="group" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))} card section">${available.map(section=>`<button type="button" class="result-card-tab${section.key===active?.key?' is-active':''}" data-result-event-tab="${esc(eventId)}" data-result-card-section="${section.key}" aria-pressed="${section.key===active?.key}" aria-controls="results-bouts-${esc(eventId)}">${section.label} <small>${section.bouts.length}</small></button>`).join('')}</div>`:'';
- return `<details class="result-event befn-result-list-event" data-result-event="${esc(eventId)}" data-befn-sport="${esc(String(r.sport||'').toLowerCase())}" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}"><summary class="befn-result-summary"><span class="befn-result-thumb${poster&&poster.kind!=="poster"?" is-landscape-art":""}">${thumb}</span><span class="befn-result-summary-copy"><small>${esc(date(r.date))}</small><strong>${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}</strong>${outcome?`<span class="befn-result-outcome">${esc(outcome)}</span>`:''}</span><span class="befn-result-caret" aria-hidden="true">⌄</span></summary><div class="befn-result-expanded">${expandedPoster}<header class="befn-result-detail-header"><h2>${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}</h2><span>${esc(date(r.date))}</span></header><div class="result-event-bouts" data-card="${esc(eventId)}">${tabs}<div class="result-bouts" id="results-bouts-${esc(eventId)}" role="list" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))} — ${esc(active?.label||'Main Card')}">${shown.map(x=>`<div role="listitem">${row(x,{main:x.id===headlinerId,coMain:main.length>1&&x.id===main[1].id})}</div>`).join('')}</div></div>${eventFoot}</div></details>`;
+ return `<details class="result-event befn-result-list-event" data-result-event="${esc(eventId)}" data-befn-sport="${esc(String(r.sport||'').toLowerCase())}" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}"><summary class="befn-result-summary rxc-head">${rxcMedia}<span class="rxc-body"><small class="rxc-kicker">${esc(date(r.date))} · ${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}</small><strong class="rxc-line">${rxcLine}</strong>${rxcMeta?`<span class="rxc-meta">${esc(rxcMeta)}</span>`:''}<span class="rxc-more">Full card · ${all.length} ${all.length===1?'bout':'bouts'} <span class="befn-result-caret" aria-hidden="true">⌄</span></span></span></summary><div class="befn-result-expanded">${expandedPoster}<header class="befn-result-detail-header"><h2>${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}</h2><span>${esc(date(r.date))}</span></header><div class="result-event-bouts" data-card="${esc(eventId)}">${tabs}<div class="result-bouts" id="results-bouts-${esc(eventId)}" role="list" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))} — ${esc(active?.label||'Main Card')}">${shown.map(x=>`<div role="listitem">${row(x,{main:x.id===headlinerId,coMain:main.length>1&&x.id===main[1].id})}</div>`).join('')}</div></div>${eventFoot}</div></details>`;
 }
   function content(){if(!data)return `<div class="empty" role="status">${error?'Results could not be loaded. <button id="results-retry">Try again</button>':'Loading sourced results…'}</div>`;
 
  const rows=selected(),events=groups(rows);
  const cutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
  const recent=events.filter(e=>e[0].date>=cutoff),earlier=events.filter(e=>e[0].date<cutoff);
- function dated(items){
-  let previous='',html='';
-  for(const event of items){
-   const day=event[0].date;
-   if(day!==previous){const d=new Date(day+'T12:00:00Z');html+='<h3 class="fights-result-date"><span>'+esc(d.toLocaleDateString('en-AU',{day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase())+'</span> · '+esc(d.toLocaleDateString('en-AU',{weekday:'long',timeZone:'UTC'}))+'</h3>';previous=day;}
-   html+=eventSection(event);
-  }
-  return html;
- }
- const group=(title,items)=>items.length?'<section class="fights-result-group"><h2>'+title+'</h2>'+dated(items)+'</section>':'';
+ const group=(title,items)=>items.length?'<section class="fights-result-group"><h2>'+title+'</h2><div class="rxc-grid">'+items.map(eventSection).join('')+'</div></section>':'';
  const sport=window.BEFNSport?.get()||'all',promo=window.BEFNFightsUI?.promotion||filters.promotion;
  const promotionLabel={ufc:'UFC',one:'ONE Championship',pfl:'PFL',ksw:'KSW',rizin:'RIZIN',cw:'Cage Warriors'}[promo]||'MMA';
  const isSearching=String(window.BEFNFightsUI?.query??filters.query).trim().length>0;
  const empty=isSearching?'<div class="empty">No results match your search. Try another event or fighter.</div>':
   '<div class="empty">'+(sport==='mma'?'No verified '+promotionLabel+' results are currently available in this feed.':'No completed fight results are currently available in this category.')+'</div>';
  return (error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':'')+
-  (events.length?group('This Week',recent)+group('Earlier Results',earlier):empty);
+  (events.length?group('This week',recent)+group('Earlier',earlier):empty);
 
  }
 function hydrateResultPhotos(){

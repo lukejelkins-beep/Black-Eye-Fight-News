@@ -90,3 +90,36 @@ html[data-befn-area="mma"] #main .fights-unified{--fx-red:#e0a400}
  #main .fights-unified .fights-view-tabs{flex:1 1 100%}
  #main .fights-unified .fights-search{max-width:none}
 }
+
+/* Results cards (owner, 24 Nov 2026): poster we hold or both faces, "Winner beat Loser", method · round · division. */
+#main #fights-active-content .fights-result-group{margin:0 0 28px}
+#main #fights-active-content .fights-result-group>h2{font:800 22px/1.2 var(--display,'Unbounded',sans-serif)!important;letter-spacing:0!important;text-transform:none!important;color:var(--fx-ink)!important;border-bottom:3px solid var(--fx-ink);padding:0 0 10px!important;margin:0 0 14px!important}
+#main #fights-active-content .rxc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+#main #fights-active-content .rxc-grid>details.befn-result-list-event{margin:0!important;border:1px solid var(--fx-line)!important;border-left:1px solid var(--fx-line)!important;border-radius:12px!important;background:#fff!important;min-width:0}
+#main #fights-active-content .rxc-grid>details.befn-result-list-event[open]{grid-column:1/-1}
+#main #fights-active-content details.befn-result-list-event>summary.rxc-head{display:flex!important;align-items:center;gap:14px!important;padding:12px 14px!important;min-height:0!important;cursor:pointer;list-style:none;background:#fff!important;color:var(--fx-ink)!important}
+#main #fights-active-content .rxc-media{flex:0 0 auto;display:flex;align-items:center}
+#main #fights-active-content .rxc-media.is-poster{width:96px;height:96px;background:var(--fx-dark);border-radius:8px;overflow:hidden;justify-content:center}
+#main #fights-active-content .rxc-media.is-poster img{width:100%;height:100%;object-fit:contain;display:block}
+#main #fights-active-content .rxc-media.is-pair{width:96px;height:72px;position:relative}
+#main #fights-active-content .rxc-face{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;background:#ece6dc;color:var(--fx-mute);font:800 15px 'DM Sans',sans-serif}
+#main #fights-active-content .rxc-face img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+#main #fights-active-content .rxc-face:first-child{left:0;top:0;width:60px;height:60px;border:2px solid var(--fx-red);z-index:1}
+#main #fights-active-content .rxc-face:last-child{right:0;bottom:0;width:44px;height:44px;border:2px solid #fff;font-size:12px}
+#main #fights-active-content .rxc-face.is-lose img{filter:grayscale(1)}
+#main #fights-active-content .rxc-body{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+#main #fights-active-content .rxc-kicker{font:800 12px/1.3 'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--fx-mute)}
+#main #fights-active-content .rxc-line{font:500 16px/1.3 'DM Sans',system-ui,sans-serif!important;letter-spacing:0!important;text-transform:none!important;color:var(--fx-ink)!important;overflow-wrap:anywhere}
+#main #fights-active-content .rxc-line b{font-weight:800}
+#main #fights-active-content .rxc-meta{font-size:13px;color:var(--fx-mute)}
+#main #fights-active-content .rxc-more{color:var(--fx-red);font:800 13px 'DM Sans',sans-serif;margin-top:2px}
+#main #fights-active-content .rxc-more .befn-result-caret{display:inline-block;transition:transform .2s;position:static!important}
+#main #fights-active-content details[open] .rxc-more .befn-result-caret{transform:rotate(180deg)}
+#main #fights-active-content details[open]>summary.rxc-head{border-bottom:1px solid var(--fx-line)}
+@media (max-width:760px){
+ #main #fights-active-content .rxc-grid{grid-template-columns:1fr}
+ #main #fights-active-content .rxc-media.is-poster{width:80px;height:80px}
+ #main #fights-active-content .rxc-media.is-pair{width:84px;height:64px}
+ #main #fights-active-content .rxc-face:first-child{width:52px;height:52px}
+ #main #fights-active-content .rxc-face:last-child{width:38px;height:38px}
+}

@@ -2,6 +2,16 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fights: Results cards)
+- **Results get the same treatment as Upcoming** (owner chose "Results tab redesign" after merging #511). Each finished event is a card showing:
+  - the event poster BEFN holds, shown whole on dark; otherwise both main-event fighters' faces, the winner large with a sport-colour ring and the loser smaller and greyed;
+  - the date and event;
+  - "**Winner** beat Loser";
+  - the method (bracketed detail dropped on the card), the round and the division;
+  - "Full card · N bouts".
+- **Layout:** 2 columns on desktop, 1 on phones, grouped into This week and Earlier with the date on each card. The 'BEFN' placeholder boxes and condensed fonts are gone. Tapping a card opens the full card exactly as before (poster, main card and prelims tabs, bouts, sources).
+- **Unchanged:** filters (All and the promotion chips, search) and the `#fights/results` address. Code: `assets/results.js` (card front and grouping) and the Results section of `assets/fights-cards.css`.
+
 ## 2026-11-24 (Fights page: posters first; poster and Top Rank permissions)
 - **Fights cards lead with the official poster, shown whole at its own shape** (owner: "I want fight posters - formatted correctly as the preference - then if there isnt an official fight poster - use photo cards").
   - **Poster order:** a portrait or square poster first, then BEFN-held landscape key art. Each is shown whole on dark, never cropped. Very tall posters are capped at 560 px and letterboxed.
