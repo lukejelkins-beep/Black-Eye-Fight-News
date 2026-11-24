@@ -3,6 +3,13 @@
  * missing profile content, broken navigation or horizontal clipping.
  * Fighter-photo network failures are reported separately: external CDNs may
  * block CI, and a passing test must never imply that reuse rights are cleared.
+ *
+ * Run locally the way CI does (.github/workflows/validate-ufc-profiles.yml): build the inputs, make Playwright
+ * importable, then run this file. It serves the repository root itself.
+ *   node scripts/build-ufc-last-five-coverage.mjs && node scripts/build-ufc-fighter-v3.mjs
+ *   npm install --no-save --no-package-lock playwright@1.56.1 && npx playwright install chromium
+ *   node tests/test-ufc-profile-visual.mjs
+ * Without Playwright in node_modules it stops with ERR_MODULE_NOT_FOUND, which is not a test failure.
  */
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -175,8 +182,9 @@ async function checkProfile(page,profile,screen){
    return !!t&&t!=="—";
   },null,{timeout:12000});
   // Wait briefly for portrait requests to settle. A cached or slow image
-  // must not be declared broken just because it was read instantly.
-  if(isLive)await page.waitForFunction(()=>{
+  // must not be declared broken just because it was read instantly. This applies to local runs too: many
+  // portraits are hotlinked, and on a slow network a mid-load frame was reported as "neither image nor fallback".
+  await page.waitForFunction(()=>{
     const img=document.querySelector("#fighterDialog .befn-pro-photo img");
     return !img||img.complete;
    },null,{timeout:2500}).catch(()=>{});
@@ -219,8 +227,10 @@ async function checkProfile(page,profile,screen){
      const im=frame?.querySelector("img");
      const fallback=frame?.querySelector(".befn-portrait-fallback");
      const styles=fallback?getComputedStyle(fallback):null;
+     // "Painted" also needs the frame on screen: an image inside a hidden frame keeps its own display and opacity.
+     const frameBox=frame?.getBoundingClientRect();
      const imagePainted=!!im&&getComputedStyle(im).display!=="none"&&
-      Number(getComputedStyle(im).opacity)>.05;
+      Number(getComputedStyle(im).opacity)>.05&&!!frameBox&&frameBox.width>0&&frameBox.height>0;
      const shown=!!fallback&&styles?.display!=="none"&&styles?.visibility!=="hidden"&&
       Number(styles?.opacity)>0.9&&!imagePainted&&
       fallback.getBoundingClientRect().width>0&&fallback.getBoundingClientRect().height>0;
