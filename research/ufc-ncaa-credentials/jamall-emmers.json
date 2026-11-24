@@ -1,0 +1,103 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "jamall-emmers",
+ "name": "Jamall Emmers",
+ "identity": {
+  "status": "confirmed"
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "UFC profile says he spent one year at Waldorf College on a wrestling scholarship; season not stated and no roster page found.",
+     "source_url": "https://www.ufc.com/athlete/jamall-emmers",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "other",
+     "level_note": "College (Waldorf); NCAA status not verified",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/jamall-emmers"
+    },
+    {
+     "name": "Waldorf men's wrestling roster 2024-25 search",
+     "checked": "2026-11-24",
+     "url": "https://waldorf.prestosports.com/sports/mwrest/2024-25/roster"
+    }
+   ],
+   "note": "Waldorf roster not found; division/association not verified."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.569Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

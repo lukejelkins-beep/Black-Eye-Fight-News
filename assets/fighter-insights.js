@@ -514,6 +514,14 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-flags])"))el.remove();
   schedule();heroCutout(true);
  }).catch(()=>{});
+ // Boxing face-off (owner, 24 Nov 2026): boxing cutouts from data/boxing-cutout-register.json. Optional, like the UFC ones.
+ let boxingCutouts=null;
+ fetch("data/boxing-cutout-register.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(!d?.cutouts)return;
+  boxingCutouts=d.cutouts;
+  for(const el of document.querySelectorAll('.befn-fight-snapshot[data-sport="boxing"]:not([data-bcuts])'))el.remove();
+  schedule();
+ }).catch(()=>{});
  function figureFor(entry,name){
   const slug=entry?.slug;
   if(!slug)return null;
@@ -1204,6 +1212,88 @@
     '<img class="sb-row-cutimg" src="'+escapeHTML(fig.cutout)+'" alt="" loading="lazy" decoding="async" onerror="this.closest(\'.upcoming-photo\')?.classList.remove(\'sb-row-cut\');this.parentNode.remove()"></span>');
   });
  }
+ // Ratings bars (Power, Defence, ...) for the older snapshot and the boxing face-off.
+ function metricRows(f,sport){
+  const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
+  return labels.map((label,i)=>{
+   const m0=rows[0][i],m1=rows[1][i];
+   return '<div class="befn-snapshot-metric">'+
+    '<b>'+(m0.score===null?'—':m0.score)+'</b>'+performanceMeter(m0,true)+
+    '<span class="befn-snapshot-metric-label">'+escapeHTML(label)+'</span>'+
+    performanceMeter(m1,false)+'<b>'+(m1.score===null?'—':m1.score)+'</b></div>';
+  }).join("");
+ }
+ const anyRated=(f,sport)=>f.some(x=>x&&ratingsFor(x,sport).some(m=>Number.isInteger(m.score)));
+ // Boxing face-off (owner picked it from the 24 Nov 2026 handover): the UFC face-off on boxing cards and on finished
+ // boxing bouts in Results. Most boxers on a card have no BEFN profile, so it is built from what the card row already
+ // shows (names, records, rank tags, photo) plus a boxing cutout where data/boxing-cutout-register.json keeps one.
+ // We hold no boxing tape (age, height, reach): the tape shows only a stance a BEFN profile states, and there are no
+ // analysis lines (those compare UFC fight numbers). Ratings, credentials and the last five appear only on a card and
+ // only for a boxer with a profile. A finished bout shows the face-off and result alone: a profile's ratings and last
+ // five are from the day it was reviewed and can predate the bout (its record can disagree with the result's).
+ function boxingFightsColumn(p,name){
+  const B=window.BEFNSnapshotB,fights=p?latestRows(p):[];
+  return '<section class="befn-history-side"><div class="befn-history-fighter"><b>'+escapeHTML(name)+'</b>'+
+   '<span>'+escapeHTML(p?shortRecord(p):"No BEFN profile yet")+'</span></div>'+
+   (fights.length?fights.map(h=>'<div class="befn-history-fight">'+outcomeTag(h)+
+    '<div class="befn-history-desc"><small>'+escapeHTML(plainDate(h.date))+'</small>'+
+    '<strong>'+escapeHTML(B.dropInitials(h.opponent))+'</strong>'+
+    '<span>'+escapeHTML(h.method||"Method not recorded")+'</span></div></div>').join(""):
+    '<p class="befn-history-empty">'+(p?'Last five results not yet available.':'')+'</p>')+'</section>';
+ }
+ function renderBoxingB(article,names,f){
+  const B=window.BEFNSnapshotB,key=matchupKey(article,names);
+  const finished=article.matches(".is-completed")&&!!article.closest("#results-content [data-result-event]");
+  const contenders=[...article.querySelectorAll(".result-matchup .result-contender")];
+  const rowSrc=i=>contenders[i]?.querySelector(".result-photo > img")?.getAttribute("src")||"";
+  const winner=finished?contenders.findIndex(c=>c.classList.contains("is-winner")):-1;
+  const day=/(\d{4}-\d{2}-\d{2})$/.exec(article.closest("[data-result-event]")?.dataset?.resultEvent||"");
+  const today=finished&&day?new Date(day[1]+"T12:00:00Z"):new Date();
+  // Record: on Results, the one the row shows with its own context ("after fight", "before fight", ...); on a card,
+  // the profile's, else the row's. KOs move to the small line so the big figure stays short.
+  const recordOf=i=>{
+   if(finished){
+    const el=contenders[i]?.querySelector(".result-bout-record");
+    if(!el||el.classList.contains("is-unverified"))return {record:"—",note:""};
+    const r=B.splitKOs([...el.childNodes].filter(x=>x.nodeType===3).map(x=>x.textContent).join("").trim());
+    return {record:r.record||"—",note:[r.kos,el.querySelector("small")?.textContent.trim()].filter(Boolean).join(" · ")};
+   }
+   const r=B.splitKOs(f[i]?.record||contenders[i]?.querySelector(".upcoming-fighter-record")?.textContent.trim()||"");
+   return {record:r.record||"—",note:r.kos};
+  };
+  const rowTags=i=>contenders[i]?[...contenders[i].querySelectorAll(".result-fighter-rank,.result-fighter-tier")].map(x=>x.textContent.trim()).filter(Boolean):[];
+  const sides=names.map((n,i)=>{
+   const r=recordOf(i);
+   return {name:n,record:r.record,note:r.note,form:finished?[]:formLetters(f[i]),
+    fig:B.boxingFigure(slugOf(n),boxingCutouts,rowSrc(i)),tags:finished?(i===winner?["Won"]:[]):rowTags(i)};
+  });
+  if(!finished)upgradeRowPhotos(article,sides);
+  const side=i=>({tape:{stance:B.stanceOf(f[i]?.meta)}});
+  const label=article.querySelector(".result-featured-bout-label")?.textContent.trim()||"";
+  const result=[article.querySelector(".result-matchup-result strong")?.textContent.trim(),
+   article.querySelector(".result-matchup-result .result-matchup-scores")?.textContent.trim()].filter(Boolean).join(" · ");
+  const h={esc:escapeHTML,today,winner:winner>=0?winner:null,
+   billing:label?label.charAt(0).toUpperCase()+label.slice(1).toLowerCase():"",
+   division:article.querySelector(".result-bout-division")?.textContent.trim()||"",
+   rounds:article.querySelector(".result-bout-rounds")?.textContent.trim()||"",
+   status:!finished&&/reported/i.test(article.querySelector(".upcoming-matchup-status")?.textContent||"")?"Reported":"",
+   result:finished?result:""};
+  const any=f.some(Boolean);
+  const bars=!finished&&anyRated(f,"Boxing")?'<div class="befn-snapshot-bars">'+metricRows(f,"Boxing")+'</div>':"";
+  const creds=!finished&&f.some(p=>p&&credentialsFor(p).length)?'<div class="befn-snapshot-extra">'+
+   f.map((p,i)=>'<div>'+(p?'<h4>'+escapeHTML(names[i])+' · credentials</h4>'+credentialsHTML(p):'')+'</div>').join("")+'</div>':"";
+  const fights=!finished&&any?'<section class="befn-recent-history" aria-label="Last five fights"><h3 class="befn-comparison-heading">Last five fights</h3>'+
+   '<section class="befn-history-two">'+boxingFightsColumn(f[0],names[0])+boxingFightsColumn(f[1],names[1])+'</section></section>':"";
+  const buttons=f.map(p=>p?
+   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
+   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  return '<details class="befn-fight-snapshot sb-boxing'+(finished?' sb-result-snap':'')+'" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-sport="boxing"'+
+   (boxingCutouts?' data-bcuts="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+   '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
+   B.tapeHTML(sides,side(0),side(1),h)+bars+creds+fights+
+   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
+   '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
+ }
  function renderSnapshot(article){
   const names=[getName(article,0),getName(article,1)];
   if(names.some(x=>!x))return "";
@@ -1213,14 +1303,9 @@
    if(pair&&tilesFor(article,names))return renderSnapshotB(article,names,f,pair);
    if(article.matches(".is-completed")&&article.closest("#results-content [data-result-event]"))return renderResultB(article,names,f);
   }
-  const rows=f.map(x=>ratingsFor(x,sport)),labels=rows[0].map(x=>x.label);
-  const metricHTML=labels.map((label,i)=>{
-   const m0=rows[0][i],m1=rows[1][i];
-   return '<div class="befn-snapshot-metric">'+
-    '<b>'+(m0.score===null?'—':m0.score)+'</b>'+performanceMeter(m0,true)+
-    '<span class="befn-snapshot-metric-label">'+escapeHTML(label)+'</span>'+
-    performanceMeter(m1,false)+'<b>'+(m1.score===null?'—':m1.score)+'</b></div>';
-  }).join("");
+  if(window.BEFNSnapshotB?.boxingFigure&&sport==="Boxing"&&(article.closest("#upcoming-cards-root")||
+   (article.matches(".is-completed")&&article.closest("#results-content [data-result-event]"))))return renderBoxingB(article,names,f);
+  const metricHTML=metricRows(f,sport);
   const sides=f.map((p,i)=>
    '<div><h4>'+escapeHTML(names[i])+' · recent form</h4>'+formHTML(p)+
    '<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p)+

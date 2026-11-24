@@ -1,0 +1,122 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "ryan-loder",
+ "name": "Ryan Loder",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name, weight class and school context from search results; UFC athlete page not separately fetched."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Placed 7th at 184 lb at the 2013 NCAA Division I championships for Northern Iowa, earning All-American status.",
+     "source_url": "https://nwhof.org/hall_of_fame/bio/13001",
+     "source_name": "Northwest Wrestling Hall of Fame",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    },
+    {
+     "text": "Earned All-American honours at 184 lb at the 2013 NCAA championships as one of two Northern Iowa All-Americans that year.",
+     "source_url": "https://indexuni.library.uni.edu/publications/northern-iowan/2013-03-29/becoming-all-americans-uni-places-two-all-americans-first",
+     "source_name": "Northern Iowan",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "all_american",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "NW Wrestling Hall of Fame",
+     "checked": "2026-11-24",
+     "url": "https://nwhof.org/hall_of_fame/bio/13001"
+    },
+    {
+     "name": "Northern Iowan (UNI student paper)",
+     "checked": "2026-11-24",
+     "url": "https://indexuni.library.uni.edu/publications/northern-iowan/2013-03-29/becoming-all-americans-uni-places-two-all-americans-first"
+    },
+    {
+     "name": "UNI Athletics",
+     "checked": "2026-11-24",
+     "url": "https://unipanthers.com/news/2013/3/23/206887861"
+    }
+   ],
+   "note": "Four-time NCAA qualifier reported; only the 2013 placing was confirmed on a fetched page. Other seasons not itemised."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.605Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

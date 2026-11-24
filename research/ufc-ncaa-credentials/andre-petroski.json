@@ -1,0 +1,132 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "andre-petroski",
+ "name": "Andre Petroski",
+ "identity": {
+  "status": "confirmed",
+  "note": "Name and Pennsylvania/Kutztown details match the middleweight on Wikipedia and the Kutztown bio."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_d1",
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled as a freshman at North Carolina in 2010-11 at 174 lbs and went 16-12, with a redshirt year after.",
+     "source_url": "https://kubears.com/sports/wrestling/roster/andre-petroski/3675",
+     "source_name": "Kutztown Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2011,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Wrestled at Bloomsburg in 2012-13 at 184 lbs and was runner-up at the PSAC Championships.",
+     "source_url": "https://kubears.com/sports/wrestling/roster/andre-petroski/3675",
+     "source_name": "Kutztown Athletics (his bio, listing prior schools)",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Wrestled at Kutztown in 2014-15 at 184 lbs, going 23-10, after a redshirt year; the bio lists him as a 2015 NCAA national qualifier who won his first match 6-4.",
+     "source_url": "https://kubears.com/sports/wrestling/roster/andre-petroski/3675",
+     "source_name": "Kutztown Athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2015,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Kutztown wrestling roster bio",
+     "checked": "2026-11-24",
+     "url": "https://kubears.com/sports/wrestling/roster/andre-petroski/3675"
+    },
+    {
+     "name": "Wikipedia (lead only)",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Andre_Petroski"
+    }
+   ],
+   "note": "Kutztown roster bio gives season detail. NCAA bracket not checked, so the final NCAA result is not confirmed."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.532Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": [
+   "wrestling:tier_A_school_athletics_participation:kubears.com"
+  ]
+ }
+}

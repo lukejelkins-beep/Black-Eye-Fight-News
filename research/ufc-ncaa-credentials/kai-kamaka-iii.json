@@ -1,0 +1,110 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "kai-kamaka-iii",
+ "name": "Kai Kamaka III",
+ "identity": {
+  "status": "confirmed",
+  "note": "Hawaii fighter, Pearl City/Midland per Wikipedia."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled at Pearl City High School in Hawaii and is reported to have won the state title.",
+     "source_url": "https://en.wikipedia.org/wiki/Kai_Kamaka_III",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "claimed"
+    },
+    {
+     "text": "Reported to have received a wrestling scholarship to Midland University.",
+     "source_url": "https://en.wikipedia.org/wiki/Kai_Kamaka_III",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "other",
+     "level_note": "NAIA",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Kai_Kamaka_III"
+    }
+   ],
+   "note": "Wikipedia only; Midland is NAIA, not NCAA."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.581Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

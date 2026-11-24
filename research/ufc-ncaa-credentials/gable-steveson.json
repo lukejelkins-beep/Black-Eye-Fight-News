@@ -1,0 +1,134 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "gable-steveson",
+ "name": "Gable Steveson",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched by name, weight class and school context from search results; UFC athlete page not separately fetched."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_d1"
+   ],
+   "claims": [
+    {
+     "text": "Won the NCAA Division I heavyweight title for Minnesota in 2021, beating Michigan's Mason Parris in the final.",
+     "source_url": "https://www.startribune.com/gophers-heavyweight-gable-steveson-dominates-his-way-to-ncaa-title/600036816",
+     "source_name": "Star Tribune",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2021,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "champion",
+     "display": "sourced"
+    },
+    {
+     "text": "Won a second NCAA Division I heavyweight title for Minnesota in 2022, beating Arizona State's Cohlton Schultz in the final.",
+     "source_url": "https://www.ncaa.com/news/wrestling-men/article/2022-03-19/gable-steveson-caps-his-historical-college-wrestling-career-second-ncaa-title",
+     "source_name": "NCAA.com",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2022,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "champion",
+     "display": "sourced"
+    },
+    {
+     "text": "Returned to Minnesota in 2025 and reached the NCAA heavyweight final, losing 5-4 to Oklahoma State's Wyatt Hendrickson.",
+     "source_url": "https://africa.espn.com/college-sports/story/_/id/44365843/ncaa-wrestling-penn-st-wins-again-hendrickson-stuns-steveson",
+     "source_name": "ESPN",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2025,
+     "level": "ncaa_d1",
+     "ncaa_division": "I",
+     "ncaa_result": "finalist",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "NCAA.com",
+     "checked": "2026-11-24",
+     "url": "https://www.ncaa.com/news/wrestling-men/article/2022-03-19/gable-steveson-caps-his-historical-college-wrestling-career-second-ncaa-title"
+    },
+    {
+     "name": "Minnesota Athletics",
+     "checked": "2026-11-24",
+     "url": "https://gophersports.com/news/2021/3/20/wrestling-steveson-wins-heavyweight-title-at-2021-ncaa-championships"
+    },
+    {
+     "name": "Star Tribune",
+     "checked": "2026-11-24",
+     "url": "https://www.startribune.com/gophers-heavyweight-gable-steveson-dominates-his-way-to-ncaa-title/600036816"
+    }
+   ],
+   "note": "Page contents were read via search summaries (fetches of school pages returned headlines only); NCAA bracket pages not opened. Confirm against NCAA results if possible."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.565Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "alex-perez",
+ "name": "Alex Perez",
+ "identity": {
+  "status": "confirmed",
+  "note": "Same Lemoore, California flyweight as in the UFC profile and InterMat preview."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "conflict",
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled for Lemoore High School, a three-time league champion and two-time divisional champion, ranked as high as 12th in California as a senior in 2010.",
+     "source_url": "https://intermatwrestle.com/articles.html/mixed-martial-arts/roman-bravo-young-vs-alex-perez-grappling-preview-r98336",
+     "source_name": "InterMat",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2010,
+     "level": "high_school",
+     "display": "sourced"
+    },
+    {
+     "text": "Wrestled for West Hills College in California junior college wrestling (CCCAA, not NCAA); reached the 133 lb state final in 2013 and lost 8-6 to a Mt. San Antonio wrestler.",
+     "source_url": "https://intermatwrestle.com/articles.html/mixed-martial-arts/roman-bravo-young-vs-alex-perez-grappling-preview-r98336",
+     "source_name": "InterMat",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "other",
+     "level_note": "CCCAA junior college",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "InterMat preview",
+     "checked": "2026-11-24",
+     "url": "https://intermatwrestle.com/articles.html/mixed-martial-arts/roman-bravo-young-vs-alex-perez-grappling-preview-r98336"
+    },
+    {
+     "name": "Wikipedia (lead only)",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Alex_Perez_(fighter)"
+    },
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/alex-perez"
+    }
+   ],
+   "note": "Junior college only (West Hills College, CCCAA). Wikipedia says regional champion and All-American as a sophomore; InterMat says 2013 133 lb runner-up. Not reconciled."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.527Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

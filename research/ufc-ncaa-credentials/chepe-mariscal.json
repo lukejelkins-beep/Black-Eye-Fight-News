@@ -1,0 +1,104 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "chepe-mariscal",
+ "name": "Chepe Mariscal",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC.com bio names Cicero, IL; Triton College wrestling listed there."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "UFC bio says he wrestled at Triton College, an Illinois junior college, for about a year and a half and qualified for the NJCAA national tournament.",
+     "source_url": "https://www.ufc.com/athlete/chepe-mariscal",
+     "source_name": "UFC.com",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2014,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/chepe-mariscal"
+    },
+    {
+     "name": "Cageside Press fighter bio",
+     "checked": "2026-11-24",
+     "url": "https://cagesidepress.com/2019/04/23/fighter-bio-jose-mariscal/"
+    }
+   ],
+   "note": "Junior college only; no NCAA found. Rests on UFC bio and a 2019 profile; no NJCAA record opened."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.546Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

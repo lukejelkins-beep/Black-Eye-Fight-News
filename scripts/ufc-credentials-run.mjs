@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Research runner for external combat-sport credentials of approved UFC fighters.
- * Research only: writes data/ufc-credentials/<slug>.json and a run directory. It never touches site pages,
+ * Research only: writes <out>/<slug>.json and a run directory under research/ (outside the site build). It never touches site pages,
  * collector-owned files, the Cito API or the UFCalendar budget, and never changes the 783-fighter cohort.
  *
  * Passes (owner plan, 22 Nov 2026):
@@ -39,25 +39,53 @@ const MAX_CONTINUATIONS = 4;
 const read = f => JSON.parse(fs.readFileSync(f, 'utf8'));
 
 /* ---------- roster, skip list, selection ---------- */
+/** Every fighter with a certified BEFN UFC profile (owner, 24 Nov 2026): the frozen 783, the 24 Nov extension cohort
+ * and the weekly rolling cohort. `resolved` are slugs whose identity certification settled (certified, not an alias). */
 export function loadRoster(rootDir = root) {
   const approval = read(path.join(rootDir, 'data/ufc-36-month-roster-approval.json'));
   if (approval.approvedFighters?.length !== 783 || approval.approvedCount !== 783) throw Error('Approved 783-fighter roster required');
+  const opt = f => { try { return read(path.join(rootDir, f)); } catch { return null; } };
+  const ext = opt('data/ufc-extension-cohort-approval-20261124.json')?.approvedFighters || [];
+  const rolling = Object.keys(opt('data/ufc-rolling-certification.json')?.members || {});
+  const slugs = [...new Set([...approval.approvedFighters, ...ext, ...rolling])];
   const names = new Map();
   try {
     for (const f of read(path.join(rootDir, 'data/ufc-36-month-candidates.json')).fighters || []) names.set(f.slug, {name: f.name, lastUfcFight: f.lastUfcFight || null});
   } catch { /* names fall back to the slug */ }
-  return {slugs: approval.approvedFighters, set: new Set(approval.approvedFighters), names};
+  const form = opt('data/ufc-fighter-form.json')?.fighters || {};
+  for (const s of slugs) if (!names.has(s) && form[s]) names.set(s, {name: form[s].name, lastUfcFight: form[s].lastFight || null});
+  const careers = opt('data/ufc-v4-certified-careers.json') || {};
+  const register = opt('data/ufc-independent-full-career-verification.json')?.fighters || {};
+  const aliases = new Set([...Object.keys(careers.statsAliases || {}),
+    ...Object.entries(register).filter(([, e]) => e?.ownerConfirmedDuplicateOf).map(([s]) => s)]);
+  const certified = new Set([...Object.keys(careers.certified || {}), ...Object.keys(careers.extension?.certified || {}),
+    ...Object.keys(careers.rolling?.certified || {})]);
+  const resolved = new Set([...certified].filter(s => !aliases.has(s)));
+  return {slugs, set: new Set(slugs), names, resolved, aliases};
 }
 
-/** Duplicate-identity pairs are an open owner decision: skip both members. Derived from "-N" slug suffixes plus the saved list. */
-export function duplicateIdentitySkips(slugs, extra = []) {
-  const set = new Set(slugs), skip = new Set(extra), pairs = [];
+/** Research folders (owner, 24 Nov 2026: research goes under research/, outside the site build). */
+export const PILOT_DIR = 'research/ufc-credentials-pilot';
+export const NCAA_DIR = 'research/ufc-ncaa-credentials';
+export const RESEARCH_DIRS = [PILOT_DIR, NCAA_DIR];
+export const SCHOOL_HOSTS = NCAA_DIR + '/_school-athletics-hosts.json';
+
+/** Reviewed official college athletics hosts (host -> school). */
+export function loadSchoolHosts(rootDir = root) {
+  try { return Object.keys(read(path.join(rootDir, SCHOOL_HOSTS)).hosts || {}); }
+  catch { return []; }
+}
+
+/** Duplicate identities. A "-N" slug and its base are skipped unless certification settled that slug's identity
+ * (`resolved`); a confirmed alias (`aliases`) and the saved list are always skipped. */
+export function duplicateIdentitySkips(slugs, extra = [], {resolved = new Set(), aliases = new Set()} = {}) {
+  const set = new Set(slugs), skip = new Set([...extra, ...[...aliases].filter(a => set.has(a))]), pairs = [];
   for (const s of slugs) {
     const m = /^(.*)-(\d+)$/.exec(s);
     if (!m) continue;
-    skip.add(s);
     pairs.push({suffixed: s, base: set.has(m[1]) ? m[1] : null});
-    if (set.has(m[1])) skip.add(m[1]);
+    if (!resolved.has(s)) skip.add(s);
+    if (set.has(m[1]) && !resolved.has(m[1])) skip.add(m[1]);
   }
   return {skip, pairs};
 }
@@ -71,7 +99,9 @@ const TEMPLATE = {
     sources_checked: [{name: 'source or database searched', url: 'optional', checked: 'YYYY-MM-DD'}],
     claims: [{text: 'one fact in your own words', level: 'from the level list', level_note: 'only when level is other',
       source_url: 'https page that states it', source_name: 'publisher or database', tier: 'A | B | C',
-      retrieved: 'YYYY-MM-DD', year: 2015}],
+      retrieved: 'YYYY-MM-DD', year: 2015,
+      ncaa_division: 'only for ncaa_d1 / ncaa_other: I | II | III',
+      ncaa_result: 'only for ncaa_d1 / ncaa_other: participant | all_american | finalist | champion'}],
   }])),
 };
 export function systemPrompt(pass) {
@@ -80,6 +110,7 @@ export function systemPrompt(pass) {
     `Disciplines, all required: ${DISCIPLINES.join(', ')}. "grappling" means submission grappling (for example ADCC), not a gym label. A bio calling someone a "wrestler" can mean high school only. A BJJ belt is verified only with a federation or lineage record.`,
     `Evidence tiers: A = governing-body or database record (IJF, JudoInside, UWW, NCAA, FIAS, IBJJF, BoxRec, ADCC, Olympics). B = reputable outlet, or the fighter's own gym or team page. C = self-reported, Wikipedia-only, forums, social media. Tier C is only ever a claim. Search results pages are never a source: cite the exact page that states the fact.`,
     `Level list (use exactly one per claim): ${LEVELS.join(', ')}. "belt_<colour>" covers BJJ belts and judo dan grades. "other" needs level_note.`,
+    'College wrestling: NCAA means NCAA only. Use ncaa_d1 (Division I) or ncaa_other (Division II or III) with ncaa_division, and ncaa_result: participant = on the team roster; all_american = placed top eight at the NCAA championships; finalist = reached the final; champion = won the NCAA title. One claim per season or result. Junior college (NJCAA) and NAIA are not NCAA: use level "other" with level_note "NJCAA" or "NAIA". A college\'s own athletics site (its roster or wrestler bio) counts as Tier A for participation only; All-American, finalist and champion need the NCAA championship bracket or results (ncaa.com, ncaa.org) or two independent Tier B outlets. Check the division of the school in that season: schools move between divisions.',
     'Status per discipline: none_found = you searched the relevant sources and list them in sources_checked and found nothing; claimed = a claim exists but only Tier C or a single weak source; verified = a Tier A record, or two independent Tier B sources; unknown = you could not tell. Unknown beats a guess. Never infer a credential from a fight style or a gym name.',
     'Identity: confirm the person with the UFC athlete page (name, division, country, age) before using any result. Common names and same-name athletes are traps: if you cannot tell them apart, set identity.status to "unclear" and add the identity_unclear flag instead of choosing one.',
     'Write every claim in your own words, one fact each, under 300 characters, with no quotation marks around source wording.',
@@ -88,11 +119,12 @@ export function systemPrompt(pass) {
     pass === 2 ? 'This is a second look at a flagged result. Re-check the flagged points with better sources, remove anything you cannot support, and return the complete corrected object.' : '',
   ].filter(Boolean).join('\n\n');
 }
-export function pass1User({slug, name, lastUfcFight, today}) {
-  return `Today is ${today}. Fighter: ${name} (roster slug ${slug})${lastUfcFight ? `, last UFC bout ${lastUfcFight}` : ''}. Research all seven disciplines and return the JSON object.`;
+export function pass1User({slug, name, lastUfcFight, today, only = null}) {
+  const scope = only && only.length ? `Research ONLY: ${only.join(', ')}. Return every other discipline as {"status":"unknown","claims":[],"sources_checked":[]}` : 'Research all seven disciplines';
+  return `Today is ${today}. Fighter: ${name} (roster slug ${slug})${lastUfcFight ? `, last UFC bout ${lastUfcFight}` : ''}. ${scope} and return the JSON object.`;
 }
 export function pass2User({slug, name, today, record}) {
-  const keep = {identity: record.identity, flags: record.flags, disciplines: Object.fromEntries(DISCIPLINES.map(d => [d, {status: record.disciplines[d].status, claims: record.disciplines[d].claims.map(({text, source_url, source_name, tier, level, year}) => ({text, source_url, source_name, tier, level, year}))}]))};
+  const keep = {identity: record.identity, flags: record.flags, disciplines: Object.fromEntries(DISCIPLINES.map(d => [d, {status: record.disciplines[d].status, claims: record.disciplines[d].claims.map(({text, source_url, source_name, tier, level, level_note, year, ncaa_division, ncaa_result}) => ({text, source_url, source_name, tier, level, level_note, year, ncaa_division, ncaa_result}))}]))};
   return `Today is ${today}. Fighter: ${name} (roster slug ${slug}). The first pass flagged: ${record.flags.join(', ') || 'nothing'}. First-pass result:\n${JSON.stringify(keep)}\nResolve the flags and return the full JSON object.`;
 }
 export function pass3System() {
@@ -273,7 +305,7 @@ function loadRecord(out, slug) { const f = fighterFile(out, slug); return fs.exi
  * Run one pass over `slugs`. `call` is injectable so tests never touch the network.
  * Returns per-outcome counts. Fighters are checkpointed one by one; --resume skips completed ones.
  */
-export async function runPass({pass, slugs, roster, out, runDir, call, workers = 4, maxCalls, resume = false, today, sample = {}, log = null, now = () => new Date().toISOString()}) {
+export async function runPass({pass, slugs, roster, out, runDir, call, workers = 4, maxCalls, resume = false, today, only = null, sample = {}, log = null, now = () => new Date().toISOString()}) {
   const cfg = PASSES[pass]; if (!cfg) throw Error('pass must be 1, 2 or 3');
   fs.mkdirSync(runDir, {recursive: true});
   const runLog = log || new RunLog(runDir, {runId: path.basename(runDir)});
@@ -296,7 +328,7 @@ export async function runPass({pass, slugs, roster, out, runDir, call, workers =
     try {
       const sys = pass === 3 ? pass3System() : systemPrompt(pass);
       let user, items;
-      if (pass === 1) user = pass1User({slug, name: info.name, lastUfcFight: info.lastUfcFight, today});
+      if (pass === 1) user = pass1User({slug, name: info.name, lastUfcFight: info.lastUfcFight, today, only});
       else if (pass === 2) user = pass2User({slug, name: info.name, today, record: item.record});
       else { items = claimItems(item.record, {allClaims: item.sampled}); user = pass3User({slug, name: info.name, items, today}); }
       const res = await call({model: cfg.model, effort: cfg.effort, system: sys, user, tools: cfg.tools, budget,
@@ -309,7 +341,7 @@ export async function runPass({pass, slugs, roster, out, runDir, call, workers =
         raw = buildRecord({slug, name: info.name, parsed, pass, usage: res.usage, today, model: cfg.model, effort: cfg.effort, at: now()});
         if (pass === 2) { raw.history = [...(item.record.history || []), ...raw.history]; }
       }
-      const v = validateRecord(raw, {today, rosterSlugs: roster.set, skipSlugs: roster.skip});
+      const v = validateRecord(raw, {today, rosterSlugs: roster.set, skipSlugs: roster.skip, schoolHosts: roster.schoolHosts || []});
       if (!v.ok) throw Object.assign(Error('validation: ' + v.errors.join(',')), {code: 'invalid'});
       writeAtomic(fighterFile(out, slug), v.record);
       counts.ok++; runLog.outcome(pass, 'ok');
@@ -335,17 +367,24 @@ export async function main(argv = process.argv.slice(2)) {
   const pass = Number(a.pass); if (![1, 2, 3].includes(pass)) throw Error('--pass 1|2|3 required');
   const maxCalls = Number(a['max-calls']); if (!Number.isInteger(maxCalls) || maxCalls < 1) throw Error('--max-calls N is mandatory (model-call budget)');
   const roster = loadRoster();
-  const out = path.resolve(root, a.out || 'data/ufc-credentials');
+  // Research lives under research/ (owner, 24 Nov 2026). The pilot has its own folder; any other run names its folder.
+  if (!a.pilot && !a.out) throw Error('--out research/<folder> is required (e.g. research/ufc-ncaa-credentials)');
+  const out = path.resolve(root, a.out || PILOT_DIR);
   const extraSkips = (() => { try { return read(path.join(out, '_skip-duplicate-identities.json')).skipSlugs || []; } catch { return []; } })();
-  const dup = duplicateIdentitySkips(roster.slugs, extraSkips);
+  const dup = duplicateIdentitySkips(roster.slugs, extraSkips, roster);
+  roster.schoolHosts = loadSchoolHosts();
   roster.skip = dup.skip;
   let selection;
-  if (a.pilot) selection = read(path.join(root, 'data/ufc-credentials-pilot.json')).fighters.map(f => f.slug);
+  if (a.pilot) selection = read(path.join(root, PILOT_DIR, '_pilot.json')).fighters.map(f => f.slug);
   else if (a.slugs) selection = String(a.slugs).split(',').map(s => s.trim()).filter(Boolean);
   else throw Error('choose --pilot or --slugs a,b (a full-roster run is not wired: it needs the owner\'s budget and approval)');
   const bad = selection.filter(s => !roster.set.has(s)); if (bad.length) throw Error('not in approved roster: ' + bad.join(', '));
   const skipped = selection.filter(s => roster.skip.has(s)); selection = selection.filter(s => !roster.skip.has(s));
-  if (selection.length > PILOT_CAP && !(Number(process.env.BEFN_CREDENTIALS_APPROVED_CALLS) >= maxCalls))
+  // A plan-only run (prompts out, saved replies in) makes no model call, so the API budget guard does not apply.
+  const planOnly = Boolean(a['emit-prompts'] || a['from-dir']);
+  const only = a.disciplines ? String(a.disciplines).split(',').map(x => x.trim()).filter(Boolean) : null;
+  if (only && only.some(d => !DISCIPLINES.includes(d))) throw Error('unknown discipline in --disciplines');
+  if (!planOnly && selection.length > PILOT_CAP && !(Number(process.env.BEFN_CREDENTIALS_APPROVED_CALLS) >= maxCalls))
     throw Error(`More than ${PILOT_CAP} fighters needs the owner's approved model-call budget: set BEFN_CREDENTIALS_APPROVED_CALLS to at least --max-calls`);
   const today = a.today || new Date().toISOString().slice(0, 10);
   const runId = a['run-id'] || `run-${today}-${Date.now().toString(36)}`;
@@ -359,7 +398,7 @@ export async function main(argv = process.argv.slice(2)) {
       const info = roster.names.get(slug) || {name: slug}, rec = loadRecord(out, slug);
       if (pass === 2 && !(rec && rec.flags.length)) continue;
       let user;
-      if (pass === 1) user = pass1User({slug, name: info.name, lastUfcFight: info.lastUfcFight, today});
+      if (pass === 1) user = pass1User({slug, name: info.name, lastUfcFight: info.lastUfcFight, today, only});
       else if (pass === 2) user = pass2User({slug, name: info.name, today, record: rec});
       else { const s = selectPass3(selection.map(x => loadRecord(out, x)).filter(Boolean), {rate: a.sample ? Number(a.sample) : 0.075, seed: a.seed || 'befn-credentials'}).find(x => x.slug === slug); if (!s) continue; user = pass3User({slug, name: info.name, items: claimItems(rec, {allClaims: s.sampled}), today}); }
       fs.writeFileSync(path.join(dir, slug + '.txt'), (pass === 3 ? pass3System() : systemPrompt(pass)) + '\n\n---\n\n' + user + '\n');
@@ -375,7 +414,7 @@ export async function main(argv = process.argv.slice(2)) {
   const log = new RunLog(runDir, {runId, dataset: SCOPE});
   const onStop = () => { log.save({interrupted: true}); process.exit(130); };
   process.on('SIGINT', onStop); process.on('SIGTERM', onStop);
-  const counts = await runPass({pass, slugs: selection, roster, out, runDir, call, workers: Number(a.workers || 4), maxCalls, resume: !!a.resume, today, log,
+  const counts = await runPass({pass, slugs: selection, roster, out, runDir, call, workers: Number(a.workers || 4), maxCalls, resume: !!a.resume, today, only, log,
     sample: {rate: a.sample ? Number(a.sample) : 0.075, seed: a.seed || 'befn-credentials'}});
   console.log(JSON.stringify({counts, totals: log.data.totals}));
   const recs = selection.map(s => loadRecord(out, s)).filter(Boolean);

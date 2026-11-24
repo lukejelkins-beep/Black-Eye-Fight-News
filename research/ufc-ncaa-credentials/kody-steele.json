@@ -1,0 +1,103 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "kody-steele",
+ "name": "Kody Steele",
+ "identity": {
+  "status": "confirmed",
+  "note": "Name and Port Angeles hometown match local and UFC coverage."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled for Port Angeles High School; no results found.",
+     "source_url": "https://www.peninsuladailynews.com/2025/02/07/mma-former-port-angeles-wrestler-kody-steele-set-for-debut-at-ufc-312/",
+     "source_name": "Peninsula Daily News",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2015,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/kody-steele"
+    },
+    {
+     "name": "Peninsula Daily News",
+     "checked": "2026-11-24",
+     "url": "https://www.peninsuladailynews.com/2025/02/07/mma-former-port-angeles-wrestler-kody-steele-set-for-debut-at-ufc-312/"
+    }
+   ],
+   "note": "Only high school wrestling found; no college wrestling found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.585Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

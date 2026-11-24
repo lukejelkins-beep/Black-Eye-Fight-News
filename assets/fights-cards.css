@@ -8,6 +8,7 @@ html[data-befn-area="mma"] #main .fights-unified{--fx-red:#e0a400}
 /* switch, chips, search */
 #main .fights-unified .fights-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:0 0 18px}
 #main .fights-unified .fights-view-tabs{display:flex;gap:4px;background:var(--fx-ink);border:0;border-radius:12px;padding:4px;flex:0 1 480px;min-width:0}
+#main .fights-unified .fights-view-tablist{display:contents}
 #main .fights-unified .fights-view-tab{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;border:0!important;border-radius:9px;background:transparent;color:#fff!important;font:800 14px/1 'DM Sans',system-ui,sans-serif;text-decoration:none;letter-spacing:0;text-transform:none;cursor:pointer}
 #main .fights-unified .fights-view-tab.is-active{background:var(--fx-gold);color:var(--fx-ink)!important}
 #main .fights-unified .fights-view-tab:focus-visible{outline:3px solid var(--fx-gold);outline-offset:2px}

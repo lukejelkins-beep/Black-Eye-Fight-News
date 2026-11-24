@@ -1,0 +1,129 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "michael-johnson",
+ "name": "Michael Johnson",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page: lightweight, age 40, born St. Louis, played college football at Central Methodist and mentions wrestling in college. Wikipedia describes the same St. Louis-born UFC lightweight."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 2
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Wikipedia, citing his former official site, says he moved to Meramec Community College after a year of college football and was one of the better NJCAA wrestlers in the country.",
+     "source_url": "https://en.wikipedia.org/wiki/Michael_Johnson_(fighter)",
+     "source_name": "Wikipedia",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/michael-johnson"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Michael_Johnson_(fighter)"
+    },
+    {
+     "name": "UFC.com Lindenwood wrestling pipeline article (mentions him only as a TUF opponent)",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/news/lindenwood-university-wrestling-ufc-pipeline-ufc-fight-pass-read"
+    },
+    {
+     "name": "NJCAA 2005-06 national championship brackets (not retrievable)",
+     "checked": "2026-11-24",
+     "url": "https://www.njcaa.org/sports/wrest/2005-06/national_championship/brackets.pdf"
+    },
+    {
+     "name": "USA Wrestling 2006 NJCAA championships recap (not retrievable)",
+     "checked": "2026-11-24",
+     "url": "https://content.usawmembership.com/articles/14123"
+    }
+   ],
+   "note": "Any college wrestling was junior college (NJCAA) at Meramec Community College, per Wikipedia citing his former website. No NCAA wrestling found, and no NJCAA result or roster could be confirmed: the 2006 NJCAA bracket PDF and the USA Wrestling NJCAA recaps were unreachable. The UFC page only says he"
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.597Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.121Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

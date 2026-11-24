@@ -1,0 +1,105 @@
+{
+  "slug": "rinya-nakamura",
+  "identity": {
+    "url": "https://www.ufc.com/athlete/rinya-nakamura",
+    "summary": "UFC and United World Wrestling match the Japanese wrestler and the 2017 U23 world title."
+  },
+  "lanes": {
+    "national": {
+      "state": "seed",
+      "checkedOn": "2026-11-24",
+      "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "United World Wrestling U23 official results book",
+          "url": "https://cdn.uww.org/2021-04/2017-u23-world_final-book.pdf",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "United World Wrestling Paris results book",
+          "url": "https://cdn.uww.org/2018-03/results_08_paris_2.pdf",
+          "outcome": "supports_claim"
+        }
+      ],
+      "claims": [
+        {
+          "kind": "team_appearance",
+          "edition": "2017 U23 World Wrestling Championships",
+          "sport": "Wrestling",
+          "event": "Men’s freestyle 61 kg",
+          "delegation": "JPN",
+          "category": "under_23",
+          "result": "Gold medallist",
+          "medal": "gold",
+          "sources": [
+            {
+              "name": "United World Wrestling U23 official results book",
+              "url": "https://cdn.uww.org/2021-04/2017-u23-world_final-book.pdf",
+              "authority": "federation"
+            }
+          ]
+        },
+        {
+          "kind": "team_appearance",
+          "edition": "2017 Senior World Wrestling Championships",
+          "sport": "Wrestling",
+          "event": "Men’s freestyle 61 kg",
+          "delegation": "JPN",
+          "category": "senior",
+          "result": "Fifth at the senior Worlds in Paris",
+          "medal": "none",
+          "sources": [
+            {
+              "name": "United World Wrestling Paris results book",
+              "url": "https://cdn.uww.org/2018-03/results_08_paris_2.pdf",
+              "authority": "federation"
+            }
+          ]
+        }
+      ]
+    },
+    "olympic": {
+      "state": "seed",
+      "checkedOn": "2026-11-24",
+      "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "Japan Olympic Committee selection report",
+          "url": "https://www.joc.or.jp/news/012177.html",
+          "outcome": "supports_claim"
+        },
+        {
+          "type": "federation_or_team",
+          "name": "United World Wrestling result",
+          "url": "https://uww.org/article/weekly-five-january-07-2020",
+          "outcome": "supports_claim"
+        }
+      ],
+      "claims": [
+        {
+          "kind": "trials",
+          "edition": "Tokyo 2020",
+          "sport": "Wrestling",
+          "event": "2019 All-Japan Championships men’s freestyle 65 kg",
+          "delegation": "JPN",
+          "category": "senior",
+          "result": "Lost the national selection final to Takuto Otoguro",
+          "medal": null,
+          "sources": [
+            {
+              "name": "Japan Olympic Committee selection report",
+              "url": "https://www.joc.or.jp/news/012177.html",
+              "authority": "delegation"
+            },
+            {
+              "name": "United World Wrestling result",
+              "url": "https://uww.org/article/weekly-five-january-07-2020",
+              "authority": "federation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

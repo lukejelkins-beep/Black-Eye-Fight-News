@@ -1,0 +1,145 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "terrance-mckinney",
+ "name": "Terrance McKinney",
+ "identity": {
+  "status": "confirmed",
+  "note": "Spokane lightweight; Spokesman-Review and school roster match."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "high_school",
+    "ncaa_other",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Won two Washington 3A state wrestling titles at Shadle Park High School, graduating in 2013.",
+     "source_url": "https://www.spokesman.com/stories/2019/jul/21/after-defeating-death-spokanes-terrance-mckinney-h/",
+     "source_name": "Spokesman-Review",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2013,
+     "level": "high_school",
+     "display": "sourced"
+    },
+    {
+     "text": "Wrestled one season at North Idaho College (junior college, not NCAA), going 31-11 and earning junior college All-American honors.",
+     "source_url": "https://chadroneagles.com/sports/wrestling/roster/terrance--mckinney/1528",
+     "source_name": "Chadron State athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2014,
+     "level": "other",
+     "level_note": "NJCAA",
+     "display": "sourced"
+    },
+    {
+     "text": "On the Chadron State (NCAA Division II) roster at 141 lb, redshirting the 2014-15 season.",
+     "source_url": "https://chadroneagles.com/sports/wrestling/roster/terrance--mckinney/1528",
+     "source_name": "Chadron State athletics",
+     "tier": "A",
+     "retrieved": "2026-11-24",
+     "year": 2015,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    },
+    {
+     "text": "Wrestled for Chadron State in 2015-16, named a Division II wrestler of the week and winning the Cowboy Open.",
+     "source_url": "https://www.spokesman.com/stories/2019/jul/21/after-defeating-death-spokanes-terrance-mckinney-h/",
+     "source_name": "Spokesman-Review",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "ncaa_other",
+     "ncaa_division": "II",
+     "ncaa_result": "participant",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "Spokesman-Review",
+     "checked": "2026-11-24",
+     "url": "https://www.spokesman.com/stories/2019/jul/21/after-defeating-death-spokanes-terrance-mckinney-h/"
+    },
+    {
+     "name": "Chadron State roster",
+     "checked": "2026-11-24",
+     "url": "https://chadroneagles.com/sports/wrestling/roster/terrance--mckinney/1528"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Terrance_McKinney"
+    }
+   ],
+   "note": "No NCAA All-American or finalist result found. North Idaho College is junior college, not NCAA. Notre Dame College: left after one semester, no wrestling confirmed."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.610Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": [
+   "wrestling:tier_A_held_at_B_unlisted_host:chadroneagles.com"
+  ]
+ }
+}

@@ -2,6 +2,40 @@
 
 Replaces the 21 Nov version. Written from the central audit chat, merging the design, Sumo and UFC/data chat handovers. Read `AGENTS.md`, `CLAUDE.md` and `docs/design/README.md` first. `DECISIONS.md` has the reasoning for every change. Where a claim here conflicts with `main`, a completed Actions run or the Render deploy, those win.
 
+## 24 Nov update: UFC certification and credentials research
+Added by the certification and NCAA-research chat after #480, #481, #483, #490 and #488 merged. Verify against `main` before relying on it.
+
+**Certification (all merged):**
+- Every UFC profile fighter is certified, **921 of 921**:
+  - 780 of the frozen 783 (#480). The 3 left (`bruno-silva`, `hyunsung-park`, `carlos-hernandez-7`) are duplicate slugs of certified fighters.
+  - 141 in the 24 Nov extension cohort (#481, `data/ufc-extension-cohort-approval-20261124.json`).
+- Road to UFC finals count, result-only, cited to UFC.com. `carlos-hernandez` is canonical.
+- Fights the archive lacked are carried result-only and never rated, so no rating moved.
+- A fight only the results importer holds needs the event's Wikipedia article as a second source.
+- Weekly automation (#483): `.github/workflows/ufc-weekly-certification.yml`, Mondays 03:37 UTC. It adds newcomers to the rolling cohort and rolls certified fighters forward when UFCStats and Wikipedia agree. Results arrive as one draft PR (`auto/ufc-weekly-certification`) for "Merge N".
+- Standing rule: `data/ufc-standing-certification-approval.json` (also in AGENTS.md).
+- The certified list `data/ufc-v4-certified-careers.json` has three parts: the 783 fields, an `extension` block and a `rolling` block (per-fighter count and cutoff).
+- The owner enabled "Allow GitHub Actions to create and approve pull requests". The workflow has not yet run on GitHub.
+
+**Credentials research (all under `research/`, outside the site build, research only):**
+- `research/ufc-ncaa-credentials/` (#490): NCAA wrestling, 198 Americans and 20 Canadians. **21 verified NCAA records**, 3 claimed, 117 Americans still unknown.
+  - Round 1 of the unknowns found none, so the owner stopped that sweep. 90 American unknowns were never re-checked.
+  - College athletics rosters count as official proof only from the reviewed host list `_school-athletics-hosts.json`. Fresno State and Chattanooga are pending.
+  - Pipeline tooling: `scripts/ufc-credentials-run.mjs` and `scripts/ufc-credentials-schema.mjs`. Rules: `docs/ufc-credentials-pipeline.md`.
+- `research/ufc-credentials-pilot/`: the #412 all-discipline pilot, 25 fighters, moved out of `data/`.
+- `research/ufc-representative-credentials/` (#488): Olympic, Commonwealth and national-team lanes. 78 fighters have evidence; every lane is still "pending" for a full individual review. Validator: `node research/ufc-representative-credentials/check.mjs`.
+- `research/ufc-bjj-credentials/` (#488): BJJ and ADCC screen.
+
+**Next (owner to choose):**
+- Show verified NCAA, Olympic and national-team results on fighter profiles. This needs a design decision.
+- Continue #488's batches.
+- Re-check the 90 American unknowns.
+- Review the two pending athletics hosts.
+
+**Lessons:**
+- Many research agents running at once exhaust the session's shared web-search budget. Run about 3 at a time with a per-fighter search cap and prefer direct page fetches.
+- `docs/design/DECISIONS.md` conflicts on almost every merge because each PR adds at the top. Keep both sides.
+
 ## Standing rules (from the owner)
 - Nothing merges to `main`, or to the Sumo preview branch, until the owner says "Merge N". Open a PR, state how it was verified and what was not, then wait.
 - Visual changes are checked in a real browser at 390 px and 1280 px, not only by tests.

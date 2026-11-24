@@ -1,0 +1,104 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "aiemann-zahabi",
+ "name": "Aiemann Zahabi",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched UFC.com athlete page (Canada, division, age)."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Says on his UFC profile that he won the Quebec wrestling provincials in 2012; age group and weight not stated and no independent results found.",
+     "source_url": "https://www.ufc.com/athlete/aiemann-zahabi",
+     "source_name": "UFC.com",
+     "tier": "C",
+     "retrieved": "2026-11-24",
+     "year": 2012,
+     "level": "other",
+     "level_note": "Quebec provincial title, self-reported",
+     "display": "claimed"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/aiemann-zahabi"
+    },
+    {
+     "name": "Wikipedia",
+     "checked": "2026-11-24",
+     "url": "https://en.wikipedia.org/wiki/Aiemann_Zahabi"
+    }
+   ],
+   "note": "Self-reported only; no NCAA link found."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T09:15:13.388Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}

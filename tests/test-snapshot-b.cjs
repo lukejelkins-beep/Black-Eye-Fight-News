@@ -82,7 +82,7 @@ const out = B.tapeHTML(sides, fighter({}, { heightIn: 75 }), fighter({}, { heigh
 assert.ok(out.includes('A &lt;b&gt;') && !out.includes('A <b>'));
 assert.ok(out.includes('class="sb-cut" src="assets/img/ufc-cutouts/a.webp"'));
 assert.ok(out.includes('sb-fig-photo') && out.includes('bo-lee-thumb.webp'));
-assert.ok(out.includes('Light Heavyweight') && out.includes('6′3″') && out.includes('is-lead'));
+assert.ok(out.includes('Light\u00a0Heavyweight') && out.includes('6′3″') && out.includes('is-lead'));
 assert.ok(!out.includes('Listed weight is as shown'), 'weight note only when a weight row exists');
 assert.ok(B.tapeHTML(sides, fighter({}, { weightLb: 205 }), fighter({}), { esc, today }).includes('Listed weight is as shown'));
 assert.ok(B.figureHTML(null, 'Jo Smith', esc).includes('<b>JS</b>'));
@@ -105,7 +105,7 @@ console.log('snapshot-b: ok');
   assert.strictEqual(B.barWidths({ n: [70, null] }), null, 'no bars when a side is missing');
   const html = B.tapeHTML([{ name: 'A One', record: '7-0', tags: ['#3'], fig: null }, { name: 'B Two', record: '9-1', fig: { cutout: 'c.webp' } }],
     fighter({}, { reachIn: 65 }), fighter({}, { reachIn: 68 }), { esc, today, billing: 'Main event', division: 'Flyweight', rounds: '5 rounds', status: 'Reported' });
-  assert.ok(html.includes('<p class="sb-chip">Main event · Flyweight · 5 rounds · Reported</p>'), 'billing said once');
+  assert.ok(html.includes('<p class="sb-chip">Main event · Flyweight · 5 rounds · Reported</p>'), 'billing said once, each part kept whole');
   assert.ok(html.includes('class="sb-vs"') && html.includes('<em>#3</em>'));
   assert.ok(html.includes('sb-row has-bars') && html.includes('style="width:100%"'));
   // a photo that fails to load leaves the initials showing, not an empty disc
@@ -128,3 +128,35 @@ console.log('snapshot-b face-off: ok');
   assert.ok(!upcoming.includes('sb-tags') && !upcoming.includes('sb-result') && !upcoming.includes('is-winner'), 'no result parts on an upcoming bout');
 }
 console.log('snapshot-b result: ok');
+
+// Boxing face-off (24 Nov 2026): figure choice, stance, KO split, initials prefix, and a stance-only tape.
+{
+  const reg = { 'tyson-fury': { ok: true }, 'adam-azim': { ok: false } };
+  assert.deepStrictEqual(B.boxingFigure('tyson-fury', reg, ''), { cutout: 'assets/img/boxing-cutouts/tyson-fury.webp', flag: '' });
+  assert.deepStrictEqual(B.boxingFigure('saul-alvarez', reg, 'assets/img/boxing/tyson-fury-thumb.webp').cutout, 'assets/img/boxing-cutouts/tyson-fury.webp', 'held row photo gives the register id');
+  assert.deepStrictEqual(B.boxingFigure('adam-azim', reg, 'assets/img/boxing/adam-azim-thumb.webp'), { photo: 'assets/img/boxing/adam-azim-thumb.webp' }, 'a dropped cutout falls back to the row photo');
+  assert.deepStrictEqual(B.boxingFigure('x', null, 'https://example.com/a.jpg'), { photo: 'https://example.com/a.jpg' });
+  assert.strictEqual(B.boxingFigure('x', reg, ''), null, 'no photo: initials');
+  assert.strictEqual(B.boxingFigure('x', reg, 'javascript:alert(1)'), null);
+  assert.strictEqual(B.boxingFigure('x', reg, 'http://example.com/a.jpg'), null, 'https only');
+  assert.strictEqual(B.boxingFigure('x', reg, 'assets/img/../../secret.webp'), null);
+  assert.ok(B.figureHTML({ photo: 'https://example.com/a.jpg' }, 'A B', esc).includes('referrerpolicy="no-referrer"'));
+  assert.strictEqual(B.stanceOf('Stance: Orthodox Promotion: Matchroom'), 'Orthodox');
+  assert.strictEqual(B.stanceOf('Stance: SOUTHPAW'), 'Southpaw');
+  assert.strictEqual(B.stanceOf('Promotion: PBC'), '');
+  assert.strictEqual(B.stanceOf(undefined), '');
+  assert.deepStrictEqual(B.splitKOs('32-0 (26 KOs)'), { record: '32-0', kos: '26 KOs' });
+  assert.deepStrictEqual(B.splitKOs('12–0 (1 KO)'), { record: '12–0', kos: '1 KO' });
+  assert.deepStrictEqual(B.splitKOs('5-1-1'), { record: '5-1-1', kos: '' });
+  assert.strictEqual(B.dropInitials('DS DeAndre Savage'), 'DeAndre Savage');
+  assert.strictEqual(B.dropInitials('GM German Garcia Montes'), 'German Garcia Montes');
+  assert.strictEqual(B.dropInitials('USA Team'), 'USA Team', 'kept when the prefix is not the initials');
+  assert.strictEqual(B.dropInitials('Canelo Álvarez'), 'Canelo Álvarez');
+  // Boxing tape: only a stated stance; no weight note, no bars, no empty table when neither stance is known.
+  const s2 = [{ name: 'Conah Walker', record: '18-3-1', note: '9 KOs', fig: null }, { name: 'Alexis Rocha', record: '26-2-1', fig: null }];
+  const html = B.tapeHTML(s2, { tape: { stance: 'Orthodox' } }, { tape: { stance: '' } }, { esc, today, billing: 'Main event', division: 'Welterweight' });
+  assert.ok(html.includes('aria-label="Stance"') && html.includes('Orthodox') && !html.includes('has-bars') && !html.includes('Listed weight'));
+  assert.ok(html.includes('18-3-1 <small>9 KOs</small>'));
+  assert.ok(!B.tapeHTML(s2, { tape: {} }, { tape: {} }, { esc, today }).includes('sb-rows'));
+}
+console.log('snapshot-b boxing: ok');

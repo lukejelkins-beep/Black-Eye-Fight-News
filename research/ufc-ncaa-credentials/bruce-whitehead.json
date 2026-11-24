@@ -1,0 +1,174 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "bruce-whitehead",
+ "name": "Bruce Whitehead",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page: welterweight, age 29, born Houston, wrestled at Conroe High School and Lyon College. Lyon College rosters list Bruce Whitehead of Conroe, Texas, Conroe H.S."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 2
+ },
+ "flags": [
+  "conflict"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school",
+    "other"
+   ],
+   "claims": [
+    {
+     "text": "Listed as a freshman from Conroe, Texas on the Lyon College 2015-16 men's wrestling roster, when Lyon competed in the NAIA.",
+     "source_url": "https://lyonscots.com/sports/wrestling/roster/2015-16",
+     "source_name": "Lyon College Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2016,
+     "level": "other",
+     "level_note": "NAIA",
+     "display": "sourced"
+    },
+    {
+     "text": "Listed as a sophomore on the Lyon College 2017-18 men's wrestling roster.",
+     "source_url": "https://lyonscots.com/sports/wrestling/roster/2017-18",
+     "source_name": "Lyon College Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "other",
+     "level_note": "NAIA",
+     "display": "sourced"
+    },
+    {
+     "text": "Listed as a junior from Conroe H.S. on the Lyon College 2018-19 men's wrestling roster.",
+     "source_url": "https://lyonscots.com/sports/wrestling/roster/2018-19",
+     "source_name": "Lyon College Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2019,
+     "level": "other",
+     "level_note": "NAIA",
+     "display": "sourced"
+    },
+    {
+     "text": "Listed as a senior on the Lyon College 2019-20 roster, and won by fall against West Virginia Tech at the November 2019 Lindsey Wilson duals.",
+     "source_url": "https://lyonscots.com/news/2019/11/16/mens-wrestling-scots-perform-well-at-lindsey-wilson-duals.aspx",
+     "source_name": "Lyon College Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2020,
+     "level": "other",
+     "level_note": "NAIA",
+     "display": "sourced"
+    },
+    {
+     "text": "The Lyon College roster gives Conroe High School in Texas as his high school, matching the UFC page.",
+     "source_url": "https://lyonscots.com/sports/wrestling/roster/2018-19",
+     "source_name": "Lyon College Athletics",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": null,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/bruce-whitehead"
+    },
+    {
+     "name": "Lyon College wrestling rosters 2015-16 to 2021-22",
+     "checked": "2026-11-24",
+     "url": "https://lyonscots.com/sports/wrestling/roster/2018-19"
+    },
+    {
+     "name": "Lyon College athletics news, Lindsey Wilson duals 2019",
+     "checked": "2026-11-24",
+     "url": "https://lyonscots.com/news/2019/11/16/mens-wrestling-scots-perform-well-at-lindsey-wilson-duals.aspx"
+    },
+    {
+     "name": "NCAA release on Lyon becoming an active Division III member",
+     "checked": "2026-11-24",
+     "url": "https://www.ncaa.org/news/2025/7/24/media-center-2-schools-to-become-active-diii-members-sept-1.aspx"
+    }
+   ],
+   "note": "On the Lyon College roster in 2015-16, 2017-18, 2018-19 and 2019-20 (not listed in 2016-17). Lyon was an NAIA school in those seasons: per the NCAA it moved from the NAIA and became an active Division III member only on Sept. 1, 2025. So this is NAIA wrestling, not NCAA; the UFC page's Division III"
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T08:55:43.542Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  },
+  {
+   "pass": 2,
+   "model": "claude-opus-5-5",
+   "effort": "high",
+   "at": "2026-11-24T09:10:30.110Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": [
+   "wrestling:tier_A_held_at_B_unlisted_host:lyonscots.com",
+   "wrestling:tier_A_held_at_B_unlisted_host:lyonscots.com",
+   "wrestling:tier_A_held_at_B_unlisted_host:lyonscots.com",
+   "wrestling:tier_A_held_at_B_unlisted_host:lyonscots.com",
+   "wrestling:status_lowered_verified_to_claimed"
+  ]
+ }
+}

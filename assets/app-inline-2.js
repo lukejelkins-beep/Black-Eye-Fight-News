@@ -143,7 +143,7 @@ async function loadDesk(background=false){
   if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'||location.hash==='#news'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=location.hash==='#news'?renderHome():renderLanding();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
   Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});
  }catch{desk.error='Current feed unavailable. Previously loaded items remain visible.';}
- if(['','#home','#news','#calendar','#results'].includes(location.hash))navigate();
+ if(['','#home','#news','#calendar','#results','#fights/results'].includes(location.hash))navigate();
 }
 const sourceHealth=()=>'<details class="source-health"><summary>News updated '+(desk.lastSuccessfulAt?esc(displayDate(desk.lastSuccessfulAt)):'pending')+'</summary><p>'+(desk.sources.some(s=>!s.ok)?'Some sources are delayed. ':'')+'Checks run every 15 minutes; publication and indexing can be delayed. '+esc(desk.error)+'</p></details><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
 function newsFighterImage(a){
@@ -251,13 +251,14 @@ function renderFightsContent(){
 }
 function renderFightsControls(film){
  const on=id=>film?id==='film':fightDesk.view===id;
- const views=[['upcoming','Upcoming'],['results','Results']].map(([id,label])=>'<button type="button" role="tab" data-fights-view="'+id+'" class="fights-view-tab'+(on(id)?' is-active':'')+'" aria-selected="'+String(on(id))+'" aria-controls="fights-active-content">'+label+'</button>').join('')+
-  '<a href="#highlights" class="fights-view-tab'+(film?' is-active':'')+'"'+(film?' aria-current="page"':'')+'>Fight film</a>';
+ const views=[['upcoming','Upcoming'],['results','Results']].map(([id,label])=>'<button type="button" role="tab" data-fights-view="'+id+'" class="fights-view-tab'+(on(id)?' is-active':'')+'" aria-selected="'+String(on(id))+'" tabindex="'+(on(id)||(film&&id==='upcoming')?'0':'-1')+'" aria-controls="fights-active-content">'+label+'</button>').join('');
+ const film_link='<a href="#highlights" class="fights-view-tab'+(film?' is-active':'')+'"'+(film?' aria-current="page"':'')+'>Fight film</a>';
  /* MMA covers every promotion we hold (owner: "All" first), the same as the MMA Overview. */
  const chips=[['all','All'],['ufc','UFC'],['pfl','PFL'],['one','ONE'],['ksw','KSW'],['rizin','RIZIN'],['cw','Cage Warriors']];
  const promotions=activeSport()==='mma'&&!film?'<div class="fights-promotion-chips" role="group" aria-label="MMA promotion">'+chips.map(([id,label])=>'<button type="button" data-fights-promotion="'+id+'" class="fights-promotion-chip'+(fightDesk.promotion===id?' is-active':'')+'" aria-pressed="'+String(fightDesk.promotion===id)+'">'+label+'</button>').join('')+'</div>':'';
  const search=film?'':'<label class="fights-search"><span class="fights-search-icon" aria-hidden="true">⌕</span><input type="search" id="fights-event-search" placeholder="Search events or fighters" aria-label="Search events or fighters" value="'+esc(fightDesk.query)+'"></label>';
- return '<div class="fights-controls"><div class="fights-view-tabs" role="tablist" aria-label="Fight schedule, results or film">'+views+'</div>'+promotions+search+'</div>';
+ /* Upcoming and Results are ARIA tabs (#fights, #fights/results); Fight film is its own page, so it is a link beside them. */
+ return '<div class="fights-controls"><div class="fights-view-tabs"><div class="fights-view-tablist" role="tablist" aria-label="Fight schedule or results">'+views+'</div>'+film_link+'</div>'+promotions+search+'</div>';
 }
 function renderFights(){return renderFrame('<section class="fights-unified">'+fightsHeading()+renderFightsControls()+'<div id="fights-active-content" role="tabpanel">'+renderFightsContent()+'</div></section>');}
 function renderCalendar(){return renderFights();}
@@ -1172,7 +1173,8 @@ function subNavHTML(key){const g=subLinks[navGroup[key]||key];return g?'<nav cla
 function renderAnalysis(){if(activeSport()==='mma')return renderLeaderboards();return renderFrame('<div class="np"><header class="np-head"><h1>Analysis</h1><p>Fight breakdowns for the biggest cards are on the way. Until then, see who is fighting next.</p></header><a class="np-button" href="#fights">See upcoming fights</a></div>');}
 // Latest three headlines that name this fighter (exact or close spelling only; see assets/related-news.js).
 function fighterRelatedNews(f){const rn=window.BEFNRelatedNews;if(!rn||!f||!Array.isArray(desk.articles))return '';return rn.relatedHTML(rn.relatedNews(desk.articles,[f.name],3),{esc,safeURL},{when:v=>new Date(v).toLocaleDateString('en-AU',{day:'numeric',month:'short'})});}
-function openFighter(id){const f=D.fighters.find(x=>x.id===id)||window.BEFNFighterInsights?.statsProfile?.(id,()=>{if(location.hash==='#fighter/'+id)openFighter(id)});if(!f)return;const recent=f.latest||[];const picture=f.noPortrait?'':f.photo||portraitURL(f.name);const img=`<div class="befn-portrait-slot" data-fighter-portrait="${f.noPortrait?'':esc(f.name)}" data-portrait-state="fallback">${fighterPortraitFallback(f.name)}${picture?`<img loading="eager" src="${safeURL(picture)}" alt="Photograph of ${esc(f.name)}" referrerpolicy="no-referrer">`:''}</div>`;
+let fighterOpener=null;
+function openFighter(id){if(!dialog.open){const a=document.activeElement;fighterOpener={el:a&&a!==document.body&&!dialog.contains(a)?a:null,id};}const f=D.fighters.find(x=>x.id===id)||window.BEFNFighterInsights?.statsProfile?.(id,()=>{if(location.hash==='#fighter/'+id)openFighter(id)});if(!f)return;const recent=f.latest||[];const picture=f.noPortrait?'':f.photo||portraitURL(f.name);const img=`<div class="befn-portrait-slot" data-fighter-portrait="${f.noPortrait?'':esc(f.name)}" data-portrait-state="fallback">${fighterPortraitFallback(f.name)}${picture?`<img loading="eager" src="${safeURL(picture)}" alt="Photograph of ${esc(f.name)}" referrerpolicy="no-referrer">`:''}</div>`;
  const ins=window.BEFNFighterInsights;
  const isUfc=!!ins?.hasV3(f);
  const next=f.nextVerified===true?(f.next||'To be announced'):'To be announced';
@@ -1194,12 +1196,14 @@ function openFighter(id){const f=D.fighters.find(x=>x.id===id)||window.BEFNFight
  syncFighterPortraits(dialog);
  if(dialog.showModal&&!dialog.open)dialog.showModal();else dialog.setAttribute('open','');
  dialog.scrollTop=0;}
-function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(location.hash.startsWith('#fighter/ufc--'))key='leaderboards';if(key==='calendar'||key==='results'){fightDesk.view=key==='results'?'results':'upcoming';history.replaceState(null,'','#fights');key='fights';}const all=['home','news','champions','fighters','leaderboards','social','fights','highlights','analysis'];if(!all.includes(key))key='home';const pages={home:renderLanding,news:renderHome,champions:renderChampions,fighters:renderFighters,leaderboards:renderLeaderboards,social:renderSocial,fights:renderFights,highlights:renderHighlights,analysis:renderAnalysis};const sub=document.getElementById('sh-sub');if(sub)sub.innerHTML=subNavHTML(key);main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===(navGroup[key]||key);x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
+function navigate(){let key=location.hash.replace('#','').split('/')[0]||'home';if(location.hash.startsWith('#fighter/ufc--'))key='leaderboards';const fr=window.BEFNFightsRoute&&window.BEFNFightsRoute.parse(location.hash);if(fr){fightDesk.view=fr.view;if(location.hash!==fr.canonical)history.replaceState(null,'',fr.canonical);key='fights';}const all=['home','news','champions','fighters','leaderboards','social','fights','highlights','analysis'];if(!all.includes(key))key='home';const pages={home:renderLanding,news:renderHome,champions:renderChampions,fighters:renderFighters,leaderboards:renderLeaderboards,social:renderSocial,fights:renderFights,highlights:renderHighlights,analysis:renderAnalysis};const sub=document.getElementById('sh-sub');if(sub)sub.innerHTML=subNavHTML(key);main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===(navGroup[key]||key);x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
 document.addEventListener('click',e=>{
  const fightButton=e.target.closest('button[data-fights-view],button[data-fights-promotion]');
  if(fightButton){
-  if(fightButton.dataset.fightsView)fightDesk.view=fightButton.dataset.fightsView;
-  if(location.hash!=='#fights'){location.hash='#fights';return;}
+  if(fightButton.dataset.fightsView){fightDesk.view=fightButton.dataset.fightsView;const h=window.BEFNFightsRoute?window.BEFNFightsRoute.hashFor(fightDesk.view):'#fights';
+   /* From the Fight film page, a tab opens the Fights page at that view. */
+   if(!window.BEFNFightsRoute?.parse(location.hash)){location.hash=h;return;}
+   if(location.hash!==h)history.replaceState(null,'',h);}
   if(fightButton.dataset.fightsPromotion)fightDesk.promotion=fightButton.dataset.fightsPromotion;
   main.innerHTML=renderFights();
   if(fightButton.dataset.fightsView)main.querySelector('[data-fights-view="'+fightDesk.view+'"]')?.focus({preventScroll:true});
@@ -1293,6 +1297,10 @@ if(ratio<.8&&img.closest('.thumb'))img.style.objectPosition='50% 6%';},true);
 window.addEventListener('hashchange',navigate);
 // A stats profile sits over the UFC stats page: closing it returns that address, so the same name opens again.
 document.addEventListener('close',e=>{if(e.target===dialog&&location.hash.startsWith('#fighter/ufc--'))history.replaceState(null,'','#leaderboards')},true);
+/* Keyboard users return to the card they opened the profile from (QA audit D04). */
+dialog?.addEventListener('close',()=>{const o=fighterOpener;fighterOpener=null;if(!o)return;const back=(o.el&&document.contains(o.el))?o.el:main.querySelector('[data-fighter="'+CSS.escape(o.id)+'"],a[href="#fighter/'+CSS.escape(o.id)+'"]');if(!back){/* The page behind may have changed (a UFC profile from the hub swaps it to the leaderboards); land on its heading, not <body>. */const h=main.querySelector('h1,h2');if(h){if(!h.hasAttribute('tabindex'))h.setAttribute('tabindex','-1');h.focus({preventScroll:true});}return;}back.focus({preventScroll:false});});
+/* Fights Upcoming/Results tabs follow the ARIA tabs pattern: arrows, Home and End move and select. */
+document.addEventListener('keydown',e=>{const tab=e.target.closest?.('[role="tab"][data-fights-view]');if(!tab)return;const tabs=[...tab.closest('[role="tablist"]').querySelectorAll('[role="tab"][data-fights-view]')];const i=tabs.indexOf(tab);const next={ArrowRight:(i+1)%tabs.length,ArrowLeft:(i-1+tabs.length)%tabs.length,Home:0,End:tabs.length-1}[e.key];if(next===undefined)return;e.preventDefault();tabs[next].click();});
 if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
  window.addEventListener('load',()=>{
   if(location.hostname==='befn-responsive-preview.onrender.com'){

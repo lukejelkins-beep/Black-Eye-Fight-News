@@ -32,22 +32,37 @@ test('extractJson finds the object in fenced or chatty replies and survives brac
   assert.equal(extractJson('no json here'), null);
 });
 
-test('the real approved roster loads and names resolve', () => {
+test('the roster is every certified profile fighter (owner, 24 Nov 2026) and names resolve', () => {
   const r = loadRoster(root);
-  assert.equal(r.slugs.length, 783);
+  const ext = JSON.parse(fs.readFileSync(path.join(root, 'data/ufc-extension-cohort-approval-20261124.json'), 'utf8')).approvedFighters;
+  assert.ok(r.slugs.length >= 783 + ext.length);
+  for (const s of ext) assert.ok(r.set.has(s), s);
   assert.equal(r.names.get('bo-nickal').name, 'Bo Nickal');
+  assert.equal(r.names.get('jose-aldo').name, 'Jose Aldo', 'extension fighters get names from their profiles');
 });
 
-test('duplicate-identity slugs are skipped with their base, and listed', () => {
+test('duplicate-identity slugs: unsettled -N slugs and their base are skipped; certification-settled ones are not', () => {
   const {skip, pairs} = duplicateIdentitySkips(['carlos-hernandez', 'carlos-hernandez-7', 'anthony-romero-3', 'bo-nickal']);
   assert.deepEqual([...skip].sort(), ['anthony-romero-3', 'carlos-hernandez', 'carlos-hernandez-7']);
   assert.deepEqual(pairs, [{suffixed: 'carlos-hernandez-7', base: 'carlos-hernandez'}, {suffixed: 'anthony-romero-3', base: null}]);
-  const real = duplicateIdentitySkips(loadRoster(root).slugs);
-  assert.deepEqual([...real.skip].sort(), ['anthony-romero-3', 'carlos-calderon-3', 'carlos-hernandez', 'carlos-hernandez-7', 'waldo-cortes-acosta-2']);
+  const settled = duplicateIdentitySkips(['carlos-hernandez', 'carlos-hernandez-7', 'anthony-romero-3'], [],
+    {resolved: new Set(['carlos-hernandez', 'anthony-romero-3']), aliases: new Set(['carlos-hernandez-7'])});
+  assert.deepEqual([...settled.skip], ['carlos-hernandez-7'], 'only the confirmed alias is skipped');
+  const r = loadRoster(root), real = duplicateIdentitySkips(r.slugs, [], r);
+  assert.deepEqual([...real.skip].sort(), ['bruno-silva', 'carlos-hernandez-7', 'hyunsung-park'],
+    'the three alias slugs; their fighters are researched under the certified slug');
+});
+
+test('a plan-only wrestling prompt says so, and carries the NCAA rules', () => {
+  const u = pass1User({slug: 'x-y', name: 'X Y', today: '2026-11-24', only: ['wrestling']});
+  assert.match(u, /Research ONLY: wrestling/);
+  assert.match(u, /roster slug x-y/);
+  const sys = systemPrompt(1);
+  assert.match(sys, /NJCAA/); assert.match(sys, /ncaa_result/); assert.match(sys, /participation only/);
 });
 
 test('the pilot has 25 roster fighters, none of them duplicate-identity, and the models match the plan', () => {
-  const pilot = JSON.parse(fs.readFileSync(path.join(root, 'data/ufc-credentials-pilot.json'), 'utf8')).fighters;
+  const pilot = JSON.parse(fs.readFileSync(path.join(root, 'research/ufc-credentials-pilot/_pilot.json'), 'utf8')).fighters;
   const roster = loadRoster(root), {skip} = duplicateIdentitySkips(roster.slugs);
   assert.equal(pilot.length, PILOT_CAP);
   assert.equal(new Set(pilot.map(f => f.slug)).size, 25);

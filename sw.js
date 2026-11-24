@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1-ov1-bxh1-nav1-front1-fx1';
+const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1-ov1-bxh1-nav1-front1-d02-sw1-bxfo1-lf1-kb1-kb2-fx1';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -13,7 +13,7 @@ const SHELL = [
   '/assets/local-time.js', '/assets/local-images.js', '/assets/upcoming-cards.js',
   '/assets/upcoming-cards.css', '/assets/related-news.css', '/assets/snapshot-tiles.css', '/assets/snapshot-tiles.js', '/assets/related-news.js', '/assets/fight-talk-filters.js', '/assets/fight-talk.css',
   '/assets/fight-film.css', '/assets/fight-film.js',
-  '/assets/results.css', '/assets/results.js', '/assets/fights-hub.css', '/assets/event-status.js', '/assets/fighter-power-index.js', '/assets/fighter-insights.js', '/assets/fighter-power.css', '/assets/fighter-profile-pro.css', '/assets/fighters-hub.css', '/assets/fighters-hub.js'
+  '/assets/results.css', '/assets/results.js', '/assets/fights-route.js', '/assets/fights-hub.css', '/assets/event-status.js', '/assets/fighter-power-index.js', '/assets/fighter-insights.js', '/assets/fighter-power.css', '/assets/fighter-profile-pro.css', '/assets/fighters-hub.css', '/assets/fighters-hub.js'
 ];
 const SHELL_PATHS = new Set(SHELL);
 self.addEventListener('install', event => {
@@ -21,7 +21,10 @@ self.addEventListener('install', event => {
 });
 self.addEventListener('activate', event => {
   event.waitUntil(caches.keys().then(names => Promise.all(
-    names.filter(name => name.startsWith('ics-live-desk-') || (name.startsWith('befn-app-shell-') && name !== CACHE_NAME))
+    // Every BEFN shell cache except this release's. Only this worker creates befn-* caches
+    // (OneSignal uses its own names). Before 24 Nov 2026 only befn-app-shell-* was cleaned,
+    // so befn-v3-* caches piled up, one per release (QA audit C04).
+    names.filter(name => name.startsWith('ics-live-desk-') || (name.startsWith('befn-') && name !== CACHE_NAME))
       .map(name => caches.delete(name))
   )).then(() => self.clients.claim()));
 });
@@ -43,9 +46,12 @@ self.addEventListener('fetch', event => {
       }
       return response;
     }).catch(async () => {
-      const cached = await caches.match(request,{ignoreSearch:true});
+      // Offline: answer only from this release's cache, never an older one, so HTML, JS and
+      // CSS stay from the same release. ignoreSearch because the shell is stored without ?v=.
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(request,{ignoreSearch:true});
       if(cached) return cached;
-      if(navigation) return (await caches.match('/index.html')) || Response.error();
+      if(navigation) return (await cache.match('/index.html')) || Response.error();
       return Response.error();
     })
   );

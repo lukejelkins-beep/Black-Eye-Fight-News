@@ -1,0 +1,108 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "ty-miller",
+ "name": "Ty Miller",
+ "identity": {
+  "status": "confirmed",
+  "note": "Matched via UFC.com athlete page (Phoenix-born welterweight, FIT NHB Albuquerque) and UFC feature on his Albuquerque upbringing."
+ },
+ "researched": {
+  "date": "2026-11-24",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "claimed",
+   "levels": [
+    "high_school"
+   ],
+   "claims": [
+    {
+     "text": "Wrestled for Sandia High School in Albuquerque before graduating in 2018 and moving straight into MMA; no college wrestling.",
+     "source_url": "https://www.abqjournal.com/sports/for-mma-fighter-miller-wrestling-was-just-part-of-the-plan/507221",
+     "source_name": "Albuquerque Journal",
+     "tier": "B",
+     "retrieved": "2026-11-24",
+     "year": 2018,
+     "level": "high_school",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC.com athlete page",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/athlete/ty-miller"
+    },
+    {
+     "name": "UFC.com feature",
+     "checked": "2026-11-24",
+     "url": "https://www.ufc.com/news/ty-miller-albuquerques-latest-export-ufc-324"
+    },
+    {
+     "name": "Albuquerque Journal",
+     "checked": "2026-11-24",
+     "url": "https://www.abqjournal.com/sports/for-mma-fighter-miller-wrestling-was-just-part-of-the-plan/507221"
+    }
+   ],
+   "note": "Albuquerque Journal says he wrestled for Sandia High School (Albuquerque), graduating 2018, and treated wrestling as a step toward MMA; no college wrestling mentioned. Identity: same FIT-NHB Albuquerque fighter; UFC feature says he moved to Albuquerque at age five."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "bjj": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": []
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-24T09:46:00.354Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}
