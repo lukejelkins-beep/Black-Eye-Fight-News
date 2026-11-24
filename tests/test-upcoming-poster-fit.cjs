@@ -40,7 +40,8 @@ vm.runInNewContext(source,sandbox);
  const html=sandbox.window.UpcomingCards.render('boxing');
  assert(html.includes('src="https://example.com/square-poster.jpg"'),'Verified square poster should take priority');
  assert(!html.includes('show.jpg'),'Landscape banner should not override the headliner portrait');
- assert(html.includes('upcoming-hero-fighter-slot-single'),'A missing poster shows a single fighter');
+ // Owner, 24 Nov 2026: with no poster, a photo card shows both main-event fighters.
+ assert(/data-upcoming-card="missing"[\s\S]*?fxc-pair[\s\S]*?upcoming-hero-fighter-slot fxc-side[\s\S]*?fxc-vs[\s\S]*?upcoming-hero-fighter-slot fxc-side/.test(html),'A missing poster shows both main-event fighters');
  assert(html.includes('data-upcoming-fighter-options'),'Can try the other main-event fighter if first image fails');
  assert(html.includes('data-upcoming-poster-candidates='),'Original and backup image candidates retained');
  assert(html.includes('upcoming-hero-fighter-slot'),'Portrait fallback available');

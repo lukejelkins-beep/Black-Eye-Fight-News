@@ -37,7 +37,9 @@ vm.runInNewContext(source,sandbox,{timeout:5000});
  assert(html.includes('upcoming-fighter-record'),'Record UI is a distinct line under fighter name');
  assert(html.includes('upcoming-hero-media'),'Event poster thumbnail displayed');
  assert(html.includes('upcoming-schedule-row'),'Compact event row required');
- assert(html.includes('upcoming-list-date'),'Date grouping required');
+ // Owner, 24 Nov 2026: cards are grouped by week, and each card carries its own date.
+ assert(/upcoming-list-heading">(Headline fight|This week|Next week|Later)</.test(html),'Week grouping required');
+ assert(/upcoming-row-kicker">[A-Z][a-z]{2}, \d{1,2} [A-Z][a-z]{2}/.test(html),'Each card shows its date');
  assert(html.includes('upcoming-hero-poster'),'Official poster is displayed ahead of the event details');
  assert(html.indexOf('upcoming-hero-poster')<html.indexOf('upcoming-hero-content'),'Poster must sit above event details');
  assert(html.includes('portrait-poster.jpg'),'Sourced portrait poster displayed');

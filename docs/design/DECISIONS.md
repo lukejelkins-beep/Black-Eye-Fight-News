@@ -2,6 +2,22 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fights page: posters first; poster and Top Rank permissions)
+- **Fights cards lead with the official poster, shown whole at its own shape** (owner: "I want fight posters - formatted correctly as the preference - then if there isnt an official fight poster - use photo cards").
+  - **Poster order:** a portrait or square poster first, then BEFN-held landscape key art. Each is shown whole on dark, never cropped. Very tall posters are capped at 560 px and letterboxed.
+  - **No poster, or one that fails:** the card becomes a photo card with both main-event fighters. Each side uses a cut-out, then BEFN's own photo, then the sourced portrait, then initials.
+  - **Card text:** date and promotion, fighters, division and title note, records, local time with countdown, venue, the "Reported · UFC confirmation pending" label where it applies, and "Full card · N bouts". "Full card" opens the existing undercard tabs.
+  - **Layout:** 3 columns on desktop, 2 on tablets, 1 on phones; an opened card spans the full row. The headline fight (the Overview's rule) leads as a wide dark feature, then This week, Next week and Later.
+- **One switch:** Upcoming / Results / Fight film. The separate "Upcoming and results | Fight film" pill row is gone, and the Fight film page shows the same heading and switch. The heading names the sport ("Boxing fights", "MMA fights").
+- **MMA "All" first** (owner's choice). The chips are All · UFC · PFL · ONE · KSW · RIZIN · Cage Warriors, for both upcoming cards and results, replacing the three logo buttons that opened on the UFC.
+- **Sumo's Fights pages are unchanged for now** (owner: Boxing and MMA only).
+- **Owner attestation, 2026-11-24, for official event posters** from boxing and MMA promoter, broadcaster and fight-schedule sites ("I have permission to get these of the various boxing and mma sites"). It is recorded in IMAGE-GUIDE.
+  - **What the search did:** the existing poster pipeline was extended. It now checks robots.txt, recognises KSW event numbers, and has more official hosts. Every kept poster is listed in `data/poster-intake.json` with source, credit, size, orientation and what was checked.
+  - **Result:** official posters for 11 of the 12 uncovered cards, every one looked at by eye. Two are portraits (UFC 336, UFC Sydney) and nine are landscapes (Walker–Rocha, Benavidez–Cieślak, Diaz–Chaves, Bivol–Smith, Soro–Liddard, Lara–Tszyu, Cacace–Ball, Haney–Paro, KSW 124).
+  - **No poster:** UFC Riyadh. It is provisional, and no image with clear official origin was found.
+  - **Blocked or refused hosts, not worked around:** ufc.com 403, PBC 403, BOXXER 502, Tapology and others via robots.txt.
+- **Top Rank attested as a press-kit source** for fighter photos (owner: "Yes, I attest Top Rank"), on the same terms as Matchroom, Queensberry, BOXXER, PBC, MVP and Salita.
+
 ## 2026-11-24 (All-sports front page in the Overview design)
 - **The front page keeps its place and gets the new design** (owner: keep it; design A from two mock-ups). The BEFN logo still opens it. The page has:
   - the next fight night in each sport (Boxing, MMA, Sumo);
