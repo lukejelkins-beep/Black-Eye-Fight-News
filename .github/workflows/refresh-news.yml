@@ -15,7 +15,9 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: publish-live-data
+  # News has its own lock (was publish-live-data, shared with Sumo): a long Sumo
+  # evening watch could hold it for 3.5 hours and delay the headlines (QA audit A03).
+  group: publish-news
   cancel-in-progress: false
 jobs:
   refresh:

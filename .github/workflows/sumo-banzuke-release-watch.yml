@@ -11,7 +11,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: publish-live-data
+  group: publish-sumo
   cancel-in-progress: false
 jobs:
   watch:
