@@ -26,11 +26,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      # The full suite imports the event-poster scout, which needs these libraries.
-      # Install test dependencies before running discovery, not just in the poster job.
-      - name: Install Python test dependencies
-        run: python -m pip install --disable-pip-version-check "Pillow>=11,<13" "requests>=2.31,<3" "beautifulsoup4>=4.12,<5"
-      - run: python -m unittest discover -s tests
+      # Run only the news collector's own tests here. The full Python suite runs in
+      # python-tests.yml on every PR and push to main, so an unrelated test or
+      # dependency (e.g. NumPy for the cutout tests) can no longer stop the feed.
+      - name: News collector tests
+        run: python -m unittest tests.test_news
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
