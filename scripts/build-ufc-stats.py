@@ -514,6 +514,7 @@ def aggregate(fights: list[dict], weights: list[float] | None = None) -> dict:
             "totalPm": per(own, "totalLanded", 60),
             "kd15": per(own, "knockdowns", 900), "kdAbs15": per(opp, "knockdowns", 900),
             "td15": per(own, "takedowns", 900), "tdAtt15": per(own, "takedownAttempts", 900),
+            "tdAbs15": per(opp, "takedowns", 900),   # taken down per 15 min (wrestling defence, 2026-11-24)
             "tdAcc": ratio(own, "takedowns", own, "takedownAttempts", minimum=3),
             "tdDef": ratio(opp, "takedowns", opp, "takedownAttempts", invert=True, minimum=3),
             "sub15": per(own, "subAttempts", 900), "subAbs15": per(opp, "subAttempts", 900),

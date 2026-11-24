@@ -71,8 +71,11 @@ SCORE_DIVISOR = 8
 # .2312, .2318, .2326), since knockdowns and strikes absorbed already carry most of it; .07 keeps it counted at no
 # measurable cost. See docs/ufc-rating-model-2026-11.md.
 # Wrestling (owner, 2026-11-24): offence 60% (takedowns landed 25, accuracy 12, control won 23), defence 40%
-# (takedown defence 22, control conceded 13, reversals 5).
-WRESTLING_WEIGHTS = {"td15": .25, "tdAcc": .12, "ctrlShare": .23, "tdDef": .22, "ctrlAgainstShare": .13, "rev15": .05}
+# (takedown defence %, taken down per 15 min, control conceded, reversals). Takedown defence % alone misses a fighter
+# who stops most attempts but faces many; "taken down per 15" counts how often it actually happens. Its weight was set
+# by a walk-forward test, see docs/ufc-rating-model-2026-11.md.
+WRESTLING_WEIGHTS = {"td15": .25, "tdAcc": .12, "ctrlShare": .23,
+                     "tdDef": .14, "tdAbs15": .12, "ctrlAgainstShare": .10, "rev15": .04}
 # Grappling (owner, 2026-11-24): offence 60% (submission attempts 20, submission wins 28, control won 12), defence 40%
 # (submission losses, opponents' submission attempts, reversals, control conceded); the submission-loss weight was set
 # by a walk-forward test, see docs/ufc-rating-model-2026-11.md.
@@ -111,6 +114,7 @@ COMPONENTS = {
                   ("tdAcc", "Takedown accuracy", "pct"),
                   ("ctrlShare", "Control-time share", "pct"),
                   ("tdDef", "Takedown defence", "pct"),
+                  ("tdAbs15", "Taken down per 15 min (lower is better)", "rate"),
                   ("ctrlAgainstShare", "Time controlled by opponents (lower is better)", "pct"),
                   ("rev15", "Reversals per 15 min", "rate")],
     "defence": [("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
@@ -149,7 +153,7 @@ BOUNDS = {"slpm": (0, 20), "sapm": (0, 20), "td15": (0, 20), "sub15": (0, 12), "
           "ctrlShare": (0, 1), "ctrlAgainstShare": (0, 1), "kd15": (0, 7), "kdAbs15": (0, 7),
           "strAcc": (0, 1), "strDef": (0, 1), "tdAcc": (0, 1), "tdDef": (0, 1),
           "koWinShare": (0, 1), "subWinShare": (0, 1), "subLossShare": (0, 1), "subAbs15": (0, 12),
-          "netCtrl": (-1, 1), "koLossShare": (0, 1)}
+          "netCtrl": (-1, 1), "koLossShare": (0, 1), "tdAbs15": (0, 20)}
 
 
 def bounded(rates: dict, window: dict) -> dict:
@@ -198,6 +202,7 @@ def specs(rates: dict, window: dict) -> dict:
                       (_between(_pct(r.get("tdAcc")), 20, 65), WR["tdAcc"]),
                       (_between(r.get("ctrlShare"), 0, .50), WR["ctrlShare"]),
                       (_between(_pct(r.get("tdDef")), 40, 95), WR["tdDef"]),
+                      (_between(r.get("tdAbs15"), 4.0, 0), WR["tdAbs15"]),
                       (_between(r.get("ctrlAgainstShare"), .50, 0), WR["ctrlAgainstShare"]),
                       (_between(r.get("rev15"), 0, 2), WR["rev15"])],
         "defence": [(_between(sapm, 6.0, 1.2), .31), (_between(_pct(r.get("strDef")), 35, 75), .29),

@@ -282,11 +282,17 @@ class Effectiveness(unittest.TestCase):
         self.assertGreater(stops, concedes)
 
     def test_offence_and_defence_split_60_40(self):
-        for W, defence in ((r.WRESTLING_WEIGHTS, ("tdDef", "ctrlAgainstShare", "rev15")),
+        for W, defence in ((r.WRESTLING_WEIGHTS, ("tdDef", "tdAbs15", "ctrlAgainstShare", "rev15")),
                            (r.GRAPPLING_WEIGHTS, ("subLossShare", "subAbs15", "rev15", "ctrlAgainstShare")),
                            (r.STRIKING_WEIGHTS, ("strDef", "sapm", "kdAbs15", "koLossShare"))):
             self.assertAlmostEqual(sum(W.values()), 1.0)
             self.assertAlmostEqual(sum(W[k] for k in defence), .40)
+
+    def test_wrestling_counts_being_taken_down(self):
+        base = {"td15": 1, "tdDef": .7, "ctrlShare": .2, "ctrlAgainstShare": .1}
+        rarely = r.raw_skill({**base, "tdAbs15": .3}, {}, "wrestling")
+        often = r.raw_skill({**base, "tdAbs15": 2.4}, {}, "wrestling")
+        self.assertGreater(rarely, often, "same defence % but taken down far more often")
 
     def test_wrestling_counts_control_conceded(self):
         a = r.raw_skill({"td15": 1, "tdDef": .7, "ctrlShare": .2, "ctrlAgainstShare": .0}, {}, "wrestling")

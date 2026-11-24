@@ -107,10 +107,10 @@
    kd15:finite(stats.kdAvg,0,7),kdAgainst15:finite(stats.kdAgainstAvg,0,7),
    koRate:finite(stats.koTkoWinRate,0,1),subFinishRate:finite(stats.submissionWinRate,0,1),
    subLossRate:finite(stats.submissionLossRate,0,1),subAgainst15:finite(stats.subAgainstAvg,0,12),
-   koLossRate:finite(stats.koTkoLossRate,0,1)
+   koLossRate:finite(stats.koTkoLossRate,0,1),tdAgainst15:finite(stats.tdAgainstAvg,0,20)
   };
  }
- const WW={td15:.25,tdAcc:.12,ctrlShare:.23,tdDef:.22,ctrlAgainstShare:.13,rev15:.05};
+ const WW={td15:.25,tdAcc:.12,ctrlShare:.23,tdDef:.14,tdAbs15:.12,ctrlAgainstShare:.10,rev15:.04};
  const GW={sub15:.20,subWinShare:.28,ctrlShare:.12,subLossShare:.15,subAbs15:.10,rev15:.08,ctrlAgainstShare:.07};
  const SW={slpm:.10,diffPm:.17,strAcc:.08,kd15:.11,koWinShare:.14,strDef:.12,sapm:.09,kdAbs15:.12,koLossShare:.07};
  function metricSpecs(d){
@@ -146,6 +146,7 @@
       [between(d.tdAcc,20,65),WW.tdAcc,"Takedown completion rate"],
       [between(d.controlShare,0,.50),WW.ctrlShare,"Control-time share"],
       [between(d.tdDef,40,95),WW.tdDef,"Takedown defence"],
+      [between(d.tdAgainst15,4.0,0),WW.tdAbs15,"Taken down/15 (lower is better)"],
       [between(d.controlAgainst,.50,0),WW.ctrlAgainstShare,"Opponent control-time share (lower is better)"],
       [between(d.rev15,0,2),WW.rev15,"Reversals/15"]
     ],
