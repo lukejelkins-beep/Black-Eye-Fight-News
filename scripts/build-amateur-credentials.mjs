@@ -180,12 +180,17 @@ export function grapplingRows(names, dir = BJJ_DIR) {
       for (const r of t.rows) {
         const slug = r['Fighter slug']; const src = link(r.Source);
         if (!verified[file].includes(slug) || !src || !names[slug]) continue;
-        if (r.Identity && r.Identity !== 'Corroborated') continue;
+        // 'Corroborated' rows need the strict name match below. 'Corroborated (gym: …)' rows were
+        // matched on academy against the UFC profile's gym; their published names carry extra
+        // surnames, so only the first name and the fighter's surname have to appear.
+        const gymCorroborated = /^Corroborated \(gym/.test(r.Identity || '');
+        if (r.Identity && r.Identity !== 'Corroborated' && !gymCorroborated) continue;
         const div = r.Division; const d = div.toLowerCase();
         if (/master|teen|kids|infant|mirim|pee wee/.test(d)) continue;
         if (!/adult|juvenile/.test(d)) continue;
         const aliases = [names[slug], ...(names.aliases?.[slug] || [])];
-        if (!aliases.some(n => nameFits(r['Published name'], n))) continue;
+        const loose = n => { const p = norm(r['Published name']), w = norm(n); return p[0] === w[0] && p.includes(w[w.length - 1]); };
+        if (!aliases.some(n => nameFits(r['Published name'], n) || (gymCorroborated && loose(n)))) continue;
         const place = Number(r.Place) || null;
         const belt = BELTS.find(b => new RegExp(`\\b${b}\\b`, 'i').test(div)) || null;
         add(slug, { lane: 'grappling', org: 'IBJJF', kind: 'grappling_result', year: yearOf(r.Event), edition: `${r.Event} (IBJJF)`,
