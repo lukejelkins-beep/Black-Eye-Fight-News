@@ -286,20 +286,22 @@ def result_margin(bout: dict, p: dict) -> float:
     return title
 
 
-def results_walk(bouts: list[dict], p: dict | None = None):
+def results_walk(bouts: list[dict], p: dict | None = None, prior: dict | None = None):
     """Elo-type pass over decided bouts in date order.
 
     bouts: {"boutId", "date", "a", "b", "outcome" (from a's side: W/L/D/NC), "method", "methodDetail"}.
     Yields (bout, rating a before, rating b before, fights a before, fights b before) and returns the final state
-    {slug: {"rating", "fights", "last"}} (ratings as of each fighter's last fight; call results_as_of to age them)."""
+    {slug: {"rating", "fights", "last"}} (ratings as of each fighter's last fight; call results_as_of to age them).
+    prior: optional slug -> starting rating (default p["start"] for everyone)."""
     p = p or RESULTS
     state = {}
     pre = []
     for bout in sorted(bouts, key=lambda x: (x["date"], str(x["boutId"]))):
         if bout["outcome"] not in ("W", "L", "D") or not bout.get("a") or not bout.get("b"):
             continue
-        sa = state.setdefault(bout["a"], {"rating": p["start"], "fights": 0, "last": None})
-        sb = state.setdefault(bout["b"], {"rating": p["start"], "fights": 0, "last": None})
+        prior = prior or {}
+        sa = state.setdefault(bout["a"], {"rating": prior.get(bout["a"], p["start"]), "fights": 0, "last": None})
+        sb = state.setdefault(bout["b"], {"rating": prior.get(bout["b"], p["start"]), "fights": 0, "last": None})
         ra, rb = _idle(sa["rating"], sa["last"], bout["date"], p), _idle(sb["rating"], sb["last"], bout["date"], p)
         pre.append((bout, ra, rb, sa["fights"], sb["fights"]))
         expected = 1 / (1 + 10 ** ((rb - ra) / 400))
