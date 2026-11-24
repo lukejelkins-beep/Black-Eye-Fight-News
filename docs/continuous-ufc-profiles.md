@@ -1,5 +1,9 @@
 # Continuous UFC profile research – BEFN
 
+
+> **Future Stage 4 (proposed, not released; 14 November 2026):** The UFC V4 rating-model evaluation, historical validation, and expanded external-achievements research are specified in [UFC V4 algorithms and credentials deployment plan](ufc-v4-algorithms-credentials-deployment-plan.md). This is a downstream, non-production workstream only. It does not change current V2 classification/V3 displays, approved 783-fighter 36-month roster, existing UFCalendar career-history collection or scheduled workflows. V4 scoring and public rollout require independent QA and explicit owner approval.
+
+
 The existing budgeted workflow \`.github/workflows/ufcalendar-rich-backfill.yml\` collects UFCalendar bouts, profiles and career research. Do **not** duplicate these API requests: its cap protects against monthly overage.
 
 ## Two independent workers
