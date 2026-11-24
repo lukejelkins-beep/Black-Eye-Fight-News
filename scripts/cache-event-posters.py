@@ -4,7 +4,8 @@
 The owner holds permission to republish official event posters (decided
 2026-11-19, docs/design/DECISIONS.md). This job:
   1. reads the poster links already recorded for upcoming cards
-     (data/upcoming-cards.json) and past cards (data/historical-posters.json);
+     (data/upcoming-cards.json), eye-checked finds (data/poster-intake.json)
+     and past cards (data/historical-posters.json);
   2. downloads each poster that is not cached yet (images only, size-capped);
   3. saves a resized WebP to assets/img/posters/<event-id>-<portrait|landscape>.webp;
   4. records source page, image URL, credit, rights, size and checksum in
@@ -34,6 +35,15 @@ def candidates(root=ROOT):
             p = e.get(field)
             if isinstance(p, dict) and p.get('url'):
                 yield e['id'], kind, p['url'], p.get('source') or e.get('source', ''), p.get('credit', '')
+    # Posters found and checked by eye for cards with no poster link in the schedule
+    # (scripts/source-event-posters.py, owner attestation 2026-11-24). Kept apart from
+    # upcoming-cards.json, which other jobs rewrite often.
+    intake_path = root / 'data/poster-intake.json'
+    if intake_path.exists():
+        for event_id, items in json.loads(intake_path.read_text()).get('events', {}).items():
+            for p in items if isinstance(items, list) else [items]:
+                if isinstance(p, dict) and p.get('url'):
+                    yield event_id, p.get('orientation') or 'landscape', p['url'], p.get('source', ''), p.get('credit', '')
     hist_path = root / 'data/historical-posters.json'
     if hist_path.exists():
         for event_id, p in json.loads(hist_path.read_text()).get('events', {}).items():

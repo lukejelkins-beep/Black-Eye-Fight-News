@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "description": "Official event posters found for upcoming cards and looked at by eye before they were kept. scripts/cache-event-posters.py reads this file alongside data/upcoming-cards.json and data/historical-posters.json, so a poster can be cached without rewriting the schedule. One entry per event id; width/height are the original image's own size and orientation is its shape. Rights basis: the owner's attestation of 2026-11-24 for official event posters from boxing and MMA promoter, broadcaster and fight-schedule sites (docs/design/IMAGE-GUIDE.md, Event posters).",
+  "attestation": "owner 2026-11-24: official event posters from boxing and MMA promoter, broadcaster and fight-schedule sites (Top Rank included)",
+  "reviewedAt": "2026-11-24",
+  "events": {
+    "walker-rocha-2026-12-05": [
+      {"url": "https://www.matchroomboxing.com/app/uploads/2026/10/WhatsApp-Image-2026-10-09-at-13.28.37.jpeg",
+       "source": "https://www.matchroomboxing.com/events/walker-vs-rocha/",
+       "credit": "Matchroom Boxing event artwork",
+       "orientation": "landscape", "width": 1600, "height": 900,
+       "check": "Matchroom's own event page (Saturday 05 December 2026). Key art of Conah Walker and Alexis Rocha without lettering; no titled poster or portrait version was published on the site."}
+    ],
+    "benavidez-cieslak-2026-12-05": [
+      {"url": "https://schedule.fightmag.com/wp-content/uploads/2026/10/benavidez-vs-cieslak.jpg",
+       "source": "https://schedule.fightmag.com/events/david-benavidez-vs-michal-cieslak/",
+       "credit": "PBC event artwork · via FIGHTMAG",
+       "orientation": "landscape", "width": 1200, "height": 691,
+       "check": "PBC pay-per-view artwork naming Benavidez and Cieslak. premierboxingchampions.com refuses automated requests (403), so it was taken from the fight-schedule page."}
+    ],
+    "diaz-chaves-2026-12-10": [
+      {"url": "https://schedule.fightmag.com/wp-content/uploads/2026/11/christopher-diaz-vs-alan-chaves.jpg",
+       "source": "https://schedule.fightmag.com/events/christopher-diaz-vs-alan-chaves/",
+       "credit": "Boxlab / Matchroom Project Series event artwork · via FIGHTMAG",
+       "orientation": "landscape", "width": 1200, "height": 675,
+       "check": "Full-card poster: Christopher Diaz vs Alan Chaves, Thursday Dec 10, Caribe Royale Orlando, DAZN."}
+    ],
+    "bivol-smith-2026-12-12": [
+      {"url": "https://www.matchroomboxing.com/app/uploads/2026/10/Bivol-Smith-BG.jpg",
+       "source": "https://www.matchroomboxing.com/events/bivol-vs-smith/",
+       "credit": "Matchroom Boxing event artwork",
+       "orientation": "landscape", "width": 1920, "height": 1081,
+       "check": "Matchroom's own event page (Saturday 12 December 2026). Close-up key art of Bivol and Callum Smith without lettering; no titled poster found (RCC's sites did not answer)."}
+    ],
+    "soro-liddard-2026-12-12": [
+      {"url": "https://schedule.fightmag.com/wp-content/uploads/2026/10/michel-soro-vs-george-liddard.jpg",
+       "source": "https://schedule.fightmag.com/events/michel-soro-vs-george-liddard/",
+       "credit": "Matchroom event artwork · via FIGHTMAG",
+       "orientation": "landscape", "width": 1200, "height": 675,
+       "check": "Monte-Carlo Showdown VII poster: Soro vs Liddard (IBO middleweight), 12 December, Salle des Étoiles Sporting Monte Carlo, Matchroom and DAZN."}
+    ],
+    "lara-tszyu-2026-12-13": [
+      {"url": "https://schedule.fightmag.com/wp-content/uploads/2026/11/lara-vs-tszyu.jpg",
+       "source": "https://schedule.fightmag.com/events/erislandy-lara-vs-tim-tszyu/",
+       "credit": "PBC / DAZN event artwork · via FIGHTMAG",
+       "orientation": "landscape", "width": 1600, "height": 900,
+       "check": "PBC and DAZN artwork of Lara and Tszyu (no date on it). No Limit Boxing's event page carries only a full-card website banner with side bars, so this cleaner headliner art was kept."}
+    ],
+    "cacace-ball-2026-12-19": [
+      {"url": "https://the-o2-belfast.s3-assets.com/_1114x628_fit_center-center_none/314686/cacace_vs_ball_the_o2_belfast.webp",
+       "source": "https://theo2belfast.com/events/cacace-v-ball",
+       "credit": "Queensberry / DAZN event artwork · via The O2 Belfast",
+       "orientation": "landscape", "width": 1114, "height": 627,
+       "check": "Weight For It: Cacace vs Ball, WBA world super featherweight championship, Sat Dec 19, The O2 Belfast, Queensberry and DAZN."}
+    ],
+    "haney-paro-2026-12-19": [
+      {"url": "https://api.toprank.com/storage/uploads/1056/conversions/261219_Haney_Paro_16x9-thumb.webp",
+       "source": "https://www.toprank.com/news/tickets-on-sale-now-for-devin-haney-liam-paro-welterweight-unification-showdown-at-chase-center-in-san-francisco",
+       "credit": "Top Rank / DAZN event artwork",
+       "orientation": "landscape", "width": 1920, "height": 1080,
+       "check": "Collision Course: Haney vs Paro, world welterweight unification, Dec 19, Chase Center San Francisco, DAZN Saturday Fight Night; Top Rank, DHP and No Limit logos."}
+    ],
+    "ksw-124-2026-12-19": [
+      {"url": "https://www.kswmma.com/storage/2026-11/1794673606-ksw124-www-kopia.jpg",
+       "source": "https://www.kswmma.com/gala/xtb-ksw-124",
+       "credit": "KSW event artwork",
+       "orientation": "landscape", "width": 1920, "height": 1080,
+       "check": "XTB KSW 124, 19/12, PreZero Arena Gliwice; Pawlak vs Kuberski (middleweight title), Vojčák vs Szpilka, Kaczmarczyk vs Štummer. Current full-card version (November) preferred over the September headliner-only one."}
+    ],
+    "ufc-336-2027-01-30": [
+      {"url": "https://fighttime.ru/images/events/2026/ufc336_poster.jpg",
+       "source": "https://fighttime.ru/events/107316/UFC-336-Van-vs-Kape.html",
+       "credit": "UFC event artwork · via FightTime",
+       "orientation": "portrait", "width": 1100, "height": 1307,
+       "check": "UFC 336: Van (C) vs Kape, world flyweight championship, Jan 30 Sat, Scotiabank Arena, Ontario. ufc.com refuses automated requests (403)."}
+    ],
+    "ufc-sydney-2027-02-06": [
+      {"url": "https://fighttime.ru/images/events/2026/ufn_sydney.jpg",
+       "source": "https://fighttime.ru/events/107318/UFC-Fight-Night-298-Saint-Denis-vs-Salkilld.html",
+       "credit": "UFC event artwork · via FightTime",
+       "orientation": "portrait", "width": 1100, "height": 1310,
+       "check": "UFC Fight Night: Salkilld vs Saint Denis, lightweight bout, Feb 6 Sat, Afterpay Arena, NSW Government. ufc.com refuses automated requests (403)."}
+    ]
+  },
+  "rejected": [
+    {"eventId": "cacace-ball-2026-12-19", "url": "https://queensberry.co.uk/cdn/shop/articles/queensberry-title-treble-in-belfast-6484154.jpg",
+     "reason": "Different event: Cacace vs Wrzesinski on the Lopez vs Conlan undercard, May 27, SSE Arena."},
+    {"eventId": "cacace-ball-2026-12-19", "url": "https://schedule.fightmag.com/wp-content/uploads/2026/08/anthony-cacace-vs-nick-ball-1.jpg",
+     "reason": "Lettering cropped out of the same key art; the titled version from The O2 Belfast was kept."},
+    {"eventId": "ufc-riyadh-2026-12-05", "url": "https://schedule.fightmag.com/wp-content/uploads/2026/10/ufc-fight-night-adesanya-vs-magomedov.jpg",
+     "reason": "Card is reported with UFC confirmation pending; the image has no UFC lettering, date or venue and its origin cannot be confirmed as official. Fail closed."},
+    {"eventId": "bivol-smith-2026-12-12", "url": "https://images.daznservices.com/di/library/DAZN_News/bb/6d/dmitry-bivol19022026_u3r20odfojm0183ebcswd2730.jpg",
+     "reason": "A news photograph of Bivol from February 2026, not event artwork."},
+    {"eventId": "bivol-smith-2026-12-12", "url": "https://photo.boxingscene.com/uploads/DmitryBivol9855.jpg",
+     "reason": "A news photograph, not event artwork."}
+  ]
+}
