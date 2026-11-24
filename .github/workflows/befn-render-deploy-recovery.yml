@@ -63,7 +63,20 @@ jobs:
             data/ufc-v4-flags.json data/ufc-v4-certified-careers.json data/ufc-overall-records.json
             data/ufc-stats/index.json data/ufc-stats/names.json
             data/ufc-stats/leaderboards.json data/ufc-stats/divisions.json
+            # Sumo pages and the data they load. Added 2026-11-24: Sumo merges only went live when a
+            # watched news or results file happened to change too.
+            sumo.html sumo-stables.html sumo-stories.html
+            assets/sumo.js assets/sumo-site-nav.js assets/sumo-area-nav.css assets/site-header.css
+            assets/sumo-home.css assets/sumo-home.mjs assets/sumo-home-data.mjs
+            assets/sumo-review.mjs assets/sumo-review-data.mjs
+            assets/sumo-banzuke-view.mjs assets/sumo-banzuke-changes.mjs
+            data/sumo/basho-archive/index.json data/sumo/banzuke-release-dates.json
           )
+          # A banzuke saved by the daily release watch (data/sumo/banzuke-release/YYYYMM.json) is new on
+          # release day, so it must count as drift then.
+          for release in data/sumo/banzuke-release/*.json; do
+            if [[ -f "$release" ]]; then files+=("$release"); fi
+          done
           # The V3 file is created by the offline calculator after this source
           # release. Monitor it once present; never fail a pre-build deployment.
           if [[ -f data/ufc-fighter-v3.json ]]; then
