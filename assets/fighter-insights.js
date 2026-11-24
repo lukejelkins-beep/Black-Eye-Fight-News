@@ -1359,6 +1359,23 @@
    if(article){const html=renderSnapshot(article);if(html)el.outerHTML=html}
   }
   layoutV3Dialog();
+  // R2 pilot is intentionally inert in production. No audited payload or flag
+  // is shipped with the public site. Do not infer certification from V3 review.
+  const pilot=window.BEFN_UFC_R2_PILOT;
+  if(pilot?.featureEnabled===true&&pilot?.audit&&pilot?.expectedCommit&&
+     Array.isArray(pilot?.bouts)&&Number.isSafeInteger(pilot?.verifiedOfficialBoutCount)){
+   const dialog=document.querySelector('#fighterDialog');
+   const host=dialog?.querySelector('.befn-profile-insights[data-befn-profile]');
+   const active=host&&byId.get(host.dataset.befnProfile);
+   if(active&&isUfcProfile(active)&&pilot.fighterSlug===active.id){
+    import('../scripts/ufc-v4-r2-v3-pilot-adapter.mjs')
+     .then(({mountVerifiedCareerPilot})=>{
+      const current=dialog.querySelector('.befn-profile-insights[data-befn-profile]');
+      if(current?.dataset.befnProfile===active.id)
+       mountVerifiedCareerPilot(dialog,pilot);
+     }).catch(()=>{});
+   }
+  }
   schedule();
  }
 
