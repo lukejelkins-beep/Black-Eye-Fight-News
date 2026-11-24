@@ -131,7 +131,7 @@ The owner has permission from the IJF and UWW (25 Nov). The runner's wide screen
 
 **Ruled out (same names):** Jesse Butler (a -81 to -100 kg judoka still competing in 2025; the UFC fighter is a bantamweight), Javier Reyes (Ecuadorian judoka; the UFC fighter is Colombian), José Henrique (the match was a Cuban "Jose Souza"), Gabriel Santos (+100 kg judoka), and wrestlers Alex Pérez Cimarra (ESP), Charles Johnson Calawen (PHI), Esteban David Martínez (COL), Daniel Felipe dos Santos (BRA, 2026), Julia da Silva Joaquim, Lázaro Daniel Hernández Luis (CUB), Jodalys Santiago Luna (PUR) and Manuel Torres (VEN).
 
-**Unresolved:** Daniel Santos (a BRA -66 kg judoka who medalled at 2013-14 Pan-American Opens; the UFC fighter is a Brazilian featherweight, but nothing links them), Irina Alekseeva (RUS U17 wrestling 2015-16; identity open), José Daniel Medina (ARG U20 wrestling 2014) and Luana Santos (a 40 kg U17 Pan-American entry in 2014).
+**Ruled out (25 Nov):** Daniel Santos. The IJF judoka (person 12141, BRA -66 kg, medals at 2013-14 Pan-American Opens) has no link to the UFC fighter, whose profile gives Muay Thai as his style, Chute Boxe as his gym and pro MMA since 2013, the same years, with no mention of judo. **Unresolved:** Irina Alekseeva (RUS U17 wrestling 2015-16; identity open), José Daniel Medina (ARG U20 wrestling 2014) and Luana Santos (a 40 kg U17 Pan-American entry in 2014).
 
 ## Bio claims checked (25 Nov 2026)
 
