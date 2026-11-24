@@ -620,8 +620,10 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(await page.locator('#sumo-main').innerText(),'No recorded losses against Churanoumi',
     'True zero losses are not described as missing technique data');
 
-  await open(page,'kimarite','.technical-terms');
-  assert.equal(await page.locator('.technical-terms .term').count(),9);
+  // The Techniques page is a gallery of all 82 official kimarite (the old nine-term glossary is gone).
+  await open(page,'kimarite','.sumo-km-gallery');
+  assert.equal(await page.locator('.sumo-km-gallery .sumo-km-tile-link').count(),82,'All 82 official kimarite are listed');
+  assertContains(await page.locator('.sumo-km-count').innerText(),'82 of 82','Technique count shown');
   assertContains(await page.locator('#sumo-main').innerText(),'Yorikiri','technique');
   await snap(page,label+'-kimarite',{fullPage:false});
 
@@ -669,9 +671,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     assert.ok(!checkedIds.has(w.sourceId),'Duplicate Sumo browser QA source ID '+w.sourceId);
     checkedIds.add(w.sourceId);
     await page.evaluate(id=>{ location.hash='#profile/'+id; },w.sourceId);
-    await page.waitForFunction(name=>document.querySelector('.profile-hero h1')?.textContent?.trim()===name,
+    await page.waitForFunction(name=>document.querySelector('.sumo-poster h1')?.textContent?.trim()===name,
       w.shikonaEn,{timeout:15000});
-    const headingText=await page.locator('.profile-hero h1').innerText();
+    const headingText=await page.locator('.sumo-poster h1').innerText();
     assertContains(headingText,w.shikonaEn,'Loaded wrestler '+w.sourceId);
     assert.equal(await page.locator('#sumo-career .sumo-career-detail-section').count(),4,
       'Visible career tile groups on wrestler '+w.sourceId);
@@ -703,11 +705,22 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('[data-h2h-order="oldest"]').click();
   const oldest=await page.locator('.sumo-h2h-order+ol li').allInnerTexts();
   assert.deepEqual(oldest,[...newest].reverse(),'H2H reverse order does not scramble date/winner/technique');
-  const linkColor=await page.locator('.sumo-h2h-hero .sumo-match-name a').first().evaluate(el=>getComputedStyle(el).color);
-  assert.equal(linkColor,'rgb(255, 247, 229)','Dark H2H header uses readable light links');
+  // The wrestler names in the H2H header are profile links; they must stay readable against their background
+  // (WCAG AA, 4.5:1) whatever colours the design uses.
+  const headerLinks=await page.locator('#sumo-main a[href^="#profile/"]').evaluateAll(links=>{
+    const parse=c=>c.match(/[\d.]+/g).map(Number);
+    const lum=([r,g,b])=>{const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(r)+.7152*f(g)+.0722*f(b)};
+    const background=el=>{for(let e=el;e;e=e.parentElement){const p=parse(getComputedStyle(e).backgroundColor);if(p.length>=3&&(p.length<4||p[3]>.5))return p.slice(0,3)}return [255,255,255]};
+    return links.slice(0,2).map(a=>{
+      const L1=lum(parse(getComputedStyle(a).color).slice(0,3)),L2=lum(background(a));
+      return {text:a.textContent.trim(),ratio:(Math.max(L1,L2)+.05)/(Math.min(L1,L2)+.05)};
+    });
+  });
+  assert.equal(headerLinks.length,2,'H2H header links both wrestlers');
+  assert.ok(headerLinks.every(l=>l.ratio>=4.5),'H2H header wrestler links are readable (contrast at least 4.5:1): '+JSON.stringify(headerLinks));
   await snap(page,label+'-h2h-onosato-ura',{fullPage:false});
   for(const id of [8850,28,75,82,16]){
-    await open(page,'profile/'+id,'.profile-hero');
+    await open(page,'profile/'+id,'.sumo-poster');
     assert.equal(await page.locator('.sumo-rank-svg').count(),1);
     assert.equal(await page.locator('.sumo-weight-svg').count(),1);
     await snap(page,label+'-profile-'+id);
@@ -720,10 +733,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // Exercise the redesigned controls, including native keyboard disclosures.
   await open(page,'profile/28','.sumo-poster');
   if(isMobile){
-    await page.locator('.sumo-mobile-more summary').press('Enter');
-    assert.equal(await page.locator('.sumo-mobile-more-links a').count(),2,
-      'Mobile navigation exposes Banzuke and Kimarite without horizontal clipping');
-    await page.locator('.sumo-mobile-more summary').press('Enter');
+    // (The old "more" disclosure is gone: all seven Sumo destinations are visible in the sub-navigation,
+    // which the home steps check for overlap and clipping.)
     await page.locator('.befn-site-menu summary').press('Enter');
     assert.equal(await page.locator('.befn-site-menu').getAttribute('open'),'');
     assert.equal(await page.locator('.befn-site-menu nav a').count(),7,'Other sports and site pages remain accessible');
@@ -808,7 +819,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('.sumo-rival').first().click();
   await page.waitForSelector('.sumo-h2h-comparison');
   await page.getByRole('link',{name:'Back to originating profile'}).click();
-  await page.waitForSelector('.profile-hero h1');
+  await page.waitForSelector('.sumo-poster h1');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
   for(const route of ['kimarite','banzuke','basho','rikishi','home']){
