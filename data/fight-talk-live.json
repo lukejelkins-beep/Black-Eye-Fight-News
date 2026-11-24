@@ -1,7 +1,7 @@
 {
-  "attemptedAt": "2026-11-24T10:04:40.211Z",
-  "checkedAt": "2026-11-24T10:04:40.211Z",
-  "updatedAt": "2026-11-24T08:08:52.302Z",
+  "attemptedAt": "2026-11-24T10:22:14.375Z",
+  "checkedAt": "2026-11-24T10:22:14.375Z",
+  "updatedAt": "2026-11-24T09:45:20Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
   "sourcesChecked": 6,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,70 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
+      "Instagram": 36,
+      "X": 34,
       "Bluesky": 6,
-      "X": 27,
-      "Threads": 8
+      "Threads": 7,
+      "Reddit": 1
     },
     "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n32ecswyvt2e",
+      "cid": "bafyreihohtjamarb3bdbaxiuzifzwhaynpso75pyonpbnmmi4lrmrdi4v4",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "The Viking Warrior returns this weekend. 🥊\n\nMikkel Kessler, 47, steps back into the ring on November 28 after 13 years away from boxing. \n\nThe former five-time world champion faces Bernard Joseph in Denmark, returning to the venue where he captured his first title in 2004. 🇩🇰",
+      "postedAt": "2026-11-24T09:45:20Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n32ecswyvt2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 2,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n327pz6tvs2e",
+      "cid": "bafyreicfo6ctq2q5nddwlt5xsjopq43bbzfe652aqtlwhh2ozc2jmfaxvq",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Claressa Shields vs Lauren Price could become a two-fight deal in 2027! 🥊🇺🇸🇬🇧\n\nPromoter Ben Shalom wants a rematch at a Cardiff stadium if their first fight is close, potentially in front of 50,000 fans.",
+      "postedAt": "2026-11-24T08:23:13Z",
+      "date": "24 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n327pz6tvs2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n326wdam7k27",
       "cid": "bafyreie6qjg55xtes5oyujzdzg5lyd5rrtcxpjpexbwwpdcxnd3xlgbskq",
@@ -139,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -163,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -183,11 +232,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
       "engagement": {
-        "likes": 2,
-        "comments": 0,
+        "likes": 3,
+        "comments": 1,
         "shares": 2
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -235,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -259,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -283,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -331,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -355,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -403,7 +452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -427,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -475,7 +524,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -499,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -523,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -547,7 +596,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -595,7 +644,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -619,7 +668,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -711,11 +760,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -739,7 +788,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
+      "engagementCheckedAt": "2026-11-24T10:22:14.375Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -863,30 +912,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2y2mcnzqk2z",
-      "cid": "bafyreic7gnh22uvn6ejk2vqkjoebbdpnmf7r3alr7hywybrasddyobzh7i",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Mike Tyson Refuses to Hand Tank Davis His Boxing Crown #boxing #boxingnews",
-      "postedAt": "2026-11-23T11:46:21Z",
-      "date": "23 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2y2mcnzqk2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2y2mbmzir26",
       "cid": "bafyreiaauqbpzzchvtvpqrqc2j7wjrbdk37wkdc4kfypk2sgxwvqlwfue4",
       "platform": "Bluesky",
@@ -908,30 +933,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-24T10:04:40.211Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n2y2jmp3xw2s",
-      "cid": "bafyreigjvsbfysbemkvagsonmazb7o3l6aybrzcz5bvdntei2ppwwj5wu4",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Mike Tyson refuses to hand Tank Davis his boxing crown. 🥊👑 Tyson says Davis must face more elite fighters, naming Shakur Stevenson, before earning his place among the greats.\n\nFull story on WBN.",
-      "postedAt": "2026-11-23T11:44:51Z",
-      "date": "23 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n2y2jmp3xw2s",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T04:50:22.473Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
