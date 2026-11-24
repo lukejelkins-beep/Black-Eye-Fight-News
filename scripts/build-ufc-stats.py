@@ -902,7 +902,8 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
     names = {}
     for slug, row in index_rows.items():
         names.setdefault(norm(row["name"]), slug)
-    rated = sum(1 for row in index_rows.values() if row["rating"] and any(v is not None for v in row["rating"][1:5]))
+    rated = sum(1 for row in index_rows.values()  # skill slots only, not form (Defence left the skills on 2026-11-24)
+                if row["rating"] and any(v is not None for v in row["rating"][1:1 + len(ufc_ratings.SKILLS)]))
     (out_dir / "names.json").write_text(json.dumps({"schema": SCHEMA, "asOf": as_of.isoformat(), "rated": rated,
                                                     "names": names},
                                                    separators=(",", ":"), sort_keys=True), encoding="utf-8")

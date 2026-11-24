@@ -51,10 +51,10 @@ RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "
 RESULTS_MEAN = 1500          # an idle rating drifts back toward this
 RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as established
 # Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Owner's mix: results carry
-# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 71/29 with the 2026-11-24 skills), same total
+# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 69/31 with the 2026-11-24 skills), same total
 # spread as the fit.
 # The four skills keep their old relative weights.
-BLEND = {"results": 1.769, "skills": 1.228}
+BLEND = {"results": 1.783, "skills": 1.236}
 # Old weights were striking 25, defence 25, wrestling 20, grappling 15; striking now carries the strike defence.
 SKILL_WEIGHTS = {"striking": .55, "grappling": .20, "wrestling": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
@@ -66,10 +66,12 @@ HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit o
 SCORE_DIVISOR = 8
 
 # Striking (owner, 2026-11-24): output 60% (landed, differential, accuracy, knockdowns, KO wins) and defence 40%
-# (strike defence, strikes absorbed, knockdowns absorbed, KO/TKO losses). The KO-loss share of the defence part was
-# chosen by a walk-forward test (scripts/ufc-rating-evaluate.py), see docs/ufc-rating-model-2026-11.md.
+# (strike defence, strikes absorbed, knockdowns absorbed, KO/TKO losses). KO/TKO losses weigh .07: a walk-forward test
+# on 2024+ fights of 0, .07, .13 and .20 found a larger weight never tracked results better (skills-only Brier .2311,
+# .2312, .2318, .2326), since knockdowns and strikes absorbed already carry most of it; .07 keeps it counted at no
+# measurable cost. See docs/ufc-rating-model-2026-11.md.
 STRIKING_WEIGHTS = {"slpm": .10, "diffPm": .17, "strAcc": .08, "kd15": .11, "koWinShare": .14,
-                    "strDef": .10, "sapm": .07, "kdAbs15": .10, "koLossShare": .13}
+                    "strDef": .12, "sapm": .09, "kdAbs15": .12, "koLossShare": .07}
 MODEL = "results+skills 2026-11"
 
 # (key, label, unit) for the "what drives this rating" view.

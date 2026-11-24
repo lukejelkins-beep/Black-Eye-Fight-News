@@ -101,3 +101,11 @@ test("last five fights come from the stats file, not a reviewed profile checked 
  const w=stats.fights.slice(0,5).filter(b=>b.outcome==="W").length,l=stats.fights.slice(0,5).filter(b=>b.outcome==="L").length;
  assert(html.includes("Last 5 UFC · "+w+"–"+l),"the last-five record is from the stats file");
 });
+
+test("the rated count on profiles equals the established ratings in the stats files",()=>{
+ // Profiles say "percentiles against N rated UFC fighters" from names.json. When Defence left the skills (2026-11-24)
+ // the count briefly included provisional fighters through the form slot (822 instead of 717).
+ const index=read("data/ufc-stats/index.json").fighters,names=read("data/ufc-stats/names.json");
+ const established=Object.keys(index).filter(slug=>read("data/ufc-stats/fighters/"+slug+".json").ratings?.eligible).length;
+ assert.equal(names.rated,established);
+});

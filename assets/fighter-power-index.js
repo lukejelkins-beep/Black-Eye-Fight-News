@@ -110,7 +110,7 @@
    koLossRate:finite(stats.koTkoLossRate,0,1)
   };
  }
- const SW={slpm:.10,diffPm:.17,strAcc:.08,kd15:.11,koWinShare:.14,strDef:.10,sapm:.07,kdAbs15:.10,koLossShare:.13};
+ const SW={slpm:.10,diffPm:.17,strAcc:.08,kd15:.11,koWinShare:.14,strDef:.12,sapm:.09,kdAbs15:.12,koLossShare:.07};
  function metricSpecs(d){
   if(!d)return null;
   const diff=d.slpm!==null&&d.sapm!==null?d.slpm-d.sapm:null;
