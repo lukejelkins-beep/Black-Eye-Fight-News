@@ -6,18 +6,18 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 :where(a,button,input,select,summary,[tabindex]):focus-visible{outline:3px solid #17664F;outline-offset:3px}
 .frame{max-width:1280px;padding-inline:clamp(16px,3vw,48px)}
 .main{padding-top:20px;padding-bottom:64px}
-.utility{display:none}
-.masthead-inner{min-height:64px}
-.logo img{width:42px;height:42px}
-.logo strong{font-size:25px}
-.logo small{font-size:10px;margin-top:5px;letter-spacing:.06em}
-.header-right{font-size:13px}
+
+
+
+
+
+
 .preview-chip{font-size:11px;padding:6px 10px}
 .primary-links a{font-size:13px;padding:10px 13px}
 .primary-links{justify-content:center}
 .befn-global-sports-inner{padding-top:5px!important;padding-bottom:5px!important;min-height:48px!important}
 .befn-sumo-link{min-height:40px}
-.subnav a{font-size:13px;padding:8px 14px}
+
 .testing-note{font-size:13px}
 .testing-note .frame{display:block;padding-block:6px}
 .testing-note summary{cursor:pointer;font-size:13px;line-height:1.4}
@@ -165,22 +165,21 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero .profile-current{grid-column:1/-1}
  .sumo-rival-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
  .sumo-result-header,.sumo-ed-row-main{grid-template-columns:64px 82px minmax(125px,1.7fr) minmax(85px,1fr) minmax(100px,1.1fr) 70px;gap:7px}
- .frame{padding-inline:24px}
-}
+ .frame{padding-inline:24px}}
 @media(max-width:599px){
  .frame{padding-inline:16px}
- .masthead-inner{min-height:56px}
- .logo img{width:36px;height:36px}
- .logo strong{font-size:21px}
- .logo small,.header-right{display:none}
+ 
+ 
+ 
+ 
  .mobile-site-menu{display:block;background:var(--ink);color:#fff}
  .mobile-site-menu summary{padding:8px 16px;min-height:44px;cursor:pointer;font-weight:700}
  .mobile-site-menu nav{display:grid;grid-template-columns:1fr 1fr;padding:8px 12px}
  .mobile-site-menu a{color:#fff!important;padding:10px;font-size:14px;min-height:44px}
  .site-nav{display:none}
  .befn-global-sports-inner{gap:8px!important}
- .subnav-inner{justify-content:start}
- .subnav a{padding:8px 11px}
+ 
+ 
  .main{padding-top:12px;padding-bottom:40px}
  .profile-hero{grid-template-columns:96px minmax(0,1fr);gap:12px;padding:14px;border-radius:8px}
  .profile-hero .profile-icon{grid-row:1}
@@ -223,13 +222,11 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-chart-controls button{font-size:13px}
  .sumo-rank-svg,.sumo-weight-svg{max-height:260px}
  .sumo-data-table .table-scroll{overflow-x:auto}
- .sumo-techniques-list .chart-row{grid-template-columns:minmax(100px,1fr) minmax(40px,1fr) auto}
-}
+ .sumo-techniques-list .chart-row{grid-template-columns:minmax(100px,1fr) minmax(40px,1fr) auto}}
 @media(max-width:359px){
  .profile-hero{grid-template-columns:88px minmax(0,1fr)}
  .profile-hero h1{font-size:34px}
- .sumo-ed-row-main{column-gap:5px}
-}
+ .sumo-ed-row-main{column-gap:5px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:0s!important;animation-duration:0s!important}}
 
 /* Hero areas use direct grid children so the facts can span the screen on mobile. */
@@ -237,20 +234,17 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero>.profile-icon{grid-column:1;grid-row:1/span 2}
  .profile-hero>.profile-title{grid-column:2;grid-row:1}
  .profile-hero>.profile-facts{grid-column:2;grid-row:2}
- .profile-hero>.profile-current{grid-column:3;grid-row:1/span 2}
-}
+ .profile-hero>.profile-current{grid-column:3;grid-row:1/span 2}}
 @media(min-width:600px) and (max-width:1023px){
  .profile-hero>.profile-icon{grid-column:1;grid-row:1}
  .profile-hero>.profile-title{grid-column:2;grid-row:1}
  .profile-hero>.profile-facts{grid-column:1/-1;grid-row:2}
- .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}
-}
+ .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}}
 @media(max-width:599px){
  .profile-hero>.profile-icon{grid-column:1;grid-row:1}
  .profile-hero>.profile-title{grid-column:2;grid-row:1}
  .profile-hero>.profile-facts{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
- .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}
-}
+ .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}}
 .sumo-photo-fallback{display:none}
 .profile-hero .sumo-photo-fallback{display:block;font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#21191c;background:#f6f2eadb;padding:4px;z-index:2}
 .profile-hero .profile-icon.sumo-photo:not(.has-photo)>span{display:none}
@@ -281,12 +275,10 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-ed-tech{overflow-wrap:anywhere}
  .sumo-ed-rank{overflow-wrap:anywhere}
  .sumo-profile-summary{font-size:14px}
- .sumo-rank-svg,.sumo-weight-svg{max-height:240px}
-}
+ .sumo-rank-svg,.sumo-weight-svg{max-height:240px}}
 @media(max-width:359px){
  .profile-hero>.profile-icon.sumo-photo.xl{width:88px}
- .sumo-ed-row-main{grid-template-columns:36px minmax(0,1fr) auto}
-}
+ .sumo-ed-row-main{grid-template-columns:36px minmax(0,1fr) auto}}
 
 /* Banzuke editorial results table: one readable aligned row per wrestler. */
 .sumo-rank-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:16px 0}
@@ -317,8 +309,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-rank-card-body .profile-icon.sumo-photo.lg{width:50px;height:63px}
  .sumo-rank-name{font-size:22px}
  .sumo-rank-info{flex-wrap:wrap;gap:2px 8px}
- .sumo-directory-facts{grid-template-columns:minmax(0,1fr)}
-}
+ .sumo-directory-facts{grid-template-columns:minmax(0,1fr)}}
 
 /* Keep detailed chart labels readable; contain scrolling within labelled regions. */
 .sumo-weight-scroll,.sumo-rank-scroll{overflow-x:auto;overflow-y:hidden;padding:4px 0 10px}
@@ -333,8 +324,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-ed-date{display:flex;flex-wrap:wrap;gap:4px 8px}
  .sumo-ed-person>.profile-icon.sumo-photo{width:30px;height:38px;flex-basis:30px}
  .sumo-ed-person .profile-icon.sumo-photo>span{display:none}
- .sumo-ed-tech{max-width:125px}
-}
+ .sumo-ed-tech{max-width:125px}}
 
 
 /* 2026-11-16: roster-first homepage, flag-backdrop identities and source-only banzuke movement. */
@@ -363,8 +353,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-standings-row{grid-template-columns:52px minmax(0,1fr);gap:7px 10px;min-height:74px;padding:6px}
  .sumo-standings-row .profile-icon.sumo-photo{width:52px;height:62px;grid-row:1/span 2}
  .sumo-standings-record{grid-column:2;text-align:left;font-size:13px}
- .sumo-standings-identity strong{font-size:19px}
-}
+ .sumo-standings-identity strong{font-size:19px}}
 /* Editorial profile snapshots and compact sourced basho history */
 .sumo-hero-peak{margin:8px 0;font-size:14px;color:var(--ink);font-weight:600}
 .sumo-hero-peak strong{font-size:17px;font-weight:850}
@@ -416,8 +405,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 @media(max-width:950px){
  .profile-hero{grid-template-columns:minmax(220px,35%) minmax(0,1fr)!important;column-gap:18px}
  .profile-hero>.profile-icon.sumo-photo.xl{min-height:400px!important;max-height:500px!important}
- .profile-hero>.profile-title{padding-top:16px}
-}
+ .profile-hero>.profile-title{padding-top:16px}}
 @media(max-width:650px){
  .profile-hero{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto auto auto;gap:0!important;padding:0 0 15px!important}
  .profile-hero>.profile-title{grid-column:1;grid-row:1;padding:15px 16px 8px}
@@ -425,13 +413,11 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero>.profile-current{grid-column:1;grid-row:3;margin:8px 16px;padding:5px}
  .profile-hero>.profile-facts{grid-column:1;grid-row:4;margin:0 16px}
  .profile-hero h1{font-size:clamp(35px,10vw,46px)}
- .sumo-hero-career>div{grid-template-columns:minmax(0,1.3fr) .8fr 65px;font-size:13px}
-}
+ .sumo-hero-career>div{grid-template-columns:minmax(0,1.3fr) .8fr 65px;font-size:13px}}
 @media(max-width:360px){
  .sumo-hero-career>div{grid-template-columns:minmax(0,1.3fr) 70px 56px;padding:5px 6px;gap:4px}
  .sumo-hero-career>div:not(:first-child){font-size:12px}
- .profile-hero .profile-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
+ .profile-hero .profile-meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* Integrated approved Sumo styling from PR #214. */
 
@@ -493,13 +479,11 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 @media(max-width:740px){
   .sumo-rival-grid{grid-template-columns:minmax(0,1fr)}
   .sumo-rival{grid-template-columns:54px minmax(0,1fr) auto;gap:9px;padding:10px;min-height:92px}
-  .sumo-rival-record{font-size:14px}
-}
+  .sumo-rival-record{font-size:14px}}
 @media(max-width:360px){
   .sumo-rival{grid-template-columns:46px minmax(0,1fr);gap:7px}
   .sumo-rival-portrait>.profile-icon.sumo-photo{width:44px;height:60px}
-  .sumo-rival-record{grid-column:2;grid-row:2;justify-self:start}
-}
+  .sumo-rival-record{grid-column:2;grid-row:2;justify-self:start}}
 
 /* Integrated approved Sumo styling from PR #220. */
 
@@ -536,8 +520,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .directory-card .directory-upper>div:last-child{padding:12px 12px 15px}
  .directory-card .directory-lower{padding:12px}
  .directory-card .directory-upper h3{font-size:clamp(22px,5vw,28px)}
- .directory-card .directory-lower .rank{font-size:clamp(17px,4vw,22px)}
-}
+ .directory-card .directory-lower .rank{font-size:clamp(17px,4vw,22px)}}
 
 /* Preserve edge-to-edge directory portraits from #227 over the compact headshot rule. */
 .directory-card .directory-upper>.profile-icon.sumo-photo.sumo-headshot.has-photo>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transform:none}
@@ -622,8 +605,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-rank-table-head{display:none}
  .sumo-rank-card{grid-template-columns:minmax(0,1.2fr) minmax(0,1.5fr);gap:6px;padding:10px}
  .sumo-rank-prior span{display:inline;margin-right:4px}
- .sumo-rank-movement,.sumo-rank-record{grid-column:2}
-}
+ .sumo-rank-movement,.sumo-rank-record{grid-column:2}}
 @media(max-width:600px){
  .sumo-overview-lede{display:block;padding:18px}
  .sumo-home-feature{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -638,35 +620,31 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-rank-person{grid-column:1/-1;grid-row:2}
  .sumo-rank-prior{grid-column:2;grid-row:1}
  .sumo-rank-movement{grid-column:1}
- .sumo-rank-record{grid-column:2}
-}
+ .sumo-rank-record{grid-column:2}}
 
 /* Single specialist navigation; global BEFN destinations remain in a disclosure. */
-.masthead-inner{display:flex;align-items:center;justify-content:space-between}
-.header-right{display:flex;align-items:center;justify-content:flex-end;gap:12px}
-.befn-site-menu{position:relative;z-index:50}
-.befn-site-menu summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;border:1px solid #716166;border-radius:6px;color:#fff;font-size:13px;font-weight:750;padding:9px 11px;min-height:44px}
-.befn-site-menu summary:after{content:"▾"}
-.befn-site-menu[open] summary:after{content:"▴"}
-.befn-site-menu nav{position:absolute;top:calc(100% + 6px);right:0;display:grid;width:min(250px,calc(100vw - 32px));padding:6px;background:#21191c;border:1px solid #7a636c;border-radius:7px;box-shadow:0 12px 28px #110a0c55}
-.befn-site-menu nav a{padding:9px 12px;color:#fff7ea;text-decoration:none;font-size:14px;font-weight:650;min-height:42px}
-.befn-site-menu nav a:hover,.befn-site-menu nav a:focus-visible{background:#84243a}
-.befn-back{font-size:13px;white-space:nowrap}
-.subnav-inner{display:flex;align-items:center;gap:4px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin}
-.subnav a{white-space:nowrap;min-height:44px;display:flex;align-items:center}
-.subnav{position:relative;z-index:10}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .sumo-ed-extra{padding:0 12px;background:transparent}
 .sumo-ed-extra summary{min-height:42px;padding:6px 5px}
 .sumo-tech-more{border-top:1px solid var(--border);margin:8px 0;padding:10px 0}
 .sumo-tech-more summary{font-size:14px;font-weight:800;cursor:pointer;min-height:44px}
 .sumo-tech-more .chart-row{margin:10px 0}
 @media(max-width:690px){
- .header-right{gap:6px}
- .befn-back{display:none}
- .preview-chip{display:none}
- .befn-site-menu summary{font-size:13px;padding-inline:8px}
- .subnav-inner{padding-inline:12px}
-}
+ 
+ 
+ .preview-chip{display:none}}
 
 /* F01: first-screen paths to results and full licensed source photograph. */
 .sumo-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -694,17 +672,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .directory-grid.is-list .sumo-directory-identity{grid-column:2;grid-row:1}
  .directory-grid.is-list .directory-lower{grid-column:2;grid-row:2}
  .directory-grid.is-list .directory-lower .cta{display:none}
- .sumo-hero-actions{margin-top:9px}
-}
-/* Five destinations, identical on phone and desktop: Results, Rankings, Rikishi, H2H, Techniques. */
-@media(max-width:680px){
- .subnav-inner{display:grid;grid-template-columns:repeat(5,auto);justify-content:space-between;gap:0;padding:0 8px;overflow:visible}
- .subnav-inner>a{justify-content:center;text-align:center;padding:8px 4px;font-size:12px;letter-spacing:.02em;white-space:nowrap;min-width:0;min-height:44px}
-}
-@media(max-width:350px){
- .subnav-inner>a{font-size:11px;letter-spacing:0}
-}
-.subnav a.active,.subnav a[aria-current="page"]{box-shadow:inset 0 -3px 0 var(--brand-red,#cf1824)}
+ .sumo-hero-actions{margin-top:9px}}
+
 
 /* One page header everywhere: dark band, uppercase title, one context line. */
 .sumo-page-head{margin:16px 0 18px;padding:clamp(16px,3vw,26px) clamp(16px,3vw,28px);background:#151115;color:#fff;border-radius:6px;border-left:4px solid var(--brand-red,#cf1824)}
@@ -747,8 +716,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   }
   .profile-hero>.profile-title{grid-column:1;grid-row:2!important;padding:15px 16px 9px}
   .profile-hero>.profile-current{grid-column:1;grid-row:3!important}
-  .profile-hero>.profile-facts{grid-column:1;grid-row:4!important}
-}
+  .profile-hero>.profile-facts{grid-column:1;grid-row:4!important}}
 @media(max-width:600px){
   .sumo-rival{
     grid-template-columns:54px minmax(0,1fr);
@@ -756,13 +724,11 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   }
   .sumo-rival-portrait{grid-column:1;grid-row:1/span 2;align-self:center}
   .sumo-rival-main{grid-column:2;grid-row:1}
-  .sumo-rival .sumo-rival-record{grid-column:2;grid-row:2;justify-self:start}
-}
+  .sumo-rival .sumo-rival-record{grid-column:2;grid-row:2;justify-self:start}}
 @media(max-width:360px){
   .sumo-rival{grid-template-columns:46px minmax(0,1fr)}
   .sumo-career-strip>div{padding:12px 10px}
-  .sumo-career-strip>div>span{font-size:13px}
-}
+  .sumo-career-strip>div>span{font-size:13px}}
 
 /* Home-only visual hierarchy: full-bleed photo panels and readable right-hand facts.
    Scope deliberately excludes Banzuke, daily matchups and full rikishi profiles. */
@@ -835,23 +801,20 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   padding:8px 11px 15px;white-space:normal;font-size:17px;line-height:1.35;
 }
 @media(max-width:1000px){
-  .sumo-home-leaders .sumo-standings-list{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
+  .sumo-home-leaders .sumo-standings-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){
   .sumo-home-feature{grid-template-columns:minmax(0,1fr)}
   .sumo-home-feature .feature-card{min-height:248px}
   .sumo-home-leaders .sumo-standings-list{grid-template-columns:minmax(0,1fr)}
   .sumo-home-leaders .sumo-standings-identity strong{font-size:clamp(27px,7vw,36px)}
-  .sumo-home-leaders .sumo-standings-record{font-size:18px}
-}
+  .sumo-home-leaders .sumo-standings-record{font-size:18px}}
 @media(max-width:360px){
   .sumo-home-feature .feature-card{grid-template-columns:minmax(0,43%) minmax(0,57%)}
   .sumo-home-feature .feature-info{padding:12px 10px 8px}
   .sumo-home-feature .feature-bottom{padding:10px 10px 14px}
   .sumo-home-feature .feature-info h3{font-size:25px}
   .sumo-home-leaders .sumo-standings-identity{padding:10px 8px 6px}
-  .sumo-home-leaders .sumo-standings-record{padding:6px 8px 12px}
-}
+  .sumo-home-leaders .sumo-standings-record{padding:6px 8px 12px}}
 
 /* Three-division top-five leader details: fill the square's information half
    without sacrificing the approved full-height, edge-to-edge portrait. */
@@ -950,8 +913,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-home-leaders .sumo-leader-details .sumo-standings-identity strong{font-size:clamp(26px,6.5vw,33px)}
   .sumo-home-leaders .sumo-leader-vitals strong{font-size:14px}
   .sumo-home-leaders .sumo-leader-last>span{font-size:13px}
-  .sumo-home-leader-controls .pill{font-size:13px;padding-inline:8px}
-}
+  .sumo-home-leader-controls .pill{font-size:13px;padding-inline:8px}}
 @media(max-width:360px){
   .sumo-home-leaders .sumo-leader-details{padding:9px 8px;gap:6px}
   .sumo-home-leaders .sumo-leader-details .sumo-standings-identity strong{font-size:25px}
@@ -961,8 +923,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-home-leaders .sumo-leader-last{padding-top:5px}
   .sumo-home-leaders .sumo-leader-last>span{font-size:12px}
   .sumo-home-leaders .sumo-leader-last>small:last-child{font-size:11px}
-  .sumo-home-leader-controls .pill{font-size:12px;padding-inline:5px}
-}
+  .sumo-home-leader-controls .pill{font-size:12px;padding-inline:5px}}
 
 /* BEFN recent-five carousel: sourced results only; no profile hero changes. */
 .sumo-recent-strip{
@@ -1037,12 +998,10 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-recent-arrow{flex-basis:21px;min-width:21px;font-size:26px}
   .sumo-recent-list{gap:7px}
   .sumo-recent-list a.sumo-recent-bout{flex:0 0 clamp(105px,32vw,139px);min-height:127px}
-  .sumo-recent-list .sumo-recent-bout .sumo-recent-person{font-size:13px}
-}
+  .sumo-recent-list .sumo-recent-bout .sumo-recent-person{font-size:13px}}
 @media(max-width:360px){
   .sumo-recent-header>span{font-size:11px}
-  .sumo-recent-summary>span:last-child{flex-basis:100%}
-}
+  .sumo-recent-summary>span:last-child{flex-basis:100%}}
 
 /* Graph redesign, strictly scoped to the existing rank + weight analysis panels. */
 #sumo-charts .sumo-career-panel{
@@ -1110,8 +1069,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-charts .sumo-chart-scroll-hint{
     margin:4px 0;font-size:12px;line-height:1.4;
   }
-  #sumo-charts .sumo-career-source{font-size:11px;line-height:1.45}
-}
+  #sumo-charts .sumo-career-source{font-size:11px;line-height:1.45}}
 
 /* Compact five-row phone form: all opponents, days and kimarite are visible
    without horizontal scrolling or narrow clipped tiles. The desktop carousel
@@ -1160,8 +1118,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
     margin:0;padding:0;background:transparent;
     text-align:left;font-size:12px;line-height:1.2;
     color:#695e60;overflow-wrap:anywhere;
-  }
-}
+  }}
 @media(max-width:360px){
   .sumo-recent-list a.sumo-recent-bout{
     grid-template-columns:35px minmax(0,1fr) auto;gap:2px 7px;
@@ -1170,8 +1127,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-recent-list a.sumo-recent-bout .sumo-recent-outcome{
     width:35px;height:35px;
   }
-  .sumo-recent-list a.sumo-recent-bout .sumo-recent-person{font-size:13px}
-}
+  .sumo-recent-list a.sumo-recent-bout .sumo-recent-person{font-size:13px}}
 
 /* Phone chart labels stay at readable size; the SVG creates only nonoverlapping
    date ticks for its mobile viewBox. All observations are still plotted. */
@@ -1185,8 +1141,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   }
   #sumo-charts .sumo-rank-scroll,#sumo-charts .sumo-weight-scroll{
     overflow-x:auto;scrollbar-width:thin;max-width:100%;
-  }
-}
+  }}
 
 /* Opponent H2H photo-left flag-on-information-only tiles.
    The entire tile remains the original accessible #headtohead link.
@@ -1280,20 +1235,17 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-opponents .sumo-rival-grid{grid-template-columns:minmax(0,1fr);gap:10px}
   #sumo-opponents .sumo-rival{height:165px;grid-template-columns:minmax(0,39%) minmax(0,61%)}
   #sumo-opponents .sumo-rival-name{font-size:clamp(23px,5.5vw,31px)}
-  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:clamp(19px,4.5vw,23px)}
-}
+  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:clamp(19px,4.5vw,23px)}}
 @media(max-width:400px){
   #sumo-opponents .sumo-rival{height:153px;grid-template-columns:minmax(0,38%) minmax(0,62%)}
   #sumo-opponents .sumo-rival-info{padding:12px 10px 12px 12px;gap:10px}
   #sumo-opponents .sumo-rival-name{font-size:clamp(21px,6vw,27px)}
-  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:19px;padding:7px 10px}
-}
+  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:19px;padding:7px 10px}}
 @media(max-width:340px){
   #sumo-opponents .sumo-rival{height:145px}
   #sumo-opponents .sumo-rival-info{padding:9px;gap:8px}
   #sumo-opponents .sumo-rival-name{font-size:21px}
-  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:17px}
-}
+  #sumo-opponents .sumo-rival .sumo-rival-record{font-size:17px}}
 
 /* Two compact opponent cards per row at every viewport.
    Left photo remains edge-to-edge; the only birthplace flag is the muted
@@ -1336,8 +1288,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-opponents .sumo-rival-name{font-size:clamp(18px,2.7vw,23px)}
   #sumo-opponents .sumo-rival .sumo-rival-record{
     font-size:clamp(14px,2.2vw,19px);padding:6px 7px;
-  }
-}
+  }}
 @media(max-width:500px){
   #sumo-opponents .sumo-rival-grid{gap:7px}
   #sumo-opponents .sumo-rival{
@@ -1348,8 +1299,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-opponents .sumo-rival .sumo-rival-record{
     font-size:clamp(12px,3.25vw,15px);padding:5px 5px;
     line-height:1.1;
-  }
-}
+  }}
 @media(max-width:360px){
   #sumo-opponents .sumo-rival-grid{gap:6px}
   #sumo-opponents .sumo-rival{
@@ -1359,8 +1309,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-opponents .sumo-rival-name{font-size:16px}
   #sumo-opponents .sumo-rival .sumo-rival-record{
     font-size:12px;padding:4px;line-height:1.05;
-  }
-}
+  }}
 
 /* Career biography and banzuke data tiles, always visible. */
 #sumo-career .sumo-career-detail-section{margin:19px 0 24px}
@@ -1424,8 +1373,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 }
 #sumo-techniques .sumo-signature p{margin:0;font-weight:750}
 @media(max-width:850px){
-  #sumo-career .sumo-career-data-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
+  #sumo-career .sumo-career-data-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){
   #sumo-career .sumo-career-detail-section{margin:15px 0 20px}
   #sumo-career .sumo-career-detail-section>h3{font-size:25px;margin-bottom:9px}
@@ -1435,15 +1383,13 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-career .sumo-career-data-tile>small{font-size:10px}
   #sumo-career .sumo-career-data-tile>strong{font-size:clamp(18px,5vw,23px)}
   #sumo-career .sumo-basho-history-item{min-height:83px;padding:10px 11px;gap:5px}
-  #sumo-career .sumo-basho-history-item span{font-size:clamp(19px,5vw,24px)}
-}
+  #sumo-career .sumo-basho-history-item span{font-size:clamp(19px,5vw,24px)}}
 @media(max-width:360px){
   #sumo-career .sumo-career-data-grid,
   #sumo-career .sumo-basho-timeline{gap:6px}
   #sumo-career .sumo-career-data-tile{padding:9px;min-height:76px}
   #sumo-career .sumo-career-data-tile>strong{font-size:17px}
-  #sumo-career .sumo-basho-history-item{padding:9px}
-}
+  #sumo-career .sumo-basho-history-item{padding:9px}}
 
 /* Ten-bout Recent Form responsive tile grid.
    Five cards across on desktop, two across on phones: a readable ten-result
@@ -1496,8 +1442,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 @media(max-width:950px){
   .sumo-recent-strip .sumo-recent-list{
     grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-}
+  }}
 @media(max-width:650px){
   .sumo-recent-strip{margin:11px 0 15px}
   .sumo-recent-strip .sumo-recent-header{padding:10px 12px}
@@ -1519,16 +1464,14 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   }
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-technique{
     font-size:11px;padding:4px;
-  }
-}
+  }}
 @media(max-width:360px){
   .sumo-recent-strip .sumo-recent-list{gap:5px}
   .sumo-recent-strip .sumo-recent-carousel{padding-inline:7px}
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout{min-height:94px;padding:5px;gap:3px 4px}
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-person{font-size:14px}
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-day{font-size:10px}
-  .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-technique{font-size:10px}
-}
+  .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-technique{font-size:10px}}
 
 /* Recent Form H2H-matched portrait-left / soft-flag-right design */
 /* Applied only to the existing Recent Form ten-bout grid, not profile photos,
@@ -1635,8 +1578,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   text-align:left;
 }
 @media(max-width:950px){
-  .sumo-recent-strip .sumo-recent-list{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
+  .sumo-recent-strip .sumo-recent-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){
   .sumo-recent-strip .sumo-recent-list{
     grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
@@ -1660,8 +1602,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-technique{
     grid-column:auto;grid-row:auto;
     font-size:10.5px;line-height:1.18;
-  }
-}
+  }}
 @media(max-width:360px){
   .sumo-recent-strip .sumo-recent-list{gap:5px}
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout{
@@ -1675,8 +1616,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-technique{font-size:10px}
   .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-outcome{
     min-width:22px;min-height:22px;padding:3px 5px;font-size:14px;
-  }
-}
+  }}
 
 /* Hero birthplace flag backdrop, information columns only.
    Uses the same mapped-country flag asset as the opponent cards. The flag
@@ -1718,8 +1658,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
     grid-column:1;grid-row:2/span 3;
     width:100%;height:100%;opacity:.22;
   }
-  .profile-hero .sumo-hero-country{font-size:12px}
-}
+  .profile-hero .sumo-hero-country{font-size:12px}}
 
 /* Bout cards (Results, Matchups, home, More bouts). One shape everywhere: a
    larger card, head crops that fade into the card with no frame, rank, this
@@ -1793,8 +1732,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .bout-side.right .bout-id{margin-right:-20px}
   .bout-name{font-size:24px}
   .bout-stats .is-basho b{font-size:26px}
-  .bout-stats dd{font-size:14px}
-}
+  .bout-stats dd{font-size:14px}}
 @media(max-width:480px){.bout-photo{width:88px;height:108px}.bout-name{font-size:18px;letter-spacing:0}.bout-name.is-long{font-size:16px}.bout-name.is-xlong{font-size:15px}.bout-compare>summary{min-height:36px}}
 @media(max-width:360px){.bout-photo{width:76px;height:86px}.bout-side.left .bout-id{margin-left:-22px}.bout-side.right .bout-id{margin-right:-22px}.bout-name{font-size:16px}.bout-name.is-long{font-size:14.5px}.bout-name.is-xlong{font-size:13.5px}.bout-stats .is-basho b{font-size:20px}.bout-form i{width:8px}.bout-stats>div{grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr)}.bout-stats dd{font-size:12px}}
 
@@ -1836,8 +1774,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-hero-career>div:first-child span:nth-child(2){font-size:11px}
   .profile-hero .sumo-hero-rank{margin:4px 0;font-size:15px}
   .profile-hero .sumo-hero-peak{font-size:13px;margin:2px 0 8px}
-  .profile-hero .sumo-current-record b{font-size:34px}
-}
+  .profile-hero .sumo-current-record b{font-size:34px}}
 /* Rankings: one two-line row per wrestler on phones; table layout stays on desktop. */
 @media(max-width:700px){
   .sumo-rank-card{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"per rec" "pub mv";gap:5px 10px;padding:9px 12px;min-height:0}
@@ -1849,8 +1786,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-rank-card>.sumo-rank-record{grid-area:rec;align-self:center;text-align:right;white-space:nowrap;font-size:14px}
   .sumo-rank-card>.sumo-rank-published{grid-area:pub;font-size:13px}
   .sumo-rank-card>.sumo-rank-movement{grid-area:mv;justify-self:end}
-  .sumo-rank-card>.sumo-rank-prior{display:none}
-}
+  .sumo-rank-card>.sumo-rank-prior{display:none}}
 
 /* Headline bouts as a seamless "stage" (UFC-style matchup): portraits stand on
    the page with no frame, names sit over a red/blue split rule, stats run down
@@ -1889,8 +1825,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .stage-stats{margin:0}
   .stage-stats>div{padding:14px 0}
   .stage-name{font-size:clamp(28px,3.4vw,46px)}
-  .hl-list>.stage:not(:first-child) .stage-photo{max-height:460px}
-}
+  .hl-list>.stage:not(:first-child) .stage-photo{max-height:460px}}
 .hl-section{display:flex;align-items:center;gap:8px;margin:18px 0 8px;font:900 22px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em}
 .hl-section span{background:#151115;color:#f3c332;font:800 12px/1 'DM Sans',sans-serif;padding:4px 8px;border-radius:999px}
 }
