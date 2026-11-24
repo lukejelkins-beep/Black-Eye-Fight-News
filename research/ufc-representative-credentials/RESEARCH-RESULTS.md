@@ -43,7 +43,8 @@ The ijf.org event pages load their results by script, so earlier page screens sa
   - Iwo Baraniewski: 2019 senior World Championships (Poland, lost first contest).
   - Dione Barbosa: 2012 Rio Grand Slam bronze.
 - Kayla Harrison's IJF placings match her existing record.
-- Unresolved (`needs_review`): Da Woon Jung and Stephanie Egger. Same name, country and sport, but the data hides birth dates, so identity is open.
+- Unresolved (`needs_review`): Stephanie Egger. Her identity is now confirmed through the UFC bio's 2010 U23 European title, but the 2011 entries conflict (Paris Grand Slam in the entrant data, a Prague World Cup on her IJF page) and the EJU report couldn't be opened.
+- Ruled out (overnight check): the Korean judoka Da Woon JUNG competed in women's categories (−78 kg and −63 kg), so this is not the UFC fighter. The file was removed.
 - Ruled out by weight or person: a Slovenian judoka Nina Milosevic (the UFC fighter is the Swedish-Serbian Nina Nikolija Milošević) and a Brazilian over-100 kg Gabriel Santos (the UFC fighter is a featherweight).
 
 ## Coverage remaining
