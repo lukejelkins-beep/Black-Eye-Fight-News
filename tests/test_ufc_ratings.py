@@ -87,7 +87,23 @@ class Form(unittest.TestCase):
                          round((60 * .25 + 40 * .15 + 50 * .2 + 80 * .15) / .75))
 
 
+def bouts_for(fighters):
+    """The bout list the build would pass: every fight once, dated in history order (newest first)."""
+    out, seen = [], set()
+    for slug, f in fighters.items():
+        for j, h in enumerate(f["history"]):
+            if h["boutId"] in seen:
+                continue
+            seen.add(h["boutId"])
+            out.append({"boutId": h["boutId"], "date": "2025-%02d-01" % (12 - j), "a": slug, "b": h["opponentSlug"],
+                        "outcome": h["outcome"], "method": "dec", "methodDetail": "Unanimous"})
+    return out
+
+
 class Roster(unittest.TestCase):
+    def rate(self, fighters, bouts=None):
+        return r.rate_roster(fighters, bouts_for(fighters) if bouts is None else bouts, "2026-01-01")
+
     def roster(self):
         fighters = {}
         for i in range(40):
@@ -102,7 +118,7 @@ class Roster(unittest.TestCase):
         return fighters
 
     def test_best_and_worst_land_at_the_ends(self):
-        out = r.rate_roster(self.roster())
+        out = self.rate(self.roster())
         for k in r.SKILLS:
             self.assertGreaterEqual(out["f39"]["skills"][k]["roster"], 90, k)
             self.assertLessEqual(out["f00"]["skills"][k]["roster"], 10, k)
@@ -110,31 +126,30 @@ class Roster(unittest.TestCase):
 
     def test_division_percentiles_need_enough_peers(self):
         fighters = self.roster()
-        out = r.rate_roster(fighters)
+        out = self.rate(fighters)
         self.assertIsNotNone(out["f39"]["skills"]["striking"]["division"], "20 lightweights is enough")
         fighters["f39"]["divisionSlug"] = "flyweight"  # alone in the division
-        self.assertIsNone(r.rate_roster(fighters)["f39"]["skills"]["striking"]["division"])
+        self.assertIsNone(self.rate(fighters)["f39"]["skills"]["striking"]["division"])
 
     def test_small_samples_are_not_rated_and_shrink(self):
         fighters = self.roster()
         fighters["f39"]["window"]["statFights"] = 2
-        out = r.rate_roster(fighters)
+        out = self.rate(fighters)
         self.assertFalse(out["f39"]["eligible"], "two measured fights is not a full rating")
         self.assertTrue(out["f39"]["provisional"])
         thin = self.roster()
         thin["f39"]["window"]["effectiveFights"] = .5
-        self.assertLess(r.rate_roster(thin)["f39"]["skills"]["striking"]["roster"],
-                        r.rate_roster(self.roster())["f39"]["skills"]["striking"]["roster"])
+        self.assertLess(self.rate(thin)["f39"]["skills"]["striking"]["roster"],
+                        self.rate(self.roster())["f39"]["skills"]["striking"]["roster"])
 
     def test_form_records_opponent_strength(self):
-        out = r.rate_roster(self.roster())
+        out = self.rate(self.roster())
         opponents = out["f20"]["form"]["opponents"]
         self.assertEqual(len(opponents), 5)
         self.assertTrue(all(o["strength"] is None or 0 <= o["strength"] <= 1 for o in opponents))
 
     def test_provisional_ratings_never_move_anyone_else(self):
         base = self.roster()
-        before = r.rate_roster(base)
         extra = self.roster()
         extra["new1"] = {"window": {"statFights": 1, "effectiveFights": .9, "rates": dict(STRONG),
                                     "koWinShare": .9, "subWinShare": .9},
@@ -144,7 +159,9 @@ class Roster(unittest.TestCase):
                                     "koWinShare": 0, "subWinShare": 0},
                          "history": [{"boutId": "n-2", "outcome": "L", "opponentSlug": "f06", "opponent": "x"}] * 2,
                          "divisionSlug": "lightweight"}
-        after = r.rate_roster(extra)
+        # A fight exists whatever the fighter's rating status, so both runs see the same bouts.
+        before = self.rate(base, bouts_for(extra))
+        after = self.rate(extra, bouts_for(extra))
         for slug in base:
             self.assertEqual(before[slug], after[slug], slug)
         for slug in ("new1", "new2"):
@@ -156,11 +173,93 @@ class Roster(unittest.TestCase):
     def test_established_and_unmeasured_fighters_are_not_provisional(self):
         extra = self.roster()
         extra["none"] = {"window": {"statFights": 0, "rates": {}}, "history": [], "divisionSlug": None}
-        out = r.rate_roster(extra)
+        out = self.rate(extra)
         self.assertFalse(out["f39"]["provisional"])
         self.assertFalse(out["none"]["provisional"])
         self.assertIsNone(out["none"]["skills"]["striking"]["roster"])
 
+
+    def test_headline_is_centred_on_the_median_established_fighter(self):
+        out = self.rate(self.roster())
+        established = sorted(v["overall"] for v in out.values() if v["eligible"])
+        self.assertEqual(established[len(established) // 2], r.HEADLINE_CENTRE)
+        self.assertGreater(out["f39"]["overall"], r.HEADLINE_CENTRE)
+        self.assertLess(out["f00"]["overall"], r.HEADLINE_CENTRE)
+        self.assertGreater(out["f39"]["overallPercentile"], out["f00"]["overallPercentile"])
+
+    def test_no_bouts_means_no_headline(self):
+        out = r.rate_roster(self.roster())
+        self.assertIsNone(out["f20"]["overall"])
+        self.assertFalse(out["f20"]["eligible"])
+
+
+def bout(a, b, outcome="W", date="2025-01-01", method="dec", detail="Unanimous", bid=None):
+    return {"boutId": bid or f"{a}-{b}-{date}", "date": date, "a": a, "b": b, "outcome": outcome,
+            "method": method, "methodDetail": detail}
+
+
+class Results(unittest.TestCase):
+    def test_beating_a_strong_opponent_counts_more(self):
+        # "strong" has beaten three fighters; "weak" has lost three. x beats strong, y beats weak.
+        history = [bout("strong", "o%d" % i, date="2024-0%d-01" % (i + 1)) for i in range(3)]
+        history += [bout("weak", "p%d" % i, "L", date="2024-0%d-01" % (i + 1)) for i in range(3)]
+        history += [bout("x", "strong", date="2025-01-01"), bout("y", "weak", date="2025-01-01")]
+        res = r.results_as_of(history, "2025-02-01")
+        self.assertGreater(res["x"]["rating"], res["y"]["rating"])
+
+    def test_finish_counts_more_and_split_less(self):
+        ko = r.results_as_of([bout("a", "b", method="ko")], "2025-02-01")["a"]["rating"]
+        ud = r.results_as_of([bout("a", "b")], "2025-02-01")["a"]["rating"]
+        split = r.results_as_of([bout("a", "b", detail="Split")], "2025-02-01")["a"]["rating"]
+        self.assertGreater(ko, ud)
+        self.assertGreater(ud, split)
+        self.assertGreater(split, r.RESULTS["start"])
+
+    def test_title_fight_counts_more(self):
+        plain = r.results_as_of([bout("a", "b")], "2025-02-01")["a"]["rating"]
+        title = r.results_as_of([{**bout("a", "b"), "titleFight": True}], "2025-02-01")["a"]["rating"]
+        self.assertGreater(title, plain)
+        self.assertAlmostEqual(title - r.RESULTS["start"], (plain - r.RESULTS["start"]) * r.RESULTS["title"])
+
+    def test_draw_and_no_contest(self):
+        draw = r.results_as_of([bout("a", "b", "D")], "2025-02-01")
+        self.assertAlmostEqual(draw["a"]["rating"], draw["b"]["rating"])
+        self.assertEqual(r.results_as_of([bout("a", "b", "NC")], "2025-02-01"), {})
+
+    def test_idle_rating_drifts_back_after_a_year(self):
+        wins = [bout("a", "o%d" % i, date="2022-0%d-01" % (i + 1)) for i in range(5)]
+        fresh = r.results_as_of(wins, "2022-12-01")["a"]["rating"]
+        idle = r.results_as_of(wins, "2025-06-01")["a"]["rating"]
+        self.assertGreater(fresh, idle)
+        self.assertGreater(idle, r.RESULTS_MEAN)
+
+    def test_ratings_only_use_earlier_fights(self):
+        _, pre = r.results_walk([bout("a", "b", date="2025-01-01"), bout("a", "c", date="2024-01-01")])
+        self.assertEqual([b["b"] for b, *_ in pre], ["c", "b"])
+        self.assertEqual(pre[0][1], r.RESULTS["start"])
+
+
+class Effectiveness(unittest.TestCase):
+    def test_wrestling_credits_takedowns_stopped(self):
+        base = {"td15": .2, "tdAcc": None, "ctrlShare": .05, "ctrlAgainstShare": .05}
+        stops = r.raw_skill({**base, "tdDef": .9}, {}, "wrestling")
+        concedes = r.raw_skill({**base, "tdDef": .4}, {}, "wrestling")
+        self.assertGreater(stops - concedes, 25)
+
+    def test_wrestling_counts_control_conceded(self):
+        a = r.raw_skill({"td15": 1, "tdDef": .7, "ctrlShare": .2, "ctrlAgainstShare": .0}, {}, "wrestling")
+        b = r.raw_skill({"td15": 1, "tdDef": .7, "ctrlShare": .2, "ctrlAgainstShare": .3}, {}, "wrestling")
+        self.assertGreater(a, b)
+
+    def test_grappling_credits_not_being_submitted(self):
+        rates = {"sub15": 0.0, "rev15": 0.0, "subAbs15": .2, "ctrlShare": .05, "ctrlAgainstShare": .05}
+        safe = r.raw_skill(rates, {"subWinShare": 0, "subLossShare": 0}, "grappling")
+        tapped = r.raw_skill(rates, {"subWinShare": 0, "subLossShare": .25}, "grappling")
+        self.assertGreater(safe - tapped, 15)
+
+    def test_drivers_weights_sum_to_one(self):
+        for skill in r.SKILLS:
+            self.assertAlmostEqual(sum(d["weight"] for d in r.drivers(STRONG, {}, skill)), 1.0, msg=skill)
 
 
 if __name__ == "__main__":

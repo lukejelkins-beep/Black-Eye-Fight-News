@@ -15,8 +15,23 @@ so the site keeps one rating model. What changes in v2 is the input and scale:
     opponent-strength adjustment (±OPPONENT_SWING).
 
 Credential bonuses stay in the browser (they depend on reviewed credentials).
+
+Rating model 2026-11 (owner decision, PR #453): the headline BEFN rating is no longer
+an average of skill percentiles. It blends
+  * a RESULTS rating: Elo-type, from every archived UFC bout in date order, so beating a
+    strong opponent counts for more than beating a weak one, a finish more than a
+    decision and a split decision less; ratings drift back toward average after a
+    year out; and
+  * a SKILLS composite: the four skill percentiles, which now score effectiveness
+    (takedowns stopped and control conceded count, not only takedowns landed).
+The blend weights and results parameters were fitted on fights before 2024 only
+(scripts/ufc-rating-fit.py) and frozen here. The headline is on a rating scale where
+1500 is the median established UFC fighter (not a percentile, not a forecast).
 """
 from __future__ import annotations
+
+import datetime as _dt
+import math
 
 SKILLS = ("striking", "grappling", "wrestling", "defence")
 OVERALL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25, "form": .15}
@@ -25,6 +40,21 @@ MIN_ROSTER = 20              # a skill needs this many rated fighters to rank an
 MIN_DIVISION_PEERS = 8       # division percentile only with this many rated peers
 OPPONENT_SWING = .25
 SHRINK_K = 4
+
+# Results rating (Elo-type). Fitted on decided UFC fights before 2024 only by scripts/ufc-rating-fit.py, then frozen.
+# Owner choices (PR #453): a title fight counts 1.5x and the idle drift is 10% a year; the rest is fitted
+# (`python3 scripts/ufc-rating-fit.py --fix idle=0.1 --fix title=1.5 --mix 0.6`).
+RESULTS = {"start": 1500, "k": 64, "boost": 1.0, "finish": 1.25, "split": 0.5, "idle": 0.1, "title": 1.5}
+RESULTS_MEAN = 1500          # an idle rating drifts back toward this
+RESULTS_MIN_FIGHTS = 3       # results fights before the results part counts as established
+# Headline blend, in log-odds per 400 results points and per 100 skills-composite points. Owner's mix: results carry
+# 60% of the spread and skills 40% (the fit on 2019-2023 fights gave 68/32), same total spread as the fit.
+# The four skills keep their old relative weights.
+BLEND = {"results": 1.843, "skills": 1.354}
+SKILL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25}
+HEADLINE_CENTRE = 1500       # the median established fighter
+HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit of log-odds
+MODEL = "results+skills 2026-11"
 
 # (key, label, unit) for the "what drives this rating" view.
 COMPONENTS = {
@@ -35,12 +65,14 @@ COMPONENTS = {
                  ("koWinShare", "KO/TKO wins per fight", "pct")],
     "grappling": [("sub15", "Submission attempts per 15 min", "rate"),
                   ("subWinShare", "Submission wins per fight", "pct"),
+                  ("subLossShare", "Submission losses per fight (lower is better)", "pct"),
+                  ("subAbs15", "Opponent submission attempts per 15 min (lower is better)", "rate"),
                   ("rev15", "Reversals per 15 min", "rate"),
-                  ("ctrlShare", "Control-time share (secondary)", "pct")],
+                  ("netCtrl", "Control time won minus conceded", "signed")],
     "wrestling": [("td15", "Takedowns per 15 min", "rate"),
                   ("tdAcc", "Takedown accuracy", "pct"),
-                  ("ctrlShare", "Control-time share", "pct"),
                   ("tdDef", "Takedown defence", "pct"),
+                  ("netCtrl", "Control time won minus conceded", "signed"),
                   ("rev15", "Reversals per 15 min", "rate")],
     "defence": [("sapm", "Significant strikes absorbed per min (lower is better)", "rate"),
                 ("strDef", "Significant strike defence", "pct"),
@@ -77,13 +109,18 @@ def _sum_parts(items, min_coverage, min_parts=2):
 BOUNDS = {"slpm": (0, 20), "sapm": (0, 20), "td15": (0, 20), "sub15": (0, 12), "rev15": (0, 12),
           "ctrlShare": (0, 1), "ctrlAgainstShare": (0, 1), "kd15": (0, 7), "kdAbs15": (0, 7),
           "strAcc": (0, 1), "strDef": (0, 1), "tdAcc": (0, 1), "tdDef": (0, 1),
-          "koWinShare": (0, 1), "subWinShare": (0, 1)}
+          "koWinShare": (0, 1), "subWinShare": (0, 1), "subLossShare": (0, 1), "subAbs15": (0, 12),
+          "netCtrl": (-1, 1)}
 
 
 def bounded(rates: dict, window: dict) -> dict:
     """Rates plus window finish shares, with out-of-range values set to None."""
-    merged = {**(rates or {}), "koWinShare": (window or {}).get("koWinShare"),
-              "subWinShare": (window or {}).get("subWinShare")}
+    rates = rates or {}
+    ctrl, against = rates.get("ctrlShare"), rates.get("ctrlAgainstShare")
+    net = (round(ctrl - against, 3) if isinstance(ctrl, (int, float)) and isinstance(against, (int, float)) else None)
+    merged = {**rates, "koWinShare": (window or {}).get("koWinShare"),
+              "subWinShare": (window or {}).get("subWinShare"), "subLossShare": (window or {}).get("subLossShare"),
+              "netCtrl": net}
     out = {}
     for key, value in merged.items():
         lo, hi = BOUNDS.get(key, (float("-inf"), float("inf")))
@@ -101,10 +138,12 @@ def specs(rates: dict, window: dict) -> dict:
         "striking": [(_between(slpm, .8, 6.5), .18), (_between(diff, -2.0, 3.0), .22),
                      (_between(_pct(r.get("strAcc")), 25, 65), .15), (_between(r.get("kd15"), 0, 1.0), .20),
                      (_between(window.get("koWinShare"), 0, .50), .25)],
-        "grappling": [(_between(r.get("sub15"), 0, 3.0), .30), (_between(window.get("subWinShare"), 0, .35), .50),
-                      (_between(r.get("rev15"), 0, 2), .15), (_between(r.get("ctrlShare"), 0, .50), .05)],
-        "wrestling": [(_between(r.get("td15"), 0, 5.5), .34), (_between(_pct(r.get("tdAcc")), 20, 65), .21),
-                      (_between(r.get("ctrlShare"), 0, .55), .28), (_between(_pct(r.get("tdDef")), 40, 95), .12),
+        # Effectiveness, not volume: what a fighter stops counts as well as what they land.
+        "grappling": [(_between(r.get("sub15"), 0, 3.0), .20), (_between(window.get("subWinShare"), 0, .35), .30),
+                      (_between(window.get("subLossShare"), .25, 0), .20), (_between(r.get("subAbs15"), 2.0, 0), .10),
+                      (_between(r.get("rev15"), 0, 2), .10), (_between(r.get("netCtrl"), -.40, .50), .10)],
+        "wrestling": [(_between(r.get("td15"), 0, 5.5), .20), (_between(_pct(r.get("tdAcc")), 20, 65), .10),
+                      (_between(_pct(r.get("tdDef")), 40, 95), .30), (_between(r.get("netCtrl"), -.40, .50), .35),
                       (_between(r.get("rev15"), 0, 2), .05)],
         "defence": [(_between(sapm, 6.0, 1.2), .31), (_between(_pct(r.get("strDef")), 35, 75), .29),
                     (_between(_pct(r.get("tdDef")), 35, 90), .22), (_between(r.get("kdAbs15"), 1.0, 0), .12),
@@ -165,7 +204,80 @@ def recent_form(history: list[dict], quality=None):
     return round(_clamp(100 * earned / total))
 
 
+def _days(a: str, b: str) -> int:
+    return (_dt.date.fromisoformat(b) - _dt.date.fromisoformat(a)).days
+
+
+def _idle(value: float, last: str | None, when: str, p: dict) -> float:
+    """A rating drifts back toward the mean after a year without a fight (p["idle"] per further year)."""
+    if not last or not p.get("idle"):
+        return value
+    gap = _days(last, when) - 365
+    if gap <= 0:
+        return value
+    return RESULTS_MEAN + (value - RESULTS_MEAN) * (1 - p["idle"]) ** (gap / 365.25)
+
+
+def result_margin(bout: dict, p: dict) -> float:
+    """How much a result moves the ratings: finishes more, split or majority decisions less, title fights more."""
+    title = p.get("title", 1.0) if bout.get("titleFight") else 1.0
+    if bout["outcome"] == "D":
+        return title
+    if bout.get("method") in ("ko", "sub"):
+        return p["finish"] * title
+    if bout.get("method") == "dec" and str(bout.get("methodDetail") or "").lower() in ("split", "majority"):
+        return p["split"] * title
+    return title
+
+
+def results_walk(bouts: list[dict], p: dict | None = None):
+    """Elo-type pass over decided bouts in date order.
+
+    bouts: {"boutId", "date", "a", "b", "outcome" (from a's side: W/L/D/NC), "method", "methodDetail"}.
+    Yields (bout, rating a before, rating b before, fights a before, fights b before) and returns the final state
+    {slug: {"rating", "fights", "last"}} (ratings as of each fighter's last fight; call results_as_of to age them)."""
+    p = p or RESULTS
+    state = {}
+    pre = []
+    for bout in sorted(bouts, key=lambda x: (x["date"], str(x["boutId"]))):
+        if bout["outcome"] not in ("W", "L", "D") or not bout.get("a") or not bout.get("b"):
+            continue
+        sa = state.setdefault(bout["a"], {"rating": p["start"], "fights": 0, "last": None})
+        sb = state.setdefault(bout["b"], {"rating": p["start"], "fights": 0, "last": None})
+        ra, rb = _idle(sa["rating"], sa["last"], bout["date"], p), _idle(sb["rating"], sb["last"], bout["date"], p)
+        pre.append((bout, ra, rb, sa["fights"], sb["fights"]))
+        expected = 1 / (1 + 10 ** ((rb - ra) / 400))
+        y = 1.0 if bout["outcome"] == "W" else 0.0 if bout["outcome"] == "L" else 0.5
+        m = result_margin(bout, p)
+        sa["rating"] = ra + p["k"] * (1 + p["boost"] / (sa["fights"] + 1)) * m * (y - expected)
+        sb["rating"] = rb - p["k"] * (1 + p["boost"] / (sb["fights"] + 1)) * m * (y - expected)
+        sa["fights"] += 1
+        sb["fights"] += 1
+        sa["last"] = sb["last"] = bout["date"]
+    return state, pre
+
+
+def results_as_of(bouts: list[dict], as_of: str, p: dict | None = None) -> dict:
+    """slug -> {"rating", "fights", "last"}, with idle drift applied up to as_of."""
+    p = p or RESULTS
+    state, _ = results_walk(bouts, p)
+    return {slug: {**v, "rating": _idle(v["rating"], v["last"], as_of, p)} for slug, v in state.items()}
+
+
+def skills_composite(pcts: dict):
+    """Weighted average of the skill percentiles (needs three of the four)."""
+    have = [k for k in SKILLS if pcts.get(k) is not None]
+    if len(have) < 3:
+        return None
+    return sum(pcts[k] * SKILL_WEIGHTS[k] for k in have) / sum(SKILL_WEIGHTS[k] for k in have)
+
+
+def blend_logit(results: float, skills: float) -> float:
+    return BLEND["results"] * (results - RESULTS_MEAN) / 400 + BLEND["skills"] * (skills - 50) / 100
+
+
 def overall(scores: dict):
+    """The OLD headline (average of skill percentiles and form, 0-100). Kept for the comparison study only."""
     skills = [k for k in SKILLS if scores.get(k) is not None]
     if len(skills) < 3 or scores.get("form") is None:
         return None
@@ -173,9 +285,10 @@ def overall(scores: dict):
     return round(total / sum(OVERALL_WEIGHTS[k] for k in skills + ["form"]))
 
 
-def rate_roster(fighters: dict) -> dict:
+def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | None = None) -> dict:
     """fighters: slug -> {"window": weighted window, "history": newest-first fights,
-    "divisionSlug": str|None}. Returns slug -> ratings dict."""
+    "divisionSlug": str|None}. bouts: every archived UFC bout (all fighters, including those who have left), for
+    the results rating; as_of: ISO date the results are aged to. Returns slug -> ratings dict."""
     raw, eligible = {}, {}
     for slug, f in fighters.items():
         w = f["window"]
@@ -239,6 +352,19 @@ def rate_roster(fighters: dict) -> dict:
         skill = sum(best) / 2
         strength[slug] = ((skill + form) / 2 if form is not None else skill) / 100
 
+    results = results_as_of(bouts or [], as_of or "9999-12-31") if bouts else {}
+    composite = {slug: skills_composite(skill_pct.get(slug) or prov_pct.get(slug) or {}) for slug in fighters}
+    logits = {}
+    for slug in fighters:
+        res = results.get(slug)
+        if res and composite.get(slug) is not None:
+            logits[slug] = blend_logit(res["rating"], composite[slug])
+    established = [slug for slug in logits if slug in shrunk and results[slug]["fights"] >= RESULTS_MIN_FIGHTS]
+    centre = sorted(logits[x] for x in established)[len(established) // 2] if established else 0.0
+    headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre)) for slug, v in logits.items()}
+    headline_pop = sorted(headline[x] for x in established)
+    results_pop = sorted(results[x]["rating"] for x in established)
+
     out = {}
     for slug, f in fighters.items():
         pcts = skill_pct.get(slug) or prov_pct.get(slug) or {k: None for k in SKILLS}
@@ -254,12 +380,12 @@ def rate_roster(fighters: dict) -> dict:
             fight["boutId"], strength.get(fight.get("opponentSlug"))))
         scores = {**pcts, "form": form}
         w = f["window"]
-        rated = slug in shrunk
-        shown = rated or slug in provisional
+        rated = slug in shrunk and slug in headline and results[slug]["fights"] >= RESULTS_MIN_FIGHTS
+        shown = slug in shrunk or slug in provisional
         out[slug] = {
             "scale": "percentile", "window": "weighted",
             "eligible": rated,
-            "provisional": slug in provisional,
+            "provisional": not rated and slug in headline,
             "sample": {"statFights": w.get("statFights", 0), "effectiveFights": w.get("effectiveFights"),
                        "minimum": MIN_STAT_FIGHTS},
             "skills": {k: {"roster": pcts.get(k), "division": division_pct.get(k),
@@ -267,7 +393,14 @@ def rate_roster(fighters: dict) -> dict:
             "form": {"score": form, "opponents": [
                 {"boutId": fight["boutId"], "opponent": fight["opponent"], "strength": opp.get(fight["boutId"])}
                 for fight in [x for x in f["history"] if x["outcome"] in ("W", "L", "D")][:5]]},
-            "overall": overall(scores),
+            "overall": headline.get(slug),
+            "overallPercentile": percentile(headline[slug], headline_pop) if slug in headline else None,
+            "model": MODEL,
+            "results": None if slug not in results else {
+                "rating": round(results[slug]["rating"]), "fights": results[slug]["fights"],
+                "percentile": percentile(results[slug]["rating"], results_pop),
+                "provisional": results[slug]["fights"] < RESULTS_MIN_FIGHTS},
+            "skillsComposite": None if composite.get(slug) is None else round(composite[slug], 1),
             "opponentStrength": strength.get(slug),
         }
     return out

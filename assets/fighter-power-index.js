@@ -105,12 +105,16 @@
    rev15:finite(stats.revAvg,0,12),controlShare:finite(stats.controlShare,0,1),
    controlAgainst:finite(stats.controlAgainst,0,1),
    kd15:finite(stats.kdAvg,0,7),kdAgainst15:finite(stats.kdAgainstAvg,0,7),
-   koRate:finite(stats.koTkoWinRate,0,1),subFinishRate:finite(stats.submissionWinRate,0,1)
+   koRate:finite(stats.koTkoWinRate,0,1),subFinishRate:finite(stats.submissionWinRate,0,1),
+   subLossRate:finite(stats.submissionLossRate,0,1),subAgainst15:finite(stats.subAgainstAvg,0,12)
   };
  }
  function metricSpecs(d){
   if(!d)return null;
   const diff=d.slpm!==null&&d.sapm!==null?d.slpm-d.sapm:null;
+  // Rounded like the Python port (ufc_ratings.bounded), so the two give identical composites.
+  const netCtrl=d.controlShare!==null&&d.controlShare!==undefined&&d.controlAgainst!==null&&d.controlAgainst!==undefined?
+   Math.round((d.controlShare-d.controlAgainst)*1000)/1000:null;
   return {
     striking:[
       [between(d.slpm,.8,6.5),.18,"Significant strikes landed/min"],
@@ -119,17 +123,20 @@
       [between(d.kd15,0,1.0),.20,"Knockdowns/15"],
       [between(d.koRate,0,.50),.25,"KO/TKO finishes per recorded fight"]
     ],
+    // Effectiveness, not volume (rating model 2026-11): what a fighter stops counts as well as what they land.
     grappling:[
-      [between(d.sub15,0,3.0),.30,"Submission attempts/15"],
-      [between(d.subFinishRate,0,.35),.50,"Submission finishes per recorded fight"],
-      [between(d.rev15,0,2),.15,"Reversals/15"],
-      [between(d.controlShare,0,.50),.05,"Control-time share (secondary context)"]
+      [between(d.sub15,0,3.0),.20,"Submission attempts/15"],
+      [between(d.subFinishRate,0,.35),.30,"Submission finishes per recorded fight"],
+      [between(d.subLossRate,.25,0),.20,"Submission losses per recorded fight (lower is better)"],
+      [between(d.subAgainst15,2.0,0),.10,"Opponent submission attempts/15 (lower is better)"],
+      [between(d.rev15,0,2),.10,"Reversals/15"],
+      [between(netCtrl,-.40,.50),.10,"Control time won minus conceded"]
     ],
     wrestling:[
-      [between(d.td15,0,5.5),.34,"Takedowns landed/15"],
-      [between(d.tdAcc,20,65),.21,"Takedown completion rate"],
-      [between(d.controlShare,0,.55),.28,"Control-time share"],
-      [between(d.tdDef,40,95),.12,"Takedown defence"],
+      [between(d.td15,0,5.5),.20,"Takedowns landed/15"],
+      [between(d.tdAcc,20,65),.10,"Takedown completion rate"],
+      [between(d.tdDef,40,95),.30,"Takedown defence"],
+      [between(netCtrl,-.40,.50),.35,"Control time won minus conceded"],
       [between(d.rev15,0,2),.05,"Reversals/15"]
     ],
     defence:[
@@ -143,8 +150,8 @@
  }
  const LABELS=[
   ["striking","Striking","Significant-strike output and differential, accuracy, knockdowns, KO/TKO evidence"],
-  ["grappling","Grappling","Submission threats and finishes, reversals and secondary control"],
-  ["wrestling","Wrestling","Takedowns, completion rate, top control and takedown defence"],
+  ["grappling","Grappling","Submission threats and finishes, submissions avoided, reversals and net control"],
+  ["wrestling","Wrestling","Takedowns landed and stopped, completion rate and control won minus conceded"],
   ["defence","Defence","Strikes absorbed, strike/takedown defence, damage and opponent control"],
   ["form","Recent form","Recency-weighted results from up to five recorded fights, with NC excluded"]
  ];

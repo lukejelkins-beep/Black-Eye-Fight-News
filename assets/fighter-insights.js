@@ -290,23 +290,24 @@
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
+   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
   };
   const v2Overall=Number.isFinite(v2?.overall)?v2.overall:null;
-  const v2Meters=v2?[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']].map(([id,label])=>{
-   const sc=v2Score(id),d=id==='form'?null:v2.skills?.[id]?.division;
-   const hint=id==='form'?'Weighted to recent fights and opponent strength':
+  const v2Meters=v2?V2_METERS.map(([id,label])=>{
+   const sc=v2Score(id),d=SKILL_IDS.includes(id)?v2.skills?.[id]?.division:null;
+   const hint=id==='form'?'Weighted to recent fights and opponent strength':id==='results'?RESULTS_HINT:
     Number.isFinite(d)&&stats.division?ordinal(d)+' in '+stats.division:null;
-   return proMeter(label,sc,id!=='form',scoreTier(sc),hint,id==='form'?'':driversHTML(v2.skills?.[id]?.drivers));
+   return proMeter(label,sc,id!=='form',scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
   }).join(''):'';
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
-  const tier=scoreTier(v2Overall);
+  const tier=scoreTier(headlineBar(v2));
   return '<section class="befn-profile-insights befn-pro-insights'+(v2?'':' befn-v3-pending')+'" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
-   '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):v2Overall+'<small>/100</small>')+'</strong>'+
-   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(v2Overall||0)+'%"></span></span>'+
+   '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):headlineHTML(v2Overall))+'</strong>'+
+   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(headlineBar(v2)||0)+'%"></span></span>'+
    (v2Overall===null?'':'<p class="befn-pro-hint">'+RATING_HINT+'</p>')+
    verifiedTag+
    (pills?'<div class="befn-pro-form"><span>Last '+fights.length+' UFC'+' · '+escapeHTML(recentRecord)+'</span><div>'+pills+'</div></div>':'')+
@@ -315,8 +316,7 @@
    '<div class="befn-pro-grid">'+
    proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC roster'):stats?.ratings?'Not enough measured fights yet':'UFC statistics pending','<div class="befn-pro-meters">'+
     (v2?v2Meters:(ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
-    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
-     ' rated UFC fighters, using the whole UFC career with recent fights counting most. Recent form is out of 100.</p>':
+    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':
      stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
    proSection('fights','Recent fights','Up to five recorded UFC fights',
@@ -353,6 +353,19 @@
    '<section class="befn-profile-block" data-pro-section="profile"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
    '<section class="befn-profile-block"><h3>Championship history</h3><div class="befn-profile-body"><p>'+escapeHTML(title)+'</p></div></section></section>';
  }
+ // Rating model 2026-11: the headline is a rating (1500 = median established UFC fighter), not out of 100. Its bar
+ // and colour use the fighter's percentile on that rating; the number itself is shown as is.
+ const RATING_HINT="UFC results weighted by opponent strength, plus measured skills. 1500 is the median rated UFC fighter.";
+ const RESULTS_HINT="Who they beat and how: stronger opponents and finishes count more";
+ const SKILL_IDS=['striking','wrestling','grappling','defence'];
+ const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
+ function ratingsNote(){
+  return 'Results and skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+' rated UFC fighters. '+
+   'Results come from every UFC fight, weighting wins over strong opponents and finishes. Skills use the whole UFC career, '+
+   'recent fights counting most, and credit what a fighter stops as well as what they land. Recent form is out of 100.';
+ }
+ const headlineBar=r=>Number.isFinite(r?.overallPercentile)?r.overallPercentile:null;
+ const headlineHTML=v=>String(v)+'<small class="befn-pro-scale">rating</small>';
  function scoreTier(value){
   return value===null?'unrated':value>=90?'legendary':value>=80?'emerald':value>=70?'lime':value>=50?'amber':'red';
  }
@@ -614,6 +627,7 @@
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form')return Number.isFinite(v2.form?.score)?v2.form.score:null;
+   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
    const base=v2.skills?.[id]?.roster;
    return Number.isFinite(base)?base:null;
   };
@@ -622,8 +636,8 @@
   const ratingScore=id=>v2?v2Score(id):built?null:technicalScoreV1(id);
   const isPercentile=id=>v2?id!=='form':!built&&isPercentileV1(id);
   const score=v2?(Number.isFinite(v2.overall)?v2.overall:null):built?null:Number.isFinite(v3.power)?v3.power:computed.overall;
-  const tier=scoreTier(score);
-  const ratings=[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
+  const tier=scoreTier(v2?headlineBar(v2):score);
+  const ratings=v2?V2_METERS:[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
   const readableLabels={
    slpm:'Significant strikes landed per minute',sapm:'Significant strikes absorbed per minute',
    diff:'Net significant strikes per 15 min',kd:'Knockdowns per 15 min',
@@ -682,8 +696,9 @@
   const pills=v3.recent.map(b=>{const [s,k]=resultSymbol(b.outcome);return '<span class="befn-power-result '+k+'">'+s+'</span>'}).join('');
   const scorePanel='<aside class="befn-pro-score is-'+tier+'" aria-label="Overall fighter rating">'+
    '<span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
-   '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):score+'<small>/100</small>')+'</strong>'+
-   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
+   '<strong class="befn-v3-score">'+(score===null?(built?noScore(stats):'Unrated'):v2?headlineHTML(score):score+'<small>/100</small>')+'</strong>'+
+   '<span class="befn-pro-progress" aria-hidden="true"><span style="width:'+(score===null?0:v2?headlineBar(v2)||0:Math.max(0,Math.min(100,score)))+'%"></span></span>'+
+   (v2&&score!==null?'<p class="befn-pro-hint">'+RATING_HINT+'</p>':'')+
    '<div class="befn-v3-status befn-scout-classification">'+
    (v3.category!=='Champion'?'<span>'+escapeHTML(v3.category)+'</span>':'')+
    (v3.officialRank?'<small>UFC division #'+v3.officialRank+'</small>':'')+'</div>'+
@@ -692,16 +707,14 @@
   const divisionLabel=stats?.division||null;
   const ratingsBody='<div class="befn-pro-meters">'+ratings.map(([id,label])=>{
     const s=ratingScore(id);
-    let hint=id==='form'&&(v2||ctx.opponents)?'Weighted to recent fights and opponent strength':null;
-    if(v2&&id!=='form'){
+    let hint=id==='form'&&(v2||ctx.opponents)?'Weighted to recent fights and opponent strength':id==='results'?RESULTS_HINT:null;
+    if(v2&&SKILL_IDS.includes(id)){
      const d=v2.skills?.[id]?.division;
      if(Number.isFinite(d)&&divisionLabel)hint=ordinal(d)+' in '+divisionLabel;
     }
-    return proMeter(label,s,isPercentile(id),scoreTier(s),hint,v2&&id!=='form'?driversHTML(v2.skills?.[id]?.drivers):'');
+    return proMeter(label,s,isPercentile(id),scoreTier(s),hint,v2&&SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
    }).join('')+'</div>'+
-   (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">Skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+
-    ' rated UFC fighters, using the whole UFC career with recent fights counting most. A rating needs at least '+
-    (v2.sample?.minimum||3)+' fights with full round statistics. Recent form is out of 100.</p>':
+   (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':
    built?(stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
     ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''):
    computed.scale==="percentile"?'<p class="befn-pro-note">Skill ratings are percentiles against '+
@@ -788,9 +801,8 @@
  const boardState={metric:"overall",window:"l36",division:"all",query:""};
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
- const RATING_HINT="Weighted average of four skill percentiles and recent form, 0–100.";
- const BOARD_RATINGS=[["overall","BEFN rating","score"],["striking","Striking rating","pct"],["grappling","Grappling rating","pct"],
-  ["wrestling","Wrestling rating","pct"],["defence","Defence rating","pct"],["form","Recent form","score"]];
+ const BOARD_RATINGS=[["overall","BEFN rating","score"],["results","Results rating","pct"],["striking","Striking rating","pct"],
+  ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["defence","Defence rating","pct"],["form","Recent form","score"]];
  function boardValue(v,unit){
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";
