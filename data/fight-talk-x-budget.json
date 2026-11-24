@@ -1,15 +1,25 @@
 {
   "schemaVersion": 1,
   "month": "2026-11",
-  "reservedMicroUsd": 584800,
+  "reservedMicroUsd": 588200,
   "verifiedEstimateMicroUsd": 394200,
-  "attempts": 172,
+  "attempts": 173,
   "completed": 148,
-  "lastReservedAt": "2026-11-23T23:35:37.764Z",
+  "lastReservedAt": "2026-11-24T01:28:08.446Z",
   "lastCompletedAt": "2026-11-23T20:32:42.886Z",
   "nextGroupIndex": 17,
   "paused": false,
-  "pending": null,
-  "error": "TwitterAPI.io returned HTTP 503",
+  "pending": {
+    "id": "2026-11-0173",
+    "groupIndex": 0,
+    "priority": true,
+    "handles": [
+      "funkmastermma",
+      "jiri_bjp"
+    ],
+    "reservedAt": "2026-11-24T01:28:08.446Z",
+    "maxReservedMicroUsd": 3400
+  },
+  "error": null,
   "nextPriorityIndex": 0
 }
