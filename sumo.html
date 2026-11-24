@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-AU">
+<html lang="en-AU" data-befn-area="sumo">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -23,34 +23,41 @@
   <link rel="stylesheet" href="assets/sumo-fact-lines.css?v=20261121-phase2">
   <link rel="stylesheet" href="assets/sumo-main-font.css?v=20261123-main-font-v1">
   <script type="module" src="assets/sumo.js?v=20261121-facts-p2"></script>
+  <link rel="stylesheet" href="assets/site-header.css?v=20261124-sumo1">
+  <link rel="stylesheet" href="assets/sumo-area-nav.css?v=20261124-sumo1">
+  <script src="assets/sumo-site-nav.js?v=20261124-sumo1" defer></script>
 </head>
 <body>
   <a class="skip" href="#sumo-main">Skip to content</a>
-  <div class="utility"><div class="frame utility-inner"><span class="live-dot"></span><span>BLACK EYE FIGHT NEWS</span><span class="utility-right">INDEPENDENT COMBAT SPORTS</span></div></div>
-  <header class="masthead">
-    <div class="frame masthead-inner">
-      <a class="logo" href="index.html#home" aria-label="Black Eye Fight News home">
-        <img src="assets/app-icon-source.webp" width="58" height="58" alt="">
-        <span><strong>BLACK EYE</strong><strong>FIGHT NEWS</strong><small>RESULTS · RANKINGS · FIGHTERS</small></span>
-      </a>
-      <div class="header-right">
-        <details class="befn-site-menu"><summary>Explore BEFN</summary><nav aria-label="Other BEFN sections">
-          <a href="index.html#home">News</a><a href="index.html#champions">Champions</a>
-          <a href="index.html#fighters">Fighter Scout</a><a href="index.html#leaderboards">UFC Stats</a>
-          <a href="index.html#fights">Fights</a><a href="index.html#highlights">Fight Film</a>
-          <a href="sumo.html" aria-current="page">Sumo</a></nav></details>
-        <a class="befn-back" href="index.html#home">BEFN home</a></div>
+  <!-- Same header as the main site (owner, 23 Nov 2026: sport first, then section). Sumo pages sit
+       under the four Sumo sections; assets/sumo-site-nav.js shows the current section's pages. -->
+  <header class="sh">
+    <a href="index.html#home" class="sh-brand" data-area="all" aria-label="Black Eye Fight News home, all sports">Black Eye<br>Fight News</a>
+    <div class="navrail">
+      <nav class="mainnav sh-areas" aria-label="Sports">
+        <a href="index.html#home" data-area="boxing">Boxing</a><a href="index.html#home" data-area="mma">MMA</a><a href="sumo.html#basho" aria-current="true">Sumo</a>
+      </nav>
     </div>
   </header>
-  <div class="subnav"><nav class="frame subnav-inner" aria-label="Sumo pages">
-    <a href="#basho" data-page="basho">Results</a>
-    <a href="#banzuke" data-page="banzuke">Rankings</a>
-    <a href="#rikishi" data-page="rikishi">Rikishi</a>
-    <a href="#h2h" data-page="h2h">H2H</a>
-    <a href="sumo-stables.html">Stables</a>
-    <a href="sumo-stories.html">Stories</a>
-    <a href="#kimarite" data-page="kimarite">Techniques</a>
-  </nav></div>
+  <div class="sh-sports" data-area-row>
+    <nav class="sh-sections" aria-label="Sumo sections">
+      <span class="sh-area-name">Sumo</span>
+      <a href="sumo.html#basho" data-sumo-section="overview">Overview</a><a href="sumo.html#matchups" data-sumo-section="fights">Fights</a><a href="sumo.html#rikishi" data-sumo-section="fighters">Fighters</a><a href="sumo-stories.html" data-sumo-section="analysis">Analysis</a>
+    </nav>
+    <nav class="sh-sports-group sh-areas-phone" aria-label="Sports">
+      <a href="index.html#home" data-area="boxing">Boxing</a><a href="index.html#home" data-area="mma">MMA</a><a class="sh-sport-link" href="sumo.html#basho" aria-current="true">Sumo</a>
+    </nav>
+  </div>
+  <nav class="sh-sub" aria-label="Sumo pages" data-sumo-sub>
+    <a href="sumo.html#basho" data-page="basho" data-sumo-page="basho" data-group="overview">Tournament</a>
+    <a href="sumo.html#banzuke" data-page="banzuke" data-sumo-page="banzuke" data-group="fighters" style="order:2">Rankings</a>
+    <a href="sumo.html#rikishi" data-page="rikishi" data-sumo-page="rikishi" data-group="fighters" style="order:1">Rikishi</a>
+    <a href="sumo.html#h2h" data-page="h2h" data-sumo-page="h2h" data-group="fights" style="order:2">Head-to-head</a>
+    <a href="sumo.html#kimarite" data-page="kimarite" data-sumo-page="kimarite" data-group="analysis" style="order:2">Techniques</a>
+    <a href="sumo.html#matchups" data-sumo-page="matchups" data-group="fights" style="order:1">Bouts</a>
+    <a href="sumo-stables.html" data-sumo-page="stables" data-group="fighters" style="order:3">Stables</a>
+    <a href="sumo-stories.html" data-sumo-page="stories" data-group="analysis" style="order:1">Stories</a>
+  </nav>
   <main id="sumo-main" class="frame main" tabindex="-1" aria-live="polite">
     <div class="loading">Loading tracked wrestler profiles and tournament data…</div>
   </main>
