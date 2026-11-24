@@ -1,0 +1,173 @@
+{
+ "schema": 1,
+ "scope": "ufc-external-credentials",
+ "nonproduction": true,
+ "slug": "aljamain-sterling",
+ "name": "Aljamain Sterling",
+ "identity": {
+  "status": "confirmed",
+  "note": "UFC athlete page: Aljamain Sterling, featherweight, United States (NY), age 37, record 26-6-0."
+ },
+ "researched": {
+  "date": "2026-11-22",
+  "pass": 1
+ },
+ "flags": [
+  "thin_sources"
+ ],
+ "disciplines": {
+  "wrestling": {
+   "status": "verified",
+   "levels": [
+    "ncaa_other"
+   ],
+   "claims": [
+    {
+     "text": "Placed fourth nationally at the NCAA Division III championships in 2010 for SUNY Cortland.",
+     "source_url": "https://www2.cortland.edu/news/a-red-dragon-uncaged",
+     "source_name": "SUNY Cortland",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2010,
+     "level": "ncaa_other",
+     "display": "sourced"
+    },
+    {
+     "text": "Placed sixth at 141 pounds at the NCAA Division III championships in 2011, entering as the third-ranked wrestler.",
+     "source_url": "https://www2.cortland.edu/news/a-red-dragon-uncaged",
+     "source_name": "SUNY Cortland",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2011,
+     "level": "ncaa_other",
+     "display": "sourced"
+    },
+    {
+     "text": "Compiled an 87-27 record across four years wrestling at SUNY Cortland.",
+     "source_url": "https://www2.cortland.edu/news/a-red-dragon-uncaged",
+     "source_name": "SUNY Cortland",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "ncaa_other",
+     "display": "sourced"
+    },
+    {
+     "text": "UFC profile says he was a two-time Division III All-American at Cortland at 133 and 141 pounds.",
+     "source_url": "https://www.ufc.com/athlete/aljamain-sterling",
+     "source_name": "UFC",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "ncaa_other",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/aljamain-sterling"
+    },
+    {
+     "name": "SUNY Cortland news",
+     "checked": "2026-11-22",
+     "url": "https://www2.cortland.edu/news/a-red-dragon-uncaged"
+    }
+   ],
+   "note": "Two Cortland-hosted pages (one the UFC page, one the Cortland article) agree on his Division III placings; no NCAA database record opened, so the All-American label is not stated as verified."
+  },
+  "grappling": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [],
+   "note": "ADCC and similar grappling records were not searched."
+  },
+  "judo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [],
+   "note": "JudoInside/IJF not searched."
+  },
+  "kickboxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [],
+   "note": "Not searched."
+  },
+  "boxing": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [],
+   "note": "BoxRec not searched."
+  },
+  "bjj": {
+   "status": "claimed",
+   "levels": [
+    "belt_black"
+   ],
+   "claims": [
+    {
+     "text": "Awarded a BJJ black belt by coach Matt Serra, announced by Sterling on social media at age 30 (reported 2019).",
+     "source_url": "https://mymmanews.com/aljamain-sterling-awarded-his-bjj-black-belt-by-matt-serra/",
+     "source_name": "MyMMANews",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": 2019,
+     "level": "belt_black",
+     "display": "sourced"
+    },
+    {
+     "text": "UFC athlete profile lists a BJJ black belt under Matt Serra.",
+     "source_url": "https://www.ufc.com/athlete/aljamain-sterling",
+     "source_name": "UFC",
+     "tier": "B",
+     "retrieved": "2026-11-22",
+     "year": null,
+     "level": "belt_black",
+     "display": "sourced"
+    }
+   ],
+   "sources_checked": [
+    {
+     "name": "UFC athlete page",
+     "checked": "2026-11-22",
+     "url": "https://www.ufc.com/athlete/aljamain-sterling"
+    },
+    {
+     "name": "MyMMANews",
+     "checked": "2026-11-22",
+     "url": "https://mymmanews.com/aljamain-sterling-awarded-his-bjj-black-belt-by-matt-serra/"
+    }
+   ],
+   "note": "Black belt under Matt Serra reported by media and the UFC profile; no IBJJF or federation record found."
+  },
+  "sambo": {
+   "status": "unknown",
+   "levels": [],
+   "claims": [],
+   "sources_checked": [],
+   "note": "Not searched."
+  }
+ },
+ "history": [
+  {
+   "pass": 1,
+   "model": "claude-sonnet-5-5",
+   "effort": "medium",
+   "at": "2026-11-22T10:07:57.810Z",
+   "requests": 0,
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "web_searches": 0
+  }
+ ],
+ "validation": {
+  "dropped": [],
+  "adjustments": []
+ }
+}
