@@ -181,10 +181,23 @@ class Roster(unittest.TestCase):
 
     def test_headline_is_centred_on_the_median_established_fighter(self):
         out = self.rate(self.roster())
-        established = sorted(v["overall"] for v in out.values() if v["eligible"])
+        established = sorted(v["overallRating"] for v in out.values() if v["eligible"])
         self.assertEqual(established[len(established) // 2], r.HEADLINE_CENTRE)
-        self.assertGreater(out["f39"]["overall"], r.HEADLINE_CENTRE)
-        self.assertLess(out["f00"]["overall"], r.HEADLINE_CENTRE)
+        self.assertGreater(out["f39"]["overallRating"], r.HEADLINE_CENTRE)
+        self.assertLess(out["f00"]["overallRating"], r.HEADLINE_CENTRE)
+        self.assertEqual(out["f39"]["overall"], r.score_100(out["f39"]["overallRating"]))
+
+    def test_score_out_of_100_and_rank(self):
+        self.assertEqual(r.score_100(r.HEADLINE_CENTRE), 50)
+        self.assertEqual(r.score_100(r.HEADLINE_CENTRE + 11 * r.SCORE_DIVISOR), 61)
+        self.assertEqual(r.score_100(5000), 99)
+        self.assertEqual(r.score_100(0), 1)
+        self.assertIsNone(r.score_100(None))
+        out = self.rate(self.roster())
+        rated = sorted((v["overallRating"], v["overallRank"]) for v in out.values() if v["eligible"])
+        self.assertEqual(rated[-1][1], 1, "the highest rating ranks first")
+        self.assertTrue(all(a[1] >= b[1] for a, b in zip(rated, rated[1:])), "ranks follow the full rating")
+        self.assertTrue(all(v["rankOf"] == len(rated) for v in out.values()))
         self.assertGreater(out["f39"]["overallPercentile"], out["f00"]["overallPercentile"])
 
     def test_no_bouts_means_no_headline(self):

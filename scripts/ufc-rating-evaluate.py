@@ -82,7 +82,8 @@ def snapshot(build, engine, cut):
                 have = [k for k, v in pcts.items() if v is not None]
                 w = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25}
                 out[d["slug"]] = {
-                    "overall": r.get("overall") if (r.get("eligible") or r.get("provisional")) else None,
+                    # the full-precision rating where the engine has one (2026-11 model), else the old 0-100 headline
+                    "overall": r.get("overallRating", r.get("overall")) if (r.get("eligible") or r.get("provisional")) else None,
                     "skills": sum(pcts[k] * w[k] for k in have) / sum(w[k] for k in have) if len(have) >= 3 else None,
                     "winrate": c["W"] / (c["W"] + c["L"]) if c["W"] + c["L"] else None}
             return out
@@ -233,7 +234,8 @@ def main() -> int:
         return d["champion"] or d["officialRank"] is not None
 
     def table_for(src):
-        rows = [(d["ratings"]["overall"], s) for s, d in src.items() if d.get("ratings") and d["ratings"].get("eligible")]
+        rows = [(d["ratings"].get("overallRating", d["ratings"]["overall"]), s) for s, d in src.items()
+                if d.get("ratings") and d["ratings"].get("eligible")]
         return [s for _, s in sorted(rows, reverse=True)]
 
     def spearman(src):

@@ -54,6 +54,11 @@ BLEND = {"results": 1.843, "skills": 1.354}
 SKILL_WEIGHTS = {"striking": .25, "grappling": .15, "wrestling": .20, "defence": .25}
 HEADLINE_CENTRE = 1500       # the median established fighter
 HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit of log-odds
+# What readers see (owner's choice, display option A, 2026-11-24): a score out of 100 where 50 is the median rated
+# fighter, 50 + (rating - 1500) / SCORE_DIVISOR, clamped to 1-99. With the rating's spread (sd about 134) the divisor 11
+# gives a spread of about 12 points and puts the best fighter in the high 90s. The full rating is kept as
+# "overallRating" and orders the ranks, so two fighters with the same rounded score still have distinct ranks.
+SCORE_DIVISOR = 11
 MODEL = "results+skills 2026-11"
 
 # (key, label, unit) for the "what drives this rating" view.
@@ -276,6 +281,13 @@ def blend_logit(results: float, skills: float) -> float:
     return BLEND["results"] * (results - RESULTS_MEAN) / 400 + BLEND["skills"] * (skills - 50) / 100
 
 
+def score_100(rating):
+    """The reader-facing score out of 100 for a headline rating (1500 = 50)."""
+    if rating is None:
+        return None
+    return int(_clamp(round(50 + (rating - HEADLINE_CENTRE) / SCORE_DIVISOR), 1, 99))
+
+
 def overall(scores: dict):
     """The OLD headline (average of skill percentiles and form, 0-100). Kept for the comparison study only."""
     skills = [k for k in SKILLS if scores.get(k) is not None]
@@ -363,6 +375,11 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
     centre = sorted(logits[x] for x in established)[len(established) // 2] if established else 0.0
     headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre)) for slug, v in logits.items()}
     headline_pop = sorted(headline[x] for x in established)
+    # Rank among established fighters by the full rating; equal ratings share a rank.
+    ordered = sorted(established, key=lambda x: -headline[x])
+    rank = {}
+    for i, slug in enumerate(ordered):
+        rank[slug] = rank[ordered[i - 1]] if i and headline[slug] == headline[ordered[i - 1]] else i + 1
     results_pop = sorted(results[x]["rating"] for x in established)
 
     out = {}
@@ -393,7 +410,10 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
             "form": {"score": form, "opponents": [
                 {"boutId": fight["boutId"], "opponent": fight["opponent"], "strength": opp.get(fight["boutId"])}
                 for fight in [x for x in f["history"] if x["outcome"] in ("W", "L", "D")][:5]]},
-            "overall": headline.get(slug),
+            "overall": score_100(headline.get(slug)),
+            "overallRating": headline.get(slug),
+            "overallRank": rank.get(slug) if rated else None,
+            "rankOf": len(established),
             "overallPercentile": percentile(headline[slug], headline_pop) if slug in headline else None,
             "model": MODEL,
             "results": None if slug not in results else {

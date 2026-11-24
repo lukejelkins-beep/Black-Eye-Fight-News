@@ -865,7 +865,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
             "rates": {k: [windows[k]["rates"].get(m) for m in INDEX_RATES] for k in WINDOWS},
             "finishRate": windows["career"]["finishRate"],
             "roundWinRate": (windows["career"]["judging"] or {}).get("roundWinRate"),
-            # [overall, striking, grappling, wrestling, defence, form]: overall is the BEFN rating (1500 = median
+            # [overall, striking, grappling, wrestling, defence, form]: overall is the BEFN score out of 100 (50 = median
             # established fighter), the four skills are roster percentiles, form is out of 100; then the same four
             # skills as division percentiles.
             "rating": None if not rating else [None] * 5 + [rating["form"]["score"]] if rating.get("provisional") else
@@ -884,7 +884,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
         "ratingFields": ["overall", *ufc_ratings.SKILLS, "form"],
         "ratingRules": {"window": "weighted", "minStatFights": ufc_ratings.MIN_STAT_FIGHTS,
                         "minDivisionPeers": ufc_ratings.MIN_DIVISION_PEERS, "scale": "percentile",
-                        "overallScale": "rating", "overallCentre": ufc_ratings.HEADLINE_CENTRE,
+                        "overallScale": "score-100", "overallCentre": 50, "scoreDivisor": ufc_ratings.SCORE_DIVISOR,
                         "model": ufc_ratings.MODEL},
         "divisionCoverage": {"withDivision": sum(1 for r in index_rows.values() if r["divisionSlug"]),
                              "officialRoster": sum(1 for c in computed.values() if c["divisionSource"] == "official-roster"),
@@ -969,7 +969,8 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         r = ratings.get(slug)
         if r and r.get("eligible"):
             rated.append([position[slug], r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
-                          r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"]])
+                          r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"],
+                          r.get("overallRank")])
     labels = {}
     for c in computed.values():
         if c["divisionSlug"] and c["division"]:
@@ -984,7 +985,7 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         "fighters": fighters,
         "rowFields": ["fighter", "statFights", *[b[0] for b in BOARD_STATS]],
         "rows": windows,
-        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights"],
+        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank"],
         "ratings": rated,
     }
 
