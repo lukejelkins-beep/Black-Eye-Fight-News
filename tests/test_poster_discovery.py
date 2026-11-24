@@ -93,6 +93,37 @@ class PosterChecks(unittest.TestCase):
         self.assertTrue(mod.trusted("https://www.ufc.com/event/123"))
         self.assertFalse(mod.trusted("https://notufc.com/other"))
         self.assertFalse(mod.trusted("http://ufc.com/not-secure"))
+        self.assertTrue(mod.official("https://www.kswmma.com/gala/xtb-ksw-124"))
+        self.assertTrue(mod.official("https://www.ksw.pl/gala/xtb-ksw-124"))
+        self.assertFalse(mod.official("https://schedule.fightmag.com/events/x/"))
+
+    def test_robots_txt_is_respected(self):
+        class Resp:
+            def __init__(self, code, text=""):
+                self.status_code, self.text, self.ok = code, text, 200 <= code < 300
+        answers = {
+            "https://open.ufc.com/robots.txt": Resp(200, "User-agent: *\nDisallow: /admin\n"),
+            "https://claude-blocked.ufc.com/robots.txt": Resp(200, "User-agent: ClaudeBot\nDisallow: /\n"),
+            "https://nofile.ufc.com/robots.txt": Resp(404),
+            "https://refuses.ufc.com/robots.txt": Resp(403),
+        }
+        fake = lambda url, **kw: answers[url]
+        mod._ROBOTS.clear()
+        self.assertTrue(mod.robots_allowed("https://open.ufc.com/event/x", fake))
+        self.assertFalse(mod.robots_allowed("https://open.ufc.com/admin/x", fake))
+        self.assertFalse(mod.robots_allowed("https://claude-blocked.ufc.com/event/x", fake))
+        self.assertTrue(mod.robots_allowed("https://nofile.ufc.com/event/x", fake))
+        self.assertFalse(mod.robots_allowed("https://refuses.ufc.com/event/x", fake))
+        mod._ROBOTS.clear()
+
+    def test_ksw_event_number_counts_as_event_specific(self):
+        e = {"id": "ksw", "date": "2099-12-19", "title": "XTB KSW 124: Pawlak vs Kuberski",
+             "bouts": [{"section": "main", "fighters": ["Paweł Pawlak", "Piotr Kuberski"]}]}
+        html = """<html><head><title>XTB KSW 124 Pawlak vs Kuberski | KSW MMA</title>
+          <meta property="og:image" content="https://www.kswmma.com/storage/ksw124-www.jpg"></head>
+          <body>19.12.2099 2099-12-19</body></html>"""
+        found = mod.candidates_from_page(e, "https://www.kswmma.com/gala/xtb-ksw-124", html)
+        self.assertEqual([x[0] for x in found], ["https://www.kswmma.com/storage/ksw124-www.jpg"])
 
 if __name__ == "__main__":
     unittest.main()

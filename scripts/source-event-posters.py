@@ -17,6 +17,7 @@ import json
 from pathlib import Path
 import re
 import unicodedata
+from urllib.robotparser import RobotFileParser
 from urllib.parse import parse_qs, quote_plus, unquote, urljoin, urlsplit
 
 from bs4 import BeautifulSoup
@@ -43,13 +44,21 @@ TRUSTED = (
     "boxingnewsonline.net", "mmaweekly.com", "mmajunkie.usatoday.com",
     "the-independent.com", "chasecenter.com", "theo2belfast.com",
     "dazn.com", "boxing247.com", "ringmagazine.com",
+    # Added 2026-11-24 with the owner's attestation for official posters from
+    # boxing and MMA promoter, broadcaster and fight-schedule sites.
+    "kswmma.com", "ksw.pl", "nolimitboxing.com.au", "mostvaluablepromotions.com",
+    "skysports.com", "tntsports.co.uk", "boxingnews.com",
 )
 OFFICIAL = (
     "ufc.com", "ufcespanol.com", "onefc.com", "pflmma.com", "rizinff.com",
     "matchroomboxing.com", "queensberry.co.uk", "toprank.com", "boxxer.com",
     "premierboxingchampions.com", "salitapromotions.com", "wbcboxing.com",
-    "dazn.com",
+    "dazn.com", "kswmma.com", "ksw.pl", "nolimitboxing.com.au",
+    "mostvaluablepromotions.com", "netflix.com", "tudum.com",
+    "skysports.com", "tntsports.co.uk",
 )
+# A site whose robots.txt turns away any of these agents is not read.
+ROBOT_AGENTS = ("BlackEyeFightNewsPosterAudit", "ClaudeBot", "*")
 BAD_ART = re.compile(r"logo|favicon|avatar|headshot|profile[-_]?pic|placeholder|sprite|"
                      r"advertisement|tracking|pixel\.|default[-_]?image", re.I)
 ART_HINT = re.compile(r"poster|key.visual|fight.card|event.art|fightnight|"
@@ -72,6 +81,33 @@ def trusted(url: str) -> bool:
 def official(url: str) -> bool:
     h = host(url)
     return bool(h) and any(h == d or h.endswith("." + d) for d in OFFICIAL)
+
+
+_ROBOTS: dict[str, RobotFileParser | None] = {}
+
+
+def robots_allowed(url: str, fetch=None) -> bool:
+    """Respect robots.txt for our agent, ClaudeBot and '*'. A missing file
+    (404/410) allows; any other failure to read it fails closed."""
+    h = host(url)
+    if not h:
+        return False
+    if h not in _ROBOTS:
+        rp: RobotFileParser | None = RobotFileParser()
+        try:
+            r = (fetch or requests.get)(f"https://{h}/robots.txt", timeout=TIMEOUT,
+                                        headers={"User-Agent": UA})
+            if r.status_code in (404, 410):
+                rp.parse([])
+            elif r.ok:
+                rp.parse(r.text.splitlines())
+            else:
+                rp = None
+        except requests.RequestException:
+            rp = None
+        _ROBOTS[h] = rp
+    rp = _ROBOTS[h]
+    return bool(rp) and all(rp.can_fetch(agent, url) for agent in ROBOT_AGENTS)
 
 
 def folded(text: str) -> str:
@@ -133,7 +169,7 @@ def future_unresolved(event: dict, today: str) -> bool:
 
 
 def fetch_text(url: str) -> str:
-    if not trusted(url):
+    if not trusted(url) or not robots_allowed(url):
         return ""
     try:
         r = requests.get(url, timeout=TIMEOUT, headers={"User-Agent": UA,
@@ -160,7 +196,7 @@ def candidates_from_page(event: dict, url: str, body: str) -> list[tuple[str, st
     if not matches_event(event, title) or not date_matches_event(event, body):
         return []
     one, two = fighters(event)
-    code = re.search(r"\b(?:ufc|one|pfl|rizin)\s*[-:]?\s*\d+\b",
+    code = re.search(r"\b(?:ufc|one|pfl|rizin|ksw)\s*[-:]?\s*\d+\b",
                      folded(event.get("title", "")))
     event_code = re.sub(r"\W+", "", code.group()) if code else ""
     images: list[tuple[str, str, int]] = []

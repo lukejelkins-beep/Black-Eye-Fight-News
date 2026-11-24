@@ -2,6 +2,22 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-24 (Fights page: posters first; poster and Top Rank permissions)
+- **Fights cards lead with the official poster, shown whole at its own shape** (owner: "I want fight posters - formatted correctly as the preference - then if there isnt an official fight poster - use photo cards").
+  - **Poster order:** a portrait or square poster first, then BEFN-held landscape key art. Each is shown whole on dark, never cropped. Very tall posters are capped at 560 px and letterboxed.
+  - **No poster, or one that fails:** the card becomes a photo card with both main-event fighters. Each side uses a cut-out, then BEFN's own photo, then the sourced portrait, then initials.
+  - **Card text:** date and promotion, fighters, division and title note, records, local time with countdown, venue, the "Reported · UFC confirmation pending" label where it applies, and "Full card · N bouts". "Full card" opens the existing undercard tabs.
+  - **Layout:** 3 columns on desktop, 2 on tablets, 1 on phones; an opened card spans the full row. The headline fight (the Overview's rule) leads as a wide dark feature, then This week, Next week and Later.
+- **One switch:** Upcoming / Results / Fight film. The separate "Upcoming and results | Fight film" pill row is gone, and the Fight film page shows the same heading and switch. The heading names the sport ("Boxing fights", "MMA fights").
+- **MMA "All" first** (owner's choice). The chips are All · UFC · PFL · ONE · KSW · RIZIN · Cage Warriors, for both upcoming cards and results, replacing the three logo buttons that opened on the UFC.
+- **Sumo's Fights pages are unchanged for now** (owner: Boxing and MMA only).
+- **Owner attestation, 2026-11-24, for official event posters** from boxing and MMA promoter, broadcaster and fight-schedule sites ("I have permission to get these of the various boxing and mma sites"). It is recorded in IMAGE-GUIDE.
+  - **What the search did:** the existing poster pipeline was extended. It now checks robots.txt, recognises KSW event numbers, and has more official hosts. Every kept poster is listed in `data/poster-intake.json` with source, credit, size, orientation and what was checked.
+  - **Result:** official posters for 11 of the 12 uncovered cards, every one looked at by eye. Two are portraits (UFC 336, UFC Sydney) and nine are landscapes (Walker–Rocha, Benavidez–Cieślak, Diaz–Chaves, Bivol–Smith, Soro–Liddard, Lara–Tszyu, Cacace–Ball, Haney–Paro, KSW 124).
+  - **No poster:** UFC Riyadh. It is provisional, and no image with clear official origin was found.
+  - **Blocked or refused hosts, not worked around:** ufc.com 403, PBC 403, BOXXER 502, Tapology and others via robots.txt.
+- **Top Rank attested as a press-kit source** for fighter photos (owner: "Yes, I attest Top Rank"), on the same terms as Matchroom, Queensberry, BOXXER, PBC, MVP and Salita.
+
 ## 2026-11-24 (UFC cutout framing fix)
 - **129 UFC cutouts re-cropped or added with a fixed framing rule** (owner picked "Fix cutout framing", then "Fix all, you review" and "All but 3" after before/after sheets of all 132 changes, 24 Nov). The tight crops the handover counted at "about ten long-haired fighters" were over 100, and not only long hair (Holly Holm, Alexa Grasso, Amanda Nunes, but also Christian Edwards, Jared Gooden, Neil Magny). Cause: when the outline shows no neck (hair falling to the shoulders, a thick neck or beard), `frame()` fell back to "head = 30% of the figure", far too small, so the crop zoomed in on the face. The source photos were fine. New rule in `scripts/build-ufc-cutouts.py`: with no neck, the head is 0.75 of the distance from the top of the head to the shoulder line (`shoulder_line()`), the median across the 698 fighters whose neck is found (p10-p90 0.65-0.78). Fighters whose neck is found are unchanged.
   - **Result:** 123 kept cutouts re-cropped; 6 that had failed the checks now pass and are added (Azamat Murzakanov, Henry Cejudo, Jacob Malkoun, Muhammad Mokaev, Viviane Araujo, Zac Pauga). Left out on the owner's review: Karine Silva (new crop tighter, old one kept), Alik Lorenz and Curtis Blaydes (pass now, but the source is a face close-up). Kayla Harrison and Youssef Zalal would fail the checks with the new crop, so they keep their current cutouts. **848 kept** (was 843).
