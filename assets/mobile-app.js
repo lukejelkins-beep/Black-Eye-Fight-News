@@ -14,7 +14,7 @@
  };
  const glyph=k=>'<svg aria-hidden="true" viewBox="0 0 24 24">'+icon[k]+'</svg>';
  const items=[['home','Home','news'],['fights','Fights','fights'],['fighters','Fighters','fighters'],['analysis','Analysis','analysis'],['social','Fight Talk','social']];
- const groupOf={calendar:'fights',results:'fights',highlights:'fights',champions:'fighters',leaderboards:'fighters'};
+ const groupOf={calendar:'fights',results:'fights',highlights:'fights',champions:'fighters',leaderboards:'analysis'};
  let sheet=null, opener=null;
  function active(){
    const route=location.hash.slice(1).split('/')[0]||'home';
@@ -59,8 +59,8 @@
    const sections=[
      ['#home',area==='all'?'Front page':'Overview'],
      ['#fights','Upcoming fights'],['#results','Results'],['#highlights','Fight film'],
-     ['#fighters','Fighter scout'],['#champions','Champions'],['#leaderboards','UFC stats'],
-     ['#analysis','Analysis'],['#social','Fight Talk']
+     ['#fighters','Fighters'],
+     ['#analysis',area==='mma'?'Analysis: UFC stats':'Analysis'],['#social','Fight Talk']
    ];
    sections.forEach(([href,label])=>{const a=document.createElement('a');a.href=href;a.textContent=label;a.addEventListener('click',close);grid.append(a);});
    const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Notification preferences';
