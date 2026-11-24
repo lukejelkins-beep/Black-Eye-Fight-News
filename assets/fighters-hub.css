@@ -20,7 +20,9 @@
 .fh-note{font-size:12px;color:var(--fh-mute);margin:0}
 .fh-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fh-gold);font-weight:700}
 .fh-kicker.is-green{color:#6fcf7a;letter-spacing:.06em}
-.fh-kicker.is-blue{color:#8fb3ff;letter-spacing:.06em;margin-top:6px}
+.fh-kicker.is-blue{color:#8fb3ff;letter-spacing:.06em}
+.fh-rv-groups{display:flex;flex-direction:column;gap:20px}
+.fh-rv-group{display:flex;flex-direction:column;gap:14px;min-width:0}
 .fh-l5{display:inline-flex;gap:3px}
 .fh-l5 b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:4px;color:#fff;font-size:12px;font-weight:700;background:#8a8490}
 .fh-l5 b.is-w{background:#2e7d32}.fh-l5 b.is-l{background:var(--fh-red)}
@@ -195,14 +197,16 @@
  .fh-head{margin:0 0 14px}
  .fh-sec{padding:32px 24px 0}
  .fh-rail{padding:0;overflow:visible;flex-wrap:wrap}
- .fh-grid-a{display:flex;flex-wrap:wrap;gap:20px;padding:20px 24px 0;align-items:stretch}
+ .fh-grid-a{display:flex;flex-direction:column;gap:20px;padding:20px 24px 0}
  .fh-grid-a .fh-panel{margin:0}
- .fh-grid-a .fh-podium{flex:999 1 640px;min-width:0;border-radius:24px;padding:22px 22px 0}
- .fh-grid-a .fh-rvf{flex:1 1 380px;min-width:0;border-radius:24px;padding:22px}
+ .fh-grid-a .fh-podium{border-radius:24px;padding:22px 22px 0}
+ .fh-podium-row{max-width:860px;margin:0 auto;width:100%}
+ .fh-grid-a .fh-rvf{border-radius:24px;padding:22px}
+ .fh-rv-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 40px}
  .fh-podium-row{grid-template-columns:1fr 1.25fr 1fr;gap:8px;flex:1}
  .fh-pod .fh-big{font-size:28px}.fh-pod.is-top .fh-big{font-size:40px}
  .fh-pod .fh-name{font-size:15px}
- .fh-pod .fh-face{width:170px;height:210px}.fh-pod.is-top .fh-face{width:220px;height:270px}
+ .fh-pod .fh-face{width:200px;height:250px}.fh-pod.is-top .fh-face{width:260px;height:325px}
  .fh-fire{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
  .fh-fire .fh-card .fh-pic{height:150px}.fh-fire .fh-card .fh-face{width:140px;height:150px}
  .fh-grid-b{display:flex;flex-wrap:wrap;gap:0 28px;padding:0 24px}

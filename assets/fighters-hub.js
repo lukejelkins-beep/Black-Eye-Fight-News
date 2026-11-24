@@ -106,9 +106,10 @@
   return '<section class="fh-panel fh-rvf"><div class="fh-head is-dark"><h2>Rank vs form</h2>'+
    "<span>Where the UFC ranks them, and where their form says they should be.</span>"+
    '<span class="fh-key"><span><i class="fh-ring"></i>UFC rank</span><span><i class="fh-dot"></i>Form rank</span></span></div>'+
-   (ahead.length?'<span class="fh-kicker is-green">Fighting above their rank</span>'+ahead.map(f=>dumb(f,true)).join(""):"")+
-   (behind.length?'<span class="fh-kicker is-blue">Ranked above their form</span>'+behind.map(f=>dumb(f,false)).join(""):"")+
-   "</section>";
+   '<div class="fh-rv-groups">'+
+   (ahead.length?'<div class="fh-rv-group"><span class="fh-kicker is-green">Fighting above their rank</span>'+ahead.map(f=>dumb(f,true)).join("")+"</div>":"")+
+   (behind.length?'<div class="fh-rv-group"><span class="fh-kicker is-blue">Ranked above their form</span>'+behind.map(f=>dumb(f,false)).join("")+"</div>":"")+
+   "</div></section>";
  }
 
  function risingHTML(list){
