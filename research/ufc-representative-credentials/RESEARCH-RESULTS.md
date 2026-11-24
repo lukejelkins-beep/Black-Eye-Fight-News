@@ -132,3 +132,13 @@ The owner has permission from the IJF and UWW (25 Nov). The runner's wide screen
 **Ruled out (same names):** Jesse Butler (a -81 to -100 kg judoka still competing in 2025; the UFC fighter is a bantamweight), Javier Reyes (Ecuadorian judoka; the UFC fighter is Colombian), José Henrique (the match was a Cuban "Jose Souza"), Gabriel Santos (+100 kg judoka), and wrestlers Alex Pérez Cimarra (ESP), Charles Johnson Calawen (PHI), Esteban David Martínez (COL), Daniel Felipe dos Santos (BRA, 2026), Julia da Silva Joaquim, Lázaro Daniel Hernández Luis (CUB), Jodalys Santiago Luna (PUR) and Manuel Torres (VEN).
 
 **Unresolved:** Daniel Santos (a BRA -66 kg judoka who medalled at 2013-14 Pan-American Opens; the UFC fighter is a Brazilian featherweight, but nothing links them), Irina Alekseeva (RUS U17 wrestling 2015-16; identity open), José Daniel Medina (ARG U20 wrestling 2014) and Luana Santos (a 40 kg U17 Pan-American entry in 2014).
+
+## Bio claims checked (25 Nov 2026)
+
+These are UFC bio claims to amateur titles in judo, wrestling and sambo, checked against the saved IJF, UWW and FIAS data (a loose surname search) and by hand. None is recorded yet.
+
+- **Luana Santos** ("Brazilian, PanAm, European judo champion"): her IJF record (judoka 36962) shows one Continental Cup gold, the 2017 Cadet European Cup in Antalya. That is an open event, not a team selection, so it isn't recorded. Her Pan-American and Brazilian titles weren't found.
+- **Uran Satybaldiev** ("Asian judo champion"): not in 556 IJF competitions, including Asian championships at all ages. Search results show only MMA profiles. Possibly kurash or belt wrestling; unresolved.
+- **Ketlen Souza** ("2014 World Wrestling Championship"): not in any screened UWW book. She was born in 1995, so this may have been the 2014 Junior Worlds, but the matching would have found "Souza Ketlen" there too. Unresolved.
+- **Muin Gafurov, Nurullo Aliev, Irina Alekseeva:** only namesakes in the IJF and FIAS data (Mirzoiusuf Gafurov, Marjona Nurulloeva), and Alekseeva's FIAS entry is still identity-open.
+- **Not searchable in the saved data:** Caio Borralho, Kevin Jousset, Nyamjargal Tumendemberel (judo); Steve Erceg, Lerryan Douglas, Michael Morales, Yuneisy Duben (national wrestling titles, which are domestic, not representative); Rafael Fiziev (national sambo). National titles alone don't qualify as national-team results.
