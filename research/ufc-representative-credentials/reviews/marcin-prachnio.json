@@ -6,9 +6,15 @@
   },
   "lanes": {
     "national": {
-      "state": "needs_review",
+      "state": "seed",
       "checkedOn": "2026-11-25",
       "checks": [
+        {
+          "type": "federation_or_team",
+          "name": "I.K.O. Kyokushinkaikan, The 26th European Weight Category Karate Championships Official Results",
+          "url": "https://www.kyokushinkaikan.org/en/news/19337/",
+          "outcome": "supports_claim"
+        },
         {
           "type": "index",
           "name": "Kyokushin Results almanac, European Championships (IKO 1)",
@@ -28,8 +34,26 @@
           "outcome": "no_match"
         }
       ],
-      "claims": [],
-      "note": "The almanac lists him second at +90 kg (misspelled 'Marchin Prachino', Poland) at the 2012 IKO-1 European Weight Category Championships in Budapest, behind Djema Belkhodja (France), and third at -90 kg at the 2011 IKO-1 Europeans in Padova. A video of the Belkhodja vs Prachnio +90 final and his UFC bio agree. Not recorded as a claim because the almanac is not a federation source. The Antwerp (EKO) and Kielce (WKO) Europeans of 2012 are different organisations and don't list him. To resolve, find the IKO (kyokushinkaikan.org) or Hungarian organiser's 2012 Budapest results."
+      "claims": [
+        {
+          "kind": "team_appearance",
+          "edition": "26th European Weight Category Karate Championships (IKO, Budapest, 2 Jun 2012)",
+          "sport": "Kyokushin karate",
+          "event": "Men +90 kg",
+          "delegation": "Poland",
+          "category": "senior",
+          "result": "Silver medallist, lost the final to Djema Belkhodja (France). Listed as 'Marchin Prachino'",
+          "medal": "silver",
+          "sources": [
+            {
+              "name": "I.K.O. Kyokushinkaikan, The 26th European Weight Category Karate Championships Official Results",
+              "url": "https://www.kyokushinkaikan.org/en/news/19337/",
+              "authority": "federation"
+            }
+          ]
+        }
+      ],
+      "note": "The IKO's official results list 'Marchin Prachino (Poland)' second at +90 kg. That is a misspelling of his name. His UFC bio ('2nd place European Championship Karate 2012') and a video of the final against Belkhodja agree. The Kyokushin Results almanac also lists a 2011 IKO Europeans (Padova) -90 kg bronze, which isn't recorded until the IKO's 2011 results are checked. The 2012 EKO (Antwerp) and WKO Shinkyokushin (Kielce) Europeans are separate organisations and don't list him."
     }
   }
 }
