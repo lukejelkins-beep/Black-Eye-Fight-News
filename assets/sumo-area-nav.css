@@ -19,5 +19,8 @@ html[data-befn-area="sumo"] .sh-area-name{color:#8ea6dc}
   .befn-mobile-tabs a svg{height:19px;width:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .befn-mobile-tabs a[aria-current="page"]{background:#f3c332;color:#211417}
   .befn-mobile-tabs a:focus-visible{outline:2px solid #fff}
-  .sh-sub{padding-top:12px}
+  /* One row of pills on phones, so a profile's name stays on the first screen at 320 px
+     (scripts/sumo-browser-qa.mjs); pills keep the 44 px tap height. */
+  .sh-sub{flex-wrap:nowrap;gap:6px;padding:10px 12px 0}
+  .sh-sub a{flex:1 1 0;justify-content:center;min-width:0;padding:0 8px;font-size:12px;letter-spacing:.04em}
 }
