@@ -25,12 +25,20 @@ class Formulas(unittest.TestCase):
 
     def test_striking_includes_strike_defence_by_hand(self):
         rates = {"slpm": 3.65, "sapm": 3.0, "strAcc": .45, "kd15": .5, "strDef": .55, "kdAbs15": .25}
-        window = {"koWinShare": .25}
-        # output as above; strDef (55-35)/40=50, sapm (3.0-6.0)/(1.2-6.0)=62.5, knockdowns absorbed (.25-1)/(0-1)=75
-        expected = 50 * .12 + 53 * .20 + 50 * .10 + 50 * .13 + 50 * .15 + 50 * .12 + 62.5 * .08 + 75 * .10
+        window = {"koWinShare": .25, "koLossShare": .125}
+        # output as above; strDef (55-35)/40=50, sapm (3.0-6.0)/(1.2-6.0)=62.5, knockdowns absorbed (.25-1)/(0-1)=75,
+        # KO losses (.125-.25)/(0-.25)=50
+        scores = {"slpm": 50, "diffPm": 53, "strAcc": 50, "kd15": 50, "koWinShare": 50,
+                  "strDef": 50, "sapm": 62.5, "kdAbs15": 75, "koLossShare": 50}
+        W = r.STRIKING_WEIGHTS
+        self.assertAlmostEqual(sum(W.values()), 1.0)
+        self.assertAlmostEqual(W["strDef"] + W["sapm"] + W["kdAbs15"] + W["koLossShare"], .40, msg="defence is 40%")
+        expected = sum(scores[k] * W[k] for k in W)
         self.assertAlmostEqual(r.raw_skill(rates, window, "striking"), expected, places=6)
         hittable = r.raw_skill({**rates, "strDef": .40, "kdAbs15": .9}, window, "striking")
         self.assertLess(hittable, expected - 8, "being hit and dropped lowers striking")
+        stopped = r.raw_skill(rates, {**window, "koLossShare": .25}, "striking")
+        self.assertLess(stopped, r.raw_skill(rates, {**window, "koLossShare": 0}, "striking"), "KO losses lower striking")
 
     def test_evidence_gates(self):
         no_grappling = {"slpm": 3, "sapm": 3, "ctrlShare": .2}
@@ -54,7 +62,7 @@ class Formulas(unittest.TestCase):
 
     def test_drivers_explain_each_component(self):
         d = r.drivers(STRONG, {"koWinShare": .3, "subWinShare": .1}, "striking")
-        self.assertEqual([x["key"] for x in d], ["slpm", "diffPm", "strAcc", "kd15", "koWinShare", "strDef", "sapm", "kdAbs15"])
+        self.assertEqual([x["key"] for x in d], ["slpm", "diffPm", "strAcc", "kd15", "koWinShare", "strDef", "sapm", "kdAbs15", "koLossShare"])
         self.assertEqual(sum(x["weight"] for x in d), 1.0)
         self.assertEqual(d[0]["value"], 5.0)
         self.assertTrue(all(0 <= x["score"] <= 100 for x in d if x["score"] is not None))
