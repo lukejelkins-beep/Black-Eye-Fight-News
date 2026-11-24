@@ -788,7 +788,7 @@ function postCard(p){
 }
 
 
-const liveTalk={posts:[],primaryPosts:[],embedPosts:[],paidXPosts:[],paidXCheckedAt:null,embedCheckedAt:null,selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
+const liveTalk={updatedAt:null,posts:[],primaryPosts:[],embedPosts:[],paidXPosts:[],paidXCheckedAt:null,embedCheckedAt:null,selected:[],checkedAt:null,platformStatus:[],directory:[],directoryCounts:null,loading:false,lastAttempt:0,error:''};
 function rebuildTalkPosts(){
  liveTalk.posts=[...liveTalk.primaryPosts,...liveTalk.paidXPosts,...liveTalk.embedPosts];
  // A platform's account API can be unavailable while authentic original
@@ -855,6 +855,7 @@ async function loadLiveTalk(){
  if(newest){
   liveTalk.primaryPosts=newest.posts;
   liveTalk.checkedAt=newest.checkedAt;
+  liveTalk.updatedAt=newest.updatedAt||null;
   liveTalk.platformStatus=Array.isArray(newest.platformStatus)?newest.platformStatus:[];
  }
  if(originalEmbeds&&(!liveTalk.embedCheckedAt||
@@ -877,6 +878,7 @@ async function loadLiveTalk(){
   if(!remote||!(Date.parse(remote.checkedAt)>Date.parse(liveTalk.checkedAt||'')))return;
   liveTalk.primaryPosts=remote.posts;
   liveTalk.checkedAt=remote.checkedAt;
+  liveTalk.updatedAt=remote.updatedAt||null;
   liveTalk.platformStatus=Array.isArray(remote.platformStatus)?remote.platformStatus:[];
   rebuildTalkPosts();
   redrawTalkIfVisible();
@@ -1077,7 +1079,9 @@ function renderSocial(){
  const total=Math.max(1,Math.ceil(list.length/pageSize));
  state.socialPage=Math.min(total,Math.max(1,state.socialPage));
  const start=(state.socialPage-1)*pageSize;
- const freshness=highlights?'Highlights from the previous four weeks':liveTalk.error||(!liveTalk.lastAttempt||liveTalk.loading?'Checking fresh posts…':liveTalk.checkedAt?'Live feed checked '+humanTalkTime(liveTalk.checkedAt)+' local time':'Checking fresh posts…');
+ /* Loading, post time, check time and outages kept apart (assets/talk-status.js, QA audit A05). */
+ const talkState={...liveTalk,highlights};
+ const freshness=window.BEFNTalkStatus.freshness(talkState,humanTalkTime,v=>new Date(v).toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'}));
  const mode='<div class="segment" role="group" aria-label="Fight Talk view">'+[['latest','Latest posts'],['highlights','Last 4 weeks']].map(([value,label])=>'<button type="button" id="talk-'+value+'" data-segment="socialMode" data-value="'+value+'" aria-pressed="'+String(value===state.socialMode)+'">'+label+'</button>').join('')+'</div>';
  const promotionFilter=state.social==='mma'&&window.BEFNTalkFilters?talkFilter('talkPromotion','Promotion',window.BEFNTalkFilters.PROMOTIONS):'';
  const fighterFilter='<div class="talk-filter talk-filter-fighter"><label for="talkFighter">Fighter</label><input type="search" id="talkFighter" data-talk-search value="'+esc(state.talkFighter)+'" placeholder="Search by fighter" autocomplete="off" aria-label="Search posts by fighter"></div>';
@@ -1085,7 +1089,7 @@ function renderSocial(){
   +talkFilter('talkRole','Posts from',{all:'Everyone',fighters:'Fighters',media:'Media & industry',fans:'Fans',memes:'Meme pages'})+talkFilter('talkSort','Order',{latest:'Newest first',balanced:'Balanced feed'});
  const toolbar='<div class="talk-toolbar"><div class="talk-toolbar-top">'+mode+'<p class="talk-freshness">'+esc(freshness)+'</p></div><div class="talk-filters">'+filters+'</div></div>';
  const platformNeedsConnection=liveTalk.platformStatus.some(p=>p.platform===state.socialPlatform&&p.state==='not-connected')&&!current.some(p=>p.platform===state.socialPlatform);
- const empty='<div class="talk-empty"><h2>No posts match these filters</h2><p>'+
+ const empty='<div class="talk-empty"><h2>'+esc(window.BEFNTalkStatus.emptyHeading(talkState))+'</h2><p>'+
   (!highlights&&(!liveTalk.lastAttempt||liveTalk.loading)?'Checking for original posts from the past seven days.':!highlights&&platformNeedsConnection?'Automatic updates from '+esc(state.socialPlatform)+' need an approved source connection.':'Try a different sport, promotion, fighter or platform filter.')+'</p></div>';
  const pages=total>1?'<div class="pagination"><button type="button" data-page="prev" '+(state.socialPage===1?'disabled':'')+'>← Previous</button><span>Page '+state.socialPage+' of '+total+'</span><button type="button" data-page="next" '+(state.socialPage===total?'disabled':'')+'>Next →</button></div>':'';
  const count=total>1?(start+1)+'–'+Math.min(start+pageSize,list.length)+' of '+list.length+' posts':list.length+' post'+(list.length===1?'':'s');
