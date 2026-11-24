@@ -556,7 +556,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-home-feature{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .sumo-inline-action{display:inline-flex;font-weight:700;font-size:14px;margin:12px 0}
 .sumo-basho-views{display:flex;gap:4px;background:#21191c;padding:5px;margin:18px 0 8px;border-radius:6px}
-.sumo-basho-views button{flex:1;background:transparent;border:0;color:#fff;padding:9px 15px;border-radius:4px;min-height:44px;cursor:pointer;font-weight:750}
+.sumo-basho-views button{flex:1;min-width:0;background:transparent;border:0;color:#fff;padding:9px 15px;border-radius:4px;min-height:44px;cursor:pointer;font-weight:750}
+@media(max-width:360px){.sumo-basho-views button{padding:9px 6px}}
 .sumo-basho-views button[aria-pressed=true]{background:#f6f2ea;color:#21191c}
 .sumo-day-quick{font-size:14px;color:var(--muted);margin:14px 0 6px}
 .sumo-empty-bout{background:#fff;padding:18px;border:1px solid var(--border);font-size:14px}

@@ -1,9 +1,14 @@
 name: Sumo desktop and mobile browser QA
 on:
-  # Manual only for now. This journey still tests the old Sumo "Overview" home screen
-  # (.sumo-overview-lede, five leaders), which no longer exists: #home now opens Results.
-  # It failed at its first step on every viewport when it first ran against main
-  # (2026-11-23). It runs on pull requests again once it is ported to the current design.
+  pull_request:
+    branches: [main]
+    paths:
+      - 'sumo*.html'
+      - 'assets/sumo*'
+      - 'data/sumo/**'
+      - 'scripts/sumo-browser-qa.mjs'
+      - 'tests/test-sumo*'
+      - '.github/workflows/sumo-browser-qa.yml'
   workflow_dispatch:
 permissions:
   contents: read

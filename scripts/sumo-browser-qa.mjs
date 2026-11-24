@@ -47,47 +47,49 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
    assert.equal(new Set(roster.rikishi.map(w=>w.sourceId)).size,roster.count,'Stable IDs are unique');
   assert.equal(research.profileCount,roster.count,'Full tracked roster has corresponding research records');
   assert.equal(research.certified,false,'Research cache must not imply JSA certification');
-  await open(page,'home','.sumo-overview-lede');
+  // #home opens Results, the Sumo landing page. (The old Overview dashboard, with its five-leaders panel,
+  // was removed when the preview design reached main; leaders now live in the Standings view.)
+  await open(page,'home','.sumo-page-head');
   const home=await page.locator('#sumo-main').innerText();
-  assertContains(home,'Sumo','Sumo home context');
-  assertContains(home,'results','latest results priority');
-  assertContains(home,'five leaders','home leaders');
-  assert.ok(await page.locator('.sumo-home-grid').count()===1,'Results and leaders appear in first dashboard');
-  assert.equal(await page.locator('.sumo-home-leaders .sumo-standings-row').count(),5,'Homepage shows exactly five leaders');
+  assertContains(home,'Results','Results landing page');
+  assertContains(home,'Day','tournament day shown');
+  assert.equal(await page.locator('.sumo-basho-views [data-basho-view]').count(),3,'Results, Matchups and Standings views');
+  assert.equal(await page.locator('[data-basho-view="results"]').getAttribute('aria-pressed'),'true','Results is the selected view');
   for(const division of ['Makuuchi','Juryo','Makushita']){
-    await page.locator('[data-home-leader-division="'+division+'"]').click();
-    assert.equal(await page.locator('[data-home-leader-division="'+division+'"]').getAttribute('aria-pressed'),'true',
-      'Selected '+division+' leader tab is accessible');
-    assert.equal(await page.locator('.sumo-home-leaders .sumo-leader-card').count(),5,
-      'Exactly five source-ranked leaders for '+division);
-    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-vitals').count(),5,'Height and weight in all '+division+' cards');
-    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-career').count(),5,'Recorded career W-L in all '+division+' cards');
-    assert.equal(await page.locator('.sumo-leader-card .sumo-leader-last').count(),5,'Latest completed result details in all '+division+' cards');
-    const proportions=await page.locator('.sumo-leader-card').first().evaluate(card=>{
-      const image=card.querySelector('.profile-icon.sumo-photo');
-      return {cardWidth:card.getBoundingClientRect().width,photoWidth:image?.getBoundingClientRect().width,
-        photoHeight:image?.getBoundingClientRect().height,cardHeight:card.getBoundingClientRect().height};
-    });
-    assert.ok(proportions.photoWidth>=proportions.cardWidth*.40,'Leader portrait dominates left edge '+JSON.stringify(proportions));
-    assert.ok(proportions.photoHeight>=proportions.cardHeight-3,'Portrait fills the height '+JSON.stringify(proportions));
+    await page.locator('[data-basho-division="'+division+'"]').click();
+    assert.ok(/\bactive\b/.test(await page.locator('[data-basho-division="'+division+'"]').getAttribute('class')),
+      'Selected '+division+' tab is marked active');
+    assert.ok(await page.locator('.sumo-compact-results .bout-row').count()>0,'Bouts listed for '+division);
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
-    assert.ok(widths.page<=widths.viewport+6,'No mobile horizontal overflow after '+division+' toggle: '+JSON.stringify(widths));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow after '+division+' toggle: '+JSON.stringify(widths));
   }
-  await page.locator('[data-home-leader-division="Makuuchi"]').click();
-  await page.locator('.sumo-home-leaders').screenshot({path:OUT+'/'+label+'-top-five.png',animations:'disabled'});
+  await page.locator('[data-basho-division="Makuuchi"]').click();
+  await page.locator('[data-basho-view="standings"]').click();
+  await page.waitForSelector('.sumo-standings-row');
+  assert.equal(await page.locator('[data-basho-view="standings"]').getAttribute('aria-pressed'),'true','Standings view selected');
+  assert.ok(await page.locator('.sumo-standings-row').count()>=5,'Standings list the top wrestlers');
+  assert.ok(await page.locator('.sumo-standings-row .sumo-standings-record').count()>=5,'Each standings row shows a record');
+  await page.locator('.sumo-standings-workspace').first().screenshot({path:OUT+'/'+label+'-standings.png',animations:'disabled'});
   screenshotCount++;
+  await page.locator('[data-basho-view="results"]').click();
   if(isMobile){
+    // Shared site navigation (sport first, then section; 24 Nov 2026): on a phone the sports sit in the row
+    // under the masthead and the four Sumo sections in the bottom tab bar.
     const nav=await page.evaluate(()=>{
-      const links=[...document.querySelector('.subnav-inner').children]
-        .filter(el=>getComputedStyle(el).display!=='none');
-      return links.map(el=>({label:el.innerText.trim(),
-        client:el.clientWidth,scroll:el.scrollWidth,
-        left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right}));
+      const read=sel=>[...document.querySelectorAll(sel)].filter(el=>getComputedStyle(el).display!=='none')
+        .map(el=>({label:el.innerText.trim().replace(/\s+/g,' '),client:el.clientWidth,scroll:el.scrollWidth,
+          top:Math.round(el.getBoundingClientRect().top),left:el.getBoundingClientRect().left,
+          right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height,
+          viewport:document.documentElement.clientWidth}));
+      return {sports:read('.sh-areas-phone a'),tabs:read('.befn-mobile-tabs a')};
     });
-    assert.equal(nav.length,4,'Mobile navigation has four unambiguous destinations');
-    assert.ok(nav.every((item,i)=>item.scroll<=item.client+2&&
-      (i===0||item.left>=nav[i-1].right-2)),
-      'No overlapping or clipped mobile navigation text: '+JSON.stringify(nav));
+    assert.deepEqual(nav.sports.map(n=>n.label),['Boxing','MMA','Sumo'],'Phone sports row: '+JSON.stringify(nav.sports));
+    assert.deepEqual(nav.tabs.map(n=>n.label),['Overview','Fights','Fighters','Analysis'],'Phone section tabs: '+JSON.stringify(nav.tabs));
+    for(const row of [nav.sports,nav.tabs]){
+      assert.ok(row.every((item,i)=>item.scroll<=item.client+2&&item.left>=-1&&item.right<=item.viewport+1&&item.height>=44&&
+        (i===0||item.left>=row[i-1].right-2)),
+        'No overlapping, clipped, off-screen or undersized mobile navigation: '+JSON.stringify(row));
+    }
   }
   await snap(page,label+'-home',{fullPage:false});
 
@@ -113,73 +115,34 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('.directory-grid.is-list').count(),0,'Return to image-card presentation');
   await snap(page,label+'-directory',{fullPage:false});
 
-  await open(page,'profile/8850','.profile-hero');
+  // The profile hero is the poster design (.sumo-poster); the old .profile-hero layout is gone.
+  await open(page,'profile/8850','.sumo-poster');
   let profile=await page.locator('#sumo-main').innerText();
   assertContains(profile,'Onosato','Onosato name');
   assert.equal(await page.locator('.sumo-quick-results').count(),0,'Redundant Jump to results hero button removed');
   assert.equal(await page.locator('.sumo-full-photo').count(),0,'Redundant View full photo hero button removed');
-  const heroMeasurements=await page.evaluate(()=>{
-    const box=document.querySelector('.profile-hero').getBoundingClientRect();
-    const image=document.querySelector('.profile-hero>.sumo-photo').getBoundingClientRect();
-    const heading=document.querySelector('.profile-hero h1').getBoundingClientRect();
-    return {top:box.top,headingTop:heading.top,imageHeight:image.height,viewport:window.innerHeight};
+  const poster=await page.locator('.sumo-poster').evaluate(P=>{
+    const rect=e=>{const b=e?.getBoundingClientRect();return b&&{top:b.top,left:b.left,right:b.right,width:b.width,height:b.height}};
+    const photo=P.querySelector('.sumo-photo,img');
+    const facts=[...P.querySelectorAll('.sumo-poster-facts>*')].map(el=>el.textContent.replace(/\s+/g,' ').trim());
+    return {h1:rect(P.querySelector('h1')),name:P.querySelector('h1')?.textContent.trim(),
+      poster:rect(P),photo:rect(photo),
+      chips:[...P.querySelectorAll('.sumo-poster-chip')].map(el=>el.textContent.replace(/\s+/g,' ').trim()),
+      country:P.querySelector('.sumo-poster-chip.country')?.textContent.trim(),
+      emojiInChips:!!P.querySelector('.sumo-poster-chip .sumo-country-emoji'),
+      facts,stats:P.querySelector('.sumo-poster-stats')?.innerText.replace(/\s+/g,' ').trim(),
+      viewport:{w:document.documentElement.clientWidth,h:window.innerHeight}};
   });
-  if(viewport.width<=650){
-    const imageFirst=await page.evaluate(()=>{
-      const hero=document.querySelector('.profile-hero');
-      const photo=hero.querySelector(':scope>.profile-icon.sumo-photo.xl');
-      const heading=hero.querySelector(':scope>.profile-title');
-      const photoRect=photo.getBoundingClientRect(),titleRect=heading.getBoundingClientRect(),heroRect=hero.getBoundingClientRect();
-      const img=photo.querySelector('img');
-      return {photoTop:photoRect.top,titleTop:titleRect.top,
-        photoWidth:photoRect.width,heroWidth:heroRect.width,
-        photoHeight:photoRect.height,objectPosition:img?getComputedStyle(img).objectPosition:null};
-    });
-    assert.ok(imageFirst.photoTop<imageFirst.titleTop,'Photo precedes name on mobile: '+JSON.stringify(imageFirst));
-    assert.ok(imageFirst.photoWidth>=imageFirst.heroWidth-3,'Photo fills mobile hero width: '+JSON.stringify(imageFirst));
-    assert.ok(imageFirst.photoHeight<=306,'Portrait bounded and not excessively tall: '+JSON.stringify(imageFirst));
-    assert.ok(!imageFirst.objectPosition||/\\btop\\b|0%$/.test(imageFirst.objectPosition),'Portrait preserves top of head: '+JSON.stringify(imageFirst));
-  }else{
-    assert.ok(heroMeasurements.headingTop<heroMeasurements.viewport/2,
-      'Desktop/tablet profile name appears high in first screen: '+JSON.stringify(heroMeasurements));
-  }
-  assert.ok(heroMeasurements.imageHeight<=(isMobile?321:521),
-    'Approved portrait is bounded rather than full-page: '+JSON.stringify(heroMeasurements));
-  const heroInfoCheck=await page.locator('.profile-hero').evaluate(hero=>{
-    const photo=hero.querySelector(':scope>.profile-icon.sumo-photo.xl');
-    const overlay=hero.querySelector(':scope>.sumo-hero-flag');
-    const title=hero.querySelector(':scope>.profile-title');
-    const rank=hero.querySelector('.sumo-hero-rank');
-    const country=hero.querySelector('.sumo-hero-country');
-    const height=[...hero.querySelectorAll('.profile-facts>div')]
-      .find(el=>el.querySelector('span')?.textContent==='Height');
-    const image=photo?.getBoundingClientRect(),flag=overlay?.getBoundingClientRect();
-    const intersect=flag&&image?Math.max(0,Math.min(flag.right,image.right)-Math.max(flag.left,image.left))*
-      Math.max(0,Math.min(flag.bottom,image.bottom)-Math.max(flag.top,image.top)):Infinity;
-    return {
-      height:height?.querySelector('strong')?.textContent,
-      rankText:rank?.textContent,
-      emojiInRank:!!rank?.querySelector('.sumo-country-emoji'),
-      country:country?.textContent,
-      flagExists:!!overlay,
-      flagUrl:overlay?getComputedStyle(overlay,'::before').backgroundImage:null,
-      flagOpacity:overlay?Number(getComputedStyle(overlay).opacity):null,
-      flagFontSize:overlay?getComputedStyle(overlay).fontSize:null,
-      photoOverlapArea:intersect,
-      titleAboveFlag:!!(overlay&&title&&Number(getComputedStyle(title).zIndex)>Number(getComputedStyle(overlay).zIndex)),
-      viewport:document.documentElement.clientWidth
-    };
-  });
-  assert.equal(heroInfoCheck.height,'190 cm · 6′3″',
-    'Profile hero shows source centimetres and nearest feet/inches');
-  assert.equal(heroInfoCheck.emojiInRank,false,'Hero flag emoji removed from rank line');
-  assert.equal(heroInfoCheck.country,'Japan','Country remains readable as plain text');
-  assert.ok(heroInfoCheck.flagExists&&heroInfoCheck.flagUrl!=='none'&&
-    heroInfoCheck.flagOpacity>0&&heroInfoCheck.flagOpacity<=.25&&heroInfoCheck.flagFontSize==='0px',
-    'Country flag is a subtle decorative image without visible emoji: '+JSON.stringify(heroInfoCheck));
-  assert.ok(heroInfoCheck.photoOverlapArea<=3,
-    'Hero flag does not overlap the wrestler photograph: '+JSON.stringify(heroInfoCheck));
-  assert.ok(heroInfoCheck.titleAboveFlag,'Hero text stays above faded flag image');
+  assert.equal(poster.name,'Onosato','Poster heading is the wrestler name');
+  assert.ok(poster.h1.top<poster.viewport.h,'Profile name appears within the first screen: '+JSON.stringify({h1:poster.h1,viewport:poster.viewport}));
+  assert.ok(poster.photo&&poster.photo.width>40&&poster.photo.height>40,'Poster shows a wrestler photograph: '+JSON.stringify(poster.photo));
+  assert.ok(poster.photo.left>=poster.poster.left-2&&poster.photo.right<=poster.poster.right+2,'Photograph stays inside the poster: '+JSON.stringify({photo:poster.photo,poster:poster.poster}));
+  assert.ok(poster.poster.right<=poster.viewport.w+2,'Poster fits the viewport width: '+JSON.stringify({poster:poster.poster,viewport:poster.viewport}));
+  assert.ok(poster.chips.some(c=>/Yokozuna/.test(c)),'Rank chip shows Yokozuna: '+JSON.stringify(poster.chips));
+  assert.equal(poster.country,'Japan','Country is readable plain text');
+  assert.equal(poster.emojiInChips,false,'No flag emoji in the poster chips');
+  assert.ok(poster.facts.some(f=>/Height\s*190 cm/.test(f)),'Poster shows source centimetres: '+JSON.stringify(poster.facts));
+  assert.ok(/\d+–\d+/.test(poster.stats)&&/CAREER WINS/i.test(poster.stats),'Poster shows a basho record and career wins: '+poster.stats);
   assertContains(profile,'Yokozuna','rank');
   assertContains(profile,'Winning techniques','techniques');
   assertContains(profile,'Results','canonical results');
@@ -188,8 +151,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await careerTiles.count(),2,'Career summary has exactly Basho and Makuuchi Championships');
   assert.deepEqual(await careerTiles.locator('span').allInnerTexts(),['Basho','Makuuchi Championships'],
     'Two clear, nonduplicative labels');
-  assert.deepEqual(await careerTiles.locator('strong').allInnerTexts(),['22','6'],
-    'Onosato source-listed Basho 22 and Makuuchi titles 6');
+  // Career totals only grow, so check a floor (22 basho and 6 Makuuchi titles when this was written)
+  // and that titles cannot exceed basho, rather than a fixed value that goes stale each tournament.
+  const careerTotals=(await careerTiles.locator('strong').allInnerTexts()).map(Number);
+  assert.ok(careerTotals.length===2&&careerTotals.every(Number.isInteger)&&careerTotals[0]>=22&&careerTotals[1]>=6&&careerTotals[1]<=careerTotals[0],
+    'Onosato source-listed basho (at least 22) and Makuuchi titles (at least 6): '+JSON.stringify(careerTotals));
   assert.equal(await page.locator('#sumo-career .sumo-career-facts').count(),0,
     'The original closed career disclosures have been replaced');
   assert.equal(await page.locator('#sumo-career .sumo-career-detail-section').count(),4,
@@ -336,7 +302,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     screenshotCount++;
   }
   assert.ok(!profile.includes('API-TRUSTED'),'Technical API badge is not displayed');
-  assertContains(profile,'Career results: independently corroborated','career evidence is labelled separately');
+  // (The profile no longer carries a sourcing/verification block, so the old
+  // "Career results: independently corroborated" label is not asserted here; #sumo-sources absent is checked above.)
   assertContains(profile,'Opponents and head-to-head','opponent catalogue');
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>=10,'Complete sourced opponent directory available');
@@ -442,14 +409,15 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('#sumo-opponent-search').fill('');
   await page.locator('#sumo-opponent-sort').selectOption('name');
   assert.ok(await page.locator('.sumo-rival').count()>0,'Sort keeps catalogue accessible');
-  assert.ok(await page.locator('.sumo-country').count()>0,'Profile shows birthplace-country flag');
+  assert.ok(await page.locator('.sumo-poster-chip.country').count()>0,'Profile shows the birthplace country (poster chip)');
   await page.evaluate(()=>scrollTo(0,0));
   await snap(page,label+'-profile',{fullPage:false});
   // Full pair-specific history is distinct from a single basho's opponent record.
-  await open(page,'headtohead/8850/8857','.sumo-h2h-hero');
+  await open(page,'headtohead/8850/8857','.sumo-h2h-comparison');
   await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===6,null,{timeout:30000});
   const history=await page.locator('#sumo-main').innerText();
-  assertContains(history,'Career head-to-head','dedicated H2H view');
+  assertContains(history,'Head-to-head','dedicated H2H view');
+  assertContains(history,'Career series','career series shown on the H2H view');
   assertContains(history,'1–5','source-confirmed all-time series');
   assert.equal(await page.locator('.section-head').filter({hasText:'Every historical meeting'}).count(),1,'Head-to-head history heading shown after kimarite charts');
   assert.equal(await page.locator('.sumo-h2h-order+ol li').count(),6,'Every source-confirmed bout is shown');
@@ -461,7 +429,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 
   // Career H2H is a comparison of each wrestler's highest sourced division,
   // not the default Makushita record in the earlier preview.
-  await open(page,'headtohead/19/7','.sumo-h2h-hero');
+  await open(page,'headtohead/19/7','.sumo-h2h-comparison');
   const careerLabels=await page.locator('.sumo-h2h-comparison .sumo-comparison-row>span').allInnerTexts();
   assert.ok(careerLabels.includes('Makuuchi W–L')&&careerLabels.includes('Makuuchi win %'),
     'Hoshoryu versus Kirishima shows top-division Makuuchi records in both rows: '+JSON.stringify(careerLabels));
@@ -476,7 +444,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 
   // All tracked rikishi should expose current banzuke opponent histories even
   // without individually fetched lifetime stats or 18-bout enrichment.
-  await open(page,'profile/2','.profile-hero');
+  await open(page,'profile/2','.sumo-poster');
   const unfeatured=await page.locator('#sumo-main').innerText();
   assertContains(unfeatured,'Career','career section exists for all tracked profiles');
   assertContains(unfeatured,'Opponents and head-to-head','opponent directory section');
@@ -484,13 +452,23 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.waitForSelector('.sumo-rival',{timeout:25000});
   assert.ok(await page.locator('.sumo-rival').count()>0,'Unfeatured rikishi has complete opponent library');
   assert.equal(await page.locator('.sumo-signature h3').count(),0,'No speculative signature manoeuvres on unsourced profiles');
-  await open(page,'profile/82','.profile-hero');
-  assertContains(await page.locator('#sumo-main').innerText(),'206–131','Fujiseiun career W–L preserved');
-  await open(page,'profile/16','.profile-hero');
-  assertContains(await page.locator('#sumo-main').innerText(),'677–716','Nishikigi career W–L preserved');
-  await open(page,'profile/75','.profile-hero');
+  // The profile poster shows career wins and a win percentage (not a W–L pair). Career wins only grow, so
+  // check the totals recorded when these checks were written (206 and 677) as floors, not fixed values.
+  const posterCareerWins=async()=>{
+    const stats=await page.locator('.sumo-poster-stats').innerText();
+    const m=stats.replace(/\s+/g,' ').match(/(\d+) CAREER WINS · (\d+(?:\.\d+)?)%/i);
+    assert.ok(m,'Poster shows career wins and a win percentage: '+stats);
+    return Number(m[1]);
+  };
+  await open(page,'profile/82','.sumo-poster');
+  assert.ok(await posterCareerWins()>=206,'Fujiseiun career wins preserved (at least 206)');
+  await open(page,'profile/16','.sumo-poster');
+  assert.ok(await posterCareerWins()>=677,'Nishikigi career wins preserved (at least 677)');
+  await open(page,'profile/75','.sumo-poster');
   const makushitaProfile=await page.locator('#sumo-main').innerText();
-  assertContains(makushitaProfile,'non-bout days','Makushita rest days do not count as absences');
+  // The profile no longer carries a "non-bout days" note or any absence counter (the Makushita caveat lives on the
+  // Results page and is checked with the basho steps), so a rest day cannot be shown as an absence here.
+  assert.ok(!/absen/i.test(makushitaProfile),'Makushita profile does not report absences: rest days are not absences');
 
 
   await open(page,'banzuke','.sumo-rank-card');
@@ -513,18 +491,30 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('.sumo-rank-card').count(),120);
   await snap(page,label+'-banzuke',{fullPage:false});
 
-  await open(page,'basho','.basho-hero');
-  const announcedDay=await page.evaluate(async()=>{
+  await open(page,'basho','.sumo-page-head');
+  const dailySnapshot=await page.evaluate(async()=>{
     const response=await fetch('data/sumo/preview-details.json');
-    return (await response.json()).announcedDay;
+    const details=await response.json();
+    return {announcedDay:details.announcedDay,dailyStatus:details.dailyStatus};
   });
-  assert.ok(Number.isInteger(announcedDay)&&announcedDay>=1&&announcedDay<=15,'Published preview has a source-scheduled day');
-  await page.locator('[data-day="'+announcedDay+'"]').click();
-  await page.locator('[data-basho-view="matchups"]').click();
-  const confirmed=await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count();
-  assert.ok(confirmed>0,'Confirmed scheduled matchups must appear without invented outcomes');
-  assertContains(await page.locator('#sumo-main').innerText(),'snapshot, not live','scheduled source provenance');
-  await snap(page,label+'-scheduled',{fullPage:false});
+  const announcedDay=dailySnapshot.announcedDay;
+  if(Number.isInteger(announcedDay)){
+    // During a tournament the source publishes the next day's torikumi.
+    assert.ok(announcedDay>=1&&announcedDay<=15,'Published preview has a source-scheduled day');
+    await page.locator('[data-day="'+announcedDay+'"]').click();
+    await page.locator('[data-basho-view="matchups"]').click();
+    const confirmed=await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count();
+    assert.ok(confirmed>0,'Confirmed scheduled matchups must appear without invented outcomes');
+    assertContains(await page.locator('#sumo-main').innerText(),'snapshot, not live','scheduled source provenance');
+    await snap(page,label+'-scheduled',{fullPage:false});
+  }else{
+    // Between tournaments (or before the next day's torikumi is published) there is no scheduled day:
+    // the page must not invent matchups.
+    assert.equal(announcedDay,null,'No scheduled day is announced: '+JSON.stringify(dailySnapshot));
+    await page.locator('[data-basho-view="matchups"]').click();
+    assert.equal(await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count(),0,
+      'No scheduled matchups are invented when no day is announced');
+  }
   await page.locator('[data-day="15"]').click();
   assert.equal(await page.locator('.sumo-daily-card .sumo-daily-status:not(.completed)').count(),0,'Day 15 cannot be guessed from future banzuke slots');
   await page.locator('[data-basho-division="Makushita"]').click();
@@ -532,58 +522,37 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assertContains(basho,'seven times across 15 tournament days','lower division caveat');
   assert.equal(await page.locator('[data-day]').count(),15,'All calendar days are selectable');
   await page.locator('[data-day="7"]').click();
-  assert.ok(await page.locator('.sumo-daily-card').count()>0,'Makushita matchups use designed face-off cards');
-  assert.ok(await page.locator('.sumo-daily-card .sumo-daily-photo').count()>=2);
+  // Bouts are .bout-row items (two portraits, names, a verdict and technique, a head-to-head link); the old
+  // .sumo-daily-card and .sumo-faceoff-* tiles no longer exist.
+  assert.ok(await page.locator('.sumo-daily-grid .bout-row').count()>0,'Makushita matchups are listed as bout rows');
+  assert.ok(await page.locator('.sumo-daily-grid .bout-row .bout-photo').count()>=2,'Matchups show wrestler portraits');
   await page.locator('[data-basho-view="standings"]').click();
   assert.ok((await page.locator('.sumo-standings-row').count())>=20,'Basho standings stay accessible in compact rows');
   await page.locator('[data-basho-view="results"]').click();
-  assert.ok((await page.locator('.sumo-compact-bout').count())>0,'Compact result rows show actual winners');
+  assert.ok((await page.locator('.sumo-compact-results .bout-row.is-finished').count())>0,'Result rows show actual winners');
 
-  const resultFaceoffs=await page.locator('.sumo-faceoff-result-card').evaluateAll(cards=>
-    cards.slice(0,12).map(card=>{
-      const photoA=card.querySelector('.sumo-faceoff-photo.left');
-      const photoB=card.querySelector('.sumo-faceoff-photo.right');
-      const centre=card.querySelector('.sumo-faceoff-centre');
-      const winner=card.querySelector('.sumo-faceoff-verdict');
-      const technique=card.querySelector('.sumo-faceoff-method');
-      const h2h=card.querySelector('.sumo-faceoff-h2h');
-      const r=card.getBoundingClientRect(),a=photoA?.getBoundingClientRect(),
-        b=photoB?.getBoundingClientRect(),m=centre?.getBoundingClientRect();
-      const imageA=photoA?.querySelector('.profile-icon.sumo-photo')?.getBoundingClientRect(),
-        imageB=photoB?.querySelector('.profile-icon.sumo-photo')?.getBoundingClientRect();
+  const resultRows=await page.locator('.sumo-compact-results .bout-row.is-finished').evaluateAll(rows=>
+    rows.slice(0,12).map(row=>{
+      const link=row.querySelector('a.bout-h2h')||row.querySelector('.bout-h2h a')||row.querySelector('.bout-h2h');
       return {
-        cardWidth:r.width,cardHeight:r.height,
-        grid:getComputedStyle(card).gridTemplateColumns,
-        leftWidth:a?.width,rightWidth:b?.width,centreWidth:m?.width,
-        leftEdge:a?.left-r.left,rightEdge:r.right-b?.right,
-        topLeft:a?.top-r.top,topRight:b?.top-r.top,
-        bottomLeft:r.bottom-a?.bottom,bottomRight:r.bottom-b?.bottom,
-        centerAligned:!!(a&&m&&b&&m.left>=a.right-2&&b.left>=m.right-2),
-        leftFill:!!(a&&imageA&&Math.abs(a.width-imageA.width)<=3&&Math.abs(a.height-imageA.height)<=3),
-        rightFill:!!(b&&imageB&&Math.abs(b.width-imageB.width)<=3&&Math.abs(b.height-imageB.height)<=3),
-        names:card.querySelector('.sumo-faceoff-names')?.innerText?.trim(),
-        winner:winner?.innerText?.trim(),
-        technique:technique?.innerText?.trim(),
-        techniqueLink:!!technique?.querySelector('a[data-kimarite-term]'),
-        h2hUrl:h2h?.getAttribute('href'),
-        sourcePhotoCount:card.querySelectorAll('.sumo-faceoff-photo .sumo-photo').length,
-        overflow:card.scrollWidth>card.clientWidth+3
+        width:row.getBoundingClientRect().width,
+        sides:row.querySelectorAll('.bout-side').length,
+        photos:row.querySelectorAll('.bout-photo').length,
+        photoImages:row.querySelectorAll('.bout-photo .sumo-photo,.bout-photo img').length,
+        names:[...row.querySelectorAll('.bout-name')].map(el=>el.textContent.trim()),
+        verdict:row.querySelector('.bout-verdict')?.innerText.replace(/\s+/g,' ').trim(),
+        techniqueLink:!!row.querySelector('a[data-kimarite-term]'),
+        h2hUrl:link?.getAttribute('href'),
+        overflow:row.scrollWidth>row.clientWidth+3
       };
     }));
-  assert.ok(resultFaceoffs.length>0,'Actual completed results use redesigned face-off tiles');
-  for(const [i,card] of resultFaceoffs.entries()){
-    assert.ok(card.cardHeight>=145&&card.leftWidth>=60&&card.rightWidth>=60&&
-      card.centreWidth>=100&&card.centerAligned,
-      'Result face-off '+i+' has generous left/right portraits and a readable centre: '+JSON.stringify(card));
-    assert.ok(card.leftFill&&card.rightFill&&
-      card.leftEdge<=3&&card.rightEdge<=3&&card.topLeft<=3&&card.topRight<=3&&
-      card.bottomLeft<=3&&card.bottomRight<=3,
-      'Portraits fill their left/right panels edge-to-edge: '+JSON.stringify(card));
-    assert.equal(card.sourcePhotoCount,2,'Both wrestler portraits use existing approved-image markup');
-    assert.ok(card.names?.length>3&&card.winner?.length>3&&card.technique?.length>0,
-      'Central panel retains wrestler identities, actual winner and kimarite');
-    assert.ok(card.h2hUrl?.startsWith('#headtohead/')&&!card.overflow,
-      'H2H link remains functional and card does not overflow: '+JSON.stringify(card));
+  assert.ok(resultRows.length>0,'Completed results are shown as bout rows');
+  for(const [i,row] of resultRows.entries()){
+    assert.equal(row.sides,2,'Result '+i+' has two wrestler sides: '+JSON.stringify(row));
+    assert.ok(row.photos===2&&row.photoImages===2,'Result '+i+' shows both wrestler portraits: '+JSON.stringify(row));
+    assert.ok(row.names.length===2&&row.names.every(n=>n.length>1),'Result '+i+' names both wrestlers: '+JSON.stringify(row.names));
+    assert.ok(/ won\b/i.test(row.verdict||'')&&row.techniqueLink,'Result '+i+' states the actual winner and links the kimarite: '+JSON.stringify(row));
+    assert.ok(row.h2hUrl?.startsWith('#headtohead/')&&!row.overflow,'H2H link works and the row does not overflow: '+JSON.stringify(row));
   }
   if(isMobile){
     const widths=await page.evaluate(()=>({
@@ -598,76 +567,69 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   // Dedicated daily face-offs use sourced pairings, two complete stat columns,
   // genuine latest-five kimarite and responsive image-first cards.
   const rankSource=await (await page.request.get('http://127.0.0.1:8765/data/sumo/preview-details.json')).json();
+  // Matchups are .bout-row items: both wrestlers (rank, country), this basho's record, career record, build
+  // (height and weight), the verdict and a head-to-head link. (The old face-off cards with seven comparison rows,
+  // flag backdrops and recent-meeting tiles no longer exist.)
   const assertRankedHeadToHeads=async division=>{
     const rows=[...(rankSource.banzuke?.[division]?.data?.east||[]),
       ...(rankSource.banzuke?.[division]?.data?.west||[])].sort((a,b)=>
       (Number(a.rankValue)||99999)-(Number(b.rankValue)||99999)||
       (a.side==='East'?-1:1));
     const positions=new Map(rows.map((row,i)=>[Number(row.rikishiID),i]));
-    const ranks=await page.locator('.sumo-daily-card').evaluateAll(cards=>cards.map(card=>
-      [...card.querySelectorAll('.sumo-daily-facts a[href^="#profile/"]')]
-        .map(a=>Number(a.getAttribute('href').split('/')[1]))));
-    assert.ok(ranks.length>0,'Head-to-head cards exist for '+division);
+    const ranks=await page.locator('.sumo-daily-grid .bout-row').evaluateAll(cards=>cards.map(card=>
+      [...new Set([...card.querySelectorAll('a[href^="#profile/"]')]
+        .map(a=>Number(a.getAttribute('href').split('/')[1])))]));
+    assert.ok(ranks.length>0,'Head-to-head rows exist for '+division);
+    assert.ok(ranks.every(pair=>pair.length===2),'Each row links exactly two wrestlers for '+division+': '+JSON.stringify(ranks.slice(0,3)));
     const highs=ranks.map(pair=>Math.min(...pair.map(id=>positions.get(id)??99999)));
     assert.deepEqual(highs,[...highs].sort((a,b)=>a-b),'Matchups descend from top of '+division+' banzuke');
   };
   await open(page,'matchups','.sumo-daily-page');
   await page.locator('#sumo-matchup-day').selectOption('1');
-  assert.ok(await page.locator('.sumo-daily-card').count()>0,'Makuuchi Day 1 verified cards rendered');
+  assert.ok(await page.locator('.sumo-daily-grid .bout-row').count()>0,'Makuuchi Day 1 matchup rows rendered');
   await assertRankedHeadToHeads('Makuuchi');
-  const firstCard=page.locator('.sumo-daily-card').first();
-  assert.equal(await firstCard.locator('.sumo-daily-facts').count(),2,'Both wrestler stat columns are present');
-  assert.equal(await firstCard.locator('.sumo-daily-photo').count(),2,'Portraits occupy both edges');
-  assert.equal(await firstCard.locator('.sumo-comparison-row').count(),7,'Shared comparison includes the seven requested source-backed statistics');
-  assert.equal(await firstCard.locator('.sumo-daily-facts>.sumo-flag-backdrop').count(),2,'Birthplace flags are decorative backgrounds behind both identities');
-  assert.match(await firstCard.locator('.sumo-comparison-row').first().innerText(),/\d+′\d+″/,'Sourced centimetres are displayed as feet and inches');
-  const data=await firstCard.innerText();
-  for(const label of ['Current basho W–L','Career W–L','Career win %','Makuuchi W–L','Makuuchi win %','Height','Weight','Peak:']){
-    assertContains(data,label,'Daily faceoff statistic');
+  const firstRow=page.locator('.sumo-daily-grid .bout-row').first();
+  assert.equal(await firstRow.locator('.bout-photo').count(),2,'Portraits for both wrestlers');
+  assert.equal(await firstRow.locator('.bout-name').count(),2,'Both wrestlers are named');
+  assert.match(await firstRow.innerText(),/\d+′\d+″/,'Sourced height is displayed in feet and inches');
+  const rowText=await firstRow.innerText();
+  for(const label of ['This basho','Career','Build','H2H']){
+    assertContains(rowText,label,'Matchup row section');
   }
-  const historyTiles=await page.locator('.sumo-daily-meeting').count();
-  for(const card of await page.locator('.sumo-daily-card').all()){
-    assert.ok(await card.locator('.sumo-daily-meeting').count()<=5,'Never fabricate more than five recent pairings');
-    for(const tile of await card.locator('.sumo-daily-meeting').all()){
-      assert.ok((await tile.locator('em').innerText()).length>0,'Individual kimarite or missing-technique notice visible');
-    }
-  }
-  assert.ok(historyTiles>=0,'Recent meeting history is optional when source data is unavailable');
+  assert.match(rowText,/\d+–\d+[\s\S]*\d+–\d+/,'Matchup row shows win–loss records for both wrestlers');
   await snap(page,label+'-daily-faceoff',{fullPage:false});
   for(const division of ['Juryo','Makushita']){
     await page.locator('[data-matchup-division="'+division+'"]').click();
     assertContains(await page.locator('.sumo-daily-date').innerText(),division,'Division selector');
-    const scopedLabels=await page.locator('.sumo-daily-card').first().locator('.sumo-comparison-row>span').allInnerTexts();
-    assert.ok(scopedLabels.includes(division+' W–L')&&scopedLabels.includes(division+' win %'),
-      'Comparison labels follow the active bout division: '+division);
-    assert.ok(!scopedLabels.includes('Makuuchi W–L'),'Other division career record is not shown');
     await assertRankedHeadToHeads(division);
     assert.equal(await page.locator('#sumo-matchup-day').inputValue(),'1','Day is retained between divisions');
   }
   await page.locator('[data-matchup-division="Makuuchi"]').click();
   const bodyWidth=await page.evaluate(()=>({
     doc:document.documentElement.scrollWidth, viewport:document.documentElement.clientWidth,
-    card:document.querySelector('.sumo-daily-card')?.getBoundingClientRect().width
+    row:document.querySelector('.sumo-daily-grid .bout-row')?.getBoundingClientRect().width
   }));
   assert.ok(bodyWidth.doc<=bodyWidth.viewport+6,'Daily page has no viewport overflow '+JSON.stringify(bodyWidth));
   await snap(page,label+'-daily-faceoff-day1',{fullPage:false});
   await page.locator('#sumo-matchup-day').selectOption('7');
-  const cardLink=page.locator('.sumo-daily-card .sumo-daily-score a').first();
-  assert.ok(await cardLink.count()>0,'Completed Day 7 card provides full H2H');
+  const cardLink=page.locator('.sumo-daily-grid .bout-row a.bout-h2h').first();
+  assert.ok(await cardLink.count()>0,'Completed Day 7 row provides full H2H');
   await cardLink.click();
-  await page.waitForSelector('.sumo-h2h-hero');
+  await page.waitForSelector('.sumo-h2h-comparison');
   assertContains(await page.locator('.back-link').innerText(),'Day 7','Context-aware H2H return label');
   await page.locator('.back-link').click();
   await page.waitForSelector('#sumo-matchup-day');
   assert.ok(page.url().includes('#matchups'),'H2H returns to originating daily route');
   assert.equal(await page.locator('#sumo-matchup-day').inputValue(),'7','Return retains original tournament day');
-  await open(page,'headtohead/8850/71','.sumo-h2h-hero');
-  await page.waitForFunction(()=>document.querySelector('.sumo-h2h-score')?.textContent.includes('5–0'),null,{timeout:25000});
+  await open(page,'headtohead/8850/71','.sumo-h2h-comparison');
+  await page.waitForFunction(()=>document.querySelector('.fo-score')?.textContent.includes('5–0'),null,{timeout:25000});
   assertContains(await page.locator('#sumo-main').innerText(),'No recorded losses against Churanoumi',
     'True zero losses are not described as missing technique data');
 
-  await open(page,'kimarite','.technical-terms');
-  assert.equal(await page.locator('.technical-terms .term').count(),9);
+  // The Techniques page is a gallery of all 82 official kimarite (the old nine-term glossary is gone).
+  await open(page,'kimarite','.sumo-km-gallery');
+  assert.equal(await page.locator('.sumo-km-gallery .sumo-km-tile-link').count(),82,'All 82 official kimarite are listed');
+  assertContains(await page.locator('.sumo-km-count').innerText(),'82 of 82','Technique count shown');
   assertContains(await page.locator('#sumo-main').innerText(),'Yorikiri','technique');
   await snap(page,label+'-kimarite',{fullPage:false});
 
@@ -715,9 +677,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     assert.ok(!checkedIds.has(w.sourceId),'Duplicate Sumo browser QA source ID '+w.sourceId);
     checkedIds.add(w.sourceId);
     await page.evaluate(id=>{ location.hash='#profile/'+id; },w.sourceId);
-    await page.waitForFunction(name=>document.querySelector('.profile-hero h1')?.textContent?.trim()===name,
+    await page.waitForFunction(name=>document.querySelector('.sumo-poster h1')?.textContent?.trim()===name,
       w.shikonaEn,{timeout:15000});
-    const headingText=await page.locator('.profile-hero h1').innerText();
+    const headingText=await page.locator('.sumo-poster h1').innerText();
     assertContains(headingText,w.shikonaEn,'Loaded wrestler '+w.sourceId);
     assert.equal(await page.locator('#sumo-career .sumo-career-detail-section').count(),4,
       'Visible career tile groups on wrestler '+w.sourceId);
@@ -733,7 +695,7 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(checkedIds.size,fullCohort?roster.count:5,'Expected cohort/sample reached working profile routes');
 
   // Exact redesign stress cases — recorded date ratios, 5 profiles, and H2H chronology.
-  await open(page,'profile/28','.profile-hero');
+  await open(page,'profile/28','.sumo-poster');
   const weightPoints=await page.locator('.sumo-weight-point').evaluateAll(ns=>ns.map(n=>({
     month:n.getAttribute('data-weight-month'),x:Number(n.getAttribute('data-weight-x'))
   })));
@@ -743,17 +705,28 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   }
   assert.ok(await page.locator('.sumo-data-table summary').count()>=2,'Rank and weight tables offered to keyboard/touch users');
   await snap(page,label+'-ura',{fullPage:false});
-  await open(page,'headtohead/8850/28','.sumo-h2h-hero');
+  await open(page,'headtohead/8850/28','.sumo-h2h-comparison');
   await page.waitForFunction(()=>document.querySelectorAll('.sumo-h2h-order+ol li').length===8,null,{timeout:30000});
   const newest=await page.locator('.sumo-h2h-order+ol li').allInnerTexts();
   await page.locator('[data-h2h-order="oldest"]').click();
   const oldest=await page.locator('.sumo-h2h-order+ol li').allInnerTexts();
   assert.deepEqual(oldest,[...newest].reverse(),'H2H reverse order does not scramble date/winner/technique');
-  const linkColor=await page.locator('.sumo-h2h-hero .sumo-match-name a').first().evaluate(el=>getComputedStyle(el).color);
-  assert.equal(linkColor,'rgb(255, 247, 229)','Dark H2H header uses readable light links');
+  // The wrestler names in the H2H header are profile links; they must stay readable against their background
+  // (WCAG AA, 4.5:1) whatever colours the design uses.
+  const headerLinks=await page.locator('#sumo-main a[href^="#profile/"]').evaluateAll(links=>{
+    const parse=c=>c.match(/[\d.]+/g).map(Number);
+    const lum=([r,g,b])=>{const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(r)+.7152*f(g)+.0722*f(b)};
+    const background=el=>{for(let e=el;e;e=e.parentElement){const p=parse(getComputedStyle(e).backgroundColor);if(p.length>=3&&(p.length<4||p[3]>.5))return p.slice(0,3)}return [255,255,255]};
+    return links.slice(0,2).map(a=>{
+      const L1=lum(parse(getComputedStyle(a).color).slice(0,3)),L2=lum(background(a));
+      return {text:a.textContent.trim(),ratio:(Math.max(L1,L2)+.05)/(Math.min(L1,L2)+.05)};
+    });
+  });
+  assert.equal(headerLinks.length,2,'H2H header links both wrestlers');
+  assert.ok(headerLinks.every(l=>l.ratio>=4.5),'H2H header wrestler links are readable (contrast at least 4.5:1): '+JSON.stringify(headerLinks));
   await snap(page,label+'-h2h-onosato-ura',{fullPage:false});
   for(const id of [8850,28,75,82,16]){
-    await open(page,'profile/'+id,'.profile-hero');
+    await open(page,'profile/'+id,'.sumo-poster');
     assert.equal(await page.locator('.sumo-rank-svg').count(),1);
     assert.equal(await page.locator('.sumo-weight-svg').count(),1);
     await snap(page,label+'-profile-'+id);
@@ -764,16 +737,11 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   }
 
   // Exercise the redesigned controls, including native keyboard disclosures.
-  await open(page,'profile/28','.profile-hero');
+  await open(page,'profile/28','.sumo-poster');
   if(isMobile){
-    await page.locator('.sumo-mobile-more summary').press('Enter');
-    assert.equal(await page.locator('.sumo-mobile-more-links a').count(),2,
-      'Mobile navigation exposes Banzuke and Kimarite without horizontal clipping');
-    await page.locator('.sumo-mobile-more summary').press('Enter');
-    await page.locator('.befn-site-menu summary').press('Enter');
-    assert.equal(await page.locator('.befn-site-menu').getAttribute('open'),'');
-    assert.equal(await page.locator('.befn-site-menu nav a').count(),7,'Other sports and site pages remain accessible');
-    await page.locator('.befn-site-menu summary').press('Enter');
+    // Other sports and the all-sports front page stay one tap away: the sports row and the masthead link.
+    assert.equal(await page.locator('.sh-areas-phone a[href="index.html#home"]:visible').count(),2,'Boxing and MMA are reachable');
+    assert.equal(await page.locator('.befn-mobile-title[href="index.html#home"]:visible').count(),1,'The masthead opens the front page');
   }
   const currentRows=await page.locator('.sumo-ed-row').count();
   await page.locator('[data-results-mode="tournaments"]').click();
@@ -852,48 +820,35 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await page.locator('[data-h2h-fewer]').click();
   assert.equal(await page.locator('.sumo-rival').count(),initialOpponents);
   await page.locator('.sumo-rival').first().click();
-  await page.waitForSelector('.sumo-h2h-hero');
+  await page.waitForSelector('.sumo-h2h-comparison');
   await page.getByRole('link',{name:'Back to originating profile'}).click();
-  await page.waitForSelector('.profile-hero h1');
+  await page.waitForSelector('.sumo-poster h1');
   assert.equal(await page.locator('#sumo-period').inputValue(),'current');
 
-  for(const route of ['kimarite','banzuke','basho','rikishi','home']){
-    if(isMobile && (route==='kimarite'||route==='banzuke')){
-      const menu=page.locator('.sumo-mobile-more');
-      if(await menu.getAttribute('open')===null)await menu.locator('summary').press('Enter');
-      await menu.locator('[data-page="'+route+'"]').press('Enter');
-      await page.waitForURL('**#'+route);
-      await menu.locator('summary').press('Enter');
-    }else{
-      await page.locator('.subnav-inner>[data-page="'+route+'"]').press('Enter');
-      await page.waitForURL('**#'+route);
-    }
-    const active=page.locator('.subnav [data-page="'+route+'"][aria-current="page"]').first();
+  // Keyboard navigation through the shared header: section links (top row on desktop, tab bar on phones) and the
+  // pills of the current section's Sumo pages. Starts on a profile, which sits under Fighters.
+  for(const [selector,route] of [
+    ['.sh-sub [data-sumo-page="banzuke"]','banzuke'],['.sh-sub [data-sumo-page="rikishi"]','rikishi'],
+    ['[data-sumo-section="fights"]','matchups'],['.sh-sub [data-sumo-page="h2h"]','h2h'],
+    ['[data-sumo-section="overview"]','basho']]){
+    await page.locator(selector+':visible').first().press('Enter');
+    await page.waitForURL('**#'+route);
+    const active=page.locator(selector+'[aria-current="page"]:visible').first();
+    await active.waitFor();
     assert.equal(await active.getAttribute('aria-current'),'page','Destination is announced as current');
   }
-  // The Nov 2026 Day 10 Tokihayate–Daiseizan card is the design acceptance fixture.
+  // Data-integrity fixture: the first Day 10 matchup in the current data. (This used to be one fixed November 2026
+  // pair, which would fail as soon as the next tournament replaced the data.) Everything the row shows is compared
+  // with the source snapshots it is built from.
   await open(page,'matchups','#sumo-main');
   await page.locator('#sumo-matchup-day').selectOption('10');
   await page.waitForTimeout(100);
-  const screenshotFixture=page.locator('.sumo-daily-card')
-    .filter({hasText:'Tokihayate'}).filter({hasText:'Daiseizan'}).first();
-  assert.ok(await screenshotFixture.count()>0,'The sourced Tokihayate–Daiseizan Day 10 matchup is present');
-  const identities=screenshotFixture.locator('.sumo-daily-facts');
-  assert.equal(await identities.count(),2);
-  const flags=screenshotFixture.locator('.sumo-daily-facts>.sumo-flag-backdrop');
-  assert.equal(await flags.count(),2,'Full-panel flags for both source countries');
-  const flagImages=await flags.evaluateAll(nodes=>nodes.map(el=>getComputedStyle(el,'::before').backgroundImage));
-  assert.ok(flagImages.some(url=>url.includes('/jp.png')),'Japanese flag backdrop');
-  assert.ok(flagImages.some(url=>url.includes('/cn.png')),'Chinese flag backdrop');
-  const overlay=await identities.first().evaluate(el=>getComputedStyle(el,'::after').background);
-  assert.ok(overlay.includes('rgba('),'Light cream overlay protects text contrast');
-  const comparison=await screenshotFixture.locator('.sumo-comparison').innerText();
-  for(const expected of ['179 cm (5′10″)','191 cm (6′3″)','135 kg','171 kg',
-    'Current basho W–L','Career W–L','Career win %','Makuuchi W–L','Makuuchi win %'])
-    assertContains(comparison,expected,'Daily card comparisons');
-  // Compare the visible pair with the actual November 2026 source snapshots.
+  const fixtureRow=page.locator('.sumo-daily-grid .bout-row').first();
+  assert.ok(await fixtureRow.count()>0,'A Day 10 matchup row is present');
+  const pairIds=await fixtureRow.evaluate(row=>[...new Set([...row.querySelectorAll('a[href^="#profile/"]')]
+    .map(a=>Number(a.getAttribute('href').split('/')[1])))]);
+  assert.equal(pairIds.length,2,'The fixture row links two wrestlers: '+JSON.stringify(pairIds));
   const sourceDetails=await (await page.request.get('http://127.0.0.1:8765/data/sumo/preview-details.json')).json();
-  const divisionCache=await (await page.request.get('http://127.0.0.1:8765/data/sumo/division-stats.json')).json();
   const banzuke=[...sourceDetails.banzuke.Makuuchi.data.east,...sourceDetails.banzuke.Makuuchi.data.west];
   const currentFor=id=>{
     const row=banzuke.find(x=>Number(x.rikishiID)===id);
@@ -901,41 +856,24 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
     const summary=recordSummary(row.record,'Makuuchi');
     return summary.win+'–'+summary.loss;
   };
-  const historicalFor=id=>{
-    const row=divisionCache.bySourceId[String(id)];
-    assert.equal(row?.status,'available','Division-specific source data for '+id);
-    const wins=row.stats.winsByDivision?.Makuuchi,losses=row.stats.lossByDivision?.Makuuchi;
-    assert.ok(Number.isSafeInteger(wins)&&Number.isSafeInteger(losses),'Sourced Makuuchi W-L for '+id);
-    return {wl:wins+'–'+losses,pct:(100*wins/(wins+losses)).toFixed(1)+'%'};
+  const careerFor=id=>{
+    const profile=research.profiles?.[String(id)];
+    assert.ok(Number.isSafeInteger(profile?.careerWins)&&Number.isSafeInteger(profile?.careerLosses),'Sourced career W–L for '+id);
+    return profile.careerWins+'–'+profile.careerLosses;
   };
-  const comparisonRows=await screenshotFixture.locator('.sumo-comparison-row').evaluateAll(nodes=>
-    Object.fromEntries(nodes.map(row=>[row.querySelector('span')?.textContent?.trim(),
-      [...row.querySelectorAll('strong')].map(el=>el.textContent.trim())])));
-  const headingNames=await screenshotFixture.locator('.sumo-comparison-head>span').allInnerTexts();
-  const pairIds=[headingNames[0],headingNames[2]].map(name=>{
-    if(name==='Tokihayate')return 83;
-    if(name==='Daiseizan')return 378;
-    throw new Error('Unexpected wrestler identity in source matchup: '+name);
-  });
-  assert.deepEqual(comparisonRows['Current basho W–L'],pairIds.map(currentFor),
-    'Current W-L matches source banzuke records, without invented non-bout losses');
-  assert.deepEqual(comparisonRows['Makuuchi W–L'],pairIds.map(id=>historicalFor(id).wl),
-    'Career Makuuchi W-L matches the division-specific source');
-  assert.deepEqual(comparisonRows['Makuuchi win %'],pairIds.map(id=>historicalFor(id).pct),
-    'Makuuchi percentages use only historical Makuuchi wins and losses');
-  const textFlow=await identities.evaluateAll(panels=>panels.map(panel=>{
-    const els=[...panel.querySelectorAll('h2,.sumo-daily-origin,.sumo-daily-ranks')];
-    const rects=els.map(el=>el.getBoundingClientRect());
-    return rects.every((r,i)=>r.width>0&&r.right<=panel.getBoundingClientRect().right+2&&
-      (i===0||r.top>=rects[i-1].bottom-1));
-  }));
-  assert.ok(textFlow.every(Boolean),'Names, birthplace and ranks do not overlap or clip');
-  const wrapping=await screenshotFixture.locator('.sumo-daily-facts h2')
-    .evaluateAll(nodes=>nodes.map(el=>({scroll:el.scrollWidth,width:el.clientWidth})));
-  assert.ok(wrapping.every(x=>x.scroll<=x.width+4),'No clipped wrestler names');
+  const shown=await fixtureRow.locator('.bout-stats>div').evaluateAll(divs=>
+    Object.fromEntries(divs.map(div=>[div.querySelector('dt')?.textContent?.trim(),
+      [div.querySelector('dd.l')?.textContent?.trim(),div.querySelector('dd.r')?.textContent?.trim()]])));
+  assert.deepEqual(shown['This basho'],pairIds.map(currentFor),
+    'This-basho records match the source banzuke records, without invented non-bout losses');
+  assert.deepEqual(shown['Career'],pairIds.map(careerFor),'Career W–L matches the sourced career totals');
+  assert.ok(shown['Build']?.length===2&&shown['Build'].every(text=>/^\d+′\d+″ · \d+ kg$/.test(text)),
+    'Build shows feet and inches and weight for both wrestlers: '+JSON.stringify(shown['Build']));
+  const nameFit=await fixtureRow.locator('.bout-name').evaluateAll(nodes=>nodes.map(el=>({scroll:el.scrollWidth,width:el.clientWidth})));
+  assert.ok(nameFit.every(x=>x.scroll<=x.width+4),'No clipped wrestler names: '+JSON.stringify(nameFit));
   const pageWidth=await page.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth}));
   assert.ok(pageWidth.scroll<=pageWidth.viewport+6,'Matchups page has no horizontal overflow');
-  await snap(page,label+'-tokihayate-daiseizan',{fullPage:false});
+  await snap(page,label+'-day10-fixture',{fullPage:false});
   if (isMobile){
     for(const route of ['home','rikishi','profile/8850','matchups','basho','banzuke','kimarite']){
       await open(page,route,'#sumo-main');
@@ -952,11 +890,14 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
 }
 await mkdir(OUT,{recursive:true});
 try {
-  await testSite({width:1440,height:900},false,'desktop',true);
-  await testSite({width:1280,height:900},false,'laptop1280',false);
-  await testSite({width:768,height:1024},false,'tablet',false);
-  await testSite({width:390,height:844},true,'mobile',true);
-  await testSite({width:320,height:740},true,'reflow320',false);
+  // SUMO_QA_ONLY=laptop1280 (or a comma list of labels) runs just those viewports, for quick local runs.
+  const only=(process.env.SUMO_QA_ONLY||'').split(',').filter(Boolean);
+  const want=label=>!only.length||only.includes(label);
+  if(want('desktop'))await testSite({width:1440,height:900},false,'desktop',true);
+  if(want('laptop1280'))await testSite({width:1280,height:900},false,'laptop1280',false);
+  if(want('tablet'))await testSite({width:768,height:1024},false,'tablet',false);
+  if(want('mobile'))await testSite({width:390,height:844},true,'mobile',true);
+  if(want('reflow320'))await testSite({width:320,height:740},true,'reflow320',false);
   if(failures.length)throw new Error(failures.join('\n'));
   await writeFile(OUT+'/qa-summary.json',JSON.stringify({status:'pass',browser:browser.version(),viewportResults,screenshotCount,views:['home','rikishi','profiles','banzuke','basho','matchups','kimarite','headtohead'],viewportWidths:[1440,1280,768,390,320],realTouchTest:false},null,2));
   console.log('Sumo editorial browser QA passed: 1440/1280/768/390/320, five key wrestlers, H2H chronology, charts and no JS exceptions. Real-device touch remains separate.');

@@ -315,7 +315,10 @@
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
    proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC roster'):stats?.ratings?'Not enough measured fights yet':'UFC statistics pending','<div class="befn-pro-meters">'+
-    (v2?v2Meters:(ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
+    // While the stats file is still loading, show the same six empty bars the rated card will have, so the card
+    // does not grow a bar when the rating arrives.
+    (v2?v2Meters:(ratedByBuild(f)&&!stats?V2_METERS.map(([,label])=>({label,score:null})):
+     ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
     (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':
      stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
@@ -637,7 +640,8 @@
   const isPercentile=id=>v2?id!=='form':!built&&isPercentileV1(id);
   const score=v2?(Number.isFinite(v2.overall)?v2.overall:null):built?null:Number.isFinite(v3.power)?v3.power:computed.overall;
   const tier=scoreTier(v2?headlineBar(v2):score);
-  const ratings=v2?V2_METERS:[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
+  // Six bars once rated, and also while the stats file is still loading (same layout, empty), so nothing jumps.
+  const ratings=v2||(built&&!stats)?V2_METERS:[['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['defence','Defence'],['form','Recent Form']];
   const readableLabels={
    slpm:'Significant strikes landed per minute',sapm:'Significant strikes absorbed per minute',
    diff:'Net significant strikes per 15 min',kd:'Knockdowns per 15 min',
