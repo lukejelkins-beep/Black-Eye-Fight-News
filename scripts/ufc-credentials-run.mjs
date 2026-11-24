@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Research runner for external combat-sport credentials of approved UFC fighters.
- * Research only: writes data/ufc-credentials/<slug>.json and a run directory. It never touches site pages,
+ * Research only: writes <out>/<slug>.json and a run directory under research/ (outside the site build). It never touches site pages,
  * collector-owned files, the Cito API or the UFCalendar budget, and never changes the 783-fighter cohort.
  *
  * Passes (owner plan, 22 Nov 2026):
@@ -64,9 +64,15 @@ export function loadRoster(rootDir = root) {
   return {slugs, set: new Set(slugs), names, resolved, aliases};
 }
 
-/** Reviewed official college athletics hosts that are not .edu (e.g. gopsusports.com), host -> school. */
+/** Research folders (owner, 24 Nov 2026: research goes under research/, outside the site build). */
+export const PILOT_DIR = 'research/ufc-credentials-pilot';
+export const NCAA_DIR = 'research/ufc-ncaa-credentials';
+export const RESEARCH_DIRS = [PILOT_DIR, NCAA_DIR];
+export const SCHOOL_HOSTS = NCAA_DIR + '/_school-athletics-hosts.json';
+
+/** Reviewed official college athletics hosts (host -> school). */
 export function loadSchoolHosts(rootDir = root) {
-  try { return Object.keys(read(path.join(rootDir, 'data/ufc-credentials/_school-athletics-hosts.json')).hosts || {}); }
+  try { return Object.keys(read(path.join(rootDir, SCHOOL_HOSTS)).hosts || {}); }
   catch { return []; }
 }
 
@@ -361,13 +367,15 @@ export async function main(argv = process.argv.slice(2)) {
   const pass = Number(a.pass); if (![1, 2, 3].includes(pass)) throw Error('--pass 1|2|3 required');
   const maxCalls = Number(a['max-calls']); if (!Number.isInteger(maxCalls) || maxCalls < 1) throw Error('--max-calls N is mandatory (model-call budget)');
   const roster = loadRoster();
-  const out = path.resolve(root, a.out || 'data/ufc-credentials');
+  // Research lives under research/ (owner, 24 Nov 2026). The pilot has its own folder; any other run names its folder.
+  if (!a.pilot && !a.out) throw Error('--out research/<folder> is required (e.g. research/ufc-ncaa-credentials)');
+  const out = path.resolve(root, a.out || PILOT_DIR);
   const extraSkips = (() => { try { return read(path.join(out, '_skip-duplicate-identities.json')).skipSlugs || []; } catch { return []; } })();
   const dup = duplicateIdentitySkips(roster.slugs, extraSkips, roster);
   roster.schoolHosts = loadSchoolHosts();
   roster.skip = dup.skip;
   let selection;
-  if (a.pilot) selection = read(path.join(root, 'data/ufc-credentials-pilot.json')).fighters.map(f => f.slug);
+  if (a.pilot) selection = read(path.join(root, PILOT_DIR, '_pilot.json')).fighters.map(f => f.slug);
   else if (a.slugs) selection = String(a.slugs).split(',').map(s => s.trim()).filter(Boolean);
   else throw Error('choose --pilot or --slugs a,b (a full-roster run is not wired: it needs the owner\'s budget and approval)');
   const bad = selection.filter(s => !roster.set.has(s)); if (bad.length) throw Error('not in approved roster: ' + bad.join(', '));

@@ -169,11 +169,15 @@ test('directory validation rejects hand-edited, non-normalised or misnamed files
   assert.deepEqual(validateDirectory(dir, {today}).failures[0].errors, ['filename_does_not_match_slug']);
 });
 
-test('every saved fighter file in the repo validates against the roster of certified profile fighters', async () => {
+test('every saved fighter file in every research folder validates against the certified profile roster', async () => {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-  const {loadRoster, loadSchoolHosts} = await import('../scripts/ufc-credentials-run.mjs');
-  const res = validateDirectory(path.join(root, 'data/ufc-credentials'), {rosterSlugs: loadRoster(root).set, schoolHosts: loadSchoolHosts(root)});
-  assert.deepEqual(res.failures, []);
+  const {loadRoster, loadSchoolHosts, RESEARCH_DIRS} = await import('../scripts/ufc-credentials-run.mjs');
+  assert.ok(!fs.existsSync(path.join(root, 'data/ufc-credentials')), 'research lives under research/, not data/');
+  for (const d of RESEARCH_DIRS) {
+    const res = validateDirectory(path.join(root, d), {rosterSlugs: loadRoster(root).set, schoolHosts: loadSchoolHosts(root)});
+    assert.ok(res.files > 0, d);
+    assert.deepEqual(res.failures, [], d);
+  }
 });
 
 // ---- NCAA claims and college athletics sites (owner, 24 Nov 2026) ----

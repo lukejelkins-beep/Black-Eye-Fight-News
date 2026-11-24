@@ -62,7 +62,7 @@ test('a plan-only wrestling prompt says so, and carries the NCAA rules', () => {
 });
 
 test('the pilot has 25 roster fighters, none of them duplicate-identity, and the models match the plan', () => {
-  const pilot = JSON.parse(fs.readFileSync(path.join(root, 'data/ufc-credentials-pilot.json'), 'utf8')).fighters;
+  const pilot = JSON.parse(fs.readFileSync(path.join(root, 'research/ufc-credentials-pilot/_pilot.json'), 'utf8')).fighters;
   const roster = loadRoster(root), {skip} = duplicateIdentitySkips(roster.slugs);
   assert.equal(pilot.length, PILOT_CAP);
   assert.equal(new Set(pilot.map(f => f.slug)).size, 25);

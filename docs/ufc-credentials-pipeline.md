@@ -5,10 +5,10 @@ Records what each approved UFC fighter has done in wrestling, grappling, judo, k
 ## Files
 - `scripts/ufc-credentials-schema.mjs` — schema constants, claim and record validator, directory check. Offline.
 - `scripts/ufc-credentials-run.mjs` — runner (queue, parallel workers, checkpoints, resume, run log).
-- `data/ufc-credentials/<slug>.json` — one file per fighter, roster slug as is.
-- `data/ufc-credentials/_runs/<run id>/` — `checkpoint.jsonl`, `requests.jsonl` (one line per HTTP request with tokens, searches, cost estimate) and `run-log.json` (totals per pass, outcomes, budget used).
-- `data/ufc-credentials/_skip-duplicate-identities.json` — extra slugs to skip. The runner also skips every `-N` slug and its base slug.
-- `data/ufc-credentials-pilot.json` — the 25-fighter pilot. The `focus` and `ownerCheck` notes are my recollection for the owner to check; they are never sent to a model and are not evidence.
+- Research folders (owner, 24 Nov 2026: research lives under `research/`, outside the site build): `research/ufc-credentials-pilot/` (the 25-fighter pilot, all disciplines) and `research/ufc-ncaa-credentials/` (NCAA wrestling). Each holds `<slug>.json`, one file per fighter, roster slug as is.
+- `<research folder>/_runs/<run id>/` — `checkpoint.jsonl`, `requests.jsonl` (one line per HTTP request with tokens, searches, cost estimate) and `run-log.json` (totals per pass, outcomes, budget used).
+- `research/ufc-credentials-pilot/_skip-duplicate-identities.json` — extra slugs to skip (read from the run's output folder). The runner also skips every `-N` slug and its base slug.
+- `research/ufc-credentials-pilot/_pilot.json` — the 25-fighter pilot. The `focus` and `ownerCheck` notes are my recollection for the owner to check; they are never sent to a model and are not evidence.
 - Tests: `tests/test-ufc-credentials-schema.mjs`, `tests/test-ufc-credentials-run.mjs` (`node --test`, no network).
 
 ## Record
@@ -27,11 +27,12 @@ Level list: `youth`, `high_school`, `ncaa_d1`, `ncaa_other`, `national_team`, `n
 
 ## NCAA wrestling and college athletics sites (owner, 24 Nov 2026)
 - An NCAA claim (`ncaa_d1` or `ncaa_other`) can carry `ncaa_division` (I, II, III; implied I for `ncaa_d1`) and `ncaa_result`: `participant` (on the team), `all_american`, `finalist`, `champion`. Junior college (NJCAA) and NAIA are not NCAA: level `other` with `level_note` "NJCAA" or "NAIA".
-- A college's own athletics site (a `.edu` host, or a reviewed host in `data/ufc-credentials/_school-athletics-hosts.json`, e.g. gopsusports.com) is Tier A for `participant` only. All-American, finalist and champion still need ncaa.com / ncaa.org or two independent Tier B outlets. Add a host to that file only after checking it is the school's official athletics site.
+- A college's own athletics site (a reviewed host in `research/ufc-ncaa-credentials/_school-athletics-hosts.json`, e.g. gopsusports.com) is Tier A for `participant` only. All-American, finalist and champion still need ncaa.com / ncaa.org or two independent Tier B outlets. Add a host to that file only after checking it is the school's official athletics site.
 - The roster is every certified profile fighter: the frozen 783, the 24 Nov extension cohort and the weekly rolling cohort. Duplicate identities are skipped only where certification has not settled them; the three confirmed alias slugs (`bruno-silva`, `hyunsung-park`, `carlos-hernandez-7`) are researched under their certified slug.
 - `--disciplines wrestling` limits a run to wrestling; the other disciplines stay `unknown`. A plan-only run (`--emit-prompts` / `--from-dir`) makes no model call, so the 25-fighter API budget guard does not apply to it.
 
 ## Running
+A run other than `--pilot` must name its folder with `--out research/<folder>`.
 ```bash
 export PATH=~/.local/opt/node-v22.23.5-darwin-arm64/bin:$PATH
 npm install --no-save @anthropic-ai/sdk          # not a repo dependency, on purpose
@@ -45,7 +46,7 @@ Add `--resume` with the same `--run-id` to continue after an interruption. Crede
 Guards: `--max-calls` is mandatory and counts every HTTP request including `pause_turn` continuations; more than 25 fighters is refused unless `BEFN_CREDENTIALS_APPROVED_CALLS` (the owner's approved budget) is at least `--max-calls`; there is no all-roster mode; slugs must be in the approved 783; duplicate-identity slugs are skipped.
 
 ## Running without the API (plan-only)
-`--emit-prompts DIR` writes one prompt file per fighter for the chosen pass and makes no call. A person or Claude Code subagents answer each prompt with the JSON object into `DIR2/<slug>.json`, then `--from-dir DIR2` ingests them through the same validator, checkpoints and run log (no tokens or cost are recorded). The 22 Nov pilot ran this way; see `ufc-credentials-pilot-report-20261122.md`.
+`--emit-prompts DIR` writes one prompt file per fighter for the chosen pass and makes no call. A person or Claude Code subagents answer each prompt with the JSON object into `DIR2/<slug>.json`, then `--from-dir DIR2` ingests them through the same validator, checkpoints and run log (no tokens or cost are recorded). The 22 Nov pilot ran this way; see `research/ufc-credentials-pilot/RESEARCH-RESULTS.md`.
 
 `none_found` requires a dated `sources_checked` entry with a URL on a governing-body or database host (the Tier A list); a UFC page, Wikipedia or Boxerbook alone gives `unknown`.
 

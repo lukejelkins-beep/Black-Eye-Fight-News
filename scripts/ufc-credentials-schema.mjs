@@ -2,7 +2,8 @@
 /**
  * Schema and validator for per-fighter external combat-sport credentials.
  * Research only: nothing here is read by a site page, a rating or a certificate.
- * Offline: no network, no API calls. `node scripts/ufc-credentials-schema.mjs [dir]` validates saved files.
+ * Offline: no network, no API calls. `node scripts/ufc-credentials-schema.mjs [dir]` validates saved files
+ * (default: every research folder, research/ufc-credentials-pilot and research/ufc-ncaa-credentials).
  *
  * Rules (owner handover 22 Nov 2026, AGENTS.md wins on conflict):
  *  - A claim without an http(s) URL, a tier A/B/C or a valid retrieved date is dropped.
@@ -34,7 +35,7 @@ export const TIER_A_HOSTS = ['ijf.org', 'judoinside.com', 'uww.org', 'unitedworl
 export const NCAA_DIVISIONS = ['I', 'II', 'III'];
 export const NCAA_RESULTS = ['participant', 'all_american', 'finalist', 'champion'];
 /** A college's own athletics site (a reviewed official athletics host, listed in
- * data/ufc-credentials/_school-athletics-hosts.json) is Tier A proof of being on that NCAA team (ncaa_result
+ * research/ufc-ncaa-credentials/_school-athletics-hosts.json) is Tier A proof of being on that NCAA team (ncaa_result
  * "participant") and nothing more (owner, 24 Nov 2026). A .edu host is not enough on its own: news, alumni and
  * student-paper pages are not rosters. Placings and titles still need ncaa.com / ncaa.org or two independent Tier B sources. */
 export const isSchoolAthleticsHost = (host, reviewed = []) => Boolean(host) && hostIn(host, reviewed);
@@ -257,11 +258,15 @@ export function validateDirectory(dir, opts = {}) {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-  const dir = path.resolve(process.argv[2] || path.join(root, 'data', 'ufc-credentials'));
-  import('./ufc-credentials-run.mjs').then(({loadRoster, loadSchoolHosts}) => {
-    const res = validateDirectory(dir, {rosterSlugs: loadRoster(root).set, schoolHosts: loadSchoolHosts(root)});
-    for (const f of res.failures) console.error(f.file + ': ' + f.errors.join(', '));
-    console.log(`${res.files} fighter files, ${res.failures.length} failing`);
-    process.exit(res.failures.length ? 1 : 0);
+  import('./ufc-credentials-run.mjs').then(({loadRoster, loadSchoolHosts, RESEARCH_DIRS}) => {
+    const dirs = process.argv[2] ? [path.resolve(process.argv[2])] : RESEARCH_DIRS.map(d => path.join(root, d));
+    let failing = 0;
+    for (const dir of dirs) {
+      const res = validateDirectory(dir, {rosterSlugs: loadRoster(root).set, schoolHosts: loadSchoolHosts(root)});
+      for (const f of res.failures) console.error(path.relative(root, dir) + '/' + f.file + ': ' + f.errors.join(', '));
+      console.log(`${path.relative(root, dir)}: ${res.files} fighter files, ${res.failures.length} failing`);
+      failing += res.failures.length;
+    }
+    process.exit(failing ? 1 : 0);
   });
 }

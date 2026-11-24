@@ -1,4 +1,6 @@
-# NCAA wrestling credentials: American and Canadian UFC fighters (research, 24 Nov 2026)
+# NCAA wrestling credentials research results
+
+24 November 2026 · American and Canadian UFC fighters
 
 **Research only. Nothing here is shown on a page, used in a rating or treated as a certificate.** Wrestling only. Run in-session with research sub-agents (no API spend) and ingested through the credentials validator (`scripts/ufc-credentials-run.mjs --from-dir`): pass 1 `us-ncaa-1` (198 Americans not in the 25-fighter pilot), pass 2 `us-ncaa-2` (26 priority re-checks), unknowns round 1 `us-ncaa-3a` (31 fighters), Canadians `ca-ncaa-1` (20 fighters).
 
@@ -54,4 +56,4 @@ Other wrestling (provincial / national, from their UFC profiles only): Aiemann Z
 
 ## Reviewed official athletics hosts
 
-A college roster counts as Tier A for team participation only when its host is in `data/ufc-credentials/_school-athletics-hosts.json` (18 hosts, each homepage checked 24 Nov). Pending (blocked automated checks): Fresno State (gobulldogs.com), Chattanooga (gomocs.com).
+A college roster counts as Tier A for team participation only when its host is in [`_school-athletics-hosts.json`](_school-athletics-hosts.json) (18 hosts, each homepage checked 24 Nov). Pending (blocked automated checks): Fresno State (gobulldogs.com), Chattanooga (gomocs.com).
