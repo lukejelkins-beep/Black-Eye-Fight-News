@@ -10,11 +10,22 @@
 
   /* A menu for pages without the main site's own (the Sumo pages): sports, then this area's
      sections and pages, read from the header that is already on the page. */
-  let sheet = null, opener = null;
-  const esc = e => { if (e.key === 'Escape') closeSheet(); };
+  let sheet = null, opener = null, inerted = [];
+  /* Keep keyboard focus inside the open menu and hide the page behind it from assistive tech
+     (QA audit D04): Tab and Shift+Tab wrap; everything else in <body> is inert until it closes. */
+  const trap = e => {
+    const f = [...sheet.querySelectorAll('a[href],button:not([disabled])')];
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1], at = document.activeElement;
+    if (!sheet.contains(at)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && at === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && at === last) { e.preventDefault(); first.focus(); }
+  };
+  const esc = e => { if (e.key === 'Escape') closeSheet(); else if (e.key === 'Tab' && sheet) trap(e); };
   function closeSheet() {
     if (!sheet) return;
     sheet.remove(); sheet = null;
+    inerted.forEach(el => { el.inert = false; }); inerted = [];
     window.removeEventListener('keydown', esc);
     if (opener) opener.focus(); opener = null;
   }
@@ -49,6 +60,8 @@
     cover.append(panel);
     cover.addEventListener('click', e => { if (e.target === cover) closeSheet(); });
     document.body.append(cover); sheet = cover;
+    inerted = [...document.body.children].filter(el => el !== cover && !el.inert);
+    inerted.forEach(el => { el.inert = true; });
     window.addEventListener('keydown', esc); x.focus();
   }
 
