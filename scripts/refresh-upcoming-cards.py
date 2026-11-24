@@ -19,6 +19,7 @@ import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import one_schedule  # noqa: E402  (sibling module; works when loaded by path in tests)
+import espn_pfl_schedule  # noqa: E402
 
 DATA = Path("data/upcoming-cards.json")
 USER_AGENT = "Mozilla/5.0 (compatible; BlackEyeFightNews/1.0; card-monitor)"
@@ -497,6 +498,15 @@ def refresh_one(events, now):
     return one_schedule.merge_new(events, new), len(cards)
 
 
+def refresh_pfl(events, now):
+    """Add scheduled PFL cards from ESPN's scoreboard (scripts/espn_pfl_schedule.py).
+    Existing events are never changed; any fetch or parse problem keeps what is there."""
+    today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    board = json.loads(webpage(espn_pfl_schedule.scoreboard_url(today)))
+    new = espn_pfl_schedule.build_events(board, now)
+    return espn_pfl_schedule.merge_new(events, new), len(board.get("events") or [])
+
+
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     events = data["events"]
@@ -553,6 +563,12 @@ def main():
               + (": " + ", ".join(e["title"] for e in added_one) if added_one else ""))
     except Exception as exc:
         print(f"ONE schedule unavailable ({type(exc).__name__}); existing ONE entries retained")
+    try:
+        added_pfl, listed = refresh_pfl(events, now)
+        print(f"ESPN PFL schedule: {listed} scheduled cards listed, {len(added_pfl)} added"
+              + (": " + ", ".join(e["title"] for e in added_pfl) if added_pfl else ""))
+    except Exception as exc:
+        print(f"ESPN PFL schedule unavailable ({type(exc).__name__}); existing PFL entries retained")
     for event in events:
         participants = {}
         for bout in event.get("bouts", []):
