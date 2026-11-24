@@ -1197,6 +1197,7 @@ function openFighter(id){if(!dialog.open){const a=document.activeElement;fighter
  dialog.classList.remove('befn-v3-dialog');
  dialog.classList.add('befn-pro-dialog');
  ins?.layoutV3Dialog?.();
+ window.BEFNAmateur?.decorate(dialog,f);
  syncFighterPortraits(dialog);
  if(dialog.showModal&&!dialog.open)dialog.showModal();else dialog.setAttribute('open','');
  dialog.scrollTop=0;}

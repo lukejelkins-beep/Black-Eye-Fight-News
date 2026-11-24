@@ -2,6 +2,12 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (UFC profiles: amateur career and medals)
+- **Verified amateur results now show on UFC profiles** (owner picked option A from a mock, then asked for "shiny gold for gold medals ... something that pops", then "I like it"). Up to three badges sit under the record: *Olympic champion / medallist / Olympian*, *World champion / titles ×N / medallist* (age-group Worlds say "Junior world"), a continental or Commonwealth title or medal, and the national team (or "youth team" / "junior team" when every appearance is age-group). Lower down, an "Amateur career" card lists one row per result: medal or place, event, year, division, country, and a "Source" link.
+  - **Medals:** metallic gold, silver and bronze discs with a slow light sweep; places outside the top three are plain cream discs. An Olympic gold badge is a polished gold pill. The sweep stops when the reader has reduced motion on.
+  - **What qualifies:** only `seed` or `reviewed` lanes in `research/ufc-representative-credentials/reviews`, and only Games, youth Games and national-team appearances with an https source from a games body, federation or delegation. Selections, squads, trials, qualifiers, `needs_review` records and leads never show. BJJ/ADCC screens are not included yet.
+  - **How:** `scripts/build-amateur-credentials.mjs` writes `data/ufc-amateur-credentials.json` (88 fighters, 171 results); `assets/amateur-credentials.js` and `.css` add the badges and card when a profile opens. Not used in ratings or certificates. — owner — UFC profiles, #521
+
 ## 2026-11-24/25 (Overnight credentials research run)
 Owner-approved plan (`Befn Research Runner/WORK-PLAN-20261124.md`). The owner delegated in-run decisions; merges wait for "Merge N". The full log is `Befn Research Runner/RESEARCH-LOG.md` (local).
 - **Terms rule for automated collection:** scripts collect only from sources whose terms of use don't forbid it and whose robots.txt allows it. IJF (Terms 3.1.4 and 3.1.5) and UWW (Terms 3(e)) forbid automated collection or downloading, and IBJJF bans bots and scripts. Their screens were stopped, and `ijf_screen.py` now needs an explicit permission flag. IFMA and WKF block Anthropic bots in robots.txt and are skipped. FIAS, World Taekwondo and WAKO have no prohibiting terms and are used, slowly and with caching. ADCC and IMMAF result pages sit behind Cloudflare checks and aren't read; only IMMAF's sitemaps are used. — Claude, delegated — runner README, #503 comment
