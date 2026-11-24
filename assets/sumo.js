@@ -5,7 +5,7 @@ import {
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
   rankPositions, confirmedCareerHigh, publishedCurrentWeight
 } from './sumo-data.mjs?v=20261116-ranked-matchups';
-import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261117-clean-profile-charts';
+import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261124-label-edge';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
 import { validateSumoPreviewReadiness, wrestlerQuality } from './sumo-verification.mjs';
 import { ageInJapan, nextDayForBasho, bashoDayForDate, h2hHistory, researchedHeadToHead, techniqueText } from './sumo-matchup.mjs';
