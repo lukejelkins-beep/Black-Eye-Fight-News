@@ -57,5 +57,49 @@ class Build(unittest.TestCase):
         self.assertEqual(tape.build(self.names, INDEX), self.out)
 
 
+def _snap(pool, matched_keys):
+    fighters = {k: {"heightIn": 70} for k in matched_keys}
+    return {"fighters": fighters, "coverage": {"cardFighters": pool, "matched": len(fighters)},
+            "cardKeys": [f"f{i}" for i in range(pool)]}
+
+
+class Guard(unittest.TestCase):
+    """QA audit A04: judge coverage of the current card, not the raw count."""
+
+    def test_card_rollover_to_smaller_event_is_allowed(self):
+        # 24 Nov 2026: 59 of 60 matched, then the card rolled over to 41 of 42.
+        before = _snap(60, [f"f{i}" for i in range(59)])
+        after = _snap(42, [f"f{i}" for i in range(41)])
+        self.assertIsNone(tape.guard_problem(before, after))
+
+    def test_rollover_to_entirely_new_fighters_is_allowed(self):
+        before = _snap(60, [f"f{i}" for i in range(59)])
+        after = {"fighters": {f"n{i}": {} for i in range(41)},
+                 "coverage": {"cardFighters": 42, "matched": 41}, "cardKeys": [f"n{i}" for i in range(42)]}
+        self.assertIsNone(tape.guard_problem(before, after))
+
+    def test_same_card_with_a_corrupt_export_is_refused(self):
+        before = _snap(60, [f"f{i}" for i in range(59)])
+        after = _snap(60, [f"f{i}" for i in range(20)])
+        self.assertIn("match rate fell", tape.guard_problem(before, after))
+
+    def test_fighters_still_on_the_card_losing_matches_is_refused(self):
+        # Rate looks fine because new fighters match, but most returning fighters vanished.
+        before = _snap(20, [f"f{i}" for i in range(20)])
+        after = {"fighters": {**{f"f{i}": {} for i in range(3)}, **{f"n{i}": {} for i in range(17)}},
+                 "coverage": {"cardFighters": 20, "matched": 20},
+                 "cardKeys": [f"f{i}" for i in range(10)] + [f"n{i}" for i in range(17)]}
+        self.assertIn("lost their match", tape.guard_problem(before, after))
+
+    def test_small_overlap_is_not_judged(self):
+        before = _snap(10, [f"f{i}" for i in range(10)])
+        after = {"fighters": {f"n{i}": {} for i in range(10)}, "coverage": {"cardFighters": 10, "matched": 10},
+                 "cardKeys": [f"f{i}" for i in range(3)] + [f"n{i}" for i in range(10)]}
+        self.assertIsNone(tape.guard_problem(before, after))
+
+    def test_no_previous_coverage_is_allowed(self):
+        self.assertIsNone(tape.guard_problem({}, _snap(42, [f"f{i}" for i in range(41)])))
+
+
 if __name__ == "__main__":
     unittest.main()
