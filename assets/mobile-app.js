@@ -15,7 +15,7 @@
  const glyph=k=>'<svg aria-hidden="true" viewBox="0 0 24 24">'+icon[k]+'</svg>';
  const items=[['home','Home','news'],['fights','Fights','fights'],['fighters','Fighters','fighters'],['analysis','Analysis','analysis'],['social','Fight Talk','social']];
  const groupOf={calendar:'fights',results:'fights',highlights:'fights',champions:'fighters',leaderboards:'analysis'};
- let sheet=null, opener=null;
+ let sheet=null, opener=null, inerted=[];
  function active(){
    const route=location.hash.slice(1).split('/')[0]||'home';
    const key=route==='news'?'home':(groupOf[route]||route);
@@ -27,10 +27,21 @@
  function close(){
    if(!sheet)return;
    sheet.remove();sheet=null;
+   inerted.forEach(el=>{el.inert=false;});inerted=[];
    window.removeEventListener('keydown',esc);
    opener?.focus();opener=null;
  }
- const esc=e=>{if(e.key==='Escape')close();};
+ /* Keep keyboard focus inside the open menu and hide the page behind it from assistive tech
+    (QA audit D04): Tab and Shift+Tab wrap; everything else in <body> is inert until it closes. */
+ const trap=e=>{
+   const f=[...sheet.querySelectorAll('a[href],button:not([disabled])')];
+   if(!f.length)return;
+   const first=f[0],last=f[f.length-1],at=document.activeElement;
+   if(!sheet.contains(at)){e.preventDefault();first.focus();}
+   else if(e.shiftKey&&at===first){e.preventDefault();last.focus();}
+   else if(!e.shiftKey&&at===last){e.preventDefault();first.focus();}
+ };
+ const esc=e=>{if(e.key==='Escape')close();else if(e.key==='Tab'&&sheet)trap(e);};
  function openMenu(button){
    if(sheet){close();return;}
    opener=button;
@@ -70,7 +81,8 @@
    if(install){const b=document.createElement('button');b.type='button';b.textContent='Install the app';b.addEventListener('click',()=>{close();install.click();});grid.append(b);}
    panel.append(heading,sportsHead,sports,sectionsHead,grid);cover.append(panel);
    cover.addEventListener('click',e=>{if(e.target===cover)close();});
-   document.body.append(cover);sheet=cover;window.addEventListener('keydown',esc);x.focus();
+   document.body.append(cover);sheet=cover;
+   inerted=[...document.body.children].filter(el=>el!==cover&&!el.inert);inerted.forEach(el=>{el.inert=true;});window.addEventListener('keydown',esc);x.focus();
  }
  function init(){
    if(document.querySelector('.befn-mobile-tabs'))return;
