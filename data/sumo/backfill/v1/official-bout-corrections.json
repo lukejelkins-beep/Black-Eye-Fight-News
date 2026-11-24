@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independently sourced corrections to raw Sumo API bout outcomes. Raw source JSON must remain unchanged.",
+  "source": "Japan Sumo Association",
+  "certifiesCareers": false,
+  "bySourceId": {
+    "242": [
+      {
+        "correctionId": "jsa-202207-obara-fusenpai",
+        "sumoApiId": 242,
+        "officialNskId": 3610,
+        "bashoId": "202207",
+        "day": 12,
+        "division": "Sandanme",
+        "opponentId": 213,
+        "opponentName": "Kotonofuji",
+        "expectedRawWinnerId": 242,
+        "verifiedOfficialWinnerId": 213,
+        "sourceKimarite": "fusen",
+        "officialResult": "Obara loss by default (不戦敗)",
+        "officialRecordThisBasho": {
+          "wins": 3,
+          "losses": 3,
+          "absences": 1
+        },
+        "rawSourceRecordThisBasho": {
+          "wins": 4,
+          "losses": 2
+        },
+        "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3610/",
+        "sourceTournament": "2022 July, Day 12, official JSA tournament records",
+        "checkedAsOf": "2026-11-15",
+        "status": "official-bout-outcome-reconciled",
+        "notes": "The source API lists winnerId=242, but the JSA official rikishi profile explicitly records a loss by default against Kotonofuji. This is a correction of the bout outcome in derived research data only, not a modification of the API cache."
+      }
+    ]
+  }
+}

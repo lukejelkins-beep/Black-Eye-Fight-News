@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independent research-only historical weight-source coverage check, NOT a certified weight timeline or publishing permission",
+  "sourceId": 28,
+  "officialNskId": 3616,
+  "sumoDbId": 12226,
+  "rikishi": "Ura",
+  "reviewedAt": "2026-11-15",
+  "sources": {
+    "api": {
+      "url": "https://www.sumo-api.com/api/measurements?rikishiId=28&limit=200&skip=0",
+      "rawCachePath": "data/sumo/backfill/v1/rikishi/28.json",
+      "recordedDatedEntries": 2
+    },
+    "sumodb": {
+      "url": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "recordedDatedEntries": 6,
+      "description": "Explicit dated weight/height values alongside basho entries; no carry-forward values counted"
+    },
+    "currentOfficial": {
+      "url": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
+      "weightKg": 138,
+      "asOf": "November 2026 Day 7",
+      "isHistoricalWeighIn": false
+    }
+  },
+  "datedEvidence": [
+    {
+      "bashoId": "201503",
+      "heightCm": 172,
+      "weightKg": 113,
+      "alsoInApi": true,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202103",
+      "heightCm": 175,
+      "weightKg": 136,
+      "alsoInApi": true,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202205",
+      "heightCm": 173,
+      "weightKg": 148,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202305",
+      "heightCm": 175,
+      "weightKg": 143,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 175,
+      "weightKg": 142,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 175,
+      "weightKg": 139,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+      "independentlyCertified": false
+    }
+  ],
+  "coverage": {
+    "datedApiPoints": 2,
+    "datedIndependentPoints": 6,
+    "additionalDatedPoints": 4
+  },
+  "caution": "Do not fabricate a weight point for every tournament; SumoDB header height/weight is undated and may differ from official current JSA listing. Preserve raw original API data and label independent source points separately. Contact data owner before automated bulk reuse.",
+  "certification": "not-started",
+  "publiclyReleased": false,
+  "identityRecheck": {
+    "verifiedAt": "2026-11-15T05:12:39.444Z",
+    "sourceParserVersion": 4,
+    "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12226",
+    "rawHtmlSha256": "3585a5eb411202d190bc1b1deeea9e4ed56fd8615bea20b0060082555a413000",
+    "identityEvidence": {
+      "valid": true,
+      "matchedShikona": "Ura",
+      "matchedCurrentName": true,
+      "recordedAliasCount": 2,
+      "birthDateStatus": "match",
+      "publishedDob": "June 22, 1992",
+      "expectedDob": "June 22, 1992",
+      "evidenceWindow": "profile-header-before-career-record"
+    },
+    "unchangedSavedMeasurements": 6,
+    "originalEvidencePreserved": true,
+    "certified": false
+  }
+}

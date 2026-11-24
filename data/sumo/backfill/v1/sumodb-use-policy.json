@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "provider": "Sumo Reference (SumoDB)",
+  "domain": "sumodb.sumogames.de",
+  "sourceContact": "doitsuyama@sumogames.de",
+  "checkedOn": "2026-11-15",
+  "sourceDocumentation": [
+    "https://sumodb.sumogames.de/About.aspx",
+    "https://sumodb.sumogames.de/Contact.aspx"
+  ],
+  "rightsStatus": "user-reported-separately-confirmed-permission",
+  "approvedForAutomatedCollection": true,
+  "approvedForPublicDisplay": true,
+  "approvalEvidence": "User confirmed separately obtained permission in BEFN Sumo project chat on 2026-11-15; confirmation recorded as user attestation, external permission document not independently inspected",
+  "latestRobotsCheck": "https://sumodb.sumogames.de/robots.txt",
+  "robotsStatus": "not-confirmed-accessible-via-web-verification",
+  "allowedRequestsPerMinute": 4,
+  "automaticHarvestEnabled": true,
+  "allowedUse": "User-authorised extraction and later attributed display of dated historical height/weight measurements, subject to accuracy checks, data provenance and general provider access limits.",
+  "constraints": [
+    "Never bypass robots, rate limits, login controls or blocks",
+    "Stop on 429/403/5xx; do not retry until approved by provider and cooldown passed",
+    "No athlete photographs: photos require separate licence",
+    "Use only explicitly dated per-tournament measurements; never fabricate or carry forward",
+    "Treat Sumodb collection and public reproduction rights as separate permissions",
+    "Preserve original API records, document conflicts separately"
+  ],
+  "approvalEvidenceType": "user-attestation",
+  "permissionScopeNote": "User confirmed separately obtained permission and instructed the BEFN Sumo project to proceed on 2026-11-15. Treat collection and planned presentation of historical numerical weight facts as user-authorised. Raw source remains private to research workstream until checks pass. External grant text not inspected.",
+  "publicDisplayApprovalStatus": "user-attested-separately-confirmed; no production release until independent data QA"
+}

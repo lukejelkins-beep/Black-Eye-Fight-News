@@ -1,0 +1,90 @@
+name: Sumo strict research certification QA (non-production)
+on:
+  push:
+    branches: [research/sumo-190-career-cache-20261114]
+    paths:
+      - .github/workflows/sumo-strict-research-qa.yml
+      - scripts/sumo-certification-preflight-190.mjs
+      - scripts/sumo-certify-strict-190.mjs
+      - tests/test-sumo-six-source-exceptions.mjs
+      - tests/test-sumo-certification-preflight-190.mjs
+      - tests/test-sumo-certify-strict-190.mjs
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sumo-strict-research-qa
+  cancel-in-progress: false
+jobs:
+  strict-research:
+    if: github.ref == 'refs/heads/research/sumo-190-career-cache-20261114'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Guard source and test syntax
+        run: |
+          node --check scripts/sumo-certification-preflight-190.mjs
+          node --check scripts/sumo-certify-strict-190.mjs
+          node --check tests/test-sumo-six-source-exceptions.mjs
+      - name: Run strict preflight, strict audit and six-case regression tests
+        run: |
+          node --test tests/test-sumo-certification-preflight-190.mjs tests/test-sumo-certify-strict-190.mjs tests/test-sumo-six-source-exceptions.mjs
+      - name: Rebuild full 190-person source preflight in isolated runner
+        run: node scripts/sumo-certification-preflight-190.mjs
+      - name: Run full strict 190-person historical-career audit
+        run: node scripts/sumo-certify-strict-190.mjs
+      - name: Verify no roster or publication mutation and audit integrity
+        run: |
+          node --input-type=module -e "
+          import fs from 'node:fs';
+          const p=JSON.parse(fs.readFileSync('data/sumo/backfill/v1/career-certification-preflight.json'));
+          const s=JSON.parse(fs.readFileSync('data/sumo/backfill/v1/career-certification-strict.json'));
+          const r=JSON.parse(fs.readFileSync('data/sumo/rikishi-index.json'));
+          if(r.count!==190||r.rikishi.length!==190||s.cohortSize!==190||p.cohortSize!==190||
+             s.strictAuditSuccessful!==true||
+             s.strictCareerResultsCertified+s.blocked!==190||
+             s.strictCareerResultsCertified!==190||
+             s.blocked!==0||
+             s.rows.find(x=>x.sourceId===112)?.careerResultsCertified!==true||
+             s.rows.find(x=>x.sourceId===98)?.careerResultsCertified!==true||
+             s.rows.find(x=>x.sourceId===118)?.careerResultsCertified!==true||
+             s.rows.find(x=>x.sourceId===172)?.careerResultsCertified!==true||
+             s.rows.find(x=>x.sourceId===9104)?.careerResultsCertified!==true||
+             s.fullProfilesCertified!==0||s.productionApproved!==false) process.exit(1);
+          console.log(JSON.stringify({strictAuditSuccessful:true,certified:s.strictCareerResultsCertified,blocked:s.blocked,preflightCandidates:p.candidateForStrictAudit,fullyCertified:0,productionApproved:false}));
+          "
+          git diff --exit-code -- data/sumo/rikishi-index.json
+      - name: Commit successful strictly audited checkpoint to the research branch only
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          BRANCH="research/sumo-190-career-cache-20261114"
+          git config user.name "BEFN Sumo research audit"
+          git config user.email "sumo-research@users.noreply.github.com"
+          git add -- data/sumo/backfill/v1/career-certification-preflight.json data/sumo/backfill/v1/career-certification-strict.json
+          if git diff --cached --quiet; then
+            echo "Current approved strict audit checkpoint already matches."
+            exit 0
+          fi
+          git commit -m "research(sumo): persist 185/190 strict career verification checkpoint"
+          git fetch origin "$BRANCH"
+          if [ "$(git rev-parse HEAD^)" != "$(git rev-parse "origin/$BRANCH")" ]; then
+            echo "Concurrent branch advance detected; preserving remote and stopping (no force push)." >&2
+            exit 1
+          fi
+          git push origin "HEAD:$BRANCH"
+      - name: Preserve non-production audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sumo-strict-research-audit
+          path: |
+            data/sumo/backfill/v1/career-certification-preflight.json
+            data/sumo/backfill/v1/career-certification-strict.json
+          retention-days: 14
+          if-no-files-found: warn

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independent research-only historical weight-source coverage check; not a certified weight timeline or publishing permission",
+  "sourceId": 7,
+  "officialNskId": 3622,
+  "sumoDbId": 12231,
+  "rikishi": "Kirishima",
+  "reviewedAt": "2026-11-15",
+  "sources": {
+    "api": {
+      "url": "https://www.sumo-api.com/api/measurements?rikishiId=7&limit=200&skip=0",
+      "rawCachePath": "data/sumo/backfill/v1/rikishi/7.json",
+      "recordedDatedEntries": 2
+    },
+    "sumodb": {
+      "url": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+      "recordedDatedEntries": 6,
+      "description": "Explicit dated tournament weight/height rows manually reviewed; no inferred dates or undated header weight"
+    }
+  },
+  "datedEvidence": [
+    {
+      "bashoId": "201503",
+      "heightCm": 184,
+      "weightKg": 94,
+      "alsoInApi": true,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202103",
+      "heightCm": 187,
+      "weightKg": 138,
+      "alsoInApi": true,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202205",
+      "heightCm": 186,
+      "weightKg": 139,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202305",
+      "heightCm": 186,
+      "weightKg": 143,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202405",
+      "heightCm": 186,
+      "weightKg": 148,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+      "independentlyCertified": false
+    },
+    {
+      "bashoId": "202505",
+      "heightCm": 186,
+      "weightKg": 147,
+      "alsoInApi": false,
+      "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+      "independentlyCertified": false
+    }
+  ],
+  "coverage": {
+    "datedApiPoints": 2,
+    "datedIndependentPoints": 6,
+    "additionalDatedPoints": 4
+  },
+  "caution": "Manual source spotcheck only. Original source API cache not modified; automated bulk use and public republishing require confirmed permission. Historical header measurements are excluded.",
+  "certification": "not-started",
+  "publiclyReleased": false,
+  "identityRecheck": {
+    "verifiedAt": "2026-11-15T04:42:19.633Z",
+    "sourceParserVersion": 4,
+    "sourceUrl": "https://sumodb.sumogames.de/Rikishi.aspx?r=12231",
+    "rawHtmlSha256": "938e59e112f09b90f4fcc8e9bff9413df9fd5dc96bbff0ddec9b24bf8073420b",
+    "identityEvidence": {
+      "valid": true,
+      "matchedShikona": "Kirishima",
+      "matchedCurrentName": true,
+      "recordedAliasCount": 3,
+      "birthDateStatus": "match",
+      "publishedDob": "April 24, 1996",
+      "expectedDob": "April 24, 1996",
+      "evidenceWindow": "profile-header-before-career-record"
+    },
+    "unchangedSavedMeasurements": 6,
+    "originalEvidencePreserved": true,
+    "certified": false
+  }
+}

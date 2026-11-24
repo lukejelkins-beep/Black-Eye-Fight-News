@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "scope": "Research-only supplemental manual source review for six blocked Sumo career-result histories",
+  "reviewedOn": "2026-11-16",
+  "cohortSize": 190,
+  "sourceResearchHeadBeforeReview": "c7a7e1397ba73e882cfb11252f90f85c66feddbb",
+  "certificationEffect": "none",
+  "strictCareerResultsCertifiedBeforeReview": 184,
+  "fullProfilesCertified": 0,
+  "productionReleaseApproved": false,
+  "sourcePrinciples": [
+    "Preserve original immutable Sumo API and independent source snapshots",
+    "Retain source publication cutoff differences and null unknowns",
+    "Do not certify or rewrite aggregates from this note; re-run complete strict 190-person audit after separately validated input changes"
+  ],
+  "cases": [
+    {
+      "sourceId": 112,
+      "name": "Kotoeiho",
+      "classification": "published-absence-count-disagreement-and-current-basho-cutoff",
+      "savedApiStats": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 5
+      },
+      "officialJsaSnapshot": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 6,
+        "asOf": "November 2026 Day 8",
+        "currentBasho": "1-2-5",
+        "priorObservedAbsence": "2022-07 4-2-1"
+      },
+      "independentSumoDbCareer": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 6
+      },
+      "officialAbsentNotice": "Absent from Day 3 of November 2026 tournament",
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4120/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=12729",
+        "https://sumo.or.jp/EnHonbashoMain/absence/"
+      ],
+      "conclusion": "Three snapshots record increasing absence totals at different November 2026 day cutoffs: saved native and saved SumoDB 5, live SumoDB 6, JSA saved Day 8 6, JSA newer Day 9 7. Confirm the dated daily absence sequence against frozen cache before any strict certification; never replace raw totals or presume a publication error.",
+      "cachedSumoDbCareer": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 5
+      },
+      "liveSumoDbCareer": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 6,
+        "publicPageBasho": "202611",
+        "publicTournamentRow": "1-2-5"
+      },
+      "laterOfficialJsaSnapshot": {
+        "wins": 174,
+        "losses": 120,
+        "absences": 7,
+        "asOf": "November 2026 Day 9",
+        "currentBasho": "1-2-6"
+      }
+    },
+    {
+      "sourceId": 98,
+      "name": "Shirokuma",
+      "classification": "published-absence-count-disagreement-and-current-basho",
+      "savedApiStats": {
+        "wins": 178,
+        "losses": 153,
+        "absences": 10
+      },
+      "officialJsaSnapshot": {
+        "wins": 178,
+        "losses": 153,
+        "absences": 11,
+        "asOf": "November 2026 Day 8"
+      },
+      "officialAbsentNotice": "Absent from Day 1 of November 2026 tournament",
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4164/",
+        "https://sumo.or.jp/EnHonbashoMain/absence/"
+      ],
+      "conclusion": "The native/SumoDB saved snapshots report 10 absences; JSA saved Day 8 reports 11; live SumoDB reports 11; later JSA Day 9 reports 12. This is consistent with ongoing tournament absences at different published cutoffs, but source-specific cutoff agreement must be proven before certification.",
+      "cachedSumoDbCareer": {
+        "wins": 178,
+        "losses": 153,
+        "absences": 10
+      },
+      "liveSumoDbCareer": {
+        "wins": 178,
+        "losses": 153,
+        "absences": 11,
+        "publicPageBasho": "202611",
+        "publicTournamentRow": "0-1-7"
+      },
+      "laterOfficialJsaSnapshot": {
+        "wins": 178,
+        "losses": 153,
+        "absences": 12,
+        "asOf": "November 2026 Day 9",
+        "currentBasho": "0-1-8"
+      }
+    },
+    {
+      "sourceId": 88,
+      "name": "Gojinyu",
+      "classification": "absence-total-unpublished",
+      "savedApiStats": {
+        "wins": 114,
+        "losses": 87,
+        "absences": 0
+      },
+      "officialJsaSnapshot": {
+        "wins": 114,
+        "losses": 87,
+        "absences": null,
+        "asOf": "November 2026 Day 8"
+      },
+      "independentSumoDbCachedAbsences": null,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4123/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=12733"
+      ],
+      "conclusion": "All 28 completed ranked tournament records reconcile; one has 8 independently corroborated bouts (2026-07 3-5) rather than the standard seven. Current zero-absence preflight rejects the eight-bout case solely by an exact-seven check. The JSA/SumoDB absence aggregate remains unpublished, so a narrowly scoped exceptional-bout attendance proof plus successful strict audit is required.",
+      "july2026HistoricalBasho": {
+        "bashoId": "202607",
+        "nativeWins": 3,
+        "nativeLosses": 5,
+        "officialJsaWins": 3,
+        "officialJsaLosses": 5,
+        "liveSumoDbWins": 3,
+        "liveSumoDbLosses": 5,
+        "rank": "Makushita 2 East",
+        "nativeRegularBoutCount": 8
+      },
+      "completedTournamentsWith7RegularBouts": 27,
+      "completedTournamentsWith8RegularBouts": 1
+    },
+    {
+      "sourceId": 118,
+      "name": "Ikawasakura",
+      "classification": "independent-career-aggregate-snapshot-conflict",
+      "savedApiStats": {
+        "wins": 306,
+        "losses": 271,
+        "absences": 36
+      },
+      "cachedSumoDbCrosscheck": {
+        "wins": 307,
+        "losses": 271,
+        "absences": 36
+      },
+      "observedSumoDbPage": {
+        "wins": 307,
+        "losses": 271,
+        "absences": 36
+      },
+      "officialJsaCareerAggregatePublished": false,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3379/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=11988"
+      ],
+      "conclusion": "Fresh SumoDB headline confirms the cached independent 307-271-36 and differs by exactly the one November 2026 win relative to native 306-271-36; all 83 independently overlapping completed ranked basho match W-L. This points to a current-basho data cutoff, not a historical recorded-bout discrepancy. Source dates still require reconciliation and a strict audit before certification.",
+      "historicalOverlapReconciliation": {
+        "projectedCompletedBasho": 83,
+        "independentCompletedBashoSameWL": 83,
+        "historicalWLDisagreements": 0,
+        "activeBashoId": "202611",
+        "nativeActiveRecord": {
+          "wins": 2,
+          "losses": 1
+        },
+        "independentActiveRecord": {
+          "wins": 3,
+          "losses": 1
+        },
+        "additionalIndependentOnlyBasho": [
+          "201201",
+          "202103",
+          "202309",
+          "202311",
+          "202401"
+        ],
+        "sourceOnlyBashoClassification": "one mae-zumo and four absence-only tournament rows, not missing native regular-bout wins/losses"
+      }
+    },
+    {
+      "sourceId": 172,
+      "name": "Kototsubasa",
+      "classification": "independent-career-aggregate-snapshot-conflict",
+      "savedApiStats": {
+        "wins": 396,
+        "losses": 409,
+        "absences": 3
+      },
+      "cachedSumoDbCrosscheck": {
+        "wins": 397,
+        "losses": 409,
+        "absences": 3
+      },
+      "observedSumoDbPage": {
+        "wins": 397,
+        "losses": 409,
+        "absences": 3
+      },
+      "officialJsaCareerAggregatePublished": false,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3023/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=7164"
+      ],
+      "conclusion": "Fresh SumoDB headline confirms the saved independent 397-409-3 (the earlier manual note's 384-397-3 was a transcription error). All 115 completed ranked basho W-L agree, and the only ranked overlap difference is one November 2026 win compared with native 396-409-3. Keep career total blocked until the active-basho cutoff is dated and the strict audit passes.",
+      "historicalOverlapReconciliation": {
+        "projectedCompletedBasho": 115,
+        "independentCompletedBashoSameWL": 115,
+        "historicalWLDisagreements": 0,
+        "activeBashoId": "202611",
+        "nativeActiveRecord": {
+          "wins": 0,
+          "losses": 3
+        },
+        "independentActiveRecord": {
+          "wins": 1,
+          "losses": 3
+        },
+        "additionalIndependentOnlyBasho": [
+          "200703"
+        ],
+        "sourceOnlyBashoClassification": "mae-zumo, not a missing native ranked bout"
+      }
+    },
+    {
+      "sourceId": 9104,
+      "name": "Tenshoyama",
+      "classification": "api-profile-weight-differs-from-independent-dated-measurement",
+      "savedApiCurrentProfileWeightKg": 172,
+      "savedApiDatedMeasurement": {
+        "bashoId": "202601",
+        "weightKg": 173
+      },
+      "officialJsaProfileWeightKg": 173,
+      "independentSumoDbProfileWeightKg": 173,
+      "evidenceUrls": [
+        "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4357/",
+        "https://sumodb.sumogames.de/Rikishi.aspx?r=12966"
+      ],
+      "conclusion": "JSA current profile and SumoDB profile both list 173 kg, consistent with the source-native dated 202601 measurement of 173 kg, while the distinct Sumo API current-profile field lists 172 kg. The independent weight evidence supports a bounded, source-preserving comparison exception, but no source mutation or certification occurs until the exception rule is tested and the strict audit passes.",
+      "liveIndependentSources": {
+        "officialJsaCurrentProfileWeightKg": 173,
+        "sumodbProfileWeightKg": 173
+      }
+    }
+  ],
+  "reviewBasis": "New independent public-source checks on 16 November 2026 compared against saved research snapshots; live pages have different day cutoffs. Source observations are not replacements for frozen raw cache."
+}

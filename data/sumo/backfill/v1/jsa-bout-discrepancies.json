@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "scope": "Research-only individual official JSA vs Sumo API bout-result discrepancy evidence; never silently mutate raw source data",
+  "reviewedAt": "2026-11-15",
+  "certifiedCareers": 0,
+  "cases": [
+    {
+      "sourceId": 16,
+      "wrestler": "Nishikigi",
+      "officialNskId": 2892,
+      "status": "aggregate-source-behind-documented-current-bout",
+      "tournament": "202611",
+      "day": 7,
+      "division": "Makushita",
+      "apiRaw": {
+        "rawCachePath": "data/sumo/backfill/v1/rikishi/16.json",
+        "sourceUrl": "https://www.sumo-api.com/api/rikishi/16/matches",
+        "opponent": "Tenshoyama",
+        "winnerId": 16,
+        "reportedWinner": "Nishikigi"
+      },
+      "officialJsa": {
+        "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2892/",
+        "asOf": "2026-11 Day 8",
+        "officialCareerRecord": {
+          "wins": 677,
+          "losses": 716,
+          "absences": 2
+        },
+        "januaryRecordNote": "JSA November 2026 tournament row shows Day 7 win over Tenshoyama"
+      },
+      "ledgerReconciliation": {
+        "rawRegularWins": 677,
+        "rawRegularLosses": 716,
+        "sourceCareerStatsWins": 676,
+        "sourceCareerStatsLosses": 716,
+        "officialCareerWins": 677,
+        "officialCareerLosses": 716,
+        "matchCountDifference": 1,
+        "assessment": "Raw bout ledger agrees with official current career totals, but the separate Sumo API aggregate is one win behind. Do not delete a recorded match or mutate the source aggregate."
+      },
+      "careerCertified": false
+    },
+    {
+      "sourceId": 82,
+      "wrestler": "Fujiseiun",
+      "officialNskId": 4093,
+      "status": "aggregate-source-behind-documented-current-bout",
+      "tournament": "202611",
+      "day": 7,
+      "division": "Makuuchi",
+      "apiRaw": {
+        "rawCachePath": "data/sumo/backfill/v1/rikishi/82.json",
+        "sourceUrl": "https://www.sumo-api.com/api/rikishi/82/matches",
+        "opponent": "Aonishiki",
+        "winnerId": 82,
+        "reportedWinner": "Fujiseiun"
+      },
+      "officialJsa": {
+        "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4093/",
+        "asOf": "2026-11 Day 8",
+        "officialCareerRecord": {
+          "wins": 206,
+          "losses": 131,
+          "absences": 29
+        },
+        "currentTournamentRecord": "4-3 through Day 7"
+      },
+      "ledgerReconciliation": {
+        "rawRegularWins": 206,
+        "rawRegularLosses": 131,
+        "sourceCareerStatsWins": 206,
+        "sourceCareerStatsLosses": 130,
+        "officialCareerWins": 206,
+        "officialCareerLosses": 131,
+        "matchCountDifference": 1,
+        "assessment": "Raw bout ledger agrees with official current career totals, but the separate Sumo API aggregate is one loss behind. Specific missed loss is not independently identified; do not infer which bout caused aggregate lag."
+      },
+      "careerCertified": false
+    },
+    {
+      "sourceId": 242,
+      "wrestler": "Obara",
+      "officialNskId": 3610,
+      "status": "official-primary-source-contradicts-api-outcome",
+      "tournament": "202207",
+      "day": 12,
+      "division": "Sandanme",
+      "apiRaw": {
+        "rawCachePath": "data/sumo/backfill/v1/rikishi/242.json",
+        "sourceUrl": "https://www.sumo-api.com/api/rikishi/242/matches",
+        "matchNo": 28,
+        "eastId": 213,
+        "eastShikona": "Kotonofuji",
+        "westId": 242,
+        "westShikona": "Obara",
+        "kimarite": "fusen",
+        "reportedWinnerId": 242,
+        "reportedWinner": "Obara"
+      },
+      "officialJsa": {
+        "sourceUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3610/",
+        "evidence": "July 2022 West Sandanme #19 tournament row, Day 12: Obara listed as 不戦敗 (loss by default), versus Kotonofuji",
+        "tournamentRecord": "3-3-1",
+        "impliedWinnerId": 213,
+        "impliedWinner": "Kotonofuji",
+        "asOf": "2026-11 Day 8",
+        "officialCareerRecord": {
+          "wins": 249,
+          "losses": 209,
+          "absences": 22
+        }
+      },
+      "ledgerReconciliation": {
+        "rawRegularWins": 250,
+        "rawRegularLosses": 208,
+        "sourceCareerStatsWins": 249,
+        "sourceCareerStatsLosses": 209,
+        "ifThisSingleOutcomeAlignedToOfficial": {
+          "wins": 249,
+          "losses": 209
+        },
+        "unresolvedOtherBoutDifferences": 0,
+        "note": "Correcting one misassigned fusen winner resolves raw ledger vs stats and official current career W-L totals; does not independently certify all historical bout results."
+      },
+      "instructions": "Retain original API response immutable. Apply a separate keyed official-evidence correction only during verified projection or auditing, not by overwriting original match rows; check opposing wrestler profile independently before full-career certification.",
+      "careerCertified": false
+    }
+  ],
+  "note": "Official JSA Day 8 records corroborate Nishikigi/Fujiseiun raw match ledgers and isolate lagging Sumo API career-stat totals. Obara requires a source-specific result override; original cache remains immutable."
+}

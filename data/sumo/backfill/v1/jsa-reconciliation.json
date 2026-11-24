@@ -1,0 +1,807 @@
+{
+  "schemaVersion": 1,
+  "scope": "Published JSA field spotchecks only; not full-career certifications",
+  "publishedAsOf": "2026-11-15",
+  "checkedProfiles": 10,
+  "fullyMatchingPublicFields": 6,
+  "discrepancies": 4,
+  "explainedCutoffDifferences": 2,
+  "unexplainedDifferences": 2,
+  "certifiedCareers": 0,
+  "bySourceId": {
+    "2": {
+      "sumoApiId": 2,
+      "name": "Asanoyama",
+      "officialAsOf": "2026-11 day 7",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3682/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 2,
+          "api": 2,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3682,
+          "api": 3682,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Asanoyama",
+          "api": "Asanoyama",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 1 East",
+          "api": "Maegashira 1 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Takasago",
+          "api": "Takasago",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 188,
+          "api": 188,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 172,
+          "api": 172,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 442,
+          "api": 442,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 223,
+          "api": 223,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 159,
+          "api": 159,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "3": {
+      "sumoApiId": 3,
+      "name": "Hakunofuji",
+      "officialAsOf": "2026-11 day 7",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4187/",
+      "status": "explained-source-cutoff",
+      "fieldCounts": {
+        "matched": 9,
+        "discrepant": 1,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 3,
+          "api": 3,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 4187,
+          "api": 4187,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Hakunofuji",
+          "api": "Hakunofuji",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 3 West",
+          "api": "Maegashira 3 West",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Isegahama",
+          "api": "Isegahama",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 181,
+          "api": 181,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 162,
+          "api": 162,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 176,
+          "api": 176,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 119,
+          "api": 120,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 40,
+          "api": 40,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": {
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4187/",
+        "bashoId": "202611",
+        "jsaLatestCompletedDay": 6,
+        "apiLatestCompletedDay": 7,
+        "apiBoutOutcome": "loss",
+        "aligned": true,
+        "note": "The JSA source has a pending Day 7 bout. Removing the API Day 7 result reconciles the records at the same cutoff; historical certification is still outstanding."
+      },
+      "careerCertified": false,
+      "notes": "Do not overwrite conflicting values without source time alignment."
+    },
+    "5": {
+      "sumoApiId": 5,
+      "name": "Takerufuji",
+      "officialAsOf": "2026-11 day 7",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4171/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 5,
+          "api": 5,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 4171,
+          "api": 4171,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Takerufuji",
+          "api": "Takerufuji",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 4 East",
+          "api": "Maegashira 4 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Isegahama",
+          "api": "Isegahama",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 186,
+          "api": 186,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 149,
+          "api": 149,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 180,
+          "api": 180,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 87,
+          "api": 87,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 44,
+          "api": 44,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "7": {
+      "sumoApiId": 7,
+      "name": "Kirishima",
+      "officialAsOf": "2026-11 day 8",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3622/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 7,
+          "api": 7,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3622,
+          "api": 3622,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Kirishima",
+          "api": "Kirishima",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Ozeki 2 East",
+          "api": "Ozeki 2 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Otowayama",
+          "api": "Otowayama",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 186,
+          "api": 186,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 150,
+          "api": 150,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 494,
+          "api": 494,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 317,
+          "api": 317,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 25,
+          "api": 25,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "8": {
+      "sumoApiId": 8,
+      "name": "Kotoshoho",
+      "officialAsOf": "2026-11 day 8",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3840/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 8,
+          "api": 8,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3840,
+          "api": 3840,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Kotoshoho",
+          "api": "Kotoshoho",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 6 East",
+          "api": "Maegashira 6 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Sadogatake",
+          "api": "Sadogatake",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 189,
+          "api": 189,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 170,
+          "api": 170,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 359,
+          "api": 359,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 316,
+          "api": 316,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 24,
+          "api": 24,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": {
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3840/",
+        "bashoId": "202611",
+        "jsaLatestCompletedDay": 6,
+        "apiLatestCompletedDay": 7,
+        "apiBoutOutcome": "loss",
+        "aligned": false,
+        "note": "Source-cutoff explanation not fully validated."
+      },
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "9": {
+      "sumoApiId": 9,
+      "name": "Daieisho",
+      "officialAsOf": "2026-11 day 8",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3376/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 9,
+          "api": 9,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3376,
+          "api": 3376,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Daieisho",
+          "api": "Daieisho",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 4 West",
+          "api": "Maegashira 4 West",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Oitekaze",
+          "api": "Oitekaze",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 182,
+          "api": 182,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 163,
+          "api": 163,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 648,
+          "api": 648,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 535,
+          "api": 535,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 17,
+          "api": 17,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "11": {
+      "sumoApiId": 11,
+      "name": "Ichiyamamoto",
+      "officialAsOf": "2026-11 day 8",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3753/",
+      "status": "public-fields-agree",
+      "fieldCounts": {
+        "matched": 10,
+        "discrepant": 0,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 11,
+          "api": 11,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3753,
+          "api": 3753,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Ichiyamamoto",
+          "api": "Ichiyamamoto",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 12 East",
+          "api": "Maegashira 12 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Hanaregoma",
+          "api": "Hanaregoma",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 190,
+          "api": 190,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 160,
+          "api": 160,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 358,
+          "api": 358,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 316,
+          "api": 316,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 28,
+          "api": 28,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Basic fields only. Bout-by-bout history, historical measurements and photographs remain separate gates."
+    },
+    "16": {
+      "sumoApiId": 16,
+      "name": "Nishikigi",
+      "officialAsOf": "2026-11 day 7",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/2892/",
+      "status": "requires-reconciliation",
+      "fieldCounts": {
+        "matched": 9,
+        "discrepant": 1,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 16,
+          "api": 16,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 2892,
+          "api": 2892,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Nishikigi",
+          "api": "Nishikigi",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Makushita 2 East",
+          "api": "Makushita 2 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Isenoumi",
+          "api": "Isenoumi",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 186,
+          "api": 186,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 184,
+          "api": 184,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 677,
+          "api": 676,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerLosses",
+          "official": 716,
+          "api": 716,
+          "state": "match"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 2,
+          "api": 2,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Do not overwrite conflicting values without source time alignment."
+    },
+    "28": {
+      "sumoApiId": 28,
+      "name": "Ura",
+      "officialAsOf": "2026-11 day 7",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
+      "status": "explained-source-cutoff",
+      "fieldCounts": {
+        "matched": 9,
+        "discrepant": 1,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 28,
+          "api": 28,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 3616,
+          "api": 3616,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Ura",
+          "api": "Ura",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 2 East",
+          "api": "Maegashira 2 East",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Kise",
+          "api": "Kise",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 173,
+          "api": 173,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 138,
+          "api": 138,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 432,
+          "api": 432,
+          "state": "match"
+        },
+        {
+          "field": "careerLosses",
+          "official": 330,
+          "api": 331,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 96,
+          "api": 96,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": {
+        "source": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/3616/",
+        "bashoId": "202611",
+        "jsaLatestCompletedDay": 6,
+        "apiLatestCompletedDay": 7,
+        "apiBoutOutcome": "loss",
+        "aligned": true,
+        "note": "The JSA source has a pending Day 7 bout. Removing the API Day 7 result reconciles the records at the same cutoff; historical certification is still outstanding."
+      },
+      "careerCertified": false,
+      "notes": "Do not overwrite conflicting values without source time alignment."
+    },
+    "82": {
+      "sumoApiId": 82,
+      "name": "Fujiseiun",
+      "officialAsOf": "2026-11 day 7, Day 7 result pending on JSA page",
+      "officialProfileUrl": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4093/",
+      "status": "requires-reconciliation",
+      "fieldCounts": {
+        "matched": 8,
+        "discrepant": 2,
+        "unavailable": 0
+      },
+      "fields": [
+        {
+          "field": "sumoApiId",
+          "official": 82,
+          "api": 82,
+          "state": "match"
+        },
+        {
+          "field": "officialNskId",
+          "official": 4093,
+          "api": 4093,
+          "state": "match"
+        },
+        {
+          "field": "name",
+          "official": "Fujiseiun",
+          "api": "Fujiseiun",
+          "state": "match"
+        },
+        {
+          "field": "currentRank",
+          "official": "Maegashira 2 West",
+          "api": "Maegashira 2 West",
+          "state": "match"
+        },
+        {
+          "field": "stable",
+          "official": "Fujishima",
+          "api": "Fujishima",
+          "state": "match"
+        },
+        {
+          "field": "heightCm",
+          "official": 185,
+          "api": 185,
+          "state": "match"
+        },
+        {
+          "field": "weightKg",
+          "official": 149,
+          "api": 149,
+          "state": "match"
+        },
+        {
+          "field": "careerWins",
+          "official": 205,
+          "api": 206,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerLosses",
+          "official": 131,
+          "api": 130,
+          "state": "discrepancy"
+        },
+        {
+          "field": "careerAbsences",
+          "official": 29,
+          "api": 29,
+          "state": "match"
+        }
+      ],
+      "cutoffAlignment": null,
+      "careerCertified": false,
+      "notes": "Do not overwrite conflicting values without source time alignment."
+    }
+  }
+}

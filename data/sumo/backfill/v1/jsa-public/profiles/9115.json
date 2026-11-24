@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 4,
+  "source": "Japan Sumo Association official public Rikishi Profile",
+  "sourceId": 9115,
+  "officialNskId": 4376,
+  "url": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4376/",
+  "profileName": "Fudoho Yuki",
+  "stable": "Tokitsukaze",
+  "rank": {
+    "division": "Makushita",
+    "position": 5
+  },
+  "heightCm": 183,
+  "weightKg": 154.1,
+  "career": {
+    "wins": 22,
+    "losses": 10,
+    "absences": null
+  },
+  "careerAbsencesPublished": false,
+  "officialAsOf": {
+    "monthYear": "November 2026",
+    "day": 8
+  },
+  "fieldComparisons": {
+    "name": true,
+    "stable": true,
+    "rankGrade": true,
+    "height": true,
+    "weight": true
+  },
+  "status": "basic-fields-parsed",
+  "certification": "not-started",
+  "notice": "Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.",
+  "officialBashoRecords": [
+    {
+      "bashoId": "202603",
+      "wins": 4,
+      "losses": 3,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202605",
+      "wins": 5,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202607",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202609",
+      "wins": 5,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202611",
+      "wins": 2,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    }
+  ],
+  "officialRankRecords": [
+    {
+      "bashoId": "202605",
+      "division": "Makushita",
+      "side": "East",
+      "position": 50,
+      "rank": "Makushita 50 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202607",
+      "division": "Makushita",
+      "side": "East",
+      "position": 30,
+      "rank": "Makushita 30 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202609",
+      "division": "Makushita",
+      "side": "East",
+      "position": 9,
+      "rank": "Makushita 9 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202611",
+      "division": "Makushita",
+      "side": "East",
+      "position": 5,
+      "rank": "Makushita 5 East",
+      "source": "JSA tournament banzuke rank"
+    }
+  ],
+  "rankReconciliation": {
+    "officialRankRows": 4,
+    "comparedBasho": 4,
+    "agreedBasho": 4,
+    "mismatches": [],
+    "missingSourceRankBasho": [],
+    "certification": "not-started",
+    "note": "Public JSA banzuke rank comparison is independent QA, not final career certification."
+  },
+  "bashoReconciliation": {
+    "officialBashoRows": 5,
+    "comparedBasho": 4,
+    "agreeingBasho": 4,
+    "discrepantBasho": 0,
+    "unmatchedOfficialBasho": [],
+    "discrepancies": [],
+    "excludedCurrentBasho": "202611",
+    "currentBashoExclusionEvidence": "official-as-of",
+    "status": "historical-tournaments-agree",
+    "certified": false,
+    "note": "Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career.",
+    "ledgerProvenance": "unaltered-sumo-api-bouts",
+    "officialOutcomeOverlays": [],
+    "rawSourceMatchesChanged": false,
+    "careerCertified": false
+  },
+  "capturedAt": "2026-11-15T03:48:15.252Z",
+  "rawHtmlSha256": "1a9e159be448d31981a9e4b142361a6a85d368d7a634c0ffec53c2b2cf5cbbfc",
+  "measurementComparisonDetails": {
+    "height": {
+      "match": true,
+      "method": "exact",
+      "published": 183,
+      "api": 183
+    },
+    "weight": {
+      "match": true,
+      "method": "exact",
+      "published": 154.1,
+      "api": 154.1
+    }
+  },
+  "measurementComparisonMethod": "published-integer-precision",
+  "historicMeasurementsChanged": false
+}

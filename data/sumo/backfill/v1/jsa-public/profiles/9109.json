@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "parserVersion": 4,
+  "source": "Japan Sumo Association official public Rikishi Profile",
+  "sourceId": 9109,
+  "officialNskId": 4364,
+  "url": "https://www.sumo.or.jp/EnSumoDataRikishi/profile/4364/",
+  "profileName": "Shosei Tanaka",
+  "stable": "Nakamura",
+  "rank": {
+    "division": "Makushita",
+    "position": 27
+  },
+  "heightCm": 175,
+  "weightKg": 157.8,
+  "career": {
+    "wins": 27,
+    "losses": 5,
+    "absences": null
+  },
+  "careerAbsencesPublished": false,
+  "officialAsOf": {
+    "monthYear": "November 2026",
+    "day": 8
+  },
+  "fieldComparisons": {
+    "name": true,
+    "stable": true,
+    "rankGrade": true,
+    "height": true,
+    "weight": true
+  },
+  "measurementComparisonDetails": {
+    "height": {
+      "match": true,
+      "method": "exact",
+      "published": 175,
+      "api": 175
+    },
+    "weight": {
+      "match": true,
+      "method": "exact",
+      "published": 157.8,
+      "api": 157.8
+    }
+  },
+  "measurementComparisonMethod": "published-integer-precision",
+  "historicMeasurementsChanged": false,
+  "status": "basic-fields-parsed",
+  "certification": "not-started",
+  "notice": "Basic current public fields only. Does NOT verify complete historical bouts, official historical weigh-ins, image rights, or career certification.",
+  "officialBashoRecords": [
+    {
+      "bashoId": "202603",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202605",
+      "wins": 7,
+      "losses": 0,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202607",
+      "wins": 5,
+      "losses": 2,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202609",
+      "wins": 6,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    },
+    {
+      "bashoId": "202611",
+      "wins": 3,
+      "losses": 1,
+      "absences": null,
+      "source": "JSA official Rikishi Profile tournament results"
+    }
+  ],
+  "officialRankRecords": [
+    {
+      "bashoId": "202603",
+      "division": "Jonokuchi",
+      "side": "East",
+      "position": 18,
+      "rank": "Jonokuchi 18 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202605",
+      "division": "Jonidan",
+      "side": "West",
+      "position": 37,
+      "rank": "Jonidan 37 West",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202607",
+      "division": "Sandanme",
+      "side": "East",
+      "position": 26,
+      "rank": "Sandanme 26 East",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202609",
+      "division": "Sandanme",
+      "side": "West",
+      "position": 2,
+      "rank": "Sandanme 2 West",
+      "source": "JSA tournament banzuke rank"
+    },
+    {
+      "bashoId": "202611",
+      "division": "Makushita",
+      "side": "West",
+      "position": 27,
+      "rank": "Makushita 27 West",
+      "source": "JSA tournament banzuke rank"
+    }
+  ],
+  "rankReconciliation": {
+    "officialRankRows": 5,
+    "comparedBasho": 5,
+    "agreedBasho": 5,
+    "mismatches": [],
+    "missingSourceRankBasho": [],
+    "certification": "not-started",
+    "note": "Public JSA banzuke rank comparison is independent QA, not final career certification."
+  },
+  "bashoReconciliation": {
+    "officialBashoRows": 5,
+    "comparedBasho": 4,
+    "agreeingBasho": 4,
+    "discrepantBasho": 0,
+    "unmatchedOfficialBasho": [],
+    "discrepancies": [],
+    "excludedCurrentBasho": "202611",
+    "currentBashoExclusionEvidence": "official-as-of",
+    "status": "historical-tournaments-agree",
+    "certified": false,
+    "note": "Only completed prior tournaments compared. Agreement cannot by itself certify an entire rikishi career.",
+    "ledgerProvenance": "unaltered-sumo-api-bouts",
+    "officialOutcomeOverlays": [],
+    "rawSourceMatchesChanged": false,
+    "careerCertified": false
+  },
+  "capturedAt": "2026-11-15T05:11:48.214Z",
+  "rawHtmlSha256": "23641180587e31e460f9779e1b6ea36384e10873534255c10fc1e4d47fec50d6"
+}
