@@ -70,7 +70,7 @@ export function editorialWeightChart(points,{start=null,end=null,source=null,rev
     const xx=x(v),yy=y(p.kg);
     return '<circle class="sumo-weight-point" data-weight-month="'+esc(p.basho)+'" data-weight-x="'+xx.toFixed(2)+
       '" cx="'+xx+'" cy="'+yy+'" r="5.5" tabindex="0" role="img" aria-label="'+esc(desc)+'"><title>'+esc(desc)+'</title></circle>'+
-      ((i===plotted.length-1||(i===0&&(!mobile||firstLastGap>=75)))?'<text class="sumo-chart-number" x="'+xx+'" y="'+(yy-13)+'" text-anchor="middle">'+esc(p.kg)+' kg</text>':'');
+      ((i===plotted.length-1||(i===0&&(!mobile||firstLastGap>=75)))?'<text class="sumo-chart-number" x="'+xx+'" y="'+(yy-13)+'" text-anchor="'+(xx-L<34?'start':W-R-xx<34?'end':'middle')+'">'+esc(p.kg)+' kg</text>':'');
   }).join('');
   const table='<details class="sumo-data-table"><summary>Weight measurements ('+plotted.length+')</summary>'+
     '<div class="table-scroll"><table><thead><tr><th scope="col">Basho</th><th scope="col">Weight</th></tr></thead><tbody>'+
