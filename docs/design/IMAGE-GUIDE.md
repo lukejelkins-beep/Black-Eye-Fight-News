@@ -38,7 +38,7 @@ The owner stated on 2026-11-22 that **every image held in this repository is app
 | Sumo kimarite clips and posters | 31 | `assets/sumo-kimarite/` | `data/sumo/kimarite-media.json` (`clips`) | NHK permission confirmed by the owner |
 | JSA kimarite stills | 82 | `assets/sumo-kimarite/jsa/` | `data/sumo/kimarite-media.json` (`jsaPhotos`) | `owner-cleared` (added 2026-11-22; had no record before) |
 | Sumo country landmarks | 4 | `assets/sumo-landmarks/` (Sumo preview branch) | `data/sumo/landmarks.json` | `approved: true`, owner 2026-11-22 |
-| Country flags | 28 | `assets/img/flags/` | licence file kept beside them | flag-icons 7.6.0, MIT |
+| Country flags | 79 (78 flags + licence) | `assets/img/flags/` | licence file kept beside them | flag-icons 7.6.0, MIT (1x1 set, unchanged files) |
 | Anthony Joshua portrait | 1 | `assets/fighter-portraits/` | `assets/portrait-sources.json`, `assets/PHOTO_CREDITS.md` | CC BY 3.0, attribution retained |
 | Site artwork, icons and brush marks | 10 | `assets/` | this table | BEFN's own artwork |
 | Documentation screenshots | 14 | `docs/design/screenshots/` | this table | BEFN's own screenshots of its own pages |
