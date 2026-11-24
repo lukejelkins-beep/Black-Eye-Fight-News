@@ -14,7 +14,7 @@
  };
  const glyph=k=>'<svg aria-hidden="true" viewBox="0 0 24 24">'+icon[k]+'</svg>';
  const items=[['home','Home','news'],['fights','Fights','fights'],['fighters','Fighters','fighters'],['analysis','Analysis','analysis'],['social','Fight Talk','social']];
- const groupOf={calendar:'fights',results:'fights',highlights:'fights',champions:'fighters',leaderboards:'fighters'};
+ const groupOf={calendar:'fights',results:'fights',highlights:'fights',champions:'fighters',leaderboards:'analysis'};
  let sheet=null, opener=null;
  function active(){
    const route=location.hash.slice(1).split('/')[0]||'home';
@@ -59,13 +59,15 @@
    const sections=[
      ['#home',area==='all'?'Front page':'Overview'],
      ['#fights','Upcoming fights'],['#results','Results'],['#highlights','Fight film'],
-     ['#fighters','Fighter scout'],['#champions','Champions'],['#leaderboards','UFC stats'],
-     ['#analysis','Analysis'],['#social','Fight Talk']
+     ['#fighters','Fighters'],
+     ['#analysis',area==='mma'?'Analysis: UFC stats':'Analysis'],['#social','Fight Talk']
    ];
    sections.forEach(([href,label])=>{const a=document.createElement('a');a.href=href;a.textContent=label;a.addEventListener('click',close);grid.append(a);});
-   const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Notification preferences';
+   const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Alerts: notification preferences';
    alerts.addEventListener('click',()=>{close();window.BEFNAlerts?.open?.();});
    grid.append(alerts);
+   const install=document.querySelector('.befn-install-button');
+   if(install){const b=document.createElement('button');b.type='button';b.textContent='Install the app';b.addEventListener('click',()=>{close();install.click();});grid.append(b);}
    panel.append(heading,sportsHead,sports,sectionsHead,grid);cover.append(panel);
    cover.addEventListener('click',e=>{if(e.target===cover)close();});
    document.body.append(cover);sheet=cover;window.addEventListener('keydown',esc);x.focus();
@@ -73,17 +75,8 @@
  function init(){
    if(document.querySelector('.befn-mobile-tabs'))return;
    const rail=$('.navrail');if(!rail)return;
-   const bar=document.createElement('div');bar.className='befn-mobile-topbar';
-   /* The masthead is the way back to the all-sports front page, like the desktop logo. */
-   const name=document.createElement('a');name.className='befn-mobile-title';name.href='#home';name.dataset.area='all';
-   name.setAttribute('aria-label','Black Eye Fight News home, all sports');
-   /* Two lines, same words, so the masthead never runs under the action buttons. */
-   name.append('BLACK EYE ',document.createElement('br'),'FIGHT NEWS');
-   const actions=document.createElement('div');actions.className='befn-mobile-actions';
-   const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Alerts';alerts.addEventListener('click',()=>window.BEFNAlerts?.open?.());
-   const menu=document.createElement('button');menu.type='button';menu.textContent='Menu';menu.addEventListener('click',()=>openMenu(menu));
-   const install=$('.navrail .befn-install-button');if(install)actions.append(install);
-   actions.append(alerts,menu);bar.append(name,actions);rail.append(bar);
+   /* The phone top bar (logo, sport tabs, menu icon) is built by assets/phone-nav.js, which opens
+      this menu; Alerts and Install now live in the menu (owner, 24 Nov 2026, phone nav option B). */
    const dock=document.createElement('nav');dock.className='befn-mobile-tabs';dock.setAttribute('aria-label','Mobile quick navigation');
    items.forEach(([key,label,iconKey])=>{
      const a=document.createElement('a');a.href='#'+key;a.dataset.key=key;
@@ -95,6 +88,7 @@
    const homeLabel=()=>{const span=dock.querySelector('a[data-key="home"] span');if(span)span.textContent=(window.BEFNSport?.get?.()||'all')==='all'?'Home':'Overview';};
    homeLabel();document.addEventListener('befn:sport-change',()=>{homeLabel();active();});
  }
+ window.BEFNMobileMenu={open:openMenu};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
  else init();
 })();

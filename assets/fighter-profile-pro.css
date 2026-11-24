@@ -370,3 +370,42 @@
 .befn-form-chip.is-injured{background:#4a4246;color:#fff}
 .befn-pro-score .befn-form-ranks{margin:8px 0 0;font-size:14px;font-weight:700;color:var(--pro-ink)}
 .befn-pro-score .befn-form-why{margin:4px 0 0;font-size:13px;color:var(--pro-muted)}
+
+/* Profile hero, option P2 "dark band" (owner, 24 Nov 2026). Only when the fighter has a cutout (.has-cut, set by
+   fighter-insights.js): the hero becomes a full-width dark band with a faded half of the fighter's flag behind, and the
+   portrait frame shows the cutout (same 4:5 shape) with its sides and foot faded so the crop never shows a hard edge.
+   The frame and its "Photo unavailable" fallback work exactly as before. Fighters without a cutout keep the photo hero. */
+#fighterDialog.befn-pro-dialog .befn-pro-hero.has-cut{position:relative;overflow:hidden;margin:-16px -20px 0;padding:28px 20px 26px;background:#151115;color:#fff;isolation:isolate}
+#fighterDialog.befn-pro-dialog .befn-pro-hero.has-cut>:not(.befn-hero-cut){position:relative;z-index:1}
+#fighterDialog.befn-pro-dialog .befn-hero-cut{position:absolute;inset:0 auto 0 0;width:46%;z-index:0;pointer-events:none}
+#fighterDialog.befn-pro-dialog .befn-hero-flag{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
+#fighterDialog.befn-pro-dialog .befn-hero-cut::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(21,17,21,.1) 0%,#151115 100%),linear-gradient(0deg,#151115 0%,rgba(21,17,21,0) 40%)}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-photo{margin-bottom:-26px}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-photo [data-fighter-portrait]{background:none}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-photo [data-fighter-portrait]>img{object-fit:contain;object-position:50% 100%;mix-blend-mode:normal;
+ -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(0deg,transparent 0,#000 24%);-webkit-mask-composite:source-in;
+ mask-image:linear-gradient(90deg,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(0deg,transparent 0,#000 24%);mask-composite:intersect}
+#fighterDialog.befn-pro-dialog .has-cut .befn-portrait-fallback{color:#b8adb0}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-eyebrow{color:#f3c332}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-id h2,#fighterDialog.befn-pro-dialog .has-cut .befn-pro-id h2 .fighter-mention{color:#fff!important;-webkit-text-fill-color:#fff!important}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-record strong{color:#f3c332}
+#fighterDialog.befn-pro-dialog .has-cut :is(.befn-pro-record span,.befn-pro-facts dt,.befn-reign b,.befn-pro-score p,.befn-pro-form>span){color:#b8adb0}
+#fighterDialog.befn-pro-dialog .has-cut :is(.befn-pro-facts dd,.befn-reign span,.befn-top-credentials,.befn-pro-score,.befn-pro-score .befn-v3-score,.befn-pro-score .befn-pro-standing,.befn-pro-score .befn-pro-standing strong,.befn-pro-rating .befn-v3-hero){color:#fff}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-score .befn-v3-score small{color:#8a8387}
+#fighterDialog.befn-pro-dialog .has-cut :is(.befn-pro-tag,.befn-reign>strong){color:#f3c332}
+#fighterDialog.befn-pro-dialog .has-cut .befn-pro-progress{background:#3a3238}
+#fighterDialog.befn-pro-dialog .has-cut .befn-reign,#fighterDialog.befn-pro-dialog .has-cut .befn-pro-facts{border-color:#3a3238}
+#fighterDialog.befn-pro-dialog .has-cut a{color:inherit}
+@media (max-width:980px){
+ #fighterDialog.befn-pro-dialog .befn-hero-cut{width:60%}
+ #fighterDialog.befn-pro-dialog .has-cut .befn-pro-photo{margin-bottom:0}
+}
+/* Phone: the figure gets its own row at the top of the band; name, record and the rest run full width beneath. */
+@media (max-width:640px){
+ #fighterDialog.befn-pro-dialog .befn-pro-hero.has-cut{margin:-12px -12px 0;padding:6px 12px 18px}
+ #fighterDialog.befn-pro-dialog .has-cut .befn-pro-photo{grid-column:1/-1;grid-row:auto;width:190px;margin:0 auto}
+ #fighterDialog.befn-pro-dialog .has-cut .befn-pro-id>*{grid-column:1/-1}
+ #fighterDialog.befn-pro-dialog .befn-hero-cut{inset:0 0 auto 0;width:100%;height:244px}
+ #fighterDialog.befn-pro-dialog .befn-hero-flag{width:70%}
+ #fighterDialog.befn-pro-dialog .befn-hero-cut::after{background:linear-gradient(90deg,rgba(21,17,21,.1) 0%,#151115 70%),linear-gradient(0deg,#151115 0%,rgba(21,17,21,0) 45%)}
+}
