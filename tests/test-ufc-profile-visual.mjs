@@ -232,6 +232,7 @@ async function checkProfile(page,profile,screen){
     })(),
     closeVisible:!!d?.querySelector("button#closeFighter"),
     renderedClassification:d?.querySelector(".befn-v3-status")?.textContent||"",
+    formStage:d?.querySelector(".befn-pro-score .befn-form-chip")?.textContent||"",
     championshipBelt:!!d?.querySelector(".befn-title-belts"),
     clippedElements:[...(d?.querySelectorAll(".befn-pro-card h3,.befn-pro-hero h2,.befn-pro-meter-head,.befn-profile-block h3,.befn-classifier-indices strong")||[])]
       .filter(x=>{const c=getComputedStyle(x);return (x.scrollWidth>x.clientWidth+5&&c.overflowX==="hidden")||
@@ -333,6 +334,11 @@ async function checkProfile(page,profile,screen){
    assert(details.relatedNewsLinks.every(h=>/^https:\/\//.test(h)),"related-news links must be https: "+details.relatedNewsLinks.join(" "));
    if(expectedCategory==="Champion")
     assert(details.championshipBelt,"verified UFC champion belt missing");
+   // Since the Fighters hub (2026-11-24) the stage chip from data/ufc-fighter-form.json is the one classification
+   // where a Form entry exists; the older label shows only without one.
+   else if(details.formStage)
+    assert(/^(Champion|Title contender|Contender|Slipping|Rising star|Prospect|Breakout|Inactive|Established)$/.test(details.formStage),
+     "unknown Fighters hub stage: "+details.formStage);
    else if(["Contender","Prospect"].includes(expectedCategory))
     assert(details.renderedClassification.includes(expectedCategory),
      "algorithmically assigned contender/prospect label missing");
