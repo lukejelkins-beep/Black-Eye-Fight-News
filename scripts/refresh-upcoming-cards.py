@@ -7,13 +7,18 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from html import unescape
 from html.parser import HTMLParser
+from http.client import IncompleteRead
 from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 import hashlib
 import json
 import re
+import sys
 import xml.etree.ElementTree as ET
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import one_schedule  # noqa: E402  (sibling module; works when loaded by path in tests)
 
 DATA = Path("data/upcoming-cards.json")
 USER_AGENT = "Mozilla/5.0 (compatible; BlackEyeFightNews/1.0; card-monitor)"
@@ -468,6 +473,30 @@ def refresh_kabayel_undercard(event, now):
         event["independentUndercardCheckedAt"] = now
     return added
 
+def refresh_one(events, now):
+    """Add upcoming ONE Championship cards that have named MMA bouts (scripts/one_schedule.py).
+    Existing events are never changed; any fetch or parse problem keeps what is there."""
+    try:
+        listing = webpage(one_schedule.EVENTS_URL)
+    except IncompleteRead as exc:
+        # The upcoming list sits near the top of the page; parse_upcoming still requires
+        # its closing tag, so a cut-off read either has the whole list or raises.
+        listing = exc.partial.decode("utf-8", "replace")
+    cards = one_schedule.parse_upcoming(listing)
+    start_of_today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    known = {e.get("source") for e in events}
+    new = []
+    for card in cards:
+        if card["start"] < start_of_today or card["url"] in known:
+            continue
+        # Event pages must be read in full (an IncompleteRead propagates and skips ONE this
+        # run): a cut-off card could miss bouts, and added events are not revisited.
+        event = one_schedule.build_event(card, one_schedule.parse_matchups(webpage(card["url"])), now)
+        if event:
+            new.append(event)
+    return one_schedule.merge_new(events, new), len(cards)
+
+
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     events = data["events"]
@@ -518,6 +547,12 @@ def main():
         if event.get("id") == BOXEN1_EVENT:
             updated = refresh_kabayel_undercard(event, now)
             print(f"Boxen1 independent Kabayel undercard: {updated} newly verified named reports")
+    try:
+        added_one, listed = refresh_one(events, now)
+        print(f"ONE official schedule: {listed} upcoming cards listed, {len(added_one)} added with MMA bouts"
+              + (": " + ", ".join(e["title"] for e in added_one) if added_one else ""))
+    except Exception as exc:
+        print(f"ONE schedule unavailable ({type(exc).__name__}); existing ONE entries retained")
     for event in events:
         participants = {}
         for bout in event.get("bouts", []):
