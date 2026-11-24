@@ -60,3 +60,14 @@ test('November 2026 in the archive matches the saved live snapshot', () => {
   for (const div of DIVISIONS) for (const r of a.banzuke[div].rows) if (old.has(r.rikishiID)) { compared++; assert.equal(r.wins + '-' + r.losses, old.get(r.rikishiID), r.shikonaEn); }
   assert.ok(compared >= 180);
 });
+
+test('index rows carry the makuuchi champion id, rank and record for small pages', async () => {
+  const { indexEntry } = await import('../scripts/sumo-collect-basho-archive.mjs');
+  const row = indexEntry({ bashoId: '202611', startDate: 's', endDate: 'e', location: null,
+    yusho: [{ type: 'Juryo', rikishiId: 12, shikonaEn: 'Wakatakakage' }, { type: 'Makuuchi', rikishiId: 8850, shikonaEn: 'Onosato' }],
+    banzuke: { Makuuchi: { rows: [{ rikishiID: 1, rank: 'Ozeki 1 East', wins: 9, losses: 6 }, { rikishiID: 8850, rank: 'Yokozuna 1 East', wins: 13, losses: 2 }] } } });
+  assert.deepEqual(row, { bashoId: '202611', startDate: 's', endDate: 'e', location: null, makuuchiChampion: 'Onosato', makuuchiChampionId: 8850,
+    makuuchiChampionRank: 'Yokozuna 1 East', makuuchiChampionRecord: { wins: 13, losses: 2 } });
+  const none = indexEntry({ bashoId: '202701', yusho: [], banzuke: {} });
+  assert.equal(none.makuuchiChampion, null); assert.equal(none.makuuchiChampionRecord, null);
+});

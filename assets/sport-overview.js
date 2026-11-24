@@ -30,7 +30,11 @@
     return c && c.ok === true ? (c.dir || 'assets/img/ufc-cutouts/') + k + '.webp' : '';
   };
   const thumbURL = (name, h, kind) => (h.localImage ? h.localImage(name, kind || 'thumb') : '') || '';
-  const img = (h, url, cls, alt) => '<img class="' + cls + '" src="' + h.safeURL(url) + '" alt="' + h.esc(alt || '') + '" loading="lazy" decoding="async">';
+  /* The page's safeURL allows https links and assets/img photos only, so this module vets its own: links
+     to the site's own routes and pages, and BEFN-held photos (including approved sumo cut-outs). */
+  const ownLink = (h, u) => /^(#[a-z0-9/_-]*|sumo(-[a-z]+)?\.html(#[a-z0-9/_-]*)?)$/i.test(String(u)) ? String(u) : h.safeURL(u);
+  const ownSrc = (h, u) => /\.\./.test(String(u)) ? '#' : /^assets\/(img|sumo-photos)\/[a-z0-9_/-]+\.webp$/i.test(String(u)) ? String(u) : h.safeURL(u);
+  const img = (h, url, cls, alt) => '<img class="' + cls + '" src="' + ownSrc(h, url) + '" alt="' + h.esc(alt || '') + '" loading="lazy" decoding="async">';
   function face(h, name, cutouts, cls) {
     const url = thumbURL(name, h) || cutoutURL(name, cutouts);
     return url ? img(h, url, 'sov-f ' + (cls || ''), '') : '<span class="sov-f is-none ' + (cls || '') + '" aria-hidden="true">' + h.esc(initials(name)) + '</span>';
@@ -86,7 +90,8 @@
     const f = list.find(e => ids.has(e.id) && daysUntil(e.date, now) <= FEATURED_DAYS);
     if (f) return f;
     const soon = list.filter(e => daysUntil(e.date, now) <= BIG_DAYS && (!e.bouts[0].section || e.bouts[0].section === 'main'));
-    return soon.slice().sort((a, b) => titleScore(b.bouts[0]) - titleScore(a.bouts[0]) || a.date.localeCompare(b.date))[0] || list[0] || null;
+    const weight = e => titleScore(e.bouts[0]) + (area === 'mma' && /^UFC/i.test(e.promotion || '') ? 1 : 0);
+    return soon.slice().sort((a, b) => weight(b) - weight(a) || a.date.localeCompare(b.date))[0] || list[0] || null;
   }
 
   /* Hero: a result for RESULT_DAYS days after a main event, otherwise the biggest coming fight. */
@@ -112,7 +117,7 @@
   const list = a => a.length <= 1 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
 
   /* ---------- blocks ---------- */
-  const head = (h, title, link, sub) => '<div class="sov-hd"><h2>' + h.esc(title) + '</h2>' + (link ? '<a href="' + h.safeURL(link[0]) + '">' + h.esc(link[1]) + ' ›</a>' : '') + '</div>' + (sub ? '<p class="sov-sub">' + h.esc(sub) + '</p>' : '');
+  const head = (h, title, link, sub) => '<div class="sov-hd"><h2>' + h.esc(title) + '</h2>' + (link ? '<a href="' + ownLink(h, link[0]) + '">' + h.esc(link[1]) + ' ›</a>' : '') + '</div>' + (sub ? '<p class="sov-sub">' + h.esc(sub) + '</p>' : '');
   const daysText = n => n <= 0 ? 'Today' : n === 1 ? 'Tomorrow' : n + ' days';
 
   function nextStrip(h, e, now) {
@@ -233,7 +238,132 @@
       resultsBlock(h, ctx, area) + upcomingBlock(h, ctx, area) + championsBlock(h, ctx, area) + newsBlock(h, ctx) + exploreBlock(h, area) + '</div>';
   }
 
-  const api = { build, pickHero, bigUpcoming, mainEvents, outcome, resultHeadline, methodShort, titleScore, boxingChampions, upcoming, daysUntil, slug };
+
+  /* ---------- all-sports front page (owner, 24 Nov 2026: design A, hero rotates by sport) ---------- */
+  const SPORT = { boxing: 'Boxing', mma: 'MMA', sumo: 'Sumo' };
+  const SUMO_MONTH = { '01': 'January', '03': 'March', '05': 'May', '07': 'July', '09': 'September', '11': 'November' };
+  const SUMO_PLACE = { '01': 'Tokyo', '03': 'Osaka', '05': 'Tokyo', '07': 'Nagoya', '09': 'Tokyo', '11': 'Fukuoka' };
+  /* A basho starts on the second Sunday of its month. */
+  function bashoStart(id) {
+    const y = Number(String(id).slice(0, 4)), m = Number(String(id).slice(4, 6));
+    const first = new Date(Date.UTC(y, m - 1, 1)).getUTCDay();
+    return new Date(Date.UTC(y, m - 1, 1 + ((7 - first) % 7) + 7)).toISOString().slice(0, 10);
+  }
+  const nextBashoId = id => { let y = Number(String(id).slice(0, 4)), m = Number(String(id).slice(4, 6)) + 2; if (m > 12) { m -= 12; y++; } return y + String(m).padStart(2, '0'); };
+  /* Sumo for the front page, from data/sumo/basho-archive/index.json and banzuke-release-dates.json. */
+  function sumoSummary(index, releases, now) {
+    const done = ((index && index.basho) || []).filter(b => b && /^\d{6}$/.test(b.bashoId) && b.endDate && Date.parse(b.endDate) <= now && b.makuuchiChampion)
+      .sort((a, b) => a.bashoId.localeCompare(b.bashoId));
+    const last = done[done.length - 1];
+    if (!last) return null;
+    const nextId = nextBashoId(last.bashoId), rel = releases && releases.releases && releases.releases[nextId];
+    const r = last.makuuchiChampionRecord;
+    return {
+      last: { id: last.bashoId, name: SUMO_MONTH[last.bashoId.slice(4)] + ' basho', place: SUMO_PLACE[last.bashoId.slice(4)], end: last.endDate.slice(0, 10),
+        champion: last.makuuchiChampion, championId: last.makuuchiChampionId, rank: last.makuuchiChampionRank || '', record: r ? r.wins + '–' + r.losses : '' },
+      next: { id: nextId, name: SUMO_MONTH[nextId.slice(4)] + ' basho', place: SUMO_PLACE[nextId.slice(4)], start: bashoStart(nextId), banzuke: rel && rel.date ? String(rel.date).slice(0, 10) : '' }
+    };
+  }
+  const tag = (h, s) => '<span class="fp-tag fp-' + s + '">' + SPORT[s] + '</span>';
+  const overviewHref = s => s === 'sumo' ? 'sumo.html#home' : '#home';
+  const areaAttr = s => s === 'sumo' ? '' : ' data-area="' + s + '"';
+  const shortName = n => n.replace(/\s+(Jr\.|Sr\.)$/, '');
+
+  function frontNext(h, ctx, sumo) {
+    const cell = (s, title, when, n) => '<a class="fp-n fp-' + s + '" href="' + (s === 'sumo' ? 'sumo.html#home' : '#calendar') + '"' + areaAttr(s) + '>' + tag(h, s) +
+      '<b>' + h.esc(title) + '</b><span>' + h.esc(when) + '</span><em>' + h.esc(daysText(n)) + '</em></a>';
+    const out = [];
+    for (const s of ['boxing', 'mma']) { const e = upcoming(ctx.events, s, ctx.now)[0]; if (e) out.push(cell(s, e.bouts[0].fighters.join(' vs '), fmt(e.date), daysUntil(e.date, ctx.now))); }
+    if (sumo) out.push(cell('sumo', sumo.next.name + ', ' + sumo.next.place, (sumo.next.banzuke ? 'Banzuke ' + fmt(sumo.next.banzuke) + ' · ' : '') + 'day 1 ' + fmt(sumo.next.start), daysUntil(sumo.next.start, ctx.now)));
+    return out.length ? '<div class="fp-next3">' + out.join('') + '</div>' : '';
+  }
+
+  /* The hero for one sport, or null when that sport has nothing to show yet. */
+  function frontHero(h, ctx, s, sumo) {
+    const btns = (a, b) => '<a class="sov-btn" href="' + a[0] + '"' + (a[2] || '') + '>' + h.esc(a[1]) + ' ›</a><a class="sov-btn is-ghost" href="' + b[0] + '"' + (b[2] || '') + '>' + h.esc(b[1]) + '</a>';
+    const wrap = (kicker, title, para, pics, b) => '<section class="sov-hero fp-hero fp-h-' + s + (pics.length ? '' : ' is-flat') + '"><div class="sov-hero-copy">' + tag(h, s) +
+      '<div class="sov-k">' + h.esc(kicker.filter(Boolean).join(' · ')) + '</div><h1>' + title + '</h1>' + (para ? '<p>' + h.esc(para) + '</p>' : '') + b + '</div>' +
+      (pics.length ? '<div class="sov-cast">' + pics.map(u => img(h, u, '', '')).join('') + '</div>' : '') + '</section>';
+    if (s === 'sumo') {
+      if (!sumo) return null;
+      const L = sumo.last, fresh = daysUntil(L.end, ctx.now) >= -14, pic = ctx.sumoPhoto ? [ctx.sumoPhoto] : [];
+      if (fresh) return wrap([L.name, L.place, 'final'], h.esc(L.champion) + ' wins the ' + h.esc(L.name) + (L.record ? ' at <span class="sov-nw">' + h.esc(L.record) + '</span>' : ''),
+        (sumo.next.banzuke ? 'The ' + sumo.next.name.replace(' basho', '') + ' banzuke is out on ' + fmt(sumo.next.banzuke) + ', and day 1 is ' + fmt(sumo.next.start) + '.' : 'Day 1 of the ' + sumo.next.name + ' is ' + fmt(sumo.next.start) + '.'), pic,
+        btns(['sumo.html#review', 'Basho review'], ['sumo.html#home', 'Sumo overview']));
+      const n = daysUntil(sumo.next.start, ctx.now);
+      return wrap([sumo.next.name, sumo.next.place], 'The ' + h.esc(sumo.next.name) + ' starts <span class="sov-nw">' + (n <= 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days') + '</span>',
+        L.champion + ' won the ' + L.name + (L.record ? ' at ' + L.record : '') + '.', pic, btns(['sumo.html#banzuke', 'Rankings'], ['sumo.html#home', 'Sumo overview']));
+    }
+    const hero = pickHero(ctx, s);
+    if (!hero) return null;
+    const html = heroBlock(h, hero, ctx, s);
+    return html.replace('<div class="sov-hero-copy">', '<div class="sov-hero-copy">' + tag(h, s)).replace('class="sov-hero', 'class="sov-hero fp-hero fp-h-' + s)
+      .replace('<a class="sov-btn is-ghost" href="#fights">All fights</a>', '<a class="sov-btn is-ghost" href="#home"' + areaAttr(s) + '>' + SPORT[s] + ' overview</a>');
+  }
+
+  function frontCards(h, ctx, heroSport, sumo) {
+    const card = (s, kicker, title, sub, pic) => '<a class="fp-sc fp-' + s + '" href="' + overviewHref(s) + '"' + areaAttr(s) + '><span class="fp-sc-copy">' + tag(h, s) +
+      '<span class="sov-ev">' + h.esc(kicker) + '</span><strong>' + h.esc(title) + '</strong><span>' + h.esc(sub) + '</span><em>' + SPORT[s] + ' overview ›</em></span>' +
+      (pic ? img(h, pic, '', '') : '') + '</a>';
+    const out = [];
+    for (const s of ['boxing', 'mma']) {
+      const big = bigUpcoming(ctx.events, s, ctx.featured, ctx.now), hero = pickHero(ctx, s);
+      const sameAsHero = heroSport === s && hero && hero.type === 'upcoming' && big && hero.event.id === big.id;
+      if (big && !sameAsHero) {
+        const b = big.bouts[0], other = upcoming(ctx.events, s, ctx.now).find(e => e.id !== big.id);
+        const pre = other && other.date < big.date;
+        out.push(card(s, [b.division, big.promotion, fmt(big.date)].filter(Boolean).join(' · '),
+          b.fighters.map(n => surname(shortName(n))).join(' vs ') + ' in ' + daysText(daysUntil(big.date, ctx.now)).toLowerCase(),
+          other ? (pre ? 'First: ' : 'Then: ') + other.bouts[0].fighters.map(n => surname(shortName(n))).join('–') + ', ' + fmt(other.date) : '',
+          cutoutURL(b.fighters[0], ctx.cutouts) || cutoutURL(b.fighters[1], ctx.cutouts)));
+      } else {
+        const last = mainEvents(ctx.results, s)[0];
+        if (last) { const o = outcome(last.bout); out.push(card(s, [last.bout.division, fmt(last.event.date)].join(' · '), resultHeadline(o, last.bout), last.event.name || '', o.winner ? cutoutURL(o.winner, ctx.cutouts) : '')); }
+      }
+    }
+    if (sumo) {
+      const L = sumo.last;
+      out.push(heroSport === 'sumo'
+        ? card('sumo', sumo.next.name + ' · ' + sumo.next.place, 'Day 1 in ' + daysText(daysUntil(sumo.next.start, ctx.now)).toLowerCase(), sumo.next.banzuke ? 'Banzuke out ' + fmt(sumo.next.banzuke) : '', '')
+        : card('sumo', L.name + ' · final', L.champion + ' wins' + (L.record ? ' at ' + L.record : ''), sumo.next.banzuke ? sumo.next.name.replace(' basho', '') + ' banzuke out ' + fmt(sumo.next.banzuke) : '', ctx.sumoPhoto || ''));
+    }
+    return out.length ? '<section class="sov-blk">' + head(h, 'Pick a sport') + '<div class="fp-scs">' + out.join('') + '</div></section>' : '';
+  }
+
+  function frontResults(h, ctx, sumo) {
+    const rows = [];
+    for (const s of ['boxing', 'mma']) for (const { event: e, bout: b } of mainEvents(ctx.results, s).slice(0, 4)) {
+      const o = outcome(b);
+      rows.push({ date: e.date, html: '<article class="fp-res">' + tag(h, s) + '<div><span class="sov-ev">' + h.esc(fmt(e.date) + ' · ' + (e.name || b.event || '')) + '</span><strong>' +
+        (o.winner ? '<b>' + h.esc(o.winner) + '</b> beat ' + h.esc(o.loser) : '<b>' + h.esc(b.fighters[0].name) + '</b> and <b>' + h.esc(b.fighters[1].name) + '</b>') +
+        '</strong><span class="sov-m">' + h.esc(methodShort(b.method) + (o.winner && b.round ? ' R' + b.round : '') + (b.division ? ' · ' + b.division : '')) + '</span></div></article>' });
+    }
+    if (sumo) { const L = sumo.last; rows.push({ date: L.end, html: '<article class="fp-res">' + tag(h, 'sumo') + '<div><span class="sov-ev">' + h.esc(fmt(L.end) + ' · ' + L.name + ', ' + L.place) + '</span><strong><b>' + h.esc(L.champion) + '</b> won the ' + h.esc(L.name) + '</strong><span class="sov-m">' + h.esc([L.record, 'Makuuchi title'].filter(Boolean).join(' · ')) + '</span></div></article>' }); }
+    rows.sort((a, b) => b.date.localeCompare(a.date));
+    return rows.length ? '<section class="sov-blk">' + head(h, 'Latest results', ['#results', 'All results']) + '<div class="sov-grid2">' + rows.slice(0, 6).map(r => r.html).join('') + '</div></section>' : '';
+  }
+
+  /* Up to four headlines, taking each sport in turn so no sport crowds the others out. */
+  function frontNews(h, stories) {
+    const by = {};
+    for (const a of stories || []) if (a && a.title && a.url && SPORT[a.sport]) (by[a.sport] = by[a.sport] || []).push(a);
+    const pick = [];
+    for (let i = 0; pick.length < 4 && i < 4; i++) for (const s of ['boxing', 'mma', 'sumo']) if (by[s] && by[s][i] && pick.length < 4) pick.push(by[s][i]);
+    if (!pick.length) return '';
+    return '<section class="sov-blk">' + head(h, 'Latest news', ['#news', 'All news']) + '<div class="sov-news">' + pick.map(a =>
+      '<a href="' + h.safeURL(a.url) + '" target="_blank" rel="noopener">' + tag(h, a.sport) + '<span class="sov-ev">' + h.esc([a.source, String(a.publishedAt || '').slice(0, 10), a.language ? 'translated' : ''].filter(Boolean).join(' · ')) + '</span><strong>' + h.esc(a.title) + '</strong></a>').join('') + '</div></section>';
+  }
+
+  /* ctx: { now, events, results, cutouts, featured, stories, sumoIndex, sumoReleases, sumoPhoto, heroOrder:['mma','sumo','boxing'] } */
+  function buildFront(ctx, h) {
+    if (!(ctx.events || []).length && !ctx.results) return '<div class="sov fp"><p class="front-loading" role="status">Loading the latest fights…</p></div>';
+    const sumo = sumoSummary(ctx.sumoIndex, ctx.sumoReleases, ctx.now);
+    let hero = '', heroSport = null;
+    for (const s of ctx.heroOrder || ['boxing', 'mma', 'sumo']) { const x = frontHero(h, ctx, s, sumo); if (x) { hero = x; heroSport = s; break; } }
+    return '<div class="sov fp">' + frontNext(h, ctx, sumo) + hero + frontCards(h, ctx, heroSport, sumo) + frontResults(h, ctx, sumo) + frontNews(h, ctx.stories) + '</div>';
+  }
+
+  const api = { ownLink, ownSrc, build, buildFront, sumoSummary, bashoStart, pickHero, bigUpcoming, mainEvents, outcome, resultHeadline, methodShort, titleScore, boxingChampions, upcoming, daysUntil, slug };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNSportOverview = api;
 })(typeof window !== 'undefined' ? window : globalThis);
