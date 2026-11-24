@@ -43,7 +43,7 @@
 .shome-star span a{text-decoration:underline}
 .shome-gold{position:absolute;top:10px;right:12px;color:#c99a06;font:800 18px/1 serif}
 .shome-sanyaku{padding:4px 14px}
-.shome-srow{display:grid;grid-template-columns:140px 1fr 52px;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--sh-line)}
+.shome-srow{display:grid;grid-template-columns:140px 1fr auto;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--sh-line)}
 .shome-srow:last-child{border-bottom:0}
 .shome-who strong{display:block;font-size:14px;line-height:1.2}
 .shome-who small{font-size:12px;color:var(--sh-muted)}
@@ -51,7 +51,7 @@
 .shome-bar i{display:block;background:#2b8a57}
 .shome-bar u{display:block;background:#d9534f;text-decoration:none}
 .shome-bar em{position:absolute;top:0;bottom:0;width:2px;background:var(--sh-ink)}
-.shome-rec{font:800 14px Unbounded,sans-serif;text-align:right}
+.shome-rec{font:800 14px Unbounded,sans-serif;text-align:right;white-space:nowrap;min-width:46px}
 .shome-tag{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:4px;font:800 12px 'DM Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
 .shome-tag.is-kadoban{background:var(--sh-gold);color:var(--sh-ink)}
 .shome-tag.is-down{background:#fbe5e4;color:var(--sh-down)}
@@ -113,6 +113,30 @@
   .shome-explore{grid-template-columns:1fr 1fr}
   .shome-fact{grid-template-columns:1fr}
   .shome-head h2{font-size:18px}
-  .shome-srow{grid-template-columns:120px 1fr 46px}
+  .shome-srow{grid-template-columns:120px 1fr auto}
 }
-@media(max-width:380px){.shome-champs,.shome-explore{grid-template-columns:1fr}.shome-srow{grid-template-columns:104px 1fr 44px}}
+@media(max-width:380px){.shome-champs,.shome-explore{grid-template-columns:1fr}.shome-srow{grid-template-columns:104px 1fr auto}}
+
+/* Basho review page (sumo.html#review/YYYYMM); shares the home page's blocks. */
+.srev-pick{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
+.srev-pick label{font:800 12px 'DM Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#b8b0b3;width:100%}
+.srev-pick select{min-height:44px;padding:0 12px;border-radius:10px;border:1px solid #5a5156;background:#231c22;color:#fff;font:700 15px 'DM Sans',sans-serif}
+.srev-step{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:22px;border:1px solid #5a5156;color:#fff!important;font:700 14px 'DM Sans',sans-serif;text-decoration:none}
+.srev-hero p b{color:var(--sh-gold)}
+.srev-hero p a{color:#fff}
+.srev-list{padding:4px 14px}
+.srev-up{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--sh-line);font-size:14px}
+.srev-up:last-child{border-bottom:0}
+.srev-up a{text-decoration:none}
+.srev-rk{display:inline-block;padding:1px 6px;border-radius:4px;background:#eee;color:#555;font:800 12px 'DM Sans',sans-serif}
+.srev-meta{display:block;color:var(--sh-muted);font-size:12.5px;margin-top:2px}
+.srev-tech{padding:12px 14px}
+.srev-trow{display:grid;grid-template-columns:130px 1fr 88px;gap:10px;align-items:center;padding:6px 0}
+.srev-tname{font-weight:700}
+.srev-tbar{height:12px;border-radius:6px;background:#eee;overflow:hidden}
+.srev-tbar i{display:block;height:100%;background:var(--sh-blue)}
+.srev-tn{text-align:right;font:800 13px 'DM Sans',sans-serif}
+.srev-notes{margin:24px 0 0;font-size:13px;color:var(--sh-muted)}
+.srev-notes summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:700}
+.srev-loading{padding:40px 0;color:var(--sh-muted)}
+@media(max-width:760px){.srev-trow{grid-template-columns:96px 1fr 76px}}

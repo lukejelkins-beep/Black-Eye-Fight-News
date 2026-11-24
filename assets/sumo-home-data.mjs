@@ -80,17 +80,19 @@ export function headline(details) {
     .map(x => ({ day: x.day, opponent: x.b.opponentShikonaEn, opponentId: x.b.opponentID })) : [];
   return {
     bashoId: details?.bashoId, name: bashoName(details?.bashoId), venue: venueOf(details?.bashoId),
-    champion: champ ? { id: champ.rikishiId, name: champ.shikonaEn, rank: row?.rank || '', wins: row?.wins ?? null, losses: row?.losses ?? null, lostTo: losses } : null,
+    champion: champ ? { id: champ.rikishiId, name: row?.shikonaEn || champ.shikonaEn, rank: row?.rank || '', wins: row?.wins ?? null, losses: row?.losses ?? null, lostTo: losses } : null,
     next: nextBasho(details?.bashoId)
   };
 }
 
 export function champions(details) {
   const d = details?.basho?.data || {};
+  const names = new Map(rows(details?.banzuke).map(r => [r.rikishiID, r.shikonaEn]));
+  const nm = (id, fallback) => names.get(id) || fallback;
   const prizeName = { 'Shukun-sho': 'Outstanding Performance Prize', 'Kanto-sho': 'Fighting Spirit Prize', 'Gino-sho': 'Technique Prize' };
   return [
-    ...(d.yusho || []).filter(y => y.type === 'Juryo' || y.type === 'Makushita').map(y => ({ id: y.rikishiId, name: y.shikonaEn, label: y.type + ' champion' })),
-    ...(d.specialPrizes || []).map(p => ({ id: p.rikishiId, name: p.shikonaEn, label: prizeName[p.type] || p.type }))
+    ...(d.yusho || []).filter(y => y.type === 'Juryo' || y.type === 'Makushita').map(y => ({ id: y.rikishiId, name: nm(y.rikishiId, y.shikonaEn), label: y.type + ' champion' })),
+    ...(d.specialPrizes || []).map(p => ({ id: p.rikishiId, name: nm(p.rikishiId, p.shikonaEn), label: prizeName[p.type] || p.type }))
   ];
 }
 
@@ -135,11 +137,13 @@ export function movers(details, careerHistory, { limit = 4 } = {}) {
     if (!p) continue;
     const from = position(p.rank), to = position(r.rank);
     if (from == null || to == null || from === to) continue;
+    /* Debut or return is only claimed when the wrestler's rank history is saved. */
+    const known = !!history[String(r.rikishiID)];
     const before = (history[String(r.rikishiID)]?.rank || []).filter(x => x.basho < details.bashoId);
     let note;
-    if (isSanyaku(r.rank) && !isSanyaku(p.rank)) note = before.some(x => isSanyaku(x.rank)) ? 'Back in sanyaku' : 'Sanyaku debut';
+    if (isSanyaku(r.rank) && !isSanyaku(p.rank)) note = !known ? 'Into sanyaku' : before.some(x => isSanyaku(x.rank)) ? 'Back in sanyaku' : 'Sanyaku debut';
     else if (isSanyaku(p.rank) && !isSanyaku(r.rank)) note = 'Out of sanyaku';
-    else if (isMakuuchi(r.rank) && !isMakuuchi(p.rank)) note = before.some(x => isMakuuchi(x.rank)) ? 'Back in Makuuchi' : 'Makuuchi debut';
+    else if (isMakuuchi(r.rank) && !isMakuuchi(p.rank)) note = !known ? 'Into Makuuchi' : before.some(x => isMakuuchi(x.rank)) ? 'Back in Makuuchi' : 'Makuuchi debut';
     else if (isMakuuchi(p.rank) && !isMakuuchi(r.rank)) note = 'Out of Makuuchi';
     else if (tierOf(r.rank) === 'Juryo' && tierOf(p.rank) === 'Makushita') note = 'Into Juryo';
     else if (tierOf(p.rank) === 'Juryo' && tierOf(r.rank) === 'Makushita') note = 'Out of Juryo';

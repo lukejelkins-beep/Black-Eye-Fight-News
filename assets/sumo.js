@@ -13,8 +13,10 @@ import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailyS
 import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
-import { buildHome } from './sumo-home-data.mjs?v=20261124-home1';
-import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-home1';
+import { buildHome } from './sumo-home-data.mjs?v=20261124-review1';
+import { renderHome as renderOverview } from './sumo-home.mjs?v=20261124-review1';
+import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
+import { renderReview } from './sumo-review.mjs?v=20261124-review1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
 const ROOT = document.querySelector('#sumo-main');
@@ -1521,9 +1523,38 @@ function verifiedDerivative(map,id,dir){
   const d=map?.[String(id)],photo=STATE.photoIndex?.[String(id)];
   return d&&photo?.approved===true&&d.sourceSha256===photo.sha256&&new RegExp('^assets/sumo-photos/'+dir+'/[a-zA-Z0-9_-]+\\.webp$').test(String(d.path||''))?d.path:'';
 }
+function homeHelpers(){
+  const known=new Set((STATE.roster?.rikishi||[]).map(w=>Number(w.sourceId)));
+  return {e,head:id=>verifiedDerivative(STATE.heads,id,'head'),cutout:id=>verifiedDerivative(STATE.cutouts,id,'cutout'),known:id=>known.has(Number(id))};
+}
 function renderSumoHome(){
   const home=buildHome({details:STATE.details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
-  return renderOverview(home,{e,head:id=>verifiedDerivative(STATE.heads,id,'head'),cutout:id=>verifiedDerivative(STATE.cutouts,id,'cutout')});
+  return renderOverview(home,homeHelpers());
+}
+/* Basho review: the archive index and each tournament file load on demand, then the page re-renders. */
+const ARCHIVE={index:null,files:{},failed:false,loading:new Set()};
+function loadArchive(id){
+  const want=[];
+  if(!ARCHIVE.index)want.push(loadJson('data/sumo/basho-archive/index.json').then(x=>{ARCHIVE.index=x;}));
+  for(const b of [id,prevBashoId(id)])if(b&&!(b in ARCHIVE.files)&&!ARCHIVE.loading.has(b)){
+    ARCHIVE.loading.add(b);
+    want.push(loadJson('data/sumo/basho-archive/'+b+'.json').then(x=>{ARCHIVE.files[b]=x;}).catch(()=>{ARCHIVE.files[b]=null;}).finally(()=>ARCHIVE.loading.delete(b)));
+  }
+  if(want.length)Promise.all(want).catch(()=>{ARCHIVE.failed=true;}).finally(()=>{if(location.hash.startsWith('#review'))render();});
+}
+function prevBashoId(id){
+  if(!/^\d{6}$/.test(String(id||'')))return null;
+  let y=Number(id.slice(0,4)),m=Number(id.slice(4))-2;if(m<1){m=11;y-=1;}
+  return String(y)+String(m).padStart(2,'0');
+}
+function renderBashoReview(id){
+  if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
+  const latest=ARCHIVE.index?.basho?.length?ARCHIVE.index.basho[ARCHIVE.index.basho.length-1].bashoId:null;
+  const want=/^\d{6}$/.test(String(id||''))?id:latest;
+  if(!ARCHIVE.index||!want||!(want in ARCHIVE.files)||ARCHIVE.loading.has(prevBashoId(want))){loadArchive(want||null);return '<div class="sumo-home"><p class="srev-loading">Loading the basho review…</p></div>';}
+  const file=ARCHIVE.files[want];
+  if(!file)return '<div class="sumo-home"><p class="srev-loading">No saved review for that tournament. <a href="#review">See the latest basho</a>.</p></div>';
+  return renderReview(buildReview(file,ARCHIVE.files[prevBashoId(want)]||null,STATE.careerHistory),file,{...homeHelpers(),index:ARCHIVE.index});
 }
 function render() {
   const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
@@ -1548,6 +1579,7 @@ function render() {
     case 'h2h': ROOT.innerHTML=renderBoard(id);
       if(STATE.boardRecent&&!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();break;
     case 'home': ROOT.innerHTML=renderSumoHome();break;
+    case 'review': ROOT.innerHTML=renderBashoReview(id);break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
     case 'matchups': ROOT.innerHTML=renderDailyMatchups();break;
     case 'kimarite': ROOT.innerHTML=renderKimarite();break;
@@ -1709,6 +1741,10 @@ document.addEventListener('click',ev=>{
   }
 });
 let lastRoute=location.hash.slice(1).split('?')[0];
+document.addEventListener('change',ev=>{
+  const sel=ev.target.closest&&ev.target.closest('[data-review-select]');
+  if(sel)location.hash='#review/'+sel.value;
+});
 window.addEventListener('hashchange',()=>{
   const sheet=document.getElementById('h2h-sheet');if(sheet?.open)sheet.close();
   const route=location.hash.slice(1).split('?')[0];

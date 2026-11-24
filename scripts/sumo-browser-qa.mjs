@@ -54,13 +54,23 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.ok(await page.locator('.shome-hero h1').count()===1,'Overview has one headline');
   assertContains(overview,'Sanyaku scorecard','Sanyaku scorecard shown');
   assert.ok(await page.locator('.shome-srow').count()>=4,'Sanyaku rows listed');
-  assert.equal(await page.locator('.shome-ex').count(),8,'Explore links to every Sumo page');
+  assert.equal(await page.locator('.shome-ex').count(),9,'Explore links to every Sumo page');
   assert.ok(await page.locator('.shome-hero-photo img, .shome-face[src]').count()>0,'Overview shows wrestler photographs');
   {
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
     assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on the Overview: '+JSON.stringify(widths));
   }
   await snap(page,label+'-overview',{fullPage:false});
+  // Basho review (#review): the latest saved tournament, with every saved tournament selectable.
+  await open(page,'review','.sumo-review');
+  assert.equal(await page.locator('.sumo-review h1').count(),1,'Review has one headline');
+  assert.ok(await page.locator('[data-review-select] option').count()>=13,'Two years of tournaments selectable');
+  assertContains(await page.locator('#sumo-main').innerText(),'Technique of the basho','Technique of the basho shown');
+  {
+    const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+    assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on the Basho review: '+JSON.stringify(widths));
+  }
+  await snap(page,label+'-review',{fullPage:false});
   // The results desk is #basho, under Fights.
   await open(page,'basho','.sumo-page-head');
   const home=await page.locator('#sumo-main').innerText();

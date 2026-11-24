@@ -11,7 +11,8 @@ function face(h, id, cls = 'shome-face') {
   const src = h.head(id);
   return src ? '<img class="' + cls + '" src="' + h.e(src) + '" alt="" loading="lazy" decoding="async">' : '<span class="' + cls + ' is-empty" aria-hidden="true">相</span>';
 }
-const who = (h, id, name) => '<a href="#profile/' + Number(id) + '">' + h.e(name) + '</a>';
+/* A wrestler with no BEFN profile (h.known says so) is shown without a link. */
+const who = (h, id, name) => h.known && !h.known(id) ? h.e(name) : '<a href="#profile/' + Number(id) + '">' + h.e(name) + '</a>';
 const head = (h, title, link, sub) => '<div class="shome-head"><h2>' + h.e(title) + '</h2>' + (link ? '<a href="' + h.e(link[0]) + '">' + h.e(link[1]) + ' ›</a>' : '') + '</div>' + (sub ? '<p class="shome-sub-line">' + h.e(sub) + '</p>' : '');
 const andList = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
 
@@ -34,13 +35,13 @@ function hero(h, d) {
   }
   return '<section class="shome-hero"><div class="shome-hero-copy"><div class="shome-kicker">' + h.e(H.name.split(' ')[0]) + ' basho ' + h.e(H.bashoId.slice(0, 4)) + ' · ' + h.e(H.venue) + (d.finished ? ' · Final' : '') + '</div>' +
     '<h1>' + title + '</h1><p>' + text + '</p><div class="shome-stats">' + stats.map(([b, s]) => '<div class="shome-chip"><b>' + h.e(b) + '</b><span>' + h.e(s) + '</span></div>').join('') + '</div>' +
-    '<a class="shome-btn" href="#basho">Full results ›</a><a class="shome-btn is-ghost" href="#matchups">' + (d.finished ? 'Final day bouts' : 'Today’s bouts') + '</a></div>' +
+    (d.finished ? '<a class="shome-btn" href="#review">Basho review ›</a><a class="shome-btn is-ghost" href="#basho">Full results</a>' : '<a class="shome-btn" href="#basho">Full results ›</a><a class="shome-btn is-ghost" href="#matchups">Today’s bouts</a>') + '</div>' +
     (c && d.finished && h.cutout(c.id) ? '<div class="shome-hero-photo"><img src="' + h.e(h.cutout(c.id)) + '" alt="' + h.e(c.name) + '"><span class="shome-cup">Makuuchi champion</span></div>' : '') + '</section>';
 }
 
-function championsBlock(h, d) {
+function championsBlock(h, d, link = ['#basho', 'Standings']) {
   if (!d.finished || !d.champions.length) return '';
-  return '<section class="shome-block">' + head(h, 'Champions and prizes', ['#basho', 'Standings']) + '<div class="shome-champs">' +
+  return '<section class="shome-block">' + head(h, 'Champions and prizes', link) + '<div class="shome-champs">' +
     d.champions.map(c => '<div class="shome-champ">' + face(h, c.id) + '<div><small>' + h.e(c.label) + '</small><strong>' + who(h, c.id, c.name) + '</strong></div></div>').join('') + '</div></section>';
 }
 
@@ -106,7 +107,8 @@ const EXPLORE = [
   ['Fights', 'Results', '#basho', 'Each day’s results and the standings'], ['Fights', 'Bouts', '#matchups', 'Matchups with head-to-head records'],
   ['Fights', 'Head-to-head', '#h2h', 'Who leads whom on this banzuke'], ['Fighters', 'Rikishi', '#rikishi', 'Profiles of every tracked wrestler'],
   ['Fighters', 'Rankings', '#banzuke', 'The banzuke and who moved'], ['Fighters', 'Stables', 'sumo-stables.html', 'The heya and their wrestlers'],
-  ['Analysis', 'Stories', 'sumo-stories.html', 'Sourced facts and records'], ['Analysis', 'Techniques', '#kimarite', 'The winning moves, explained']
+  ['Analysis', 'Basho review', '#review', 'Every tournament since Nov 2024'], ['Analysis', 'Stories', 'sumo-stories.html', 'Sourced facts and records'],
+  ['Analysis', 'Techniques', '#kimarite', 'The winning moves, explained']
 ];
 function exploreBlock(h) {
   return '<section class="shome-block">' + head(h, 'Explore sumo') + '<div class="shome-explore">' +
@@ -119,3 +121,6 @@ export function renderHome(d, h) {
     risingBlock(h, d) + moversBlock(h, d) + watchBlock(h, d) + factBlock(h, d) + exploreBlock(h) +
     '<p class="shome-source">Worked out from the Sumo API snapshot of the ' + h.e(d.headline.name) + ' basho and BEFN’s saved rank history. Photographs: Japan Sumo Association.</p></div>';
 }
+
+/* Shared with the Basho review page (sumo-review.mjs). */
+export { face, who, head, championsBlock, starsBlock, sanyakuBlock, moversBlock };
