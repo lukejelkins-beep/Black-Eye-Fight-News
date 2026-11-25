@@ -8,6 +8,8 @@ owner's choices of the same day (docs/design/DECISIONS.md):
   * Rising star and Prospect also need a modest pre-UFC career (15 or fewer pre-UFC fights) where the pre-UFC record
     is known (overall record minus UFC record, data/ufc-overall-records.json), as well as the debut-age rule;
   * Form and the BEFN rating (Overall) are shown side by side; nothing here compares them.
+Form v2 (owner request, 25 Nov 2026; spec section 3): each fight is valued by opponent strength and dominance (finish
+round, judges' scorecards, knockdowns; losses too), with momentum from the results rating and flatter recency.
 
 Offline and deterministic. Inputs: data/ufc-stats (fighters, index asOf), data/ufc-v4-certified-careers.json,
 data/ufc-fighter-born.json, data/ufc-overall-records.json, data/ufc-fighter-status.json (hand-kept injuries), and
@@ -17,6 +19,7 @@ file if the number of fighters falls by 30% or more.
 from __future__ import annotations
 
 import argparse
+import bisect
 import datetime as dt
 import importlib.util
 import json
@@ -32,11 +35,23 @@ OUT = DATA / "ufc-fighter-form.json"
 STATUS = DATA / "ufc-fighter-status.json"
 
 MONTH = 30.4375
-WEIGHTS = {"results": .30, "finishing": .30, "opposition": .20, "activity": .10, "performance": .10}
-POSITION = (1.00, .85, .70, .55, .40)
-HALF_LIFE_MONTHS = 18
+# Form v2 (owner request, 25 Nov 2026): every fight is valued against the BEFN expectation on the night, dominance
+# covers losses as well as wins and reads the judges' scorecards, and momentum follows the results rating itself.
+WEIGHTS = {"results": .25, "dominance": .30, "opposition": .15, "momentum": .10, "activity": .10, "performance": .10}
+POSITION = (1.00, 1.00, 1.00, 1.00, 1.00)   # v2, owner 25 Nov: flat; only age (the half-life) weights recency
+HALF_LIFE_MONTHS = 24                  # v2: was 18
 WINDOW_MONTHS = 36
 POOL_MONTHS = 24
+STREAK_STEP = 0                  # results: per-fight streak step (v1 +0.05 a win); 0 since v2, it backtested worse
+MOMENTUM_SPAN = 240              # a 120-point rise in the results rating over the window gives momentum 1.0
+# Each fighter's "fights": the fights behind the score, newest first, one array per fight in this order. share is
+# the fight's percentage of the recency weight; value is what the result was worth (fight_value).
+FIGHT_FIELDS = ["date", "opponent", "outcome", "method", "share", "oppStrength", "dominance", "value"]
+KD_FIELD = 16                    # "knockdowns" in roundFields
+# Stage and badge thresholds are on the displayed Form (a percentile), so re-weighting the points cannot move them.
+FORM_ON_FIRE, FORM_ON_FIRE_KEEP = 90, 79
+FORM_TITLE_CONTENDER, FORM_RISING, FORM_BREAKOUT = 82, 74, 79
+FORM_SLIPPING, FORM_SLIPPING_TWO_LOSSES = 20, 30
 MAX_PRE_UFC_FIGHTS = 15          # owner, 2026-11-24: Rising star / Prospect need a modest pre-UFC career
 
 
@@ -73,7 +88,7 @@ def pct_rank(value, population) -> int:
     return int(clamp(round(100 * (below + equal / 2) / len(population)), 1, 99))
 
 
-# ---------- rating history: strength on the night ----------
+# ---------- rating history: strength and expectation on the night ----------
 def load_build():
     sys.path.insert(0, str(ROOT / "scripts"))
     spec = importlib.util.spec_from_file_location("ufc_stats_build", ROOT / "scripts/build-ufc-stats.py")
@@ -83,7 +98,11 @@ def load_build():
 
 
 def rating_history(build, as_of: dt.date):
-    """boutId -> {slug: pre-bout BEFN results rating}, plus a date-sorted list of all pre-bout ratings."""
+    """Point-in-time BEFN results ratings.
+
+    Returns (by_bout, after, timeline): by_bout is boutId -> {slug: rating before the bout}, after is
+    boutId -> {slug: rating straight after it} (the same update scripts/ufc_ratings.py results_walk applies), and
+    timeline is a date-sorted list of all pre-bout ratings."""
     old, real, captured = build.ACTIVE_MONTHS, build.results_bouts, {}
     build.ACTIVE_MONTHS = 10 ** 4
     build.results_bouts = lambda pf: captured.setdefault("b", real(pf))
@@ -92,13 +111,25 @@ def rating_history(build, as_of: dt.date):
             build.build(as_of, Path(tmp), None, True)
     finally:
         build.ACTIVE_MONTHS, build.results_bouts = old, real
-    _, pre = build.ufc_ratings.results_walk(captured["b"], build.ufc_ratings.RESULTS, build.pre_ufc_priors())
-    by_bout, timeline = {}, []
-    for bout, ra, rb, _na, _nb in pre:
-        by_bout[str(bout["boutId"])] = {bout["a"]: ra, bout["b"]: rb}
+    ur = build.ufc_ratings
+    p = ur.RESULTS
+    _, pre = ur.results_walk(captured["b"], p, build.pre_ufc_priors())
+    by_bout, after, timeline = {}, {}, []
+    for bout, ra, rb, na, nb in pre:
+        bid = str(bout["boutId"])
+        by_bout[bid] = {bout["a"]: ra, bout["b"]: rb}
+        y = 1.0 if bout["outcome"] == "W" else 0.0 if bout["outcome"] == "L" else 0.5
+        move = p["k"] * ur.result_margin(bout, p) * (y - win_prob(ra, rb))
+        after[bid] = {bout["a"]: ra + move * (1 + p["boost"] / (na + 1)),
+                      bout["b"]: rb - move * (1 + p["boost"] / (nb + 1))}
         timeline += [(bout["date"], ra), (bout["date"], rb)]
     timeline.sort()
-    return by_bout, timeline
+    return by_bout, after, timeline
+
+
+def win_prob(me: float, opp: float) -> float:
+    """The results rating's own expectation (400-point logistic, scripts/ufc_ratings.py)."""
+    return 1 / (1 + 10 ** ((opp - me) / 400))
 
 
 class Strength:
@@ -113,7 +144,6 @@ class Strength:
     def of(self, rating: float, date: str) -> float:
         key = (round(rating, 6), date)
         if key not in self.cache:
-            import bisect
             lo = bisect.bisect_left(self.dates, add_months(date, -WINDOW_MONTHS))
             hi = bisect.bisect_left(self.dates, date)
             pool = self.values[lo:hi]
@@ -122,89 +152,165 @@ class Strength:
         return self.cache[key]
 
 
-# ---------- the Form points score ----------
+# ---------- one fight: how much of it the fighter won ----------
 def decided(history):
     return [f for f in history if f["outcome"] in ("W", "L", "D")]
 
 
-def win_streak(history) -> int:
+def streak(history, outcome) -> int:
     n = 0
     for f in decided(history):
-        if f["outcome"] != "W":
+        if f["outcome"] != outcome:
             break
         n += 1
     return n
 
 
-def points_for(fighter, history, as_of, ratings, strength, performance, injured):
-    """Returns (points or None, parts, lossCap, per-fight notes). history: newest first, all UFC fights."""
+def win_streak(history) -> int:
+    return streak(history, "W")
+
+
+def judged_share(f):
+    """Share of the judges' rounds the fighter won (a 10-8 round counts double, an even round half each way).
+    None when the scorecards are missing."""
+    won = total = 0.0
+    for j in ((f.get("scorecards") or {}).get("judges") or []):
+        for _rnd, me, opp in j.get("rounds") or []:
+            weight = 2.0 if abs(me - opp) >= 2 else 1.0
+            total += weight
+            won += weight if me > opp else weight / 2 if me == opp else 0.0
+    return won / total if total else None
+
+
+def knockdowns(f):
+    """(scored, absorbed) from the round statistics, or (0, 0) when there are none."""
+    kd = KD_FIELD
+    rounds = f.get("rounds") or []
+    return (sum(r[2][kd] for r in rounds if len(r) > 3 and len(r[2]) > kd),
+            sum(r[3][kd] for r in rounds if len(r) > 3 and len(r[3]) > kd))
+
+
+def dominance(f) -> float:
+    """0 to 1: how much of the fight the fighter won, whichever way it went.
+
+    Finish wins by round (1.00, 0.92, 0.85, then 0.80); a DQ win 0.60. Decisions run on the judges' scorecards,
+    0.15 + 0.70 x the share of rounds won (a clean sweep 0.85, a split around 0.5, swept 0.15), nudged 0.04 per
+    knockdown scored or absorbed; without scorecards a unanimous win is 0.75, split or majority 0.55, and the
+    mirror for losses. Draws 0.50. Being finished scores 0 in rounds 1-2 and 0.05 later; a DQ loss 0.30."""
+    method, out = f.get("method"), f["outcome"]
+    rnd = f.get("endRound") or 3
+    if out == "D":
+        return .50
+    if method in ("ko", "sub"):
+        if out == "W":
+            return 1.00 if rnd <= 1 else .92 if rnd == 2 else .85 if rnd == 3 else .80
+        return 0.0 if rnd <= 2 else .05
+    if method == "dq":
+        return .60 if out == "W" else .30
+    share = judged_share(f)
+    if share is None:
+        close = is_split(f)
+        share = (.57 if close else .86) if out == "W" else (.43 if close else .14)
+    kd_for, kd_against = knockdowns(f)
+    d = .15 + .70 * share + .04 * (kd_for - kd_against)
+    return clamp(d, .05, .95)
+
+
+def fight_value(outcome, strength, dom) -> float:
+    """0 to 1: what the result is worth, given who it was against and how it went.
+
+    A win is worth 0.55 at least, plus up to 0.25 for the opponent's strength on the night and 0.20 for dominance:
+    a first-round finish of a top opponent is 1.0, a split decision over a weak one about 0.6. A draw is 0.25 plus
+    up to 0.20 for strength. A loss is worth at most 0.40: (0.12 + 0.56 x dominance, which stops counting at 0.5) x
+    (0.4 + 0.6 x strength), so a close decision loss to an elite opponent keeps 0.40 and a first-round stoppage by a
+    weak one keeps about 0.05. (An upset bonus on 1 - the win probability was tried and backtested worse: it rewards
+    fighters for having been rated low.)"""
+    if outcome == "W":
+        return .55 + .25 * strength + .20 * dom
+    if outcome == "D":
+        return .25 + .20 * strength
+    return (.12 + .56 * min(dom, .5)) * (.4 + .6 * strength)
+
+
+def points_for(fighter, history, as_of, ratings, strength, performance, injured, after=None):
+    """Returns (points or None, parts, lossCap, per-fight breakdown). history: newest first, all UFC fights."""
+    after = after or {}
     window = [f for f in decided(history) if months_between(f["date"], as_of) <= WINDOW_MONTHS][:5]
     if len(window) < 2:
-        return None, None, None
+        return None, None, None, None
     weights = [POSITION[i] * .5 ** (months_between(f["date"], as_of) / HALF_LIFE_MONTHS) for i, f in enumerate(window)]
     s = sum(weights)
 
-    def higher_on_night(f):
+    def on_night(f):
         r = ratings.get(str(f["boutId"])) or {}
-        me, opp = r.get(fighter), r.get(f.get("opponentSlug"))
-        return None if me is None or opp is None else opp > me
+        return r.get(fighter), r.get(f.get("opponentSlug"))
 
-    def opp_strength(f):
-        r = ratings.get(str(f["boutId"])) or {}
-        opp = r.get(f.get("opponentSlug"))
-        return strength.of(opp, f["date"]) if opp is not None else .3   # unknown opponent: the median's score
+    rows = []
+    for w, f in zip(weights, window):
+        me, opp = on_night(f)
+        q = strength.of(opp, f["date"]) if opp is not None else .3       # unknown opponent: the median's score
+        d = dominance(f)
+        v = fight_value(f["outcome"], q, d)
+        rows.append({"w": w, "f": f, "q": q, "d": d, "v": v, "me": me, "opp": opp})
 
-    res = []
-    for f in window:
-        if f["outcome"] == "W":
-            res.append(1.0)
-        elif f["outcome"] == "D":
-            res.append(.5)
-        elif higher_on_night(f) or f.get("titleFight"):
-            res.append(.2 if finished(f) else .4)
-        else:
-            res.append(0.0)
-    R = min(1.0, sum(w * x for w, x in zip(weights, res)) / s + min(.15, .05 * win_streak(history)))
+    wins, losses = win_streak(history), streak(history, "L")
+    trend = STREAK_STEP * min(wins, 3) - STREAK_STEP * min(max(losses - 1, 0), 3)
+    R = clamp(sum(r["w"] * r["v"] for r in rows) / s + trend)
+    D = sum(r["w"] * r["d"] for r in rows) / s
+    Q = sum(r["w"] * (r["q"] if r["f"]["outcome"] == "W" else r["q"] / 2 if r["f"]["outcome"] == "D"
+                      else .2 * r["q"]) for r in rows) / s
 
-    wins = [(w, f) for w, f in zip(weights, window) if f["outcome"] == "W"]
-    def fin(f):
-        if finished(f):
-            rnd = f.get("endRound") or 3
-            return 1.0 if rnd <= 1 else .85 if rnd == 2 else .70
-        return .15 if is_split(f) else .40
-    F = sum(w * fin(f) for w, f in wins) / sum(w for w, _ in wins) if wins else 0.0
+    # Momentum: how far the results rating moved across the window, from before the oldest fight to after the newest.
+    first_pre = rows[-1]["me"]
+    last_post = (after.get(str(window[0]["boutId"])) or {}).get(fighter)
+    M = None if first_pre is None or last_post is None else clamp(.5 + (last_post - first_pre) / MOMENTUM_SPAN)
 
-    Q = sum(w * (0.0 if f["outcome"] == "L" else opp_strength(f)) for w, f in zip(weights, window)) / s
-
-    last_any = history[0]["date"]
-    gap = months_between(last_any, as_of)
+    gap = months_between(history[0]["date"], as_of)
     A = 1.0 if injured else clamp(1 - (gap - 6) / 12)
 
-    parts = {"results": round(R, 3), "finishing": round(F, 3), "opposition": round(Q, 3),
-             "activity": round(A, 3), "performance": None if performance is None else round(performance, 3)}
+    parts = {"results": round(R, 3), "dominance": round(D, 3), "opposition": round(Q, 3),
+             "momentum": None if M is None else round(M, 3), "activity": round(A, 3),
+             "performance": None if performance is None else round(performance, 3)}
     used = {k: v for k, v in parts.items() if v is not None}
     points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used)
 
-    cap = None
-    last = decided(history)[0]
-    if last["outcome"] == "L":
-        r = ratings.get(str(last["boutId"])) or {}
-        me, opp = r.get(fighter), r.get(last.get("opponentSlug"))
-        if last.get("titleFight") or (me is not None and opp is not None and opp > me):
-            opp_pen = 0
-        elif me is not None and opp is not None and me - opp <= 100:
-            opp_pen = 10
-        else:
-            opp_pen = 20
-        if is_split(last):
-            manner = 0
-        elif not finished(last):
-            manner = 5
-        else:
-            manner = 10 if (last.get("endRound") or 3) >= 3 else 15
-        cap = 85 - opp_pen - manner
+    cap = loss_cap(fighter, history, ratings)
+    if cap is not None:
         points = min(points, cap)
-    return round(points, 1), parts, cap
+    breakdown = [[r["f"]["date"], r["f"].get("opponentSlug"), r["f"]["outcome"], r["f"].get("method"),
+                  round(100 * r["w"] / s), round(r["q"], 2), round(r["d"], 2), round(r["v"], 2)] for r in rows]
+    return round(points, 1), parts, cap, breakdown
+
+
+def loss_cap(fighter, history, ratings):
+    """If the last fight was a loss: 85 minus penalties for who it was against, how it happened, a losing run and a
+    second stoppage loss in two years. None after a win or draw (the cap lifts with the next win)."""
+    dec = decided(history)
+    if not dec or dec[0]["outcome"] != "L":
+        return None
+    last = dec[0]
+    r = ratings.get(str(last["boutId"])) or {}
+    me, opp = r.get(fighter), r.get(last.get("opponentSlug"))
+    if last.get("titleFight") or (me is not None and opp is not None and opp > me):
+        opp_pen = 0
+    elif me is not None and opp is not None and me - opp <= 100:
+        opp_pen = 10
+    else:
+        opp_pen = 20
+    if is_split(last):
+        manner = 0
+    elif not finished(last) or last.get("method") == "dq":
+        manner = 5
+    else:
+        manner = 10 if (last.get("endRound") or 3) >= 3 else 15
+    run = streak(history, "L")
+    run_pen = 0 if run <= 1 else 5 if run == 2 else 10
+    stopped_again = 0
+    if last.get("method") in ("ko", "sub"):
+        since = add_months(last["date"], -24)
+        if any(f["outcome"] == "L" and f.get("method") in ("ko", "sub") and since <= f["date"] for f in dec[1:]):
+            stopped_again = 5
+    return 85 - opp_pen - manner - run_pen - stopped_again
 
 
 # ---------- inputs ----------
@@ -282,7 +388,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
         d = json.loads(p.read_text(encoding="utf-8"))
         files[d["slug"]] = d
     build = load_build()
-    ratings, timeline = rating_history(build, dt.date.fromisoformat(as_of))
+    ratings, after, timeline = rating_history(build, dt.date.fromisoformat(as_of))
     strength = Strength(timeline)
     certified = certified_set()
     born = (load_json(DATA / "ufc-fighter-born.json", {}) or {}).get("fighters") or {}
@@ -318,7 +424,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for slug, d in files.items():
         history = d["fights"]                     # newest first
         inj = active_injury(injuries.get(slug), history, as_of)
-        pts, parts, cap = points_for(slug, history, as_of, ratings, strength, performance.get(slug), inj)
+        pts, parts, cap, fights = points_for(slug, history, as_of, ratings, strength, performance.get(slug), inj, after)
         dec = decided(history)
         last_date = history[0]["date"] if history else None
         gap = months_between(last_date, as_of) if last_date else 999
@@ -326,7 +432,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
         age = years_between(born[slug], as_of) if slug in born else None
         debut_age = years_between(born[slug], first) if slug in born and first else None
         career = d["windows"]["career"]
-        out[slug] = {"name": d["name"], "slug": slug, "points": pts, "parts": parts, "lossCap": cap,
+        out[slug] = {"name": d["name"], "slug": slug, "points": pts, "parts": parts, "lossCap": cap, "fights": fights,
                      "rank": d.get("officialRank"), "champion": bool(d.get("champion")), "division": division[slug],
                      "women": str(division[slug] or "").startswith("womens"), "certified": slug in certified,
                      "age": age, "debutAge": debut_age, "preUfcFights": pre_ufc.get(slug),
@@ -370,13 +476,13 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
             "source": "scripts/build-ufc-fighter-form.py (Fighters hub handover, 24 Nov 2026)",
             "note": "Form describes recent UFC results; it is not a prediction. Form 90 means going better right now "
                     "than 90% of active UFC fighters (a UFC fight in the last 24 months).",
-            "weights": WEIGHTS, "formPool": len(pool), "fighters": out, "divisions": pulse,
+            "weights": WEIGHTS, "fightFields": FIGHT_FIELDS, "formPool": len(pool), "fighters": out, "divisions": pulse,
             "certificationQueue": queue, "injurySuggestions": suggestions}
 
 
 def stage_for(f):
     """Handover 4.1, checked in order; the first match wins. Returns (stage, reasons)."""
-    pts, rank, why = f["points"], f["rank"], []
+    pts, rank, why = f["form"], f["rank"], []
     dec = f["_dec"]
     won_last = bool(dec) and dec[0]["outcome"] == "W"
     injured = bool(f["injured"])
@@ -386,7 +492,7 @@ def stage_for(f):
         reason = form_check(f)
         if reason:
             return "Slipping", [reason]
-        if rank <= 5 and (won_last or (pts is not None and pts >= 70)):
+        if rank <= 5 and (won_last or (pts is not None and pts >= FORM_TITLE_CONTENDER)):
             return "Title contender", why
         return "Contender", (["limited data"] if pts is None else why)
     if f["monthsOut"] > 24 and not injured:
@@ -396,13 +502,13 @@ def stage_for(f):
     pre_ok = f["preUfcFights"] is None or f["preUfcFights"] <= MAX_PRE_UFC_FIGHTS
     note = (["age unknown"] if f["age"] is None else []) + ([] if f["preUfcFights"] is not None else ["pre-UFC record unknown"])
     debut_recent = f["debut"] and months_between(f["debut"], AS_OF[0]) <= 36
-    if (3 <= f["ufcFights"] <= 6 and debut_recent and f["losses"] <= 1 and won_last and pts is not None and pts >= 65
+    if (3 <= f["ufcFights"] <= 6 and debut_recent and f["losses"] <= 1 and won_last and pts is not None and pts >= FORM_RISING
             and age_ok(32) and debut_ok and pre_ok):
         return "Rising star", note
     if 1 <= f["ufcFights"] <= 3 and f["losses"] == 0 and age_ok(30) and debut_ok and pre_ok:
         return "Prospect", note
     last4 = [x["outcome"] for x in dec[:4]]
-    if (pts is not None and pts >= 68 and won_last and last4.count("W") >= 3 and f["monthsOut"] <= 18
+    if (pts is not None and pts >= FORM_BREAKOUT and won_last and last4.count("W") >= 3 and f["monthsOut"] <= 18
             and f["ufcFights"] <= 10 and f["age"] is not None and f["age"] <= 33):
         return "Breakout", why
     return "Established", why
@@ -410,7 +516,7 @@ def stage_for(f):
 
 def form_check(f):
     """Handover 4.2: the first reason a ranked fighter fails, or None."""
-    dec, pts = f["_dec"], f["points"]
+    dec, pts = f["_dec"], f["form"]
     if f["monthsOut"] > 18 and not f["injured"]:
         return "no UFC fight in 18 months"
     last5 = [x["outcome"] for x in dec[:5]]
@@ -426,18 +532,18 @@ def form_check(f):
     if bad >= 2:
         return "2 of last 3 were losses to clearly lower-rated opponents"
     last3 = [x["outcome"] for x in dec[:3]]
-    if pts is not None and (pts < 30 or (pts < 40 and last3.count("L") >= 2)):
+    if pts is not None and (pts < FORM_SLIPPING or (pts < FORM_SLIPPING_TWO_LOSSES and last3.count("L") >= 2)):
         return "form well below the division"
     return None
 
 
 def badges_for(f, prev):
-    dec, pts, out = f["_dec"], f["points"], []
+    dec, pts, out = f["_dec"], f["form"], []
     last3 = [x["outcome"] for x in dec[:3]]
     hot = (pts is not None and len(dec) >= 3 and last3 == ["W", "W", "W"] and f["monthsOut"] <= 12
            and f["ufcFights"] >= 3 and not f["injured"])
     was_hot = bool(prev) and "On fire" in (prev.get("badges") or [])
-    if hot and (pts >= 75 or (was_hot and pts >= 68)):      # drop only below 68, to avoid flicker
+    if hot and (pts >= FORM_ON_FIRE or (was_hot and pts >= FORM_ON_FIRE_KEEP)):   # hysteresis, to avoid flicker
         out.append("On fire")
     if (f["rank"] and 1 <= f["rank"] <= 15 and last3[:1] == ["L"] and last3.count("L") >= 2
             and f["monthsOut"] <= 24):
