@@ -403,6 +403,7 @@
   if(!m.ufc){const fp=pa.querySelector('[data-pa-panel="fights"]'),fNew=fightsPanelHTML(m,h);if(fp.dataset.paHtml!==fNew){fp.innerHTML=fNew;fp.dataset.paHtml=fNew;}}
   distribute(pa,m);
   absorb(dialog,m.about);
+  if(root.BEFNFinishClips)root.BEFNFinishClips.decorate(dialog);
   tabsVisible(pa);
   select(pa,dialog.dataset.paTab||"overview",false);
  }
