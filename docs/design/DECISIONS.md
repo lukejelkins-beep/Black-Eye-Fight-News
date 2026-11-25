@@ -5,6 +5,19 @@ Format: date — decision — who — where it shows up.
 ## 2026-11-25 (Official posters in the Overview hero)
 - **An upcoming fight in the Overview hero leads with its official poster when BEFN holds one** (owner: "Can we use official fight posters please for fury joshua as an example"), extending the Fights-page rule of 24 Nov. Portrait first, then landscape, shown whole with its credit (e.g. Fury vs Joshua: "Event promotional artwork via www.netflix.com"). With no poster, the fighters' cut-outs as before; result heroes keep the cut-outs. Layout (owner, same day: "poster at the top with seamless border and details below"): the poster runs edge to edge across the top of the card, a blurred copy of the same artwork fills the sides beside a portrait poster so there is no frame, the bottom fades into the card, and the date line, headline, summary and buttons sit below. Covers the Boxing and MMA Overviews and the front-page hero. Shows up in `assets/sport-overview.js` (`heroBlock`) and `assets/sport-overview.css` (`.sov-poster`).
 
+## 2026-11-24 (Fight film: film wall)
+- **The Fight film tab is a film wall** (owner chose design A, "Film wall", with all four extras). Under the Fights heading and the Upcoming / Results / Fight film switch there is no second "Fight film" heading or kicker.
+  - **Top:** the big latest clip (two thirds) and a "Latest finishes" column of three (one third); stacked on phones. The big clip is worked out from the data: the newest finish from the last 7 days, else the newest clip. The hard-coded "7 November 2026 · UFC Vegas 124" block is gone.
+  - **Bar:** All / Finishes / Full fights / Highlights, and promotion chips (All plus the top five publishers for the sport). On the all-sports page the chips start with Boxing and MMA (a sport chip, not separate groups) followed by the top four publishers. Grappling is not shown, matching the navigation.
+  - **Wall:** 4 columns on desktop, 2 on phones, 12 cards, then "More film" adds 12.
+  - **Tags:** Finish (red), Full fight (yellow), Highlights (dark). Finish means the feed marks it a finish, or the publisher's own title says KO, knockout, submission, finish or stoppage (not media days, reactions or previews).
+- **YouTube clips play in the page** through the privacy-enhanced youtube-nocookie.com player. The iframe is created only on tap. Every card keeps a visible "Watch on YouTube ↗" link. Publisher-site clips (UFC.com, MMA Fighting) still open on the publisher's site. There is no CSP in `index.html` or the Render config, so no frame-src change was needed.
+- **Titles are tidied for display:** emojis, hashtags and shouting go, the "X vs Y" part leads and the hook is a subtitle. The original title stays in the label and tooltip. YouTube Shorts (#shorts) never show.
+- **Staff notes moved to a closed "About this film" panel** at the foot (DIRECTION rule 6): the AU playback check, sources and update time. "Publisher clip · AU playback not verified" is no longer on every card. The availability rules themselves are unchanged.
+- Code: `assets/fight-film.js` and `assets/fight-film.css`; `tests/test-fight-film.cjs` was added to the release readiness gate. — owner — Fights › Fight film
+
+- **Only real fight finishes count as "Finish"** (owner's choice). A compilation ("5 Crazy Knockouts...", "Every Knockout & Submission From UFC Qatar", "100 Knockouts In PFL") is Highlights, so it never leads the page or appears under Latest finishes.
+
 ## 2026-11-25 (Sport in the address)
 - **The sport is part of every link**: `?sport=mma` or `?sport=boxing` before the `#` (e.g. `/?sport=mma#fights/results`); the all-sports front page has none. A shared or reopened link shows the same sport; a link without it uses the reader's saved choice and then gains it, so copying works. Routes after `#` are unchanged (the owner was shown `#mma/fights`; the query form gives the same result without touching the ~28 places that read the route). Sumo pages' Boxing/MMA links carry it too. QA audit D02. Claude, at the owner's request. Shows up in `assets/global-sport-v1.0.3.js`.
 
@@ -23,7 +36,7 @@ Format: date — decision — who — where it shows up.
   - Run 1: 48 (boxing 3, UFC 10, KSW 14, ONE 21). Safar and Suarez were rejected.
   - ONE: 2.
   - PFL: 182. 18 PFL placeholder silhouettes were rejected, and the runner now refuses any image file staged for more than one fighter.
-  - 8 RIZIN photos are staged and waiting for the owner.
+  - RIZIN: 8, approved by the owner on 2026-11-24 and checked by eye with their cut-outs.
 - **137 UFC ESPN headshots from 24 Nov were re-processed** to remove colour streaks. Their cut-outs were rebuilt, and 11 that failed before now pass, checked by eye. The cut-outs the owner dropped stay dropped.
 - **The pages now read the MMA cut-out register** (`data/mma-cutout-register.json`, with files in `assets/img/mma-cutouts/`) wherever UFC and boxing cut-outs are merged: the front page, the Overviews and the Fights cards. For example, Chihiro Sawada's cut-out shows on the ONE Samurai 6 card.
 
