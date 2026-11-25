@@ -180,16 +180,12 @@ summary:focus-visible,[role="button"]:focus-visible {
 .event-status-completed {background:#efeae4;color:#4b403c}
 .event-status-cancelled,.event-status-postponed {background:#f9e0df;color:#9d1b23}
 /* Fight Film: warm neutrals + gold active category */
-.film-refresh-note {border-left-color:#ba1a25;background:#fff1d6;color:#61432e}
-.film-refresh-note span {color:#ad2028}
-.film-updated,.film-section-head p {color:#6c605c}
+
+.film-section-head p {color:#6c605c}
 .film-section-head {border-bottom-color:#e2d5ca}
 .film-section-head .eyebrow {color:#a61720}
 .film-section-head h2 {color:#24191b}
-.film-total {background:#2d1a1d;color:#fff2e6}
-.film-card {border-color:#ded1c8}
-.film-switch-tab.is-active {background:var(--brand-gold);color:#211416;border-color:var(--brand-gold)}
-.film-card-link:hover {color:#a31620}
+
 /* Fight Talk: neutral dark cards while authentic source embeds remain untouched. */
 #talk-results .social-card,#talk-results .social-card[data-platform] {
   background:#171416;color:#fff7f2;border-color:#49373a;
@@ -224,7 +220,6 @@ summary:focus-visible,[role="button"]:focus-visible {
   .ticker {color:#231818}
   .ticker > .ticker-label {background:#a7151f;color:#fffaf1}
 }
-
 
 /* Page-specific overrides: these original IDs deliberately outrank global component styles. */
 #upcoming-cards-root .upcoming-schedule {
@@ -304,24 +299,12 @@ summary:focus-visible,[role="button"]:focus-visible {
 .result-bout-compact .result-bout-detail,
 .result-bout-compact .result-bout-secondary {background:#171316;border-top-color:#453239}
 .result-event-bouts .result-bouts-note {background:#22191c;color:#d9c7c0}
-.film-thumbnail {background:linear-gradient(130deg,#542629,#211719 65%,#100e10)}
-.film-thumbnail-fallback {color:#d9aa6e}
-.film-play {background:#1f1014db;border-color:#f3bf4a}
-.film-kind {background:#9d1a25e5;color:#fff7ea}
-.film-card-link:hover .film-copy h3 {text-decoration-color:var(--brand-red)}
-.film-meta {color:#a91b24}
-.film-copy h3 {color:#24191b}
-.film-publisher {border-top-color:#e6d8cb;color:#675751}
-.film-publisher strong {color:#9d1a23}
-.film-empty,.film-loading {border-color:#e0ccad;color:#63504c}
-.film-switch {background:#21181a;border-color:#5a4446}
-.film-switch-tab:hover {background:#4c292d}
-.film-featured {background:#fff0d9;border-left-color:#c51a26}
-.film-featured-head .eyebrow {color:#a51620}
-.film-featured-head h3 {color:#261719}
-.film-featured-head p {color:#66534e}
-.befn-alerts-toast {border-left-color:var(--brand-red);background:#251719;color:#fff7ef}
 
+.film-play {background:#1f1014db;border-color:#f3bf4a}
+
+.film-copy h3 {color:#24191b}
+
+.befn-alerts-toast {border-left-color:var(--brand-red);background:#251719;color:#fff7ef}
 
 /* Top Stories: image-led editorial treatment, mobile-first. */
 .front-home .front-lead-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
@@ -341,7 +324,6 @@ summary:focus-visible,[role="button"]:focus-visible {
 @media(min-width:1000px){.front-home .front-lead-layout{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
 @media(max-width:430px){.front-home .front-lead-copy{padding:18px}.front-home .front-brief-copy{padding:14px}.front-home .front-brief-card{grid-template-columns:minmax(0,1fr) 34%;min-height:138px}.front-home .front-brief-copy h3{font-size:clamp(1.1rem,4.5vw,1.5rem)}}
 
-
 /* All Top Stories use the same full-width editorial card, including desktop. */
 .front-home .front-lead-layout.top-story-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
 .front-home .top-story-full{display:block;width:100%;overflow:hidden;border-radius:22px;background:#1d1519;border:1px solid #654b51;color:#fff5ed}
@@ -355,7 +337,6 @@ summary:focus-visible,[role="button"]:focus-visible {
 .front-home .top-story-full .top-story-read{display:inline-block;margin-top:8px;color:#f4c644;font-weight:800;text-decoration:none}
 .front-home .top-story-full .top-story-pending{color:#c9bcb8;font-size:.95rem}
 
-
 /* Mobile Top Stories correction: compact editorial type, image-first cards. */
 #main .front-home .front-lead-layout.top-story-stack{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:18px!important}
 #main .front-home .top-story-full{display:block!important;min-width:0;overflow:hidden}
@@ -368,7 +349,6 @@ summary:focus-visible,[role="button"]:focus-visible {
 #main .front-home .top-story-full .top-story-points li{padding-left:2px}
 #main .front-home .top-story-full .top-story-read{font-size:14px!important}
 @media(min-width:800px){#main .front-home .top-story-full .front-lead-copy{padding:28px 32px!important}#main .front-home .top-story-full .front-lead-copy h2{font-size:clamp(28px,3.2vw,44px)!important}#main .front-home .top-story-full .top-story-points{font-size:17px!important}}
-
 
 /* BEFN Top Stories editorial grid restoration — 2026-11-13.
    Desktop: one feature left + three compact stories right.
