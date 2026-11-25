@@ -26,6 +26,7 @@ jobs:
           node --check assets/ufc-prospect-contender.js
           node --check assets/upcoming-cards.js
           node --check assets/fighter-profile-a.js
+          node --check assets/news-front.js
       - name: Verify reviewed UFC profile integrity and scoring
         run: |
           node --test tests/test-ufc-fighter-v3.mjs
@@ -48,6 +49,7 @@ jobs:
           node tests/test-talk-status.cjs
           node tests/test-sport-url.cjs
           node tests/test-overview-poster.cjs
+          node tests/test-news-page-a.cjs
           node --test tests/test-ufc-async-authority.cjs
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-postfight-metrics.mjs
