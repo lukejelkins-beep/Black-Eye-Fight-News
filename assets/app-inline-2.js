@@ -140,11 +140,11 @@ async function loadDesk(background=false){
   const [n,e]=await Promise.all([deskJSON('data/news-live.json'),deskJSON('data/grappling-events.json')]);
   if(!Array.isArray(n.articles)||!Array.isArray(e.events))throw Error('Invalid feed');
   const lang=await deskJSON('data/news-language-live.json').catch(()=>null);if(lang&&Array.isArray(lang.stories))desk.language=lang;
-  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'||location.hash==='#news'){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=location.hash==='#news'?renderHome():renderLanding();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
+  if(background){if(JSON.stringify(n.articles)===JSON.stringify(desk.articles)&&JSON.stringify(e.events)===JSON.stringify(desk.events)){Object.assign(desk,n,{error:''});return;}if(!location.hash||location.hash==='#home'||location.hash.startsWith('#news')){Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});const target=document.getElementById('main');if(target)target.innerHTML=location.hash.startsWith('#news')?renderHome():renderLanding();return;}desk.pending={n,e};const button=document.getElementById('desk-updates');if(button){button.hidden=false;button.textContent='New headlines available — show updates';}return;}
   Object.assign(desk,n,{events:e.events,reviewedAt:e.reviewedAt,error:'',pending:null});
   if(dialog?.open)window.BEFNProfileA?.layout(dialog);
  }catch{desk.error='Current feed unavailable. Previously loaded items remain visible.';}
- if(['','#home','#news','#calendar','#results','#fights/results'].includes(location.hash))navigate();
+ if(['','#home','#news','#news/sumo','#calendar','#results','#fights/results'].includes(location.hash))navigate();
 }
 const sourceHealth=()=>'<details class="source-health"><summary>News updated '+(desk.lastSuccessfulAt?esc(displayDate(desk.lastSuccessfulAt)):'pending')+'</summary><p>'+(desk.sources.some(s=>!s.ok)?'Some sources are delayed. ':'')+'Checks run every 15 minutes; publication and indexing can be delayed. '+esc(desk.error)+'</p></details><button class="btn" id="desk-updates" hidden>Show fresh updates</button>';
 function newsFighterImage(a){
@@ -482,16 +482,29 @@ function newsFeedItems(){
   ?headlineImportance(b,now)-headlineImportance(a,now)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt)
   :Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
 }
-function renderNewsFeed(){
- const all=newsFeedItems(),shown=all.slice(0,Math.max(1,state.newsPage||1)*14);
- const controls='<div class="unified-news-filters">'+segments('newsSort',['latest','significant'],state.newsSort)+'</div>';
- const more=shown.length<all.length?'<button class="news-load-more" type="button" data-news-more>Show more stories ('+(all.length-shown.length)+' remaining)</button>':'';
- const junkie=state.news==='mma'?'<a class="news-publisher-link" href="https://mmajunkie.usatoday.com/" target="_blank" rel="noopener noreferrer">MMA Junkie ↗</a>':'';
- const h=newsPageHelpers();
- return '<div class="np-list"><div class="np-list-head"><h2>Latest news</h2><span class="np-note unified-news-count">'+all.length+' stories</span></div>'
-  +controls+junkie+'<div class="np-rows">'+(shown.length?shown.map(a=>window.BEFNNewsPage.rowHTML(a,h)).join(''):'<p class="front-loading">No other articles match these filters.</p>')+'</div>'
-  +more+sourceHealth()+'</div>';
+/* News page, design A "Front page + timeline" (owner, 25 Nov 2026): assets/news-front.js draws it.
+   The view is the site's sport (window.BEFNSport) or Sumo (#news/sumo, translated headlines from Japan).
+   Grappling stays out: the site covers boxing, MMA and sumo. */
+const newsView=()=>location.hash==='#news/sumo'?'sumo':activeSport();
+let newsNameIndex=null;
+/* Fighter names that link to a profile: the names the dotted hover underline already knows
+   (fighter-portrait-registry, same length rule as assets/fighter-hover.js) that are also a fighter profile here. */
+function newsFighterNames(){
+ if(newsNameIndex)return newsNameIndex;
+ let cat={};try{cat=JSON.parse(document.getElementById('fighter-portrait-registry').textContent).fighters||{};}catch(_){cat={};}
+ const known=new Set(Object.keys(cat).filter(n=>n.length>=5&&(n.includes(' ')||n.length>9)));
+ newsNameIndex=(D.fighters||[]).filter(f=>f&&f.id&&known.has(f.name)).map(f=>({name:f.name,id:f.id}));
+ return newsNameIndex;
 }
+function newsFrontModel(){
+ const view=newsView(),now=Date.now();
+ const pool=view==='sumo'?[]:(desk.articles||[]).filter(headlineEligible).filter(a=>a.sport==='boxing'||a.sport==='mma').filter(a=>view==='all'||a.sport===view).filter(a=>Date.parse(a.publishedAt)<=now+30*60*1000);
+ const clusters=window.BEFNNewsFront.buildClusters(pool,desk.deduplication,window.BEFNNewsClusters);
+ const sumo=window.BEFNNewsPage.usableLanguageStories(desk.language,'sumo');
+ const updatedAt=view==='sumo'?(desk.language&&desk.language.lastSuccessfulAt):desk.lastSuccessfulAt;
+ return {view,sort:state.newsSort==='covered'?'covered':'latest',page:state.newsPage,clusters,sumo,updatedAt,names:newsFighterNames(),now,loading:!desk.articles.length&&!desk.error};
+}
+function renderNewsFeed(){return window.BEFNNewsFront.feedHTML(newsFrontModel(),{esc,safeURL});}
 document.addEventListener('error',e=>{const i=e.target;if(i&&i.tagName==='IMG'){const w=i.closest('.lp-col-photo,.lp-lead-photo,.lp-fixture-art,.lp-latest-photo');if(w){const row=w.parentElement;w.remove();if(row&&row.classList)row.classList.remove('has-art');}}},true);
 const landing={results:null,cutouts:null,featured:null,sumoIndex:null,sumoReleases:null,sumoPhoto:'',events:[],videos:[],started:false};
 /* Front page hero rotates by sport, one step per visit (owner, 24 Nov 2026). */
@@ -539,14 +552,26 @@ function renderLanding(skipLoad){
 const agoText=iso=>{const t=Date.parse(iso);if(!Number.isFinite(t))return '';const m=Math.max(0,Math.floor((Date.now()-t)/60000));return m<1?'just now':m<60?m+' min ago':m<48*60?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' days ago'};
 const updatedLine=()=>desk.lastSuccessfulAt&&agoText(desk.lastSuccessfulAt)?'<p class="np-updated" data-updated-at="'+esc(desk.lastSuccessfulAt)+'">Updated <span>'+esc(agoText(desk.lastSuccessfulAt))+'</span></p>':'';
 function renderHome(){
- const leads=newsLeads();
- const head='<header class="np-head"><h1>News</h1><p>'+(activeSport()==='all'?'Boxing, MMA, grappling and sumo, from the publishers that cover them.':'Latest '+esc(activeSport())+' news from the publishers that cover it.')+'</p>'+updatedLine()+'</header>';
- if(!leads.length)return renderFrame('<div class="np">'+head+'<p role="status" class="front-loading">'+(desk.articles.length?'No verified stories available for this sport yet.':'Checking the latest fight news…')+'</p></div>'+window.BEFNCoverage.panel(activeSport()));
- const h=newsPageHelpers();
- const intl=window.BEFNNewsPage.languageHTML(window.BEFNNewsPage.usableLanguageStories(desk.language,activeSport()),h,6);
- return renderFrame('<div class="np">'+head+window.BEFNNewsPage.leadsHTML(leads,h)+intl
-  +'<section id="news-feed" aria-label="Latest fight news">'+renderNewsFeed()+'</section></div>'+window.BEFNCoverage.panel(activeSport()));
+ /* MMA keeps its direct link to MMA Junkie, whose stories reach the feed through a search index. */
+ const junkie=newsView()==='mma'?'<p class="nwa-more-link"><a class="nwa-pill news-publisher-link" href="https://mmajunkie.usatoday.com/" target="_blank" rel="noopener noreferrer">More at MMA Junkie ↗</a></p>':'';
+ return renderFrame(window.BEFNNewsFront.pageHTML(newsFrontModel(),{esc,safeURL}).replace(/<\/div>$/,junkie+'</div>')+window.BEFNCoverage.panel(activeSport()));
 }
+/* A top-section photo that fails to load: draw the page again without it, keeping the scroll position. */
+document.addEventListener('befn:news-photo-failed',()=>{if(!location.hash.startsWith('#news'))return;const t=document.getElementById('main'),y=scrollY;if(t&&t.querySelector('.nwa')&&!t.querySelector('.nwa [aria-expanded="true"]')){t.innerHTML=renderHome();scrollTo(0,y);}});
+/* News chips: All, Boxing and MMA set the site's sport (the top bar follows); Sumo is #news/sumo. Latest / Most covered reorder. */
+document.addEventListener('click',e=>{
+ const sp=e.target.closest('[data-nwa-sport]'),so=e.target.closest('[data-nwa-sort]');
+ if(!sp&&!so)return;
+ const target=document.getElementById('main');
+ const redraw=sel=>{if(target){target.innerHTML=renderHome();target.querySelector(sel)?.focus({preventScroll:true});}};
+ state.newsPage=1;
+ if(so){state.newsSort=so.dataset.nwaSort==='covered'?'covered':'latest';redraw('[data-nwa-sort="'+state.newsSort+'"]');return;}
+ const v=sp.dataset.nwaSport;
+ if(v==='sumo'){if(location.hash!=='#news/sumo')history.replaceState(null,'','#news/sumo');pageHash='#news/sumo';redraw('[data-nwa-sport="sumo"]');return;}
+ if(location.hash==='#news/sumo'){history.replaceState(null,'','#news');pageHash='#news';}
+ if(v!==activeSport()&&window.BEFNSport){window.BEFNSport.set(v);}else redraw('[data-nwa-sport="'+v+'"]');
+ document.querySelector('#main [data-nwa-sport="'+v+'"]')?.focus({preventScroll:true});
+});
 document.addEventListener('click',e=>{if(e.target.closest('#desk-updates')&&desk.pending){const {n,e:events}=desk.pending;Object.assign(desk,n,{events:events.events,reviewedAt:events.reviewedAt,pending:null});navigate();}});
 setInterval(()=>loadDesk(true),5*60*1000);
 setInterval(()=>{if(document.hidden)return;document.querySelectorAll('[data-updated-at] span').forEach(el=>{const v=agoText(el.parentElement.dataset.updatedAt);if(v&&el.textContent!==v)el.textContent=v});},30000);
@@ -1284,12 +1309,11 @@ document.addEventListener('click',e=>{
    return;
   }
   if(name==='talkRole'||name==='socialPlatform')state.socialPage=1;
-  if(name==='newsSort'){state.newsPage=1;const feed=document.getElementById('news-feed');if(feed){feed.innerHTML=renderNewsFeed();return;}}
-  
+    
   navigate();
   return;
  }
- if(e.target.closest('[data-news-more]')){state.newsPage++;const feed=document.getElementById('news-feed');if(feed)feed.innerHTML=renderNewsFeed();return;}
+ if(e.target.closest('[data-news-more]')){const feed=document.getElementById('news-feed');const had=feed?feed.querySelectorAll('.nwa-row').length:0;state.newsPage++;if(feed){feed.innerHTML=renderNewsFeed();feed.querySelectorAll('.nwa-row .nwa-hit')[had]?.focus({preventScroll:true});}return;}
  const fighter=e.target.closest('[data-fighter]');
  if(fighter){openFighter(fighter.dataset.fighter);return;}
  if(e.target.closest('#closeFighter,[data-close-fighter]')){dialog.close?.();return;}

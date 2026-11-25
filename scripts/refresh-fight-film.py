@@ -12,6 +12,7 @@ import concurrent.futures
 import re
 import sys
 import unicodedata
+import urllib.parse
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
@@ -42,12 +43,12 @@ CHANNELS=[
 # UFC posts a short for almost every finish and a card has 12+ fights, so the newest 6 uploads age out of re-verification
 # (and out of the 48 h Australian-playback gate) within hours. Look at the whole RSS window (15) for UFC; others stay at 6.
 PER_CHANNEL={'UFC':15}
-KEYWORDS=re.compile(r'\b(highlights?|knockouts?|ko|tko|stoppage|stops|stopped|finish(?:es|ed)?|finishing|submission|submits?|tapout|tap out|pins?|tech fall|technical fall|best moments|fight recap|match recap|full fight|full match|first [0-9]+ matches|full bout|wrestling finals|bjj finals|world championship highlights|final moments|leg locks|chokes?|ground and pound|full fight|full match|full bout|najlepsze momenty|nokaut|poddanie|ハイライト|試合|一本)\b',re.I)
+KEYWORDS=re.compile(r'\b(highlights?|knockouts?|knock(?:s|ed)?\s*out|ko|tko|stoppage|stops|stopped|finish(?:es|ed)?|finishing|submission|submits?|tapout|tap out|pins?|tech fall|technical fall|best moments|fight recap|match recap|full fight|full match|first [0-9]+ matches|full bout|wrestling finals|bjj finals|world championship highlights|final moments|leg locks|chokes?|ground and pound|full fight|full match|full bout|najlepsze momenty|nokaut|poddanie|ハイライト|試合|一本)\b',re.I)
 NEGATIVE=re.compile(r'\b(previews?|predictions?|interviews?|press conference|weigh[- ]?in|face[- ]?off|watchalong|podcast|training|tutorial|how to|explained|reacts?|rumours?|breakdown|breaks down|trailer|teaser|countdown|coming soon|fight week|before the fight|behind the scenes|promo(?:tional)?|presser)\b',re.I)
 SPORT_WORDS={
- 'Boxing':re.compile(r'\b(boxing|round|ko|tko|knockout|fight|stoppage|knockdown|highlights?)\b',re.I),
- 'MMA':re.compile(r'\b(ufc|mma|pfl|rizin|ksw|cage warriors|fight|finish|submission|knockout|highlights?|tko|ko|stoppage|full fight|full bout|nokaut|poddanie)\b|試合|ハイライト',re.I),
- 'MMA / Grappling':re.compile(r'\b(one championship|mma|fight|submission|knockout|highlights?|tko|ko|stoppage)\b',re.I),
+ 'Boxing':re.compile(r'\b(boxing|round|ko|tko|knock(?:s|ed)?\s*out|knockout|fight|stoppage|knockdown|highlights?)\b',re.I),
+ 'MMA':re.compile(r'\b(ufc|mma|pfl|rizin|ksw|cage warriors|fight|finish|submission|knock(?:s|ed)?\s*out|knockout|highlights?|tko|ko|stoppage|full fight|full bout|nokaut|poddanie)\b|試合|ハイライト',re.I),
+ 'MMA / Grappling':re.compile(r'\b(one championship|mma|fight|submission|knock(?:s|ed)?\s*out|knockout|highlights?|tko|ko|stoppage)\b',re.I),
  'BJJ / Grappling':re.compile(r'\b(bjj|jiu.jitsu|ibjjf|adcc|grappling|nogi|no.gi|submission|choke|leg.lock|highlights?|finals|finish)\b',re.I),
  'Wrestling / RAF':re.compile(r'\b(raf|wrestling|freestyle|pin|takedown|tech fall|highlights?|finals|match|finish)\b',re.I)
 }
@@ -75,7 +76,7 @@ def normal(text):
  return re.sub(r'[^a-z0-9]+',' ',unicodedata.normalize('NFKD',str(text or '')).encode('ascii','ignore').decode().lower()).strip()
 def video_kind(title):
  if re.search(r'\b(submission|submits|tapout|tap out|choke|leg lock)\b',title,re.I):return 'Submission'
- if re.search(r'\b(ko|tko|knockout|stoppage|stops|stopped|knockdown)\b',title,re.I):return 'KO / TKO'
+ if re.search(r'\b(ko|tko|knock(?:s|ed)?\s*out|knockout|stoppage|stops|stopped|knockdown)\b',title,re.I):return 'KO / TKO'
  if re.search(r'\b(pin|tech fall|technical fall)\b',title,re.I):return 'Pin / Technical fall'
  return 'Highlights'
 def qualifies(title,discipline):
@@ -98,7 +99,7 @@ def parse_feed(xml,publisher,category,discipline,today=None):
    'title':title,'url':'https://www.youtube.com/watch?v='+vid,
    'thumbnail':'https://i.ytimg.com/vi/'+vid+'/hqdefault.jpg',
    'publisher':publisher,'date':published,'verified':True,'kind':video_kind(title),
-   'isFinish':bool(re.search(r'\b(ko|tko|knockout|stoppage|submission|submits|tapout|pin|tech fall|technical fall)\b',title,re.I)),
+   'isFinish':bool(re.search(r'\b(ko|tko|knock(?:s|ed)?\s*out|knockout|stoppage|submission|submits|tapout|pin|tech fall|technical fall)\b',title,re.I)),
    'source':'Verified publisher YouTube upload feed'
   })
  return [dict(video,sport=sport) for video in videos if (sport:=video_sport(video))]
@@ -187,7 +188,7 @@ def parse_channel_videos(html,publisher,category,discipline,today=None):
    'title':title,'url':'https://www.youtube.com/watch?v='+vid,
    'thumbnail':'https://i.ytimg.com/vi/'+vid+'/mqdefault.jpg',
    'publisher':publisher,'date':date,'verified':True,'kind':video_kind(title),
-   'isFinish':bool(re.search(r'\b(ko|tko|knockout|stoppage|submission|submits|tapout|pin|tech fall)\b',title,re.I)),
+   'isFinish':bool(re.search(r'\b(ko|tko|knock(?:s|ed)?\s*out|knockout|stoppage|submission|submits|tapout|pin|tech fall)\b',title,re.I)),
    'source':'Public publisher channel videos page'})
  return [dict(video,sport=sport) for video in results if (sport:=video_sport(video))]
 
@@ -410,7 +411,39 @@ def merge_video(film,results,fetched):
  # Only Australian-listed videos with actual publisher thumbnails are shown.
  film['videos']=sorted(existing.values(),key=lambda v:(v.get('date',''),str(v.get('id',''))),reverse=True)[:150]
  return added,matched
-def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au,check_shorts=True):
+SEARCH_CHANNELS={'UFC':[('UFC','UCvgfXK4nTYKudb0rFR6noLA','combat','MMA')],
+ 'PFL':[('PFL','UCPrONRG9hO1f-OrxW-WH-xg','combat','MMA')],
+ 'Cage Warriors':[('Cage Warriors','c/CageWarriorsTV','combat','MMA')],
+ 'Boxing':[('DAZN Boxing','UCurvRE5fGcdUgCYWgh-BDsg','boxing','Boxing'),('Top Rank Boxing','UCbzRzJNHx7ZLlJML9BjZQVQ','boxing','Boxing')]}
+MAX_SEARCHES=24
+def finish_searches(results,today,days=14):
+ """Channel searches for recent stoppages: one per winner and publisher channel, newest fights first, capped.
+ The channel's own upload list holds only its newest uploads, and a card has a dozen finishes."""
+ out=[];seen=set()
+ rows=[r for r in (results or {}).get('results',[]) if isinstance(r,dict) and r.get('sport') in ('MMA','Boxing') and isinstance(r.get('winner'),int)
+  and re.search(r'\b(ko|tko)\b',str(r.get('method','')),re.I) and len(r.get('fighters') or [])==2]
+ for r in sorted(rows,key=lambda r:r.get('date',''),reverse=True):
+  try:age=(today-dt.date.fromisoformat(r['date'])).days
+  except (KeyError,ValueError):continue
+  if age<0 or age>days:continue
+  event=str(r.get('event',''))
+  group='Boxing' if r['sport']=='Boxing' else 'UFC' if re.match(r'ufc',event,re.I) else 'PFL' if re.match(r'pfl',event,re.I) else 'Cage Warriors' if re.search(r'cage warriors',event,re.I) else None
+  name=str(r['fighters'][r['winner']].get('name',''))
+  if not group or not name:continue
+  for channel in SEARCH_CHANNELS[group]:
+   key=(channel[0],normal(name))
+   if key in seen:continue
+   seen.add(key);out.append((channel,name+' knockout'))
+   if len(out)>=MAX_SEARCHES:return out
+ return out
+def fetch_search(channel_id,query):
+ """A publisher's own channel search page (its uploads only), read like its videos page."""
+ base='https://www.youtube.com/'+(channel_id if channel_id.startswith(('@','c/')) else 'channel/'+channel_id)
+ url=base+'/search?query='+urllib.parse.quote(query)
+ request=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36','Accept-Language':'en-AU,en;q=0.9'})
+ with urllib.request.urlopen(request,timeout=15) as res:return res.read(4500000).decode('utf-8','replace')
+
+def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au,check_shorts=True,search=fetch_search):
  today=today or dt.datetime.now(dt.timezone.utc).date()
  now=dt.datetime.now(dt.timezone.utc)
  candidates=[];fail=[]
@@ -423,6 +456,20 @@ def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au,check_shor
   except Exception as exc:
    fail.append(publisher)
    print('Video source delayed:',publisher,type(exc).__name__,getattr(exc,'code',''),str(exc)[:90],file=sys.stderr)
+ # Finish clips for recent stoppages: search the publisher's own channel for each winner (channel upload lists only hold the newest uploads).
+ searched=0
+ for (publisher,channel,category,discipline),query in finish_searches(results,today):
+  try:
+   html=search(channel,query)
+   candidates.extend(parse_channel_videos(html,publisher,category,discipline,today)[:3]);searched+=1
+  except Exception as exc:
+   print('Finish search delayed:',publisher,type(exc).__name__,str(exc)[:80],file=sys.stderr)
+ # Clips already in the feed stay playable only while their Australian check is under 48 h old, and they drop out of a channel's newest uploads within hours,
+ # so re-check every YouTube clip from the last 21 days (each at most every 6 h).
+ for v in known.values():
+  try:recent=0<=(today-dt.date.fromisoformat(v.get('date',''))).days<=21
+  except ValueError:recent=False
+  if recent and str(v.get('url','')).startswith('https://www.youtube.com/watch?v='):candidates.append(v)
  # A public upload is not proof of AU playback: check each candidate's
  # YouTube player country list before it can enter the website data.
  unique={v['id']:v for v in candidates}
@@ -444,7 +491,7 @@ def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au,check_shor
  film['regionPolicy']='Videos need documented YouTube API AU region permission (or verified public player country metadata) plus an original video thumbnail; unconfirmed videos are withheld.'
  print('Fight Film: '+str(len(CHANNELS)-len(fail))+'/'+str(len(CHANNELS))+' channel feeds, '
        +str(len(verified))+' AU-approved with thumbnails, '+str(added)+' new videos, '
-       +str(matched)+' newly matched bouts')
+       +str(matched)+' newly matched bouts, '+str(searched)+' finish searches')
  return added,matched
 
 if __name__=='__main__':
