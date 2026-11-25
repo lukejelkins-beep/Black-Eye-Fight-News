@@ -21,6 +21,16 @@
 #main .sov-btn.is-ghost{background:transparent;color:#fff!important;border:1px solid #6a6166}
 #main .sov-cast{display:flex;justify-content:center;align-items:flex-end;height:300px}
 #main .sov-cast img{height:100%;width:auto;max-width:60%;object-fit:contain;object-position:bottom;margin:0 -24px;filter:drop-shadow(0 10px 30px #0008)}
+/* Official event poster in the hero (owner, 25 Nov 2026): poster on top, edge to edge, with a blurred copy
+   of the same artwork filling the sides so there is no frame; the details sit below. Never cropped. */
+#main .sov-hero.has-poster{grid-template-columns:1fr;padding:0;gap:0;min-height:0;align-items:stretch}
+#main .sov-hero.has-poster .sov-hero-copy{padding:20px 32px 28px}
+#main .sov-poster{position:relative;margin:0;overflow:hidden;display:flex;justify-content:center;background:var(--dark)}
+#main .sov-poster-bg{position:absolute;inset:-10%;width:120%;height:120%;object-fit:cover;filter:blur(28px) brightness(.55) saturate(1.1)}
+#main .sov-poster-img{position:relative;display:block;width:auto;max-width:100%;height:auto;max-height:520px;object-fit:contain}
+#main .sov-poster.is-landscape .sov-poster-img{width:100%;max-height:none}
+#main .sov-poster::after{content:"";position:absolute;left:0;right:0;bottom:0;height:72px;background:linear-gradient(transparent,var(--dark));pointer-events:none}
+#main .sov-poster figcaption{position:absolute;right:12px;bottom:8px;z-index:1;font-size:11px;line-height:1.3;color:#cfc6ca;text-shadow:0 1px 2px #000}
 /* blocks */
 #main .sov-blk{padding-top:32px}
 #main .sov-hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:10px;margin-bottom:14px}
@@ -64,6 +74,7 @@
  #main .sov-next{margin-top:12px}#main .sov-next>b{font-size:15px;width:100%}#main .sov-cd b{font-size:20px}
  #main .sov-hero{grid-template-columns:1fr;padding:0 16px;min-height:0;gap:0}
  #main .sov-cast{height:200px;margin-top:4px}#main .sov-cast img{margin:0 -16px}
+ #main .sov-hero.has-poster{padding:0}#main .sov-hero.has-poster .sov-hero-copy{padding:14px 16px 20px}#main .sov-poster-img{width:100%;max-height:none}#main .sov-poster figcaption{right:8px;bottom:6px}
  #main .sov-hero-copy{padding:16px 0 8px}#main .sov-hero h1{font-size:24px}
  #main .sov-grid2,#main .sov-ups,#main .sov-news{grid-template-columns:1fr}
  #main .sov-chs,#main .sov-exp{grid-template-columns:1fr 1fr}

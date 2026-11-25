@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (Official posters in the Overview hero)
+- **An upcoming fight in the Overview hero leads with its official poster when BEFN holds one** (owner: "Can we use official fight posters please for fury joshua as an example"), extending the Fights-page rule of 24 Nov. Portrait first, then landscape, shown whole with its credit (e.g. Fury vs Joshua: "Event promotional artwork via www.netflix.com"). With no poster, the fighters' cut-outs as before; result heroes keep the cut-outs. Layout (owner, same day: "poster at the top with seamless border and details below"): the poster runs edge to edge across the top of the card, a blurred copy of the same artwork fills the sides beside a portrait poster so there is no frame, the bottom fades into the card, and the date line, headline, summary and buttons sit below. Covers the Boxing and MMA Overviews and the front-page hero. Shows up in `assets/sport-overview.js` (`heroBlock`) and `assets/sport-overview.css` (`.sov-poster`).
+
 ## 2026-11-24 (Fight film: film wall)
 - **The Fight film tab is a film wall** (owner chose design A, "Film wall", with all four extras). Under the Fights heading and the Upcoming / Results / Fight film switch there is no second "Fight film" heading or kicker.
   - **Top:** the big latest clip (two thirds) and a "Latest finishes" column of three (one third); stacked on phones. The big clip is worked out from the data: the newest finish from the last 7 days, else the newest clip. The hard-coded "7 November 2026 · UFC Vegas 124" block is gone.
