@@ -140,11 +140,24 @@ assert(html.includes('>W bantamweight<'), 'short chip label for women’s divisi
 const evil = A.carouselHTML(A.mmaSlides({ champions: [{ division: '<i>D</i>', name: '<img src=x>', start: '1 Jan 2026' }], now, events: [], regs: {} }), { title: 'T' });
 assert(!evil.includes('<img src=x>') && evil.includes('&lt;img src=x&gt;') && !evil.includes('<i>D</i>'));
 console.log('fight analysis tests passed');
-// Stoppage videos (25 Nov 2026): a clip must name the winner or loser and fall from a day before to three weeks after the fight; finishes lead; none if none match.
+// Stoppage videos (25 Nov 2026): the clip must be a finish whose title names the winner, dated on/after the fight and within two weeks; reactions, reels and loser-only titles never show.
 const stops = [{ date: '2026-11-14', winner: 'Diego Pacheco', loser: 'Darius Fulghum', round: 2 }, { date: '2026-11-14', winner: 'Nobody Known', loser: 'Also Absent', round: 1 }];
-const clip = (title, date, extra = {}) => Object.assign({ url: 'https://www.youtube.com/watch?v=AAAAAAAAAAA', thumbnail: 'https://i.ytimg.com/vi/x/hq.jpg', title, date }, extra);
-const sc = A.stoppageClips(stops, [clip('Pacheco highlights', '2026-11-15'), clip('Pacheco vs Fulghum KO', '2026-11-16', { isFinish: true }), clip('Pacheco full fight', '2026-11-15', { isFinish: true }),
-  clip('Pacheco old', '2026-09-01', { isFinish: true }), clip('Unrelated bout', '2026-11-15', { isFinish: true })]);
-assert.strictEqual(sc[0].clip.title, 'Pacheco vs Fulghum KO', 'finish beats highlights; full fights and out-of-window clips are skipped');
+const clip = (title, date, extra = {}) => Object.assign({ url: 'https://www.youtube.com/watch?v=AAAAAAAAAAA', thumbnail: 'https://i.ytimg.com/vi/x/hq.jpg', title, date, isFinish: true, kind: 'KO / TKO' }, extra);
+const sc = A.stoppageClips(stops, [clip('Pacheco highlights', '2026-11-15', { isFinish: false, kind: 'Highlights' }), clip('Pacheco stops Fulghum', '2026-11-16'),
+  clip('Hooker reacting to Pacheco\u2019s KNOCKOUT', '2026-11-14'), clip('Every Pacheco KNOCKOUT', '2026-11-15'), clip('Fulghum knocked out by someone', '2026-11-15'),
+  clip('Pacheco KO', '2026-11-13'), clip('Pacheco old KO', '2026-09-01'), clip('Unrelated KO', '2026-11-15')]);
+assert.strictEqual(sc[0].clip.title, 'Pacheco stops Fulghum', 'only a finish naming the winner, in the window, that is not a reaction or reel');
 assert.strictEqual(sc[1].clip, null, 'no matching clip means no clip');
 console.log('stoppage clip tests passed');
+// UFC's own shorts rarely name fighters: matched by #ufc<place> card tag + the stoppage's technique, only when that technique is unique on the card.
+const ev2 = 'UFC Fight Night: A vs B', loc = 'Doha, Qatar';
+const r2 = (n, l, m) => ({ sport: 'MMA', date: '2026-11-21', eventId: 'q', event: ev2, location: loc, winner: 0, method: m, round: 1, fighters: [f(n), f(l)] });
+const e2 = A.ended(A.recent({ results: [r2('John Mitchell', 'Shoaib Yousaf', 'KO/TKO (knee to head at distance)'), r2('Diyar Nurgozhay', 'Alik Lorenz', 'KO/TKO (kick to head at distance)'),
+  r2('Navajo Stirling', 'Jiri Prochazka', 'KO/TKO (punch to head at distance)'), r2('Same Punch', 'Other Loser', 'KO/TKO (punches)')] }, 'MMA', now));
+const sc2 = A.stoppageClips(e2.stoppages, [clip('BEAUTIFUL KNEE KNOCKOUT #ufcqatar', '2026-11-21'), clip('BRUTAL KICK KNOCKOUT #ufcvegas124', '2026-11-21'), clip('PUNCH KNOCKOUT #ufcqatar', '2026-11-21')]);
+const by = n => sc2.find(s => s.winner === n);
+assert.strictEqual(by('John Mitchell').clip.title, 'BEAUTIFUL KNEE KNOCKOUT #ufcqatar', 'unique knee on the card matches the knee short');
+assert.strictEqual(by('Diyar Nurgozhay').clip, null, 'a short tagged for a different card never matches');
+assert.strictEqual(by('Navajo Stirling').clip, null, 'two punch finishes on the card: ambiguous, so none');
+assert.strictEqual(A.technique('KO (punches)'), 'punch'); assert.strictEqual(A.technique('TKO (retirement)'), '');
+console.log('short clip tests passed');

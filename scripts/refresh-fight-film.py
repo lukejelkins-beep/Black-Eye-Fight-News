@@ -39,6 +39,9 @@ CHANNELS=[
  ('KSW','UCv_fwQqff6zEFDxfJh_03fg','combat','MMA'),
  ('TNT Fight Sports','UC-hWvVvE-crFl5vg5G8QbqA','combat','MMA')
 ]
+# UFC posts a short for almost every finish and a card has 12+ fights, so the newest 6 uploads age out of re-verification
+# (and out of the 48 h Australian-playback gate) within hours. Look at the whole RSS window (15) for UFC; others stay at 6.
+PER_CHANNEL={'UFC':15}
 KEYWORDS=re.compile(r'\b(highlights?|knockouts?|ko|tko|stoppage|stops|stopped|finish(?:es|ed)?|finishing|submission|submits?|tapout|tap out|pins?|tech fall|technical fall|best moments|fight recap|match recap|full fight|full match|first [0-9]+ matches|full bout|wrestling finals|bjj finals|world championship highlights|final moments|leg locks|chokes?|ground and pound|full fight|full match|full bout|najlepsze momenty|nokaut|poddanie|ハイライト|試合|一本)\b',re.I)
 NEGATIVE=re.compile(r'\b(previews?|predictions?|interviews?|press conference|weigh[- ]?in|face[- ]?off|watchalong|podcast|training|tutorial|how to|explained|reacts?|rumours?|breakdown|breaks down|trailer|teaser|countdown|coming soon|fight week|before the fight|behind the scenes|promo(?:tional)?|presser)\b',re.I)
 SPORT_WORDS={
@@ -416,7 +419,7 @@ def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au,check_shor
   try:
    feed=fetch(channel)
    matches=(parse_feed(feed,publisher,category,discipline,today) if feed.lstrip().startswith('<?xml') or feed.lstrip().startswith('<feed') else parse_channel_videos(feed,publisher,category,discipline,today))
-   candidates.extend(matches[:6])
+   candidates.extend(matches[:PER_CHANNEL.get(publisher,6)])
   except Exception as exc:
    fail.append(publisher)
    print('Video source delayed:',publisher,type(exc).__name__,getattr(exc,'code',''),str(exc)[:90],file=sys.stderr)
