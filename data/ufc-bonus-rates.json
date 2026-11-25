@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "currency": "USD",
+  "note": "Estimate only. Amount per Fight of the Night or Performance of the Night award, by event date. $25,000 finish awards are not in the API and are not counted.",
+  "rates": [
+    { "from": "2012-01-01", "amount": 50000, "source": "UFC standardised awards at $50,000 in 2012 (Knockout and Submission of the Night merged into Performance of the Night in 2014, same amount)" },
+    { "from": "2026-01-24", "amount": 100000, "source": "Raised to $100,000 per award from UFC 324 (24 Jan 2026) under the Paramount deal" }
+  ],
+  "unpricedBefore": "2012-01-01",
+  "unpricedBeforeReason": "Amounts varied by event before 2012 ($50,000 to $75,000 in 2011 reports) and no complete table was found",
+  "unpricedEvents": [
+    { "date": "2026-06-14", "reason": "UFC Freedom 250 (White House) paid special amounts, partly in cryptocurrency" }
+  ]
+}

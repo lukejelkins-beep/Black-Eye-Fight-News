@@ -400,3 +400,16 @@
  #fighterDialog.befn-pro-dialog .befn-hero-flag{width:70%}
  #fighterDialog.befn-pro-dialog .befn-hero-cut::after{background:linear-gradient(90deg,rgba(21,17,21,.1) 0%,#151115 70%),linear-gradient(0deg,#151115 0%,rgba(21,17,21,0) 45%)}
 }
+
+/* Bonuses: Fight of the Night is a filled gold chip, Performance of the Night an outlined one (differ by more than colour) */
+.bsp-chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.bsp-chip.is-fotn{background:var(--pro-gold);color:var(--pro-ink);border:2px solid var(--pro-gold)}
+.bsp-chip.is-potn{background:transparent;color:var(--pro-ink);border:2px solid var(--pro-ink)}
+.bsp-bonus-list{list-style:none;margin:6px 0 0;padding:0}
+.bsp-bonus-list li{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:space-between;align-items:center;padding:8px 6px 8px 10px;border-bottom:1px solid var(--pro-border);border-left:4px solid var(--pro-gold)}
+.bsp-bonus-list strong{display:block;font:800 17px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--pro-ink)}
+.bsp-bonus-list small{display:block;font-size:12px;color:var(--pro-muted)}
+.bsp-bonus-kinds{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bsp-bonus-est{min-width:64px;text-align:right;font-weight:800;color:var(--pro-text)}
+.bsp-bonus-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:720px){.bsp-bonus-tiles{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
