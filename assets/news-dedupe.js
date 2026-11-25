@@ -2,6 +2,7 @@
    Publishing-time deduplication remains authoritative in scripts/news_dedupe.py. */
 (function(){
   'use strict';
+  const window=typeof globalThis.window!=='undefined'?globalThis.window:globalThis;
   const stop=new Set('a an the to and or of in on at for from after before with as by is are was were will be has have had new latest report reports says said reveals breaking exclusive video'.split(' '));
   const updates=new Set('confirmed announced rumored rumoured injured withdraws withdrawn cancelled postponed wins won loses lost knockout stopped weigh weighin signed signs suspended returns retired'.split(' '));
   function url(value){
@@ -92,11 +93,19 @@
   function quality(a){
     return (a.image?.url?10:0)+(Array.isArray(a.summaryPoints)?Math.min(3,a.summaryPoints.length):0)+(a.sourceMethod?0:2);
   }
-  window.BEFNNewsUnique=function(items){
+  /* Clusters: the kept story and the copies this same rule folded into it, so the News page can say
+     which other outlets ran it ("+N outlets"). BEFNNewsUnique keeps its old output: the kept stories. */
+  function clusters(items){
     if(!Array.isArray(items))return [];
     const sorted=[...items].sort((a,b)=>quality(b)-quality(a)||Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
     const picked=[];
-    for(const item of sorted)if(item&&item.url&&item.title&&!picked.some(prev=>same(item,prev)))picked.push(item);
+    for(const item of sorted){
+      if(!(item&&item.url&&item.title))continue;
+      const prev=picked.find(c=>same(item,c.item));
+      if(prev)prev.dupes.push(item);else picked.push({item,dupes:[]});
+    }
     return picked;
-  };
+  }
+  window.BEFNNewsClusters=clusters;
+  window.BEFNNewsUnique=function(items){return clusters(items).map(c=>c.item);};
 })();

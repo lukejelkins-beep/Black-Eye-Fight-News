@@ -1,0 +1,105 @@
+/* News page, design A "Front page + timeline" (owner, 25 Nov 2026). Scoped to .nwa; loaded after site-theme.css.
+   Light page, white cards, one red accent, sport colours for the sport labels. Nothing under 12 px, taps 44 px. */
+.nwa{--nwa-ink:var(--t-ink,#111013);--nwa-mute:var(--t-mute,#5b565d);--nwa-line:var(--t-line,#e5e1d8);--nwa-red:var(--t-red,#cf1824);
+  max-width:1180px;margin:0 auto;padding:clamp(8px,1.6vw,16px) 0 24px;color:var(--nwa-ink);font-family:'DM Sans',system-ui,sans-serif}
+.nwa a{color:inherit;text-decoration:none}
+.nwa a:focus-visible,.nwa button:focus-visible{outline:3px solid var(--nwa-red);outline-offset:2px}
+
+/* Page head: title and one context line. */
+.nwa-head{margin:0 0 12px}
+#main .nwa-head h1{margin:6px 0 4px}
+.nwa-head p{margin:0;color:var(--nwa-mute);font-size:14px;line-height:1.4}
+.nwa-dot{margin:0 5px;color:var(--nwa-mute)}
+
+/* Chips: sport, then order. */
+.nwa-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px 0;margin:0 0 16px}
+.nwa-chip-group{display:flex;flex-wrap:wrap;gap:6px}
+.nwa-sort{margin-left:10px;padding-left:10px;border-left:1px solid #d9d2c4}
+.nwa-chip{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #d9d2c4;background:#fff;color:var(--nwa-ink);font:700 14px/1 'DM Sans',system-ui,sans-serif;cursor:pointer}
+.nwa-chip:hover{border-color:var(--nwa-ink)}
+.nwa-chip[aria-pressed="true"]{background:var(--nwa-ink);border-color:var(--nwa-ink);color:#fff}
+.nwa-sort .nwa-chip[aria-pressed="true"]{background:var(--nwa-red);border-color:var(--nwa-red)}
+
+/* Meta line: sport · source · time · +N outlets. */
+.nwa-meta{display:flex;flex-wrap:wrap;align-items:center;margin:0;font-size:12px;line-height:1.5;font-weight:700;color:var(--nwa-mute)}
+.nwa-sport{font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.nwa-sp-boxing{color:var(--sport-boxing,#cf1824)}
+.nwa-sp-mma{color:#a37500}
+.nwa-sp-sumo{color:var(--sport-sumo,#2a4a8f)}
+.nwa-outlets-btn{position:relative;z-index:2;display:inline-flex;align-items:center;min-height:44px;margin:-14px 0;padding:0 6px;border:0;background:none;color:var(--nwa-red);font:800 12px/1 'DM Sans',system-ui,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.nwa-outlets-btn[aria-expanded="true"]{color:var(--nwa-ink)}
+.nwa-outlets{position:relative;z-index:2;list-style:none;margin:8px 0 0;padding:4px 0 0;border-top:1px dashed var(--nwa-line)}
+.nwa-outlets li{font-size:13px;line-height:1.35}
+.nwa-outlets a,.nwa-outlet-plain{display:block;min-height:44px;padding:12px 0 8px}
+.nwa-outlets a:hover{text-decoration:underline}
+.nwa-outlets strong{font-weight:800}
+
+/* One tap target per story: the overlay link opens the article; names and the outlets button sit above it. */
+.nwa-lead,.nwa-card,.nwa-row{position:relative}
+.nwa-hit{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.nwa-hit:focus-visible{outline:3px solid var(--nwa-red);outline-offset:-3px}
+.nwa-lead:hover h2,.nwa-card:hover h3,.nwa-row:hover h3{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.nwa-name{position:relative;z-index:2;padding:12px 0;text-decoration:underline dotted;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:currentColor}
+.nwa-name:hover{text-decoration-style:solid}
+.nwa-lead .nwa-name{text-decoration-color:#f3c332}
+
+/* Top section: lead and up to three compact stories. */
+.nwa-top{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:14px;margin:0 0 22px}
+.nwa-top.is-single{grid-template-columns:minmax(0,1fr)}
+.nwa-lead{display:block;border-radius:14px;overflow:hidden;background:#151115;min-height:380px;color:#fff}
+.nwa-lead-img{position:absolute;inset:0}
+.nwa-lead-img img{width:100%;height:100%;object-fit:cover;display:block}
+.nwa-lead-copy{position:absolute;left:0;right:0;bottom:0;padding:48px 18px 18px;background:linear-gradient(transparent,rgba(0,0,0,.8) 40%)}
+.nwa-lead .nwa-meta{color:#f3c332}
+.nwa-lead .nwa-sport,.nwa-lead .nwa-dot{color:#f3c332}
+.nwa-lead .nwa-outlets-btn{color:#fff}
+.nwa-lead .nwa-outlets{border-top-color:#ffffff40}
+#main .nwa-lead-title{margin:6px 0 0;color:#fff;font-size:clamp(20px,2.3vw,28px)!important;line-height:1.18!important}
+.nwa-lead.no-img{min-height:0;background:#fff;color:var(--nwa-ink);border:1px solid var(--nwa-line)}
+.nwa-lead.no-img .nwa-lead-copy{position:static;background:none;padding:18px}
+.nwa-lead.no-img .nwa-meta,.nwa-lead.no-img .nwa-dot{color:var(--nwa-mute)}
+.nwa-lead.no-img #main .nwa-lead-title,#main .nwa-lead.no-img .nwa-lead-title{color:var(--nwa-ink)}
+.nwa-side{display:flex;flex-direction:column;gap:10px}
+.nwa-card{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;background:#fff;border:1px solid var(--nwa-line);border-radius:12px;overflow:hidden;min-height:96px}
+.nwa-card.no-img{grid-template-columns:minmax(0,1fr);padding-left:12px}
+.nwa-card-img img{width:120px;height:100%;min-height:96px;object-fit:cover;display:block}
+.nwa-card-copy{padding:10px 10px 10px 0;min-width:0}
+.nwa-card-title,.nwa-row-title{margin:4px 0 0;font:700 15px/1.3 'DM Sans',system-ui,sans-serif!important;letter-spacing:0!important;overflow-wrap:anywhere}
+
+/* Sumo box. */
+.nwa-sumo{background:#fff;border:1px solid var(--nwa-line);border-left:4px solid var(--sport-sumo,#2a4a8f);border-radius:12px;padding:12px 14px;margin:0 0 22px}
+.nwa-sumo-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 8px;margin-bottom:4px}
+#main .nwa-sumo-head h2{margin:0;font-size:17px!important}
+.nwa-note{font-size:12px;font-weight:700;color:var(--nwa-mute)}
+.nwa-sumo-list{list-style:none;margin:0;padding:0}
+.nwa-sumo-list a{display:flex;flex-direction:column;gap:2px;min-height:44px;padding:10px 0;border-top:1px solid #eee7dc}
+.nwa-sumo-title{font-weight:700;font-size:15px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nwa-sumo-list a:hover .nwa-sumo-title{text-decoration:underline}
+.nwa-sumo-meta{font-size:12px;font-weight:600;color:var(--nwa-mute)}
+.nwa-pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border:1px solid #d9d2c4;border-radius:999px;background:#fff;color:var(--nwa-ink);font:800 14px/1 'DM Sans',system-ui,sans-serif;cursor:pointer;margin-top:6px}
+.nwa-pill:hover{border-color:var(--nwa-ink)}
+
+/* Timeline. */
+#main .nwa-day h2{margin:18px 0 0;padding-bottom:6px;border-bottom:3px solid var(--nwa-ink);font-size:18px!important}
+.nwa-row{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--nwa-line)}
+.nwa-thumb{flex:none;width:112px;height:72px;border-radius:8px;overflow:hidden;background:#ece7dc}
+.nwa-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.nwa-row-copy{min-width:0;flex:1}
+.nwa-row-title{font-size:16px!important;margin-top:3px}
+.nwa-morebtn{display:flex;margin:18px auto 0;background:var(--nwa-ink);border-color:var(--nwa-ink);color:#fff;padding:0 26px}
+.nwa-morebtn:hover{background:#000}
+.nwa-empty{font-size:15px;color:var(--nwa-mute);margin:12px 0}
+.nwa-more-link{margin:8px 0 0}
+
+@media (max-width:760px){
+  .nwa-top{grid-template-columns:minmax(0,1fr)}
+  .nwa-lead{min-height:260px}
+  .nwa-card{grid-template-columns:100px minmax(0,1fr)}
+  .nwa-card-img img{width:100px;min-height:88px}
+  .nwa-thumb{width:96px;height:64px}
+  .nwa-row-title{font-size:15px!important}
+}
+@media (max-width:520px){
+  .nwa-chips{gap:8px}
+  .nwa-sort{margin-left:0;padding-left:0;border-left:0;flex-basis:100%}
+}
