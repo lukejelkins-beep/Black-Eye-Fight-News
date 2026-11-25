@@ -155,7 +155,8 @@ class VideoDisciplineScopeTests(unittest.TestCase):
    row('2026-10-01','UFC 999','MMA','Old Winner','KO'),
    row('2026-11-14','Unknown Promotion','MMA','Nobody','KO')]}
   out=m.finish_searches(res,today)
-  self.assertEqual([(c[0],q) for c,q in out],[('UFC','Navajo Stirling knockout'),('DAZN Boxing','Ky Hodgson knockout'),('Top Rank Boxing','Ky Hodgson knockout')])
+  self.assertEqual([(c[0],q) for c,q in out],[('UFC','Navajo Stirling knockout'),('ESPN MMA','Navajo Stirling knockout'),('MMA Junkie','Navajo Stirling knockout'),('Sherdog','Navajo Stirling knockout'),
+   ('DAZN Boxing','Ky Hodgson knockout'),('Top Rank Boxing','Ky Hodgson knockout'),('Sky Sports Boxing','Ky Hodgson knockout'),('Matchroom Boxing','Ky Hodgson knockout')])
   self.assertLessEqual(len(m.finish_searches({'results':[row('2026-11-21','UFC X','MMA','W%d'%i,'KO') for i in range(60)]},today)),m.MAX_SEARCHES)
  def test_refresh_searches_and_rechecks_recent_clips(self):
   today=dt.date(2026,11,25)
@@ -172,7 +173,7 @@ class VideoDisciplineScopeTests(unittest.TestCase):
   m.refresh(film,res,fetch=fetch,today=today,verify=verify,check_shorts=False,search=search)
   self.assertIn('yt-DSGCMCD7cEM',seen['verified'],'a recent clip is re-verified even when it left the channel list')
   self.assertNotIn('yt-OLDOLDOLD00',seen['verified'],'clips older than 21 days are not')
-  self.assertEqual([q for _,q in seen['search']],['John Mitchell knockout'])
+  self.assertEqual([q for _,q in seen['search']],['John Mitchell knockout']*4)
   self.assertEqual([v for v in film['videos'] if v['id']=='yt-DSGCMCD7cEM'][0]['auVerifiedAt'],'2026-11-25T00:00:00Z')
 
 if __name__=='__main__': unittest.main()

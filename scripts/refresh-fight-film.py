@@ -411,11 +411,15 @@ def merge_video(film,results,fetched):
  # Only Australian-listed videos with actual publisher thumbnails are shown.
  film['videos']=sorted(existing.values(),key=lambda v:(v.get('date',''),str(v.get('id',''))),reverse=True)[:150]
  return added,matched
-SEARCH_CHANNELS={'UFC':[('UFC','UCvgfXK4nTYKudb0rFR6noLA','combat','MMA')],
+# Channel IDs and handles below were each read from the channel's own YouTube page (25 Nov 2026). Outlets that could not be confirmed
+# (MMA Fighting, Boxing Scene, TNT Sports Boxing) are left out rather than guessed.
+SEARCH_CHANNELS={'UFC':[('UFC','UCvgfXK4nTYKudb0rFR6noLA','combat','MMA'),('ESPN MMA','UCO4AcsPKEkIqDmbeiZLfd1A','combat','MMA'),
+  ('MMA Junkie','UCJwzYDWMjcrm49k7gmyE1tg','combat','MMA'),('Sherdog','UCW3KTagNuyADCijmSwuaNJA','combat','MMA')],
  'PFL':[('PFL','UCPrONRG9hO1f-OrxW-WH-xg','combat','MMA')],
  'Cage Warriors':[('Cage Warriors','c/CageWarriorsTV','combat','MMA')],
- 'Boxing':[('DAZN Boxing','UCurvRE5fGcdUgCYWgh-BDsg','boxing','Boxing'),('Top Rank Boxing','UCbzRzJNHx7ZLlJML9BjZQVQ','boxing','Boxing')]}
-MAX_SEARCHES=24
+ 'Boxing':[('DAZN Boxing','UCurvRE5fGcdUgCYWgh-BDsg','boxing','Boxing'),('Top Rank Boxing','UCbzRzJNHx7ZLlJML9BjZQVQ','boxing','Boxing'),
+  ('Sky Sports Boxing','@skysportsboxing','boxing','Boxing'),('Matchroom Boxing','UC7LReVje9aPB4B6XAsXX8WQ','boxing','Boxing')]}
+MAX_SEARCHES=48
 def finish_searches(results,today,days=14):
  """Channel searches for recent stoppages: one per winner and publisher channel, newest fights first, capped.
  The channel's own upload list holds only its newest uploads, and a card has a dozen finishes."""
