@@ -69,6 +69,12 @@ HEADLINE_SCALE = 400 / math.log(10)   # Elo convention: rating points per unit o
 # (owner, 2026-11-24, was 11) puts the top ten at about 88 or higher and only the very best at the 99 cap. The full rating is kept as
 # "overallRating" and orders the ranks, so two fighters with the same rounded score still have distinct ranks.
 SCORE_DIVISOR = 8
+# Age (owner request 25 Nov 2026, "improve the BEFN rating"): fitted on 2019-2023 quarterly snapshots, tested on
+# 1,238 bouts from 2024 (scripts/ufc-rating-evaluate.py protocol): accuracy 62.6% -> 64.0%, Brier 0.2275 -> 0.2229
+# (95% interval of the gain +0.0027 to +0.0063). Each year over AGE_CENTRE (the median fighter's age) takes
+# AGE_POINTS_PER_YEAR rating points off; each year under adds them. Unknown birth date: no adjustment.
+AGE_CENTRE = 31.0
+AGE_POINTS_PER_YEAR = 5.4
 
 # Striking (owner, 2026-11-24): output 60% (landed, differential, accuracy, knockdowns, KO wins) and defence 40%
 # (strike defence, strikes absorbed, knockdowns absorbed, KO/TKO losses). KO/TKO losses weigh .07: a walk-forward test
@@ -349,11 +355,23 @@ def blend_logit(results: float, skills: float) -> float:
     return BLEND["results"] * (results - RESULTS_MEAN) / 400 + BLEND["skills"] * (skills - 50) / 100
 
 
+def age_points(born: str | None, as_of: str | None) -> float:
+    """Rating points for age on as_of: AGE_POINTS_PER_YEAR per year from AGE_CENTRE, younger up, older down."""
+    if not born or not as_of or as_of >= "9999":
+        return 0.0
+    try:
+        age = (_dt.date.fromisoformat(as_of[:10]) - _dt.date.fromisoformat(born[:10])).days / 365.25
+    except ValueError:
+        return 0.0
+    return -AGE_POINTS_PER_YEAR * (age - AGE_CENTRE)
+
+
 def score_100(rating):
-    """The reader-facing score out of 100 for a headline rating (1500 = 50)."""
+    """The reader-facing score out of 100 for a headline rating (1500 = 50), to 2 decimal places (owner, 25 Nov 2026:
+    "give the ratings decimal points like 99.95", so close fighters no longer tie). Kept within 1 to 99.99."""
     if rating is None:
         return None
-    return int(_clamp(round(50 + (rating - HEADLINE_CENTRE) / SCORE_DIVISOR), 1, 99))
+    return round(_clamp(50 + (rating - HEADLINE_CENTRE) / SCORE_DIVISOR, 1, 99.99), 2)
 
 
 def overall(scores: dict):
@@ -368,7 +386,7 @@ def overall(scores: dict):
 def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | None = None,
                 prior: dict | None = None) -> dict:
     """fighters: slug -> {"window": weighted window, "history": newest-first fights,
-    "divisionSlug": str|None}. bouts: every archived UFC bout (all fighters, including those who have left), for
+    "divisionSlug": str|None, "born": ISO birth date or None (age adjustment)}. bouts: every archived UFC bout (all fighters, including those who have left), for
     the results rating; as_of: ISO date the results are aged to; prior: slug -> starting rating (pre_ufc_priors).
     Returns slug -> ratings dict."""
     raw, eligible = {}, {}
@@ -443,7 +461,10 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
             logits[slug] = blend_logit(res["rating"], composite[slug])
     established = [slug for slug in logits if slug in shrunk and results[slug]["fights"] >= RESULTS_MIN_FIGHTS]
     centre = sorted(logits[x] for x in established)[len(established) // 2] if established else 0.0
-    headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre)) for slug, v in logits.items()}
+    # 2 decimals (was whole points): one rating point is 0.125 on the score out of 100, so whole points would leave the
+    # decimal score in steps of an eighth.
+    headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre)
+                            + age_points(fighters[slug].get("born"), as_of), 2) for slug, v in logits.items()}
     headline_pop = sorted(headline[x] for x in established)
     # Rank among established fighters by the full rating; equal ratings share a rank.
     ordered = sorted(established, key=lambda x: -headline[x])
@@ -482,6 +503,7 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
                 for fight in [x for x in f["history"] if x["outcome"] in ("W", "L", "D")][:5]]},
             "overall": score_100(headline.get(slug)),
             "overallRating": headline.get(slug),
+            "ageAdjustment": round(age_points(f.get("born"), as_of), 2) if slug in headline else None,
             "overallRank": rank.get(slug) if rated else None,
             "rankOf": len(established),
             "overallPercentile": percentile(headline[slug], headline_pop) if slug in headline else None,

@@ -23,6 +23,7 @@ import bisect
 import datetime as dt
 import importlib.util
 import json
+import math
 import re
 import sys
 import tempfile
@@ -37,21 +38,39 @@ STATUS = DATA / "ufc-fighter-status.json"
 MONTH = 30.4375
 # Form v2 (owner request, 25 Nov 2026): every fight is valued against the BEFN expectation on the night, dominance
 # covers losses as well as wins and reads the judges' scorecards, and momentum follows the results rating itself.
-WEIGHTS = {"results": .25, "dominance": .30, "opposition": .15, "momentum": .10, "activity": .10, "performance": .10}
-POSITION = (1.00, 1.00, 1.00, 1.00, 1.00)   # v2, owner 25 Nov: flat; only age (the half-life) weights recency
-HALF_LIFE_MONTHS = 24                  # v2: was 18
-WINDOW_MONTHS = 36
+# Form v3 (owner request, 25 Nov 2026: "highest possible percentage"): chosen by a weight search scored on fights it
+# was not tuned on (scripts/ufc-form-backtest.py; spec section 3). The fight-by-fight striking, control and takedown
+# margins replace the old last-5 Performance percentile, and the window looks back further.
+# Form v4 (owner, 25 Nov 2026: "Yes, add age", "keep trying to get it higher"): age joins, and Results is still
+# reported but no longer weighted (dominance, opposition and momentum already carry the results; weighting it as well
+# backtested worse).
+WEIGHTS = {"results": 0.0, "dominance": .10, "opposition": .10, "momentum": .10, "activity": .05,
+           "striking": .25, "control": .15, "takedowns": .10, "age": .15}
+AGE_TOP, AGE_SPAN = 38, 16       # age part: 1 at 22 or younger, falling evenly to 0 at 38
+WINDOW_FIGHTS = 8                # v3: up to 8 fights (v2: 5)
+WINDOW_MONTHS = 60               # v3: within 5 years (v2: 3)
+ELIGIBLE_MONTHS = 36             # at least 2 fights in the last 36 months, or no Form ("limited data")
+STRENGTH_MONTHS = 36             # opponent strength: percentile among pre-bout ratings in the 36 months before a bout
+POSITION = (1.0,) * WINDOW_FIGHTS  # flat (owner, 25 Nov); only age (the half-life) weights recency
+HALF_LIFE_MONTHS = 36            # v3 (v2: 24, v1: 18)
+# Fight statistics: margin per fight mapped by 0.5 + 0.5 tanh(margin / scale), so a margin of one scale is 0.88.
+STAT_SCALE = {"striking": 1.5, "control": .2, "takedowns": 1.5}   # sig. strikes/min, control share, takedowns/15 min
 POOL_MONTHS = 24
 STREAK_STEP = 0                  # results: per-fight streak step (v1 +0.05 a win); 0 since v2, it backtested worse
 MOMENTUM_SPAN = 240              # a 120-point rise in the results rating over the window gives momentum 1.0
 # Each fighter's "fights": the fights behind the score, newest first, one array per fight in this order. share is
 # the fight's percentage of the recency weight; value is what the result was worth (fight_value).
-FIGHT_FIELDS = ["date", "opponent", "outcome", "method", "share", "oppStrength", "dominance", "value"]
-KD_FIELD = 16                    # "knockdowns" in roundFields
+FIGHT_FIELDS = ["date", "opponent", "outcome", "method", "share", "oppStrength", "dominance", "value",
+                "strikeDiffPm", "controlShare", "takedownDiff15"]
+SIG_FIELD, KD_FIELD, TD_FIELD, CTRL_FIELD = 0, 16, 17, 21   # sigLanded, knockdowns, takedowns, controlSec (roundFields)
 # Stage and badge thresholds are on the displayed Form (a percentile), so re-weighting the points cannot move them.
 FORM_ON_FIRE, FORM_ON_FIRE_KEEP = 90, 79
 FORM_TITLE_CONTENDER, FORM_RISING, FORM_BREAKOUT = 82, 74, 79
 FORM_SLIPPING, FORM_SLIPPING_TWO_LOSSES = 20, 30
+# The best case after a loss (a split decision to a higher-rated opponent): v1/v2 85, v3 75, v4 75 (owner, selector 25
+# Nov: "Looser, cap from 75": about the 95th percentile of the v4 points; 70 held it at the 90th but cost about a point
+# of backtest accuracy). tests/test_ufc_fighter_form.py checks it stays near there through future reweights.
+LOSS_CAP_START = 75
 MAX_PRE_UFC_FIGHTS = 15          # owner, 2026-11-24: Rising star / Prospect need a modest pre-UFC career
 
 
@@ -81,11 +100,12 @@ def is_split(f) -> bool:
     return f.get("method") == "dec" and str(f.get("methodDetail") or "").lower() in ("split", "majority")
 
 
-def pct_rank(value, population) -> int:
-    """Mid-rank percentile, rounded, 1-99 (the stats build's convention)."""
+def pct_rank(value, population) -> float:
+    """Mid-rank percentile to 2 decimal places, 0.01 to 99.99 (owner, 25 Nov 2026: decimals, so close fighters no longer
+    tie; was a whole number 1-99)."""
     below = sum(1 for v in population if v < value)
     equal = sum(1 for v in population if v == value)
-    return int(clamp(round(100 * (below + equal / 2) / len(population)), 1, 99))
+    return round(clamp(100 * (below + equal / 2) / len(population), .01, 99.99), 2)
 
 
 # ---------- rating history: strength and expectation on the night ----------
@@ -144,7 +164,7 @@ class Strength:
     def of(self, rating: float, date: str) -> float:
         key = (round(rating, 6), date)
         if key not in self.cache:
-            lo = bisect.bisect_left(self.dates, add_months(date, -WINDOW_MONTHS))
+            lo = bisect.bisect_left(self.dates, add_months(date, -STRENGTH_MONTHS))
             hi = bisect.bisect_left(self.dates, date)
             pool = self.values[lo:hi]
             p = (sum(1 for v in pool if v < rating) + .5 * sum(1 for v in pool if v == rating)) / len(pool) if pool else .5
@@ -232,12 +252,29 @@ def fight_value(outcome, strength, dom) -> float:
     return (.12 + .56 * min(dom, .5)) * (.4 + .6 * strength)
 
 
-def points_for(fighter, history, as_of, ratings, strength, performance, injured, after=None):
-    """Returns (points or None, parts, lossCap, per-fight breakdown). history: newest first, all UFC fights."""
+def fight_stats(f):
+    """Margins from the round statistics, the fighter minus the opponent: significant strikes per minute, share of
+    the fight spent in control, takedowns per 15 minutes. None when the fight has no round statistics."""
+    rounds = [r for r in (f.get("rounds") or []) if len(r) > 3]
+    secs = sum(r[1] for r in rounds)
+    if secs <= 0:
+        return None
+
+    def margin(i):
+        return sum(r[2][i] for r in rounds) - sum(r[3][i] for r in rounds)
+    return {"striking": margin(SIG_FIELD) / (secs / 60), "control": margin(CTRL_FIELD) / secs,
+            "takedowns": margin(TD_FIELD) / (secs / 900)}
+
+
+def points_for(fighter, history, as_of, ratings, strength, injured, after=None, born=None):
+    """Returns (points or None, parts, lossCap, per-fight breakdown, points before the loss cap). history: newest
+    first, all UFC fights.
+    born: the fighter's birth date (ISO), or None when unknown (then the age part is left out)."""
     after = after or {}
-    window = [f for f in decided(history) if months_between(f["date"], as_of) <= WINDOW_MONTHS][:5]
-    if len(window) < 2:
-        return None, None, None, None
+    dec = decided(history)
+    if sum(1 for f in dec if months_between(f["date"], as_of) <= ELIGIBLE_MONTHS) < 2:
+        return None, None, None, None, None
+    window = [f for f in dec if months_between(f["date"], as_of) <= WINDOW_MONTHS][:WINDOW_FIGHTS]
     weights = [POSITION[i] * .5 ** (months_between(f["date"], as_of) / HALF_LIFE_MONTHS) for i, f in enumerate(window)]
     s = sum(weights)
 
@@ -251,7 +288,7 @@ def points_for(fighter, history, as_of, ratings, strength, performance, injured,
         q = strength.of(opp, f["date"]) if opp is not None else .3       # unknown opponent: the median's score
         d = dominance(f)
         v = fight_value(f["outcome"], q, d)
-        rows.append({"w": w, "f": f, "q": q, "d": d, "v": v, "me": me, "opp": opp})
+        rows.append({"w": w, "f": f, "q": q, "d": d, "v": v, "me": me, "opp": opp, "st": fight_stats(f)})
 
     wins, losses = win_streak(history), streak(history, "L")
     trend = STREAK_STEP * min(wins, 3) - STREAK_STEP * min(max(losses - 1, 0), 3)
@@ -268,22 +305,32 @@ def points_for(fighter, history, as_of, ratings, strength, performance, injured,
     gap = months_between(history[0]["date"], as_of)
     A = 1.0 if injured else clamp(1 - (gap - 6) / 12)
 
+    stats = {}
+    for k, scale in STAT_SCALE.items():
+        have = [r for r in rows if r["st"] is not None]
+        ws = sum(r["w"] for r in have)
+        stats[k] = None if not ws else .5 + .5 * math.tanh(sum(r["w"] * r["st"][k] for r in have) / ws / scale)
+
     parts = {"results": round(R, 3), "dominance": round(D, 3), "opposition": round(Q, 3),
              "momentum": None if M is None else round(M, 3), "activity": round(A, 3),
-             "performance": None if performance is None else round(performance, 3)}
+             **{k: None if v is None else round(v, 3) for k, v in stats.items()},
+             "age": None if not born else round(clamp((AGE_TOP - years_between(born, as_of)) / AGE_SPAN), 3)}
     used = {k: v for k, v in parts.items() if v is not None}
-    points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used)
+    points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used if WEIGHTS[k])
 
+    uncapped = points
     cap = loss_cap(fighter, history, ratings)
     if cap is not None:
         points = min(points, cap)
     breakdown = [[r["f"]["date"], r["f"].get("opponentSlug"), r["f"]["outcome"], r["f"].get("method"),
-                  round(100 * r["w"] / s), round(r["q"], 2), round(r["d"], 2), round(r["v"], 2)] for r in rows]
-    return round(points, 1), parts, cap, breakdown
+                  round(100 * r["w"] / s), round(r["q"], 2), round(r["d"], 2), round(r["v"], 2)]
+                 + ([None] * 3 if r["st"] is None else [round(r["st"]["striking"], 2), round(r["st"]["control"], 3),
+                                                        round(r["st"]["takedowns"], 2)]) for r in rows]
+    return round(points, 2), parts, cap, breakdown, round(uncapped, 4)
 
 
 def loss_cap(fighter, history, ratings):
-    """If the last fight was a loss: 85 minus penalties for who it was against, how it happened, a losing run and a
+    """If the last fight was a loss: LOSS_CAP_START (75) minus penalties for who it was against, how it happened, a losing run and a
     second stoppage loss in two years. None after a win or draw (the cap lifts with the next win)."""
     dec = decided(history)
     if not dec or dec[0]["outcome"] != "L":
@@ -310,7 +357,7 @@ def loss_cap(fighter, history, ratings):
         since = add_months(last["date"], -24)
         if any(f["outcome"] == "L" and f.get("method") in ("ko", "sub") and since <= f["date"] for f in dec[1:]):
             stopped_again = 5
-    return 85 - opp_pen - manner - run_pen - stopped_again
+    return LOSS_CAP_START - opp_pen - manner - run_pen - stopped_again
 
 
 # ---------- inputs ----------
@@ -349,13 +396,6 @@ def active_injury(entry, history, as_of):
     if months_between(since, as_of) > 24:
         return None
     return entry
-
-
-def percentile_in(values, x):
-    vals = [v for v in values if v is not None]
-    if x is None or not vals:
-        return None
-    return (sum(1 for v in vals if v < x) + .5 * sum(1 for v in vals if v == x)) / len(vals)
 
 
 # ---------- main build ----------
@@ -408,23 +448,11 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
             div = Counter(opp).most_common(1)[0][0] if opp else None
         division[slug] = div
 
-    # within-division percentiles of last-5 strike differential and control share
-    by_div = {}
-    for slug, d in files.items():
-        r = (d["windows"].get("last5") or {}).get("rates") or {}
-        by_div.setdefault(division[slug], []).append((slug, r.get("diffPm"), r.get("ctrlShare")))
-    performance = {}
-    for div, rows in by_div.items():
-        diffs, ctrls = [x[1] for x in rows], [x[2] for x in rows]
-        for slug, dp, cs in rows:
-            parts = [p for p in (percentile_in(diffs, dp), percentile_in(ctrls, cs)) if p is not None]
-            performance[slug] = sum(parts) / len(parts) if parts else None
-
     out = {}
     for slug, d in files.items():
         history = d["fights"]                     # newest first
         inj = active_injury(injuries.get(slug), history, as_of)
-        pts, parts, cap, fights = points_for(slug, history, as_of, ratings, strength, performance.get(slug), inj, after)
+        pts, parts, cap, fights, uncapped = points_for(slug, history, as_of, ratings, strength, inj, after, born.get(slug))
         dec = decided(history)
         last_date = history[0]["date"] if history else None
         gap = months_between(last_date, as_of) if last_date else 999
@@ -432,7 +460,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
         age = years_between(born[slug], as_of) if slug in born else None
         debut_age = years_between(born[slug], first) if slug in born and first else None
         career = d["windows"]["career"]
-        out[slug] = {"name": d["name"], "slug": slug, "points": pts, "parts": parts, "lossCap": cap, "fights": fights,
+        out[slug] = {"name": d["name"], "slug": slug, "points": pts, "_uncapped": uncapped, "parts": parts, "lossCap": cap, "fights": fights,
                      "rank": d.get("officialRank"), "champion": bool(d.get("champion")), "division": division[slug],
                      "women": str(division[slug] or "").startswith("womens"), "certified": slug in certified,
                      "age": age, "debutAge": debut_age, "preUfcFights": pre_ufc.get(slug),
@@ -446,9 +474,11 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
                      "_dec": dec, "_ratings": ratings}
 
     # displayed Form: percentile of points among fighters with a UFC fight in the last 24 months
-    pool = [f["points"] for f in out.values() if f["points"] is not None and f["monthsOut"] <= POOL_MONTHS]
+    # Ranked on (points, points before the loss cap): fighters held at the same cap are ordered by how they were going
+    # before it, instead of sharing one Form (31 shared Form 58.65 on 21 Nov).
+    pool = [(f["points"], f["_uncapped"]) for f in out.values() if f["points"] is not None and f["monthsOut"] <= POOL_MONTHS]
     for f in out.values():
-        f["form"] = min(99, pct_rank(f["points"], pool)) if f["points"] is not None and pool else None
+        f["form"] = pct_rank((f["points"], f["_uncapped"]), pool) if f["points"] is not None and pool else None
 
     for slug, f in out.items():
         f["stage"], f["why"] = stage_for(f)
@@ -458,7 +488,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for div in {f["division"] for f in out.values()}:
         ranked = [f for f in out.values() if f["division"] == div and f["rank"] and 1 <= f["rank"] <= 15
                   and f["form"] is not None and not f["injured"]]
-        ranked.sort(key=lambda f: (-f["points"], f["rank"]))
+        ranked.sort(key=lambda f: (-f["form"], f["rank"]))
         for i, f in enumerate(ranked, 1):
             f["formRank"] = i
     for f in out.values():
@@ -472,6 +502,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for f in out.values():
         f.pop("_dec", None)
         f.pop("_ratings", None)
+        f.pop("_uncapped", None)
     return {"schema": 1, "asOf": as_of, "rankingDate": ranking_date, "previousRankingDate": ranking_prev,
             "source": "scripts/build-ufc-fighter-form.py (Fighters hub handover, 24 Nov 2026)",
             "note": "Form describes recent UFC results; it is not a prediction. Form 90 means going better right now "
@@ -562,7 +593,7 @@ def division_pulse(hub):
         top5 = [f["form"] for f in members if f["rank"] and 1 <= f["rank"] <= 5 and f["form"] is not None]
         hottest = max((f for f in members if not f["champion"] and f["form"] is not None),
                       key=lambda f: (f["form"], f["points"]), default=None)
-        out[div] = {"top5Form": round(sum(top5) / len(top5)) if top5 else None,
+        out[div] = {"top5Form": round(sum(top5) / len(top5), 2) if top5 else None,
                     "onFire": sum(1 for f in members if "On fire" in f["badges"]),
                     "rising": sum(1 for f in members if f["stage"] == "Rising star"),
                     "slipping": sum(1 for f in members if f["stage"] == "Slipping"),
