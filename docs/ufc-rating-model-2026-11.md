@@ -31,6 +31,16 @@ contenders lose a little (Volkanovski #4 to #9, Shevchenko #2 to #6) and younger
 Biggest falls: veterans near the end (Arlovski, Blachowicz, Holly Holm, Cannonier, Thompson); biggest rises: young
 fighters (Tereza Bleda, Francisco Prado, Cameron Saaiman).
 
+## 25 Nov 2026: opponent credit tested on the rating, not adopted
+After Form gained opponent credit in its fight margins (PR #562), the owner asked to test the same on the BEFN rating.
+The results half already credits opponents (Elo); the skills half uses career rates. Opponent-credited striking,
+control and takedown margins (credit 0, 0.5, 1.0 and 1.5; last 8 fights in 5 years, or whole career) were added to the
+rating with age, or used in place of the skills composite, on the same quarterly snapshots (fit before 2024, test
+1,238 bouts from 2024). Every version was slightly worse than the rating with age (64.2%, Brier 0.2227): added,
+63.2-63.7% and Brier 0.0009 to 0.0012 worse; in place of skills, 63.5-63.7% and 0.0025 to 0.0027 worse. On their
+own the credited margins pick 58.5% of winners, but they overlap the rating (correlation 0.55) and add nothing to it.
+The rating is unchanged; the credit stays in Form only.
+
 ## 25 Nov 2026: amateur and Olympic/Commonwealth credentials tested, not adopted
 Owner asked whether the verified amateur results (`data/ufc-amateur-credentials.json`: 128 fighters, 485 results)
 should raise ratings "in a consistent way". One table for every sport and row: Olympic 10 / 9 / 8 (gold, silver,
