@@ -54,20 +54,22 @@
       .map(r => ({ date: r.date, winner: r.fighters[r.winner].name, loser: r.fighters[1 - r.winner].name, round: r.round || null, method: shortMethod(r.method) }));
     return out;
   }
-  /* Stoppage video (owner, 25 Nov 2026). Each stoppage gets the best verified clip from BEFN's film feed that names the winner or
-     the loser and was published from a day before the fight to three weeks after it. Finishes beat highlights, then closest to the
-     fight date. The film feed's own gates decide which clips may show (Australian playback, freshness, no shorts), so `clips` is
-     FightFilm.pool(...). A stoppage with no clip gets none: never an unrelated one. */
+  /* Stoppage video (owner, 25 Nov 2026; tightened the same day after a reaction clip showed as the finish). A clip shows only if it is
+     a finish in the film feed (KO, TKO or submission), its title names the WINNER (a clip naming only the loser is usually a career
+     reel), it was published on or after the fight day and within two weeks, and its title is not a reaction, compilation, full fight
+     or "best of" reel. The closest to the fight date wins. The film feed's own gates (Australian playback, freshness, no shorts) decide
+     which clips may show, so `clips` is FightFilm.pool(...). A stoppage with no clip gets none: never an unrelated one. */
   const norm = s => String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const namesIn = (title, name) => { const t = '-' + norm(title) + '-', n = norm(name), last = n.split('-').pop(); return !!n && (t.includes('-' + n + '-') || (last.length > 4 && t.includes('-' + last + '-'))); };
+  const NOT_THE_FINISH = /\b(react\w*|every|best|greatest|top \d+|ranked|ever|of the year|full fight|full card|marathon|compilation|comeback|press conference|weigh[- ]?in|interview|breakdown|analysis|preview)\b/i;
   function stoppageClips(stoppages, clips) {
     const day = d => Date.parse(d + 'T12:00:00Z');
+    const isFinish = v => v.isFinish === true || /^(ko|tko|submission)\b/i.test(v.kind || '');
     return (stoppages || []).map(s => {
       const fight = day(s.date);
-      const hits = (clips || []).filter(v => v && v.url && v.title && v.thumbnail && !/\b(full fight|full card|marathon|compilation|top \d+|best of)\b/i.test(v.title) &&
-        (namesIn(v.title, s.winner) || namesIn(v.title, s.loser)) && Number.isFinite(day(v.date)) && day(v.date) >= fight - DAY && day(v.date) <= fight + 21 * DAY);
-      const isFinish = v => v.isFinish === true || /ko|tko|submission/i.test(v.kind || '');
-      hits.sort((a, b) => isFinish(b) - isFinish(a) || Math.abs(day(a.date) - fight) - Math.abs(day(b.date) - fight));
+      const hits = (clips || []).filter(v => v && v.url && v.title && v.thumbnail && isFinish(v) && !NOT_THE_FINISH.test(v.title) &&
+        namesIn(v.title, s.winner) && Number.isFinite(day(v.date)) && day(v.date) >= fight && day(v.date) <= fight + 14 * DAY);
+      hits.sort((a, b) => Math.abs(day(a.date) - fight) - Math.abs(day(b.date) - fight));
       return Object.assign({}, s, { clip: hits[0] || null });
     });
   }
