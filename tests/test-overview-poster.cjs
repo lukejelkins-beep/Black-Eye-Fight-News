@@ -37,4 +37,24 @@ for (const helpers of [{ ...base, poster: () => null }, base]) {
 // A poster URL outside BEFN's own assets is refused rather than shown.
 h = hero(O.build(ctx, { ...base, poster: () => ({ portrait: { url: 'javascript:alert(1)' } }) }));
 assert.ok(!h.includes('sov-poster') && !h.includes('javascript:'));
+
+// Coming up cards: a held poster replaces the cut-outs; others keep them.
+const kab = { id: 'kabayel-hysa-2026-11-28', date: '2026-11-28', sport: 'boxing', title: 'Agit Kabayel vs Nelson Hysa', location: 'Germany', promotion: 'Queensberry',
+  bouts: [{ section: 'main', fighters: ['Agit Kabayel', 'Nelson Hysa'], division: 'Heavyweight', note: 'WBC heavyweight world title' }] };
+const two = { ...ctx, events: [kab, fj] };
+const ups = html => (html.match(/<div class="sov-ups">[\s\S]*?<\/div><\/section>/) || [''])[0];
+const only = id => i => (i === id ? posters['fury-joshua-2026-12-11'] : null);
+let u = ups(O.build(two, { ...base, poster: only('fury-joshua-2026-12-11') }));
+assert.ok(/<a class="sov-up" href="#calendar"><span class="sov-up-art is-poster"><img class="sov-poster-bg"[^>]*aria-hidden="true"><img class="sov-up-poster" src="assets\/img\/posters\/fury-joshua-2026-12-11-portrait.webp" alt="Fury vs Joshua official event poster"/.test(u), u.slice(0, 600));
+assert.strictEqual((u.match(/sov-up-art is-poster/g) || []).length, 1, 'only the card with a held poster uses one');
+assert.ok(/sov-up-art"><span class="sov-pc">/.test(u), 'the other card keeps its fighters');
+
+// Front page "Pick a sport": the boxing card (not the hero) uses its poster.
+const ufc = { id: 'ufc-x-2026-12-12', date: '2026-12-12', sport: 'mma', title: 'UFC X: A vs B', location: 'Somewhere', promotion: 'UFC',
+  bouts: [{ section: 'main', fighters: ['Alpha One', 'Beta Two'], division: 'Lightweight', note: 'UFC lightweight title' }] };
+const front = O.buildFront({ now, events: [fj, ufc], results: [], cutouts: {}, featured: { boxing: ['fury-joshua-2026-12-11'], mma: ['ufc-x-2026-12-12'] }, heroOrder: ['mma', 'boxing'], stories: [] },
+  { ...base, poster: only('fury-joshua-2026-12-11') });
+const cards = (front.match(/<div class="fp-scs">[\s\S]*?<\/div><\/section>/) || [''])[0];
+assert.ok(/<a class="fp-sc fp-boxing has-poster"[\s\S]*?<img class="fp-sc-poster is-portrait" src="assets\/img\/posters\/fury-joshua-2026-12-11-portrait.webp" alt="Fury vs Joshua official event poster"/.test(cards), cards.slice(0, 700));
+assert.ok(!/fp-mma has-poster/.test(cards), 'a card without a held poster is unchanged');
 console.log('overview poster: ok');
