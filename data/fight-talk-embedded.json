@@ -1,13 +1,13 @@
 {
-  "attemptedAt": "2026-11-25T00:30:02.216Z",
-  "checkedAt": "2026-11-25T00:30:02.216Z",
+  "attemptedAt": "2026-11-25T02:58:53.413Z",
+  "checkedAt": "2026-11-25T02:58:53.413Z",
   "windowDays": 28,
   "articlesChecked": 30,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 43,
   "publisherSourcesConfigured": 33,
-  "linksFound": 10,
+  "linksFound": 7,
   "newEmbedsVerified": 0,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
@@ -18,6 +18,27 @@
   "curatedRejected": 0,
   "curatedPublisherLinked": 2,
   "posts": [
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "mma",
+      "name": "MMA Fighting",
+      "role": "media",
+      "handle": "@MMAFighting",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-15T03:03:22.786Z",
+      "sourceLinkedAt": "2026-11-25T00:00:00+00:00",
+      "discoveredAt": "2026-11-25T01:57:55.393Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/523204/gabriel-bonfim-vs-sean-brady-fight-night-event-adds-slew-of-undercard-fights",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://x.com/MMAFighting/status/2121801203730579511"
+    },
     {
       "type": "post",
       "platform": "X",
@@ -2323,25 +2344,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DfmvRO3AYVn/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-19T02:25:33+00:00",
-      "discoveredAt": "2026-11-19T04:57:08.507Z",
-      "sourcePublisher": "ONE Championship",
-      "evidenceUrl": "https://www.onefc.com/news/its-my-city-aslamjon-ortikov-carries-spirit-of-samarkands-little-thailand-into-one-world-title-rematch/",
-      "summary": "Original social post linked in ONE Championship coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/DfuKFpFigow/"
     }
   ],
   "seenOriginals": [
@@ -3664,6 +3666,10 @@
     {
       "url": "https://www.instagram.com/reel/DgFwmlWPN4i/",
       "firstSeen": "2026-11-24T23:35:12.264Z"
+    },
+    {
+      "url": "https://x.com/MMAFighting/status/2121801203730579511",
+      "firstSeen": "2026-11-25T01:57:55.393Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."

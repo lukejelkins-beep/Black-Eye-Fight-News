@@ -54,9 +54,27 @@
     const out = { ko: 0, sub: 0, dec: 0, other: 0, total: rows.length };
     for (const r of rows) out[methodKind(r.method)]++;
     out.stoppages = rows.filter(r => methodKind(r.method) === 'ko' && Number.isInteger(r.winner)).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 4)
-      .map(r => ({ date: r.date, winner: r.fighters[r.winner].name, loser: r.fighters[1 - r.winner].name, round: r.round || null }));
+      .map(r => ({ date: r.date, winner: r.fighters[r.winner].name, loser: r.fighters[1 - r.winner].name, round: r.round || null, method: shortMethod(r.method) }));
     return out;
   }
+  /* Stoppage video (owner, 25 Nov 2026). Each stoppage gets the best verified clip from BEFN's film feed that names the winner or
+     the loser and was published from a day before the fight to three weeks after it. Finishes beat highlights, then closest to the
+     fight date. The film feed's own gates decide which clips may show (Australian playback, freshness, no shorts), so `clips` is
+     FightFilm.pool(...). A stoppage with no clip gets none: never an unrelated one. */
+  const norm = s => String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const namesIn = (title, name) => { const t = '-' + norm(title) + '-', n = norm(name), last = n.split('-').pop(); return !!n && (t.includes('-' + n + '-') || (last.length > 4 && t.includes('-' + last + '-'))); };
+  function stoppageClips(stoppages, clips) {
+    const day = d => Date.parse(d + 'T12:00:00Z');
+    return (stoppages || []).map(s => {
+      const fight = day(s.date);
+      const hits = (clips || []).filter(v => v && v.url && v.title && v.thumbnail && !/\b(full fight|full card|marathon|compilation|top \d+|best of)\b/i.test(v.title) &&
+        (namesIn(v.title, s.winner) || namesIn(v.title, s.loser)) && Number.isFinite(day(v.date)) && day(v.date) >= fight - DAY && day(v.date) <= fight + 21 * DAY);
+      const isFinish = v => v.isFinish === true || /ko|tko|submission/i.test(v.kind || '');
+      hits.sort((a, b) => isFinish(b) - isFinish(a) || Math.abs(day(a.date) - fight) - Math.abs(day(b.date) - fight));
+      return Object.assign({}, s, { clip: hits[0] || null });
+    });
+  }
+
   /* A loser whose sourced pre-fight record had no losses ("26-0-0"). */
   function zerosEnded(rows) {
     return rows.filter(r => Number.isInteger(r.winner) && /^\d+-0(-\d+)?$/.test(String(r.fighters[1 - r.winner]?.preRecord || '')))
@@ -269,7 +287,18 @@
     return '<section class="sov-blk">' + head('How fights ended', 'All ' + e.total + ' ' + (sport === 'mma' ? 'MMA' : 'boxing') + ' results BEFN holds from the last two weeks') +
       '<div class="fa-bars">' + bar(e.ko, 'KO / TKO', 'is-ko') + (sport === 'mma' ? bar(e.sub, 'Submission', 'is-sub') : '') + bar(e.dec, 'Decision', 'is-dec') + bar(e.other, 'Draw, no contest, other', 'is-oth') +
       '<p class="sov-sub fa-note">' + Math.round(inside / e.total * 100) + '% ended inside the distance.</p></div>' +
-      (e.stoppages.length ? '<div class="fa-stops"><span class="sov-ev">Latest stoppages</span>' + e.stoppages.map(s => '<div>' + H.face(s.winner, 'is-xs') + '<span><b>' + esc(s.winner) + '</b> stopped ' + esc(s.loser) + (s.round ? ' in round ' + s.round : '') + '</span></div>').join('') + '</div>' : '') + '</section>';
+      (e.stoppages.length ? '<div class="fa-stops"><span class="sov-ev">Latest stoppages</span><div class="fa-stop-grid">' + e.stoppages.map(s => stopHTML(H, s)).join('') + '</div></div>' : '') + '</section>';
+  }
+  function stopHTML(H, s) {
+    const line = '<b>' + esc(s.winner) + '</b> stopped ' + esc(s.loser) + (s.round ? ' in round ' + s.round : '');
+    const v = s.clip;
+    if (!v) return '<div class="fa-stop">' + H.face(s.winner, 'is-xs') + '<span>' + line + '</span></div>';
+    const id = root.FightFilm && root.FightFilm.youtubeId ? root.FightFilm.youtubeId(v.url) : '';
+    const thumb = '<img src="' + esc(v.thumbnail) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="fa-play" aria-hidden="true">▶</span>';
+    const meta = esc([v.publisher || 'Publisher', fmt(v.date)].filter(Boolean).join(' · '));
+    const media = id ? '<button type="button" class="fa-vid" data-fa-play="' + esc(id) + '" data-fa-title="' + esc(v.title) + '" aria-label="Play: ' + esc(v.title) + '">' + thumb + '</button>'
+      : '<a class="fa-vid" href="' + esc(v.url) + '" target="_blank" rel="noopener noreferrer" aria-label="Watch on ' + esc(v.publisher || 'the publisher') + ': ' + esc(v.title) + '">' + thumb + '</a>';
+    return '<div class="fa-stop has-video">' + media + '<span class="fa-stop-cap">' + line + '<small>' + meta + '</small></span></div>';
   }
   function defencesHTML(H, list) {
     if (!list.length) return '';
@@ -290,6 +319,10 @@
   /* Where the local portrait for a name lives ('' when BEFN holds none). */
   const portraitOf = ctx => ctx.portrait || (n => root.BEFNLocalImages ? root.BEFNLocalImages.url(n, 'portrait') : '');
   const regsOf = (ctx, sport) => ({ fullbody: ctx.fullbody && ctx.fullbody.cutouts, cutouts: ((sport === 'boxing' ? ctx.boxingCutouts : ctx.ufcCutouts) || {}).cutouts });
+  function withClips(e, ctx, sport) {
+    const clips = root.FightFilm && root.FightFilm.pool && ctx.film ? root.FightFilm.pool(ctx.film, sport, ctx.now) : [];
+    e.stoppages = stoppageClips(e.stoppages, clips); return e;
+  }
   function boxingPage(ctx) {
     const H = helpers(), D = ctx.data || {}, now = ctx.now;
     const rows = recent(ctx.results, 'Boxing', now);
@@ -300,7 +333,7 @@
       carouselHTML(slides, { title: 'World champions', sub: 'WBA, WBC, IBF and WBO, from BEFN’s title tracker. One division at a time, heaviest first.' }) +
       gridHTML(H, titleGrid(D.champions && D.champions.boxing)) +
       fightsHTML(H, titleFights(ctx.events, 'boxing', now), 'Title fights coming up') +
-      '<div class="fa-two">' + endedHTML(H, ended(rows), 'boxing') + defencesHTML(H, defences(D.champions && D.champions.boxing, 6)) + '</div>' +
+      '<div class="fa-two">' + endedHTML(H, withClips(ended(rows), ctx, 'boxing'), 'boxing') + defencesHTML(H, defences(D.champions && D.champions.boxing, 6)) + '</div>' +
       zerosHTML(H, zerosEnded(rows)) + unbeatenHTML(H, unbeaten) +
       '<p class="sov-sub fa-foot">From BEFN’s title tracker, the schedule and the verified results feed. Results cover the last two weeks BEFN holds.</p></div>';
   }
@@ -308,7 +341,7 @@
     const H = helpers(), D = ctx.data || {}, now = ctx.now;
     const slides = mmaSlides({ champions: D.champions && D.champions.mma, now, events: ctx.events, form: ctx.form, regs: regsOf(ctx, 'ufc'), portrait: portraitOf(ctx) });
     return '<div class="sov fa fa-mma">' + carouselHTML(slides, { title: 'UFC champions', sub: 'From BEFN’s title tracker. Heavyweight first, women’s divisions after the men’s.' }) +
-      '<div class="fa-two">' + endedHTML(H, ended(recent(ctx.results, 'MMA', now)), 'mma') + fightsHTML(H, titleFights(ctx.events, 'mma', now), 'UFC title fights coming up') + '</div></div>';
+      '<div class="fa-two">' + endedHTML(H, withClips(ended(recent(ctx.results, 'MMA', now)), ctx, 'mma'), 'mma') + fightsHTML(H, titleFights(ctx.events, 'mma', now), 'UFC title fights coming up') + '</div></div>';
   }
 
   /* ---------- browser ---------- */
@@ -361,8 +394,8 @@
     if (root.addEventListener) root.addEventListener('resize', () => { if (sec.isConnected) track.scrollLeft = slides[cur].offsetLeft; });
   }
   const URLS = { events: 'data/upcoming-cards.json', results: 'data/results.json', form: 'data/ufc-fighter-form.json',
-    ufcCutouts: 'data/ufc-cutout-register.json', boxingCutouts: 'data/boxing-cutout-register.json', fullbody: 'data/fullbody-cutout-register.json' };
-  const NEEDS = { mma: ['events', 'results', 'form', 'ufcCutouts', 'fullbody'], boxing: ['events', 'results', 'boxingCutouts', 'fullbody'] };
+    ufcCutouts: 'data/ufc-cutout-register.json', boxingCutouts: 'data/boxing-cutout-register.json', fullbody: 'data/fullbody-cutout-register.json', film: 'data/fight-film.json' };
+  const NEEDS = { mma: ['events', 'results', 'form', 'ufcCutouts', 'fullbody', 'film'], boxing: ['events', 'results', 'boxingCutouts', 'fullbody', 'film'] };
   const st = {}, pending = {};
   function get(key) {
     if (!pending[key]) pending[key] = fetch(URLS[key]).then(r => r.ok ? r.json() : null).catch(() => null).then(v => {
@@ -386,7 +419,17 @@
       Promise.all(NEEDS[kind].map(get)).then(() => { if (m.isConnected) render(m); });
     });
   }
-  const api = { titleGrid, titleFights, recent, ended, zerosEnded, defences, boxingPage, mmaTop, methodKind,
+  function play(btn) {
+    const id = btn.getAttribute('data-fa-play'); if (!/^[\w-]{11}$/.test(id || '')) return;
+    const d = root.document, frame = d.createElement('iframe'), box = d.createElement('div');
+    frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+    frame.title = btn.getAttribute('data-fa-title') || 'YouTube video';
+    frame.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture'); frame.setAttribute('allowfullscreen', '');
+    frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    box.className = 'fa-vid fa-player'; box.appendChild(frame); btn.replaceWith(box); frame.focus();
+  }
+  if (typeof document !== 'undefined') document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-fa-play]'); if (t && t.closest('.fa')) { e.preventDefault(); play(t); } });
+  const api = { stoppageClips, titleGrid, titleFights, recent, ended, zerosEnded, defences, boxingPage, mmaTop, methodKind,
     divisionRank, figureFor, nextTitleFight, mmaSlides, boxingSlides, carouselHTML };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNFightAnalysis = api;

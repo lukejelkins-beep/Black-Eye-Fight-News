@@ -150,10 +150,24 @@
       btn = ['#calendar', 'Fight card'];
     }
     const pics = names.map(n => cutoutURL(n, ctx.cutouts)).filter(Boolean);
-    return '<section class="sov-hero' + (pics.length ? '' : ' is-flat') + '"><div class="sov-hero-copy"><div class="sov-k">' + h.esc(kicker.filter(Boolean).join(' · ')) + '</div>' +
+    // An upcoming card leads with its official poster when BEFN holds one (owner, 25 Nov 2026,
+    // following the Fights-page rule of 24 Nov): portrait first, then landscape, shown whole with
+    // its credit. Without one, the fighters' cut-outs as before. Results keep the cut-outs.
+    const held = hero.type === 'upcoming' && h.poster ? h.poster(hero.event.id) : null;
+    const poster = held && (held.portrait || held.landscape);
+    const posterSrc = poster ? ownSrc(h, poster.url) : '#';
+    const art = poster && posterSrc !== '#'
+      ? '<figure class="sov-poster is-' + (held.portrait ? 'portrait' : 'landscape') + '"><img class="sov-poster-bg" src="' + posterSrc + '" alt="" aria-hidden="true"><img class="sov-poster-img" src="' + posterSrc + '" alt="' +
+        h.esc(pairName(hero.event) + ' official event poster') + '" loading="eager" decoding="async"' +
+        (poster.width && poster.height ? ' width="' + Number(poster.width) + '" height="' + Number(poster.height) + '"' : '') + '>' +
+        (poster.credit ? '<figcaption>' + h.esc(poster.credit) + '</figcaption>' : '') + '</figure>'
+      : (pics.length ? '<div class="sov-cast">' + pics.map(u => img(h, u, '', '')).join('') + '</div>' : '');
+    // With a poster: poster on top, edge to edge, details below (owner, 25 Nov 2026). Otherwise as before.
+    const isPoster = art.startsWith('<figure');
+    return '<section class="sov-hero' + (isPoster ? ' has-poster' : art ? '' : ' is-flat') + '">' + (isPoster ? art : '') + '<div class="sov-hero-copy"><div class="sov-k">' + h.esc(kicker.filter(Boolean).join(' · ')) + '</div>' +
       '<h1>' + title + '</h1>' + (para ? '<p>' + h.esc(para) + '</p>' : '') +
       '<a class="sov-btn" href="' + btn[0] + '">' + h.esc(btn[1]) + ' ›</a><a class="sov-btn is-ghost" href="#fights">All fights</a></div>' +
-      (pics.length ? '<div class="sov-cast">' + pics.map(u => img(h, u, '', '')).join('') + '</div>' : '') + '</section>';
+      (isPoster ? '' : art) + '</section>';
   }
 
   function resultsBlock(h, ctx, area) {
@@ -200,7 +214,105 @@
     return out;
   }
 
+  /* UFC champion spotlight (owner, 25 Nov 2026, from the mock-up): one champion large in the centre as a
+     borderless cut-out on the page itself, the previous and next small and blurred either side. It loops, moves on
+     every 5 s, and swipes, arrows, a tap on a side champion or the division buttons move it. ctx.championPhotos is
+     data/ufc-champion-photo-register.json. A champion without a cut-out gets the photo, else initials. */
+  const regRow = (name, reg) => { const k = slug(name); return ((reg && reg.photos) || []).find(x => x && x.slug === k) || null; };
+  const championPhotoURL = (name, reg) => {
+    const r = regRow(name, reg);
+    return r && /^assets\/img\/ufc-champions\/[a-z0-9-]+\.webp$/.test(r.file) ? r.file : '';
+  };
+  const championCutoutURL = (name, reg) => {
+    const r = regRow(name, reg), f = r && r.cutout && r.cutout.file;
+    return f && /^assets\/img\/ufc-champions\/cutout\/[a-z0-9-]+\.webp$/.test(f) ? f : '';
+  };
+  const reignLine = c => {
+    const d = Number(c.defences) || 0;
+    return [c.start ? 'Since ' + c.start : '', d ? d + (d === 1 ? ' defence' : ' defences') : ''].filter(Boolean).join(' · ');
+  };
+  /* Position of champion j when champion i is in the centre, on a loop: 0 centre, -1/1 either side, -2/2 hidden beyond. */
+  const spotOffset = (j, i, n) => { let o = ((j - i) % n + n) % n; if (o > n / 2) o -= n; return o; };
+  const spotClass = o => o === 0 ? 'is-c' : o === -1 ? 'is-l' : o === 1 ? 'is-r' : o === -2 ? 'is-ll' : o === 2 ? 'is-rr' : 'is-off';
+  const shortDiv = d => String(d).replace(/^Women[’']s /i, 'W ').replace(/^Light heavyweight$/i, 'Light heavy');
+  function championSpotlight(h, ctx, list) {
+    const n = list.length, still = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const figs = list.map((c, j) => {
+      const o = spotOffset(j, 0, n), cut = championCutoutURL(c.name, ctx.championPhotos), photo = cut ? '' : championPhotoURL(c.name, ctx.championPhotos);
+      const pic = cut || photo ? '<img src="' + ownSrc(h, cut || photo) + '" alt="' + h.esc(c.name + ', UFC ' + c.division + ' champion') + '"' + (Math.abs(o) > 1 ? ' loading="lazy"' : '') + ' decoding="async" draggable="false">'
+        : '<span class="sov-spot-none">' + h.esc(initials(c.name)) + '</span>';
+      return '<a class="sov-spot-f ' + spotClass(o) + (cut ? '' : ' is-photo') + '" data-spot-i="' + j + '" href="' + ownLink(h, '#fighter/ufc--' + slug(c.name)) + '"' +
+        (o ? ' tabindex="-1" aria-hidden="true"' : '') + ' draggable="false">' + pic + '</a>';
+    }).join('');
+    const infos = list.map((c, j) => '<div class="sov-spot-info" data-spot-info="' + j + '"' + (j ? ' hidden' : '') + '><span class="sov-spot-div">' + h.esc(c.division) + ' champion</span>' +
+      '<a class="sov-spot-name" href="' + ownLink(h, '#fighter/ufc--' + slug(c.name)) + '">' + h.esc(c.name) + '</a>' + (reignLine(c) ? '<small>' + h.esc(reignLine(c)) + '</small>' : '') + '</div>').join('');
+    const pills = list.map((c, j) => '<button type="button" data-spot-go="' + j + '" aria-current="' + (j ? 'false' : 'true') + '" aria-label="' + h.esc(c.division + ': ' + c.name) + '">' + h.esc(shortDiv(c.division)) + '</button>').join('');
+    return '<section class="sov-blk sov-champs">' + head(h, 'UFC champions', ['#champions', 'All divisions']) +
+      '<div class="sov-spot" data-spot-n="' + n + '" data-i="0"' + (still ? ' data-paused="1"' : '') + ' tabindex="0" role="region" aria-roledescription="carousel" aria-label="UFC champions. Swipe or use the arrow keys." data-portrait-ignore>' +
+      '<div class="sov-spot-bar"><span class="sov-spot-n">1 / ' + n + '</span><button type="button" class="sov-spot-play" data-spot="play" aria-label="' + (still ? 'Start rotation">▶' : 'Pause rotation">❚❚') + '</button></div>' +
+      '<div class="sov-spot-stage">' + figs + '</div>' +
+      '<button type="button" class="sov-spot-nav is-prev" data-spot="-1" aria-label="Previous champion">‹</button><button type="button" class="sov-spot-nav is-next" data-spot="1" aria-label="Next champion">›</button>' +
+      infos + '<div class="sov-spot-pills">' + pills + '</div></div></section>';
+  }
+  /* Spotlight controls, browser only: one set of listeners and one timer for the page, working on whatever
+     .sov-spot is on screen (the Overview is re-rendered as innerHTML). State lives on the element. */
+  function spotGo(root, i, byUser) {
+    const n = Number(root.getAttribute('data-spot-n')) || 1; i = ((i % n) + n) % n;
+    root.setAttribute('data-i', i);
+    if (byUser) { root.setAttribute('data-hold', Date.now() + 10000); root.querySelectorAll('.sov-spot-info').forEach(x => x.setAttribute('aria-live', 'polite')); }
+    root.querySelectorAll('.sov-spot-f').forEach(f => {
+      const o = spotOffset(Number(f.getAttribute('data-spot-i')), i, n);
+      f.className = 'sov-spot-f ' + spotClass(o) + (f.classList.contains('is-photo') ? ' is-photo' : '');
+      if (o) { f.setAttribute('tabindex', '-1'); f.setAttribute('aria-hidden', 'true'); } else { f.removeAttribute('tabindex'); f.removeAttribute('aria-hidden'); }
+    });
+    root.querySelectorAll('[data-spot-info]').forEach(x => { x.hidden = Number(x.getAttribute('data-spot-info')) !== i; });
+    root.querySelectorAll('[data-spot-go]').forEach(b => {
+      const on = Number(b.getAttribute('data-spot-go')) === i; b.setAttribute('aria-current', on ? 'true' : 'false');
+      if (on && b.parentNode && b.parentNode.scrollTo) b.parentNode.scrollTo({ left: b.offsetLeft - (b.parentNode.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' });
+    });
+    const c = root.querySelector('.sov-spot-n'); if (c) c.textContent = (i + 1) + ' / ' + n;
+  }
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    const spotOf = e => e.target && e.target.closest && e.target.closest('.sov-spot');
+    const cur = r => Number(r.getAttribute('data-i')) || 0;
+    let swipe = null, swiped = false;
+    document.addEventListener('click', e => {
+      const r = spotOf(e); if (!r) return;
+      if (swiped) { swiped = false; if (e.target.closest('.sov-spot-f')) e.preventDefault(); return; }
+      const b = e.target.closest('[data-spot],[data-spot-go]'), f = e.target.closest('.sov-spot-f');
+      if (b && b.getAttribute('data-spot') === 'play') {
+        const p = !r.hasAttribute('data-paused'); if (p) r.setAttribute('data-paused', '1'); else r.removeAttribute('data-paused');
+        b.textContent = p ? '▶' : '❚❚'; b.setAttribute('aria-label', p ? 'Start rotation' : 'Pause rotation');
+      } else if (b && b.hasAttribute('data-spot-go')) spotGo(r, Number(b.getAttribute('data-spot-go')), true);
+      else if (b) spotGo(r, cur(r) + Number(b.getAttribute('data-spot')), true);
+      else if (f && !f.classList.contains('is-c')) { e.preventDefault(); spotGo(r, Number(f.getAttribute('data-spot-i')), true); }
+    });
+    document.addEventListener('pointerdown', e => { const r = spotOf(e); swipe = r && e.target.closest('.sov-spot-stage') ? { r, x: e.clientX, y: e.clientY } : null; });
+    document.addEventListener('pointerup', e => {
+      if (!swipe) return; const dx = e.clientX - swipe.x, dy = e.clientY - swipe.y, r = swipe.r; swipe = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { swiped = true; setTimeout(() => { swiped = false; }, 60); spotGo(r, cur(r) + (dx < 0 ? 1 : -1), true); }
+    });
+    document.addEventListener('keydown', e => {
+      const r = spotOf(e); if (!r || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') || e.target.closest('.sov-spot-pills')) return;
+      e.preventDefault(); spotGo(r, cur(r) + (e.key === 'ArrowRight' ? 1 : -1), true);
+    });
+    const hover = on => e => { const r = spotOf(e); if (r) { if (on) r.setAttribute('data-hover', '1'); else if (!r.contains(e.relatedTarget)) r.removeAttribute('data-hover'); } };
+    document.addEventListener('mouseover', hover(true)); document.addEventListener('mouseout', hover(false));
+    document.addEventListener('focusin', hover(true)); document.addEventListener('focusout', hover(false));
+    setInterval(() => {
+      if (document.hidden) return;
+      document.querySelectorAll('.sov-spot').forEach(r => {
+        if (r.hasAttribute('data-paused') || r.hasAttribute('data-hover') || Number(r.getAttribute('data-hold') || 0) > Date.now()) return;
+        spotGo(r, cur(r) + 1, false);
+      });
+    }, 5000);
+  }
+
   function championsBlock(h, ctx, area) {
+    if (area === 'mma') {
+      const list = ((ctx.champions && ctx.champions.mma) || []).filter(c => c && c.name && !/vacant/i.test(c.name));
+      if (list.length && ctx.championPhotos && (ctx.championPhotos.photos || []).length) return championSpotlight(h, ctx, list);
+    }
     const rows = area === 'boxing' ? boxingChampions(ctx.champions && ctx.champions.boxing)
       : ((ctx.champions && ctx.champions.mma) || []).filter(c => c && c.name && !/vacant/i.test(c.name)).map(c => ({ division: c.division, name: c.name, belts: [], others: [] }));
     if (!rows.length) return '';
@@ -229,7 +341,7 @@
     return '<section class="sov-blk">' + head(h, 'Explore') + '<div class="sov-exp">' + items.map(x => '<a href="' + x[0] + '"><b>' + h.esc(x[1]) + '</b><span>' + h.esc(x[2]) + '</span></a>').join('') + '</div></section>';
   }
 
-  /* ctx: { area, now, events, results, cutouts, champions:{boxing,mma}, featured, stories } */
+  /* ctx: { area, now, events, results, cutouts, champions:{boxing,mma}, championPhotos, featured, stories } */
   function build(ctx, h) {
     const area = AREA[ctx.area] ? ctx.area : 'boxing';
     if (!(ctx.events || []).length && !ctx.results) return '<div class="sov sov-' + area + '"><p class="front-loading" role="status">Loading the latest ' + AREA[area] + ' fights…</p></div>';
@@ -363,7 +475,7 @@
     return '<div class="sov fp">' + frontNext(h, ctx, sumo) + hero + frontCards(h, ctx, heroSport, sumo) + frontResults(h, ctx, sumo) + frontNews(h, ctx.stories) + '</div>';
   }
 
-  const api = { ownLink, ownSrc, build, buildFront, sumoSummary, bashoStart, pickHero, bigUpcoming, mainEvents, outcome, resultHeadline, methodShort, titleScore, boxingChampions, upcoming, daysUntil, slug };
+  const api = { ownLink, ownSrc, build, buildFront, sumoSummary, bashoStart, pickHero, bigUpcoming, mainEvents, outcome, resultHeadline, methodShort, titleScore, boxingChampions, championPhotoURL, championCutoutURL, spotOffset, upcoming, daysUntil, slug };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNSportOverview = api;
 })(typeof window !== 'undefined' ? window : globalThis);

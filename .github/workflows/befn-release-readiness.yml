@@ -47,6 +47,7 @@ jobs:
           node tests/test-form-rule.cjs
           node tests/test-talk-status.cjs
           node tests/test-sport-url.cjs
+          node tests/test-overview-poster.cjs
           node --test tests/test-ufc-async-authority.cjs
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-postfight-metrics.mjs

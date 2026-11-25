@@ -103,3 +103,42 @@ console.log('sport overview tests passed');
   assert(O.buildFront({ now, events: [], results: null }, h).includes('Loading'));
   console.log('front page tests passed');
 }
+
+// UFC champion spotlight: owner-supplied belt portraits as cut-outs, heavyweight first, looping; the grid without the register.
+{
+  const fs = require('fs'), path = require('path');
+  const reg = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ufc-champion-photo-register.json'), 'utf8'));
+  const champions = { mma: [{ division: 'Heavyweight', name: 'Ciryl Gane', start: '14 Sep 2026', defences: 0 },
+    { division: 'Featherweight', name: 'Alexander Volkanovski', start: '12 Apr 2025', defences: 2 },
+    { division: 'Flyweight', name: 'No Photo <b>', start: '', defences: 1 }, { division: 'Middleweight', name: 'Vacant' },
+    { division: 'Women’s strawweight', name: 'Mackenzie Dern', start: '1 Jan 2026', defences: 0 }] };
+  const base = { area: 'mma', now, events, results, featured, champions, stories: [] };
+  const html = O.build(Object.assign({ championPhotos: reg }, base), h);
+  assert(html.includes('class="sov-spot"') && html.includes('data-spot-n="4"'), 'spotlight shown with 4 champions (vacant left out)');
+  assert(!/Vacant/.test(html), 'vacant titles left out');
+  assert(/class="sov-spot-f is-c" data-spot-i="0" href="#fighter\/ufc--ciryl-gane"/.test(html), 'heavyweight starts in the centre');
+  assert(html.includes('src="assets/img/ufc-champions/cutout/ciryl-gane.webp"'), 'the cut-out, not the photo');
+  assert(/class="sov-spot-f is-r" data-spot-i="1"/.test(html), 'next champion on the right');
+  assert(/class="sov-spot-f is-l[^"]*" data-spot-i="3"/.test(html), 'it loops: the last champion is on the left');
+  assert(/data-spot-i="1"[^>]*tabindex="-1" aria-hidden="true"/.test(html), 'side champions are not tab stops');
+  assert(html.includes('Since 12 Apr 2025 · 2 defences') && html.includes('Since 14 Sep 2026<'), 'reign line, no "0 defences"');
+  assert(html.includes('No Photo &lt;b&gt;') && html.includes('sov-spot-none'), 'a champion without a photo gets initials, escaped');
+  assert(html.includes('>W strawweight</button>') && (html.match(/data-spot-go=/g) || []).length === 4, 'one division button each');
+  assert(html.includes('data-spot="play"') && html.includes('aria-label="Pause rotation"'), 'rotation can be paused');
+  assert(html.includes('1 / 4'));
+  assert(!O.build(base, h).includes('sov-spot') && O.build(base, h).includes('sov-chs'), 'grid without the register');
+  assert.strictEqual(O.championCutoutURL('Petr Yan', { photos: [{ slug: 'petr-yan', file: 'x', cutout: { file: 'https://evil.example/x.webp' } }] }), '', 'only BEFN-held files');
+  assert.deepStrictEqual([0, 1, 2, 9, 10].map(j => O.spotOffset(j, 0, 11)), [0, 1, 2, -2, -1], 'loop offsets');
+  assert.deepStrictEqual([0, 9, 10].map(j => O.spotOffset(j, 10, 11)), [1, -1, 0]);
+  // Every photo and cut-out in the register exists and names a current UFC champion.
+  const divs = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ufc-divisions.json'), 'utf8')).divisions;
+  const champs = new Set(Object.values(divs).map(d => d.champion && d.champion.slug).filter(Boolean));
+  for (const p of reg.photos) {
+    assert(fs.existsSync(path.join(__dirname, '..', p.file)), p.file);
+    assert(p.cutout && fs.existsSync(path.join(__dirname, '..', p.cutout.file)), p.slug + ' has a cut-out');
+    assert.strictEqual(p.width * 5, p.height * 4, p.slug + ' is 4:5');
+    assert(champs.has(p.slug), p.slug + ' is a current champion');
+    assert(p.rights && p.credit && p.sha256 && p.cutout.sha256, p.slug + ' has provenance');
+  }
+}
+console.log('champion spotlight ok');
