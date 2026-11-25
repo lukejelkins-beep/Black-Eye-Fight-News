@@ -2,7 +2,7 @@
   "schema": 1,
   "description": "Official event posters found for upcoming cards and looked at by eye before they were kept. scripts/cache-event-posters.py reads this file alongside data/upcoming-cards.json and data/historical-posters.json, so a poster can be cached without rewriting the schedule. One entry per event id; width/height are the original image's own size and orientation is its shape. Rights basis: the owner's attestation of 2026-11-24 for official event posters from boxing and MMA promoter, broadcaster and fight-schedule sites (docs/design/IMAGE-GUIDE.md, Event posters).",
   "attestation": "owner 2026-11-24: official event posters from boxing and MMA promoter, broadcaster and fight-schedule sites (Top Rank included)",
-  "reviewedAt": "2026-11-24",
+  "reviewedAt": "2026-11-25",
   "events": {
     "walker-rocha-2026-12-05": [
       {"url": "https://www.matchroomboxing.com/app/uploads/2026/10/WhatsApp-Image-2026-10-09-at-13.28.37.jpeg",
@@ -80,6 +80,20 @@
        "credit": "UFC event artwork · via FightTime",
        "orientation": "portrait", "width": 1100, "height": 1310,
        "check": "UFC Fight Night: Salkilld vs Saint Denis, lightweight bout, Feb 6 Sat, Afterpay Arena, NSW Government. ufc.com refuses automated requests (403)."}
+    ],
+    "one-samurai-6-2026-12-02": [
+      {"url": "https://cdn.onefc.com/wp-content/uploads/2026/08/261202-ONESamurai6-1800x1200px.jpg",
+       "source": "https://www.onefc.com/events/one-samurai-6/",
+       "credit": "ONE Championship event artwork",
+       "orientation": "landscape", "width": 1800, "height": 1200,
+       "check": "ONE's own event page (og:image), 25 Nov 2026. Key art of Chihiro Sawada and Anastasia Nikolakakos with the ONE world title belt, matching the card's main MMA bout (Atomweight MMA World Championship); no lettering."}
+    ],
+    "ufc-riyadh-2026-12-05": [
+      {"url": "https://ufc.com/images/styles/background_image_xl/s3/2026-11/120526-ufc-fight-night-adesanya-vs-magomedov-EVENT-ART.jpg",
+       "source": "https://www.ufc.com/event/ufc-fight-night-december-05-2026",
+       "credit": "UFC event artwork",
+       "orientation": "landscape", "width": 2000, "height": 1333,
+       "check": "UFC's own event page (\"UFC Fight Night: Adesanya vs Magomedov | UFC Saudi Arabia\"), 25 Nov 2026. ufc.com answered this time (403 on 24 Nov) and its robots.txt allows the page; crawl-delay 15 respected. Event art of Israel Adesanya and Shara Magomedov, the main event; no lettering."}
     ]
   },
   "rejected": [
@@ -92,6 +106,10 @@
     {"eventId": "bivol-smith-2026-12-12", "url": "https://images.daznservices.com/di/library/DAZN_News/bb/6d/dmitry-bivol19022026_u3r20odfojm0183ebcswd2730.jpg",
      "reason": "A news photograph of Bivol from February 2026, not event artwork."},
     {"eventId": "bivol-smith-2026-12-12", "url": "https://photo.boxingscene.com/uploads/DmitryBivol9855.jpg",
-     "reason": "A news photograph, not event artwork."}
+     "reason": "A news photograph, not event artwork."},
+    {"eventId": "one-friday-fights-180-2026-11-27", "url": "https://cdn.onefc.com/wp-content/uploads/2026/09/261127-BKK-OFF180_TIC40-1800x1200px.jpg",
+     "reason": "Official ONE art, but it shows the four Muay Thai headliners; BEFN's card lists only the MMA bouts (Fitzharris vs Mutum leads), so it would picture fighters who are not on the card."},
+    {"eventId": "pfl-lyon-2026-12-19", "url": "https://pflmma-prod.s3.amazonaws.com/events/background_banners/1965605019557f43a5df95bf11192d74-1.jpg",
+     "reason": "Official PFL page banner (Lapilus vs McKee, Bantamweight World Title, Lyon-Décines, Sat Dec 19) but 1920x318: a 6:1 background strip, not a poster."}
   ]
 }
