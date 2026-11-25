@@ -66,15 +66,26 @@
   const name=(pa.querySelector('.befn-pa-who h2')||{}).textContent||'';
   if(!name||!data.loading)return;
   const now=Date.now();
+  const rows=[];
+  // Recent fights cards (fighter-insights) and the "Earlier UFC fights" list (fighter-stats-profile).
   for(const li of pa.querySelectorAll('[data-pa-deep="fights"] .befn-pro-fight-list>li')){
    const main=li.querySelector('.befn-pro-fight-main');
-   if(!main||main.querySelector('.befn-finish-play,.befn-finish-video'))continue;
-   const bout={fighter:name.trim(),opponent:(li.querySelector('.befn-v3-opponent')||{}).textContent,
-    date:((li.querySelector('.befn-v3-date')||{}).textContent||'').trim(),
-    outcome:li.classList.contains('is-win')?'W':'',method:(li.querySelector('.befn-v3-method')||{}).textContent};
+   rows.push({li,host:main,opponent:(li.querySelector('.befn-v3-opponent')||{}).textContent,
+    date:(li.querySelector('.befn-v3-date')||{}).textContent,method:(li.querySelector('.befn-v3-method')||{}).textContent});
+  }
+  for(const li of pa.querySelectorAll('[data-pa-deep="fights"] .bsp-history>ul>li')){
+   const host=li.querySelector('.bsp-history-row>div');
+   const small=((host&&host.querySelector('small'))||{}).textContent||'';
+   const parts=small.split(' · ');
+   rows.push({li,host,opponent:((host&&host.querySelector('strong'))||{}).textContent,date:parts[parts.length-1],method:parts.slice(0,-1).join(' · ')});
+  }
+  for(const r of rows){
+   if(!r.host||r.host.querySelector('.befn-finish-play')||r.li.querySelector('.befn-finish-video'))continue;
+   const bout={fighter:name.trim(),opponent:String(r.opponent||'').trim(),date:String(r.date||'').trim(),
+    outcome:r.li.classList.contains('is-win')?'W':'',method:r.method};
    const clip=clipFor(bout,data.curated,data.film,now);
    if(!clip)continue;
-   main.insertAdjacentHTML('beforeend','<button type="button" class="befn-finish-play" data-finish-id="'+esc(clip.id)+'" data-finish-title="'+
+   r.host.insertAdjacentHTML('beforeend','<button type="button" class="befn-finish-play" data-finish-id="'+esc(clip.id)+'" data-finish-title="'+
     esc(clip.title||bout.fighter+' vs '+bout.opponent)+'"><span aria-hidden="true">▶</span> '+esc(LABEL[clip.kind])+'</button>');
   }
  }

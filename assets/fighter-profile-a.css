@@ -173,9 +173,11 @@
  #fighterDialog.befn-pa-dialog .befn-pa-about{margin:20px 16px 24px}
 }
 /* Finish videos on the Fights tab (owner, 25 Nov 2026): a button under a KO/TKO or submission win, the player across the row. */
-#fighterDialog.befn-pa-dialog .befn-finish-play{display:inline-flex;align-items:center;gap:6px;margin-top:8px;min-height:44px;padding:0 14px;border:0;border-radius:999px;
+#fighterDialog.befn-pa-dialog .befn-finish-play{display:flex;width:max-content;max-width:100%;justify-self:start;align-self:flex-start;align-items:center;gap:6px;margin-top:8px;min-height:44px;padding:0 14px;border:0;border-radius:999px;
  background:var(--pa-ink);color:#fff;font:700 13px/1 'DM Sans',sans-serif;cursor:pointer}
 #fighterDialog.befn-pa-dialog .befn-finish-play span{color:var(--pa-gold)}
-#fighterDialog.befn-pa-dialog .befn-finish-play:hover,#fighterDialog.befn-pa-dialog .befn-finish-play:focus-visible{background:#2c262b;outline:2px solid var(--pa-gold);outline-offset:2px}
+#fighterDialog.befn-pa-dialog .befn-finish-play:hover{background:#2c262b}
+#fighterDialog.befn-pa-dialog .befn-finish-play:focus-visible{outline:2px solid var(--pa-gold);outline-offset:2px}
 #fighterDialog.befn-pa-dialog .befn-pro-fight-list>li>.befn-finish-video{grid-column:1/-1;grid-row:auto;width:100%;max-width:720px;aspect-ratio:16/9;margin:4px 0 6px;border-radius:10px;overflow:hidden;background:#000}
 #fighterDialog.befn-pa-dialog .befn-finish-video iframe{display:block;width:100%;height:100%;border:0}
+#fighterDialog.befn-pa-dialog .bsp-history>ul>li>.befn-finish-video{max-width:720px;aspect-ratio:16/9;margin:8px 0;border-radius:10px;overflow:hidden;background:#000}
