@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (Credentials in ratings: tested, not adopted)
+- **Amateur, Olympic and Commonwealth credentials stay on the profile and do not raise Form or the BEFN rating.** Owner asked to factor them in "in a consistent way and see if that effects the prediction rate". One points table for every sport (Olympic 10/9/8/6 down to national 2/1.5/1/0.5, scaled by age group; best result plus 0.3 of the rest, capped at 12, years before the bout only), fitted before 2024 and tested on 2024 onward: the rating with age went from 64.2% to 63.3%, Form v4 from 64.1% to 62.7%, and worse again on the bouts where a credentialed fighter took part; fading and Olympic/World-only variants were also worse. Likely selection: the credentials were researched for fighters still on the roster in 2026. Re-test when the research covers fighters who have left. Details: `docs/ufc-rating-model-2026-11.md`. — Owner request; Claude — recorded in PR #554 (no code change).
+
 ## 2026-11-25 (BEFN rating: age added)
 - **The BEFN rating (Overall) now includes age: 5.4 rating points a year from 31, younger up, older down** (about 0.68 a year on the score out of 100; unknown birth date: no change). Owner: "can we improve the BEFN rating as well". Fitted on 2019-2023 quarterly snapshots, tested walk-forward on 1,135 bouts from 2024: **accuracy 62.7% → 64.1%, Brier 0.2274 → 0.2222 (clearly better), better in each of 2024, 2025 and 2026.** Trade-off: slightly less agreement with the official rankings (ranked fighters in the top 100 83 → 78, champions in the top 50 10 → 8). Form, separate skill weights and curved age effects added nothing. Details: `docs/ufc-rating-model-2026-11.md`. — Owner request; Claude — PR #554, awaiting owner "Merge 554".
 

@@ -31,6 +31,27 @@ contenders lose a little (Volkanovski #4 to #9, Shevchenko #2 to #6) and younger
 Biggest falls: veterans near the end (Arlovski, Blachowicz, Holly Holm, Cannonier, Thompson); biggest rises: young
 fighters (Tereza Bleda, Francisco Prado, Cameron Saaiman).
 
+## 25 Nov 2026: amateur and Olympic/Commonwealth credentials tested, not adopted
+Owner asked whether the verified amateur results (`data/ufc-amateur-credentials.json`: 128 fighters, 485 results)
+should raise ratings "in a consistent way". One table for every sport and row: Olympic 10 / 9 / 8 (gold, silver,
+bronze) and 6 to take part; World 6 / 5 / 4 / 2; continental or Commonwealth 4 / 3 / 3 / 1.5; national 2 / 1.5 / 1 /
+0.5; other 1.5 / 1 / 1 / 0.5; times 1 senior, 0.75 under-23, 0.6 junior, 0.4 youth or cadet. A fighter's score is
+their best result plus 0.3 of each other one, capped at 12, counting only years before the bout. Fitted on bouts
+before 2024, tested on 2024 onward:
+
+| Test (2024 on) | Without | With credentials |
+|---|---:|---:|
+| BEFN rating (with age), 1,238 bouts | 64.2% / Brier 0.2227 | 63.3% / 0.2249 |
+| … the 307 bouts where either fighter has a credential | 66.8% / 0.2109 | 63.2% / 0.2192 |
+| Form v4, 991 bouts | 64.1% / 0.2316 | 62.7% / 0.2319 |
+| … the 249 bouts with a credential | 69.1% / 0.2240 | 63.5% / 0.2243 |
+
+Variants (a bonus that fades as UFC fights accumulate, Olympic and senior World results only, both) were also
+slightly worse. On the fitted years (before 2024) credentials looked helpful (Brier 0.2259 to 0.2237), but that did
+not carry forward, which points to selection: the credentials were researched in 2026 for fighters still on the
+roster, and what they show is already in the grappling and wrestling statistics. Credentials stay on the profile,
+not in Form or the rating. Worth re-testing once the research covers fighters who have left the UFC.
+
 ## What the headline is now
 **What readers see (owner's choice, 24 Nov):** `overall` in each `data/ufc-stats/fighters/<slug>.json` is a **score out of 100**, 50 + (rating - 1500) / 11, so 50 is the median rated UFC fighter and Islam Makhachev is 97; profiles show it with the overall rank (`overallRank` of `rankOf`). The full **BEFN rating** below is kept as `overallRating` (1500 = median; Makhachev 2019) and orders the ranks. It combines:
 
