@@ -279,3 +279,9 @@ test("source mismatch and inconsistent snapshot dates stop publication",()=>{
  assert.throws(()=>buildSnapshot(coverage,{schema:1,scope:"all"}),/Required saved/);
  assert.throws(()=>buildSnapshot(coverage,postfight,cohorts,{asOf:"2026-11-14"}),/date must match/);
 });
+test("snake-case saved methods (ko_tko) count as KO/TKO wins",()=>{
+ const snake=JSON.parse(JSON.stringify(coverage));
+ for(const f of snake.fighters)for(const r of f.recent)if(r.method==="KO")r.method="ko_tko";
+ const d=buildSnapshot(snake,postfight,cohorts);
+ assert.equal(d.fighters.aone.metrics.ko.value,2);
+});

@@ -56,7 +56,9 @@ function metricOn(rows,id){
    // Only confirmed unique UFC bout IDs can qualify finish leaderboards.
    // A research-note-only result is useful context, not a measured bout.
    if(!result?.boutId||!eligibleOutcome(result?.outcome))continue;
-   const method=String(result.method||"").trim().toLowerCase();
+   // Saved methods use snake case ("ko_tko", "decision_unanimous"); "_" is a word character, so
+   // \bko\b never matched "ko_tko" and almost every KO/TKO win counted as 0 (profile bug, 2026-11-25).
+   const method=String(result.method||"").trim().toLowerCase().replace(/_/g," ");
    if(result.outcome==="W"&&!method)continue;
    bouts++;
    if(result.outcome==="W"&&(id==="ko"?/\b(?:ko|tko|knockout)\b/.test(method):
