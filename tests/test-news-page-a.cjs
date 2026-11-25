@@ -170,7 +170,8 @@ for (const tz of [TZ, 'UTC', 'America/New_York']) {
     assert(fs.readFileSync(path.join(__dirname, '..', f), 'utf8').includes('<a href="index.html#news/sumo" data-sumo-section="news">News</a>'), f + ' lists News beside its sections');
   }
   const sw = fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8');
-  assert(/CACHE_NAME = '[^']*-nwa1'/.test(sw) && sw.includes("'/assets/news-front.js'"), 'service worker cache bumped');
+  // The News bump must still be in the cache name; later changes append their own suffixes after it.
+  assert(/CACHE_NAME = '[^']*-nwa1(-[^']*)?'/.test(sw) && sw.includes("'/assets/news-front.js'"), 'service worker cache bumped');
 }
 
 console.log('news page A: ok');
