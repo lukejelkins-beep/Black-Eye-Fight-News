@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (Profile: Latest bout folded into Recent fights)
+- **The separate "Latest bout" box on the Fights tab is gone; its numbers (sig. strikes, takedowns, control) now sit inside the first Recent fights row.** On desktop the box was a full-width dark panel, mostly empty, and repeated the first row right under it. The numbers move only when that first row is the same bout (same opponent); otherwise the box stays as before. The event name the box showed is not repeated in the row. — Owner ("the latest bout (on desktop) takes up a lot of space", picked "Merge into first row") — `assets/fighter-profile-a.js` (`mergeLatest`), `.css`.
+
 ## 2026-11-25 (Tidy-up)
 - **Removed CSS that no page builds any more:** 20 old Fight film rules in `brand-theme.css` (`film-card`, `film-switch`, `film-featured` and others, replaced by the film wall) and the old profile section bar and facts grid in `fighter-profile-pro.css` (`befn-pro-nav`, `befn-pro-facts`, replaced by the one-profile layout). Selectors that still mix in live classes (for example inside `:is(...)`) keep their live parts. The profile and Fight film were checked in a browser at 390 and 1280 px and look the same.
 - This session's nine merged worktrees and their local branches were deleted (about 3 GB). Nothing was removed from GitHub.

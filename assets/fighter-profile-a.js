@@ -424,6 +424,7 @@
    const slot=pa.querySelector('[data-pa-deep="'+DEEP[k]+'"]');
    if(slot&&node)slot.appendChild(node);
   }
+  mergeLatest(pa);
   // The career line inside the full UFC history ("verified to …") is staff text: it moves to About.
   for(const sum of pa.querySelectorAll(".befn-pa-body .bsp-history>summary")){
    const small=sum.querySelector("small");
@@ -435,6 +436,22 @@
   }
   ins.replaceChildren();
   pa._paDeepAbout=about;
+ }
+ // "Latest bout" (owner, 25 Nov 2026: it took a lot of space on desktop and repeated the first fight): its numbers
+ // (sig. strikes, takedowns, control) go inside the first Recent fights row when that row is the same bout, and the
+ // separate box is dropped. If the rows do not match (or are missing), the box stays as it was.
+ function mergeLatest(pa){
+  const box=pa.querySelector('[data-pa-deep="fights"] > .bsp-latest');
+  if(!box)return;
+  const first=pa.querySelector('[data-pa-deep="fights"] .befn-pro-fight-list > li');
+  const main=first&&first.querySelector(".befn-pro-fight-main");
+  const opp=s=>String(s||"").replace(/^\s*vs\.?\s+/i,"").replace(/\s+/g," ").trim().toLowerCase();
+  const boxOpp=opp(box.querySelector(".bsp-latest-main strong")&&box.querySelector(".bsp-latest-main strong").textContent);
+  const rowOpp=opp(main&&main.querySelector(".befn-v3-opponent")&&main.querySelector(".befn-v3-opponent").textContent);
+  if(!main||!boxOpp||boxOpp!==rowOpp)return;
+  const nums=box.querySelector(".bsp-latest-stats");
+  if(nums){nums.classList.add("is-inline");main.appendChild(nums);}
+  box.remove();
  }
  // Notes marked data-pa-about anywhere in the body (the amateur card adds one later) go to "About this profile".
  function absorb(dialog,base){
