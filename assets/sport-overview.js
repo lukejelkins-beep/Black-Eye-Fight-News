@@ -214,7 +214,42 @@
     return out;
   }
 
+  /* UFC champion carousel (owner supplied the belt portraits, 25 Nov 2026). ctx.championPhotos is
+     data/ufc-champion-photo-register.json; a champion without a photo keeps a cut-out or initials in the same frame. */
+  const championPhotoURL = (name, reg) => {
+    const k = slug(name), r = ((reg && reg.photos) || []).find(x => x && x.slug === k);
+    return r && /^assets\/img\/ufc-champions\/[a-z0-9-]+\.webp$/.test(r.file) ? r.file : '';
+  };
+  const reignLine = c => {
+    const d = Number(c.defences) || 0;
+    return [c.start ? 'Since ' + c.start : '', d ? d + (d === 1 ? ' defence' : ' defences') : ''].filter(Boolean).join(' · ');
+  };
+  function championCarousel(h, ctx, list) {
+    const card = c => {
+      const photo = championPhotoURL(c.name, ctx.championPhotos), cut = photo ? '' : cutoutURL(c.name, ctx.cutouts);
+      const pic = photo ? img(h, photo, 'sov-cc-img', c.name + ', UFC ' + c.division + ' champion, with the belt')
+        : cut ? img(h, cut, 'sov-cc-img is-cut', c.name) : '<span class="sov-cc-img is-none" aria-hidden="true">' + h.esc(initials(c.name)) + '</span>';
+      return '<a class="sov-cc" href="' + ownLink(h, '#fighter/ufc--' + slug(c.name)) + '">' + pic +
+        '<span class="sov-cc-txt" data-portrait-ignore><span class="sov-cc-div">' + h.esc(c.division) + '</span><strong>' + h.esc(c.name) + '</strong>' +
+        (reignLine(c) ? '<small>' + h.esc(reignLine(c)) + '</small>' : '') + '</span></a>';
+    };
+    return '<section class="sov-blk sov-champs">' + head(h, 'UFC champions', ['#champions', 'All divisions']) +
+      '<div class="sov-cc-wrap"><button type="button" class="sov-cc-nav is-prev" data-sov-cc="-1" aria-label="Previous champions">‹</button>' +
+      '<div class="sov-ccs" role="region" aria-label="UFC champions, scroll sideways" tabindex="0">' + list.map(card).join('') + '</div>' +
+      '<button type="button" class="sov-cc-nav is-next" data-sov-cc="1" aria-label="More champions">›</button></div></section>';
+  }
+  /* Carousel arrows: scroll by most of a screen's width. One listener for the page. */
+  if (typeof document !== 'undefined' && document.addEventListener) document.addEventListener('click', e => {
+    const b = e.target && e.target.closest && e.target.closest('[data-sov-cc]');
+    const rail = b && b.parentNode && b.parentNode.querySelector('.sov-ccs');
+    if (rail) rail.scrollBy({ left: Number(b.getAttribute('data-sov-cc')) * rail.clientWidth * 0.8, behavior: 'smooth' });
+  });
+
   function championsBlock(h, ctx, area) {
+    if (area === 'mma') {
+      const list = ((ctx.champions && ctx.champions.mma) || []).filter(c => c && c.name && !/vacant/i.test(c.name));
+      if (list.length && ctx.championPhotos && (ctx.championPhotos.photos || []).length) return championCarousel(h, ctx, list);
+    }
     const rows = area === 'boxing' ? boxingChampions(ctx.champions && ctx.champions.boxing)
       : ((ctx.champions && ctx.champions.mma) || []).filter(c => c && c.name && !/vacant/i.test(c.name)).map(c => ({ division: c.division, name: c.name, belts: [], others: [] }));
     if (!rows.length) return '';
@@ -243,7 +278,7 @@
     return '<section class="sov-blk">' + head(h, 'Explore') + '<div class="sov-exp">' + items.map(x => '<a href="' + x[0] + '"><b>' + h.esc(x[1]) + '</b><span>' + h.esc(x[2]) + '</span></a>').join('') + '</div></section>';
   }
 
-  /* ctx: { area, now, events, results, cutouts, champions:{boxing,mma}, featured, stories } */
+  /* ctx: { area, now, events, results, cutouts, champions:{boxing,mma}, championPhotos, featured, stories } */
   function build(ctx, h) {
     const area = AREA[ctx.area] ? ctx.area : 'boxing';
     if (!(ctx.events || []).length && !ctx.results) return '<div class="sov sov-' + area + '"><p class="front-loading" role="status">Loading the latest ' + AREA[area] + ' fights…</p></div>';
@@ -377,7 +412,7 @@
     return '<div class="sov fp">' + frontNext(h, ctx, sumo) + hero + frontCards(h, ctx, heroSport, sumo) + frontResults(h, ctx, sumo) + frontNews(h, ctx.stories) + '</div>';
   }
 
-  const api = { ownLink, ownSrc, build, buildFront, sumoSummary, bashoStart, pickHero, bigUpcoming, mainEvents, outcome, resultHeadline, methodShort, titleScore, boxingChampions, upcoming, daysUntil, slug };
+  const api = { ownLink, ownSrc, build, buildFront, sumoSummary, bashoStart, pickHero, bigUpcoming, mainEvents, outcome, resultHeadline, methodShort, titleScore, boxingChampions, championPhotoURL, upcoming, daysUntil, slug };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNSportOverview = api;
 })(typeof window !== 'undefined' ? window : globalThis);
