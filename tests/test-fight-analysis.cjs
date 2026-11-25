@@ -56,3 +56,15 @@ const sc = A.stoppageClips(stops, [clip('Pacheco highlights', '2026-11-15', { is
 assert.strictEqual(sc[0].clip.title, 'Pacheco stops Fulghum', 'only a finish naming the winner, in the window, that is not a reaction or reel');
 assert.strictEqual(sc[1].clip, null, 'no matching clip means no clip');
 console.log('stoppage clip tests passed');
+// UFC's own shorts rarely name fighters: matched by #ufc<place> card tag + the stoppage's technique, only when that technique is unique on the card.
+const ev2 = 'UFC Fight Night: A vs B', loc = 'Doha, Qatar';
+const r2 = (n, l, m) => ({ sport: 'MMA', date: '2026-11-21', eventId: 'q', event: ev2, location: loc, winner: 0, method: m, round: 1, fighters: [f(n), f(l)] });
+const e2 = A.ended(A.recent({ results: [r2('John Mitchell', 'Shoaib Yousaf', 'KO/TKO (knee to head at distance)'), r2('Diyar Nurgozhay', 'Alik Lorenz', 'KO/TKO (kick to head at distance)'),
+  r2('Navajo Stirling', 'Jiri Prochazka', 'KO/TKO (punch to head at distance)'), r2('Same Punch', 'Other Loser', 'KO/TKO (punches)')] }, 'MMA', now));
+const sc2 = A.stoppageClips(e2.stoppages, [clip('BEAUTIFUL KNEE KNOCKOUT #ufcqatar', '2026-11-21'), clip('BRUTAL KICK KNOCKOUT #ufcvegas124', '2026-11-21'), clip('PUNCH KNOCKOUT #ufcqatar', '2026-11-21')]);
+const by = n => sc2.find(s => s.winner === n);
+assert.strictEqual(by('John Mitchell').clip.title, 'BEAUTIFUL KNEE KNOCKOUT #ufcqatar', 'unique knee on the card matches the knee short');
+assert.strictEqual(by('Diyar Nurgozhay').clip, null, 'a short tagged for a different card never matches');
+assert.strictEqual(by('Navajo Stirling').clip, null, 'two punch finishes on the card: ambiguous, so none');
+assert.strictEqual(A.technique('KO (punches)'), 'punch'); assert.strictEqual(A.technique('TKO (retirement)'), '');
+console.log('short clip tests passed');

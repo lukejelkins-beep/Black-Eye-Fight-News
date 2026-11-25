@@ -106,9 +106,9 @@
  }
  const sortNewest=(a,b)=>(b.date||'').localeCompare(a.date||'')||(a.featuredOrder??999)-(b.featuredOrder??999);
  /* Every clip that may show for the sport: gated, sorted newest first, no shorts. */
- function pool(data,sport,now=Date.now()){
+ function pool(data,sport,now=Date.now(),opts){
   const sports=sport==='all'||!sport?['boxing','mma']:[sport];
-  return (data?.videos||[]).filter(v=>v&&v.url&&['boxing','combat'].includes(v.category)&&(isAuYoutube(v,now)||isPublisherClip(v,now))&&!isShort(v)&&sports.includes(videoSport(v)))
+  return (data?.videos||[]).filter(v=>v&&v.url&&['boxing','combat'].includes(v.category)&&(isAuYoutube(v,now)||isPublisherClip(v,now))&&(opts?.shorts===true||!isShort(v))&&sports.includes(videoSport(v)))
    .map((v,i)=>({v,i})).sort((a,b)=>sortNewest(a.v,b.v)||a.i-b.i).map(x=>x.v);
  }
  /* The big clip is the newest clip, or the newest finish from the last week if there is one. */

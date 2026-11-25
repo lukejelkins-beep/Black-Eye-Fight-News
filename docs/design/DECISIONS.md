@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (UFC shorts for stoppage video)
+- **UFC's own finish shorts are the source for the stoppage videos, matched without fighter names when it is safe.** UFC titles its shorts "BEAUTIFUL KNEE KNOCKOUT #ufcqatar", with no names. Such a clip now matches a stoppage only if its `#ufc<place>` tag is that stoppage's card, its technique word (knee, kick, elbow, slam, punch) is the stoppage's technique, and no other stoppage on that card ended the same way; ambiguous means none. A clip that names the winner still matches by name. The film pool takes a `shorts` option for this; the film wall still excludes shorts.
+- **The film refresh now re-verifies the whole UFC RSS window (15) instead of the newest 6.** A card has 12+ finishes, so last weekend's UFC Qatar shorts fell out of re-verification within hours and then out of the 48-hour Australian-playback gate; that is why the knee knockout short was in the feed but not showing. Other channels stay at 6. Same Australian-availability checks. — Owner ("You can use the ufc official shorts as a good starting point") — `assets/fight-analysis.js`, `assets/fight-film.js`, `scripts/refresh-fight-film.py`.
+
 ## 2026-11-25 (Stoppage video: only the actual finish)
 - **A stoppage shows a video only if it is the finish itself.** The first version matched on a fighter's name alone and put a reaction clip ("Hooker reacting to Stirling's KNOCKOUT") under Stirling's win over Procházka. The rule is now: the clip is a KO, TKO or submission in the film feed, its title names the winner (not only the loser), it was published on or after the fight day and within 14 days, and its title is not a reaction, "every/best/greatest" reel, full fight, compilation, interview or preview. With the current feed none of the 8 latest MMA and boxing stoppages has such a clip, so all show as text rows until the film refresh collects the official finish clips. — Owner ("The video shows but its not the actual finish") — `assets/fight-analysis.js`.
 
