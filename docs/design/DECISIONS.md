@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (About page and media-access requests)
+- **An About page** (`/about.html`, linked from the footer). It covers who BEFN is, independence, how facts and photos are sourced and checked, corrections, and contact. It uses only facts the site already states: nothing invented, no audience figures and no names. Contact uses the existing project channel until the owner has a BEFN email; an HTML comment marks where to swap it in.
+- **Request emails drafted for the owner** (`docs/outreach/media-access-requests.md`). They go to UFC media relations (with Getty licensing as a fallback), the boxing promoters, and a written-confirmation note for the five MMA promoters already attested. Each asks for press-image access plus written permission to publish with credit; a credential alone isn't enough. Nothing has been sent. The owner asked for full-body photos (champions carousel), and the sources BEFN is cleared to use don't have them: UFC.com refuses automated requests.
+
 ## 2026-11-24 (Fight film: film wall)
 - **The Fight film tab is a film wall** (owner chose design A, "Film wall", with all four extras). Under the Fights heading and the Upcoming / Results / Fight film switch there is no second "Fight film" heading or kicker.
   - **Top:** the big latest clip (two thirds) and a "Latest finishes" column of three (one third); stacked on phones. The big clip is worked out from the data: the newest finish from the last 7 days, else the newest clip. The hard-coded "7 November 2026 · UFC Vegas 124" block is gone.
