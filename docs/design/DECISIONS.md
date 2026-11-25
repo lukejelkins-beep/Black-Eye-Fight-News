@@ -15,6 +15,9 @@ Format: date — decision — who — where it shows up.
 
 - **Only real fight finishes count as "Finish"** (owner's choice). A compilation ("5 Crazy Knockouts...", "Every Knockout & Submission From UFC Qatar", "100 Knockouts In PFL") is Highlights, so it never leads the page or appears under Latest finishes.
 
+## 2026-11-25 (Sport in the address)
+- **The sport is part of every link**: `?sport=mma` or `?sport=boxing` before the `#` (e.g. `/?sport=mma#fights/results`); the all-sports front page has none. A shared or reopened link shows the same sport; a link without it uses the reader's saved choice and then gains it, so copying works. Routes after `#` are unchanged (the owner was shown `#mma/fights`; the query form gives the same result without touching the ~28 places that read the route). Sumo pages' Boxing/MMA links carry it too. QA audit D02. Claude, at the owner's request. Shows up in `assets/global-sport-v1.0.3.js`.
+
 ## 2026-11-24 (Photo runner)
 - **A photo runner finds fighters with no photo and stages photos for the owner to approve** (owner's choices: all four sports, "Stage, then approve", a drop folder for the owner's own photos, a weekly GitHub run that opens a draft PR, and a missing-photo report). It is `scripts/photo-runner.py`, with `missing`, `fetch`, `approve`, `drop`, `reject-cutout` and `report`.
   - Nothing is registered until `approve`.

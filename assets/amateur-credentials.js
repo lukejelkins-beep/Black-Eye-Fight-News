@@ -4,7 +4,7 @@
  * "Amateur career" list with one row per result and a link to its source. */
 (function(){
  'use strict';
- const DATA_URL='data/ufc-amateur-credentials.json?v=20261125-am6';
+ const DATA_URL='data/ufc-amateur-credentials.json?v=20261125-am7';
  let data=null,loading=null;
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const safeURL=u=>/^https:\/\//i.test(u||'')?u:'';
@@ -73,6 +73,10 @@
    else body.insertAdjacentHTML('beforeend',sectionHTML(entry));
    changed=true;
   }
+  // The profile hides section-bar buttons whose section is missing when it lays out; the card
+  // can arrive later, so show the "Amateur" jump button once the card is in place.
+  const jump=dialog.querySelector('[data-pro-jump="amateur"]');
+  if(jump&&dialog.querySelector('[data-befn-amateur]'))jump.hidden=false;
   return changed;
  }
  function apply(dialog,f){
