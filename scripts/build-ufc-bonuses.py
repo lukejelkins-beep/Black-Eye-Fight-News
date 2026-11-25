@@ -105,7 +105,7 @@ def main():
     for r in out.values():
         r["bouts"].sort(key=lambda x: x["date"], reverse=True)
     doc = {"schema": 1, "asOf": src.get("asOf"), "fighters": dict(sorted(out.items())),
-           "unplaced": unplaced, "outsideRoster": outside, "currency": RATES["currency"], "rule": "Fight of the Night: both fighters. Performance of the Night: the winner."}
+           "unplaced": unplaced, "outsideRoster": outside, "currency": RATES["currency"], "rates": [{"from": r["from"], "amount": r["amount"]} for r in RATES["rates"]], "rule": "Fight of the Night: both fighters. Performance of the Night: the winner."}
     OUT.write_text(json.dumps(doc, separators=(",", ":"), sort_keys=True))
     print(f"{len(out)} fighters with bonuses, {sum(r['total'] for r in out.values())} bonuses credited, {len(unplaced)} unplaced, {outside} credits to fighters without a BEFN file")
 
