@@ -47,12 +47,12 @@ jobs:
             git fetch -q origin main
             git reset --hard -q origin/main
             python scripts/refresh-fight-film.py
-            git add data/fight-film.json data/results.json
+            git add data/fight-film.json data/results.json data/ufc-finish-clips.json
             if git diff --cached --quiet; then
               echo 'No newly verified clips; no commit needed'
               exit 0
             fi
-            git commit -m 'Refresh sourced finish videos and matched result links'
+            git commit -m 'Refresh sourced finish videos, matched result links and profile finish clips'
             if git push origin HEAD:main; then
               exit 0
             fi
