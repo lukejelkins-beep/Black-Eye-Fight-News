@@ -18,6 +18,8 @@
   const fmt = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }).replace(',', '');
   const isTitle = b => /title|championship/i.test(b && b.note || '') && !/eliminator/i.test(b && b.note || '');
   const methodKind = m => { const l = String(m || '').toLowerCase(); return /no contest|draw/.test(l) ? 'other' : /sub/.test(l) ? 'sub' : /\bt?ko\b|ko\/tko|stoppage|rtd|retire/.test(l) ? 'ko' : /decision/.test(l) ? 'dec' : 'other'; };
+  /* The finishing technique a method line names ("KO/TKO (knee to head at distance)" is knee), or '' when it names none. */
+  const technique = m => { const l = String(m || '').toLowerCase(); return /\bknees?\b/.test(l) ? 'knee' : /\bkicks?\b/.test(l) ? 'kick' : /\belbows?\b/.test(l) ? 'elbow' : /\bslam/.test(l) ? 'slam' : /\bpunch/.test(l) ? 'punch' : ''; };
   const shortMethod = m => String(m || '').replace(/\s*\(.*\)\s*$/, '');
 
   /* ---------- builders (pure) ---------- */
@@ -53,24 +55,37 @@
   function ended(rows) {
     const out = { ko: 0, sub: 0, dec: 0, other: 0, total: rows.length };
     for (const r of rows) out[methodKind(r.method)]++;
-    out.stoppages = rows.filter(r => methodKind(r.method) === 'ko' && Number.isInteger(r.winner)).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 4)
-      .map(r => ({ date: r.date, winner: r.fighters[r.winner].name, loser: r.fighters[1 - r.winner].name, round: r.round || null, method: shortMethod(r.method) }));
+    const kos = rows.filter(r => methodKind(r.method) === 'ko' && Number.isInteger(r.winner));
+    out.stoppages = kos.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 4)
+      .map(r => ({ date: r.date, winner: r.fighters[r.winner].name, loser: r.fighters[1 - r.winner].name, round: r.round || null, method: shortMethod(r.method),
+        place: [r.event, r.location].filter(Boolean).join(' '), tech: technique(r.method),
+        sameTech: kos.filter(o => o.eventId === r.eventId && technique(o.method) === technique(r.method)).length }));
     return out;
   }
-  /* Stoppage video (owner, 25 Nov 2026). Each stoppage gets the best verified clip from BEFN's film feed that names the winner or
-     the loser and was published from a day before the fight to three weeks after it. Finishes beat highlights, then closest to the
-     fight date. The film feed's own gates decide which clips may show (Australian playback, freshness, no shorts), so `clips` is
-     FightFilm.pool(...). A stoppage with no clip gets none: never an unrelated one. */
+  /* Stoppage video (owner, 25 Nov 2026; tightened the same day after a reaction clip showed as the finish). A clip shows only if it is
+     a finish in the film feed (KO, TKO or submission), its title names the WINNER (a clip naming only the loser is usually a career
+     reel), it was published on or after the fight day and within two weeks, and its title is not a reaction, compilation, full fight
+     or "best of" reel. The closest to the fight date wins. The film feed's own gates (Australian playback, freshness, no shorts) decide
+     which clips may show, so `clips` is FightFilm.pool(...). A stoppage with no clip gets none: never an unrelated one. */
   const norm = s => String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const namesIn = (title, name) => { const t = '-' + norm(title) + '-', n = norm(name), last = n.split('-').pop(); return !!n && (t.includes('-' + n + '-') || (last.length > 4 && t.includes('-' + last + '-'))); };
+  const NOT_THE_FINISH = /\b(react\w*|every|best|greatest|top \d+|ranked|ever|of the year|full fight|full card|marathon|compilation|comeback|press conference|weigh[- ]?in|interview|breakdown|analysis|preview)\b/i;
+  /* UFC's own short uploads rarely name the fighters: "BEAUTIFUL KNEE KNOCKOUT #ufcqatar". Such a clip is matched to a stoppage only when
+     its #ufc<place> tag is the stoppage's own card (the place word is in the event or location) AND its technique word is the technique
+     of that stoppage AND no other stoppage on that card ended the same way, so the match is one-to-one or none. */
+  const tagPlace = title => { const m = /#ufc([a-z]+)\d*/i.exec(String(title || '')); return m ? m[1].toLowerCase() : ''; };
   function stoppageClips(stoppages, clips) {
     const day = d => Date.parse(d + 'T12:00:00Z');
+    const isFinish = v => v.isFinish === true || /^(ko|tko|submission)\b/i.test(v.kind || '');
     return (stoppages || []).map(s => {
-      const fight = day(s.date);
-      const hits = (clips || []).filter(v => v && v.url && v.title && v.thumbnail && !/\b(full fight|full card|marathon|compilation|top \d+|best of)\b/i.test(v.title) &&
-        (namesIn(v.title, s.winner) || namesIn(v.title, s.loser)) && Number.isFinite(day(v.date)) && day(v.date) >= fight - DAY && day(v.date) <= fight + 21 * DAY);
-      const isFinish = v => v.isFinish === true || /ko|tko|submission/i.test(v.kind || '');
-      hits.sort((a, b) => isFinish(b) - isFinish(a) || Math.abs(day(a.date) - fight) - Math.abs(day(b.date) - fight));
+      const fight = day(s.date), place = norm(s.place).replace(/-/g, '');
+      const hits = (clips || []).filter(v => {
+        if (!(v && v.url && v.title && v.thumbnail && isFinish(v) && !NOT_THE_FINISH.test(v.title) && Number.isFinite(day(v.date)) && day(v.date) >= fight && day(v.date) <= fight + 14 * DAY)) return false;
+        if (namesIn(v.title, s.winner)) return true;
+        const named = namesIn(v.title, s.loser), tag = tagPlace(v.title), t = String(v.title).toLowerCase();
+        return !named && !!s.tech && s.sameTech === 1 && !!tag && place.includes(tag) && new RegExp('\\b' + s.tech + 's?\\b').test(t);
+      });
+      hits.sort((a, b) => Math.abs(day(a.date) - fight) - Math.abs(day(b.date) - fight));
       return Object.assign({}, s, { clip: hits[0] || null });
     });
   }
@@ -320,7 +335,7 @@
   const portraitOf = ctx => ctx.portrait || (n => root.BEFNLocalImages ? root.BEFNLocalImages.url(n, 'portrait') : '');
   const regsOf = (ctx, sport) => ({ fullbody: ctx.fullbody && ctx.fullbody.cutouts, cutouts: ((sport === 'boxing' ? ctx.boxingCutouts : ctx.ufcCutouts) || {}).cutouts });
   function withClips(e, ctx, sport) {
-    const clips = root.FightFilm && root.FightFilm.pool && ctx.film ? root.FightFilm.pool(ctx.film, sport, ctx.now) : [];
+    const clips = root.FightFilm && root.FightFilm.pool && ctx.film ? root.FightFilm.pool(ctx.film, sport, ctx.now, { shorts: true }) : [];
     e.stoppages = stoppageClips(e.stoppages, clips); return e;
   }
   function boxingPage(ctx) {
@@ -429,7 +444,7 @@
     box.className = 'fa-vid fa-player'; box.appendChild(frame); btn.replaceWith(box); frame.focus();
   }
   if (typeof document !== 'undefined') document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-fa-play]'); if (t && t.closest('.fa')) { e.preventDefault(); play(t); } });
-  const api = { stoppageClips, titleGrid, titleFights, recent, ended, zerosEnded, defences, boxingPage, mmaTop, methodKind,
+  const api = { technique, stoppageClips, titleGrid, titleFights, recent, ended, zerosEnded, defences, boxingPage, mmaTop, methodKind,
     divisionRank, figureFor, nextTitleFight, mmaSlides, boxingSlides, carouselHTML };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNFightAnalysis = api;
