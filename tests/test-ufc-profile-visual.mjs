@@ -182,6 +182,15 @@ async function checkProfile(page,profile,screen){
    const t=document.querySelector("#fighterDialog .befn-pro-score .befn-v3-score")?.textContent?.trim();
    return !!t&&t!=="—";
   },null,{timeout:12000});
+  // The five recent fights are redrawn from the stats file once that file has loaded, a moment after the rating card
+  // fills (the live site is slower than a local server). Wait for the rows themselves to settle on the stats file's
+  // five, so a read in between is not reported as a mismatch (live runs on 2026-11-25 failed on a different fighter
+  // each time). If the page never settles the wait times out and the assertion below reports the real difference.
+  if(statsFileFor(profile.name))await page.waitForFunction(expected=>{
+   const rows=[...document.querySelectorAll("#fighterDialog .befn-v3-fights li")].map(r=>[
+    r.querySelector("time")?.textContent?.trim()||"",r.querySelector(".befn-v3-opponent")?.textContent?.trim()||""]);
+   return rows.length===expected.length&&rows.every((r,i)=>r[0]===expected[i][0]&&r[1]===expected[i][1]);
+  },statsFileFor(profile.name).fights.slice(0,5).map(f=>[f.date,f.opponent]),{timeout:12000}).catch(()=>{});
   // Wait briefly for portrait requests to settle. A cached or slow image
   // must not be declared broken just because it was read instantly. This applies to local runs too: many
   // portraits are hotlinked, and on a slow network a mid-load frame was reported as "neither image nor fallback".
@@ -216,7 +225,10 @@ async function checkProfile(page,profile,screen){
     noLegacyTable:!d?.querySelector("table[data-befn-recent-results]"),
     // Related news (assets/related-news.js, .rn-block) links out to the stories by design (owner, 2026-11-24); every
     // other link in the dialog must still be absent.
-    publicLinks:[...(d?.querySelectorAll("a[href]")||[])].filter(a=>!a.closest(".rn-block")).map(a=>a.getAttribute("href")),
+    // The amateur career card's per-result "Source" links (assets/amateur-credentials.js) are shown by design (owner,
+    // 2026-11-25: "a 'Source' link" on every result); they are checked on their own below.
+    publicLinks:[...(d?.querySelectorAll("a[href]")||[])].filter(a=>!a.closest(".rn-block")&&!a.matches("a.befn-am-source")).map(a=>a.getAttribute("href")),
+    amateurSourceLinks:[...(d?.querySelectorAll("a.befn-am-source")||[])].map(a=>({href:a.getAttribute("href"),target:a.getAttribute("target"),rel:a.getAttribute("rel")||""})),
     relatedNewsLinks:[...(d?.querySelectorAll(".rn-block a[href]")||[])].map(a=>a.getAttribute("href")),
     provenanceText:d?.querySelector(".befn-pro-body")?.textContent||"",
     rect:rect&&{left:rect.left,right:rect.right,width:rect.width},
@@ -356,6 +368,8 @@ async function checkProfile(page,profile,screen){
   if(isLive){
    assert.deepEqual(details.clippedElements,[],"important profile labels visibly clipped");
    assert.deepEqual(details.publicLinks,[],"fighter dialog must not show external research links");
+   assert(details.amateurSourceLinks.every(l=>/^https:\/\//.test(l.href)&&l.target==="_blank"&&/\bnoopener\b/.test(l.rel)),
+    "amateur career source links must be https and open safely in a new tab: "+JSON.stringify(details.amateurSourceLinks.filter(l=>!(/^https:\/\//.test(l.href)&&l.target==="_blank"&&/\bnoopener\b/.test(l.rel)))));
    assert(details.relatedNewsLinks.every(h=>/^https:\/\//.test(h)),"related-news links must be https: "+details.relatedNewsLinks.join(" "));
    if(expectedCategory==="Champion")
     assert(details.championshipBelt,"verified UFC champion belt missing");
