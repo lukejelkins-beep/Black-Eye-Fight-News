@@ -79,7 +79,7 @@ def main():
                 elif label in WINNER:
                     if fight.get("winnerId") and fight["winnerId"] == me["id"]:
                         kinds.append(KIND[label])
-                    elif not fight.get("winnerId"):
+                    elif not fight.get("winnerId") and me is a:  # once per fight, not once per corner
                         unplaced.append({"fightId": fight["fightId"], "date": fight["date"], "why": "performance bonus, no winner"})
                 else:
                     unplaced.append({"fightId": fight["fightId"], "date": fight["date"], "why": "unknown label " + label})
