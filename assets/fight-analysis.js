@@ -69,7 +69,7 @@
      which clips may show, so `clips` is FightFilm.pool(...). A stoppage with no clip gets none: never an unrelated one. */
   const norm = s => String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const namesIn = (title, name) => { const t = '-' + norm(title) + '-', n = norm(name), last = n.split('-').pop(); return !!n && (t.includes('-' + n + '-') || (last.length > 4 && t.includes('-' + last + '-'))); };
-  const NOT_THE_FINISH = /\b(react\w*|every|best|greatest|top \d+|ranked|ever|of the year|full fight|full card|marathon|compilation|comeback|press conference|weigh[- ]?in|interview|breakdown|analysis|preview)\b/i;
+  const NOT_THE_FINISH = /\b(react\w*|every(?:\s+\S+){0,2}?\s+(?:knock\s?outs?|k\.?os?|tkos?|finish\w*|submissions?|stoppages?|fights?|moments?|highlights?)|best|greatest|top \d+|ranked|ever|of the year|full fight|full card|marathon|compilation|comeback|press conference|weigh[- ]?in|interview|breakdown|analysis|preview)\b/i;
   /* UFC's own short uploads rarely name the fighters: "BEAUTIFUL KNEE KNOCKOUT #ufcqatar". Such a clip is matched to a stoppage only when
      its #ufc<place> tag is the stoppage's own card (the place word is in the event or location) AND its technique word is the technique
      of that stoppage AND no other stoppage on that card ended the same way, so the match is one-to-one or none. */

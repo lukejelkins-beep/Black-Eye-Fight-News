@@ -27,6 +27,11 @@
 #fighterDialog.befn-pa-dialog .befn-pa-hero{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;gap:20px;align-items:end;margin:0;
  padding:20px 24px 0;background:var(--pa-band);color:#fff;border:0;border-radius:0;position:relative;overflow:hidden}
 #fighterDialog.befn-pa-dialog .befn-pa-pic{align-self:end;margin:0;min-width:0}
+/* Flag backdrop (P2 "dark band", owner 24 Nov 2026): a faded half of the fighter's flag behind the cut-out. */
+#fighterDialog.befn-pa-dialog .befn-pa-flag{position:absolute;inset:0 auto 0 0;width:46%;z-index:0;pointer-events:none}
+#fighterDialog.befn-pa-dialog .befn-pa-flag img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
+#fighterDialog.befn-pa-dialog .befn-pa-flag::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(21,17,21,.1) 0%,var(--pa-band) 100%),linear-gradient(0deg,var(--pa-band) 0%,rgba(21,17,21,0) 40%)}
+#fighterDialog.befn-pa-dialog .befn-pa-hero>:not(.befn-pa-flag){position:relative;z-index:1}
 #fighterDialog.befn-pa-dialog .befn-pa-pic [data-fighter-portrait]{position:relative;width:100%;aspect-ratio:13/16;overflow:hidden;border-radius:10px 10px 0 0;background:#2c262b}
 #fighterDialog.befn-pa-dialog .befn-pa-pic [data-fighter-portrait]>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%;
  mix-blend-mode:normal;-webkit-mask-image:none;mask-image:none;opacity:0;z-index:1}
@@ -148,6 +153,8 @@
  #fighterDialog.befn-pa-dialog .befn-pa-bar{padding:8px 12px}
  #fighterDialog.befn-pa-dialog .befn-pa-hero{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:0 12px;padding:14px 16px 0;align-items:end}
  #fighterDialog.befn-pa-dialog .befn-pa-pic{grid-column:1;grid-row:1}
+ /* The flag stays behind the picture row (picture column is about 1/2.15 of the band, 13:16), not the rating row. */
+ #fighterDialog.befn-pa-dialog .befn-pa-flag{width:62%;bottom:auto;height:calc((100vw - 44px) / 2.15 * 16 / 13 + 14px)}
  #fighterDialog.befn-pa-dialog .befn-pa-who{grid-column:2;grid-row:1;padding-bottom:14px;align-self:center}
  #fighterDialog.befn-pa-dialog .befn-pa-who h2{font-size:clamp(22px,6.6vw,28px)}
  #fighterDialog.befn-pa-dialog .befn-pa-record strong{font-size:22px}
@@ -172,3 +179,15 @@
  #fighterDialog.befn-pa-dialog .befn-pa-band{grid-column:3}
  #fighterDialog.befn-pa-dialog .befn-pa-about{margin:20px 16px 24px}
 }
+/* Latest bout numbers inside the first Recent fights row (owner, 25 Nov 2026), on the light card. */
+#fighterDialog.befn-pa-dialog .befn-pro-fight-main .bsp-latest-stats.is-inline{margin-top:6px;gap:4px 14px;font-size:13px;color:#5f5559}
+#fighterDialog.befn-pa-dialog .befn-pro-fight-main .bsp-latest-stats.is-inline b{color:var(--pa-ink);margin-right:3px}
+/* Finish videos on the Fights tab (owner, 25 Nov 2026): a button under a KO/TKO or submission win, the player across the row. */
+#fighterDialog.befn-pa-dialog .befn-finish-play{display:flex;width:max-content;max-width:100%;justify-self:start;align-self:flex-start;align-items:center;gap:6px;margin-top:8px;min-height:44px;padding:0 14px;border:0;border-radius:999px;
+ background:var(--pa-ink);color:#fff;font:700 13px/1 'DM Sans',sans-serif;cursor:pointer}
+#fighterDialog.befn-pa-dialog .befn-finish-play span{color:var(--pa-gold)}
+#fighterDialog.befn-pa-dialog .befn-finish-play:hover{background:#2c262b}
+#fighterDialog.befn-pa-dialog .befn-finish-play:focus-visible{outline:2px solid var(--pa-gold);outline-offset:2px}
+#fighterDialog.befn-pa-dialog .befn-pro-fight-list>li>.befn-finish-video{grid-column:1/-1;grid-row:auto;width:100%;max-width:720px;aspect-ratio:16/9;margin:4px 0 6px;border-radius:10px;overflow:hidden;background:#000}
+#fighterDialog.befn-pa-dialog .befn-finish-video iframe{display:block;width:100%;height:100%;border:0}
+#fighterDialog.befn-pa-dialog .bsp-history>ul>li>.befn-finish-video{max-width:720px;aspect-ratio:16/9;margin:8px 0;border-radius:10px;overflow:hidden;background:#000}

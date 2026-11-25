@@ -55,6 +55,7 @@ jobs:
           node --test tests/test-ufc-postfight-metrics.mjs
           node --test tests/test-ufc-qa-freshness.mjs
           node --test tests/test-fighter-profile-a.cjs
+          node tests/test-fighter-finish-clips.cjs
       - name: Validate fight cards and results without API calls
         run: |
           node tests/test-upcoming-ui.cjs

@@ -127,6 +127,35 @@ class FilmTests(unittest.TestCase):
   self.assertEqual(m.merge_video(film,results,[entry]),(0,0))
   self.assertEqual(results['results'][0]['highlights']['publisher'],'UFC')
 
+class FinishClipTests(unittest.TestCase):
+ NOW=dt.datetime(2026,11,25,12,tzinfo=dt.timezone.utc)
+ def data(self,**extra):
+  return {'schema':1,'clips':[dict({'videoId':'abcdefghijk','fighter':'A','opponent':'B','date':'2025-01-01'},**extra)]}
+ def test_confirmed_clip_gets_au_stamp_and_thumbnail(self):
+  d=self.data()
+  n=m.refresh_finish_clips(d,now=self.NOW,batch=lambda ids:{i:{'thumbnail':'https://i.ytimg.com/vi/'+i+'/hqdefault.jpg','auAvailable':True,'auVerification':'youtube-api-region-restriction'} for i in ids})
+  c=d['clips'][0]
+  self.assertEqual(n,1);self.assertTrue(c['auAvailable']);self.assertEqual(c['auVerifiedAt'],'2026-11-25T12:00:00Z')
+ def test_refused_clip_keeps_old_stamp_so_it_expires(self):
+  d=self.data(auAvailable=True,auVerification='youtube-api-region-restriction',auVerifiedAt='2026-11-23T00:00:00Z',thumbnail='https://i.ytimg.com/vi/x/a.jpg')
+  n=m.refresh_finish_clips(d,now=self.NOW,batch=lambda ids:{i:None for i in ids})
+  self.assertEqual(n,0);self.assertEqual(d['clips'][0]['auVerifiedAt'],'2026-11-23T00:00:00Z')
+ def test_recent_clip_is_not_rechecked(self):
+  d=self.data(auVerifiedAt='2026-11-25T02:00:00Z')
+  calls=[]
+  m.refresh_finish_clips(d,now=self.NOW,batch=lambda ids:calls.append(ids) or {})
+  self.assertEqual(calls,[])
+ def test_without_api_key_falls_back_to_player_page_with_limit(self):
+  d={'clips':[{'videoId':'abcdefghij'+str(i)} for i in range(5)]}
+  seen=[]
+  m.refresh_finish_clips(d,now=self.NOW,batch=lambda ids:None,verify=lambda v:seen.append(v['id']) or None,page_limit=2)
+  self.assertEqual(seen,['yt-abcdefghij0','yt-abcdefghij1'])
+ def test_bad_thumbnail_is_not_accepted(self):
+  d=self.data()
+  n=m.refresh_finish_clips(d,now=self.NOW,batch=lambda ids:{i:{'thumbnail':'https://evil.example/x.jpg','auAvailable':True,'auVerification':'youtube-api-region-restriction'} for i in ids})
+  self.assertEqual(n,0);self.assertNotIn('auAvailable',d['clips'][0])
+
+
 class VideoDisciplineScopeTests(unittest.TestCase):
  def test_official_mma_and_grappling_are_separated(self):
   self.assertEqual(m.video_sport({'publisher':'UFC','title':'UFC BJJ 14 submission highlights','category':'combat','discipline':'MMA'}),'grappling')

@@ -161,3 +161,8 @@ assert.strictEqual(by('Diyar Nurgozhay').clip, null, 'a short tagged for a diffe
 assert.strictEqual(by('Navajo Stirling').clip, null, 'two punch finishes on the card: ambiguous, so none');
 assert.strictEqual(A.technique('KO (punches)'), 'punch'); assert.strictEqual(A.technique('TKO (retirement)'), '');
 console.log('short clip tests passed');
+// "Every angle of X's knockout" is the finish itself; "Every X knockout" is a reel.
+const ang = A.stoppageClips([{ date: '2026-11-21', winner: 'Navajo Stirling', loser: 'Jiri Prochazka', round: 2 }],
+  [clip('Every angle of Navajo Stirling\u2019s knockout of Jiri Prochazka', '2026-11-24'), clip('Every Navajo Stirling knockout', '2026-11-24'), clip('Every Knockout & Submission From UFC Qatar', '2026-11-22')]);
+assert.strictEqual(ang[0].clip.title, 'Every angle of Navajo Stirling\u2019s knockout of Jiri Prochazka', 'a replay of the finish is allowed; reels are not');
+console.log('every-filter tests passed');

@@ -21,6 +21,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 FILM=ROOT/'data/fight-film.json'
 RESULTS=ROOT/'data/results.json'
+CLIPS=ROOT/'data/ufc-finish-clips.json'
 ATOM={'a':'http://www.w3.org/2005/Atom','yt':'http://www.youtube.com/xml/schemas/2015'}
 CHANNELS=[
  ('DAZN Boxing','UCurvRE5fGcdUgCYWgh-BDsg','boxing','Boxing'),
@@ -498,6 +499,55 @@ def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au,check_shor
        +str(matched)+' newly matched bouts, '+str(searched)+' finish searches')
  return added,matched
 
+
+# ---- Hand-checked UFC finish clips for fighter profiles (owner, 25 Nov 2026) ----
+# data/ufc-finish-clips.json lists official UFC uploads of specific finishes, each checked by hand (oEmbed author "UFC",
+# title naming the bout). This job only re-checks Australian playback, with the same rules as the film feed: one
+# YouTube Data API call per 50 clips when the key is set, else the public player page for a few clips per run. A clip
+# that fails keeps its old stamp and drops off the site when it is 48 hours old (the profile's gate).
+CLIP_RECHECK_SECONDS=20*3600
+def _clip_due(clip,now):
+ stamp=clip.get('auVerifiedAt','')
+ try:age=(now-dt.datetime.fromisoformat(stamp.replace('Z','+00:00'))).total_seconds()
+ except (TypeError,ValueError,AttributeError):return True
+ return not(0<=age<CLIP_RECHECK_SECONDS)
+def fetch_data_api_batch(ids):
+ key=os.getenv('YOUTUBE_API_KEY','').strip()
+ if not key or not ids:return None
+ from urllib.parse import urlencode
+ url='https://www.googleapis.com/youtube/v3/videos?'+urlencode({'part':'contentDetails,snippet,status','id':','.join(ids),'key':key})
+ req=urllib.request.Request(url,headers={'Accept':'application/json'})
+ with urllib.request.urlopen(req,timeout=15) as res:
+  payload=json.loads(res.read().decode('utf-8'))
+ return {i:parse_youtube_data_api(payload,i) for i in ids}
+def refresh_finish_clips(data,now=None,batch=fetch_data_api_batch,verify=verify_au,page_limit=12):
+ """Re-check AU playback of due clips. Returns how many were confirmed."""
+ now=now or dt.datetime.now(dt.timezone.utc)
+ stamp=now.isoformat(timespec='seconds').replace('+00:00','Z')
+ due=[c for c in data.get('clips',[]) if re.fullmatch(r'[A-Za-z0-9_-]{11}',str(c.get('videoId',''))) and _clip_due(c,now)]
+ ok=0
+ def apply(c,meta):
+  nonlocal ok
+  if not meta or not re.match(r'^https://(?:i\.ytimg\.com|img\.youtube\.com)/',meta.get('thumbnail','')):return
+  c.update({'thumbnail':meta['thumbnail'],'auAvailable':True,'auVerification':meta['auVerification'],'auVerifiedAt':stamp});ok+=1
+ answers=None
+ try:
+  answers={}
+  for i in range(0,len(due),50):
+   got=batch([c['videoId'] for c in due[i:i+50]])
+   if got is None:answers=None;break
+   answers.update(got)
+ except Exception as exc:
+  print('Finish clips: API check failed',type(exc).__name__,str(exc)[:80],file=sys.stderr);answers=None
+ if answers is not None:
+  for c in due:apply(c,answers.get(c['videoId']))
+ else:
+  for c in due[:page_limit]:
+   v=verify({'id':'yt-'+c['videoId'],'url':'https://www.youtube.com/watch?v='+c['videoId']})
+   apply(c,v)
+ print('Finish clips: '+str(len(due))+' due, '+str(ok)+' confirmed for Australia')
+ return ok
+
 if __name__=='__main__':
  film=json.loads(FILM.read_text())
  results=json.loads(RESULTS.read_text())
@@ -506,3 +556,9 @@ if __name__=='__main__':
  if json.dumps((film,results),sort_keys=True,ensure_ascii=False)!=before:
   FILM.write_text(json.dumps(film,ensure_ascii=False,indent=2)+'\n')
   RESULTS.write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n')
+ if CLIPS.exists():
+  clips=json.loads(CLIPS.read_text())
+  before=json.dumps(clips,sort_keys=True,ensure_ascii=False)
+  refresh_finish_clips(clips)
+  if json.dumps(clips,sort_keys=True,ensure_ascii=False)!=before:
+   CLIPS.write_text(json.dumps(clips,ensure_ascii=False,indent=1)+'\n')
