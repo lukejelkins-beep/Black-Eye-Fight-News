@@ -172,4 +172,37 @@ class VideoDisciplineScopeTests(unittest.TestCase):
   self.assertEqual(m.video_sport({'publisher':'United World Wrestling','title':'Greco-Roman wrestling finals highlights','category':'combat','discipline':'Wrestling / RAF'}),'grappling')
   self.assertEqual(m.video_sport({'publisher':'FloGrappling','title':'ADCC finals submission highlights','category':'combat','discipline':'BJJ / Grappling'}),'grappling')
 
+ def test_knocks_out_titles_count_as_finishes(self):
+  self.assertTrue(m.qualifies('Navajo Stirling knocks out Jiri Prochazka','MMA'))
+  self.assertEqual(m.video_kind('Stirling knocked out Prochazka in round 2'),'KO / TKO')
+ def test_finish_searches_cover_recent_stoppages_only(self):
+  today=dt.date(2026,11,25)
+  row=lambda d,ev,sp,winner,method:{'sport':sp,'date':d,'event':ev,'winner':0,'method':method,'fighters':[{'name':winner},{'name':'Loser'}]}
+  res={'results':[row('2026-11-21','UFC Fight Night: A vs B','MMA','Navajo Stirling','KO/TKO (punch)'),
+   row('2026-11-21','UFC Fight Night: A vs B','MMA','Decision Guy','Decision (unanimous)'),
+   row('2026-11-18','Matchroom','Boxing','Ky Hodgson','TKO'),
+   row('2026-10-01','UFC 999','MMA','Old Winner','KO'),
+   row('2026-11-14','Unknown Promotion','MMA','Nobody','KO')]}
+  out=m.finish_searches(res,today)
+  self.assertEqual([(c[0],q) for c,q in out],[('UFC','Navajo Stirling knockout'),('ESPN MMA','Navajo Stirling knockout'),('MMA Junkie','Navajo Stirling knockout'),('Sherdog','Navajo Stirling knockout'),
+   ('DAZN Boxing','Ky Hodgson knockout'),('Top Rank Boxing','Ky Hodgson knockout'),('Sky Sports Boxing','Ky Hodgson knockout'),('Matchroom Boxing','Ky Hodgson knockout')])
+  self.assertLessEqual(len(m.finish_searches({'results':[row('2026-11-21','UFC X','MMA','W%d'%i,'KO') for i in range(60)]},today)),m.MAX_SEARCHES)
+ def test_refresh_searches_and_rechecks_recent_clips(self):
+  today=dt.date(2026,11,25)
+  seen={'search':[],'verified':[]}
+  def search(ch,q):
+   seen['search'].append((ch,q));return ''
+  def verify(v):
+   seen['verified'].append(v['id']);return dict(v,auAvailable=True,auVerification='youtube-api-region-restriction',auVerifiedAt='2026-11-25T00:00:00Z')
+  old={'id':'yt-DSGCMCD7cEM','category':'combat','discipline':'MMA','title':'BEAUTIFUL KNEE KNOCKOUT #ufcqatar','url':'https://www.youtube.com/watch?v=DSGCMCD7cEM','thumbnail':'https://i.ytimg.com/vi/DSGCMCD7cEM/hq.jpg','publisher':'UFC','date':'2026-11-21','verified':True,'kind':'KO / TKO','isFinish':True,'sport':'mma','auAvailable':True,'auVerification':'youtube-api-region-restriction','auVerifiedAt':'2026-11-21T15:47:41Z'}
+  stale={'id':'yt-OLDOLDOLD00','url':'https://www.youtube.com/watch?v=OLDOLDOLD00','date':'2026-09-01','title':'old','thumbnail':'x'}
+  film={'videos':[old,stale]}
+  res={'results':[{'sport':'MMA','date':'2026-11-21','event':'UFC Fight Night: A vs B','winner':0,'method':'KO/TKO (knee)','fighters':[{'name':'John Mitchell'},{'name':'Loser'}]}]}
+  def fetch(channel):raise ValueError('offline')
+  m.refresh(film,res,fetch=fetch,today=today,verify=verify,check_shorts=False,search=search)
+  self.assertIn('yt-DSGCMCD7cEM',seen['verified'],'a recent clip is re-verified even when it left the channel list')
+  self.assertNotIn('yt-OLDOLDOLD00',seen['verified'],'clips older than 21 days are not')
+  self.assertEqual([q for _,q in seen['search']],['John Mitchell knockout']*4)
+  self.assertEqual([v for v in film['videos'] if v['id']=='yt-DSGCMCD7cEM'][0]['auVerifiedAt'],'2026-11-25T00:00:00Z')
+
 if __name__=='__main__': unittest.main()
