@@ -359,6 +359,91 @@ class Drop(Base):
             self.runner.cmd_drop(SimpleNamespace(folder=str(d), sport="boxing", credit="x", attest="yes"), self.p)
 
 
+def fake_remover(span=0.8):
+    """Stands in for rembg: one opaque upright figure, `span` of the frame's height, on a transparent ground."""
+    def remove(im):
+        out = Image.new("RGBA", im.size, (0, 0, 0, 0))
+        w, h = im.size
+        top = int(h * (1 - span) / 2)
+        out.paste(Image.new("RGBA", (int(w * 0.27), int(h * span)), (120, 80, 60, 255)), (int(w * 0.36), top))
+        return out
+    return remove
+
+
+class FullBody(Base):
+    """`drop --kind fullbody` (owner, 25 Nov 2026): full-length photographs for the champions carousel."""
+    attest = "owner, 2026-11-25: I took these photographs and BEFN may publish them"
+
+    def folder(self, *names, size=(600, 1000)):
+        d = self.root / "drop-full"
+        d.mkdir(exist_ok=True)
+        for n in names:
+            (d / n).write_bytes(png(size=size))
+        return d
+
+    def drop(self, d, sport="ufc", attest=None):
+        return self.runner.cmd_drop(SimpleNamespace(folder=str(d), sport=sport, credit="Photo: The Owner",
+                                                    attest=attest or self.attest, kind="fullbody"), self.p)
+
+    def approve(self, run, remover=None, no_cutouts=False):
+        with mock.patch.object(self.runner, "fullbody_remover", lambda: remover or fake_remover()):
+            return self.runner.cmd_approve(SimpleNamespace(run_id=run, all=True, only="", reject="", owner_cleared=False,
+                                                           no_cutouts=no_cutouts), self.p)
+
+    def test_stages_without_registering_then_approve_writes_the_register(self):
+        d = self.folder("Champ Holder.jpg", "Nobody Here.jpg")
+        before = tree(self.root)
+        # Champ Holder already has a UFC portrait: a full-body photograph is still welcome.
+        manifest = self.drop(d)
+        self.assertEqual([(e["name"], e["kind"]) for e in manifest["entries"]], [("Champ Holder", "fullbody")])
+        self.assertIn("matches no ufc fighter", {s["name"]: s["reason"] for s in manifest["skipped"]}["Nobody Here.jpg"])
+        stage = self.root / "qa/photo-runner/staging" / manifest["runId"]
+        self.assertTrue((stage / "contact.png").exists())
+        self.assertTrue((stage / "fullbody/files/champ-holder.png").exists())
+        changed = {k for k, v in tree(self.root).items() if before.get(k) != v}
+        self.assertTrue(all(k.startswith("qa/photo-runner/") for k in changed), changed)
+        self.approve(manifest["runId"])
+        reg = json.loads((self.root / "data/fullbody-cutout-register.json").read_text())
+        row = reg["cutouts"]["champ-holder"]
+        self.assertEqual((row["ok"], row["sport"], row["credit"], row["attestation"]), (True, "ufc", "Photo: The Owner", self.attest))
+        self.assertIn("Champ Holder.jpg", row["source"])
+        out = Image.open(self.root / "assets/img/fullbody-cutouts/champ-holder.webp")
+        self.assertEqual(out.mode, "RGBA")
+        self.assertLess(out.width, out.height, "trimmed to the standing figure")
+        # nothing went into the portrait registers, and the review sheet shows the cut-out
+        self.assertNotIn("Photo: The Owner", (self.root / "data/ufc-image-register.json").read_text())
+        self.assertTrue((self.root / "qa/photo-runner/reviews" / manifest["runId"] / "cutouts.png").exists())
+        # a second drop for the same fighter is refused
+        again = self.drop(self.folder("Champ Holder.png"))
+        self.assertIsNone(again)
+
+    def test_a_figure_that_is_not_full_length_is_recorded_and_not_kept(self):
+        manifest = self.drop(self.folder("Champ Holder.jpg"))
+        self.approve(manifest["runId"], remover=fake_remover(span=0.4))
+        row = json.loads((self.root / "data/fullbody-cutout-register.json").read_text())["cutouts"]["champ-holder"]
+        self.assertFalse(row["ok"])
+        self.assertIn("not a full-length figure", row["reason"])
+        self.assertNotIn("attestation", row)
+        self.assertFalse((self.root / "assets/img/fullbody-cutouts/champ-holder.webp").exists())
+
+    def test_needs_a_dated_attestation_a_cut_out_and_ufc_or_boxing(self):
+        with self.assertRaises(SystemExit):
+            self.drop(self.folder("Champ Holder.jpg"), attest="yes")
+        with self.assertRaises(SystemExit):
+            self.drop(self.folder("Champ Holder.jpg"), sport="mma")
+        manifest = self.drop(self.folder("Agit Kabayel.jpg"), sport="boxing")
+        with self.assertRaises(SystemExit):
+            self.approve(manifest["runId"], no_cutouts=True)
+        self.assertFalse((self.root / "data/fullbody-cutout-register.json").exists())
+
+    def test_command_line_option(self):
+        d = self.folder("Agit Kabayel.jpg")
+        self.runner.main(["drop", str(d), "--sport", "boxing", "--kind", "fullbody", "--credit", "Photo: The Owner",
+                          "--attest", self.attest])
+        state = json.loads((self.root / "qa/photo-runner/state.json").read_text())
+        self.assertEqual(state["runs"][state["lastRun"]]["kind"], "drop-fullbody")
+
+
 class Attestations(unittest.TestCase):
     def test_each_promoter_has_its_own_dated_attestation(self):
         mma = load(REPO, "mma-portrait-intake.py")

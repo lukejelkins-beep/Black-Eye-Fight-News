@@ -79,6 +79,7 @@
   return {main:calm(main),hook:hook?calm(hook.replace(/\s+[-–]\s+(?:official\s+|full\s+|fight\s+)*highlights$/i,'')):'',original};
  }
  function isShort(v){
+  if(v?.isShort===true)return true; // the film collector asked YouTube (/shorts/<id> answers only for a Short)
   return /#shorts?\b/i.test(String(v?.title||''))||/^shorts?$/i.test(String(v?.kind||''))||/youtube\.com\/shorts\//i.test(String(v?.url||''));
  }
  const FINISH_WORDS=/\b(?:knock\s?outs?|k\.?o\.?s?|tko|submissions?|finish(?:es)?|stoppage|pins?)\b/i;

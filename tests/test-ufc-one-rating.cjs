@@ -47,11 +47,15 @@ test("profile rating and skills equal the stats build, with no credential points
   const shown=/class="befn-v3-score">(\d+|Unrated|—)/.exec(html)?.[1];
   const want=expectedRating(slug,row);
   assert.equal(shown,want[0]===null?"Unrated":String(want[0]),slug+" headline");
+  // Profile design A (owner, 2026-11-25): a skill with no value is left out of the Ratings card, never "Not rated".
+  const a=html.indexOf('data-pro-section="ratings"'),ratings=a<0?"":html.slice(a,html.indexOf("</section>",a));
   for(const [i,label] of ["Striking","Grappling","Wrestling"].entries()){
-   const value=want[i+1],meter=html.slice(html.indexOf(">"+label+"<"));
-   const got=/<b[^>]*>(Not rated|\d+)/.exec(meter)?.[1];
-   assert.equal(got,value===null?"Not rated":String(value),slug+" "+label);
+   const value=want[i+1],at=ratings.indexOf(">"+label+"<");
+   if(value===null){assert.equal(at,-1,slug+" "+label+" has no value and must be left out");continue;}
+   const got=/<b[^>]*>(\d+)/.exec(ratings.slice(at))?.[1];
+   assert.equal(got,String(value),slug+" "+label);
   }
+  assert(!html.includes("Not rated"),slug+" shows Not rated");
  }
  assert(credentialled>=5,"fighters with credentials are covered");
 });

@@ -8,6 +8,7 @@ source for them, stage what is found for a look by eye, and register only what i
                                             [--owner-cleared] [--no-cutouts]
     python3 scripts/photo-runner.py reject-cutout "<name>:reason" [--sport ...]
     python3 scripts/photo-runner.py drop <folder> --sport ... --credit "..." --attest "owner, YYYY-MM-DD: <wording>"
+                                         [--kind fullbody]   (UFC or boxing full-length photos for the champions carousel)
     python3 scripts/photo-runner.py report
 
 It does no fetching or registering of its own: each sport's existing pipeline does that, and this
@@ -68,7 +69,8 @@ def paths():
         "ufc": d / "ufc-image-register.json", "ufc_cut": d / "ufc-cutout-register.json",
         "mma": d / "mma-image-register.json", "mma_cut": d / "mma-cutout-register.json",
         "sumo_index": d / "sumo/rikishi-index.json", "sumo_photos": d / "sumo/approved-photos.json",
-        "sumo_cut": d / "sumo/cutouts.json",
+        "sumo_cut": d / "sumo/cutouts.json", "fullbody_cut": d / "fullbody-cutout-register.json",
+        "fullbody_dir": ROOT / "assets/img/fullbody-cutouts",
         "qa": ROOT / "qa/photo-runner", "staging": ROOT / "qa/photo-runner/staging",
         "reviews": ROOT / "qa/photo-runner/reviews", "state": ROOT / "qa/photo-runner/state.json",
     }
@@ -638,8 +640,16 @@ def cmd_drop(args, p=None):
     if not args.credit.strip():
         raise SystemExit("refused: --credit is required")
     folder = Path(args.folder)
+    fullbody = getattr(args, "kind", "portrait") == "fullbody"
+    if fullbody and args.sport not in FULLBODY_SPORTS:
+        raise SystemExit(f"refused: --kind fullbody is for {' and '.join(FULLBODY_SPORTS)} only")
     known = COLLECT[args.sport](p).by
-    have, _ = holdings(p, args.sport)
+    if fullbody:
+        # A full-body photograph sits beside the fighter's portrait, so only a full-body cut-out already kept stops it.
+        held = (read_json(p["fullbody_cut"], {}) or {}).get("cutouts", {})
+        have = {k for k, v in known.items() if held.get(slugify(v["name"]), {}).get("ok") is True}
+    else:
+        have, _ = holdings(p, args.sport)
     refused, files = [], []
     for f in sorted(folder.iterdir()):
         if f.is_dir() or f.name.startswith("."):
@@ -649,7 +659,7 @@ def cmd_drop(args, p=None):
         elif fold(f.stem) not in known:
             refused.append((f.name, f"the file name matches no {args.sport} fighter on the site"))
         elif fold(f.stem) in have:
-            refused.append((f.name, "this fighter already has an approved photo"))
+            refused.append((f.name, "this fighter already has a full-body cut-out" if fullbody else "this fighter already has an approved photo"))
         else:
             files.append(f)
     for name, why in refused:
@@ -657,7 +667,7 @@ def cmd_drop(args, p=None):
     if not files:
         print("nothing staged")
         return None
-    run_id = new_run_id("drop-")
+    run_id = new_run_id("drop-fullbody-" if fullbody else "drop-")
     stage = p["staging"] / run_id
     entries = []
     box = load_script("boxing-portrait-intake.py")
@@ -668,6 +678,17 @@ def cmd_drop(args, p=None):
         base = {"credit": args.credit.strip(), "rights": "owner-supplied", "attestation": args.attest,
                 "originalFile": f.name, "sha256": sha, "fetchedAt": now_iso(),
                 "identityBasis": "the owner named the file after the fighter"}
+        if fullbody:
+            slug = slugify(person["name"])
+            out = stage / "fullbody/files" / f"{slug}.png"
+            out.parent.mkdir(parents=True, exist_ok=True)
+            from PIL import Image, ImageOps
+            im = ImageOps.exif_transpose(Image.open(f)).convert("RGB")
+            im.save(out, "PNG")
+            row = {"id": slug, "name": person["name"], "sport": args.sport, **base, "originalSize": f"{im.width}x{im.height}"}
+            entries.append({"sport": args.sport, "kind": "fullbody", "id": slug, "name": person["name"], "row": row,
+                            "portrait": f"fullbody/files/{slug}.png", "credit": row["credit"], "licence": args.attest})
+            continue
         if args.sport == "sumo":
             sid = person.get("sourceId")
             if not sid:
@@ -698,9 +719,9 @@ def cmd_drop(args, p=None):
                         "portrait": f"{args.sport}/files/{files_['portrait']}", "credit": row["credit"],
                         "licence": args.attest})
     skips = [{"sport": args.sport, "name": n, "reason": why, "category": "name mismatch"} for n, why in refused]
-    manifest = write_manifest_and_sheet(stage, run_id, entries, skips, {}, kind="drop")
+    manifest = write_manifest_and_sheet(stage, run_id, entries, skips, {}, kind="drop-fullbody" if fullbody else "drop")
     state = load_state(p)
-    state["runs"][run_id] = {"date": today().isoformat(), "kind": "drop", "staged": {f"{args.sport} · {args.credit}": len(entries)},
+    state["runs"][run_id] = {"date": today().isoformat(), "kind": "drop-fullbody" if fullbody else "drop", "staged": {f"{args.sport} · {args.credit}": len(entries)},
                              "blockedHosts": {}, "approved": [], "rejected": []}
     state["lastRun"] = run_id
     write_json(p["state"], state)
@@ -807,7 +828,46 @@ CUTOUT_LISTS = {"boxing": ("build-boxing-cutouts.py", "BY_EYE"), "mma": ("build-
                 "ufc": ("build-ufc-cutouts.py", "BY_EYE")}
 
 
+FULLBODY_SPORTS = ("ufc", "boxing")
+
+
+def fullbody_remover():
+    """rembg with the model every BEFN cut-out uses (isnet-general-use). Tests replace this."""
+    from rembg import new_session, remove
+    session = new_session("isnet-general-use")
+    return lambda im: remove(im, session=session)
+
+
+def approve_fullbody(p, entries, stage, log):
+    """Cut out the approved full-body photographs with the cut-out builder's full-body mode and record each one,
+    kept or not, in data/fullbody-cutout-register.json. The original photograph is not published; only the cut-out."""
+    if not entries:
+        return
+    for e in entries:
+        if not ATTEST_RE.match(e["row"].get("attestation") or ""):
+            raise SystemExit(f"refused: {e['name']} has no dated owner attestation")
+    builder = load_script("build-ufc-cutouts.py")
+    remove = fullbody_remover()
+    reg = read_json(p["fullbody_cut"], None) or {"version": 1, "cutouts": {}}
+    reg.setdefault("cutouts", {})
+    for e in entries:
+        row = e["row"]
+        out = p["fullbody_dir"] / f"{e['id']}.webp"
+        ok, reason = builder.fullbody_cutout(stage / e["portrait"], out, remove)
+        source = f"owner drop folder: {row.get('originalFile', '')} (sha256 {row.get('sha256', '')})"
+        reg["cutouts"][e["id"]] = ({"ok": True, "sport": row["sport"], "name": e["name"], "source": source, "credit": row["credit"],
+                                    "attestation": row["attestation"], "reason": reason} if ok else
+                                   {"ok": False, "sport": row["sport"], "source": source, "reason": reason})
+        if not ok:
+            out.unlink(missing_ok=True)
+        log.write(f"fullbody {e['id']}: {'kept' if ok else 'not kept'} ({reason})\n")
+    reg["cutouts"] = dict(sorted(reg["cutouts"].items()))
+    write_json(p["fullbody_cut"], reg)
+
+
 def record_reject(p, e, reason):
+    if e.get("kind") == "fullbody":
+        return "state only"  # the owner's own file: there is no pipeline to keep from fetching it again
     target = REJECT_LISTS.get((e["sport"], e["row"].get("rights")))
     where = "state only"
     if target:
@@ -838,6 +898,12 @@ def cutout_tiles(p, approved):
     tiles = []
     for e in approved:
         sport = e["sport"]
+        if e.get("kind") == "fullbody":
+            v = (read_json(p["fullbody_cut"], {}) or {}).get("cutouts", {}).get(e["id"], {})
+            f = p["fullbody_dir"] / f"{e['id']}.webp"
+            tiles.append((f if v.get("ok") else None, e["name"],
+                          f"{sport} full body · kept" if v.get("ok") else f"dropped: {v.get('reason', 'not built')}"))
+            continue
         if sport == "sumo":
             cut = (read_json(p["sumo_cut"], {}) or {}).get("bySourceId", {}).get(str(e["id"]))
             tiles.append((ROOT / cut["path"] if cut else None, e["name"], "sumo · cut-out" if cut else "headshot: disc"))
@@ -867,6 +933,10 @@ def cmd_approve(args, p=None):
         chosen = [e for k, e in by_name.items() if k not in {fold(n) for n in rejects}]
     else:
         chosen = [by_name[fold(n)] for n in (args.only or "").split(",") if n.strip()]
+    full = [e for e in chosen if e.get("kind") == "fullbody"]
+    if full and args.no_cutouts:
+        raise SystemExit("refused: a full-body photograph is registered only as its cut-out; leave out --no-cutouts")
+    chosen = [e for e in chosen if e.get("kind") != "fullbody"]
     espn = [e for e in chosen if e["sport"] == "ufc" and e["row"].get("rights") == "owner-cleared"]
     if espn and not args.owner_cleared:
         raise SystemExit("refused: UFC headshots enter the register only with the owner's statement that they are "
@@ -884,6 +954,13 @@ def cmd_approve(args, p=None):
             run.setdefault("rejected", []).append({"sport": e["sport"], "name": e["name"], "reason": reason})
             state["attempts"][f"{e['sport']}|{fold(e['name'])}"] = {"date": today().isoformat(), "run": args.run_id,
                                                                    "category": "rejected by eye", "reason": reason}
+        approve_fullbody(p, full, stage, log)
+        for e in full:
+            e["status"] = "approved"
+            run.setdefault("approved", []).append({"sport": e["sport"], "name": e["name"], "credit": e["credit"],
+                                                   "sourcePage": e["row"].get("originalFile", ""), "kind": "fullbody"})
+            state["attempts"][f"fullbody|{e['sport']}|{fold(e['name'])}"] = {"date": today().isoformat(), "run": args.run_id,
+                                                                            "category": "added", "reason": "approved by eye"}
         for sport in SPORTS:
             mine = [e for e in chosen if e["sport"] == sport]
             if not mine:
@@ -1019,6 +1096,8 @@ def main(argv=None):
     d.add_argument("--sport", choices=SPORTS, required=True)
     d.add_argument("--credit", required=True)
     d.add_argument("--attest", required=True, help='"owner, YYYY-MM-DD: <wording>"')
+    d.add_argument("--kind", choices=("portrait", "fullbody"), default="portrait",
+                   help="fullbody: full-length photographs (UFC or boxing) cut out whole into data/fullbody-cutout-register.json")
     sub.add_parser("report")
     args = ap.parse_args(argv)
     {"missing": cmd_missing, "fetch": cmd_fetch, "approve": cmd_approve, "reject-cutout": cmd_reject_cutout,
