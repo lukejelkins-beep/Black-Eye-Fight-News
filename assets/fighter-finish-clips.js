@@ -110,7 +110,10 @@
   const b=e.target.closest&&e.target.closest('.befn-finish-play');
   if(b){e.preventDefault();play(b);}
  });
- const api={clipFor,decorate,load,isFinishMethod};
+ /* The clip for a finished bout on the Results snapshot: winner first. Null until the two feeds have loaded (call load()
+  and draw again when it resolves), and null for anything that is not a KO/TKO or submission win. */
+ function forBout(bout){return data.curated===null&&data.film===null?null:clipFor(bout,data.curated,data.film,Date.now());}
+ const api={clipFor,decorate,load,isFinishMethod,forBout,LABEL};
  root.BEFNFinishClips=api;
  if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);
