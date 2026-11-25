@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (Tidy-up)
+- **Removed CSS that no page builds any more:** 20 old Fight film rules in `brand-theme.css` (`film-card`, `film-switch`, `film-featured` and others, replaced by the film wall) and the old profile section bar and facts grid in `fighter-profile-pro.css` (`befn-pro-nav`, `befn-pro-facts`, replaced by the one-profile layout). Selectors that still mix in live classes (for example inside `:is(...)`) keep their live parts. The profile and Fight film were checked in a browser at 390 and 1280 px and look the same.
+- This session's nine merged worktrees and their local branches were deleted (about 3 GB). Nothing was removed from GitHub.
+
 ## 2026-11-25 (About page and media-access requests)
 - **An About page** (`/about.html`, linked from the footer). It covers who BEFN is, independence, how facts and photos are sourced and checked, corrections, and contact. It uses only facts the site already states: nothing invented, no audience figures and no names. Contact is admin@blackeyefightnews.com.au (owner, 25 Nov). By the owner's choice, the email is shown but no personal name.
 - **Request emails drafted for the owner** (`docs/outreach/media-access-requests.md`). They go to UFC media relations (with Getty licensing as a fallback), the boxing promoters, and a written-confirmation note for the five MMA promoters already attested. Each asks for press-image access plus written permission to publish with credit; a credential alone isn't enough. The site address and contact details are filled in. A private copy signed by the owner is kept out of this public repository. Nothing has been sent. The owner asked for full-body photos (champions carousel), and the sources BEFN is cleared to use don't have them: UFC.com refuses automated requests.
