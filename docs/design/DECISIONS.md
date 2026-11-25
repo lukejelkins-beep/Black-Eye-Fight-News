@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (Profile fight videos: second pass)
+- **21 more official UFC fight videos in `data/ufc-finish-clips.json` (38 in all: 35 full fights, 2 highlights, 1 finish).** The second pass covered the ~90 bouts the first pass did not reach and the last three KO/sub wins of the 102 fighters ranked 6–15 (360 bouts, one search per fighter). The rules were the same: oEmbed author "UFC" (@ufc), the title names the bout, and a rematch number has to match this meeting. Two were dropped for that reason: "Figueiredo vs Moreno 3" is their third fight, while our bout is the fourth (UFC 283), and Grasso vs Barber has two meetings and no number in the title. Most UFC full-fight uploads have embedding turned off (oEmbed 403), so they can be neither checked nor shown; that, and broadcaster channels (ESPN, TNT, Paramount+), is why coverage stays low. — Owner (picked "Yes, and widen") — `data/ufc-finish-clips.json`.
+
 ## 2026-11-25 (Stoppage clips: "every" only blocks reels)
 - **A title with "every" is rejected only when it reads as a reel** ("Every knockout...", "Every Pacheco KNOCKOUT", "Every finish from..."). "Every angle of Stirling's knockout of Prochazka" is a replay of the finish and can show once it passes the Australian-playback check. The diagnostic run found ESPN MMA's clip with that title, and that clip currently fails the playback check, so nothing changes on the site today. — Owner ("Fix the 'every' filter") — `assets/fight-analysis.js`.
 
