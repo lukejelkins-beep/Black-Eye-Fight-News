@@ -2,8 +2,8 @@
 
 The fixed cases are the handover's section 9 fighters on the committed data, re-baselined for the owner's choice to
 take strength on the night from the BEFN rating history instead of a separate Elo, and again for Form v2 (25 Nov 2026:
-dominance from scorecards, quality-weighted results, momentum, flatter recency) and v3 (fight statistics, 8 fights in
-5 years, loss cap from 75; docs/design/FIGHTERS-HUB-FORM.md 3).
+dominance from scorecards, quality-weighted results, momentum, flatter recency) v3 (fight statistics, 8 fights in 5 years)
+and v4 (age, loss cap from 70; docs/design/FIGHTERS-HUB-FORM.md 3).
 """
 import importlib.util
 import json
@@ -25,11 +25,11 @@ class Saved(unittest.TestCase):
     def test_section_9_cases(self):
         f = self.F
         self.assertEqual((f["valter-walker"]["form"], f["valter-walker"]["stage"], f["valter-walker"]["formRank"]),
-                         (95, "Contender", 2))
+                         (96, "Contender", 1))
         self.assertIn("On fire", f["valter-walker"]["badges"])
-        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 92))
+        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 96))
         self.assertIn("On fire", f["elijah-smith"]["badges"])
-        self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Contender", 65))
+        self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Contender", 60))
         self.assertIn("Cooling", f["alexandre-pantoja"]["badges"])
         self.assertEqual(f["israel-adesanya"]["stage"], "Slipping")
         self.assertEqual(f["israel-adesanya"]["why"], ["lost last fight and 4 of last 5"])
@@ -49,6 +49,10 @@ class Saved(unittest.TestCase):
             if f["lossCap"] is not None:
                 self.assertLessEqual(f["points"], f["lossCap"], slug)
         self.assertGreater(SAVED["formPool"], 500)
+        # the loss cap's best case must stay near the top 10%, whatever the weights (v3 drifted to 83rd-89th)
+        pool = sorted(f["points"] for f in self.F.values() if f["points"] is not None and f["monthsOut"] <= fb.POOL_MONTHS)
+        share_at_or_below = sum(1 for x in pool if x <= fb.LOSS_CAP_START) / len(pool)
+        self.assertTrue(.86 <= share_at_or_below <= .94, f"loss cap start sits at the {share_at_or_below:.0%} point")
         self.assertEqual(SAVED["fightFields"], fb.FIGHT_FIELDS)
         self.assertAlmostEqual(sum(SAVED["weights"].values()), 1.0)
         for slug, f in self.F.items():
@@ -158,8 +162,8 @@ class FightScoring(unittest.TestCase):
             return {"outcome": "L", "date": day, "method": method, "methodDetail": detail, "endRound": rnd,
                     "boutId": bout, "opponentSlug": "o" + bout}
         ratings = {str(i): {"me": 1500, "o" + str(i): 1600} for i in range(1, 4)}   # higher-rated opponents
-        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01")], ratings), 70)
-        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01"), loss("2025-06-01", bout="2")], ratings), 65)
+        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01")], ratings), 65)
+        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01"), loss("2025-06-01", bout="2")], ratings), 60)
         three = [loss("2026-01-01", "ko", None, 1), loss("2025-06-01", bout="2"), loss("2025-01-01", "ko", None, 2, "3")]
         self.assertEqual(fb.loss_cap("me", three, ratings), fb.LOSS_CAP_START - 15 - 10 - 5)
         self.assertIsNone(fb.loss_cap("me", [{"outcome": "W", "date": "2026-02-01"}] + three, ratings))

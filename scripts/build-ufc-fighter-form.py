@@ -41,8 +41,12 @@ MONTH = 30.4375
 # Form v3 (owner request, 25 Nov 2026: "highest possible percentage"): chosen by a weight search scored on fights it
 # was not tuned on (scripts/ufc-form-backtest.py; spec section 3). The fight-by-fight striking, control and takedown
 # margins replace the old last-5 Performance percentile, and the window looks back further.
-WEIGHTS = {"results": .10, "dominance": .10, "opposition": .10, "momentum": .15, "activity": .05,
-           "striking": .25, "control": .15, "takedowns": .10}
+# Form v4 (owner, 25 Nov 2026: "Yes, add age", "keep trying to get it higher"): age joins, and Results is still
+# reported but no longer weighted (dominance, opposition and momentum already carry the results; weighting it as well
+# backtested worse).
+WEIGHTS = {"results": 0.0, "dominance": .10, "opposition": .10, "momentum": .10, "activity": .05,
+           "striking": .25, "control": .15, "takedowns": .10, "age": .15}
+AGE_TOP, AGE_SPAN = 38, 16       # age part: 1 at 22 or younger, falling evenly to 0 at 38
 WINDOW_FIGHTS = 8                # v3: up to 8 fights (v2: 5)
 WINDOW_MONTHS = 60               # v3: within 5 years (v2: 3)
 ELIGIBLE_MONTHS = 36             # at least 2 fights in the last 36 months, or no Form ("limited data")
@@ -63,9 +67,9 @@ SIG_FIELD, KD_FIELD, TD_FIELD, CTRL_FIELD = 0, 16, 17, 21   # sigLanded, knockdo
 FORM_ON_FIRE, FORM_ON_FIRE_KEEP = 90, 79
 FORM_TITLE_CONTENDER, FORM_RISING, FORM_BREAKOUT = 82, 74, 79
 FORM_SLIPPING, FORM_SLIPPING_TWO_LOSSES = 20, 30
-# v3: 75 (v1/v2: 85). The fight-statistics parts bunch the points (90th percentile about 75), so 85 no longer held a
-# fighter coming off a loss below the top 10%. Backtest: no measurable cost (59.3% / 59.1% vs 59.2% / 59.4%).
-LOSS_CAP_START = 75
+# Set so the best case after a loss (a split decision to a higher-rated opponent) is about the 90th percentile of the
+# points pool: v1/v2 85, v3 75, v4 70 (each reweighting moves the points; tests/test_ufc_fighter_form.py checks it).
+LOSS_CAP_START = 70
 MAX_PRE_UFC_FIGHTS = 15          # owner, 2026-11-24: Rising star / Prospect need a modest pre-UFC career
 
 
@@ -260,8 +264,9 @@ def fight_stats(f):
             "takedowns": margin(TD_FIELD) / (secs / 900)}
 
 
-def points_for(fighter, history, as_of, ratings, strength, injured, after=None):
-    """Returns (points or None, parts, lossCap, per-fight breakdown). history: newest first, all UFC fights."""
+def points_for(fighter, history, as_of, ratings, strength, injured, after=None, born=None):
+    """Returns (points or None, parts, lossCap, per-fight breakdown). history: newest first, all UFC fights.
+    born: the fighter's birth date (ISO), or None when unknown (then the age part is left out)."""
     after = after or {}
     dec = decided(history)
     if sum(1 for f in dec if months_between(f["date"], as_of) <= ELIGIBLE_MONTHS) < 2:
@@ -305,9 +310,10 @@ def points_for(fighter, history, as_of, ratings, strength, injured, after=None):
 
     parts = {"results": round(R, 3), "dominance": round(D, 3), "opposition": round(Q, 3),
              "momentum": None if M is None else round(M, 3), "activity": round(A, 3),
-             **{k: None if v is None else round(v, 3) for k, v in stats.items()}}
+             **{k: None if v is None else round(v, 3) for k, v in stats.items()},
+             "age": None if not born else round(clamp((AGE_TOP - years_between(born, as_of)) / AGE_SPAN), 3)}
     used = {k: v for k, v in parts.items() if v is not None}
-    points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used)
+    points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used if WEIGHTS[k])
 
     cap = loss_cap(fighter, history, ratings)
     if cap is not None:
@@ -442,7 +448,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for slug, d in files.items():
         history = d["fights"]                     # newest first
         inj = active_injury(injuries.get(slug), history, as_of)
-        pts, parts, cap, fights = points_for(slug, history, as_of, ratings, strength, inj, after)
+        pts, parts, cap, fights = points_for(slug, history, as_of, ratings, strength, inj, after, born.get(slug))
         dec = decided(history)
         last_date = history[0]["date"] if history else None
         gap = months_between(last_date, as_of) if last_date else 999
