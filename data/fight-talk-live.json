@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-25T04:29:11.324Z",
-  "checkedAt": "2026-11-25T03:17:56.846Z",
-  "updatedAt": "2026-11-25T02:43:21Z",
+  "attemptedAt": "2026-11-25T05:17:02.253Z",
+  "checkedAt": "2026-11-25T05:17:02.253Z",
+  "updatedAt": "2026-11-25T05:02:23Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 0,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
-      "state": "not-scheduled",
-      "checked": 0,
+      "state": "connected",
+      "checked": 4,
       "failed": 0,
-      "configured": 0,
-      "message": "0 of 0 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 9,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 17,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -54,21 +54,47 @@
   "failures": [],
   "rollingScan": {
     "directoryEntries": 449,
-    "scheduledEntries": 29,
-    "batchIndex": 5,
+    "scheduledEntries": 84,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 17,
-      "X": 9,
-      "Threads": 3
+      "Threads": 12,
+      "X": 27,
+      "Instagram": 39,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 0,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n34exstqsu2d",
+      "cid": "bafyreidysze6cnztqhdevrl7vi373apntau4vzz6vq4dzobk5bcku5rnci",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Carlos Prates dismisses interim belt as ‘not a real title’ ahead of Michael Morales clash at UFC 336",
+      "postedAt": "2026-11-25T05:02:23Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n34exstqsu2d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n34576xqep2p",
       "cid": "bafyreiannl3cpnggpvpou4m3evrv44ansbcquwuer4awkab4gc2vo4ilsy",
@@ -90,7 +116,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -138,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -186,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -282,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -450,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -546,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -618,7 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -690,7 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -738,7 +764,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -835,30 +861,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-25T02:21:53.466Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n32pfaaguz2a",
-      "cid": "bafyreib65vk67mzvwzbtegb6vu5xhkteifvkf7ym7nraxt7a4psj7vggbu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC 336 update: Gable Steveson’s return and three other fights confirmed",
-      "postedAt": "2026-11-24T13:03:32Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n32pfaaguz2a",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1674,7 +1676,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1842,7 +1844,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1866,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1890,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1914,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1938,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1962,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1986,7 +1988,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2454,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T03:17:56.846Z",
+      "engagementCheckedAt": "2026-11-25T05:17:02.253Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {

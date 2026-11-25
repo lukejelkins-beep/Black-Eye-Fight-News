@@ -307,13 +307,14 @@
  }
 
  // ---------- browser ----------
- const data={results:null,upcoming:null,cuts:{ufc:null,boxing:null,mma:null},loading:null,loaded:false};
+ const data={results:null,upcoming:null,cuts:{ufc:null,boxing:null,mma:null},countries:null,loading:null,loaded:false};
  const basics=new Map();
  function load(){
   if(data.loading||typeof fetch!=="function")return data.loading||Promise.resolve();
   const get=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
   data.loading=Promise.all([get("data/results.json"),get("data/upcoming-cards.json"),get("data/ufc-cutout-register.json"),
-   get("data/boxing-cutout-register.json"),get("data/mma-cutout-register.json")]).then(([r,u,c1,c2,c3])=>{
+   get("data/boxing-cutout-register.json"),get("data/mma-cutout-register.json"),get("data/ufc-fighter-countries.json")]).then(([r,u,c1,c2,c3,cc])=>{
+   data.countries=cc&&cc.schema===1&&cc.fighters||null;
    data.results=r&&Array.isArray(r.results)?r:null;data.upcoming=u&&Array.isArray(u.events)?u:null;
    data.cuts={ufc:c1&&c1.cutouts||null,boxing:c2&&c2.cutouts||null,mma:c3&&c3.cutouts||null};
    data.loaded=true;
@@ -349,6 +350,20 @@
    '<div class="befn-portrait-fallback" role="img" aria-label="Photograph unavailable for '+esc(name)+'"><strong aria-hidden="true">'+esc(initials(name))+'</strong><span aria-hidden="true">Photo unavailable</span></div>'+
    (pic?'<img loading="eager" src="'+esc(pic.src)+'" alt="Photograph of '+esc(name)+'"'+(pic.cut?'':' referrerpolicy="no-referrer"')+'>':'')+'</div>';
  }
+ // Flag backdrop, option P2 "dark band" (owner, 24 Nov 2026, kept for design A on 25 Nov): a UFC fighter shown as a
+ // cut-out stands over a faded half of their flag (data/ufc-fighter-countries.json, as shown on UFC telecasts). No
+ // country held or no cut-out: the plain dark band.
+ const foldName=s=>String(s==null?"":s).normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
+ function heroFlag(hero,f,m,pic){
+  if(!hero)return;
+  const cc=m.ufc&&pic&&pic.cut&&data.countries?data.countries[foldName(f.name)]:null;
+  const ok=/^[a-z]{2}(-[a-z]{3})?$/.test(cc||"");
+  const old=hero.querySelector(":scope>.befn-pa-flag");
+  if(old&&ok&&old.dataset.cc===cc)return;
+  if(old)old.remove();
+  if(!ok)return;
+  hero.insertAdjacentHTML("afterbegin",'<div class="befn-pa-flag" aria-hidden="true" data-cc="'+esc(cc)+'"><img src="assets/img/flags/'+esc(cc)+'.svg" alt="" onerror="this.parentNode.remove()"></div>');
+ }
  const ctxFor=dialog=>dialog&&dialog._paCtx;
  // Related news is read when drawn, so a profile opened before the news feed loads gains its News tab when it does.
  const newsFor=c=>({news:c&&c.newsFn?c.newsFn(3):"",newsOne:c&&c.newsFn?c.newsFn(1):""});
@@ -364,6 +379,7 @@
   const hero=dialog.querySelector(".befn-pa-hero");
   hero.classList.toggle("has-cutout",!!(pic&&pic.cut));
   hero.dataset.paPicSrc=pic?pic.src:"";
+  heroFlag(hero,f,m,pic);
   dialog.dataset.paTab="overview";
   layout(dialog);
   return m;
@@ -395,6 +411,7 @@
    hero.dataset.paPicSrc=pic.src;hero.classList.toggle("has-cutout",pic.cut);
    pa.querySelector("[data-pa-pic]").innerHTML=portraitHTML(f.name,pic);
   }
+  heroFlag(hero,f,m,pic);
   pa.dataset.paCrumb=m.crumb;pa.querySelector(".befn-pa-crumb").textContent=m.crumb;
   // Overview and the plain Fights list follow the model too.
   const ov=pa.querySelector('[data-pa-panel="overview"]'),ovNew=overviewHTML(m,h);
@@ -425,6 +442,7 @@
    const slot=pa.querySelector('[data-pa-deep="'+DEEP[k]+'"]');
    if(slot&&node)slot.appendChild(node);
   }
+  mergeLatest(pa);
   // The career line inside the full UFC history ("verified to …") is staff text: it moves to About.
   for(const sum of pa.querySelectorAll(".befn-pa-body .bsp-history>summary")){
    const small=sum.querySelector("small");
@@ -436,6 +454,22 @@
   }
   ins.replaceChildren();
   pa._paDeepAbout=about;
+ }
+ // "Latest bout" (owner, 25 Nov 2026: it took a lot of space on desktop and repeated the first fight): its numbers
+ // (sig. strikes, takedowns, control) go inside the first Recent fights row when that row is the same bout, and the
+ // separate box is dropped. If the rows do not match (or are missing), the box stays as it was.
+ function mergeLatest(pa){
+  const box=pa.querySelector('[data-pa-deep="fights"] > .bsp-latest');
+  if(!box)return;
+  const first=pa.querySelector('[data-pa-deep="fights"] .befn-pro-fight-list > li');
+  const main=first&&first.querySelector(".befn-pro-fight-main");
+  const opp=s=>String(s||"").replace(/^\s*vs\.?\s+/i,"").replace(/\s+/g," ").trim().toLowerCase();
+  const boxOpp=opp(box.querySelector(".bsp-latest-main strong")&&box.querySelector(".bsp-latest-main strong").textContent);
+  const rowOpp=opp(main&&main.querySelector(".befn-v3-opponent")&&main.querySelector(".befn-v3-opponent").textContent);
+  if(!main||!boxOpp||boxOpp!==rowOpp)return;
+  const nums=box.querySelector(".bsp-latest-stats");
+  if(nums){nums.classList.add("is-inline");main.appendChild(nums);}
+  box.remove();
  }
  // Notes marked data-pa-about anywhere in the body (the amateur card adds one later) go to "About this profile".
  function absorb(dialog,base){
