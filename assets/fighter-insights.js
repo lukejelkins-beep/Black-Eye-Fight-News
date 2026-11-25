@@ -95,8 +95,8 @@
  }
  const credentialsHTML=f=>{
   const list=credentialsFor(f);
-  return list.length?'<div class="befn-credential-list">'+list.map(badge).join("")+'</div>':
-   '<span class="befn-credential-empty">No credentials listed.</span>';
+  // Design A (owner, 2026-11-25): an empty list renders nothing, never "No credentials listed".
+  return list.length?'<div class="befn-credential-list">'+list.map(badge).join("")+'</div>':'';
  };
  function historyFor(f){
   return engine.normalizeHistory((f?.latest||[]).map(x=>({
@@ -240,7 +240,9 @@
  function classificationHTML(f){
   if(f?.sport!=="MMA"||!f.classification)return "";
   const c=f.classification;
-  const category=String(c.label||"Unassessed");
+  const category=String(c.label||"");
+  // Design A: "Unassessed" (and an empty label) is never shown to readers.
+  if(!category||/^(Unassessed|Roster)$/.test(category))return "";
   const score=Number.isFinite(c.score)&&!["Champion","Unassessed"].includes(category)?
    '<span class="befn-scout-score">'+escapeHTML(String(c.score))+' / 100</span>':"";
   return '<section class="befn-profile-block befn-scout-classification" data-befn-classification="'+
@@ -305,6 +307,8 @@
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
   const tier=scoreTier(headlineBar(v2));
+  // Only bars with a value (design A); while the stats file loads there are none, and the card is left out.
+  const structureMeters=v2?v2Meters:(ratedByBuild(f)?'':known.map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''));
   return '<section class="befn-profile-insights befn-pro-insights'+(v2?'':' befn-v3-pending')+'" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    '<aside class="befn-pro-score is-'+(v2Overall===null?'unrated':tier)+'" aria-label="Overall fighter rating"><span class="befn-pro-tag">BEFN rating'+(v2?.provisional?' · provisional':'')+'</span>'+
    '<strong class="befn-v3-score">'+(v2Overall===null?noScore(stats):headlineHTML(v2Overall))+'</strong>'+
@@ -315,16 +319,12 @@
    '</aside>'+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
-   proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC roster'):stats?.ratings?'Not enough measured fights yet':'UFC statistics pending','<div class="befn-pro-meters">'+
-    // While the stats file is still loading, show the same six empty bars the rated card will have, so the card
-    // does not grow a bar when the rating arrives.
-    (v2?v2Meters:(ratedByBuild(f)&&!stats?V2_METERS.map(([,label])=>({label,score:null})):
-     ratedByBuild(f)?known.map(m=>({label:m.label,score:null})):known).map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''))+'</div>'+
-    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':
-     stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
+   (structureMeters?proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC roster'):'Percentile vs. UFC roster','<div class="befn-pro-meters">'+structureMeters+'</div>'+
+    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':'')):
+    (stats?.ratings?'<p class="befn-pro-note" data-pa-about>Unrated: a rating needs '+stats.ratings.sample.minimum+
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
    proSection('fights','Recent fights','Up to five recorded UFC fights',
-    (history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'<p class="befn-pro-note">Fight history awaiting verification</p>')+
+    (history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'')+
     (SP&&stats?SP.history(stats,matched,careerFor(stats)):''))+
    '</div>'+
    proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages appear once UFC statistics are recorded',
@@ -344,18 +344,19 @@
   const reviewedChampion=f.sport==="MMA"&&f.organisation==="UFC"&&
     f.category==="Champion"&&f.championReview===true&&
     validSource(f.review?.championStatusSource);
+  // Design A (owner, 2026-11-25): no "No title history listed" or "No credentials listed"; an empty section is left out.
   const title=reviewedChampion?"UFC "+String(f.division||"")+" champion":
     medallist?"Former world champion":
-    f.sport==="Boxing"?"No title history listed":
-    /former\s+UFC\s+[\w\s-]{0,25}champion/i.test(sourceText(f))?
-     "Former UFC champion":"No championship history listed";
+    f.sport!=="Boxing"&&/former\s+UFC\s+[\w\s-]{0,25}champion/i.test(sourceText(f))?"Former UFC champion":"";
+  const rated=metrics.filter(m=>Number.isInteger(m.score)&&m.score>=0&&m.score<=100);
+  const creds=credentialsHTML(f);
   return '<section class="befn-profile-insights" data-befn-profile="'+escapeHTML(f.id)+
    '" aria-label="Fighter performance insights">'+
-   '<section class="befn-profile-block" data-pro-section="ratings"><h3>Fighter ratings</h3><div class="befn-profile-body">'+
-   '<div class="befn-power-bars">'+metrics.map(profileMetric).join("")+'</div></div></section>'+
+   (rated.length?'<section class="befn-profile-block" data-pro-section="ratings"><h3>Fighter ratings</h3><div class="befn-profile-body">'+
+   '<div class="befn-power-bars">'+rated.map(m=>profileMetric(m)).join("")+'</div></div></section>':'')+
    trackedMetricHTML(f)+classificationHTML(f)+
-   '<section class="befn-profile-block" data-pro-section="profile"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+credentialsHTML(f)+'</div></section>'+
-   '<section class="befn-profile-block"><h3>Championship history</h3><div class="befn-profile-body"><p>'+escapeHTML(title)+'</p></div></section></section>';
+   (creds?'<section class="befn-profile-block" data-pro-section="profile"><h3>'+escapeHTML(kind)+'</h3><div class="befn-profile-body">'+creds+'</div></section>':'')+
+   (title?'<section class="befn-profile-block" data-pro-section="titles"><h3>Championship history</h3><div class="befn-profile-body"><p>'+escapeHTML(title)+'</p></div></section>':'')+'</section>';
  }
  // Rating model 2026-11: the headline is a rating (1500 = median established UFC fighter), not out of 100. Its bar
  // and colour use the fighter's percentile on that rating; the number itself is shown as is.
@@ -411,6 +412,7 @@
   if(!ufcV3||ufcV3.schema<4||v3.recent.filter(b=>b.outcome!=='NC').length<3)return '';
   const choices=ufcV3.boards.flatMap(b=>{
    const m=v3.metrics?.[b.id];if(!m||m.bouts<3||m.bouts>5||!Number.isFinite(m.value))return [];
+   if(b.type==='count'&&(m.value<1||m.value!==countFromRecent(v3,b.id)))return [];
    const division=null; // old V3 division ranks are not used (see badge note below)
    const all=Number.isInteger(m.rank)?m.rank:null;
    if(![division,all].some(n=>n!==null&&n>=1&&n<=30))return [];
@@ -430,6 +432,11 @@
 
     (x.all&&x.all<=30?'<b class="'+(x.all<=10?'is-gold':'')+'">#'+x.all+' All UFC</b>':'')+
     '</footer></div></div>').join('')+'</div></section>';
+ }
+ // KO/TKO or submission wins among the fights a V3 entry lists, by the build's own rule (snake case read as words).
+ function countFromRecent(v3,id){
+  return (v3?.recent||[]).filter(b=>b&&b.outcome==='W'&&(id==='ko'?/\b(?:ko|tko|knockout)\b/:/\bsubmission\b|\btap(?:ped)?\b/)
+   .test(String(b.method||'').toLowerCase().replace(/_/g,' '))).length;
  }
  function v3Context(){
   if(!ufcV3)return {population:null,opponents:null};
@@ -453,6 +460,8 @@
  }
  function proMeter(label,score,percentile,tier,hint,extra){
   const valid=Number.isFinite(score);
+  // Design A (owner, 2026-11-25): a rating with no value is omitted, never shown as "Not rated".
+  if(!valid)return '';
   return '<div class="befn-pro-meter is-'+tier+'">'+
    '<div class="befn-pro-meter-head"><span>'+escapeHTML(label)+'</span><b'+(valid?'':' class="is-unrated"')+'>'+
    (valid?(percentile==='plain'?String(score):percentile?ordinal(score)+' <small>pct</small>':score+' <small>/ 100</small>'):'Not rated')+'</b></div>'+
@@ -723,10 +732,11 @@
    ['kd','Knockdowns/15 min'],['td','Takedowns/15 min'],
    ['tdDef','TD defence'],['control','Control/15 min']
   ]){
-   const metric=v3.metrics?.[id];
+   let metric=v3.metrics?.[id];
    const measured=metric&&Number.isFinite(metric.value)&&
     Number.isInteger(metric.bouts)&&metric.bouts>=1&&metric.bouts<=5;
    let value='—';
+   if(measured&&(id==='ko'||id==='submission')&&metric.value!==countFromRecent(v3,id))metric={...metric,value:countFromRecent(v3,id)};
    if(measured){
     value=id==='control'?(metric.value<0?'−':'')+
      Math.floor(Math.abs(metric.value)/60)+':'+
@@ -789,7 +799,9 @@
    scorePanel+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
-   proSection('ratings','Ratings',rosterSize?'Percentile vs. UFC roster':'UFC ratings',ratingsBody)+
+   (ratingsBody.includes('befn-pro-meter ')?proSection('ratings','Ratings',rosterSize?'Percentile vs. UFC roster':'UFC ratings',ratingsBody):
+    (built&&stats?.ratings&&!v2?'<p class="befn-pro-note" data-pa-about>Unrated: a rating needs '+stats.ratings.sample.minimum+
+     ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
    proSection('fights','Recent fights','Last five UFC bouts',fightCards)+
    '</div>'+
    proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages, last five UFC bouts',statsBody+
@@ -1134,7 +1146,7 @@
   if(id==="scores")return scoresFor(article,names);
   if(id==="fights"){
    const sides=f.map((p,i)=>'<div><h4>'+escapeHTML(names[i])+' · recent form</h4>'+formHTML(p)+
-    '<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p)+'</div>').join("");
+    (credentialsHTML(p)?'<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p):'')+'</div>').join("");
    return lastFivePanel(f,names)+'<div class="befn-snapshot-extra">'+sides+'</div>';
   }
   return tilesFor(article,names)+'<details class="sb-totals"><summary>Tracked totals</summary>'+statsPanel(f,names)+'</details>';
@@ -1159,9 +1171,7 @@
   const rounds=article.querySelector(".result-bout-rounds")?.textContent.trim()||"";
   const reported=/reported/i.test(article.querySelector(".upcoming-matchup-status")?.textContent||"")?"Reported":"";
   const h={esc:escapeHTML,today:new Date(),division,billing,rounds,status:reported};
-  const buttons=f.map(p=>p?
-   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
-   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  const buttons=profileLinks(f,names,article);
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-tiles="1"'+
    (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+(cardScores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
@@ -1169,7 +1179,7 @@
    B.analysisHTML(B.analysisLines(side(0),side(1),names,h.today),h)+
    B.tabsHTML(tabs,active,h)+
    '<div class="sb-panel">'+bPanel(active,article,names,f)+'</div>'+
-   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
+   buttons+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
  }
  // Finished UFC bout on the Results page: the same face-off (owner, 24 Nov 2026), led by the result. Records are the
@@ -1192,14 +1202,12 @@
    division:article.querySelector(".result-bout-division")?.textContent.trim()||"",
    rounds:article.querySelector(".result-bout-rounds")?.textContent.trim()||"",
    result:article.querySelector(".result-matchup-result strong")?.textContent.trim()||""};
-  const buttons=f.map(p=>p?
-   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
-   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  const buttons=profileLinks(f,names,article);
   return '<details class="befn-fight-snapshot sb-result-snap" data-snapshot-key="'+escapeHTML(key)+'" data-b="1"'+
    (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
    B.tapeHTML(sides,side(0),side(1),h)+historyHTML(f,names,key)+
-   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
+   buttons+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
  }
  // Closed card row (layout B): a fighter with a cutout is shown as that cutout on their flag disc, the same picture
@@ -1287,15 +1295,31 @@
    f.map((p,i)=>'<div>'+(p?'<h4>'+escapeHTML(names[i])+' · credentials</h4>'+credentialsHTML(p):'')+'</div>').join("")+'</div>':"";
   const fights=!finished&&any?'<section class="befn-recent-history" aria-label="Last five fights"><h3 class="befn-comparison-heading">Last five fights</h3>'+
    '<section class="befn-history-two">'+boxingFightsColumn(f[0],names[0])+boxingFightsColumn(f[1],names[1])+'</section></section>':"";
-  const buttons=f.map(p=>p?
-   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
-   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  const buttons=profileLinks(f,names,article);
   return '<details class="befn-fight-snapshot sb-boxing'+(finished?' sb-result-snap':'')+'" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-sport="boxing"'+
    (boxingCutouts?' data-bcuts="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
    B.tapeHTML(sides,side(0),side(1),h)+bars+creds+fights+
-   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
+   buttons+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
+ }
+ // Profile buttons under a snapshot. A roster profile wins; a UFC fighter in the stats build opens #fighter/ufc--<slug>;
+ // other MMA (PFL, ONE, KSW, RIZIN, Cage Warriors) and boxers without a roster profile open the basic profile
+ // (#fighter/mma--<slug>, #fighter/boxing--<slug>, assets/fighter-profile-a.js) once BEFN's results and cards are loaded
+ // and hold the name. data-pa marks links drawn after that load, so earlier ones are redrawn.
+ function profileLinks(f,names,article){
+  const PA=window.BEFNProfileA,ready=!!PA?._data?.loaded;
+  if(PA&&!ready)PA.load();
+  const card=article.closest("[data-upcoming-card],[data-result-event]");
+  const cardId=card?.dataset?.upcomingCard||card?.dataset?.resultEvent||"";
+  const sport=sportFor(article,f[0],f[1]),ufcCard=sport==="MMA"&&/^ufc-/i.test(cardId);
+  return '<div class="befn-snapshot-links" data-portrait-ignore'+(ready?' data-pa="1"':'')+'>'+f.map((p,i)=>{
+   const name=p?.name||names[i];let id=p?.id||"";
+   if(!id&&ufcCard){const k=norm(names[i]),slug=statsNames.get(k);if(slug&&!isSharedName(k))id="ufc--"+slug;}
+   if(!id&&ready&&!ufcCard){const cand=PA.idFor(names[i],sport==="Boxing"?"boxing":"mma");if(cand&&PA.basicFor(cand))id=cand;}
+   return id?'<button type="button" data-fighter="'+escapeHTML(id)+'" aria-label="Open '+escapeHTML(name)+' full fighter profile">'+escapeHTML(name)+' profile</button>':
+    '<span class="befn-link-unavailable">Profile not yet available</span>';
+  }).join("")+'</div>';
  }
  function renderSnapshot(article){
   const names=[getName(article,0),getName(article,1)];
@@ -1311,12 +1335,10 @@
   const metricHTML=metricRows(f,sport);
   const sides=f.map((p,i)=>
    '<div><h4>'+escapeHTML(names[i])+' · recent form</h4>'+formHTML(p)+
-   '<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p)+
+   (credentialsHTML(p)?'<h4 style="margin-top:12px!important">Credentials</h4>'+credentialsHTML(p):'')+
    '</div>'
   ).join("");
-  const buttons=f.map((p,i)=>p?
-   '<button type="button" data-fighter="'+escapeHTML(p.id)+'" aria-label="Open '+escapeHTML(p.name)+' full fighter profile">'+escapeHTML(p.name)+' profile</button>':
-   '<span class="befn-link-unavailable">Profile not yet available</span>').join("");
+  const buttons=profileLinks(f,names,article);
   const key=matchupKey(article,names);
   const historyTab=historyHTML(f,names,key);
   const tiles=tilesFor(article,names),scores=scoresFor(article,names);
@@ -1329,7 +1351,7 @@
    '<div class="befn-snapshot-bars">'+metricHTML+'</div>'+
    '<div class="befn-snapshot-extra">'+sides+'</div>'+
    historyTab+talePanel(f,names)+
-   '<div class="befn-snapshot-links" data-portrait-ignore>'+buttons+'</div>'+
+   buttons+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p>'+
    '</div></details>';
  }
@@ -1366,6 +1388,8 @@
  // cutout), so the frame's loaded / "Photo unavailable" fallback states keep working as before. Everyone else keeps the
  // photo hero. `force` redraws once the country list arrives.
  function heroCutout(force){
+  // Design A draws its own hero picture (assets/fighter-profile-a.js).
+  if(document.querySelector('#fighterDialog .befn-pa'))return;
   const hero=document.querySelector('#fighterDialog.befn-pro-dialog .befn-pro-hero');
   const name=hero?.querySelector('.befn-pro-id h2')?.textContent.trim()||"";
   const frame=hero?.querySelector('.befn-pro-photo [data-fighter-portrait]');
@@ -1384,8 +1408,62 @@
   const src='assets/img/ufc-cutouts/'+slug+'.webp';
   if(img.getAttribute('src')!==src){frame.classList.remove('is-loaded');img.classList.remove('is-error');img.removeAttribute('referrerpolicy');img.src=src;}
  }
+ // Profile design A "One profile" (owner, 2026-11-25): the hero, the Overview and the tabs are drawn by
+ // assets/fighter-profile-a.js from this model. Every field is from data BEFN holds; a missing one is left out.
+ const PRETTY_METHOD={ko_tko:"KO/TKO",submission:"Submission",decision_unanimous:"Decision (unanimous)",decision_split:"Decision (split)",
+  decision_majority:"Decision (majority)",draw:"Draw",no_contest:"No contest",dq:"DQ"};
+ function modelFor(f){
+  if(!f)return null;
+  if(!isUfcProfile(f)){
+   const ratings=ratingsFor(f).filter(m=>Number.isInteger(m.score)&&m.score>=0&&m.score<=100).map(m=>({label:m.label,score:m.score}));
+   return {ufc:false,ratings,credentials:credentialsHTML(f)};
+  }
+  const stats=statsFor(f),SP=window.BEFNStatsProfile;
+  const v2=(stats?.ratings?.eligible||stats?.ratings?.provisional)?stats.ratings:null,e=formEntry(stats);
+  const v3=v3For(f);
+  let rows=freshRows(f);
+  if(!rows)rows=v3?(v3.recent||[]).map(b=>({...b,method:PRETTY_METHOD[b.method]||String(b.method||"").replaceAll("_"," ")})):latestRows(f);
+  const strength=new Map(v2?(v2.form?.opponents||[]).map(o=>[norm(o.opponent),o.strength]):[]);
+  const eventOf=b=>{const x=stats?.fights?.find(y=>(b.boutId&&String(y.boutId)===String(b.boutId))||(y.date===b.date&&norm(y.opponent)===norm(b.opponent)));return x?.event?(globalThis.BEFNEventTitle||(t=>t))(x.event):"";};
+  const letter=o=>{const r=String(o||"").toUpperCase();return r==="W"||r==="WIN"?"W":r==="L"||r==="LOSS"?"L":r==="NC"||r==="NO CONTEST"?"NC":"D";};
+  const recent=rows.slice(0,5).map(b=>({outcome:letter(b.outcome||b.result),opponent:b.opponent,method:b.method||"",date:b.date||"",
+   event:eventOf(b),band:opponentBand(strength.get(norm(b.opponent)))}));
+  const c=stats?.windows?.career,l5=stats?.windows?.last5;
+  const keyNumbers=[];
+  if(c?.fights)keyNumbers.push({value:c.W+"–"+c.L+(c.D?"–"+c.D:""),label:"UFC record"});
+  if(c?.W&&Number.isFinite(c.finishRate))keyNumbers.push({value:Math.round(c.finishRate*100)+"%",label:"Finish rate"});
+  if(l5?.fights>=3&&Number.isInteger(l5.winsBy?.ko))keyNumbers.push({value:String(l5.winsBy.ko),label:"KO/TKO wins in last "+l5.fights});
+  if(c?.judging&&Number.isFinite(c.judging.roundWinRate))keyNumbers.push({value:Math.round(c.judging.roundWinRate*100)+"%",label:"Rounds won on the cards"});
+  else if(Number.isFinite(c?.rates?.diffPm))keyNumbers.push({value:(c.rates.diffPm>0?"+":"")+c.rates.diffPm.toFixed(2),label:"Strike difference per min"});
+  const skills=[];
+  if(v2){
+   for(const [id,label] of [["striking","Striking"],["wrestling","Wrestling"],["grappling","Grappling"]]){
+    const v=v2.skills?.[id]?.roster;if(Number.isFinite(v))skills.push({label,score:v,percentile:true});
+   }
+   if(formShown(e))skills.push({label:"Form",score:e.form,percentile:true});
+  }
+  const pills=[];
+  const champion=stats?.champion===true||(isReviewedUfc(f)&&f.category==="Champion");
+  if(champion)pills.push({text:"Champion",gold:true});
+  else if(Number.isInteger(stats?.officialRank)&&stats.officialRank>0&&stats.division)pills.push({text:"#"+stats.officialRank+" "+stats.division,gold:true});
+  if(e?.stage&&e.stage!=="Champion")pills.push({text:e.stage,stage:STAGE_CLASS[e.stage]||"established"});
+  else if(!e&&isReviewedUfc(f)&&["Contender","Prospect"].includes(f.category)&&f.classification?.label===f.category)pills.push({text:f.category});
+  if(Number.isInteger(e?.age)&&e.age>15&&e.age<60)pills.push({text:"Age "+e.age});
+  const about=[];
+  if(stats)about.push("UFC fight statistics are from UFCStats round data, as of "+stats.asOf+".");
+  if(pills.some(x=>/^#\d/.test(x.text)))about.push("Rank: the official UFC rankings (ufc.com) as the stats build of "+stats.asOf+" holds them.");
+  if(pills.some(x=>/^Age /.test(x.text)))about.push("Age: from the birth date UFCStats lists.");
+  if(e?.stage)about.push("Stage (for example “Title contender”) and Form are BEFN’s own, from UFC results only; they are not predictions.");
+  return {ufc:true,division:stats?.division||f.division||"",
+   rating:v2&&Number.isFinite(v2.overall)?{value:v2.overall,rank:Number.isInteger(v2.overallRank)?v2.overallRank:null,
+    of:Number.isInteger(v2.rankOf)?v2.rankOf:null,provisional:!!v2.provisional}:null,
+   form:recent.map(x=>x.outcome),formLabel:recent.length===1?"Last UFC fight":"Last "+recent.length+" UFC fights",
+   keyNumbers,recent,skills,pills,about,credentials:credentialsHTML(f),
+   statsReady:!!stats||!ratedByBuild(f)};
+ }
  function layoutProDialog(){
   const dialog=document.querySelector('#fighterDialog.befn-pro-dialog');
+  if(dialog?.querySelector('.befn-pa')&&window.BEFNProfileA){window.BEFNProfileA.layout(dialog);return true;}
   const slot=dialog?.querySelector('[data-befn-pro-rating]');
   if(!slot)return false;
   heroCutout();
@@ -1506,7 +1584,7 @@
   }
   if(added)update();
  });
- window.BEFNFighterInsights={renderProfile,statsProfile,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,layoutV3Dialog,heroFallback,topCredentials:f=>credentialsFor(f).length?credentialsHTML(f):"",hasV3:isUfcProfile};
+ window.BEFNFighterInsights={renderProfile,statsProfile,modelFor,credentialsFor,ratingsFor,renderSnapshot,profileFor,hydrate,layoutV3Dialog,heroFallback,topCredentials:f=>credentialsFor(f).length?credentialsHTML(f):"",hasV3:isUfcProfile};
  // The router runs before this deferred file, so replay a shared profile link.
  if(String(window.location?.hash||"").startsWith("#fighter/ufc--"))window.dispatchEvent(new Event("hashchange"));
  schedule();
