@@ -1,8 +1,9 @@
 /* Finish videos on fighter profiles (owner, 25 Nov 2026: "link videos for highlights of the fighter ... submissions/knockouts").
  * A UFC fighter's KO/TKO or submission WIN in the Fights tab gets a "Watch the finish" button when BEFN holds a clip of that
- * exact bout. Two sources, both official UFC uploads and both behind the film feed's Australian-playback gate (checked in the
+ * exact bout. Two sources, both official uploads (the UFC or its broadcasters) and both behind the film feed's Australian-playback gate (checked in the
  * last 48 hours, with YouTube's own thumbnail):
- *  1. data/ufc-finish-clips.json: hand-checked clips (oEmbed author "UFC", title names the bout), matched on fighter,
+ *  1. data/ufc-finish-clips.json: hand-checked clips (oEmbed author UFC, ESPN MMA or TNT Fight Sports, title names the
+ *     bout; owner 25 Nov 2026 added the two broadcasters, and a non-UFC clip's button names its channel), matched on fighter,
  *     opponent and date. Kind: finish, highlights or full fight; the button says which.
  *  2. data/fight-film.json: the film feed, with the Analysis stoppage rule (a KO, TKO or submission clip whose title names
  *     the winner, published on the fight day or within 14 days, not a reaction, reel, full card, interview or preview).
@@ -32,7 +33,7 @@
   const f=key(bout.fighter),o=key(bout.opponent);
   for(const c of (curated&&curated.clips)||[]){
    if(c&&ID.test(c.videoId||'')&&key(c.fighter)===f&&key(c.opponent)===o&&c.date===bout.date&&LABEL[c.kind]&&auOk(c,now))
-    return {id:c.videoId,kind:c.kind,title:c.title||'',source:'curated'};
+    return {id:c.videoId,kind:c.kind,title:c.title||'',publisher:c.publisher||'UFC',source:'curated'};
   }
   const fight=Date.parse(bout.date+'T12:00:00Z');
   const pool=root.FightFilm&&root.FightFilm.pool&&film?root.FightFilm.pool(film,'mma',now,{shorts:true}):[];
@@ -41,7 +42,7 @@
    return v&&v.title&&(v.isFinish===true||/^(ko|tko|submission)\b/i.test(v.kind||''))&&!NOT_THE_FINISH.test(v.title)&&
     youtubeId(v.url)&&Number.isFinite(day)&&day>=fight&&day<=fight+14*DAY&&namesIn(v.title,bout.fighter);
   }).sort((a,b)=>Math.abs(Date.parse(a.date)-fight)-Math.abs(Date.parse(b.date)-fight));
-  return hits[0]?{id:youtubeId(hits[0].url),kind:'finish',title:hits[0].title,source:'feed'}:null;
+  return hits[0]?{id:youtubeId(hits[0].url),kind:'finish',title:hits[0].title,publisher:hits[0].publisher||'',source:'feed'}:null;
  }
 
  // ---------- browser ----------
@@ -86,7 +87,7 @@
    const clip=clipFor(bout,data.curated,data.film,now);
    if(!clip)continue;
    r.host.insertAdjacentHTML('beforeend','<button type="button" class="befn-finish-play" data-finish-id="'+esc(clip.id)+'" data-finish-title="'+
-    esc(clip.title||bout.fighter+' vs '+bout.opponent)+'"><span aria-hidden="true">▶</span> '+esc(LABEL[clip.kind])+'</button>');
+    esc(clip.title||bout.fighter+' vs '+bout.opponent)+'"><span aria-hidden="true">▶</span> '+esc(LABEL[clip.kind])+(clip.publisher&&clip.publisher!=='UFC'?' · '+esc(clip.publisher):'')+'</button>');
   }
  }
  function play(btn){

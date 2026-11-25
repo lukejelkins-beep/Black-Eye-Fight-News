@@ -8,7 +8,9 @@ const bout = { fighter: 'Cam Rowston', opponent: 'Cody Brundage', date: '2026-01
 const curated = { schema: 1, clips: [Object.assign({ fighter: 'Cam Rowston', opponent: 'Cody Brundage', date: '2026-01-31', videoId: 'abcdefghijk', kind: 'finish', title: 'Cam Rowston knocks out Cody Brundage' }, au)] };
 
 // Curated clip of the exact bout.
-assert.deepStrictEqual(clipFor(bout, curated, null, NOW), { id: 'abcdefghijk', kind: 'finish', title: 'Cam Rowston knocks out Cody Brundage', source: 'curated' });
+assert.deepStrictEqual(clipFor(bout, curated, null, NOW), { id: 'abcdefghijk', kind: 'finish', title: 'Cam Rowston knocks out Cody Brundage', publisher: 'UFC', source: 'curated' });
+// A broadcaster clip keeps its channel name, which the button shows.
+assert.strictEqual(clipFor(bout, { schema: 1, clips: [Object.assign({}, curated.clips[0], { publisher: 'ESPN MMA' })] }, null, NOW).publisher, 'ESPN MMA');
 // Not a win, not a finish, other date, other opponent: nothing.
 assert.strictEqual(clipFor(Object.assign({}, bout, { outcome: '' }), curated, null, NOW), null);
 assert.strictEqual(clipFor(Object.assign({}, bout, { method: 'Decision (unanimous)' }), curated, null, NOW), null);
