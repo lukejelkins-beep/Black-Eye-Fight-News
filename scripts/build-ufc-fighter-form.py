@@ -23,6 +23,7 @@ import bisect
 import datetime as dt
 import importlib.util
 import json
+import math
 import re
 import sys
 import tempfile
@@ -37,21 +38,34 @@ STATUS = DATA / "ufc-fighter-status.json"
 MONTH = 30.4375
 # Form v2 (owner request, 25 Nov 2026): every fight is valued against the BEFN expectation on the night, dominance
 # covers losses as well as wins and reads the judges' scorecards, and momentum follows the results rating itself.
-WEIGHTS = {"results": .25, "dominance": .30, "opposition": .15, "momentum": .10, "activity": .10, "performance": .10}
-POSITION = (1.00, 1.00, 1.00, 1.00, 1.00)   # v2, owner 25 Nov: flat; only age (the half-life) weights recency
-HALF_LIFE_MONTHS = 24                  # v2: was 18
-WINDOW_MONTHS = 36
+# Form v3 (owner request, 25 Nov 2026: "highest possible percentage"): chosen by a weight search scored on fights it
+# was not tuned on (scripts/ufc-form-backtest.py; spec section 3). The fight-by-fight striking, control and takedown
+# margins replace the old last-5 Performance percentile, and the window looks back further.
+WEIGHTS = {"results": .10, "dominance": .10, "opposition": .10, "momentum": .15, "activity": .05,
+           "striking": .25, "control": .15, "takedowns": .10}
+WINDOW_FIGHTS = 8                # v3: up to 8 fights (v2: 5)
+WINDOW_MONTHS = 60               # v3: within 5 years (v2: 3)
+ELIGIBLE_MONTHS = 36             # at least 2 fights in the last 36 months, or no Form ("limited data")
+STRENGTH_MONTHS = 36             # opponent strength: percentile among pre-bout ratings in the 36 months before a bout
+POSITION = (1.0,) * WINDOW_FIGHTS  # flat (owner, 25 Nov); only age (the half-life) weights recency
+HALF_LIFE_MONTHS = 36            # v3 (v2: 24, v1: 18)
+# Fight statistics: margin per fight mapped by 0.5 + 0.5 tanh(margin / scale), so a margin of one scale is 0.88.
+STAT_SCALE = {"striking": 1.5, "control": .2, "takedowns": 1.5}   # sig. strikes/min, control share, takedowns/15 min
 POOL_MONTHS = 24
 STREAK_STEP = 0                  # results: per-fight streak step (v1 +0.05 a win); 0 since v2, it backtested worse
 MOMENTUM_SPAN = 240              # a 120-point rise in the results rating over the window gives momentum 1.0
 # Each fighter's "fights": the fights behind the score, newest first, one array per fight in this order. share is
 # the fight's percentage of the recency weight; value is what the result was worth (fight_value).
-FIGHT_FIELDS = ["date", "opponent", "outcome", "method", "share", "oppStrength", "dominance", "value"]
-KD_FIELD = 16                    # "knockdowns" in roundFields
+FIGHT_FIELDS = ["date", "opponent", "outcome", "method", "share", "oppStrength", "dominance", "value",
+                "strikeDiffPm", "controlShare", "takedownDiff15"]
+SIG_FIELD, KD_FIELD, TD_FIELD, CTRL_FIELD = 0, 16, 17, 21   # sigLanded, knockdowns, takedowns, controlSec (roundFields)
 # Stage and badge thresholds are on the displayed Form (a percentile), so re-weighting the points cannot move them.
 FORM_ON_FIRE, FORM_ON_FIRE_KEEP = 90, 79
 FORM_TITLE_CONTENDER, FORM_RISING, FORM_BREAKOUT = 82, 74, 79
 FORM_SLIPPING, FORM_SLIPPING_TWO_LOSSES = 20, 30
+# v3: 75 (v1/v2: 85). The fight-statistics parts bunch the points (90th percentile about 75), so 85 no longer held a
+# fighter coming off a loss below the top 10%. Backtest: no measurable cost (59.3% / 59.1% vs 59.2% / 59.4%).
+LOSS_CAP_START = 75
 MAX_PRE_UFC_FIGHTS = 15          # owner, 2026-11-24: Rising star / Prospect need a modest pre-UFC career
 
 
@@ -144,7 +158,7 @@ class Strength:
     def of(self, rating: float, date: str) -> float:
         key = (round(rating, 6), date)
         if key not in self.cache:
-            lo = bisect.bisect_left(self.dates, add_months(date, -WINDOW_MONTHS))
+            lo = bisect.bisect_left(self.dates, add_months(date, -STRENGTH_MONTHS))
             hi = bisect.bisect_left(self.dates, date)
             pool = self.values[lo:hi]
             p = (sum(1 for v in pool if v < rating) + .5 * sum(1 for v in pool if v == rating)) / len(pool) if pool else .5
@@ -232,12 +246,27 @@ def fight_value(outcome, strength, dom) -> float:
     return (.12 + .56 * min(dom, .5)) * (.4 + .6 * strength)
 
 
-def points_for(fighter, history, as_of, ratings, strength, performance, injured, after=None):
+def fight_stats(f):
+    """Margins from the round statistics, the fighter minus the opponent: significant strikes per minute, share of
+    the fight spent in control, takedowns per 15 minutes. None when the fight has no round statistics."""
+    rounds = [r for r in (f.get("rounds") or []) if len(r) > 3]
+    secs = sum(r[1] for r in rounds)
+    if secs <= 0:
+        return None
+
+    def margin(i):
+        return sum(r[2][i] for r in rounds) - sum(r[3][i] for r in rounds)
+    return {"striking": margin(SIG_FIELD) / (secs / 60), "control": margin(CTRL_FIELD) / secs,
+            "takedowns": margin(TD_FIELD) / (secs / 900)}
+
+
+def points_for(fighter, history, as_of, ratings, strength, injured, after=None):
     """Returns (points or None, parts, lossCap, per-fight breakdown). history: newest first, all UFC fights."""
     after = after or {}
-    window = [f for f in decided(history) if months_between(f["date"], as_of) <= WINDOW_MONTHS][:5]
-    if len(window) < 2:
+    dec = decided(history)
+    if sum(1 for f in dec if months_between(f["date"], as_of) <= ELIGIBLE_MONTHS) < 2:
         return None, None, None, None
+    window = [f for f in dec if months_between(f["date"], as_of) <= WINDOW_MONTHS][:WINDOW_FIGHTS]
     weights = [POSITION[i] * .5 ** (months_between(f["date"], as_of) / HALF_LIFE_MONTHS) for i, f in enumerate(window)]
     s = sum(weights)
 
@@ -251,7 +280,7 @@ def points_for(fighter, history, as_of, ratings, strength, performance, injured,
         q = strength.of(opp, f["date"]) if opp is not None else .3       # unknown opponent: the median's score
         d = dominance(f)
         v = fight_value(f["outcome"], q, d)
-        rows.append({"w": w, "f": f, "q": q, "d": d, "v": v, "me": me, "opp": opp})
+        rows.append({"w": w, "f": f, "q": q, "d": d, "v": v, "me": me, "opp": opp, "st": fight_stats(f)})
 
     wins, losses = win_streak(history), streak(history, "L")
     trend = STREAK_STEP * min(wins, 3) - STREAK_STEP * min(max(losses - 1, 0), 3)
@@ -268,9 +297,15 @@ def points_for(fighter, history, as_of, ratings, strength, performance, injured,
     gap = months_between(history[0]["date"], as_of)
     A = 1.0 if injured else clamp(1 - (gap - 6) / 12)
 
+    stats = {}
+    for k, scale in STAT_SCALE.items():
+        have = [r for r in rows if r["st"] is not None]
+        ws = sum(r["w"] for r in have)
+        stats[k] = None if not ws else .5 + .5 * math.tanh(sum(r["w"] * r["st"][k] for r in have) / ws / scale)
+
     parts = {"results": round(R, 3), "dominance": round(D, 3), "opposition": round(Q, 3),
              "momentum": None if M is None else round(M, 3), "activity": round(A, 3),
-             "performance": None if performance is None else round(performance, 3)}
+             **{k: None if v is None else round(v, 3) for k, v in stats.items()}}
     used = {k: v for k, v in parts.items() if v is not None}
     points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used)
 
@@ -278,12 +313,14 @@ def points_for(fighter, history, as_of, ratings, strength, performance, injured,
     if cap is not None:
         points = min(points, cap)
     breakdown = [[r["f"]["date"], r["f"].get("opponentSlug"), r["f"]["outcome"], r["f"].get("method"),
-                  round(100 * r["w"] / s), round(r["q"], 2), round(r["d"], 2), round(r["v"], 2)] for r in rows]
+                  round(100 * r["w"] / s), round(r["q"], 2), round(r["d"], 2), round(r["v"], 2)]
+                 + ([None] * 3 if r["st"] is None else [round(r["st"]["striking"], 2), round(r["st"]["control"], 3),
+                                                        round(r["st"]["takedowns"], 2)]) for r in rows]
     return round(points, 1), parts, cap, breakdown
 
 
 def loss_cap(fighter, history, ratings):
-    """If the last fight was a loss: 85 minus penalties for who it was against, how it happened, a losing run and a
+    """If the last fight was a loss: LOSS_CAP_START (75) minus penalties for who it was against, how it happened, a losing run and a
     second stoppage loss in two years. None after a win or draw (the cap lifts with the next win)."""
     dec = decided(history)
     if not dec or dec[0]["outcome"] != "L":
@@ -310,7 +347,7 @@ def loss_cap(fighter, history, ratings):
         since = add_months(last["date"], -24)
         if any(f["outcome"] == "L" and f.get("method") in ("ko", "sub") and since <= f["date"] for f in dec[1:]):
             stopped_again = 5
-    return 85 - opp_pen - manner - run_pen - stopped_again
+    return LOSS_CAP_START - opp_pen - manner - run_pen - stopped_again
 
 
 # ---------- inputs ----------
@@ -349,13 +386,6 @@ def active_injury(entry, history, as_of):
     if months_between(since, as_of) > 24:
         return None
     return entry
-
-
-def percentile_in(values, x):
-    vals = [v for v in values if v is not None]
-    if x is None or not vals:
-        return None
-    return (sum(1 for v in vals if v < x) + .5 * sum(1 for v in vals if v == x)) / len(vals)
 
 
 # ---------- main build ----------
@@ -408,23 +438,11 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
             div = Counter(opp).most_common(1)[0][0] if opp else None
         division[slug] = div
 
-    # within-division percentiles of last-5 strike differential and control share
-    by_div = {}
-    for slug, d in files.items():
-        r = (d["windows"].get("last5") or {}).get("rates") or {}
-        by_div.setdefault(division[slug], []).append((slug, r.get("diffPm"), r.get("ctrlShare")))
-    performance = {}
-    for div, rows in by_div.items():
-        diffs, ctrls = [x[1] for x in rows], [x[2] for x in rows]
-        for slug, dp, cs in rows:
-            parts = [p for p in (percentile_in(diffs, dp), percentile_in(ctrls, cs)) if p is not None]
-            performance[slug] = sum(parts) / len(parts) if parts else None
-
     out = {}
     for slug, d in files.items():
         history = d["fights"]                     # newest first
         inj = active_injury(injuries.get(slug), history, as_of)
-        pts, parts, cap, fights = points_for(slug, history, as_of, ratings, strength, performance.get(slug), inj, after)
+        pts, parts, cap, fights = points_for(slug, history, as_of, ratings, strength, inj, after)
         dec = decided(history)
         last_date = history[0]["date"] if history else None
         gap = months_between(last_date, as_of) if last_date else 999

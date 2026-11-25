@@ -2,7 +2,8 @@
 
 The fixed cases are the handover's section 9 fighters on the committed data, re-baselined for the owner's choice to
 take strength on the night from the BEFN rating history instead of a separate Elo, and again for Form v2 (25 Nov 2026:
-dominance from scorecards, quality-weighted results, momentum, flatter recency; docs/design/FIGHTERS-HUB-FORM.md 3).
+dominance from scorecards, quality-weighted results, momentum, flatter recency) and v3 (fight statistics, 8 fights in
+5 years, loss cap from 75; docs/design/FIGHTERS-HUB-FORM.md 3).
 """
 import importlib.util
 import json
@@ -24,11 +25,11 @@ class Saved(unittest.TestCase):
     def test_section_9_cases(self):
         f = self.F
         self.assertEqual((f["valter-walker"]["form"], f["valter-walker"]["stage"], f["valter-walker"]["formRank"]),
-                         (96, "Contender", 1))
+                         (95, "Contender", 2))
         self.assertIn("On fire", f["valter-walker"]["badges"])
-        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 97))
+        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 92))
         self.assertIn("On fire", f["elijah-smith"]["badges"])
-        self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Contender", 75))
+        self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Contender", 65))
         self.assertIn("Cooling", f["alexandre-pantoja"]["badges"])
         self.assertEqual(f["israel-adesanya"]["stage"], "Slipping")
         self.assertEqual(f["israel-adesanya"]["why"], ["lost last fight and 4 of last 5"])
@@ -37,8 +38,8 @@ class Saved(unittest.TestCase):
         self.assertEqual(f["tom-aspinall"]["stage"], "Title contender")
         self.assertEqual(f["michael-page"]["stage"], "Established", "39: too old for Rising star and Breakout")
         # v2 regression: one knockout win must not carry a 1-4 run (v1 scored Niko Price Form 65 on finishing 1.0)
-        self.assertEqual([x[2] for x in f["niko-price"]["fights"]], ["W", "L", "L", "L", "L"])
-        self.assertLess(f["niko-price"]["form"], 40)
+        self.assertEqual([x[2] for x in f["niko-price"]["fights"]][:5], ["W", "L", "L", "L", "L"])
+        self.assertLess(f["niko-price"]["form"], 50)
 
     def test_shape_and_ranges(self):
         for slug, f in self.F.items():
@@ -53,7 +54,8 @@ class Saved(unittest.TestCase):
         for slug, f in self.F.items():
             if f["points"] is not None:
                 self.assertEqual(set(f["parts"]), set(fb.WEIGHTS), slug)
-                self.assertTrue(2 <= len(f["fights"]) <= 5, slug)
+                self.assertTrue(all(len(x) == len(fb.FIGHT_FIELDS) for x in f["fights"]), slug)
+                self.assertTrue(2 <= len(f["fights"]) <= fb.WINDOW_FIGHTS, slug)
                 self.assertAlmostEqual(sum(x[4] for x in f["fights"]), 100, delta=3, msg=slug)
 
     def test_form_ranks_are_a_ranking_per_division(self):
@@ -156,11 +158,20 @@ class FightScoring(unittest.TestCase):
             return {"outcome": "L", "date": day, "method": method, "methodDetail": detail, "endRound": rnd,
                     "boutId": bout, "opponentSlug": "o" + bout}
         ratings = {str(i): {"me": 1500, "o" + str(i): 1600} for i in range(1, 4)}   # higher-rated opponents
-        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01")], ratings), 80)
-        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01"), loss("2025-06-01", bout="2")], ratings), 75)
+        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01")], ratings), 70)
+        self.assertEqual(fb.loss_cap("me", [loss("2026-01-01"), loss("2025-06-01", bout="2")], ratings), 65)
         three = [loss("2026-01-01", "ko", None, 1), loss("2025-06-01", bout="2"), loss("2025-01-01", "ko", None, 2, "3")]
-        self.assertEqual(fb.loss_cap("me", three, ratings), 85 - 15 - 10 - 5)
+        self.assertEqual(fb.loss_cap("me", three, ratings), fb.LOSS_CAP_START - 15 - 10 - 5)
         self.assertIsNone(fb.loss_cap("me", [{"outcome": "W", "date": "2026-02-01"}] + three, ratings))
+
+    def test_fight_stats_are_margins_from_the_rounds(self):
+        me = [10, 20] + [0] * 14 + [1, 2] + [0] * 3 + [60] + [0] * 3     # 10 sig. strikes, 1 kd, 2 td, 60 s control
+        opp = [4, 20] + [0] * 15 + [1] + [0] * 3 + [30] + [0] * 3
+        st = fb.fight_stats({"rounds": [[1, 300, me, opp]]})
+        self.assertAlmostEqual(st["striking"], 6 / 5)            # per minute over 5 minutes
+        self.assertAlmostEqual(st["control"], 30 / 300)
+        self.assertAlmostEqual(st["takedowns"], 1 * 3)            # per 15 minutes
+        self.assertIsNone(fb.fight_stats({"rounds": []}))
 
 
 class Deterministic(unittest.TestCase):

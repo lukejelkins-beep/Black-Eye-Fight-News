@@ -2,9 +2,9 @@
 """Backtest the Form points score: does the fighter with the higher Form the day before a UFC bout win it?
 
 Research only; writes nothing. Each fighter is scored from their earlier fights alone, with the results-rating history
-(point-in-time) and Performance left out (its last-5 rates are as of today, so it would leak). Prints accuracy and the
+(point-in-time) and each fight's own statistics, so nothing from after the bout leaks in. Prints accuracy and the
 log loss of a one-parameter logistic fit on the points difference, with the BEFN pre-bout rating as a reference.
-Used for Form v2 (docs/design/FIGHTERS-HUB-FORM.md section 3). Takes about 15 seconds.
+Used for Form v2 and v3 (docs/design/FIGHTERS-HUB-FORM.md section 3). Takes about 15 seconds.
 
   python3 scripts/ufc-form-backtest.py --start 2022-01-01
   python3 scripts/ufc-form-backtest.py --start 2018-01-01 --end 2021-12-31
@@ -65,8 +65,8 @@ def main() -> int:
             theirs = [x for x in files[opp] if x["date"] < f["date"]]
             if not mine or not theirs:
                 continue
-            a = fb.points_for(slug, mine, day, ratings, strength, None, None, after)[0]
-            b = fb.points_for(opp, theirs, day, ratings, strength, None, None, after)[0]
+            a = fb.points_for(slug, mine, day, ratings, strength, None, after)[0]
+            b = fb.points_for(opp, theirs, day, ratings, strength, None, after)[0]
             if a is None or b is None:
                 continue
             y = 1 if f["outcome"] == "W" else 0
