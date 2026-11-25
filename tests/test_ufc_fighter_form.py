@@ -25,11 +25,11 @@ class Saved(unittest.TestCase):
     def test_section_9_cases(self):
         f = self.F
         self.assertEqual((f["valter-walker"]["form"], f["valter-walker"]["stage"], f["valter-walker"]["formRank"]),
-                         (96.18, "Contender", 1))
+                         (94.16, "Contender", 2))
         self.assertIn("On fire", f["valter-walker"]["badges"])
-        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 95.89))
+        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 95.75))
         self.assertIn("On fire", f["elijah-smith"]["badges"])
-        self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Title contender", 65))
+        self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Contender", 65))
         self.assertIn("Cooling", f["alexandre-pantoja"]["badges"])
         self.assertEqual(f["israel-adesanya"]["stage"], "Slipping")
         self.assertEqual(f["israel-adesanya"]["why"], ["lost last fight and 4 of last 5"])
@@ -40,6 +40,9 @@ class Saved(unittest.TestCase):
         # v2 regression: one knockout win must not carry a 1-4 run (v1 scored Niko Price Form 65 on finishing 1.0)
         self.assertEqual([x[2] for x in f["niko-price"]["fights"]][:5], ["W", "L", "L", "L", "L"])
         self.assertLess(f["niko-price"]["form"], 50)
+        # opponent credit (25 Nov 2026): a champion winning close decisions over elite opponents is not average
+        self.assertGreater(f["petr-yan"]["form"], 85, "Petr Yan read 75.14 when margins ignored opponent strength")
+        self.assertIn("On fire", f["petr-yan"]["badges"])
 
     def test_shape_and_ranges(self):
         for slug, f in self.F.items():
@@ -179,6 +182,7 @@ class FightScoring(unittest.TestCase):
         me = [10, 20] + [0] * 14 + [1, 2] + [0] * 3 + [60] + [0] * 3     # 10 sig. strikes, 1 kd, 2 td, 60 s control
         opp = [4, 20] + [0] * 15 + [1] + [0] * 3 + [30] + [0] * 3
         st = fb.fight_stats({"rounds": [[1, 300, me, opp]]})
+        self.assertEqual(fb.OPP_CREDIT, 1.0)
         self.assertAlmostEqual(st["striking"], 6 / 5)            # per minute over 5 minutes
         self.assertAlmostEqual(st["control"], 30 / 300)
         self.assertAlmostEqual(st["takedowns"], 1 * 3)            # per 15 minutes

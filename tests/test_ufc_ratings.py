@@ -217,6 +217,17 @@ class Roster(unittest.TestCase):
         y, o = self.rate({**roster, "f39": young["f39"]}), self.rate({**roster, "f39": old["f39"]})
         self.assertGreater(y["f39"]["overallRating"], o["f39"]["overallRating"])
 
+    def test_height_adjustment(self):
+        # owner, 25 Nov 2026: height against the division average (2024+ walk-forward 64.1% -> 65.0%)
+        roster = {f"h{i}": {"height": 70, "divisionSlug": "lightweight"} for i in range(5)}
+        avg = r.division_heights({**roster, "tall": {"height": 75, "divisionSlug": "lightweight"}})
+        self.assertAlmostEqual(avg["lightweight"], 70 + 5 / 6)
+        self.assertEqual(r.division_heights({"a": {"height": 70, "divisionSlug": "x"}}), {}, "needs 5 fighters")
+        self.assertAlmostEqual(r.height_points(73, 70), 3 * r.HEIGHT_POINTS_PER_INCH)
+        self.assertAlmostEqual(r.height_points(67, 70), -3 * r.HEIGHT_POINTS_PER_INCH)
+        self.assertEqual(r.height_points(None, 70), 0.0)
+        self.assertEqual(r.height_points(72, None), 0.0)
+
     def test_score_out_of_100_and_rank(self):
         self.assertEqual(r.score_100(r.HEADLINE_CENTRE), 50)
         self.assertEqual(r.score_100(r.HEADLINE_CENTRE + 11 * r.SCORE_DIVISOR), 61)
