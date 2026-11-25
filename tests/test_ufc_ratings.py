@@ -203,7 +203,9 @@ class Roster(unittest.TestCase):
     def test_score_out_of_100_and_rank(self):
         self.assertEqual(r.score_100(r.HEADLINE_CENTRE), 50)
         self.assertEqual(r.score_100(r.HEADLINE_CENTRE + 11 * r.SCORE_DIVISOR), 61)
-        self.assertEqual(r.score_100(5000), 99)
+        self.assertEqual(r.score_100(r.HEADLINE_CENTRE + 4), 50.5, "2 decimal places, not a whole number")
+        self.assertEqual(r.score_100(r.HEADLINE_CENTRE + 3.6), 50.45)
+        self.assertEqual(r.score_100(5000), 99.99)
         self.assertEqual(r.score_100(0), 1)
         self.assertIsNone(r.score_100(None))
         out = self.rate(self.roster())

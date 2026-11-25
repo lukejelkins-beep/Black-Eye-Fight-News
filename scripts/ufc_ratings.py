@@ -350,10 +350,11 @@ def blend_logit(results: float, skills: float) -> float:
 
 
 def score_100(rating):
-    """The reader-facing score out of 100 for a headline rating (1500 = 50)."""
+    """The reader-facing score out of 100 for a headline rating (1500 = 50), to 2 decimal places (owner, 25 Nov 2026:
+    "give the ratings decimal points like 99.95", so close fighters no longer tie). Kept within 1 to 99.99."""
     if rating is None:
         return None
-    return int(_clamp(round(50 + (rating - HEADLINE_CENTRE) / SCORE_DIVISOR), 1, 99))
+    return round(_clamp(50 + (rating - HEADLINE_CENTRE) / SCORE_DIVISOR, 1, 99.99), 2)
 
 
 def overall(scores: dict):
@@ -443,7 +444,9 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
             logits[slug] = blend_logit(res["rating"], composite[slug])
     established = [slug for slug in logits if slug in shrunk and results[slug]["fights"] >= RESULTS_MIN_FIGHTS]
     centre = sorted(logits[x] for x in established)[len(established) // 2] if established else 0.0
-    headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre)) for slug, v in logits.items()}
+    # 2 decimals (was whole points): one rating point is 0.125 on the score out of 100, so whole points would leave the
+    # decimal score in steps of an eighth.
+    headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre), 2) for slug, v in logits.items()}
     headline_pop = sorted(headline[x] for x in established)
     # Rank among established fighters by the full rating; equal ratings share a rank.
     ordered = sorted(established, key=lambda x: -headline[x])

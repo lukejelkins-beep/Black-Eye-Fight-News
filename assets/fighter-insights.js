@@ -396,7 +396,9 @@
   return '<div class="befn-form-tags">'+chips.join('')+'</div>'+ranks+why;
  }
  const headlineBar=r=>Number.isFinite(r?.overall)?r.overall:null;
- const headlineHTML=v=>String(v)+'<small>/100</small>';
+ // Overall and Form to 2 decimal places on every page (assets/form-rule.js score()).
+ const dec2=v=>window.BEFNFormRule?.score?window.BEFNFormRule.score(v):Number(v).toFixed(2);
+ const headlineHTML=v=>dec2(v)+'<small>/100</small>';
  const rankHTML=r=>Number.isInteger(r?.overallRank)&&Number.isInteger(r?.rankOf)?
   '<p class="befn-pro-standing"><strong>#'+r.overallRank+'</strong> of '+r.rankOf+' rated UFC fighters</p>':'';
  function scoreTier(value){
@@ -464,7 +466,7 @@
   if(!valid)return '';
   return '<div class="befn-pro-meter is-'+tier+'">'+
    '<div class="befn-pro-meter-head"><span>'+escapeHTML(label)+'</span><b'+(valid?'':' class="is-unrated"')+'>'+
-   (valid?(percentile==='plain'?String(score):percentile?ordinal(score)+' <small>pct</small>':score+' <small>/ 100</small>'):'Not rated')+'</b></div>'+
+   (valid?(percentile==='plain'?dec2(score):percentile?ordinal(score)+' <small>pct</small>':score+' <small>/ 100</small>'):'Not rated')+'</b></div>'+
    '<span class="befn-pro-track" '+(valid?'role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+score+'"':
     'role="img" aria-label="Not rated: insufficient evidence"')+' title="'+escapeHTML(label)+'"><span style="width:'+
    (valid?Math.max(2,Math.min(100,score)):0)+'%"></span></span>'+
@@ -869,7 +871,7 @@
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";
   if(unit==="signed")return (v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2);
-  if(unit==="score")return String(Math.round(v));
+  if(unit==="score")return dec2(v);
   if(unit==="ordinal")return ordinal(Math.round(v));
   return v.toFixed(2);
  }
@@ -919,7 +921,7 @@
    (found.length?'<ol class="befn-board-list is-search">'+found.slice(0,30).map(f=>'<li><span class="befn-board-place"></span>'+
     boardPhoto(f.name)+'<span class="befn-board-name">'+boardLink(f.slug,f.name)+
     (boardData.divisions[f.div]?'<small>'+escapeHTML(boardData.divisions[f.div])+'</small>':'')+'</span>'+
-    '<strong class="befn-board-value">'+(Number.isFinite(f.score)?f.score:'Unrated')+'</strong></li>').join("")+'</ol>':
+    '<strong class="befn-board-value">'+(Number.isFinite(f.score)?dec2(f.score):'Unrated')+'</strong></li>').join("")+'</ol>':
     '<p class="befn-board-placeholder">No UFC fighter with statistics matches that name.</p>');
  }
  function boardRowHTML(r,unit){

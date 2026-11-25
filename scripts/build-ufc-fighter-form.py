@@ -100,11 +100,12 @@ def is_split(f) -> bool:
     return f.get("method") == "dec" and str(f.get("methodDetail") or "").lower() in ("split", "majority")
 
 
-def pct_rank(value, population) -> int:
-    """Mid-rank percentile, rounded, 1-99 (the stats build's convention)."""
+def pct_rank(value, population) -> float:
+    """Mid-rank percentile to 2 decimal places, 0.01 to 99.99 (owner, 25 Nov 2026: decimals, so close fighters no longer
+    tie; was a whole number 1-99)."""
     below = sum(1 for v in population if v < value)
     equal = sum(1 for v in population if v == value)
-    return int(clamp(round(100 * (below + equal / 2) / len(population)), 1, 99))
+    return round(clamp(100 * (below + equal / 2) / len(population), .01, 99.99), 2)
 
 
 # ---------- rating history: strength and expectation on the night ----------
@@ -266,12 +267,13 @@ def fight_stats(f):
 
 
 def points_for(fighter, history, as_of, ratings, strength, injured, after=None, born=None):
-    """Returns (points or None, parts, lossCap, per-fight breakdown). history: newest first, all UFC fights.
+    """Returns (points or None, parts, lossCap, per-fight breakdown, points before the loss cap). history: newest
+    first, all UFC fights.
     born: the fighter's birth date (ISO), or None when unknown (then the age part is left out)."""
     after = after or {}
     dec = decided(history)
     if sum(1 for f in dec if months_between(f["date"], as_of) <= ELIGIBLE_MONTHS) < 2:
-        return None, None, None, None
+        return None, None, None, None, None
     window = [f for f in dec if months_between(f["date"], as_of) <= WINDOW_MONTHS][:WINDOW_FIGHTS]
     weights = [POSITION[i] * .5 ** (months_between(f["date"], as_of) / HALF_LIFE_MONTHS) for i, f in enumerate(window)]
     s = sum(weights)
@@ -316,6 +318,7 @@ def points_for(fighter, history, as_of, ratings, strength, injured, after=None, 
     used = {k: v for k, v in parts.items() if v is not None}
     points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used if WEIGHTS[k])
 
+    uncapped = points
     cap = loss_cap(fighter, history, ratings)
     if cap is not None:
         points = min(points, cap)
@@ -323,7 +326,7 @@ def points_for(fighter, history, as_of, ratings, strength, injured, after=None, 
                   round(100 * r["w"] / s), round(r["q"], 2), round(r["d"], 2), round(r["v"], 2)]
                  + ([None] * 3 if r["st"] is None else [round(r["st"]["striking"], 2), round(r["st"]["control"], 3),
                                                         round(r["st"]["takedowns"], 2)]) for r in rows]
-    return round(points, 1), parts, cap, breakdown
+    return round(points, 2), parts, cap, breakdown, round(uncapped, 4)
 
 
 def loss_cap(fighter, history, ratings):
@@ -449,7 +452,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for slug, d in files.items():
         history = d["fights"]                     # newest first
         inj = active_injury(injuries.get(slug), history, as_of)
-        pts, parts, cap, fights = points_for(slug, history, as_of, ratings, strength, inj, after, born.get(slug))
+        pts, parts, cap, fights, uncapped = points_for(slug, history, as_of, ratings, strength, inj, after, born.get(slug))
         dec = decided(history)
         last_date = history[0]["date"] if history else None
         gap = months_between(last_date, as_of) if last_date else 999
@@ -457,7 +460,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
         age = years_between(born[slug], as_of) if slug in born else None
         debut_age = years_between(born[slug], first) if slug in born and first else None
         career = d["windows"]["career"]
-        out[slug] = {"name": d["name"], "slug": slug, "points": pts, "parts": parts, "lossCap": cap, "fights": fights,
+        out[slug] = {"name": d["name"], "slug": slug, "points": pts, "_uncapped": uncapped, "parts": parts, "lossCap": cap, "fights": fights,
                      "rank": d.get("officialRank"), "champion": bool(d.get("champion")), "division": division[slug],
                      "women": str(division[slug] or "").startswith("womens"), "certified": slug in certified,
                      "age": age, "debutAge": debut_age, "preUfcFights": pre_ufc.get(slug),
@@ -471,9 +474,11 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
                      "_dec": dec, "_ratings": ratings}
 
     # displayed Form: percentile of points among fighters with a UFC fight in the last 24 months
-    pool = [f["points"] for f in out.values() if f["points"] is not None and f["monthsOut"] <= POOL_MONTHS]
+    # Ranked on (points, points before the loss cap): fighters held at the same cap are ordered by how they were going
+    # before it, instead of sharing one Form (31 shared Form 58.65 on 21 Nov).
+    pool = [(f["points"], f["_uncapped"]) for f in out.values() if f["points"] is not None and f["monthsOut"] <= POOL_MONTHS]
     for f in out.values():
-        f["form"] = min(99, pct_rank(f["points"], pool)) if f["points"] is not None and pool else None
+        f["form"] = pct_rank((f["points"], f["_uncapped"]), pool) if f["points"] is not None and pool else None
 
     for slug, f in out.items():
         f["stage"], f["why"] = stage_for(f)
@@ -483,7 +488,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for div in {f["division"] for f in out.values()}:
         ranked = [f for f in out.values() if f["division"] == div and f["rank"] and 1 <= f["rank"] <= 15
                   and f["form"] is not None and not f["injured"]]
-        ranked.sort(key=lambda f: (-f["points"], f["rank"]))
+        ranked.sort(key=lambda f: (-f["form"], f["rank"]))
         for i, f in enumerate(ranked, 1):
             f["formRank"] = i
     for f in out.values():
@@ -497,6 +502,7 @@ def build_form(as_of_str=None, previous=None, status=None, news=None):
     for f in out.values():
         f.pop("_dec", None)
         f.pop("_ratings", None)
+        f.pop("_uncapped", None)
     return {"schema": 1, "asOf": as_of, "rankingDate": ranking_date, "previousRankingDate": ranking_prev,
             "source": "scripts/build-ufc-fighter-form.py (Fighters hub handover, 24 Nov 2026)",
             "note": "Form describes recent UFC results; it is not a prediction. Form 90 means going better right now "
@@ -587,7 +593,7 @@ def division_pulse(hub):
         top5 = [f["form"] for f in members if f["rank"] and 1 <= f["rank"] <= 5 and f["form"] is not None]
         hottest = max((f for f in members if not f["champion"] and f["form"] is not None),
                       key=lambda f: (f["form"], f["points"]), default=None)
-        out[div] = {"top5Form": round(sum(top5) / len(top5)) if top5 else None,
+        out[div] = {"top5Form": round(sum(top5) / len(top5), 2) if top5 else None,
                     "onFire": sum(1 for f in members if "On fire" in f["badges"]),
                     "rising": sum(1 for f in members if f["stage"] == "Rising star"),
                     "slipping": sum(1 for f in members if f["stage"] == "Slipping"),

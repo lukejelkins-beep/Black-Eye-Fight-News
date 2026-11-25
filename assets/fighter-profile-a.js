@@ -233,7 +233,7 @@
   if(m.rating){
    const r=m.rating;
    return '<aside class="befn-pro-score befn-pa-score" aria-label="BEFN rating"><span class="befn-pa-label">BEFN rating'+(r.provisional?' · provisional':'')+'</span>'+
-    '<div class="befn-pa-scoreline"><strong class="befn-v3-score">'+esc(r.value)+'<small>/100</small></strong>'+
+    '<div class="befn-pa-scoreline"><strong class="befn-v3-score">'+esc(Number.isFinite(r.value)?r.value.toFixed(2):r.value)+'<small>/100</small></strong>'+
     (r.rank&&r.of?'<p class="befn-pa-standing">#'+esc(r.rank)+' of '+esc(r.of)+' rated UFC fighters</p>':'')+'</div>'+
     (chips?'<div class="befn-pa-formwrap">'+chips+'<p class="befn-pa-formlabel">'+esc(m.formLabel)+'</p></div>':'')+'</aside>';
   }

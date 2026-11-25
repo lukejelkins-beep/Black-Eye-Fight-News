@@ -21,8 +21,10 @@
 
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
  const url=f=>"#fighter/ufc--"+encodeURIComponent(f.slug);
- const ovr=f=>f.overall==null?"new":f.overall;
- const form=f=>(window.BEFNFormRule?window.BEFNFormRule.shown(f):(f.certified===true&&Number.isFinite(f.form)))?f.form:"–";
+ // Form and Overall to 2 decimal places (assets/form-rule.js score()), the same on every page.
+ const dec2=v=>window.BEFNFormRule?.score?window.BEFNFormRule.score(v):Number(v).toFixed(2);
+ const ovr=f=>f.overall==null?"new":dec2(f.overall);
+ const form=f=>(window.BEFNFormRule?window.BEFNFormRule.shown(f):(f.certified===true&&Number.isFinite(f.form)))?dec2(f.form):"–";
  const rec=f=>{const r=f.record;if(!r)return "";return r[0]+"–"+r[1]+(r[2]?"–"+r[2]:"")+(r[3]?" ("+r[3]+" NC)":"");};
  const dateText=d=>d?new Date(d+"T12:00:00Z").toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}):"";
 
@@ -50,7 +52,7 @@
   const all=Object.values(st.data.fighters).filter(f=>f.certified);
   return all.filter(f=>f.women===(st.sex==="women"));
  }
- const byForm=(a,b)=>(b.points??-1)-(a.points??-1)||a.name.localeCompare(b.name);
+ const byForm=(a,b)=>(b.form??-1)-(a.form??-1)||(b.points??-1)-(a.points??-1)||a.name.localeCompare(b.name);
  const formShown=f=>window.BEFNFormRule?window.BEFNFormRule.shown(f):(f.certified===true&&Number.isFinite(f.form));
  const scored=f=>formShown(f)&&!f.injured&&f.stage!=="Inactive";
 
@@ -146,7 +148,7 @@
      (f?'<a class="fh-tile-pic" href="'+url(f)+'" aria-label="'+esc(f.name)+' profile">'+img(f)+"</a>":"")+
      '<div class="fh-tile-body"><button type="button" data-fh-div="'+esc(p.slug)+'"><span class="fh-tag">'+(i===0?"Hottest division":"#"+(i+1))+
      "</span><span>"+esc(LABEL[p.slug])+"</span></button>"+
-     '<span class="fh-depth">'+p.top5Form+'</span><span class="fh-soft">Top-5 form</span>'+
+     '<span class="fh-depth">'+dec2(p.top5Form)+'</span><span class="fh-soft">Top-5 form</span>'+
      '<span class="fh-counts"><span>'+p.onFire+" on fire</span><span>▲ "+p.rising+" rising</span><span>▼ "+p.slipping+" slipping</span></span>"+
      (f?'<a class="fh-tile-name" href="'+url(f)+'">'+esc(f.name)+" · "+form(f)+"</a>":"")+"</div></div>";
    }).join("")+'</div><p class="fh-note">Tap a division name to open it, or a fighter to open their profile.</p></section>';

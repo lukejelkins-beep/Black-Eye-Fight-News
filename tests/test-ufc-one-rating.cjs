@@ -1,5 +1,5 @@
 /* One BEFN rating: every profile shows the stats build's own number, the one the
- * UFC stats page ranks by. Runs the shipped renderer on the committed data. */
+ * UFC stats page ranks by, to 2 decimal places (owner, 25 Nov 2026). Runs the shipped renderer on the committed data. */
 "use strict";
 const test=require("node:test"),assert=require("node:assert/strict"),fs=require("node:fs"),vm=require("node:vm");
 const read=p=>fs.existsSync(p)?JSON.parse(fs.readFileSync(p,"utf8")):null;
@@ -44,9 +44,9 @@ test("profile rating and skills equal the stats build, with no credential points
  for(const {slug,row,profile} of people){
   if(ui.credentialsFor(profile).length)credentialled++;
   const html=ui.renderProfile(profile);
-  const shown=/class="befn-v3-score">(\d+|Unrated|—)/.exec(html)?.[1];
+  const shown=/class="befn-v3-score">(\d+\.\d\d|Unrated|—)/.exec(html)?.[1];
   const want=expectedRating(slug,row);
-  assert.equal(shown,want[0]===null?"Unrated":String(want[0]),slug+" headline");
+  assert.equal(shown,want[0]===null?"Unrated":want[0].toFixed(2),slug+" headline");
   // Profile design A (owner, 2026-11-25): a skill with no value is left out of the Ratings card, never "Not rated".
   const a=html.indexOf('data-pro-section="ratings"'),ratings=a<0?"":html.slice(a,html.indexOf("</section>",a));
   for(const [i,label] of ["Striking","Grappling","Wrestling"].entries()){
@@ -68,11 +68,11 @@ test("every fighter in the stats build has a profile with their own stats and ra
  for(const [slug,row] of Object.entries(index)){
   const f=ui.statsProfile("ufc--"+slug);
   assert(f,slug+" has no profile");
-  const html=ui.renderProfile(f),shown=/class="befn-v3-score">(\d+|Unrated|—)/.exec(html)?.[1];
+  const html=ui.renderProfile(f),shown=/class="befn-v3-score">(\d+\.\d\d|Unrated|—)/.exec(html)?.[1];
   const plain=n=>n.normalize("NFKD").replace(/[^a-z0-9]/gi,"").toLowerCase();
   assert.equal(plain(f.name),plain(row.name),slug);
   const want=expectedRating(slug,row);
-  assert.equal(shown,want[0]===null?"Unrated":String(want[0]),slug+" headline");
+  assert.equal(shown,want[0]===null?"Unrated":want[0].toFixed(2),slug+" headline");
   assert(html.includes("data-bsp-stats"),slug+" has no statistics panel");
  }
 });

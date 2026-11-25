@@ -25,9 +25,9 @@ class Saved(unittest.TestCase):
     def test_section_9_cases(self):
         f = self.F
         self.assertEqual((f["valter-walker"]["form"], f["valter-walker"]["stage"], f["valter-walker"]["formRank"]),
-                         (96, "Contender", 1))
+                         (96.18, "Contender", 1))
         self.assertIn("On fire", f["valter-walker"]["badges"])
-        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 96))
+        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 95.89))
         self.assertIn("On fire", f["elijah-smith"]["badges"])
         self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Title contender", 65))
         self.assertIn("Cooling", f["alexandre-pantoja"]["badges"])
@@ -44,7 +44,8 @@ class Saved(unittest.TestCase):
     def test_shape_and_ranges(self):
         for slug, f in self.F.items():
             if f["form"] is not None:
-                self.assertTrue(1 <= f["form"] <= 99, slug)
+                self.assertTrue(0 < f["form"] < 100, slug)
+                self.assertEqual(f["form"], round(f["form"], 2), slug)
                 self.assertTrue(0 <= f["points"] <= 100, slug)
             if f["lossCap"] is not None:
                 self.assertLessEqual(f["points"], f["lossCap"], slug)
@@ -61,6 +62,12 @@ class Saved(unittest.TestCase):
                 self.assertTrue(all(len(x) == len(fb.FIGHT_FIELDS) for x in f["fights"]), slug)
                 self.assertTrue(2 <= len(f["fights"]) <= fb.WINDOW_FIGHTS, slug)
                 self.assertAlmostEqual(sum(x[4] for x in f["fights"]), 100, delta=3, msg=slug)
+
+    def test_decimals_separate_fighters(self):
+        # owner, 25 Nov 2026: 2 decimal places so close fighters no longer tie (31 shared Form 59 with whole numbers)
+        from collections import Counter
+        shared = Counter(f["form"] for f in self.F.values() if f["form"] is not None).most_common(1)[0][1]
+        self.assertLessEqual(shared, 3)
 
     def test_form_ranks_are_a_ranking_per_division(self):
         by_div = {}

@@ -153,7 +153,7 @@ If the last fight was a loss, the points score is capped at **75 (v3, v4; v1/v2:
 - v4: the owner kept 75 (about the 95th percentile of the v4 points; 70 would be the 90th). `tests/test_ufc_fighter_form.py` fails if a reweight moves the start outside the 91st to 98th percentile, so a future change cannot quietly loosen or tighten it.
 
 ### 3.5 Displayed Form (what readers see)
-- **Form = the percentile of the points score among fighters with a UFC fight in the last 24 months, rounded and capped at 99.** On 21 Nov that pool was 672 fighters.
+- **Form = the percentile of the points score among fighters with a UFC fight in the last 24 months, to 2 decimal places (0.01 to 99.99).** On 21 Nov that pool was 694 fighters. Until 25 Nov it was a whole number capped at 99; the owner asked for decimals ("like 99.95") so close fighters no longer tie. Fighters held at the same loss cap are ordered by their points before the cap, so they no longer share one Form (31 fighters shared 59). Stage and badge thresholds are unchanged (Form 82 means 82.00).
 - Wording everywhere: "Form 90 means going better right now than 90% of active UFC fighters." Always add that it describes recent results and is not a prediction.
 - The profile's Form meter shows this same number.
 
