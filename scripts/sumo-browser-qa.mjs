@@ -793,7 +793,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await open(page,'profile/28','.sumo-poster');
   if(isMobile){
     // Other sports and the all-sports front page stay one tap away: the sport tabs and the BEFN link in the top bar.
-    assert.equal(await page.locator('.befn-phonebar-sports a[href="index.html#home"]:visible').count(),2,'Boxing and MMA are reachable');
+    // Each sport tab carries its sport in the address (?sport=…, D02) so open-in-new-tab and shared links keep it.
+    assert.equal(await page.locator('.befn-phonebar-sports a[href="index.html?sport=boxing#home"]:visible').count(),1,'Boxing is reachable with its sport in the link');
+    assert.equal(await page.locator('.befn-phonebar-sports a[href="index.html?sport=mma#home"]:visible').count(),1,'MMA is reachable with its sport in the link');
     assert.equal(await page.locator('.befn-phonebar-brand[href="index.html#home"]:visible').count(),1,'The masthead opens the front page');
   }
   const currentRows=await page.locator('.sumo-ed-row').count();
