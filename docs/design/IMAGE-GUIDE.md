@@ -33,7 +33,7 @@ The owner stated on 2026-11-22 that **every image held in this repository is app
 | --- | --- | --- | --- | --- |
 | UFC fighter photos | 2,703 (901 fighters × 3 crops) | `assets/img/ufc/` | `data/ufc-image-register.json` | `owner-cleared` |
 | UFC cutouts | 843 | `assets/img/ufc-cutouts/` | `data/ufc-cutout-register.json` | derivative of the cleared portraits, same status |
-| UFC champion belt portraits | 11 (2026-11-25) | `assets/img/ufc-champions/` | `data/ufc-champion-photo-register.json` | `owner-supplied` (official UFC portraits the owner supplied for the champion carousel; owner to confirm rights and identities) |
+| UFC champion belt portraits and cut-outs | 22 (11 photos + 11 cut-outs, 2026-11-25) | `assets/img/ufc-champions/`, `assets/img/ufc-champions/cutout/` | `data/ufc-champion-photo-register.json` | `owner-supplied` (official UFC portraits the owner supplied for the champion carousel; owner to confirm rights and identities) |
 | Event posters | 100 (2026-11-24) | `assets/img/posters/` | `data/poster-register.json`, finds in `data/poster-intake.json` | `owner-cleared`, official promotional posters; owner attestation of 2026-11-24 for new finds |
 | Sumo JSA portraits, heads and cutouts | 478 (190 rikishi) | `assets/sumo-photos/` | `data/sumo/approved-photos.json` | `approved: true`, owner's attested JSA permission (2026-11-16) |
 | Sumo kimarite clips and posters | 31 | `assets/sumo-kimarite/` | `data/sumo/kimarite-media.json` (`clips`) | NHK permission confirmed by the owner |
