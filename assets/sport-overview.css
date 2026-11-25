@@ -52,6 +52,10 @@
 #main .sov-pc{flex:1;display:flex;justify-content:center;align-items:flex-end;height:100%;min-width:0}
 #main .sov-pc img{height:100%;max-width:100%;object-fit:contain;object-position:bottom}
 #main .sov-pc .sov-f.is-big{width:84px;height:84px;margin-bottom:30px;font-size:22px;object-fit:cover}
+/* Coming up card with the official poster: shown whole, a blurred copy of the art fills the strip (as in the hero). */
+#main .sov-up-art.is-poster{position:relative;overflow:hidden;align-items:center;justify-content:center;background:var(--dark)}
+#main .sov-up-art.is-poster .sov-poster-bg{position:absolute;inset:-10%;width:120%;height:120%;object-fit:cover;filter:blur(18px) brightness(.55)}
+#main .sov-up-poster{position:relative;height:100%;width:auto;max-width:100%;object-fit:contain}
 #main .sov-ub{display:block;padding:12px 14px}#main .sov-ub strong{display:block;font-size:17px}#main .sov-ub>span:not(.sov-ev){display:block;font-size:14px}#main .sov-ub small{display:block;color:var(--mute);font-size:13px;margin-top:2px}
 #main .sov-dd{position:absolute;top:10px;left:10px;background:var(--gold);color:#111;font-weight:800;border-radius:12px;padding:3px 10px;font-size:13px}
 /* champions */
@@ -99,6 +103,7 @@
 #main .fp-sc-copy>span:not(.fp-tag):not(.sov-ev){color:#ddd5d8;font-size:14px}
 #main .fp-sc em{font-style:normal;font-weight:800;color:var(--gold);margin-top:auto;padding-top:8px;font-size:14px}
 #main .fp-sc img{height:180px;width:auto;max-width:46%;object-fit:contain;object-position:bottom;flex:none}
+#main .fp-sc img.fp-sc-poster{align-self:center;object-position:center;margin:12px 12px 12px 0;border-radius:6px;height:auto;max-height:166px}
 #main .fp-res{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
 #main .fp-res .fp-tag{margin:2px 0 0;flex:none;width:60px;text-align:center}
 #main .fp-res>div{min-width:0}#main .fp-res strong{display:block;font-weight:500}#main .fp-res strong b{font-weight:800}
