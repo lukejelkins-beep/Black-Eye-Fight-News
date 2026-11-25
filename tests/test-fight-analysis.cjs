@@ -47,3 +47,11 @@ assert(page.includes('The title picture') && page.includes('&lt;b&gt;x&lt;/b&gt;
 const top = A.mmaTop({ data: { champions: { mma: [{ division: 'Heavyweight', name: 'Ciryl Gane', start: '14 Sep 2026', defences: 0 }] } }, events: [], results, now });
 assert(top.includes('UFC champions') && top.includes('Ciryl Gane') && top.includes('Submission'));
 console.log('fight analysis tests passed');
+// Stoppage videos (25 Nov 2026): a clip must name the winner or loser and fall from a day before to three weeks after the fight; finishes lead; none if none match.
+const stops = [{ date: '2026-11-14', winner: 'Diego Pacheco', loser: 'Darius Fulghum', round: 2 }, { date: '2026-11-14', winner: 'Nobody Known', loser: 'Also Absent', round: 1 }];
+const clip = (title, date, extra = {}) => Object.assign({ url: 'https://www.youtube.com/watch?v=AAAAAAAAAAA', thumbnail: 'https://i.ytimg.com/vi/x/hq.jpg', title, date }, extra);
+const sc = A.stoppageClips(stops, [clip('Pacheco highlights', '2026-11-15'), clip('Pacheco vs Fulghum KO', '2026-11-16', { isFinish: true }), clip('Pacheco full fight', '2026-11-15', { isFinish: true }),
+  clip('Pacheco old', '2026-09-01', { isFinish: true }), clip('Unrelated bout', '2026-11-15', { isFinish: true })]);
+assert.strictEqual(sc[0].clip.title, 'Pacheco vs Fulghum KO', 'finish beats highlights; full fights and out-of-window clips are skipped');
+assert.strictEqual(sc[1].clip, null, 'no matching clip means no clip');
+console.log('stoppage clip tests passed');
