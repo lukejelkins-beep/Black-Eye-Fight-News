@@ -150,10 +150,22 @@
       btn = ['#calendar', 'Fight card'];
     }
     const pics = names.map(n => cutoutURL(n, ctx.cutouts)).filter(Boolean);
-    return '<section class="sov-hero' + (pics.length ? '' : ' is-flat') + '"><div class="sov-hero-copy"><div class="sov-k">' + h.esc(kicker.filter(Boolean).join(' · ')) + '</div>' +
+    // An upcoming card leads with its official poster when BEFN holds one (owner, 25 Nov 2026,
+    // following the Fights-page rule of 24 Nov): portrait first, then landscape, shown whole with
+    // its credit. Without one, the fighters' cut-outs as before. Results keep the cut-outs.
+    const held = hero.type === 'upcoming' && h.poster ? h.poster(hero.event.id) : null;
+    const poster = held && (held.portrait || held.landscape);
+    const posterSrc = poster ? ownSrc(h, poster.url) : '#';
+    const art = poster && posterSrc !== '#'
+      ? '<figure class="sov-poster is-' + (held.portrait ? 'portrait' : 'landscape') + '"><img src="' + posterSrc + '" alt="' +
+        h.esc(pairName(hero.event) + ' official event poster') + '" loading="eager" decoding="async"' +
+        (poster.width && poster.height ? ' width="' + Number(poster.width) + '" height="' + Number(poster.height) + '"' : '') + '>' +
+        (poster.credit ? '<figcaption>' + h.esc(poster.credit) + '</figcaption>' : '') + '</figure>'
+      : (pics.length ? '<div class="sov-cast">' + pics.map(u => img(h, u, '', '')).join('') + '</div>' : '');
+    return '<section class="sov-hero' + (art ? '' : ' is-flat') + '"><div class="sov-hero-copy"><div class="sov-k">' + h.esc(kicker.filter(Boolean).join(' · ')) + '</div>' +
       '<h1>' + title + '</h1>' + (para ? '<p>' + h.esc(para) + '</p>' : '') +
       '<a class="sov-btn" href="' + btn[0] + '">' + h.esc(btn[1]) + ' ›</a><a class="sov-btn is-ghost" href="#fights">All fights</a></div>' +
-      (pics.length ? '<div class="sov-cast">' + pics.map(u => img(h, u, '', '')).join('') + '</div>' : '') + '</section>';
+      art + '</section>';
   }
 
   function resultsBlock(h, ctx, area) {
