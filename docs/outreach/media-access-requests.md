@@ -1,6 +1,6 @@
 # Media access and photo-permission requests
 
-Drafted 25 Nov 2026 for the owner to send. Nothing here has been sent. Fill the `[square brackets]` first.
+Drafted 25 Nov 2026 for the owner to send. Nothing here has been sent. The owner has a filled-in private copy, with name and contact details kept out of this public repository.
 
 **What we are asking for.** A media credential gets a reporter into an event. What BEFN needs is mainly the right to publish promotional images, including full-body studio shots, with credit. Every email below asks for two things:
 1. access to the promoter's media or press-image portal (or the press list that sends image galleries);
@@ -10,9 +10,9 @@ Keep every reply. A written "yes" is the attestation the photo runner records (`
 
 ## Before sending: checklist
 
-- [ ] **About page live** at `/about.html`, drafted alongside this file. Fill its contact line first.
-- [ ] **A contact email on a domain you control.** A free webmail address reads as less credible to PR teams.
-- [ ] **Audience figures** you can stand behind (monthly visitors, social followers). Send only real numbers, or leave the line out.
+- [x] **About page** at `/about.html`, with the contact email (live once its PR merges).
+- [x] **A contact email on BEFN's own domain** (blackeyefightnews.com.au).
+- [x] **Audience figures:** left out (owner's choice).
 - [ ] **Two or three links** to your best BEFN pages: a fight card, a results page, the Analysis page.
 - [ ] **Your name and role** (for example Editor), and where you're based (BEFN's footer says Melbourne, Australia).
 
@@ -32,7 +32,7 @@ Keep every reply. A written "yes" is the attestation the photo runner records (`
 
 > Hello UFC media team,
 >
-> My name is [YOUR NAME], [ROLE] of Black Eye Fight News (BEFN), an independent, non-commercial combat sports site based in Melbourne, Australia: [SITE URL]
+> My name is [YOUR NAME], [ROLE] of Black Eye Fight News (BEFN), an independent, non-commercial combat sports site based in Melbourne, Australia: https://blackeyefightnews.com.au
 >
 > BEFN covers UFC cards, results, champions and fighter profiles, with every fact tied to a source and every image credited on a public credits page. We'd like to apply for:
 >
@@ -40,14 +40,14 @@ Keep every reply. A written "yes" is the attestation the photo runner records (`
 > 2. **Written permission to publish those images on BEFN**, credited to UFC, for editorial use on fighter and event pages.
 > 3. If you accredit online outlets, **media credentials** for future events, and inclusion on your press release list.
 >
-> About BEFN: [ONE LINE OF AUDIENCE FIGURES, OR DELETE]. Examples of our coverage: [LINK 1], [LINK 2]. About us and our editorial policy: [SITE URL]/about.html
+> About BEFN: [ONE LINE OF AUDIENCE FIGURES, OR DELETE]. Examples of our coverage: [LINK 1], [LINK 2]. About us and our editorial policy: https://blackeyefightnews.com.au/about.html
 >
 > We're happy to agree to UFC's usage terms and credit format. If photo use is handled through Getty Images instead, could you point us to the right contact?
 >
 > Thank you,
 > [YOUR NAME]
 > [ROLE], Black Eye Fight News
-> [EMAIL] · [SITE URL]
+> [EMAIL] · https://blackeyefightnews.com.au
 
 ## 2. Getty Images: UFC photo licensing (fallback)
 
@@ -56,7 +56,7 @@ Keep every reply. A written "yes" is the attestation the photo runner records (`
 
 > Hello,
 >
-> I run Black Eye Fight News, a small independent, non-commercial combat sports site in Australia ([SITE URL]). We'd like a quote for editorial web use of official UFC athlete portraits (full-body studio shots) for about [NUMBER] fighters, shown on fighter profile and champions pages with credit.
+> I run Black Eye Fight News, a small independent, non-commercial combat sports site in Australia (https://blackeyefightnews.com.au). We'd like a quote for editorial web use of official UFC athlete portraits (full-body studio shots) for about [NUMBER] fighters, shown on fighter profile and champions pages with credit.
 >
 > Could you tell me what licence options exist for a site of our size: per image, or a subscription/pack?
 >
@@ -81,35 +81,35 @@ Send one per promoter. Change the **bold** parts.
 
 > Hello **[PROMOTER]** media team,
 >
-> My name is [YOUR NAME], [ROLE] of Black Eye Fight News (BEFN), an independent, non-commercial boxing and MMA site based in Melbourne, Australia: [SITE URL]
+> My name is [YOUR NAME], [ROLE] of Black Eye Fight News (BEFN), an independent, non-commercial boxing and MMA site based in Melbourne, Australia: https://blackeyefightnews.com.au
 >
 > We cover **[PROMOTER]** cards, results and champions, and we'd like to:
 >
 > 1. **Join your press list and get access to your press-image library**, including fighter portraits (full-body studio shots where you have them);
 > 2. **Have written permission to publish those images on BEFN, credited to [PROMOTER]**, on fighter profiles, fight cards and our champions page.
 >
-> Every image we publish is credited and listed with its source on our public credits page ([SITE URL]/boxing-photo-credits.html), and we remove anything on request.
+> Every image we publish is credited and listed with its source on our public credits page (https://blackeyefightnews.com.au/boxing-photo-credits.html), and we remove anything on request.
 >
 > **[Matchroom / Top Rank only: We already show a few photos from your public event pages, credited to you. We'd appreciate a written OK for that too.]**
 >
-> About us and our editorial policy: [SITE URL]/about.html · Examples: [LINK 1], [LINK 2]
+> About us and our editorial policy: https://blackeyefightnews.com.au/about.html · Examples: [LINK 1], [LINK 2]
 >
 > Thank you,
 > [YOUR NAME]
 > [ROLE], Black Eye Fight News
-> [EMAIL] · [SITE URL]
+> [EMAIL] · https://blackeyefightnews.com.au
 
 ## 4. MMA promoters you've attested: written confirmation
 
-You attested PFL, ONE Championship, KSW, RIZIN and Cage Warriors press and media photos on 24 Nov 2026. A short confirming email from each one firms that up. Ask Cage Warriors for image access too, because their site refuses automated requests.
+You attested PFL, ONE Championship, KSW, RIZIN and Cage Warriors press and media photos on 24 Nov 2026. A short confirming email from each one firms that up. Cage Warriors is different: BEFN shows none of their photos yet (their site refuses automated requests), so their email asks for image access rather than confirmation.
 
 **Subject:** Confirming photo use: Black Eye Fight News (Australia)
 
 > Hello **[PROMOTER]** media team,
 >
-> I'm [YOUR NAME] of Black Eye Fight News, an independent, non-commercial combat sports site in Melbourne, Australia ([SITE URL]).
+> I'm [YOUR NAME] of Black Eye Fight News, an independent, non-commercial combat sports site in Melbourne, Australia (https://blackeyefightnews.com.au).
 >
-> We show **[PROMOTER]** fighter portraits from your official athlete pages on our fighter and fight-card pages, always credited to **[PROMOTER]** and listed on our credits page: [SITE URL]/mma-photo-credits.html
+> We show **[PROMOTER]** fighter portraits from your official athlete pages on our fighter and fight-card pages, always credited to **[PROMOTER]** and listed on our credits page: https://blackeyefightnews.com.au/mma-photo-credits.html
 >
 > Could you confirm in writing that this editorial use is OK? If you have a media portal with higher-resolution or full-body portraits, we'd be glad to use those instead. **[Cage Warriors only: your website doesn't allow automated access, so a press-image folder or portal would be the only way for us to show your fighters.]**
 >
