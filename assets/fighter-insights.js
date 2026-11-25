@@ -1188,28 +1188,56 @@
  // records after the fight, age is age on fight night. No pre-fight analysis or last-five form: we hold no numbers
  // frozen at fight time, and today's last five can include later fights.
  function slugOf(name){return String(name||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");}
+ // Finished UFC bout (owner, 25 Nov 2026: design D "Poster" with the X insight cards, assets/snapshot-result.js): borderless
+ // cutouts on a dark stage led by the result, the finish video when BEFN holds an official clip, a written analysis built
+ // from this fight and each fighter's previous fights, this fight's statistics with the notable ones marked, and the last
+ // five up to this fight. Everything after the hero is built from data/ufc-stats/fighters/<slug>.json; a part with no data
+ // is left out and the older recent-fight tables take the last-five place.
+ let clipsReady=false;
  function renderResultB(article,names,f){
-  const B=window.BEFNSnapshotB,T=window.BEFNSnapshotTiles;
+  const R=window.BEFNSnapshotResult,B=window.BEFNSnapshotB;
   const key=matchupKey(article,names);
-  const day=/(\d{4}-\d{2}-\d{2})$/.exec(article.closest("[data-result-event]")?.dataset?.resultEvent||"");
-  const today=day?new Date(day[1]+"T12:00:00Z"):new Date();
+  // the fight day is in the event id, at the end ("ufc-x-y-2026-11-07") or in the middle ("ufc-archive-2026-10-10-ufc-fight-night-...")
+  const day=/(?:^|-)(\d{4}-\d{2}-\d{2})(?:-|$)/.exec(article.closest("[data-result-event]")?.dataset?.resultEvent||"");
+  const dateISO=day?day[1]:"";
   const contenders=[...article.querySelectorAll(".result-matchup .result-contender")];
   const winner=contenders.findIndex(c=>c.classList.contains("is-winner"));
   const record=i=>{const el=contenders[i]?.querySelector(".result-bout-record");return el?[...el.childNodes].filter(x=>x.nodeType===3).map(x=>x.textContent).join("").trim():"";};
-  const side=i=>({tape:(T&&fighterTape?.fighters?.[T.fold(names[i])])||{}});
-  const sides=names.map((n,i)=>({name:n,record:record(i)||"—",note:record(i)?"after the fight":"",fig:figureFor({slug:slugOf(n)},n),tags:i===winner?["Won"]:[]}));
   const label=article.querySelector(".result-featured-bout-label")?.textContent.trim()||"";
-  const h={esc:escapeHTML,today,winner,
-   billing:label?label.charAt(0).toUpperCase()+label.slice(1).toLowerCase():"",
-   division:article.querySelector(".result-bout-division")?.textContent.trim()||"",
-   rounds:article.querySelector(".result-bout-rounds")?.textContent.trim()||"",
-   result:article.querySelector(".result-matchup-result strong")?.textContent.trim()||""};
-  const buttons=profileLinks(f,names,article);
-  return '<details class="befn-fight-snapshot sb-result-snap" data-snapshot-key="'+escapeHTML(key)+'" data-b="1"'+
+  const resultText=article.querySelector(".result-matchup-result strong")?.textContent.trim()||"";
+  const stats=names.map((n,i)=>statsFor({name:n,statsSlug:f[i]?.statsSlug}));
+  const model=dateISO&&stats[0]&&stats[1]?R.analyse(stats[0],stats[1],names,dateISO,winner):null;
+  const sides=names.map((n,i)=>({name:n,record:record(i)||"—",note:record(i)?"after the fight":"",fig:figureFor({slug:slugOf(n)},n),initials:B.initialsOf(n)}));
+  // headline and kicker: from the stats record when held, else from the result text on the card row
+  const [methodDetail="",rest=""]=resultText.split(" · ");
+  const rd=/R(\d+)\s*([\d:]+)?/.exec(rest);
+  const short=R.shortNames(names);
+  const methodWord=model?({ko:"KO/TKO",sub:"submission",dec:"decision"}[model.fight.method]||""):/^ko/i.test(methodDetail)?"KO/TKO":/^sub/i.test(methodDetail)?"submission":methodDetail.replace(/\s*\(.*$/,"").toLowerCase();
+  const paren=/\(([^)]+)\)/.exec(methodDetail)?.[1]||"";
+  const hero=R.heroHTML(sides,{winner:winner>=0?winner:null,
+   kicker:model?"Final · Round "+model.fight.endRound+(model.fight.endTime?" · "+model.fight.endTime:""):rd?"Final · Round "+rd[1]+(rd[2]?" · "+rd[2]:""):"Final",
+   headline:winner>=0?short[winner]+(methodWord?" wins by "+methodWord:" wins"):(methodDetail.replace(/\s*\(.*$/,"")||"Draw"),
+   sub:paren?paren.charAt(0).toUpperCase()+paren.slice(1):"",
+   chip:[label?label.charAt(0).toUpperCase()+label.slice(1).toLowerCase():"",article.querySelector(".result-bout-division")?.textContent.trim()||"",article.querySelector(".result-bout-rounds")?.textContent.trim()||""]});
+  // finish video: a KO/TKO or submission win with an official clip that passed the Australian playback check
+  let video="";
+  const FC=window.BEFNFinishClips;
+  if(FC&&winner>=0&&dateISO){
+   FC.load().then(()=>{if(!clipsReady){clipsReady=true;update();}});
+   const clip=FC.forBout({fighter:names[winner],opponent:names[1-winner],date:dateISO,outcome:"W",method:model?(model.fight.method==="ko"?"KO/TKO":model.fight.method==="sub"?"Submission":""):methodDetail});
+   if(clip)video=R.videoHTML(clip,sides,FC.LABEL,winner);
+  }
+  const lastFive=stats[0]&&stats[1]&&dateISO?R.lastFiveHTML([R.lastFive(stats[0],dateISO),R.lastFive(stats[1],dateISO)],names):"";
+  // tale of the tape: age on fight night, then today's listed height, reach and stance (data/ufc-fighter-tape.json)
+  const T=window.BEFNSnapshotTiles;
+  const tapeOf=n=>({tape:(T&&fighterTape?.fighters?.[T.fold(n)])||{}});
+  const tape=dateISO?R.tapeHTML(B.tapeRows(tapeOf(names[0]),tapeOf(names[1]),new Date(dateISO+"T12:00:00Z")),B.barWidths):"";
+  const left=tape+video+(model?R.analysisHTML(model):"");
+  const right=(model?R.statsHTML(model):"")+(lastFive||historyHTML(f,names,key));
+  return '<details class="befn-fight-snapshot sb-result-snap sr-snap" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-sr="'+(model?"1":"0")+'"'+
    (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
-   '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
-   B.tapeHTML(sides,side(0),side(1),h)+historyHTML(f,names,key)+
-   buttons+
+   '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body sr-body">'+hero+
+   '<div class="sr-layout"><div class="sr-col">'+left+'</div><div class="sr-col">'+right+profileLinks(f,names,article)+'</div></div>'+
    '<p class="befn-snapshot-disclaimer">— indicates unavailable data.</p></div></details>';
  }
  // Closed card row (layout B): a fighter with a cutout is shown as that cutout on their flag disc, the same picture

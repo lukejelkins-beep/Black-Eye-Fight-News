@@ -57,6 +57,45 @@ class Build(unittest.TestCase):
         self.assertEqual(tape.build(self.names, INDEX), self.out)
 
 
+class Pool(unittest.TestCase):
+    """25 Nov 2026: the tape covers finished UFC bouts too, and future ones join by themselves."""
+    CSV2 = ('FIGHTER,HEIGHT,WEIGHT,REACH,STANCE,DOB,URL\n'
+            'Jan Blachowicz,"6\' 2""",205 lbs.,"78""",Orthodox,"Feb 24, 1983",u\n'
+            'Levi Rodrigues,"5\' 10""",185 lbs.,"73""",Orthodox,"Jan 01, 1992",u\n'
+            'Kai Kamaka III,"5\' 9""",145 lbs.,"70""",Orthodox,"Jan 01, 1996",u\n'
+            'Ann Smith Jr.,"5\' 8""",155 lbs.,"68""",Southpaw,"Jan 01, 1994",u\n')
+    INDEX2 = tape.index_export(CSV2)
+
+    def build(self, display):
+        names = {tape.fold(display): display}
+        return tape.build(names, self.INDEX2)
+
+    def test_letters_nfkd_cannot_split_are_matched_but_the_key_stays_the_pages_key(self):
+        out = self.build("Jan Błachowicz")
+        self.assertEqual(list(out["fighters"]), ["janbachowicz"], "key is fold() of the card name, as the page computes it")
+        self.assertEqual(out["fighters"]["janbachowicz"]["reachIn"], 78)
+
+    def test_card_suffix_the_export_leaves_off(self):
+        self.assertEqual(self.build("Levi Rodrigues Jr.")["fighters"]["levirodriguesjr"]["heightIn"], 70)
+
+    def test_export_suffix_the_card_leaves_off(self):
+        self.assertEqual(self.build("Kai Kamaka")["fighters"]["kaikamaka"]["heightIn"], 69)
+        self.assertEqual(self.build("Ann Smith")["fighters"]["annsmith"]["stance"], "Southpaw")
+
+    def test_results_names_join_the_pool(self):
+        import json, tempfile
+        results = {"results": [
+            {"eventId": "ufc-x-2026-11-21", "event": "UFC Fight Night: X", "fighters": [{"name": "Navajo Stirling"}, {"name": "Jiří Procházka"}]},
+            {"eventId": "pfl-y-2026-11-21", "event": "PFL 10", "fighters": [{"name": "Not Ufc"}]},
+            {"eventId": "misc", "event": "UFC 400", "fighters": [{"name": "Name Only"}, {"name": None}, {}]},
+        ]}
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+            json.dump(results, f)
+        got = tape.result_names(f.name)
+        self.assertEqual(got, {"navajostirling": "Navajo Stirling", "jiriprochazka": "Jiří Procházka", "nameonly": "Name Only"})
+        self.assertEqual(tape.result_names("/nonexistent/results.json"), {}, "a missing results file is an empty pool, not a crash")
+
+
 def _snap(pool, matched_keys):
     fighters = {k: {"heightIn": 70} for k in matched_keys}
     return {"fighters": fighters, "coverage": {"cardFighters": pool, "matched": len(fighters)},
