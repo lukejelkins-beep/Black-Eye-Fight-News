@@ -1,7 +1,7 @@
 {
-  "attemptedAt": "2026-11-24T23:34:45.266Z",
-  "checkedAt": "2026-11-24T23:34:45.266Z",
-  "updatedAt": "2026-11-24T22:30:12.339Z",
+  "attemptedAt": "2026-11-25T00:23:04.517Z",
+  "checkedAt": "2026-11-25T00:23:04.517Z",
+  "updatedAt": "2026-11-25T00:07:12.023220Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
   "sourcesChecked": 6,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,70 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
+      "Instagram": 36,
+      "X": 34,
       "Bluesky": 6,
-      "X": 27,
-      "Threads": 8
+      "Threads": 7,
+      "Reddit": 1
     },
     "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n33ui2k2sa2g",
+      "cid": "bafyreidxwuomwwetbsatisbshln3krj4snqnoqdtvjkqihytf644zyhqla",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Gabriel Bonfim vs. Sean Brady fight night event adds slew of undercard fights www.mmafighting.com/ufc/523204/g...",
+      "postedAt": "2026-11-25T00:07:12.023220Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n33ui2k2sa2g",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n33p3pslhn2z",
+      "cid": "bafyreigdrma6bwenpo5i2oxz5fkvop5i62pybwwmgwguffol6d25uplwj4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Aljamin Sterling takes UFC Qatar judges to task\n\n📰 mma-fighting.visitlink.me/ev1tzn",
+      "postedAt": "2026-11-24T22:30:50.946767Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n33p3pslhn2z",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n33p2j66ds2o",
       "cid": "bafyreifm4lgvkzzsvmppxut5ps4ixezfsgjgpejtbk36qeiafvespnmfom",
@@ -92,6 +141,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-24T23:34:45.266Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n33nkg4ivw2y",
+      "cid": "bafyreiaulf4jl3mzu2zusx2625nnwxixpgaooyhv2jvn7tqlcm4tu35zty",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "MMA Fighting",
+      "handle": "@mmafighting.bsky.social",
+      "role": "media",
+      "quote": "Aljamain Sterling questions judging ‘conspiracy,’ Kevin Vallejos’ slippery takedown defense in UFC Qatar loss www.mmafighting.com/ufc/523185/a...",
+      "postedAt": "2026-11-24T22:03:16.406831Z",
+      "date": "25 Nov 2026",
+      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n33nkg4ivw2y",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -139,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -187,7 +260,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -211,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -235,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -259,7 +332,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -307,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -355,7 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -403,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -475,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -499,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -547,7 +620,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -575,30 +648,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n32w53zchh2f",
-      "cid": "bafyreihj7bdvzs32vshhxi3sn6xvoifxgjyftqaxy3eowtj4bofg3wk7aa",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Olympic champion Kyle Snyder defends crossover matches in RAF despite repeated fights, brawls www.mmafighting.com/raf-wrestlin...",
-      "postedAt": "2026-11-24T15:04:13.584065Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n32w53zchh2f",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n32uqcthkp26",
       "cid": "bafyreiayrg6oq22xabg7a6oyrhu3g3cglqomq4pyycwuej7mepdksisgqq",
       "platform": "Bluesky",
@@ -615,35 +664,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
       "engagement": {
-        "likes": 0,
+        "likes": 1,
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n32ubld3ca2h",
-      "cid": "bafyreiboyybccqthqt6yefjeqh3rznn2mtnzck5rxj5dlhsvkv6agjn7fm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Matt Brown has come to the defense of Josh Hokit over the eye poke in his Ciryl Gane fight\n\n📰 mma-fighting.visitlink.me/7qXPrO",
-      "postedAt": "2026-11-24T14:30:56.761851Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n32ubld3ca2h",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -667,7 +692,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -695,30 +720,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n32srcqilz2n",
-      "cid": "bafyreicxtih5tetgpplhf4ja4if3a6lhlg3azqn5fymfb6qkwgfkeglyvu",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "MMA Fighting",
-      "handle": "@mmafighting.bsky.social",
-      "role": "media",
-      "quote": "Matt Brown defends Josh Hokit’s complaints about eye poke in Ciryl Gane fight: ‘A f*cking point deduction at minimum’ www.mmafighting.com/ufc/523076/m...",
-      "postedAt": "2026-11-24T14:03:56.685216Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/mmafighting.bsky.social/post/3n32srcqilz2n",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:mljgtdz3acgo6ix4j2qegd3f/bafkreigbztxtkxtglot5b4mm6dmqg3yd2pa66yrjc6rdaiu5vxlhxb545y",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:mljgtdz3acgo6ix4j2qegd3f",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n32pmfc3wq2s",
       "cid": "bafyreidszahgpfjz2kpebfcygrfo6aptszlpxsl5pei7q2naphfk5pxjhm",
       "platform": "Bluesky",
@@ -739,7 +740,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -787,7 +788,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -811,7 +812,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -835,7 +836,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-24T20:20:53.937Z",
+      "engagementCheckedAt": "2026-11-25T00:23:04.517Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
