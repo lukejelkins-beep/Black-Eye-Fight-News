@@ -173,7 +173,7 @@ class VideoDisciplineScopeTests(unittest.TestCase):
   m.refresh(film,res,fetch=fetch,today=today,verify=verify,check_shorts=False,search=search)
   self.assertIn('yt-DSGCMCD7cEM',seen['verified'],'a recent clip is re-verified even when it left the channel list')
   self.assertNotIn('yt-OLDOLDOLD00',seen['verified'],'clips older than 21 days are not')
-  self.assertEqual([q for _,q in seen['search']],['John Mitchell knockout'])
+  self.assertEqual([q for _,q in seen['search']],['John Mitchell knockout']*4)
   self.assertEqual([v for v in film['videos'] if v['id']=='yt-DSGCMCD7cEM'][0]['auVerifiedAt'],'2026-11-25T00:00:00Z')
 
 if __name__=='__main__': unittest.main()
