@@ -31,6 +31,38 @@ contenders lose a little (Volkanovski #4 to #9, Shevchenko #2 to #6) and younger
 Biggest falls: veterans near the end (Arlovski, Blachowicz, Holly Holm, Cannonier, Thompson); biggest rises: young
 fighters (Tereza Bleda, Francisco Prado, Cameron Saaiman).
 
+## 25 Nov 2026: height against the division average (adopted); reach tested, not used
+Owner: "difference in height, reach, difference from the average in the division ... see if that has any
+predictability", then "do whatever increases the predictability most". Heights and reaches from the same free UFCStats
+export as the birth dates (`heightInches` in `data/ufc-fighter-born.json`, 815 of 921 fighters).
+
+On their own: the taller fighter wins 54.8% of 2,050 bouts (56.8% with a 3-inch gap); the longer reach 52.4% (55.0%);
+the bigger ape index 51.1%. Added to the rating with age, height helped in every test period (Brier +0.0015 on
+2022-23, +0.0011 on 2024-26, +0.0008 on 2019-21 fitted the other way round); reach helped in some and hurt in others,
+and added nothing once height was in. Size chosen for accuracy by 10-fold cross-validation over all 2019-2026 snapshot
+bouts: 0 → 64.62%, 3 points an inch 65.28%, **6 points 65.46% (the peak)**, 9 → 65.30%, 12 → 65.20%, 25 → 64.78%.
+
+**Rule:** `HEIGHT_POINTS_PER_INCH` = 6 rating points (0.75 on the score out of 100) per inch above or below the
+average height of the fighter's division on the roster being rated (`division_heights`, `height_points` in
+`scripts/ufc_ratings.py`; at least 5 fighters with a height; unknown height or division: no change). Two fighters in
+one division differ by exactly their height gap. Profiles carry it as `heightAdjustment`.
+
+`python3 scripts/ufc-rating-evaluate.py --previous origin/main` (the rating with age) on 1,135 bouts from 2024:
+accuracy 64.1% → **65.0%**, Brier 0.2222 → 0.2213 (gain +0.0008, interval −0.0002 to +0.0019: small, not certain on
+its own, but in the same direction in every period tested); 2024 / 2025 / 2026: 65.3 / 68.1 / 59.0% → 64.4 / 69.0 /
+61.3%; ranked fighters or champions in the top 100 78 → 80. Biggest moves: Chris Barnett (heavyweight, 5'9", −38
+points, −4.8 on the score), Tom Nolan (lightweight, 6'3", +30, +3.8); Topuria −18, Salkilld +12.
+
+## 25 Nov 2026: opponent credit tested on the rating, not adopted
+After Form gained opponent credit in its fight margins (PR #562), the owner asked to test the same on the BEFN rating.
+The results half already credits opponents (Elo); the skills half uses career rates. Opponent-credited striking,
+control and takedown margins (credit 0, 0.5, 1.0 and 1.5; last 8 fights in 5 years, or whole career) were added to the
+rating with age, or used in place of the skills composite, on the same quarterly snapshots (fit before 2024, test
+1,238 bouts from 2024). Every version was slightly worse than the rating with age (64.2%, Brier 0.2227): added,
+63.2-63.7% and Brier 0.0009 to 0.0012 worse; in place of skills, 63.5-63.7% and 0.0025 to 0.0027 worse. On their
+own the credited margins pick 58.5% of winners, but they overlap the rating (correlation 0.55) and add nothing to it.
+The rating is unchanged; the credit stays in Form only.
+
 ## 25 Nov 2026: amateur and Olympic/Commonwealth credentials tested, not adopted
 Owner asked whether the verified amateur results (`data/ufc-amateur-credentials.json`: 128 fighters, 485 results)
 should raise ratings "in a consistent way". One table for every sport and row: Olympic 10 / 9 / 8 (gold, silver,
