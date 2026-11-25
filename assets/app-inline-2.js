@@ -1232,7 +1232,7 @@ function openFighter(id){if(!dialog.open){const a=document.activeElement;fighter
 <div class="befn-pro-id"><small class="befn-pro-eyebrow">${esc([isUfc?'UFC':'',f.sport,f.division].filter(Boolean).join(' · '))}</small><h2>${esc(f.name)}</h2><div class="befn-pro-record"><strong>${esc(f.record||'—')}</strong><span>${esc(f.recordLabel||'Pro record')}</span></div>${befnTitleBelts(f)}<dl class="befn-pro-facts">${facts.map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>${befnReign(f)}<div class="befn-top-credentials" data-befn-top-credentials>${ins?.topCredentials(f)||''}</div></div>
 <div class="befn-pro-rating" data-befn-pro-rating></div>
 </header>
-<nav class="befn-pro-nav" aria-label="Profile sections">${[['overview','Overview'],['ratings','Ratings'],['fights','Fights'],['stats','Stats'],['compare','Compare'],['profile','Profile']].map(([k,l])=>`<button type="button" data-pro-jump="${k}">${l}</button>`).join('')}</nav>
+<nav class="befn-pro-nav" aria-label="Profile sections">${[['overview','Overview'],['ratings','Ratings'],['fights','Fights'],['amateur','Amateur'],['stats','Stats'],['compare','Compare'],['profile','Profile']].map(([k,l])=>`<button type="button" data-pro-jump="${k}">${l}</button>`).join('')}</nav>
 <div class="befn-pro-body">${ins?.renderProfile(f)||''}${legacy}${fighterRelatedNews(f)}</div>
 </div>`;
  dialog.classList.remove('befn-v3-dialog');
