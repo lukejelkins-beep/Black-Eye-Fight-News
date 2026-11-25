@@ -2,6 +2,35 @@
 
 The owner chose, on 2026-11-23 (PR #453): blend results with skills in the headline, score the skill bars for effectiveness, and use a wider rating number. After reviewing the first build the owner also chose: title fights count more, a weaker inactivity drift (10% a year), and a 60/40 results/skills mix. This note says what was built and how well it works. The rating stays **descriptive**: prediction is only the objective test, never shown (owner decision #432).
 
+## Update 25 Nov 2026: age in the headline (owner request: "can we improve the BEFN rating as well")
+Each fighter's rating now includes an age adjustment: **5.4 rating points per year away from 31** (the median fighter's
+age), younger up and older down, measured on the rating's own date (`AGE_CENTRE`, `AGE_POINTS_PER_YEAR`,
+`age_points` in `scripts/ufc_ratings.py`; birth dates from `data/ufc-fighter-born.json`; unknown birth date, about 4%
+of the roster: no adjustment). On the score out of 100 that is about 0.68 a year. The profile file carries it as
+`ageAdjustment`.
+
+How it was chosen: the same quarterly point-in-time snapshots as `scripts/ufc-rating-evaluate.py`, fitted on bouts
+from 2019 to 2023 and tested on 2024 onward. Age was the only candidate that helped. Tried and rejected: adding the
+Form v4 score (no gain on top of age), separate striking / wrestling / grappling weights in place of the composite
+(61.8% against 62.6%), and age curves with a peak or a threshold (no better than a straight line).
+
+`python3 scripts/ufc-rating-evaluate.py` against the previous engine, 1,135 bouts from 2024 to 21 Nov 2026:
+
+| | Previous | With age |
+|---|---:|---:|
+| Accuracy | 62.7% | **64.1%** |
+| Brier (lower is better) | 0.2274 | **0.2222** (gain +0.0053, 95% interval +0.0031 to +0.0075: clearly better) |
+| Log loss | 0.6467 | 0.6353 |
+| 2024 / 2025 / 2026 accuracy | 63.1 / 66.9 / 58.0% | 65.3 / 68.1 / 59.0% |
+| Ranked fighters or champions in the top 100 | 83 | 78 |
+| Champions in the top 50 (of 11) | 10 | 8 |
+| Rank correlation with the official order inside each division | 0.68 | 0.66 |
+
+Trade-off: it predicts better but agrees slightly less with the official rankings, because older champions and
+contenders lose a little (Volkanovski #4 to #9, Shevchenko #2 to #6) and younger ones gain (Joshua Van #6 to #2).
+Biggest falls: veterans near the end (Arlovski, Blachowicz, Holly Holm, Cannonier, Thompson); biggest rises: young
+fighters (Tereza Bleda, Francisco Prado, Cameron Saaiman).
+
 ## What the headline is now
 **What readers see (owner's choice, 24 Nov):** `overall` in each `data/ufc-stats/fighters/<slug>.json` is a **score out of 100**, 50 + (rating - 1500) / 11, so 50 is the median rated UFC fighter and Islam Makhachev is 97; profiles show it with the overall rank (`overallRank` of `rankOf`). The full **BEFN rating** below is kept as `overallRating` (1500 = median; Makhachev 2019) and orders the ranks. It combines:
 

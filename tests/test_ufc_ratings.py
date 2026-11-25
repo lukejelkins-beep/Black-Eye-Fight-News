@@ -200,6 +200,23 @@ class Roster(unittest.TestCase):
         self.assertLess(out["f00"]["overallRating"], r.HEADLINE_CENTRE)
         self.assertEqual(out["f39"]["overall"], r.score_100(out["f39"]["overallRating"]))
 
+    def test_age_adjustment(self):
+        # owner request 25 Nov 2026: age in the headline (tested on 2024+ bouts: 62.7% -> 64.1%)
+        self.assertEqual(r.age_points(None, "2026-11-21"), 0.0, "unknown birth date: no adjustment")
+        self.assertAlmostEqual(r.age_points("1995-11-21", "2026-11-21"), 0.0, delta=.05, msg="31: the centre")
+        self.assertAlmostEqual(r.age_points("2000-11-21", "2026-11-21"), 5 * r.AGE_POINTS_PER_YEAR, delta=.1)
+        self.assertAlmostEqual(r.age_points("1986-11-21", "2026-11-21"), -9 * r.AGE_POINTS_PER_YEAR, delta=.1)
+        self.assertEqual(r.age_points("1990-01-01", None), 0.0)
+        roster = self.roster()
+        young = {s: {**f, "born": "2001-01-01"} for s, f in roster.items()}
+        old = {s: {**f, "born": "1988-01-01"} for s, f in roster.items()}
+        base = self.rate(roster)
+        for s in ("f39", "f20"):
+            if base[s]["overallRating"] is not None:
+                self.assertEqual(base[s]["ageAdjustment"], 0.0)
+        y, o = self.rate({**roster, "f39": young["f39"]}), self.rate({**roster, "f39": old["f39"]})
+        self.assertGreater(y["f39"]["overallRating"], o["f39"]["overallRating"])
+
     def test_score_out_of_100_and_rank(self):
         self.assertEqual(r.score_100(r.HEADLINE_CENTRE), 50)
         self.assertEqual(r.score_100(r.HEADLINE_CENTRE + 11 * r.SCORE_DIVISOR), 61)

@@ -932,10 +932,12 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
                           "divisionSlug": division["slug"], "divisionSource": division["source"]}
     # Ratings read only rated fights: a certified result-only win/loss/draw counts in the record, never in a rating.
     rate_inputs = {}
+    born_path = DATA / "ufc-fighter-born.json"   # birth dates for the rating's age adjustment (scripts/ufc_ratings.py)
+    born = (json.loads(born_path.read_text(encoding="utf-8")).get("fighters") or {}) if born_path.exists() else {}
     for slug, c in computed.items():
         h = [f for f in c["history"] if is_rated(f)]
         w = c["windows"]["weighted"] if len(h) == len(c["history"]) else windows_for(h, as_of)["weighted"]
-        rate_inputs[slug] = {"window": w, "history": h, "divisionSlug": c["divisionSlug"]}
+        rate_inputs[slug] = {"window": w, "history": h, "divisionSlug": c["divisionSlug"], "born": born.get(slug)}
     ratings = ufc_ratings.rate_roster(rate_inputs,
                                       results_bouts(per_fighter), as_of.isoformat(), pre_ufc_priors())
 
