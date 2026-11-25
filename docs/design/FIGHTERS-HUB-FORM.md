@@ -30,34 +30,68 @@ A working prototype of everything below is in the project: `claude/fighters-heat
 
 ## 3. Form score: the exact calculation
 
+**Form v2 (owner request, 25 Nov 2026).** v1 counted every win the same whatever the opponent, scored finishing on
+wins only, ignored how a decision was won or lost, and let one knockout carry a 1-4 run (Niko Price was Form 65). v2
+values each fight by who it was against and how much of it the fighter won, adds momentum from the BEFN results
+rating, and weights recent fights less steeply. Backtest (each fighter scored the day before every UFC bout from
+earlier fights only, P left out because it is not point-in-time; does the higher Form win?):
+
+| Bouts | v1 accuracy / log loss | v2 accuracy / log loss | BEFN pre-bout rating (reference) |
+| --- | --- | --- | --- |
+| 2022 to Nov 2026 (tuned on), n ≈ 1,410 | 56.7% / 0.684 | 57.9% / 0.673 | 59.9% / 0.659 |
+| 2018 to 2021 (held out), n ≈ 330 | 49.2% / 0.693 | 50.5% / 0.690 | 58.0% / 0.673 |
+
+Form is still not a prediction (the BEFN rating predicts better, as it should); the backtest checks that the score
+tracks real quality rather than noise. **How much a recent loss matters:** steeper recency (v1's 1.00 to 0.40
+positions, a 12-month half-life) and a bigger streak bonus both backtested *worse*; what matters about a loss is who
+it was to and how it happened, not just that it was last. The owner chose flat positions (selector, 25 Nov): the five
+fights count the same apart from their age, and the weight sits on the manner of the loss (below) and the loss cap.
+(The middle option, positions 1.00 to 0.60 with a +0.02 streak step, scored 57.0% / 0.675 and 52.1% / 0.690.)
+
 ### 3.1 Window and recency
 - Take the fighter's UFC fights with a result (W, L, D) in the last 36 months, newest first, up to 5. No contests are skipped here but still count as activity (3.6).
-- Base weights by position: 1.00, 0.85, 0.70, 0.55, 0.40.
-- Multiply each weight by 0.5^(months since the fight / 18), an 18-month half-life.
+- Base weights by position: all 1.00 (v1: 1.00, 0.85, 0.70, 0.55, 0.40). Only age separates them.
+- Multiply each weight by 0.5^(months since the fight / 24), a 24-month half-life (v1: 18). A fight 1 month old counts about 2.3 times one 30 months old.
 - Every part below is a weighted average using these weights. S is the sum of the weights.
 - Fewer than 2 fights in the window: **no Form**. Show "limited data", never an estimate.
+- The output lists each fight behind the score with its share of the weight (`fights`, columns in `fightFields`).
 
-### 3.2 Points score (0 to 100)
-`Form points = 100 × (0.30 R + 0.30 F + 0.20 Q + 0.10 A + 0.10 P)`. Finishing was raised to 30% at the owner's request.
+### 3.2 Each fight
+For every fight in the window:
+- **q, opponent strength on the night** (3.3), 0 to 1.
+- **d, dominance**: how much of the fight the fighter won, 0 to 1, for losses as well as wins.
+  - Finish win: round 1 = 1.00, round 2 = 0.92, round 3 = 0.85, rounds 4-5 = 0.80. DQ win 0.60.
+  - Decision: 0.15 + 0.70 × the share of the judges' rounds the fighter won (all three judges; a 10-8 round counts double, an even round half), plus 0.04 per knockdown scored and minus 0.04 per knockdown absorbed, kept within 0.05 to 0.95. A 30-27 ×3 win is 0.85, a split about 0.5, being swept 0.15. Without scorecards: unanimous win 0.75, split or majority win 0.55, split loss 0.45, unanimous loss 0.25.
+  - Draw 0.50. Finished in rounds 1-2: 0. Finished in round 3 or later: 0.05. DQ loss 0.30.
+- **v, value of the result**:
+  - Win: 0.55 + 0.25 q + 0.20 d. A first-round finish of an elite opponent is 1.0; a split decision over a weak one about 0.65.
+  - Draw: 0.25 + 0.20 q.
+  - Loss: (0.12 + 0.56 × min(d, 0.5)) × (0.4 + 0.6 q). A close loss to an elite opponent keeps 0.40; a first-round stoppage by a weak one about 0.05.
+  - An upset bonus (1 − the fighter's win probability) was tried and backtested worse: it rewards a fighter for having been rated low.
 
-| Part | How each fight scores |
+### 3.3 Points score (0 to 100)
+`Form points = 100 × (0.25 R + 0.30 D + 0.15 Q + 0.10 M + 0.10 A + 0.10 P)`. A part with no data (M or P) is left out and the rest re-weighted.
+
+| Part | How it scores |
 | --- | --- |
-| **R, Results** | Win 1. Draw 0.5. A loss to a fighter rated higher on the night, or any title-fight loss, scores 0.4 by decision or 0.2 if finished. Any other loss scores 0. Then add 0.05 per win in the current streak (at most +0.15) and cap at 1. |
-| **F, Finishing** (wins only, weighted over wins) | KO, TKO, submission or DQ: round 1 = 1.00, round 2 = 0.85, round 3+ = 0.70. Unanimous decision 0.40. Split or majority decision 0.15. No wins gives 0. |
-| **Q, Opposition** (losses score 0) | The opponent's strength **on the night** (3.3). |
+| **R, Results** | Weighted average of v. No streak bonus in v2 (v1 added 0.05 a win; it backtested worse). A losing run is handled by the loss cap. |
+| **D, Dominance** | Weighted average of d over every fight, wins and losses. On its own the most predictive part (57.7% in the backtest; v1's wins-only finishing 51.9%). |
+| **Q, Opposition** | Weighted average of q for wins, q/2 for draws and 0.2 q for losses (credit for facing the best, much less than beating them). |
+| **M, Momentum** | How far the BEFN results rating moved across the window: 0.5 + (rating after the newest fight − rating before the oldest) / 240, kept within 0 to 1. A 120-point rise is 1.0. |
 | **A, Activity** | 1.0 if their last UFC fight was within 6 months, falling evenly to 0 at 18 months. Uses the most recent fight of any kind, including no contests. While out injured, A is held at 1 (4.4). |
 | **P, Performance** | The average of two within-division percentiles from the last 5 fights: strike differential per minute (`diffPm`) and control share (`ctrlShare`). |
 
-### 3.3 Strength on the night (replaces "today's rank")
-- Replay every UFC bout in the stats build in date order with a simple Elo (start 1500, K = 32; dedupe bouts by `boutId`). Record each fighter's rating **before** each bout.
-- An opponent's strength in a bout is the percentile p of their pre-bout rating among all pre-bout ratings in the 36 months before that bout. It maps to `clamp((p − 0.30) / 0.68, 0, 1)`, so the top 2% score about 1.0 and the median about 0.3.
-- **If your BEFN rating has its own point-in-time history, use that instead of this internal Elo.** This Elo exists only because no rating history existed. One rating engine is better than two.
+### 3.3a Strength on the night
+- From the BEFN results rating's own point-in-time history (`scripts/ufc_ratings.py` `results_walk`): each fighter's rating **before** each bout.
+- An opponent's strength in a bout is the percentile p of their pre-bout rating among all pre-bout ratings in the 36 months before that bout. It maps to `clamp((p − 0.30) / 0.68, 0, 1)`, so the top 2% score about 1.0 and the median about 0.3. An unknown opponent scores 0.3.
 
 ### 3.4 Loss cap
-If the last fight was a loss, the points score is capped at **85 − opponent penalty − manner penalty**. The cap lifts with the next win.
+If the last fight was a loss, the points score is capped at **85 − opponent penalty − manner penalty − losing-run penalty − repeat-stoppage penalty**. The cap lifts with the next win.
 
-- Opponent penalty: 0 if the opponent was rated higher on the night, or it was a title fight. 10 if rated up to 100 Elo points lower. 20 if more than 100 lower.
-- Manner penalty: 0 for a split or majority decision, 5 for unanimous, 10 for a finish in round 3 or later, 15 for a finish in round 1 or 2.
+- Opponent penalty: 0 if the opponent was rated higher on the night, or it was a title fight. 10 if rated up to 100 points lower. 20 if more than 100 lower.
+- Manner penalty: 0 for a split or majority decision, 5 for unanimous (or a DQ), 10 for a finish in round 3 or later, 15 for a finish in round 1 or 2.
+- Losing run (v2): 5 for a second straight loss, 10 for a third or more.
+- Repeat stoppage (v2): 5 if the last loss was a KO/TKO or submission and the fighter was also stopped in another loss in the 24 months before it.
 
 ### 3.5 Displayed Form (what readers see)
 - **Form = the percentile of the points score among fighters with a UFC fight in the last 24 months, rounded and capped at 99.** On 21 Nov that pool was 672 fighters.
@@ -70,14 +104,17 @@ A no contest counts as a fight for activity and inactivity. This was found in te
 ## 4. Stages, badges and statuses
 
 ### 4.1 Stages (checked in this order; the first match wins)
+
+Since Form v2 every threshold is on the displayed Form (a percentile), not the points, so re-weighting the points cannot shift the stage counts. The v1 points thresholds map to these Form values.
+
 1. **Champion**: rank 0 and not interim.
 2. **Slipping**: ranked #1 to #15 (not interim) and fails the form check (4.2). The UFC number stays on the page, along with the reason.
-3. **Title contender**: interim champion, or ranked #1 to #5, who won their last fight or has points 70+ (shown Form 82+).
+3. **Title contender**: interim champion, or ranked #1 to #5, who won their last fight or has Form 82+.
 4. **Contender**: ranked #1 to #15. With no Form, add "limited data".
 5. **Inactive**: unranked, no UFC fight in 24 months (time out injured doesn't count).
-6. **Rising star**: unranked, 3 to 6 UFC fights, debut within 36 months, at most 1 loss, won last fight, points 65+ (shown 74+), age 32 or under, UFC debut before age 30.
+6. **Rising star**: unranked, 3 to 6 UFC fights, debut within 36 months, at most 1 loss, won last fight, Form 74+, age 32 or under, UFC debut before age 30.
 7. **Prospect**: unranked, 1 to 3 UFC fights, unbeaten in the UFC, age 30 or under, UFC debut before age 30.
-8. **Breakout**: unranked, points 68+ (shown 79+), won last fight and 3 of last 4, a fight within 18 months, 10 or fewer UFC fights, age 33 or under.
+8. **Breakout**: unranked, Form 79+, won last fight and 3 of last 4, a fight within 18 months, 10 or fewer UFC fights, age 33 or under.
 9. **Established**: everyone else.
 
 Unknown age doesn't block Rising star or Prospect, but they show "age unknown". Debut age of 30 or over is the stand-in for a long pre-UFC career, because no free source of full professional records was found.
@@ -87,10 +124,10 @@ A ranked fighter fails if any of these is true:
 - no UFC fight in 18 months (unless injured)
 - lost their last fight and 3 or more of their last 5
 - 2 of their last 3 fights were losses to clearly lower-rated opponents (opponent penalty 20, not title fights)
-- points under 30 (shown Form under 20), or points under 40 (shown under 30) with 2 losses in the last 3
+- Form under 20, or Form under 30 with 2 losses in the last 3
 
 ### 4.3 Badges (any stage can carry them)
-- **On fire**: points 75+ (shown **Form 90+**), won the last 3 UFC fights, 3+ UFC fights, a fight within 12 months. To avoid flicker, drop it only below points 68.
+- **On fire**: **Form 90+**, won the last 3 UFC fights, 3+ UFC fights, a fight within 12 months. To avoid flicker, drop it only below Form 79.
 - **Cooling**: ranked, lost the last fight and 2 of the last 3, a fight within 24 months.
 - **Inactive risk**: 18 to 24 months since the last fight, and not injured.
 - **Out injured**: an active entry in the injury file (4.4).
@@ -160,17 +197,18 @@ The profile and the hub should both read this one file for Form, stage and badge
 - They were delivered to the owner as `befn-ufc-cutouts-2026-11-24.zip` and are not yet in the repo. A separate Claude Code prompt covers committing them.
 - 151 portraits under 300 px still need bigger originals.
 
-## 9. Test cases (21 Nov data; use as fixed tests)
-| Fighter | Points | Form shown | Parts R/F/Q/A/P | Stage, badges |
-| --- | --- | --- | --- | --- |
-| Valter Walker (HW #12) | 82 | 97 | 1.0 / 1.0 / 0.15 / 1.0 / 0.87 | Contender, On fire; form #1 |
-| Elijah Smith (BW, unranked, 4-0) | 84 | 99 | 1.0 / 0.89 / 0.40 / 1.0 / 0.86 | Rising star, On fire |
-| Alexandre Pantoja (FLY #1) | 58 | 61 | 0.55 / 0.70 / 0.16 / 1.0 / 0.74 | Contender, Cooling; loss cap 80 (title-fight decision loss to Van) |
-| Israel Adesanya (MW #9) | 12 | 4 | 0.04 / 0.0 / 0.0 / 0.85 / 0.25 | Slipping ("lost last fight and 4 of last 5"), Cooling; loss cap 60 |
-| Tom Aspinall (HW #1) | none | none | under 2 fights in 36 months | Title contender, Out injured |
-| Michael Page (MW, 39) | 70 | 82 | n/a | Established (too old for Rising star and Breakout) |
+## 9. Test cases (21 Nov data, Form v2; `tests/test_ufc_fighter_form.py`)
+| Fighter | Form v1 → v2 | Parts v2 R/D/Q/M/A/P | Stage, badges |
+| --- | --- | --- | --- |
+| Valter Walker (HW #12) | 97 → 96 | 0.78 / 1.0 / 0.11 / 1.0 / 1.0 / 0.85 | Contender, On fire; form #1 |
+| Elijah Smith (BW, unranked, 4-0) | 99 → 97 | 0.82 / 0.91 / 0.35 / 1.0 / 1.0 / 0.86 | Rising star, On fire |
+| Alexandre Pantoja (FLY #1) | 62 → 60 | 0.50 / 0.46 / 0.33 / 0.33 / 1.0 / 0.73 | Contender, Cooling; loss cap 75 (title-fight decision loss, second straight loss) |
+| Israel Adesanya (MW #9) | 9 → 8 | 0.12 / 0.01 / 0.19 / 0.0 / 0.85 / 0.26 | Slipping ("lost last fight and 4 of last 5"), Cooling; loss cap 55 |
+| Tom Aspinall (HW #1) | none | under 2 fights in 36 months | Title contender |
+| Michael Page (MW, 39) | 86 → 91 | n/a | Established, On fire (too old for Rising star and Breakout) |
+| Niko Price (WW, 1-4 in last 5) | 65 → 24 | 0.26 / 0.29 / 0.06 / 0.16 / 1.0 / 0.34 | Established; v1 scored his one KO win as finishing 1.0 |
 
-Other checks: two runs give identical output. On the 21 Nov data the certified hub had 11 Champion, 35 Title contender, 99 Contender, 29 Slipping, 20 Rising star, 41 Prospect, 8 Breakout, 61 Inactive and 470 Established, plus 40 On fire.
+Other checks: two runs give identical output. On the 21 Nov data with v2 the hub had 11 Champion, 36 Title contender, 99 Contender, 30 Slipping, 21 Rising star, 31 Prospect, 12 Breakout, 112 Inactive and 569 Established, plus 53 On fire (v1: 35, 100, 30, 18, 32, 10, 112, 573 and 41).
 
 ## 10. Still open
 - The scale of the BEFN rating, and therefore whether Form and Overall can be compared (section 1).
