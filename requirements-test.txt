@@ -1,7 +1,9 @@
 # Everything the full Python test suite (tests/*.py) imports. Used by
 # .github/workflows/python-tests.yml. rembg and OpenCV are not needed: the
-# cutout tests run on synthetic masks.
+# cutout tests run on synthetic masks. scipy is needed by the cut-out judge, which the
+# full-body photo runner tests (tests/test_photo_runner.py FullBody) exercise.
 numpy>=2,<3
 Pillow>=11,<13
 requests>=2.31,<3
 beautifulsoup4>=4.12,<5
+scipy>=1.13,<2
