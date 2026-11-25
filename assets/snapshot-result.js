@@ -348,6 +348,25 @@
     return '<section class="sr-last5" aria-label="Last five fights"><h3 class="sr-h3">Last five fights</h3><div class="sr-l5">' + card(names[0], rows[0]) + card(names[1], rows[1]) + '</div></section>';
   }
 
+  // Tale of the tape for a finished bout. rows: BEFNSnapshotB.tapeRows (age is age on the fight day). Listed weight is left
+  // out (the chip above already names the weight class and the listed figure is not fight-day weight). A row nobody has
+  // is left out and a missing side shows a dash; bars only for height and reach, drawn from zero.
+  function tapeHTML(rows, barWidths) {
+    const list = (rows || []).filter(r => r && r.key !== 'weight');
+    if (!list.length) return '';
+    const bar = (w, i, lead) => '<span class="sr-tb sr-' + (i ? 'b' : 'a') + (lead ? ' is-lead' : '') + '" aria-hidden="true">' + (w ? '<i style="width:' + w[i] + '%"></i>' : '') + '</span>';
+    const body = list.map(r => {
+      const w = barWidths ? barWidths(r) : null;
+      const label = r.key === 'age' ? 'Age on fight night' : r.label;
+      return '<div class="sr-trow' + (w ? ' has-bars' : '') + '" role="group" aria-label="' + esc(label) + '">' +
+        '<span class="sr-tv' + (r.lead === 0 ? ' is-lead' : '') + '">' + esc(r.v[0]) + '</span>' + (w ? bar(w, 0, r.lead === 0) : '<span></span>') +
+        '<span class="sr-tl">' + esc(label) + '</span>' + (w ? bar(w, 1, r.lead === 1) : '<span></span>') +
+        '<span class="sr-tv' + (r.lead === 1 ? ' is-lead' : '') + '">' + esc(r.v[1]) + '</span></div>';
+    }).join('');
+    return '<section class="sr-tape" aria-label="Tale of the tape"><h3 class="sr-h3">Tale of the tape</h3>' + body +
+      '<p class="sr-note">Age is on fight night. Height, reach and stance are today’s figures listed by UFCStats. — means not listed.</p></section>';
+  }
+
   // Hero: borderless cutouts on a dark stage. sides: [{ name, record, note, fig: {cutout|photo}, initials }].
   function figHTML(side, i, lost) {
     const fig = side.fig || {};
@@ -382,7 +401,7 @@
   }
 
   const api = { FORM_GAP, MIN_PRIOR, PRIOR_N, SHIFT_POINTS, HELD_RATIO, NOTABLE, fold, surname, shortNames, sumSide, profileOf, fightOf, priorOf, lastFive, isNotable,
-    statRows, chips, analyse, analysisHTML, statsHTML, lastFiveHTML, heroHTML, videoHTML, cmpHTML };
+    statRows, chips, analyse, analysisHTML, statsHTML, lastFiveHTML, tapeHTML, heroHTML, videoHTML, cmpHTML };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.BEFNSnapshotResult = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

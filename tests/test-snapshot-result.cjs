@@ -120,4 +120,16 @@ assert.strictEqual(R.videoHTML(null, sides), '');
 const vid = R.videoHTML({ id: 'FZ-7oEF9u8w', kind: 'finish', publisher: 'UFC', title: 'T' }, sides, { finish: 'Watch the finish' }, 0);
 assert.ok(vid.includes('befn-finish-play') && vid.includes('data-finish-id="FZ-7oEF9u8w"') && vid.includes('Watch the finish') && !vid.includes('<iframe'), 'the player is not loaded until the tap');
 assert.ok(!/i\.ytimg|youtube/.test(vid.replace(/data-finish-id="[^"]*"/, '')), 'no third-party picture on the poster');
+// ---- tale of the tape ----
+const B = require('../assets/snapshot-b.js');
+const tp = n => ({ tape: n });
+const rows = B.tapeRows(tp({ heightIn: 75, reachIn: 80, weightLb: 205, born: '1992-10-14', stance: 'Orthodox' }), tp({ heightIn: 76, reachIn: 79, weightLb: 205, born: '2001-03-02', stance: 'Orthodox' }), new Date(Date.UTC(2026, 10, 21, 12)));
+const tapeHtml = R.tapeHTML(rows, B.barWidths);
+assert.ok(tapeHtml.includes('Tale of the tape') && tapeHtml.includes('Age on fight night') && tapeHtml.includes('34') && tapeHtml.includes('25'), 'age is on the fight day');
+assert.ok(!/Listed weight/i.test(tapeHtml), 'weight is left out');
+assert.strictEqual((tapeHtml.match(/sr-trow has-bars/g) || []).length, 2, 'bars for height and reach only');
+assert.ok(/aria-label="Reach"[^]*?sr-tv is-lead">80/.test(tapeHtml), 'the longer reach leads');
+assert.strictEqual(R.tapeHTML(B.tapeRows(tp({}), tp({}), new Date()), B.barWidths), '', 'no tape for either fighter: no section');
+const partial = R.tapeHTML(B.tapeRows(tp({ stance: 'Southpaw' }), tp({}), new Date()), B.barWidths);
+assert.ok(partial.includes('Southpaw') && partial.includes('—') && !partial.includes('has-bars'), 'a missing side is a dash, and no bars');
 console.log('snapshot-result tests ok');

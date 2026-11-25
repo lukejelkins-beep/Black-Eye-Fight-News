@@ -1197,7 +1197,8 @@
  function renderResultB(article,names,f){
   const R=window.BEFNSnapshotResult,B=window.BEFNSnapshotB;
   const key=matchupKey(article,names);
-  const day=/(\d{4}-\d{2}-\d{2})$/.exec(article.closest("[data-result-event]")?.dataset?.resultEvent||"");
+  // the fight day is in the event id, at the end ("ufc-x-y-2026-11-07") or in the middle ("ufc-archive-2026-10-10-ufc-fight-night-...")
+  const day=/(?:^|-)(\d{4}-\d{2}-\d{2})(?:-|$)/.exec(article.closest("[data-result-event]")?.dataset?.resultEvent||"");
   const dateISO=day?day[1]:"";
   const contenders=[...article.querySelectorAll(".result-matchup .result-contender")];
   const winner=contenders.findIndex(c=>c.classList.contains("is-winner"));
@@ -1227,7 +1228,11 @@
    if(clip)video=R.videoHTML(clip,sides,FC.LABEL,winner);
   }
   const lastFive=stats[0]&&stats[1]&&dateISO?R.lastFiveHTML([R.lastFive(stats[0],dateISO),R.lastFive(stats[1],dateISO)],names):"";
-  const left=video+(model?R.analysisHTML(model):"");
+  // tale of the tape: age on fight night, then today's listed height, reach and stance (data/ufc-fighter-tape.json)
+  const T=window.BEFNSnapshotTiles;
+  const tapeOf=n=>({tape:(T&&fighterTape?.fighters?.[T.fold(n)])||{}});
+  const tape=dateISO?R.tapeHTML(B.tapeRows(tapeOf(names[0]),tapeOf(names[1]),new Date(dateISO+"T12:00:00Z")),B.barWidths):"";
+  const left=tape+video+(model?R.analysisHTML(model):"");
   const right=(model?R.statsHTML(model):"")+(lastFive||historyHTML(f,names,key));
   return '<details class="befn-fight-snapshot sb-result-snap sr-snap" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-sr="'+(model?"1":"0")+'"'+
    (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+

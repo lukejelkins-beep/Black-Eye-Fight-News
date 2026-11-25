@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Build data/ufc-fighter-tape.json: height, reach, stance, listed weight and birth date for fighters on announced UFC cards.
+"""Build data/ufc-fighter-tape.json: height, reach, stance, listed weight and birth date for fighters on announced UFC cards
+and in finished UFC bouts on Results.
 
 Phase 3, "tale of the tape". No scores here.
 
 Source: the free UFCStats.com fighter export (ufc_fighter_tott.csv) in the Greco1899/scrape_ufc_stats CSV export, the same
-family the weight-class builder uses. No key, no quota, no paid worker. Only the card fighters in
-data/ufc-card-snapshots.json are kept, not the export.
+family the weight-class builder uses. No key, no quota, no paid worker. Only the fighters we show are kept, not the export:
+the card fighters in data/ufc-card-snapshots.json plus every fighter in a UFC bout in data/results.json (owner, 25 Nov 2026:
+the tale of the tape on finished bouts, for every fight listed and for future ones, which join this pool by themselves
+when a card is announced or a result is added; the workflow runs daily).
 
 Rules
   * A fighter is matched on the name with accents and punctuation ignored. A name that appears more than once in the
@@ -36,6 +39,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 OUT = DATA / "ufc-fighter-tape.json"
 SNAPSHOTS = DATA / "ufc-card-snapshots.json"
+RESULTS = DATA / "results.json"
 URL = "https://raw.githubusercontent.com/Greco1899/scrape_ufc_stats/main/ufc_fighter_tott.csv"
 SOURCE_LABEL = "UFCStats.com via the Greco1899/scrape_ufc_stats CSV export"
 
@@ -43,6 +47,24 @@ SOURCE_LABEL = "UFCStats.com via the Greco1899/scrape_ufc_stats CSV export"
 def fold(name) -> str:
     text = unicodedata.normalize("NFKD", str(name or "")).encode("ascii", "ignore").decode().lower()
     return re.sub(r"[^a-z0-9]", "", text)
+
+
+def result_names(path) -> dict:
+    """folded name -> display name for every fighter in a UFC bout in data/results.json (card names are kept as is)."""
+    try:
+        results = json.loads(Path(path).read_text()).get("results") or []
+    except (OSError, ValueError):
+        return {}
+    out = {}
+    for bout in results:
+        if not str(bout.get("eventId") or "").startswith("ufc-") and not str(bout.get("event") or "").startswith("UFC"):
+            continue
+        for side in bout.get("fighters") or []:
+            name = (side or {}).get("name")
+            key = fold(name)
+            if key and key not in out:
+                out[key] = str(name).strip()
+    return out
 
 
 def parse_height(text):
@@ -85,18 +107,46 @@ def parse_stance(text):
     return value if value in ("Orthodox", "Southpaw", "Switch", "Open Stance", "Sideways") else None
 
 
+# Letters that NFKD does not split into a base letter and an accent, so fold() drops them ("Błachowicz" -> "bachowicz").
+# The tape key stays fold() of the card name, which is what the page computes; only the lookup in the export is widened.
+_TRANSLIT = str.maketrans({"ł": "l", "Ł": "L", "ø": "o", "Ø": "O", "đ": "d", "Đ": "D", "ı": "i", "ß": "ss", "æ": "ae", "Æ": "AE", "œ": "oe", "Œ": "OE"})
+_SUFFIX = re.compile(r"(jr|sr|ii|iii|iv)$")
+
+
+def fold_translit(name) -> str:
+    return fold(str(name or "").translate(_TRANSLIT))
+
+
+def lookup_rows(key: str, display: str, index: dict, aliases: dict) -> list:
+    """Rows for a card name: the exact folded name, then the alias, then transliterated letters, then without a
+    Jr./III suffix on either side. The first step that finds anything wins; more than one row means ambiguous."""
+    for k in (key, aliases.get(key, ""), fold_translit(display)):
+        if k and index.get(k):
+            return index[k]
+    bare = _SUFFIX.sub("", fold_translit(display))
+    if bare and bare != fold_translit(display) and index.get(bare):
+        return index[bare]
+    return []
+
+
 def index_export(text: str) -> dict:
-    """folded name -> list of rows, so duplicates can be told apart from unique names."""
+    """folded name -> list of rows, so duplicates can be told apart from unique names. A row whose name has a
+    Jr./III suffix is also listed under the bare name, so a card that leaves the suffix off still finds it."""
     out = defaultdict(list)
     for row in csv.DictReader(io.StringIO(text)):
-        out[fold(row.get("FIGHTER"))].append(row)
+        keys = {fold(row.get("FIGHTER")), fold_translit(row.get("FIGHTER"))}
+        keys |= {_SUFFIX.sub("", k) for k in list(keys) if _SUFFIX.sub("", k) != k and len(k) > 6}
+        for k in keys:
+            if k:
+                out[k].append(row)
     return out
 
 
 def build(card_names: dict, index: dict) -> dict:
     fighters, missing, ambiguous = {}, [], []
+    aliases = load_aliases()
     for key in sorted(card_names):
-        rows = index.get(key) or index.get(load_aliases().get(key, ""), [])
+        rows = lookup_rows(key, card_names[key], index, aliases)
         if len(rows) > 1:
             ambiguous.append(card_names[key])
             continue
@@ -171,6 +221,8 @@ def main() -> int:
             text = r.read().decode("utf-8")
     snaps = json.loads(SNAPSHOTS.read_text())["fighters"]
     card_names = {k: v["name"] for k, v in snaps.items()}
+    # Finished bouts: a name already on a card keeps the card's spelling.
+    card_names = {**result_names(RESULTS), **card_names}
     out = build(card_names, index_export(text))
     path = Path(args.out)
     # Never replace a good file with a bad download. Exit 3 means "kept the previous
