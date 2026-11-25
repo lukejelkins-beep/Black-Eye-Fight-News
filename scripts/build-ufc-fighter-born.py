@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Build data/ufc-fighter-born.json: birth dates for every fighter in the UFC stats build.
+"""Build data/ufc-fighter-born.json: birth dates (and heights) for every fighter in the UFC stats build.
 
 Source: the free UFCStats.com fighter export (ufc_fighter_tott.csv) in the Greco1899/scrape_ufc_stats CSV export, the
 same file scripts/build-ufc-fighter-tape.py uses. Names are matched on the folded name (ASCII, lower case, letters and
 digits only), with the display-name aliases the tape builder uses. A name that appears twice in the export is left out,
-never guessed. Used by scripts/build-ufc-fighter-form.py for age and UFC debut age (Fighters hub stages).
+never guessed. Used by scripts/build-ufc-fighter-form.py for age and UFC debut age (Fighters hub stages), and by
+scripts/build-ufc-stats.py for the BEFN rating's age and height adjustments (`heightInches`, 25 Nov 2026).
 
 Like the tape builder, it refuses to overwrite the saved file if the number of dated fighters falls by 30% or more.
 """
@@ -40,13 +41,16 @@ def stats_names() -> dict:
 
 def build(names: dict, index: dict, tape) -> dict:
     aliases = tape.load_aliases()
-    fighters, missing, ambiguous = {}, [], []
+    fighters, heights, missing, ambiguous = {}, {}, [], []
     for slug, name in sorted(names.items()):
         key = tape.fold(name)
         rows = index.get(key) or index.get(aliases.get(key, ""), [])
         if len(rows) > 1:
             ambiguous.append(slug)
             continue
+        height = tape.parse_height(rows[0].get("HEIGHT")) if rows else None
+        if height:
+            heights[slug] = height
         born = tape.parse_born(rows[0].get("DOB")) if rows else None
         if not born:
             missing.append(slug)
@@ -56,6 +60,7 @@ def build(names: dict, index: dict, tape) -> dict:
             "note": "Birth dates from UFCStats, matched on the folded name. Names that appear twice in the export, "
                     "and fighters without a listed date, are left out.",
             "fighters": fighters,
+            "heightInches": heights,
             "coverage": {"statsFighters": len(names), "dated": len(fighters),
                          "ambiguous": ambiguous, "notFound": missing}}
 
