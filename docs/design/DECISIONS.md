@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (Profile: flag backdrop restored)
+- **The faded flag behind a UFC fighter's cut-out is back.** Nobody decided to remove it: the 24 Nov choice (P2 "dark band", cut-out over a faded half of the flag) was simply not carried into the one-profile design A, which draws its own hero. Design A's "no country pill" rule is unchanged; this is only the backdrop. Same rule as before: a UFC fighter shown as a cut-out with a country in `data/ufc-fighter-countries.json` gets it; anyone else keeps the plain dark band. On phones it sits behind the picture row only, not the rating row. — Owner ("when did we agree to remove country flag behind the fighter photo??", then picked "Restore flag backdrop") — `assets/fighter-profile-a.js`, `.css`.
+- **10 short-name keys in the country list** (camrowston, standorsainvil, wesschultz, zachreese, abusmagomedov, sharamagomedov, josedelano, josedelgado, ninamilosevic, matthieuduclos), each copied from the full-name entry Wikipedia lists (Cameron Rowston and so on). Each is the only roster match on surname plus first-name prefix and was checked by hand; Bruno Silva is left out (two fighters). Cam Rowston had no flag even before design A for this reason.
+
 ## 2026-11-25 (Tidy-up)
 - **Removed CSS that no page builds any more:** 20 old Fight film rules in `brand-theme.css` (`film-card`, `film-switch`, `film-featured` and others, replaced by the film wall) and the old profile section bar and facts grid in `fighter-profile-pro.css` (`befn-pro-nav`, `befn-pro-facts`, replaced by the one-profile layout). Selectors that still mix in live classes (for example inside `:is(...)`) keep their live parts. The profile and Fight film were checked in a browser at 390 and 1280 px and look the same.
 - This session's nine merged worktrees and their local branches were deleted (about 3 GB). Nothing was removed from GitHub.
