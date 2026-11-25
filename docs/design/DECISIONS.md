@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (About page and media-access requests)
+- **An About page** (`/about.html`, linked from the footer). It covers who BEFN is, independence, how facts and photos are sourced and checked, corrections, and contact. It uses only facts the site already states: nothing invented, no audience figures and no names. Contact is admin@blackeyefightnews.com.au (owner, 25 Nov). By the owner's choice, the email is shown but no personal name.
+- **Request emails drafted for the owner** (`docs/outreach/media-access-requests.md`). They go to UFC media relations (with Getty licensing as a fallback), the boxing promoters, and a written-confirmation note for the five MMA promoters already attested. Each asks for press-image access plus written permission to publish with credit; a credential alone isn't enough. The site address and contact details are filled in. A private copy signed by the owner is kept out of this public repository. Nothing has been sent. The owner asked for full-body photos (champions carousel), and the sources BEFN is cleared to use don't have them: UFC.com refuses automated requests.
+
 ## 2026-11-25 (Analysis: champions carousel)
 - **A champions carousel opens both Analysis pages** (owner: "a large seamless full body cutout (similar to sumo profiles but without flag or background thing) with details below, starting at heavyweight you swipe left to see the next champion"). It follows the mock-up of 25 Nov (`champmock`). `assets/fight-analysis.js` and `.css`.
   - MMA Analysis: "UFC champions" replaces the old champions list. Boxing Analysis: "World champions" sits above "The title picture"; the title grid, title fights, how fights ended, most title defences, unbeaten records ended and unbeaten watch are unchanged.
