@@ -424,7 +424,7 @@
   tabsVisible(pa);
   select(pa,dialog.dataset.paTab||"overview",false);
  }
- const DEEP={overview:"fights",fights:"fights",ratings:"stats",stats:"stats",profile:"stats",titles:"stats",compare:"compare"};
+ const DEEP={overview:"fights",fights:"fights",bonuses:"fights",ratings:"stats",stats:"stats",profile:"stats",titles:"stats",compare:"compare"};
  function distribute(pa,m){
   const ins=pa.querySelector(".befn-pa-src .befn-profile-insights");
   if(!ins||!ins.children.length)return;
