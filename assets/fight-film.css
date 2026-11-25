@@ -1,94 +1,92 @@
+/* Fight film: the film wall (owner, design A, 24 Nov 2026).
+   Big latest clip with a "Latest finishes" column, a type / promotion bar, a 4-column wall
+   (2 on phones) with "More film", and a closed "About this film" panel at the foot.
+   Scoped under #main .ff so the older site stylesheets that load later cannot reach it. */
+#main .ff{--ff-ink:#111013;--ff-red:#cf1824;--ff-gold:#f3c332;--ff-line:#e5e1d8;--ff-mute:#5b565d;--ff-dark:#1b171a;
+ --ff-display:'Unbounded','Arial Black',system-ui,sans-serif;
+ max-width:1120px;margin:0 auto;padding:4px 16px 56px;min-width:0;font-family:'DM Sans',system-ui,sans-serif;color:var(--ff-ink)}
+#main .ff *{box-sizing:border-box}
 
-/* Fight Film — original publisher videos, never copied or rehosted. */
-.film-page{max-width:1420px;margin-inline:auto;padding:38px 4.2vw 65px}
-.film-page .section-heading{margin-bottom:22px}
-.film-refresh-note{display:flex;align-items:center;gap:9px;margin:0 0 24px;padding:12px 17px;border-left:3px solid #23866e;background:#dcece6;color:#295449;font-size:11px;font-weight:750;line-height:1.5}
-.film-refresh-note span{font-size:13px;color:#26886a}
-.film-updated{font-size:12px;color:#516760;line-height:1.7;margin:0 0 30px;max-width:890px}
-.film-section{margin:26px 0 43px}
-.film-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px 25px;flex-wrap:wrap;margin-bottom:19px;border-bottom:1px solid #c7d8cf;padding-bottom:16px}
-.film-section-head .eyebrow{font-size:10px;color:#317e6e;font-weight:850;letter-spacing:.13em}
-.film-section-head h2{font:900 clamp(29px,3vw,43px)/1.05 'Barlow Condensed',Impact,sans-serif;color:#142a31;margin:6px 0 7px}
-.film-section-head p{margin:0;color:#586a67;font-size:12px;line-height:1.6}
-.film-total{background:#193b3c;color:#e6f1eb;border-radius:24px;padding:7px 12px;white-space:nowrap;font-size:11px;font-weight:800}
-.film-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.film-card{min-width:0;background:#fff;border:1px solid #d0dcd5;border-radius:10px;overflow:hidden;box-shadow:0 4px 18px rgba(13,41,38,.06)}
-.film-card-link{display:flex;flex-direction:column;height:100%;color:inherit;text-decoration:none}
-.film-card-link:hover .film-thumbnail img{transform:scale(1.045)}
-.film-card-link:hover .film-copy h3{text-decoration:underline;text-decoration-color:#267b69;text-underline-offset:3px}
-.film-thumbnail{position:relative;aspect-ratio:16/9;background:linear-gradient(130deg,#163740,#162a37 65%,#224b4e);overflow:hidden;display:flex;align-items:center;justify-content:center}
-.film-thumbnail img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;transition:transform .25s}
-.film-thumbnail img[hidden]{display:none}
-.film-thumbnail-fallback{font:900 36px 'Barlow Condensed',Impact,sans-serif;letter-spacing:.08em;color:#8ebbb1}
-.film-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#101c20db;border:1px solid #b5d2c7;display:grid;place-items:center;color:white;font-size:18px;padding-left:3px}
-.film-kind{position:absolute;bottom:11px;left:11px;padding:5px 9px;border-radius:4px;color:#ddf6e6;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:#123d33e5}
-.film-copy{padding:16px 17px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
-.film-meta{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;text-transform:uppercase;letter-spacing:.08em;color:#3a796d;font-size:10px;font-weight:800}
-.film-copy h3{font:800 20px/1.2 'Barlow Condensed',Impact,sans-serif;margin:0;overflow-wrap:break-word;color:#14272d}
-.film-publisher{margin-top:auto;display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;align-items:baseline;border-top:1px solid #e1e9e5;padding-top:12px;font-size:11px;color:#53645f}
-.film-publisher strong{color:#126b5b}
-.film-empty,.film-loading{background:#fff;border:1px dashed #a9c7bb;border-radius:8px;padding:28px;color:#557269;line-height:1.6}
-.film-disclosure{font-size:11px;color:#65716e;line-height:1.7}
-@media(max-width:1050px){.film-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:610px){.film-page{padding-top:27px}.film-grid{grid-template-columns:1fr;gap:14px}.film-section-head h2{font-size:31px}.film-copy h3{font-size:22px}.film-section{margin-bottom:35px}.film-refresh-note{font-size:10px;padding:12px}}
-@media(prefers-reduced-motion:reduce){.film-thumbnail img{transition:none}}
+/* hero: big latest clip + latest finishes */
+#main .ff .ff-hero{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:14px;margin:0 0 22px}
+#main .ff .ff-hero.is-solo{grid-template-columns:minmax(0,1fr)}
+#main .ff .ff-side{display:flex;flex-direction:column;gap:10px;min-width:0}
+#main .ff .ff-side-h{margin:2px 0 0;font:800 18px/1.2 var(--ff-display);letter-spacing:-.01em;color:var(--ff-ink);text-transform:none}
 
-/* One-page fight-film switch, with a large touch target for either discipline. */
-.film-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:16px 0 25px;background:#182b32;border:1px solid #41585b;border-radius:11px;overflow:hidden}
-.film-switch-tab{min-width:0;appearance:none;border:0;border-bottom:4px solid transparent;background:transparent;color:#b4c3c2;padding:16px 11px 13px;min-height:60px;cursor:pointer;font:800 14px/1.25 'DM Sans',system-ui,sans-serif;transition:background .15s,color .15s}
-.film-switch-tab:hover{background:#29414a;color:#fff}
-.film-switch-tab.is-active{background:#21413d;border-bottom-color:#80d5b4;color:#fff}
-.film-switch-tab:focus-visible{outline:3px solid #e5ac68;outline-offset:-5px;position:relative}
-.film-card[hidden]{display:none!important}
-@media(max-width:610px){.film-switch{margin:12px 0 20px}.film-switch-tab{font-size:11px;padding:14px 7px;min-height:57px}}
-@media(prefers-reduced-motion:reduce){.film-switch-tab{transition:none}}
+/* cards */
+#main .ff .ff-card{display:flex;flex-direction:column;min-width:0;background:#fff;border:1px solid var(--ff-line);border-radius:12px;overflow:hidden}
+#main .ff .ff-card[hidden]{display:none}
+#main .ff .ff-thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;margin:0;border:0;border-radius:0;background:var(--ff-dark);overflow:hidden;cursor:pointer;color:#fff;text-decoration:none;font:inherit}
+#main .ff .ff-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .25s}
+#main .ff .ff-thumb img.is-portrait{object-fit:contain;background:#14242c}
+#main .ff .ff-thumb:hover img{transform:scale(1.04)}
+#main .ff .ff-thumb:focus-visible{outline:3px solid var(--ff-gold);outline-offset:-3px}
+#main .ff .ff-play{position:absolute;inset:0;margin:auto;width:46px;height:46px;border-radius:50%;background:rgba(0,0,0,.62);color:#fff;display:grid;place-items:center;font-size:16px;line-height:1;padding-left:3px}
+#main .ff .ff-tag{position:absolute;left:8px;bottom:8px;font-size:12px;line-height:1.2;font-weight:800;padding:3px 7px;border-radius:4px;background:var(--ff-ink);color:#fff}
+#main .ff .ff-tag-finish{background:var(--ff-red);color:#fff}
+#main .ff .ff-tag-full{background:var(--ff-gold);color:var(--ff-ink)}
+#main .ff .ff-player{cursor:auto;background:#000}
+#main .ff .ff-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+#main .ff .ff-body{display:flex;flex-direction:column;gap:4px;padding:10px 12px 4px;min-width:0;flex:1}
+#main .ff .ff-meta{margin:0;color:var(--ff-mute);font-size:12px;font-weight:700;line-height:1.4}
+#main .ff .ff-title{margin:0;font:700 15px/1.3 'DM Sans',system-ui,sans-serif;color:var(--ff-ink);letter-spacing:0;text-transform:none;overflow-wrap:anywhere}
+#main .ff .ff-hook{margin:0;font-size:13px;line-height:1.35;color:#4a454c;overflow-wrap:anywhere}
+#main .ff .ff-out{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:4px;min-height:44px;font-size:13px;font-weight:800;color:#b0141f;text-decoration:none}
+#main .ff .ff-out:hover{text-decoration:underline;text-underline-offset:3px}
+#main .ff .ff-out:focus-visible{outline:3px solid var(--ff-gold);outline-offset:2px;border-radius:4px}
 
-/* Latest card: keep sourced finish clips together, ahead of older film. */
-.film-featured-head{margin:8px 0 16px;padding:15px 18px;border-left:4px solid #27866f;background:#edf5f1}
-.film-featured-head .eyebrow{font-size:10px;letter-spacing:.12em;color:#286e61;font-weight:850}
-.film-featured-head h3{font:900 clamp(24px,2.5vw,30px)/1.1 'Barlow Condensed',Impact,sans-serif;color:#16343b;margin:5px 0 8px}
-.film-featured-head p{margin:0;max-width:780px;font-size:12px;color:#536762;line-height:1.55}
-.film-access-note{display:block;margin-top:4px;font-size:10px;line-height:1.4;color:#7a6859;font-weight:650}
+#main .ff .ff-c-big .ff-title{font:800 clamp(19px,2.2vw,24px)/1.2 var(--ff-display);letter-spacing:-.02em}
+#main .ff .ff-c-big .ff-hook{font-size:14px}
+#main .ff .ff-c-big .ff-play{width:72px;height:72px;font-size:26px;padding-left:5px}
+#main .ff .ff-c-big .ff-body{padding:12px 14px 4px}
 
-/* Design D (2026-11-22): the film page was still on the old teal palette and Barlow
-   headings while the rest of the site moved to cream, red and Unbounded. Colour and
-   type only — the sourcing rules, the markup and the AU-availability notes are
-   untouched. The first card in a grid leads at double width, so the page opens on a
-   picture rather than a wall of equal tiles. */
-.film-page{--f-ink:#111013;--f-red:#cf1824;--f-gold:#f3c332;--f-cream:#f8f4ed;--f-mute:#5b565d;--f-line:#e5e1d8;
- --f-display:'Unbounded','Arial Black',system-ui,sans-serif;font-family:'DM Sans',system-ui,sans-serif;color:var(--f-ink)}
-.film-page .film-section-head h2,.film-page .film-featured-head h3,.film-page .film-copy h3{
- font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;text-transform:none;color:var(--f-ink);
- -webkit-text-fill-color:var(--f-ink);background:none;transform:none;font-style:normal}
-.film-page .film-section-head{border-bottom:3px solid var(--f-ink);padding-bottom:10px}
-.film-page .film-section-head h2{font-size:clamp(20px,2.4vw,28px);line-height:1.15}
-.film-page .film-section-head .eyebrow{color:var(--f-red);letter-spacing:.12em}
-.film-page .film-section-head p{color:var(--f-mute)}
-.film-page .film-total{background:var(--f-ink);color:#fff}
-.film-page .film-card{border:0;border-radius:12px;box-shadow:none;background:#fff}
-.film-page .film-copy h3{font-size:16px;line-height:1.3}
-.film-page .film-meta{color:var(--f-mute);font-size:10px}
-.film-page .film-publisher{border-top:1px solid var(--f-line);color:var(--f-mute);min-height:44px;align-items:center}
-.film-page .film-publisher strong{color:var(--f-red);font-size:12px}
-.film-page .film-card-link:hover .film-copy h3{text-decoration-color:var(--f-red)}
-.film-page .film-thumbnail{background:#1b1419}
-.film-page .film-play{background:rgba(17,16,19,.72);border:0;width:52px;height:52px}
-.film-page .film-kind{background:var(--f-ink);color:#fff;border-radius:4px;letter-spacing:.08em}
-.film-page .film-card[data-kind-finish] .film-kind{background:var(--f-red)}
-.film-page .film-refresh-note{border-left:3px solid var(--f-red);background:#fff;color:var(--f-mute)}
-.film-page .film-refresh-note span{color:var(--f-red)}
-.film-page .film-featured-head{border-left:4px solid var(--f-red);background:#fff;border-radius:0 12px 12px 0}
-.film-page .film-featured-head .eyebrow{color:var(--f-red)}
-.film-page .film-featured-head h3{font-size:clamp(18px,2.2vw,24px)}
-.film-page .film-empty,.film-page .film-loading{background:#fff;border:1px dashed var(--f-line);color:var(--f-mute);border-radius:12px}
-.film-page .film-switch{background:var(--f-ink);border:0;border-radius:12px}
-.film-page .film-switch-tab{color:#d9d2d5}
-.film-page .film-switch-tab.is-active{background:var(--f-gold);color:var(--f-ink);border-bottom-color:var(--f-red)}
-.film-page .film-switch-tab:hover{background:#2c262b;color:#fff}
-.film-page .film-disclosure{color:var(--f-mute)}
+#main .ff .ff-c-mini:not(.is-playing){flex-direction:row}
+#main .ff .ff-c-mini:not(.is-playing) .ff-thumb{width:42%;flex:none;aspect-ratio:16/10}
+#main .ff .ff-c-mini .ff-body{padding:8px 10px 2px}
+#main .ff .ff-c-mini .ff-title{font-size:14px}
+#main .ff .ff-c-mini .ff-play{width:38px;height:38px;font-size:14px}
 
-/* The newest clip in a section leads. */
-@media(min-width:1051px){
- .film-page .film-grid>.film-card:first-child{grid-column:span 2}
- .film-page .film-grid>.film-card:first-child .film-copy h3{font-size:22px}
+/* bar: type segment + promotion chips */
+#main .ff .ff-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+#main .ff .ff-seg{display:flex;gap:4px;background:var(--ff-ink);border-radius:12px;padding:4px}
+#main .ff .ff-seg button{min-height:44px;border:0;border-radius:9px;background:transparent;color:#fff;font:800 14px/1 'DM Sans',system-ui,sans-serif;padding:0 14px;cursor:pointer}
+#main .ff .ff-seg button.is-on{background:var(--ff-gold);color:var(--ff-ink)}
+#main .ff .ff-chips{display:flex;gap:6px;flex-wrap:wrap;min-width:0}
+#main .ff .ff-chips button{flex:0 0 auto;min-height:44px;border:1px solid #d9d2c4;border-radius:999px;background:#fff;color:var(--ff-ink);font:700 13px/1 'DM Sans',system-ui,sans-serif;padding:0 14px;cursor:pointer;white-space:nowrap}
+#main .ff .ff-chips button.is-on{background:var(--ff-ink);border-color:var(--ff-ink);color:#fff}
+#main .ff .ff-seg button:focus-visible,#main .ff .ff-chips button:focus-visible,#main .ff .ff-more:focus-visible{outline:3px solid var(--ff-red);outline-offset:2px}
+
+/* wall */
+#main .ff .ff-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#main .ff .ff-grid>.is-playing{grid-column:span 2}
+#main .ff .ff-more{display:block;margin:18px auto 0;min-height:44px;border:0;border-radius:999px;background:var(--ff-ink);color:#fff;font:800 14px/1 'DM Sans',system-ui,sans-serif;padding:0 26px;cursor:pointer}
+#main .ff .ff-empty,#main .ff .ff-loading{background:#fff;border:1px dashed var(--ff-line);border-radius:12px;padding:24px;color:var(--ff-mute);font-size:14px;line-height:1.5;margin:0 0 14px}
+
+/* about: staff notes, closed by default */
+#main .ff .ff-about{margin-top:28px;background:#fff;border:1px solid var(--ff-line);border-radius:10px;color:#4a454c;font-size:14px;line-height:1.55}
+#main .ff .ff-about summary{min-height:44px;display:flex;align-items:center;gap:8px;padding:0 14px;cursor:pointer;font-weight:700;list-style:none}
+#main .ff .ff-about summary::-webkit-details-marker{display:none}
+#main .ff .ff-about summary::before{content:"▸";font-size:14px;transition:transform .15s}
+#main .ff .ff-about[open] summary::before{transform:rotate(90deg)}
+#main .ff .ff-about-body{padding:0 14px 12px}
+#main .ff .ff-about-body p{margin:0 0 8px;font-size:13px}
+
+@media(max-width:860px){
+ #main .ff .ff-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+@media(max-width:760px){
+ #main .ff{padding:0 12px 96px}
+ #main .ff .ff-hero{grid-template-columns:minmax(0,1fr)}
+ #main .ff .ff-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #main .ff .ff-grid>.is-playing{grid-column:1/-1}
+ #main .ff .ff-grid .ff-title{font-size:13px}
+ #main .ff .ff-grid .ff-card:not(.is-playing) .ff-hook{display:none}
+ #main .ff .ff-grid .ff-body{padding:8px 10px 2px}
+ #main .ff .ff-grid .ff-out{font-size:12px}
+ #main .ff .ff-c-big .ff-play{width:60px;height:60px;font-size:22px}
+ #main .ff .ff-bar{flex-direction:column;flex-wrap:nowrap;align-items:stretch}
+ #main .ff .ff-seg button{flex:1 1 0;min-width:0;padding:0 4px;font-size:13px}
+ #main .ff .ff-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -12px;padding:0 12px}
+ #main .ff .ff-chips::-webkit-scrollbar{display:none}
+}
+@media(prefers-reduced-motion:reduce){#main .ff .ff-thumb img,#main .ff .ff-about summary::before{transition:none}}
