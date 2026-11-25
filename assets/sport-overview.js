@@ -128,6 +128,18 @@
       '<span class="sov-cd">' + (n <= 1 ? '<b>' + h.esc(daysText(n)) + '</b>' : '<b>' + n + '</b> days') + '</span></a>';
   }
 
+  /* The official poster BEFN holds for an event (assets/local-posters.js, owner-cleared): portrait
+     first, then landscape. Only BEFN's own image paths are accepted. Used by the hero, the Coming up
+     cards and the front page's sport cards, so posters appear the same way everywhere (25 Nov 2026). */
+  function heldPoster(h, event) {
+    const held = event && h.poster ? h.poster(event.id) : null;
+    const p = held && (held.portrait || held.landscape);
+    const src = p ? ownSrc(h, p.url) : '#';
+    if (!p || src === '#') return null;
+    return { src, orient: held.portrait ? 'portrait' : 'landscape', credit: p.credit || '', width: p.width, height: p.height,
+      alt: pairName(event) + ' official event poster' };
+  }
+
   function heroBlock(h, hero, ctx, area) {
     if (!hero) return '';
     let kicker, title, para, names, btn;
@@ -153,12 +165,10 @@
     // An upcoming card leads with its official poster when BEFN holds one (owner, 25 Nov 2026,
     // following the Fights-page rule of 24 Nov): portrait first, then landscape, shown whole with
     // its credit. Without one, the fighters' cut-outs as before. Results keep the cut-outs.
-    const held = hero.type === 'upcoming' && h.poster ? h.poster(hero.event.id) : null;
-    const poster = held && (held.portrait || held.landscape);
-    const posterSrc = poster ? ownSrc(h, poster.url) : '#';
-    const art = poster && posterSrc !== '#'
-      ? '<figure class="sov-poster is-' + (held.portrait ? 'portrait' : 'landscape') + '"><img class="sov-poster-bg" src="' + posterSrc + '" alt="" aria-hidden="true"><img class="sov-poster-img" src="' + posterSrc + '" alt="' +
-        h.esc(pairName(hero.event) + ' official event poster') + '" loading="eager" decoding="async"' +
+    const poster = hero.type === 'upcoming' ? heldPoster(h, hero.event) : null;
+    const art = poster
+      ? '<figure class="sov-poster is-' + poster.orient + '"><img class="sov-poster-bg" src="' + poster.src + '" alt="" aria-hidden="true"><img class="sov-poster-img" src="' + poster.src + '" alt="' +
+        h.esc(poster.alt) + '" loading="eager" decoding="async"' +
         (poster.width && poster.height ? ' width="' + Number(poster.width) + '" height="' + Number(poster.height) + '"' : '') + '>' +
         (poster.credit ? '<figcaption>' + h.esc(poster.credit) + '</figcaption>' : '') + '</figure>'
       : (pics.length ? '<div class="sov-cast">' + pics.map(u => img(h, u, '', '')).join('') + '</div>' : '');
@@ -187,7 +197,11 @@
       const b = e.bouts[0], n = daysUntil(e.date, ctx.now);
       const note = String(b.note || '').split('·')[0].trim();
       const sides = b.fighters.map(name => { const c = cutoutURL(name, ctx.cutouts); return '<span class="sov-pc">' + (c ? img(h, c, '', name) : face(h, name, null, 'is-big')) + '</span>'; }).join('');
-      return '<a class="sov-up" href="#calendar"><span class="sov-up-art">' + sides + '</span><span class="sov-dd">' + (n <= 0 ? 'Today' : n + 'd') + '</span><span class="sov-ub"><span class="sov-ev">' + h.esc(fmt(e.date) + (e.promotion ? ' · ' + e.promotion : '')) + '</span>' +
+      const poster = heldPoster(h, e);
+      const art = poster
+        ? '<span class="sov-up-art is-poster"><img class="sov-poster-bg" src="' + poster.src + '" alt="" aria-hidden="true"><img class="sov-up-poster" src="' + poster.src + '" alt="' + h.esc(poster.alt) + '" loading="lazy" decoding="async"></span>'
+        : '<span class="sov-up-art">' + sides + '</span>';
+      return '<a class="sov-up" href="#calendar">' + art + '<span class="sov-dd">' + (n <= 0 ? 'Today' : n + 'd') + '</span><span class="sov-ub"><span class="sov-ev">' + h.esc(fmt(e.date) + (e.promotion ? ' · ' + e.promotion : '')) + '</span>' +
         '<strong>' + h.esc(b.fighters.join(' vs ')) + '</strong><span>' + h.esc([b.division, /tbc|pending|awaiting|reported/i.test(note) ? '' : note].filter(Boolean).join(' · ')) + '</span><small>' + h.esc(e.location || '') + '</small></span></a>';
     });
     return cards.length ? '<section class="sov-blk">' + head(h, 'Coming up', ['#calendar', 'Full schedule']) + '<div class="sov-ups">' + cards.join('') + '</div></section>' : '';
@@ -414,9 +428,12 @@
   }
 
   function frontCards(h, ctx, heroSport, sumo) {
-    const card = (s, kicker, title, sub, pic) => '<a class="fp-sc fp-' + s + '" href="' + overviewHref(s) + '"' + areaAttr(s) + '><span class="fp-sc-copy">' + tag(h, s) +
-      '<span class="sov-ev">' + h.esc(kicker) + '</span><strong>' + h.esc(title) + '</strong><span>' + h.esc(sub) + '</span><em>' + SPORT[s] + ' overview ›</em></span>' +
-      (pic ? img(h, pic, '', '') : '') + '</a>';
+    const card = (s, kicker, title, sub, pic, event) => {
+      const poster = event ? heldPoster(h, event) : null;
+      return '<a class="fp-sc fp-' + s + (poster ? ' has-poster' : '') + '" href="' + overviewHref(s) + '"' + areaAttr(s) + '><span class="fp-sc-copy">' + tag(h, s) +
+        '<span class="sov-ev">' + h.esc(kicker) + '</span><strong>' + h.esc(title) + '</strong><span>' + h.esc(sub) + '</span><em>' + SPORT[s] + ' overview ›</em></span>' +
+        (poster ? '<img class="fp-sc-poster is-' + poster.orient + '" src="' + poster.src + '" alt="' + h.esc(poster.alt) + '" loading="lazy" decoding="async">' : pic ? img(h, pic, '', '') : '') + '</a>';
+    };
     const out = [];
     for (const s of ['boxing', 'mma']) {
       const big = bigUpcoming(ctx.events, s, ctx.featured, ctx.now), hero = pickHero(ctx, s);
@@ -427,7 +444,7 @@
         out.push(card(s, [b.division, big.promotion, fmt(big.date)].filter(Boolean).join(' · '),
           b.fighters.map(n => surname(shortName(n))).join(' vs ') + ' in ' + daysText(daysUntil(big.date, ctx.now)).toLowerCase(),
           other ? (pre ? 'First: ' : 'Then: ') + other.bouts[0].fighters.map(n => surname(shortName(n))).join('–') + ', ' + fmt(other.date) : '',
-          cutoutURL(b.fighters[0], ctx.cutouts) || cutoutURL(b.fighters[1], ctx.cutouts)));
+          cutoutURL(b.fighters[0], ctx.cutouts) || cutoutURL(b.fighters[1], ctx.cutouts), big));
       } else {
         const last = mainEvents(ctx.results, s)[0];
         if (last) { const o = outcome(last.bout); out.push(card(s, [last.bout.division, fmt(last.event.date)].join(' · '), resultHeadline(o, last.bout), last.event.name || '', o.winner ? cutoutURL(o.winner, ctx.cutouts) : '')); }
