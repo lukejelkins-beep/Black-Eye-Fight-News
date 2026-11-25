@@ -54,12 +54,15 @@ def main():
     src = json.loads(SRC.read_text())
     # (date, folded own name, folded opponent name) -> slug, from BEFN's own fighter files
     place = defaultdict(set)
+    opp_slug = {}  # (fighter slug, date, folded opponent) -> opponent slug, for the opponent's cutout
     names = {}
     for p in sorted((DATA / "ufc-stats" / "fighters").glob("*.json")):
         d = json.loads(p.read_text())
         names[d["slug"]] = d["name"]
         for f in d.get("fights", []):
             place[(f["date"], fold(d["name"]), fold(f["opponent"]))].add(d["slug"])
+            if f.get("opponentSlug"):
+                opp_slug[(d["slug"], f["date"], fold(f["opponent"]))] = f["opponentSlug"]
 
     def slug_for(day, own, opp):
         d0 = date.fromisoformat(day)
@@ -102,7 +105,8 @@ def main():
             r["estimate"] += (p or 0) * len(kinds)
             r["unpriced"] += 0 if p else len(kinds)
             r["bouts"].append({"est": p * len(kinds) if p else None, "date": fight["date"], "event": fight["event"], "opponent": other["name"],
-                               "outcome": me.get("result"), "kinds": kinds})
+                               "outcome": me.get("result"), "kinds": kinds,
+                               "opponentSlug": opp_slug.get((s, fight["date"], fold(other["name"])))})
     for r in out.values():
         r["bouts"].sort(key=lambda x: x["date"], reverse=True)
     doc = {"schema": 1, "asOf": src.get("asOf"), "fighters": dict(sorted(out.items())),

@@ -18,5 +18,5 @@ jobs:
           node-version: '22'
       - name: Build dist/ exactly as Render does and check what is published
         run: |
-          node --test tests/test-build-site.mjs
+          node --test tests/test-build-site.mjs tests/test-bonuses-section.mjs
           node scripts/build-site.mjs

@@ -579,7 +579,7 @@
  // Bonus counts per fighter slug (scripts/build-ufc-bonuses.py). Optional: no file, no section.
  let bonusDoc=null;
  fetch("data/ufc-bonuses.json").then(r=>r.ok?r.json():null).then(d=>{bonusDoc=d;update();}).catch(()=>{});
- const bonusSection=stats=>{const b=window.BEFNStatsProfile?.bonuses?.(stats?.slug,bonusDoc);return b?proSection('bonuses','Bonuses','Fight and Performance of the Night',b):'';};
+ const bonusSection=stats=>{const b=window.BEFNStatsProfile?.bonuses?.(stats?.slug,bonusDoc,k=>cutoutRegister?.[k]?.ok===true?'assets/img/ufc-cutouts/'+k+'.webp':'');return b?proSection('bonuses','Bonuses','Fight and Performance of the Night',b):'';};
  const careerFor=stats=>window.BEFNStatsProfile.careerState(stats,careerList,careerFlags);
  // Overall (all-promotion) records from scripts/build-ufc-overall-records.py. A fighter without one
  // keeps showing the UFC record, labelled as that.
