@@ -67,9 +67,10 @@ SIG_FIELD, KD_FIELD, TD_FIELD, CTRL_FIELD = 0, 16, 17, 21   # sigLanded, knockdo
 FORM_ON_FIRE, FORM_ON_FIRE_KEEP = 90, 79
 FORM_TITLE_CONTENDER, FORM_RISING, FORM_BREAKOUT = 82, 74, 79
 FORM_SLIPPING, FORM_SLIPPING_TWO_LOSSES = 20, 30
-# Set so the best case after a loss (a split decision to a higher-rated opponent) is about the 90th percentile of the
-# points pool: v1/v2 85, v3 75, v4 70 (each reweighting moves the points; tests/test_ufc_fighter_form.py checks it).
-LOSS_CAP_START = 70
+# The best case after a loss (a split decision to a higher-rated opponent): v1/v2 85, v3 75, v4 75 (owner, selector 25
+# Nov: "Looser, cap from 75": about the 95th percentile of the v4 points; 70 held it at the 90th but cost about a point
+# of backtest accuracy). tests/test_ufc_fighter_form.py checks it stays near there through future reweights.
+LOSS_CAP_START = 75
 MAX_PRE_UFC_FIGHTS = 15          # owner, 2026-11-24: Rising star / Prospect need a modest pre-UFC career
 
 
