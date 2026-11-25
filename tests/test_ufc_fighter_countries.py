@@ -77,6 +77,15 @@ class Data(unittest.TestCase):
         missing = {c for c in data["fighters"].values() if not (ROOT / "assets/img/flags" / f"{c}.svg").exists()}
         self.assertEqual(missing, set())
 
+    def test_short_name_keys_copy_the_full_name_entry(self):
+        # Profiles use the roster's short name (Cam Rowston); Wikipedia lists the full one (Cameron Rowston).
+        f = json.loads((ROOT / "data/ufc-fighter-countries.json").read_text(encoding="utf-8"))["fighters"]
+        pairs = {"camrowston": "cameronrowston", "standorsainvil": "stanleydorsainvil", "wesschultz": "wesleyschultz",
+                 "zachreese": "zacharyreese", "abusmagomedov": "abusupiyanmagomedov", "sharamagomedov": "sharabutdinmagomedov"}
+        for short, full in pairs.items():
+            self.assertEqual(f[short], f[full], short)
+        self.assertNotIn("brunosilva", f)  # two UFC fighters share the name
+
 
 if __name__ == "__main__":
     unittest.main()
