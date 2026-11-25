@@ -1,8 +1,8 @@
 # Fighters without an approved photo
 
-Generated 2026-11-24T23:20:11+00:00 by `python3 scripts/photo-runner.py missing`. Sorted by prominence: current champion, upcoming main event, upcoming card, recent result, roster.
+Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`. Sorted by prominence: current champion, upcoming main event, upcoming card, recent result, roster.
 
-## BOXING: 240 without a photo, 17 with a photo but no cut-out (320 on the site)
+## BOXING: 237 without a photo, 18 with a photo but no cut-out (320 on the site)
 
 | Fighter | Why they matter | Last attempt |
 | --- | --- | --- |
@@ -33,11 +33,9 @@ Generated 2026-11-24T23:20:11+00:00 by `python3 scripts/photo-runner.py missing`
 | Arman Khudoyan | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Arnold Gonzalez | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Arthur Mann | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
-| Bakhram Murtazaliev | on the card: Dmitry Bivol vs Callum Smith (2026-12-12) | 2026-11-24: staged (awaiting approval) |
 | Billy Stanbury | on the card: Conah Walker vs Alexis Rocha (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Bobby Faulkner | on the card: Adam Azim vs Gabriel Gollaz Valenzuela (2026-12-04) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Brandon Ortiz | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
-| Brian Norman Jr. | on the card: Devin Haney vs Liam Paro (2026-12-19) | 2026-11-24: staged (awaiting approval) |
 | Brock Jarvis | on the card: Erislandy Lara vs Tim Tszyu (2026-12-13) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Connor Goulding | on the card: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Cruse Stewart | on the card: David Benavidez vs Michał Cieślak (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -207,7 +205,7 @@ Generated 2026-11-24T23:20:11+00:00 by `python3 scripts/photo-runner.py missing`
 | Bryan Mercado | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Callum Walsh | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Charles Conwell | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Charly Suarez | scouting roster (contender) | 2026-11-24: staged (awaiting approval) |
+| Charly Suarez | scouting roster (contender) | 2026-11-24: rejected by eye (cropped casual selfie, not a portrait) |
 | Cristóbal Lorente | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Curmel Moton | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | David Morrell Jr. | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -235,14 +233,13 @@ Generated 2026-11-24T23:20:11+00:00 by `python3 scripts/photo-runner.py missing`
 | Omar Trinidad | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Otabek Kholmatov | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Ramon Cardenas | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Robin Sirwan Safar | scouting roster (contender) | 2026-11-24: staged (awaiting approval) |
+| Robin Sirwan Safar | scouting roster (contender) | 2026-11-24: rejected by eye (in-ring arena shot, not a portrait) |
 | Royston Barney-Smith | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Sam Goodman | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Sam Noakes | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Sebastian Hernandez Reyes | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Shakhram Giyasov | scouting roster (contender) | 2026-11-24: rejected by eye (press-kit photograph reviewed and not used: the roster's file name (EM1_9245) does not name him) |
 | Tenshin Nasukawa | scouting roster (contender) | 2026-11-24: no source (Commons fetch failed: HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead ) |
-| Viddal Riley | scouting roster (contender) | 2026-11-24: staged (awaiting approval) |
 | Vito Mielnicki Jr. | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Wilkens Mathieu | scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Yoenli Hernandez | scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -266,6 +263,7 @@ Generated 2026-11-24T23:20:11+00:00 by `python3 scripts/photo-runner.py missing`
 - Teremoana Teremoana: dropped by eye: mid-punch, the torso fills the frame and the head is small
 - Fabio Wardley: source portrait under 300px wide
 - Omari Jones: dropped by eye: a low-key photograph: the dark hair merges with the dark backdrop, so the crown is cut away and the crop is a face filling the frame
+- Viddal Riley: dropped by eye: hard vertical crop edge on the right of the cut-out
 
 </details>
 
