@@ -4,6 +4,7 @@ window.ResultsDesk=(()=>{
  let data=null,error='',pending=null,lastPollAt=0;
  let posters={},posterPending=null,posterLastChecked=0;
  const activeCardSection=new Map();
+ let weeksShown=3; // Results page (owner, 25 Nov 2026, design G/H): newest weeks first, "Show older weeks" adds four.
  const attemptedPortraits=new Set(),portraitJobs=[];
  let portraitActive=0;
  const filters={sport:'All',query:'',clips:false,promotion:'all'};
@@ -145,7 +146,7 @@ window.ResultsDesk=(()=>{
  const section=String(r.section||'').toLowerCase();
  return /prelim|undercard|the inner circle/.test(section)?'prelims':'main';
 }
- function eventSection(rows){
+ function eventSection(rows,opts={}){
  const r=rows[0],e=(data.events||[]).find(e=>e.id===r.eventId)||{},all=data.results.filter(x=>x.eventId===r.eventId),done=all.filter(x=>isFinalStatus(x.status)).length;
  const featured=all.find(x=>x.id===e.featuredId&&x.status==='completed'&&[0,1].includes(x.winner))||all.find(x=>x.status==='completed'&&[0,1].includes(x.winner));
  const stale=e.feedDelayed||(e.status==='underway'&&Date.now()-Date.parse(e.checkedAt)>900000);
@@ -213,22 +214,106 @@ window.ResultsDesk=(()=>{
  const active=available.find(x=>x.key===requested)||available[0];
  const shown=active?active.bouts:[];
  const tabs=available.length>1?`<div class="result-card-tabs" role="group" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))} card section">${available.map(section=>`<button type="button" class="result-card-tab${section.key===active?.key?' is-active':''}" data-result-event-tab="${esc(eventId)}" data-result-card-section="${section.key}" aria-pressed="${section.key===active?.key}" aria-controls="results-bouts-${esc(eventId)}">${section.label} <small>${section.bouts.length}</small></button>`).join('')}</div>`:'';
- return `<details class="result-event befn-result-list-event" data-result-event="${esc(eventId)}" data-befn-sport="${esc(String(r.sport||'').toLowerCase())}" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}"><summary class="befn-result-summary rxc-head">${rxcMedia}<span class="rxc-body"><small class="rxc-kicker">${esc(date(r.date))} · ${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}</small><strong class="rxc-line">${rxcLine}</strong>${rxcMeta?`<span class="rxc-meta">${esc(rxcMeta)}</span>`:''}<span class="rxc-more">Full card · ${all.length} ${all.length===1?'bout':'bouts'} <span class="befn-result-caret" aria-hidden="true">⌄</span></span></span></summary><div class="befn-result-expanded">${expandedPoster}<header class="befn-result-detail-header"><h2>${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))}</h2><span>${esc(date(r.date))}</span></header><div class="result-event-bouts" data-card="${esc(eventId)}">${tabs}<div class="result-bouts" id="results-bouts-${esc(eventId)}" role="list" aria-label="${esc((globalThis.BEFNEventTitle||(x=>x))(r.event))} — ${esc(active?.label||'Main Card')}">${shown.map(x=>`<div role="listitem">${row(x,{main:x.id===headlinerId,coMain:main.length>1&&x.id===main[1].id})}</div>`).join('')}</div></div>${eventFoot}</div></details>`;
+ const size=['lead','big','small'].includes(opts.size)?opts.size:'big';
+ const title=String((globalThis.BEFNEventTitle||(x=>x))(r.event)).replace(/\s+[—–-]\s+verified\b.*$/i,''); // e.g. "RIZIN 55 — verified main-card results"
+ const art=posterArt(e,poster);
+ const surname=f=>String(f?.name||'').trim().split(/\s+/).slice(-1)[0]||'';
+ const tile=pairNames.length===2?esc(surname(pairNames[0]))+'<i>v</i>'+esc(surname(pairNames[1])):esc(title);
+ const rxpArt=art?'<span class="rxp-art"><img src="'+url(art.url)+'" alt="'+esc((art.kind==='poster'?'Event poster for ':'Event artwork for ')+title)+'" style="object-position:'+art.position+'" loading="'+(size==='lead'?'eager':'lazy')+'" decoding="async" referrerpolicy="no-referrer"></span>'
+  :'<span class="rxp-art is-tile" aria-hidden="true"><span class="rxp-tile">'+tile+'</span></span>';
+ const lead=size==='lead';
+ const leadClip=lead&&featured&&verifiedClip(featured)?'<span class="rxp-clip">'+clip(featured)+'</span>':'';
+ const m=opts.match;
+ const matchLine=m&&[0,1].includes(m.winner)&&isFinalStatus(m.status)?'<span class="rxp-match">'+esc(m.fighters[m.winner].name)+' beat '+esc(m.fighters[1-m.winner].name)+' · '+esc(String(boutMethod(m.method)).replace(/\s*\(.*\)\s*$/,''))+'</span>':m?'<span class="rxp-match">'+esc(m.fighters.map(f=>f.name).join(' v '))+'</span>':'';
+ const meta=[rxcMeta,all.length+' '+(all.length===1?'bout':'bouts')].filter(Boolean).join(' · ');
+ return `<details class="result-event befn-result-list-event rxp-card is-${size}${art?'':' no-art'}" data-result-event="${esc(eventId)}" data-befn-sport="${esc(String(r.sport||'').toLowerCase())}" aria-label="${esc(title)}"><summary class="befn-result-summary rxp-head">${rxpArt}<span class="rxp-text"><small class="rxp-kicker">${esc(title)} · ${esc(shortDay(r.date))}</small><strong class="rxp-line">${rxcLine}</strong>${matchLine}<span class="rxp-meta">${esc(meta)}</span>${leadClip}</span><span class="rxp-open" aria-hidden="true"><span class="rxp-open-closed">Card <span class="befn-result-caret">⌄</span></span><span class="rxp-open-opened">Close ⌃</span></span></summary><div class="befn-result-expanded"><div class="result-event-bouts" data-card="${esc(eventId)}">${tabs}<div class="result-bouts" id="results-bouts-${esc(eventId)}" role="list" aria-label="${esc(title)} — ${esc(active?.label||'Main Card')}">${shown.map(x=>`<div role="listitem">${row(x,{main:x.id===headlinerId,coMain:main.length>1&&x.id===main[1].id})}</div>`).join('')}</div></div>${eventFoot}</div></details>`;
 }
+
+ /* Results page layout (owner, 25 Nov 2026): phone design G, desktop H. Search on top (Fights controls),
+    the result of the week, then each week newest first as big posters (older weeks smaller), and
+    "Show older weeks". A poster opens the full card in place. */
+ const DAY=86400000;
+ const dayMs=d=>Date.parse(String(d).slice(0,10)+'T12:00:00Z');
+ function shortDay(d){const t=dayMs(d);return Number.isFinite(t)?new Date(t).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}).replace(',',''):String(d||'')}
+ function weekStart(d){const t=dayMs(d);if(!Number.isFinite(t))return '';const wd=(new Date(t).getUTCDay()+6)%7;return new Date(t-wd*DAY).toISOString().slice(0,10)}
+ function todayKey(){try{return window.FightTime.dayKey(new Date())}catch{return new Date().toISOString().slice(0,10)}}
+ function weekLabel(start,today=todayKey()){
+  const current=weekStart(today);
+  if(start===current)return 'This week';
+  if(start===weekStart(new Date(dayMs(current)-7*DAY).toISOString()))return 'Last week';
+  return weekRange(start);
+ }
+ function weekRange(start){
+  const a=new Date(dayMs(start)),z=new Date(dayMs(start)+6*DAY);
+  const mon=x=>x.toLocaleDateString('en-GB',{month:'short',timeZone:'UTC'});
+  return a.getUTCMonth()===z.getUTCMonth()?a.getUTCDate()+'–'+z.getUTCDate()+' '+mon(z):a.getUTCDate()+' '+mon(a)+'–'+z.getUTCDate()+' '+mon(z);
+ }
+ // The sharper of the two posters we hold: the wide one when it is at least 600 px wide, otherwise the
+ // tall poster cropped to the fighters. Then the historical poster feed. No image: a dark name tile.
+ function posterArt(e,remote){
+  const own=(window.BEFNLocalPosters||{})[e.id]||{},wide=own.landscape,tall=own.portrait;
+  if(wide?.url&&(wide.width||0)>=600)return {url:wide.url,position:'center',kind:'artwork'};
+  if(tall?.url)return {url:tall.url,position:'center 15%',kind:'poster'};
+  if(wide?.url)return {url:wide.url,position:'center',kind:'artwork'};
+  if(remote?.url)return {url:remote.url,position:'center 20%',kind:remote.kind==='poster'?'poster':'artwork'};
+  return null;
+ }
+ const verifiedClip=r=>Boolean(r?.highlights?.url&&r.highlights.auAvailable===true&&r.highlights.thumbnail);
+ function headliner(ev){
+  const all=(data?.results||[]).filter(x=>x.eventId===ev[0].eventId),e=(data?.events||[]).find(x=>x.id===ev[0].eventId)||{};
+  return all.find(x=>x.id===e.mainBoutId)||all.find(x=>x.id===e.featuredId)||null;
+ }
+ // Result of the week: from the newest week with results, the card whose main event has a verified
+ // video, then the biggest card, then the newest.
+ function pickLead(week){
+  const size=ev=>(data?.results||[]).filter(x=>x.eventId===ev[0].eventId).length;
+  return [...week].sort((a,b)=>(verifiedClip(headliner(b))-verifiedClip(headliner(a)))||(size(b)-size(a))||b[0].date.localeCompare(a[0].date))[0];
+ }
+ function weeksOf(events){
+  const weeks=new Map();
+  for(const ev of events){const k=weekStart(ev[0].date);if(!weeks.has(k))weeks.set(k,[]);weeks.get(k).push(ev)}
+  return [...weeks.entries()].sort((a,b)=>b[0].localeCompare(a[0]));
+ }
+ function weeklyLayout(events){
+  const weeks=weeksOf(events),today=todayKey();
+  const lead=pickLead(weeks[0][1]);
+  let html='<section class="rxp-group rxp-lead-group"><h2 class="rxp-sec">Result of the week</h2>'+eventSection(lead,{size:'lead'})+'</section>';
+  weeks.slice(0,weeksShown).forEach(([start,list],i)=>{
+   const items=list.filter(ev=>ev!==lead);
+   if(!items.length)return;
+   const label=weekLabel(start,today),relative=/week$/.test(label);
+   const heading=(list.includes(lead)?'Also '+(relative?label.toLowerCase():label):label);
+   const note=(relative?weekRange(start)+' · ':'')+items.length+' '+(items.length===1?'card':'cards');
+   const size=i<2?'big':'small';
+   html+='<section class="rxp-group"><div class="rxp-wkh"><h2>'+esc(heading)+'</h2><span>'+esc(note)+'</span></div><div class="rxp-grid is-'+size+'">'+items.map(ev=>eventSection(ev,{size})).join('')+'</div></section>';
+  });
+  if(weeks.length>weeksShown){
+   const oldest=events[events.length-1][0].date;
+   html+='<div class="rxp-older"><button type="button" class="rxp-more" data-results-older>Show older weeks</button><p>Results go back to '+esc(shortDay(oldest)+' '+String(oldest).slice(0,4))+', or search above.</p></div>';
+  }
+  return html;
+ }
+ function searchLayout(events,query){
+  const q=query.toLowerCase();
+  const cards=events.map(ev=>{
+   const full=(data?.results||[]).filter(x=>x.eventId===ev[0].eventId);
+   const byName=String(ev[0].event||'').toLowerCase().includes(q);
+   const match=byName?null:ev.find(x=>x.fighters.some(f=>String(f.name||'').toLowerCase().includes(q)))||null;
+   return eventSection(full.length?full:ev,{size:'big',match});
+  });
+  return '<section class="rxp-group"><div class="rxp-wkh"><h2>Cards matching “'+esc(query)+'”</h2><span>'+cards.length+' '+(cards.length===1?'card':'cards')+'</span></div><div class="rxp-grid is-big">'+cards.join('')+'</div></section>';
+ }
   function content(){if(!data)return `<div class="empty" role="status">${error?'Results could not be loaded. <button id="results-retry">Try again</button>':'Loading sourced results…'}</div>`;
 
  const rows=selected(),events=groups(rows);
- const cutoff=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
- const recent=events.filter(e=>e[0].date>=cutoff),earlier=events.filter(e=>e[0].date<cutoff);
- const group=(title,items)=>items.length?'<section class="fights-result-group"><h2>'+title+'</h2><div class="rxc-grid">'+items.map(eventSection).join('')+'</div></section>':'';
  const sport=window.BEFNSport?.get()||'all',promo=window.BEFNFightsUI?.promotion||filters.promotion;
  const promotionLabel={ufc:'UFC',one:'ONE Championship',pfl:'PFL',ksw:'KSW',rizin:'RIZIN',cw:'Cage Warriors'}[promo]||'MMA';
- const isSearching=String(window.BEFNFightsUI?.query??filters.query).trim().length>0;
- const empty=isSearching?'<div class="empty">No results match your search. Try another event or fighter.</div>':
+ const query=String(window.BEFNFightsUI?.query??filters.query).trim();
+ const empty=query?'<div class="empty">No results match your search. Try another event or fighter.</div>':
   '<div class="empty">'+(sport==='mma'?'No verified '+promotionLabel+' results are currently available in this feed.':'No completed fight results are currently available in this category.')+'</div>';
- return (error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':'')+
-  (events.length?group('This week',recent)+group('Earlier',earlier):empty);
-
+ const status=error?'<p role="status">Refresh unavailable. Showing the last loaded results.</p>':'';
+ if(!events.length)return status+empty;
+ return status+(query?searchLayout(events,query):weeklyLayout(events));
  }
 function hydrateResultPhotos(){
  if(typeof findWikipediaPortrait!=='function')return;
@@ -320,6 +405,7 @@ function hydrateResultPhotos(){
  document.addEventListener('change',e=>{if(e.target.id==='results-clips')filters.clips=e.target.checked;else return;update()});
  document.addEventListener('click',e=>{
   const promotion=e.target.closest('[data-result-promotion]');if(promotion){filters.promotion=promotion.dataset.resultPromotion;document.querySelectorAll('[data-result-promotion]').forEach(b=>{b.classList.toggle('selected',b.dataset.resultPromotion===filters.promotion);b.setAttribute('aria-pressed',String(b.dataset.resultPromotion===filters.promotion))});update();return;}
+  if(e.target.closest('[data-results-older]')){weeksShown+=4;update();return;}
   const tab=e.target.closest('[data-result-event-tab]');
   if(tab){
    activeCardSection.set(tab.dataset.resultEventTab,tab.dataset.resultCardSection);
@@ -356,5 +442,6 @@ function hydrateResultPhotos(){
  }else hide();
 },true);
  const css=document.createElement('style');css.textContent=`.befn-promotion-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;max-width:420px;min-width:0;box-sizing:border-box;margin:0 0 18px;padding:4px 2px}.befn-promotion-strip[hidden]{display:none!important}.befn-promotion-tab{width:100%;min-width:0;min-height:64px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #b9b3ae;border-radius:12px;box-shadow:0 2px 3px #0002;padding:9px;color:#21191a;font-weight:900;font-size:13px;cursor:pointer;overflow:hidden}.befn-promotion-tab img{display:block;width:90px;height:42px;max-width:100%;object-fit:contain}.befn-promotion-tab.selected{background:#b70c1c;border:3px solid #ef3343;color:#fff;box-shadow:0 0 0 2px #b70c1c}.befn-promotion-tab:focus-visible{outline:3px solid #111;outline-offset:2px}@media(max-width:600px){.befn-promotion-strip{max-width:100%;gap:6px}.befn-promotion-tab{min-height:60px;padding:6px}.befn-promotion-tab img{width:82px;height:40px}.results-page{min-width:0;max-width:100%;overflow-x:clip}.befn-promotion-tab span:not([hidden]){font-size:12px;line-height:1.1;text-align:center}}`;document.head.appendChild(css);
- return {render};
+ // Pure helpers, exposed for tests/test-results-layout.cjs.
+ return {render,layout:{weekStart,weekLabel,weekRange,shortDay,posterArt}};
 })();

@@ -123,3 +123,68 @@ html[data-befn-area="mma"] #main .fights-unified{--fx-red:#e0a400}
  #main #fights-active-content .rxc-face:first-child{width:52px;height:52px}
  #main #fights-active-content .rxc-face:last-child{width:38px;height:38px}
 }
+
+/* Results page, design G (phone) and H (desktop), owner 25 Nov 2026: search on top, the result of the week,
+   each week as big posters newest first (older weeks smaller), "Show older weeks". A poster opens the full
+   card in place; on desktop it takes the whole row. */
+#main #fights-active-content .rxp-group{margin:0 0 26px}
+#main #fights-active-content .rxp-sec,#main #fights-active-content .rxp-wkh h2{font:800 20px/1.2 var(--display,'Unbounded',sans-serif)!important;letter-spacing:0!important;text-transform:none!important;color:var(--fx-ink)!important;margin:0!important;padding:0!important;border:0!important}
+#main #fights-active-content .rxp-sec{margin:0 0 12px!important}
+#main #fights-active-content .rxp-wkh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 12px}
+#main #fights-active-content .rxp-wkh span{font:700 13px 'DM Sans',sans-serif;color:var(--fx-mute);white-space:nowrap}
+#main #fights-active-content .rxp-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}
+#main #fights-active-content .rxp-grid.is-small{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#main #fights-active-content .rxp-grid>details[open]{grid-column:1/-1}
+#main #fights-active-content details.rxp-card{margin:0!important;border:0!important;border-radius:14px!important;overflow:hidden;background:var(--fx-dark)!important;color:#fff;min-width:0;box-shadow:0 2px 8px #0002}
+#main #fights-active-content details.rxp-card>summary.rxp-head{display:block!important;position:relative;padding:0!important;min-height:0!important;cursor:pointer;list-style:none;background:var(--fx-dark)!important;color:#fff!important}
+#main #fights-active-content details.rxp-card>summary.rxp-head::-webkit-details-marker{display:none}
+#main #fights-active-content details.rxp-card>summary.rxp-head:focus-visible{outline:3px solid var(--fx-gold);outline-offset:-3px}
+#main #fights-active-content .rxp-art{display:block;position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
+#main #fights-active-content .rxp-art img{display:block;width:100%;height:100%;object-fit:cover}
+#main #fights-active-content .rxp-art.is-tile{aspect-ratio:16/7;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a2226,#151115)}
+#main #fights-active-content .rxp-tile{font:900 20px/1.15 var(--display,'Unbounded',sans-serif);text-align:center;color:#fff;padding:0 12px;overflow-wrap:anywhere}
+#main #fights-active-content .rxp-tile i{display:block;font:700 13px 'DM Sans',sans-serif;font-style:normal;color:var(--fx-gold)}
+#main #fights-active-content .rxp-text{display:flex;flex-direction:column;gap:3px;padding:10px 104px 12px 12px;min-width:0}
+#main #fights-active-content .rxp-kicker{font:700 12px/1.3 'DM Sans',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:var(--fx-gold)}
+#main #fights-active-content .rxp-line{font:800 17px/1.2 var(--display,'Unbounded',sans-serif)!important;letter-spacing:0!important;text-transform:none!important;color:#fff!important;overflow-wrap:anywhere}
+#main #fights-active-content .rxp-line b{font-weight:800}
+#main #fights-active-content .rxp-meta,#main #fights-active-content .rxp-match{font:500 13px/1.35 'DM Sans',sans-serif;color:#d8d0d4}
+#main #fights-active-content .rxp-match{color:#fff;font-weight:700}
+#main #fights-active-content .rxp-clip{margin-top:6px}
+#main #fights-active-content .rxp-clip .result-watch{color:#fff;background:var(--fx-red);border-radius:8px;padding:8px 12px;display:inline-flex;min-height:40px;align-items:center;font-weight:800;text-decoration:none}
+#main #fights-active-content .rxp-clip .result-clip-publisher{display:block;color:#d8d0d4;font-size:12px;margin-top:4px}
+#main #fights-active-content .rxp-open{position:absolute;right:12px;bottom:12px;min-height:44px;min-width:44px;padding:0 14px;border-radius:999px;border:1px solid #ffffff55;display:flex;align-items:center;justify-content:center;font:700 13px 'DM Sans',sans-serif;color:#fff;white-space:nowrap}
+#main #fights-active-content .rxp-open-opened,#main #fights-active-content details[open]>.rxp-head .rxp-open-closed{display:none}
+#main #fights-active-content details[open]>.rxp-head .rxp-open-opened{display:inline}
+#main #fights-active-content details.rxp-card>.befn-result-expanded{background:#fff;color:var(--fx-ink);padding:12px}
+/* older weeks: smaller posters, two across on a phone */
+#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-art{aspect-ratio:4/3}
+#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-art.is-tile{aspect-ratio:4/3}
+#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-tile{font-size:15px}
+#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-text{padding:8px 10px 10px}
+#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-line{font-size:13px!important}
+#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-kicker{letter-spacing:.03em}
+#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-open{display:none}
+#main #fights-active-content .rxp-older{text-align:center;margin:4px 0 28px}
+#main #fights-active-content .rxp-more{width:100%;max-width:420px;min-height:48px;border-radius:12px;border:1px solid var(--fx-line);background:#fff;color:var(--fx-ink);font:800 14px 'DM Sans',sans-serif;cursor:pointer}
+#main #fights-active-content .rxp-more:focus-visible{outline:3px solid var(--fx-gold);outline-offset:2px}
+#main #fights-active-content .rxp-older p{margin:8px 0 0;font-size:13px;color:var(--fx-mute)}
+@media (min-width:761px){
+ #main #fights-active-content .rxp-grid,#main #fights-active-content .rxp-grid.is-small{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+ #main #fights-active-content .rxp-sec,#main #fights-active-content .rxp-wkh h2{font-size:22px!important}
+ #main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-art,#main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-art.is-tile{aspect-ratio:16/9}
+ #main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-line{font-size:15px!important}
+ #main #fights-active-content details.rxp-card.is-small:not([open]) .rxp-text{padding:10px 12px 12px}
+ /* the result of the week, and any opened card: picture beside the words */
+ #main #fights-active-content details.rxp-card.is-lead>summary.rxp-head,
+ #main #fights-active-content details.rxp-card[open]>summary.rxp-head{display:grid!important;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)!important;gap:0!important;align-items:center!important}
+ #main #fights-active-content details.rxp-card[open]:not(.is-lead)>summary.rxp-head{grid-template-columns:minmax(0,420px) minmax(0,1fr)!important}
+ #main #fights-active-content details.rxp-card.is-lead .rxp-text{padding:26px 28px 70px;gap:8px}
+ #main #fights-active-content details.rxp-card.is-lead .rxp-line{font-size:28px!important;line-height:1.15!important}
+ #main #fights-active-content details.rxp-card.is-lead .rxp-kicker{font-size:13px}
+ #main #fights-active-content details.rxp-card.is-lead .rxp-meta{font-size:15px}
+ #main #fights-active-content details.rxp-card[open]:not(.is-lead) .rxp-text{padding:20px 24px 70px}
+ #main #fights-active-content details.rxp-card[open]:not(.is-lead) .rxp-line{font-size:22px!important}
+ #main #fights-active-content details.rxp-card.is-lead .rxp-open,#main #fights-active-content details.rxp-card[open] .rxp-open{right:24px;bottom:20px}
+ #main #fights-active-content details.rxp-card>.befn-result-expanded{padding:18px 20px}
+}
