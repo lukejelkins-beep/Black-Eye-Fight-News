@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-25T15:21:46.626Z",
-  "checkedAt": "2026-11-25T15:21:46.626Z",
-  "updatedAt": "2026-11-25T15:04:27.970702Z",
+  "attemptedAt": "2026-11-25T16:47:02.975Z",
+  "checkedAt": "2026-11-25T16:47:02.975Z",
+  "updatedAt": "2026-11-25T16:04:44Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 34,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 36,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 1,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,46 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 4,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 36,
-      "X": 34,
-      "Bluesky": 6,
-      "Threads": 7,
-      "Reddit": 1
+      "Threads": 12,
+      "X": 27,
+      "Instagram": 39,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n35jy5w3de2p",
+      "cid": "bafyreid4togjezv7fy6dmgu3s5uk2s6jard55ocrn5kbaqv55ivcx3oumm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Josh Hokit recalls private voice note Conor McGregor sent him after UFC Freedom 250",
+      "postedAt": "2026-11-25T16:04:44Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n35jy5w3de2p",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n35gmj332r2t",
       "cid": "bafyreig4ze36o6oke2h76oiom7eibgqjh7ck3jcv3b3zktefjqggbfymdu",
@@ -93,6 +117,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-25T15:21:46.626Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n35gisj7ii2e",
+      "cid": "bafyreifujkzuaxc5bu7f37yiceg3m32wc2dk4lpnmxkzgse6w5j4xsy6fa",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Record-breaking champion’s UFC debut after win over Alex Pereira’s sister among ten new fights",
+      "postedAt": "2026-11-25T15:02:27Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n35gisj7ii2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -165,6 +213,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n357rvqb6t27",
+      "cid": "bafyreiexvjjfdcgjolczl3g4fjvf4crhgvdpqabdxzo6fiqh56golr77le",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Ex-UFC fighter Lee Murray’s health said to be ‘failing’ during prison sentence for $92 million robbery",
+      "postedAt": "2026-11-25T13:02:16Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n357rvqb6t27",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -284,7 +356,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -308,7 +380,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -380,7 +452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -428,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -524,7 +596,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -692,7 +764,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -740,7 +812,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -792,30 +864,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n334mci56z2p",
-      "cid": "bafyreig4m2zxcbg62oflngtvrvxujcbrowuiuuxfb7dnygv3kqxoh7j2ge",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Josh Hokit fires back at Bruce Buffer over UFC 334 middle finger incident: ‘You’d get beat up’",
-      "postedAt": "2026-11-24T17:00:07Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n334mci56z2p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n332huudvg2z",
       "cid": "bafyreia2qi4hwuxj5r6juufp4x2hacx6oki6pcis3t6ycl46jl2ojkjz44",
       "platform": "Bluesky",
@@ -837,54 +885,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-25T15:21:46.626Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n32zds77zw2o",
-      "cid": "bafyreidstxm7rgt4phnbyepj25vfhi4ady3625mspe7ntrkpuo5i4k74ly",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Jiri Prochazka called out by former champion after claiming he will continue fighting",
-      "postedAt": "2026-11-24T16:01:41Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n32zds77zw2o",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n32w5m5ook2r",
-      "cid": "bafyreiahk2jp7qjfsk2vgicq4wllebmjja7nq5nqwqtjps3jm742amizua",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Dan Hooker reveals why the UFC shut down his Max Holloway fight callout",
-      "postedAt": "2026-11-24T15:04:32Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n32w5m5ook2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1676,7 +1676,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1844,7 +1844,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1868,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1892,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1916,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1940,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1964,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1988,7 +1988,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2456,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T12:19:29.931Z",
+      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
