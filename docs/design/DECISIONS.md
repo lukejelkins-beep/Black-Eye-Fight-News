@@ -31,6 +31,8 @@ Format: date — decision — who — where it shows up.
 - Tests: `tests/test-fighter-profile-a.cjs` (added to the release readiness gate). `tests/test-ufc-profile-visual.mjs`, `tests/test-ufc-one-rating.cjs` and `tests/test-ufc-public-profile-clean.cjs` were updated for the intended changes. — owner — every fighter profile
 
 ## 2026-11-24 (Fight film: film wall)
+- **Shorts without "#shorts" in the title are hidden too** (25 Nov). The live page led with a ONE Championship Short whose title gave no sign of it. The film collector now asks YouTube: `youtube.com/shorts/<id>` answers directly for a Short and redirects an ordinary video to `/watch` (robots.txt allows it). The answer is saved as `isShort`, and an unclear answer leaves it unset rather than hide by guesswork. Up to 60 clips are checked per run.
+
 - **The Fight film tab is a film wall** (owner chose design A, "Film wall", with all four extras). Under the Fights heading and the Upcoming / Results / Fight film switch there is no second "Fight film" heading or kicker.
   - **Top:** the big latest clip (two thirds) and a "Latest finishes" column of three (one third); stacked on phones. The big clip is worked out from the data: the newest finish from the last 7 days, else the newest clip. The hard-coded "7 November 2026 · UFC Vegas 124" block is gone.
   - **Bar:** All / Finishes / Full fights / Highlights, and promotion chips (All plus the top five publishers for the sport). On the all-sports page the chips start with Boxing and MMA (a sport chip, not separate groups) followed by the top four publishers. Grappling is not shown, matching the navigation.

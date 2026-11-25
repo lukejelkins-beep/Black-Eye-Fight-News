@@ -13,6 +13,7 @@ import re
 import sys
 import unicodedata
 import urllib.request
+import urllib.error
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -272,6 +273,37 @@ def parse_australian_player(html,video_id):
  return {'thumbnail':preferred['url'],'auAvailable':True,
          'auVerification':'youtube-country-metadata'}
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+ def redirect_request(self,*a,**k):return None
+
+def is_youtube_short(video_id,opener=None):
+ """YouTube serves /shorts/<id> for a Short and redirects an ordinary video to /watch.
+ Returns True, False, or None when the answer is unclear (left unset, so nothing is hidden by guesswork)."""
+ if not re.fullmatch(r'[A-Za-z0-9_-]{11}',video_id or ''):return None
+ opener=opener or urllib.request.build_opener(_NoRedirect)
+ req=urllib.request.Request('https://www.youtube.com/shorts/'+video_id,method='HEAD',headers={
+  'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36'})
+ try:
+  with opener.open(req,timeout=10) as res:
+   return True if res.status==200 else None
+ except urllib.error.HTTPError as e:
+  if e.code in (301,302,303,307,308):
+   return False if '/watch' in (e.headers.get('Location') or '') else None
+  return None
+ except Exception:
+  return None
+
+def mark_shorts(videos,check=is_youtube_short,limit=60):
+ """Owner, 25 Nov 2026: a Short never leads Fight film, even when its title has no #shorts.
+ Checks YouTube clips not yet marked, at most `limit` per run; returns how many were checked."""
+ done=0
+ for v in videos:
+  if done>=limit:break
+  if 'isShort' in v or not str(v.get('id','')).startswith('yt-'):continue
+  answer=check(v['id'][3:]);done+=1
+  if answer is not None:v['isShort']=answer
+ return done
+
 def verify_au(video,fetch_page=fetch_player_page):
  video_id=video['id'][3:] if video.get('id','').startswith('yt-') else ''
  if not re.fullmatch(r'[A-Za-z0-9_-]{11}',video_id):return None
@@ -375,7 +407,7 @@ def merge_video(film,results,fetched):
  # Only Australian-listed videos with actual publisher thumbnails are shown.
  film['videos']=sorted(existing.values(),key=lambda v:(v.get('date',''),str(v.get('id',''))),reverse=True)[:150]
  return added,matched
-def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au):
+def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au,check_shorts=True):
  today=today or dt.datetime.now(dt.timezone.utc).date()
  now=dt.datetime.now(dt.timezone.utc)
  candidates=[];fail=[]
@@ -403,6 +435,7 @@ def refresh(film,results,fetch=fetch_feed,today=None,verify=verify_au):
    for v in pool.map(verify,to_check):
     if v:verified.append(v)
  added,matched=merge_video(film,results,verified)
+ if check_shorts:mark_shorts(film.get('videos',[]))
  if added or matched or any(known.get(v['id'])!=v for v in verified):
   film['updatedAt']=dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds').replace('+00:00','Z')
  film['regionPolicy']='Videos need documented YouTube API AU region permission (or verified public player country metadata) plus an original video thumbnail; unconfirmed videos are withheld.'

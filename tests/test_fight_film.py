@@ -10,6 +10,29 @@ m=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 
 class FilmTests(unittest.TestCase):
+ def test_shorts_are_marked_from_youtubes_own_answer(self):
+  import io,urllib.error
+  class Opener:
+   def __init__(self,answer):self.answer=answer
+   def open(self,req,timeout=10):
+    if self.answer==200:
+     class R:
+      status=200
+      def __enter__(s):return s
+      def __exit__(s,*a):return False
+     return R()
+    raise urllib.error.HTTPError(req.full_url,self.answer,'x',{'Location':self.loc},io.BytesIO())
+  o=Opener(200);self.assertIs(m.is_youtube_short('mUKBT9jY--w',o),True)
+  o=Opener(303);o.loc='https://www.youtube.com/watch?v=08tvCDKpPRo';self.assertIs(m.is_youtube_short('08tvCDKpPRo',o),False)
+  o=Opener(303);o.loc='https://consent.youtube.com/';self.assertIsNone(m.is_youtube_short('08tvCDKpPRo',o))
+  o=Opener(429);o.loc='';self.assertIsNone(m.is_youtube_short('08tvCDKpPRo',o))
+  self.assertIsNone(m.is_youtube_short('bad id'))
+ def test_mark_shorts_only_sets_known_answers_and_respects_the_limit(self):
+  vids=[{'id':'yt-AAAAAAAAAAA'},{'id':'yt-BBBBBBBBBBB'},{'id':'yt-CCCCCCCCCCC','isShort':False},{'id':'ufc-1'},{'id':'yt-DDDDDDDDDDD'}]
+  answers={'AAAAAAAAAAA':True,'BBBBBBBBBBB':None,'DDDDDDDDDDD':False}
+  n=m.mark_shorts(vids,check=lambda i:answers[i],limit=2)
+  self.assertEqual(n,2)
+  self.assertIs(vids[0]['isShort'],True);self.assertNotIn('isShort',vids[1]);self.assertNotIn('isShort',vids[4])
  def test_curated_upload_filter(self):
   self.assertTrue(m.qualifies('HUGE KO! Smith vs Brown | UFC 2026 Highlights','MMA'))
   self.assertTrue(m.qualifies('Every Submission From IBJJF No-Gi Pans','BJJ / Grappling'))
