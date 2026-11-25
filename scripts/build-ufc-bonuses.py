@@ -7,7 +7,7 @@ Inputs
 Output
   data/ufc-bonuses.json          { slug: { fotn, potn, total, bouts:[{date,event,opponent,outcome,kinds}] } }
 
-Crediting rule (owner to confirm): Fight of the Night is credited to BOTH fighters; Performance of the Night to the
+Crediting rule (owner to confirm): Fight of the Night is credited to BOTH fighters; Performance of the Night (and the pre-2014 Knockout / Submission of the Night) to the
 WINNER only. The label set is read from the data: an unknown label, a performance bonus on a fight without a winner
 (draw / no contest), or a fight we cannot place on exactly one BEFN fighter file is listed in `unplaced` and credited to
 nobody. Nothing is guessed. The UFC Stats API has no UFCStats id on BEFN fighters, so a fighter is placed by the date
@@ -29,8 +29,9 @@ OUT = DATA / "ufc-bonuses.json"
 RATES = json.loads((DATA / "ufc-bonus-rates.json").read_text())
 
 BOTH = {"fight_of_the_night"}  # credited to both corners
-WINNER = {"performance_of_the_night"}  # credited to the winner only
-KIND = {"fight_of_the_night": "fotn", "performance_of_the_night": "potn"}
+WINNER = {"performance_of_the_night", "knockout_of_the_night", "submission_of_the_night"}  # credited to the winner only
+KIND = {"fight_of_the_night": "fotn", "performance_of_the_night": "potn",
+        "knockout_of_the_night": "kotn", "submission_of_the_night": "sotn"}
 
 
 def fold(s):
@@ -93,7 +94,7 @@ def main():
                                  "why": "ambiguous " + ",".join(sorted(slugs))})
                 continue
             s = next(iter(slugs))
-            r = out.setdefault(s, {"fotn": 0, "potn": 0, "total": 0, "estimate": 0, "unpriced": 0, "bouts": []})
+            r = out.setdefault(s, {"fotn": 0, "potn": 0, "kotn": 0, "sotn": 0, "total": 0, "estimate": 0, "unpriced": 0, "bouts": []})
             for k in kinds:
                 r[k] += 1
                 r["total"] += 1

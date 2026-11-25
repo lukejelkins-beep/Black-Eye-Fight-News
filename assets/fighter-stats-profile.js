@@ -265,7 +265,7 @@
  // From data/ufc-bonuses.json (scripts/build-ufc-bonuses.py). Counts are facts; money is an ESTIMATE from
  // the rate table in the bonus file and is shown only for the awards that have a sourced amount. A fighter with no
  // bonus gets no section (nothing is claimed about them).
- const KIND_LABEL={fotn:"Fight of the Night",potn:"Performance of the Night"};
+ const KIND_LABEL={fotn:"Fight of the Night",potn:"Performance of the Night",kotn:"Knockout of the Night",sotn:"Submission of the Night"};
  const usd=n=>"$"+Math.round(n).toLocaleString("en-US");
  const rateText=doc=>(doc.rates||[]).map(x=>usd(x.amount)+" per award from "+(x.from>="2026"?"January 2026":x.from.slice(0,4))).join(", ");
  function bonuses(slug,doc){
@@ -273,6 +273,8 @@
   if(!r||!r.total)return "";
   const priced=r.total-(r.unpriced||0);
   const tiles=[[String(r.total),"Bonuses",""],[String(r.fotn),"Fight of the Night",""],[String(r.potn),"Performance of the Night",""]];
+  const old=(r.kotn||0)+(r.sotn||0);
+  if(old)tiles.push([String(old),"Knockout / Submission of the Night","Awarded before 2014"]);
   if(priced>0)tiles.push([usd(r.estimate),"Estimated bonus earnings",r.unpriced?priced+" of "+r.total+" bonuses priced":"Estimate"]);
   const chip=k=>'<span class="bsp-chip is-'+k+'">'+esc(KIND_LABEL[k])+'</span>';
   const rows=(r.bouts||[]).map(b=>'<li><div><strong>vs '+esc(b.opponent)+'</strong><small>'+esc(b.date)+' · '+esc(eventTitle(b.event))+'</small></div>'+
@@ -281,7 +283,7 @@
   return '<div class="befn-pro-tiles bsp-bonus-tiles">'+tiles.map(([v,l,sm])=>'<div><strong>'+esc(v)+'</strong><span>'+esc(l)+'</span>'+
    (sm?'<small>'+esc(sm)+'</small>':'')+'</div>').join("")+'</div>'+
    '<details class="bsp-history"><summary>Bonus history <small>'+r.bouts.length+(r.bouts.length===1?' fight':' fights')+'</small></summary><ul class="bsp-bonus-list">'+rows+'</ul></details>'+
-   '<small class="bsp-note">Fight of the Night counts for both fighters; Performance of the Night for the winner. '+
+   '<small class="bsp-note">Fight of the Night counts for both fighters; Performance, Knockout and Submission of the Night for the winner. '+
    'Earnings are an estimate: '+rateText(doc)+'. Earlier awards varied by event and are counted but not priced, '+
    'and special-event amounts and the $25,000 finish bonus are not included.</small>';
  }
