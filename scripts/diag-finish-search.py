@@ -19,3 +19,10 @@ for (pub,cid,cat,disc),q in plan:
     print('==',pub,'|',q,'| bytes',len(html),'| ytInitialData',has,'| ids',len(set(ids)),'| parsed after filters',len(parsed))
     for t in titles[:8]:print('   page title:',t)
     for v in parsed[:5]:print('   KEPT:',v['date'],v['kind'],v['title'][:90])
+
+print('== AU verification of the kept ESPN clip')
+for (pub,cid,cat,disc),q in plan:
+    if pub!='ESPN MMA' or not q.startswith('Navajo'):continue
+    for v in m.parse_channel_videos(m.fetch_search(cid,q),pub,cat,disc,today)[:3]:
+        out=m.verify_au(v)
+        print(v['id'],v['title'][:70],'->',('OK '+out.get('auVerification','')) if out else 'NOT VERIFIED')
