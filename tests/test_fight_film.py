@@ -155,7 +155,8 @@ class VideoDisciplineScopeTests(unittest.TestCase):
    row('2026-10-01','UFC 999','MMA','Old Winner','KO'),
    row('2026-11-14','Unknown Promotion','MMA','Nobody','KO')]}
   out=m.finish_searches(res,today)
-  self.assertEqual([(c[0],q) for c,q in out],[('UFC','Navajo Stirling knockout'),('DAZN Boxing','Ky Hodgson knockout'),('Top Rank Boxing','Ky Hodgson knockout')])
+  self.assertEqual([(c[0],q) for c,q in out],[('UFC','Navajo Stirling knockout'),('ESPN MMA','Navajo Stirling knockout'),('MMA Junkie','Navajo Stirling knockout'),('Sherdog','Navajo Stirling knockout'),
+   ('DAZN Boxing','Ky Hodgson knockout'),('Top Rank Boxing','Ky Hodgson knockout'),('Sky Sports Boxing','Ky Hodgson knockout'),('Matchroom Boxing','Ky Hodgson knockout')])
   self.assertLessEqual(len(m.finish_searches({'results':[row('2026-11-21','UFC X','MMA','W%d'%i,'KO') for i in range(60)]},today)),m.MAX_SEARCHES)
  def test_refresh_searches_and_rechecks_recent_clips(self):
   today=dt.date(2026,11,25)
