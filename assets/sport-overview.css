@@ -109,3 +109,28 @@
 }
 #main .fp-sc strong{color:#fff}
 #main .fp-h-boxing{border-bottom-color:#cf1824}#main .fp-h-mma{border-bottom-color:#e0a400}#main .fp-h-sumo{border-bottom-color:#2a4a8f}
+
+/* UFC champion carousel (MMA Overview): the owner's belt portraits on their own dark ground, swipe on phones, arrows on desktop. */
+#main .sov-cc-wrap{position:relative}
+#main .sov-ccs{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 2px;padding:2px 2px 8px;scrollbar-width:thin;overscroll-behavior-x:contain}
+#main .sov-ccs:focus-visible{outline:3px solid var(--ac);outline-offset:2px;border-radius:12px}
+#main a.sov-cc{position:relative;flex:0 0 calc((100% - 40px) / 5);aspect-ratio:4/5;scroll-snap-align:start;border-radius:12px;overflow:hidden;background:#1a191e;color:#fff;text-decoration:none;display:block}
+#main .sov-cc strong{color:#fff}
+#main .sov-cc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+#main .sov-cc-img.is-cut{object-fit:contain;object-position:bottom;top:12%;height:88%}
+#main .sov-cc-img.is-none{display:flex;align-items:center;justify-content:center;font:800 34px var(--display,'Unbounded',sans-serif);color:#5d5660}
+#main .sov-cc-txt{position:absolute;left:0;right:0;bottom:0;padding:44px 12px 12px;background:linear-gradient(to bottom,rgba(26,25,30,0),rgba(26,25,30,.88) 45%,#1a191e)}
+#main .sov-cc-div{display:block;font:800 12px/1.2 'DM Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--gold,#f3c332)}
+#main .sov-cc strong{display:block;font:800 16px/1.2 var(--display,'Unbounded',sans-serif);margin-top:3px}
+#main .sov-cc small{display:block;font-size:12px;color:#cfc8cb;margin-top:4px}
+#main .sov-cc:hover .sov-cc-img{transform:scale(1.03)}#main .sov-cc-img{transition:transform .25s ease}
+#main .sov-cc:focus-visible{outline:3px solid var(--ac);outline-offset:-3px}
+#main .sov-cc-nav{position:absolute;top:calc(50% - 26px);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#111013;font:700 26px/1 system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+#main .sov-cc-nav.is-prev{left:-14px}#main .sov-cc-nav.is-next{right:-14px}
+#main .sov-cc-nav:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+@media (max-width:1000px){#main a.sov-cc{flex-basis:calc((100% - 20px) / 3)}}
+@media (max-width:760px){
+ #main a.sov-cc{flex-basis:62%}
+ #main .sov-cc-nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){#main .sov-cc-img{transition:none}#main .sov-cc:hover .sov-cc-img{transform:none}}

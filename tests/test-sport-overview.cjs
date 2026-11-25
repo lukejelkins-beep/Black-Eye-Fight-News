@@ -103,3 +103,32 @@ console.log('sport overview tests passed');
   assert(O.buildFront({ now, events: [], results: null }, h).includes('Loading'));
   console.log('front page tests passed');
 }
+
+// UFC champion carousel: owner-supplied belt portraits, falling back to the grid without the register.
+{
+  const reg = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '../data/ufc-champion-photo-register.json'), 'utf8'));
+  const champions = { mma: [{ division: 'Lightweight', name: 'Justin Gaethje', start: '14 Jun 2026', defences: 0 },
+    { division: 'Featherweight', name: 'Alexander Volkanovski', start: '12 Apr 2025', defences: 2 },
+    { division: 'Flyweight', name: 'No Photo <b>', start: '', defences: 1 }, { division: 'Middleweight', name: 'Vacant' }] };
+  const base = { area: 'mma', now, events, results, featured, champions, stories: [] };
+  const html = O.build(Object.assign({ championPhotos: reg }, base), h);
+  assert(html.includes('class="sov-ccs"'), 'carousel shown when the register loads');
+  assert(html.includes('src="assets/img/ufc-champions/justin-gaethje.webp"'));
+  assert(html.includes('href="#fighter/ufc--alexander-volkanovski"'));
+  assert(html.includes('Since 12 Apr 2025 · 2 defences') && html.includes('Since 14 Jun 2026<'), 'reign line, no "0 defences"');
+  assert(html.includes('No Photo &lt;b&gt;') && html.includes('sov-cc-img is-none'), 'a champion without a photo keeps initials, escaped');
+  assert(!/Vacant/.test(html), 'vacant titles left out');
+  assert(!O.build(base, h).includes('sov-ccs') && O.build(base, h).includes('sov-chs'), 'grid without the register');
+  assert.strictEqual(O.championPhotoURL('Petr Yan', { photos: [{ slug: 'petr-yan', file: 'https://evil.example/x.webp' }] }), '', 'only BEFN-held files');
+  // Every photo in the register exists, is 4:5 and names a current UFC champion.
+  const fs = require('fs'), path = require('path');
+  const divs = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ufc-divisions.json'), 'utf8')).divisions;
+  const champs = new Set(Object.values(divs).map(d => d.champion && d.champion.slug).filter(Boolean));
+  for (const p of reg.photos) {
+    assert(fs.existsSync(path.join(__dirname, '..', p.file)), p.file);
+    assert.strictEqual(p.width * 5, p.height * 4, p.slug + ' is 4:5');
+    assert(champs.has(p.slug), p.slug + ' is a current champion');
+    assert(p.rights && p.credit && p.sha256, p.slug + ' has provenance');
+  }
+}
+console.log('champion carousel ok');
