@@ -18,7 +18,8 @@
  let sheet=null, opener=null, inerted=[];
  function active(){
    const route=location.hash.slice(1).split('/')[0]||'home';
-   const key=route==='news'?'home':(groupOf[route]||route);
+   /* News has no bottom tab (five is the limit); it is in the menu, so no tab is marked on #news. */
+   const key=groupOf[route]||route;
    document.querySelectorAll('.befn-mobile-tabs a').forEach(a=>{
      if(a.dataset.key===key)a.setAttribute('aria-current','page');
      else a.removeAttribute('aria-current');
@@ -69,11 +70,13 @@
    const sectionsHead=document.createElement('h3');sectionsHead.className='befn-mobile-sheet-sub';sectionsHead.textContent=areaName;
    const sections=[
      ['#home',area==='all'?'Front page':'Overview'],
+     ['#news','News'],
      ['#fights','Upcoming fights'],['#results','Results'],['#highlights','Fight film'],
      ['#fighters','Fighters'],
      ['#analysis',area==='mma'?'Analysis: UFC stats':'Analysis'],['#social','Fight Talk']
    ];
-   sections.forEach(([href,label])=>{const a=document.createElement('a');a.href=href;a.textContent=label;a.addEventListener('click',close);grid.append(a);});
+   const here=(location.hash||'#home').split('/')[0];
+   sections.forEach(([href,label])=>{const a=document.createElement('a');a.href=href;a.textContent=label;if(href===here)a.setAttribute('aria-current','page');a.addEventListener('click',close);grid.append(a);});
    const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Alerts: notification preferences';
    alerts.addEventListener('click',()=>{close();window.BEFNAlerts?.open?.();});
    grid.append(alerts);
