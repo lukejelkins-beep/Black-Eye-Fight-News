@@ -2,6 +2,7 @@
 """Champion carousel photos: owner-supplied belt portraits -> assets/img/ufc-champions/<slug>.webp.
 
 Usage: python3 scripts/build-ufc-champion-photos.py <manifest.json>
+       python3 scripts/build-ufc-champion-photos.py --cutouts   (cut-outs from the committed photos)
 The manifest lists {"file": "<path to original>", "ownerName": "IMG_3115.png", "slug": "joshua-van"}.
 Originals are not committed. Each output is 400x500 (4:5): scaled to 500 px tall, then centre-cropped
 or padded to 400 px wide with the photo's own flat background, so no figure is stretched.
@@ -48,7 +49,29 @@ def build(src):
         canvas.paste(im, ((W - w) // 2, 0))
     return canvas, bg
 
+def cutouts():
+    """Full-figure cut-outs for the champion spotlight: assets/img/ufc-champions/cutout/<slug>.webp, 600 px tall,
+    transparent, trimmed to the figure. Offline rembg (isnet-general-use), as scripts/build-ufc-cutouts.py.
+    The 400x500 photo is upscaled 2x before the mask so the edge is smooth, then saved at 600 px."""
+    from rembg import new_session, remove
+    sess = new_session('isnet-general-use')
+    reg = json.loads(REGISTER.read_text())
+    (OUT / 'cutout').mkdir(parents=True, exist_ok=True)
+    for r in reg['photos']:
+        im = Image.open(ROOT / r['file']).convert('RGB').resize((W * 2, H * 2), Image.LANCZOS)
+        cut = remove(im, session=sess)
+        cut = cut.crop(cut.getchannel('A').point(lambda a: 255 if a > 20 else 0).getbbox())
+        cut = cut.resize((round(cut.width * 600 / cut.height), 600), Image.LANCZOS)
+        dest = OUT / 'cutout' / (r['slug'] + '.webp')
+        cut.save(dest, 'WEBP', quality=84, method=6)
+        r['cutout'] = {'file': str(dest.relative_to(ROOT)), 'width': cut.width, 'height': cut.height,
+                       'sha256': hashlib.sha256(dest.read_bytes()).hexdigest(), 'model': 'rembg isnet-general-use'}
+        print(r['slug'], cut.size)
+    REGISTER.write_text(json.dumps(reg, indent=2, ensure_ascii=False) + '\n')
+
 def main():
+    if sys.argv[1:] == ['--cutouts']:
+        return cutouts()
     items = json.loads(pathlib.Path(sys.argv[1]).read_text())
     OUT.mkdir(parents=True, exist_ok=True)
     reg = json.loads(REGISTER.read_text()) if REGISTER.exists() else {}
