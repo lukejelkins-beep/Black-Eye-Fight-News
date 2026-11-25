@@ -131,6 +131,7 @@ For every fight in the window:
 | **M, Momentum** | How far the BEFN results rating moved across the window: 0.5 + (rating after the newest fight − rating before the oldest) / 240, kept within 0 to 1. A 120-point rise is 1.0. |
 | **A, Activity** | 1.0 if their last UFC fight was within 6 months, falling evenly to 0 at 18 months. Uses the most recent fight of any kind, including no contests. While out injured, A is held at 1 (4.4). |
 | **S, Striking** (v3) | Per fight: significant strikes landed minus absorbed, per minute, from the round statistics. Weighted average m, scored 0.5 + 0.5 tanh(m / 1.5): +1.5 a minute is 0.88, level is 0.5. On its own 56.3% in the search. |
+| **Opponent credit** (25 Nov) | Before S, C and T are averaged, each fight's margin gains 1.0 × the part's scale × (opponent strength − 0.3): an elite opponent (strength about 1) adds about 0.7 of a scale, a median opponent (0.3) nothing, a weak one a little less. Without it, close wins over the best counted like close wins over anyone (Petr Yan, champion on five straight wins, two over Dvalishvili, read Form 75.14; now 91.14). Tested 0 to 3 in steps of 0.25: accuracy flat to 1.0 and falling past 1.5; 1.0 had the best 2025-26 test (63.0% against 62.6%) and log loss (0.6473 against 0.6501). Median champion 78.75 → 89.12. |
 | **C, Control** (v3) | Per fight: control time minus control time against, as a share of fight time. 0.5 + 0.5 tanh(m / 0.2). |
 | **T, Takedowns** (v3) | Per fight: takedowns landed minus conceded, per 15 minutes. 0.5 + 0.5 tanh(m / 1.5). |
 

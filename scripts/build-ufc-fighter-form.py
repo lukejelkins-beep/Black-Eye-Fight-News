@@ -55,6 +55,11 @@ POSITION = (1.0,) * WINDOW_FIGHTS  # flat (owner, 25 Nov); only age (the half-li
 HALF_LIFE_MONTHS = 36            # v3 (v2: 24, v1: 18)
 # Fight statistics: margin per fight mapped by 0.5 + 0.5 tanh(margin / scale), so a margin of one scale is 0.88.
 STAT_SCALE = {"striking": 1.5, "control": .2, "takedowns": 1.5}   # sig. strikes/min, control share, takedowns/15 min
+# Opponent credit (owner, 25 Nov 2026, after "How is Petr Yan's form 75.14?"): each fight's margin gains
+# OPP_CREDIT x scale x (opponent strength - 0.3), so a close win over an elite opponent (strength near 1) counts like a
+# clear win, and a margin against a median opponent (0.3) is unchanged. Tested 0 to 3 in steps of 0.25: accuracy flat
+# to 1.0 and falling past 1.5; 1.0 had the best 2025-26 test (63.0%, live 62.6%) and log loss. Petr Yan 75.14 -> 91.14.
+OPP_CREDIT = 1.0
 POOL_MONTHS = 24
 STREAK_STEP = 0                  # results: per-fight streak step (v1 +0.05 a win); 0 since v2, it backtested worse
 MOMENTUM_SPAN = 240              # a 120-point rise in the results rating over the window gives momentum 1.0
@@ -309,7 +314,8 @@ def points_for(fighter, history, as_of, ratings, strength, injured, after=None, 
     for k, scale in STAT_SCALE.items():
         have = [r for r in rows if r["st"] is not None]
         ws = sum(r["w"] for r in have)
-        stats[k] = None if not ws else .5 + .5 * math.tanh(sum(r["w"] * r["st"][k] for r in have) / ws / scale)
+        stats[k] = None if not ws else .5 + .5 * math.tanh(
+            sum(r["w"] * (r["st"][k] + OPP_CREDIT * scale * (r["q"] - .3)) for r in have) / ws / scale)
 
     parts = {"results": round(R, 3), "dominance": round(D, 3), "opposition": round(Q, 3),
              "momentum": None if M is None else round(M, 3), "activity": round(A, 3),
