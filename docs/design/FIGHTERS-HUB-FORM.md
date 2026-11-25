@@ -38,19 +38,20 @@ earlier fights only, P left out because it is not point-in-time; does the higher
 
 | Bouts | v1 accuracy / log loss | v2 accuracy / log loss | BEFN pre-bout rating (reference) |
 | --- | --- | --- | --- |
-| 2022 to Nov 2026 (tuned on), n ≈ 1,410 | 56.7% / 0.684 | 57.0% / 0.675 | 59.9% / 0.659 |
-| 2018 to 2021 (held out), n ≈ 330 | 49.2% / 0.693 | 52.1% / 0.690 | 58.0% / 0.673 |
+| 2022 to Nov 2026 (tuned on), n ≈ 1,410 | 56.7% / 0.684 | 57.9% / 0.673 | 59.9% / 0.659 |
+| 2018 to 2021 (held out), n ≈ 330 | 49.2% / 0.693 | 50.5% / 0.690 | 58.0% / 0.673 |
 
 Form is still not a prediction (the BEFN rating predicts better, as it should); the backtest checks that the score
 tracks real quality rather than noise. **How much a recent loss matters:** steeper recency (v1's 1.00 to 0.40
 positions, a 12-month half-life) and a bigger streak bonus both backtested *worse*; what matters about a loss is who
-it was to and how it happened, not just that it was last. So v2 keeps the newest fight heaviest but flattens the
-curve, and puts the weight on the manner of the loss (below) and on the loss cap.
+it was to and how it happened, not just that it was last. The owner chose flat positions (selector, 25 Nov): the five
+fights count the same apart from their age, and the weight sits on the manner of the loss (below) and the loss cap.
+(The middle option, positions 1.00 to 0.60 with a +0.02 streak step, scored 57.0% / 0.675 and 52.1% / 0.690.)
 
 ### 3.1 Window and recency
 - Take the fighter's UFC fights with a result (W, L, D) in the last 36 months, newest first, up to 5. No contests are skipped here but still count as activity (3.6).
-- Base weights by position: 1.00, 0.90, 0.80, 0.70, 0.60 (v1: 1.00, 0.85, 0.70, 0.55, 0.40).
-- Multiply each weight by 0.5^(months since the fight / 24), a 24-month half-life (v1: 18). A fight 1 month old and a fight 30 months old in 5th place differ by about 2.4 times.
+- Base weights by position: all 1.00 (v1: 1.00, 0.85, 0.70, 0.55, 0.40). Only age separates them.
+- Multiply each weight by 0.5^(months since the fight / 24), a 24-month half-life (v1: 18). A fight 1 month old counts about 2.3 times one 30 months old.
 - Every part below is a weighted average using these weights. S is the sum of the weights.
 - Fewer than 2 fights in the window: **no Form**. Show "limited data", never an estimate.
 - The output lists each fight behind the score with its share of the weight (`fights`, columns in `fightFields`).
@@ -73,7 +74,7 @@ For every fight in the window:
 
 | Part | How it scores |
 | --- | --- |
-| **R, Results** | Weighted average of v. Then +0.02 per win in the current streak (at most +0.06), or −0.02 per loss in a losing run after the first (at most −0.06). Kept within 0 to 1. |
+| **R, Results** | Weighted average of v. No streak bonus in v2 (v1 added 0.05 a win; it backtested worse). A losing run is handled by the loss cap. |
 | **D, Dominance** | Weighted average of d over every fight, wins and losses. On its own the most predictive part (57.7% in the backtest; v1's wins-only finishing 51.9%). |
 | **Q, Opposition** | Weighted average of q for wins, q/2 for draws and 0.2 q for losses (credit for facing the best, much less than beating them). |
 | **M, Momentum** | How far the BEFN results rating moved across the window: 0.5 + (rating after the newest fight − rating before the oldest) / 240, kept within 0 to 1. A 120-point rise is 1.0. |
@@ -199,15 +200,15 @@ The profile and the hub should both read this one file for Form, stage and badge
 ## 9. Test cases (21 Nov data, Form v2; `tests/test_ufc_fighter_form.py`)
 | Fighter | Form v1 → v2 | Parts v2 R/D/Q/M/A/P | Stage, badges |
 | --- | --- | --- | --- |
-| Valter Walker (HW #12) | 97 → 96 | 0.84 / 1.0 / 0.10 / 1.0 / 1.0 / 0.85 | Contender, On fire; form #1 |
-| Elijah Smith (BW, unranked, 4-0) | 99 → 98 | 0.89 / 0.92 / 0.38 / 1.0 / 1.0 / 0.86 | Rising star, On fire |
-| Alexandre Pantoja (FLY #1) | 62 → 55 | 0.44 / 0.42 / 0.31 / 0.33 / 1.0 / 0.73 | Contender, Cooling; loss cap 75 (title-fight decision loss, second straight loss) |
-| Israel Adesanya (MW #9) | 9 → 7 | 0.06 / 0.01 / 0.19 / 0.0 / 0.85 / 0.26 | Slipping ("lost last fight and 4 of last 5"), Cooling; loss cap 55 |
+| Valter Walker (HW #12) | 97 → 96 | 0.78 / 1.0 / 0.11 / 1.0 / 1.0 / 0.85 | Contender, On fire; form #1 |
+| Elijah Smith (BW, unranked, 4-0) | 99 → 97 | 0.82 / 0.91 / 0.35 / 1.0 / 1.0 / 0.86 | Rising star, On fire |
+| Alexandre Pantoja (FLY #1) | 62 → 60 | 0.50 / 0.46 / 0.33 / 0.33 / 1.0 / 0.73 | Contender, Cooling; loss cap 75 (title-fight decision loss, second straight loss) |
+| Israel Adesanya (MW #9) | 9 → 8 | 0.12 / 0.01 / 0.19 / 0.0 / 0.85 / 0.26 | Slipping ("lost last fight and 4 of last 5"), Cooling; loss cap 55 |
 | Tom Aspinall (HW #1) | none | under 2 fights in 36 months | Title contender |
-| Michael Page (MW, 39) | 86 → 92 | n/a | Established (too old for Rising star and Breakout) |
-| Niko Price (WW, 1-4 in last 5) | 65 → 30 | 0.32 / 0.33 / 0.06 / 0.16 / 1.0 / 0.34 | Established; v1 scored his one KO win as finishing 1.0 |
+| Michael Page (MW, 39) | 86 → 91 | n/a | Established, On fire (too old for Rising star and Breakout) |
+| Niko Price (WW, 1-4 in last 5) | 65 → 24 | 0.26 / 0.29 / 0.06 / 0.16 / 1.0 / 0.34 | Established; v1 scored his one KO win as finishing 1.0 |
 
-Other checks: two runs give identical output. On the 21 Nov data with v2 the hub had 11 Champion, 36 Title contender, 99 Contender, 30 Slipping, 22 Rising star, 31 Prospect, 14 Breakout, 112 Inactive and 566 Established, plus 53 On fire (v1: 35, 100, 30, 18, 32, 10, 112, 573 and 41). Median change in shown Form 7 points.
+Other checks: two runs give identical output. On the 21 Nov data with v2 the hub had 11 Champion, 36 Title contender, 99 Contender, 30 Slipping, 21 Rising star, 31 Prospect, 12 Breakout, 112 Inactive and 569 Established, plus 53 On fire (v1: 35, 100, 30, 18, 32, 10, 112, 573 and 41).
 
 ## 10. Still open
 - The scale of the BEFN rating, and therefore whether Form and Overall can be compared (section 1).

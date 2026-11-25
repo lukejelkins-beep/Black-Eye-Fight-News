@@ -38,11 +38,11 @@ MONTH = 30.4375
 # Form v2 (owner request, 25 Nov 2026): every fight is valued against the BEFN expectation on the night, dominance
 # covers losses as well as wins and reads the judges' scorecards, and momentum follows the results rating itself.
 WEIGHTS = {"results": .25, "dominance": .30, "opposition": .15, "momentum": .10, "activity": .10, "performance": .10}
-POSITION = (1.00, .90, .80, .70, .60)   # v2: flatter than v1 (1.00-0.40), which backtested worse
+POSITION = (1.00, 1.00, 1.00, 1.00, 1.00)   # v2, owner 25 Nov: flat; only age (the half-life) weights recency
 HALF_LIFE_MONTHS = 24                  # v2: was 18
 WINDOW_MONTHS = 36
 POOL_MONTHS = 24
-STREAK_STEP = .02                # results: +0.02 a win in the current streak, -0.02 a loss after the first (3 at most)
+STREAK_STEP = 0                  # results: per-fight streak step (v1 +0.05 a win); 0 since v2, it backtested worse
 MOMENTUM_SPAN = 240              # a 120-point rise in the results rating over the window gives momentum 1.0
 # Each fighter's "fights": the fights behind the score, newest first, one array per fight in this order. share is
 # the fight's percentage of the recency weight; value is what the result was worth (fight_value).
