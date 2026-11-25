@@ -48,12 +48,13 @@
   // Long careers (some grapplers have 70+ podiums) fold after the first rows.
   const shown=entry.rows.slice(0,FOLD).map(row).join(''),rest=entry.rows.slice(FOLD);
   return '<section class="befn-pro-card befn-am-card" data-pro-section="amateur" data-befn-amateur>'+
-   '<header><h3>Amateur career</h3><p>'+esc(sports.join(' · '))+' · verified against official results</p></header>'+
+   '<header><h3>Amateur career</h3><p>'+esc(sports.join(' · '))+'</p></header>'+
    '<ol class="befn-am-list">'+shown+'</ol>'+
    (rest.length?'<details class="befn-am-more"><summary>Show all '+entry.rows.length+' results</summary><ol class="befn-am-list" start="'+(FOLD+1)+'">'+rest.map(row).join('')+'</ol></details>':'')+
    '<div class="befn-am-key" aria-hidden="true">'+medalHTML('gold',1,true)+'Gold'+medalHTML('silver',2,true)+'Silver'+
    medalHTML('bronze',3,true)+'Bronze'+medalHTML(null,8,true)+'Placed</div>'+
-   '<p class="befn-am-note">Only results checked against the official source appear here.</p></section>';
+   // Verification wording is staff text: profile design A moves it to "About this profile" (DIRECTION rule 6).
+   '<p class="befn-am-note" data-pa-about>Amateur career: only results checked against the official source appear, each with its source.</p></section>';
  }
  // The badges and card sit BESIDE the areas fighter-insights.js rebuilds when its own data
  // arrives (it rewrites [data-befn-top-credentials] and replaces .befn-profile-insights), never
@@ -68,8 +69,11 @@
   }
   const body=dialog.querySelector('.befn-pro-body');
   if(body&&!dialog.querySelector('[data-befn-amateur]')){
+   // Profile design A keeps a slot for it in the Stats tab.
+   const slot=dialog.querySelector('[data-befn-amateur-slot]');
    const insights=body.querySelector(':scope > .befn-profile-insights');
-   if(insights)insights.insertAdjacentHTML('afterend',sectionHTML(entry));
+   if(slot)slot.insertAdjacentHTML('beforeend',sectionHTML(entry));
+   else if(insights)insights.insertAdjacentHTML('afterend',sectionHTML(entry));
    else body.insertAdjacentHTML('beforeend',sectionHTML(entry));
    changed=true;
   }
@@ -77,6 +81,7 @@
   // can arrive later, so show the "Amateur" jump button once the card is in place.
   const jump=dialog.querySelector('[data-pro-jump="amateur"]');
   if(jump&&dialog.querySelector('[data-befn-amateur]'))jump.hidden=false;
+  if(changed)window.BEFNProfileA?.absorb?.(dialog);
   return changed;
  }
  function apply(dialog,f){
