@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "policy": "Official UFC YouTube uploads of a specific UFC bout won by KO/TKO or submission, for the fighter profile. Each was checked by hand on 2026-11-25: YouTube oEmbed author \"UFC\" (@ufc), the title names this bout, and the date or rematch number matches it. Kind is finish, highlights or full-fight. The film refresh job (scripts/refresh-fight-film.py) re-checks Australian playback; a clip shows only when that check is under 48 hours old.",
+ "policy": "Official YouTube uploads by the UFC, ESPN MMA or TNT Fight Sports (owner, 25 Nov 2026: broadcaster clips added) of a specific UFC bout won by KO/TKO or submission, for the fighter profile. Each was checked by hand on 2026-11-25: YouTube oEmbed author @ufc, @ESPNMMA or @TNTFightSports, the title names this bout, and the date or rematch number matches it. Kind is finish, highlights or full-fight. The film refresh job (scripts/refresh-fight-film.py) re-checks Australian playback; a clip shows only when that check is under 48 hours old.",
  "clips": [
   {
    "boutId": "61041",
@@ -19,6 +19,19 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "60191",
+   "fighter": "Alex Pereira",
+   "opponent": "Khalil Rountree Jr.",
+   "date": "2024-10-05",
+   "event": "UFC 307: Pereira vs Rountree Jr.",
+   "videoId": "WkQGm6ZFVjA",
+   "kind": "highlights",
+   "title": "FINISH FIGHT⚔️ | Alex Pereira vs Khalil Rountree | UFC 307",
+   "publisher": "UFC",
+   "checkedOn": "2026-11-25",
+   "note": "Title \"FINISH FIGHT\" is unclear about what the video shows, so labelled highlights"
+  },
+  {
    "boutId": "60738",
    "fighter": "Alex Pereira",
    "opponent": "Magomed Ankalaev",
@@ -35,6 +48,30 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "60624",
+   "fighter": "Alexa Grasso",
+   "opponent": "Maycee Barber",
+   "date": "2026-03-28",
+   "event": "UFC Fight Night: Adesanya vs Pyfer",
+   "videoId": "ErQSbTceGG0",
+   "kind": "highlights",
+   "title": "KO OF THE YEAR?! 🤯 | Alexa Grasso vs Maycee Barber | #UFCSeattle Fight Night Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "83679",
+   "fighter": "Alexander Volkanovski",
+   "opponent": "Movsar Evloev",
+   "date": "2026-10-24",
+   "event": "UFC 333: Volkanovski vs Evloev",
+   "videoId": "CBav6aQoMR4",
+   "kind": "highlights",
+   "title": "Alexander Volkanovski vs. Movsar Evloev Highlights | UFC 333 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60777",
    "fighter": "Alexandre Pantoja",
    "opponent": "Kai Asakura",
@@ -49,6 +86,42 @@
    "auAvailable": true,
    "auVerification": "youtube-api-region-restriction",
    "auVerifiedAt": "2026-11-25T05:22:37Z"
+  },
+  {
+   "boutId": "ufcstats-69c06be4f87ccdab",
+   "fighter": "Amanda Nunes",
+   "opponent": "Holly Holm",
+   "date": "2019-07-06",
+   "event": null,
+   "videoId": "m03vp8y_JSg",
+   "kind": "finish",
+   "title": "When Amanda Nunes head-kick KO’d Holly Holm 😮 | #Shorts",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60404",
+   "fighter": "Arman Tsarukyan",
+   "opponent": "Dan Hooker",
+   "date": "2025-11-22",
+   "event": "UFC Qatar: Tsarukyan vs Hooker",
+   "videoId": "TkV5-3-UxXE",
+   "kind": "finish",
+   "title": "Arman Tsarukyan gets Dan Hooker to tap in Round 2 at UFC Qatar | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "83413",
+   "fighter": "Arman Tsarukyan",
+   "opponent": "Maurício Ruffy",
+   "date": "2026-09-19",
+   "event": "Crypto.com UFC 331",
+   "videoId": "WQMZni7wnlE",
+   "kind": "highlights",
+   "title": "STATEMENT MADE! 💥 | Arman Tsarukyan vs. Mauricio Ruffy | #UFC331 Fight Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
   },
   {
    "boutId": "65848",
@@ -75,6 +148,18 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "66461",
+   "fighter": "Brandon Royval",
+   "opponent": "Lone'er Kavanagh",
+   "date": "2026-07-11",
+   "event": "UFC 329: McGregor vs Holloway 2",
+   "videoId": "sX6NTWd2hfM",
+   "kind": "highlights",
+   "title": "CHOKED UNCONSCIOUS! 🤯 | Brandon Royval vs Lone’er Kavanagh | #UFC329 Fight Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "38142",
    "fighter": "Brendan Allen",
    "opponent": "Reinier de Ridder",
@@ -91,6 +176,30 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "92963",
+   "fighter": "Brendan Allen",
+   "opponent": "Christian Leroy Duncan",
+   "date": "2026-10-10",
+   "event": "UFC Fight Night: Allen vs Duncan",
+   "videoId": "HG2OOrSHbHA",
+   "kind": "highlights",
+   "title": "UFC Fight Night: Brendan Allen vs. Christian Leroy Duncan HIGHLIGHTS | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60498",
+   "fighter": "Carlos Prates",
+   "opponent": "Geoff Neal",
+   "date": "2025-08-17",
+   "event": "UFC 319: Du Plessis vs Chimaev",
+   "videoId": "1O0gUN4Fzro",
+   "kind": "highlights",
+   "title": "BRUTAL SPINNING KNOCKOUT! 💥 | Geoff Neal vs Carlos Prates | #UFC319 Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "38198",
    "fighter": "Carlos Prates",
    "opponent": "Leon Edwards",
@@ -103,6 +212,30 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "60931",
+   "fighter": "Carlos Ulberg",
+   "opponent": "Alonzo Menifield",
+   "date": "2024-05-11",
+   "event": "UFC Fight Night: Lewis vs Nascimento",
+   "videoId": "CzTUbxb8zPU",
+   "kind": "finish",
+   "title": "Carlos Ulberg knocks out Alonzo Menifield in 12 SECONDS | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "38209",
+   "fighter": "Carlos Ulberg",
+   "opponent": "Dominick Reyes",
+   "date": "2025-09-28",
+   "event": "UFC Perth: Ulberg vs Reyes",
+   "videoId": "F19Wqo7QFpc",
+   "kind": "finish",
+   "title": "Carlos Ulberg knocks out Dominick Reyes for his 9th straight win at #UFCPerth | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "65985",
    "fighter": "Carlos Ulberg",
    "opponent": "Jiri Prochazka",
@@ -112,6 +245,18 @@
    "kind": "highlights",
    "title": "Carlos Ulberg vs Jiri Prochazka Highlights 👊 | UFC 327",
    "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "65887",
+   "fighter": "Charles Oliveira",
+   "opponent": "Mateusz Gamrot",
+   "date": "2025-10-11",
+   "event": "UFC Fight Night: Oliveira vs Gamrot",
+   "videoId": "bPXxNTkeVxk",
+   "kind": "finish",
+   "title": "Charles Oliveira submits Mateusz Gamrot, celebrates with crowd in Rio | ESPN MMA",
+   "publisher": "ESPN MMA",
    "checkedOn": "2026-11-25"
   },
   {
@@ -159,6 +304,18 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "60907",
+   "fighter": "Curtis Blaydes",
+   "opponent": "Jailton Almeida",
+   "date": "2024-03-09",
+   "event": "UFC 299: O'Malley vs Vera 2",
+   "videoId": "kCNrM7d-Z-A",
+   "kind": "finish",
+   "title": "HAMMER FISTS 👊 Curtis Blaydes stops Jailton in Round 2 of UFC 299 prelims | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60829",
    "fighter": "Derrick Lewis",
    "opponent": "Tallison Teixeira",
@@ -187,6 +344,54 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "66010",
+   "fighter": "Diego Lopes",
+   "opponent": "Steve Garcia",
+   "date": "2026-06-15",
+   "event": "UFC Freedom 250",
+   "videoId": "uKTLuJwGXEY",
+   "kind": "highlights",
+   "title": "UFC Freedom 250 Highlights: Diego Lopes vs. Steve Garcia | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "65945",
+   "fighter": "Dricus Du Plessis",
+   "opponent": "Israel Adesanya",
+   "date": "2024-08-17",
+   "event": "UFC 305: Du Plessis vs Adesanya",
+   "videoId": "IRIwozQnjTg",
+   "kind": "full-fight",
+   "title": "FULL FIGHT REPLAY! Dricus Du Plessis vs Israel Adesanya #UFC305 🔥",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "38202",
+   "fighter": "Erin Blanchfield",
+   "opponent": "Tracy Cortez",
+   "date": "2025-11-16",
+   "event": "VeChain UFC 322: Della Maddalena vs Makhachev",
+   "videoId": "nhs5us7ekVk",
+   "kind": "finish",
+   "title": "Erin Blanchfield submits Tracy Cortez on the UFC 322 prelims | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "65899",
+   "fighter": "Gabriel Bonfim",
+   "opponent": "Randy Brown",
+   "date": "2025-11-09",
+   "event": "UFC Fight Night: Bonfim vs Brown",
+   "videoId": "4mxCrfR5L5k",
+   "kind": "highlights",
+   "title": "POWERFUL KNEE KNOCKOUT! 🤯 | Gabriel Bonfim vs Randy Brown | #UFCVegas Fight Night Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60690",
    "fighter": "Gregory Rodrigues",
    "opponent": "Brunno Ferreira",
@@ -196,6 +401,54 @@
    "kind": "full-fight",
    "title": "INSANE KNOCKOUT | Gregory Rodrigues vs Brunno Ferreira 2 | FULL FIGHT",
    "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "59689",
+   "fighter": "Ian Machado Garry",
+   "opponent": "Song Kenan",
+   "date": "2023-03-04",
+   "event": "UFC 285: Jones vs Gane",
+   "videoId": "FunmKSh1K-0",
+   "kind": "finish",
+   "title": "Ian Machado Garry pours it on late to win by TKO at UFC 285 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "61298",
+   "fighter": "Ian Machado Garry",
+   "opponent": "Daniel Rodriguez",
+   "date": "2023-05-13",
+   "event": "UFC Fight Night: Rozenstruik vs Almeida",
+   "videoId": "fM8leS2Bv6Y",
+   "kind": "finish",
+   "title": "Ian Machado Garry knocks out Daniel Rodriguez in Round 1 at #UFCCharlotte | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "59888",
+   "fighter": "Ilia Topuria",
+   "opponent": "Alexander Volkanovski",
+   "date": "2024-02-17",
+   "event": "UFC 298: Volkanovski vs Topuria",
+   "videoId": "uXSzhyoRhPk",
+   "kind": "full-fight",
+   "title": "UFC FULL FIGHT: Alexander Volkanovski vs. Ilia Topuria [UFC 298 – Feb. 17, 2024] | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60260",
+   "fighter": "Ilia Topuria",
+   "opponent": "Charles Oliveira",
+   "date": "2025-06-29",
+   "event": "UFC 317: Topuria vs Oliveira",
+   "videoId": "9-iNNJ14ULs",
+   "kind": "finish",
+   "title": "Ilia Topuria knocks out Charles Oliveira in the first round of the main event of #UFC317 | ESPN MMA",
+   "publisher": "ESPN MMA",
    "checkedOn": "2026-11-25"
   },
   {
@@ -227,6 +480,30 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "60894",
+   "fighter": "Jasmine Jasudavicius",
+   "opponent": "Jessica Andrade",
+   "date": "2025-05-11",
+   "event": "UFC 315: Muhammad vs Della Maddalena",
+   "videoId": "ta3YJcGdsnk",
+   "kind": "finish",
+   "title": "The crowd in Montreal ERUPTS as Jasmine Jasudavicius submits Jessica Andrade at UFC 315",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "38531",
+   "fighter": "Jean Silva",
+   "opponent": "Melsik Baghdasaryan",
+   "date": "2025-02-22",
+   "event": "UFC Seattle: Cejudo vs Song",
+   "videoId": "h51v5Fbjzio",
+   "kind": "finish",
+   "title": "Jean Silva knocks out Melsik Baghdasaryan in the first round at #UFCSeattle | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60969",
    "fighter": "Jean Silva",
    "opponent": "Bryce Mitchell",
@@ -241,6 +518,42 @@
    "auAvailable": true,
    "auVerification": "youtube-api-region-restriction",
    "auVerifiedAt": "2026-11-25T05:22:37Z"
+  },
+  {
+   "boutId": "83816",
+   "fighter": "Jean Silva",
+   "opponent": "Jose Miguel Delgado",
+   "date": "2026-09-12",
+   "event": "Noche UFC: Silva vs Delgado",
+   "videoId": "hEieTo1STX8",
+   "kind": "highlights",
+   "title": "ONE-ARMED CHOKE! 🫣 | Jean Silva vs. Jose Miguel Delgado | #UFCNoche Fight Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "53792",
+   "fighter": "Jiri Prochazka",
+   "opponent": "Aleksandar Rakic",
+   "date": "2024-04-13",
+   "event": "UFC 300: Pereira vs Hill",
+   "videoId": "Z_DnR2iZu3g",
+   "kind": "finish",
+   "title": "Jiri Prochazka TKO’s Aleksandar Rakic to close out UFC 300 prelims | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60740",
+   "fighter": "Jiri Prochazka",
+   "opponent": "Khalil Rountree Jr.",
+   "date": "2025-10-05",
+   "event": "UFC 320: Ankalaev vs Pereira 2",
+   "videoId": "RGQhxTh0tvs",
+   "kind": "finish",
+   "title": "Jiri Prochazka knocks out Khalil Rountree Jr. with massive left hook at UFC 320 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
   },
   {
    "boutId": "83723",
@@ -267,6 +580,42 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "66051",
+   "fighter": "Joshua Van",
+   "opponent": "Tatsuro Taira",
+   "date": "2026-05-09",
+   "event": "UFC 328: Chimaev vs Strickland",
+   "videoId": "Bqmx4xiyjSk",
+   "kind": "highlights",
+   "title": "UFC 328 Highlights: Joshua Van vs. Tatsuro Taira | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "66005",
+   "fighter": "Justin Gaethje",
+   "opponent": "Ilia Topuria",
+   "date": "2026-06-15",
+   "event": "UFC Freedom 250",
+   "videoId": "ntAR0YWkHmg",
+   "kind": "highlights",
+   "title": "UFC Freedom 250 Highlights: Ilia Topuria vs. Justin Gaethje | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "53794",
+   "fighter": "Kayla Harrison",
+   "opponent": "Holly Holm",
+   "date": "2024-04-13",
+   "event": "UFC 300: Pereira vs Hill",
+   "videoId": "Rkmef6WhcQ4",
+   "kind": "finish",
+   "title": "Kayla Harrison submits Holly Holm on UFC 300 prelims | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60862",
    "fighter": "Kayla Harrison",
    "opponent": "Julianna Pena",
@@ -283,6 +632,30 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "93103",
+   "fighter": "Kayla Harrison",
+   "opponent": "Amanda Nunes",
+   "date": "2026-11-14",
+   "event": "Polymarket UFC 334: Gane vs Hokit",
+   "videoId": "aL3UJI3oTbg",
+   "kind": "highlights",
+   "title": "FEUD SETTLED AT MSG! 🍿 | Kayla Harrison vs. Amanda Nunes | #UFC334 Fight Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60078",
+   "fighter": "Khalil Rountree Jr.",
+   "opponent": "Chris Daukaus",
+   "date": "2023-08-12",
+   "event": "UFC Fight Night: Luque vs Dos Anjos",
+   "videoId": "ghtoemUgwG8",
+   "kind": "full-fight",
+   "title": "UFC FULL FIGHT: Khalil Rountree Jr. vs. Chris Daukaus [Aug. 12, 2023] | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60179",
    "fighter": "Khamzat Chimaev",
    "opponent": "Robert Whittaker",
@@ -297,6 +670,114 @@
    "auAvailable": true,
    "auVerification": "youtube-api-region-restriction",
    "auVerifiedAt": "2026-11-25T05:22:37Z"
+  },
+  {
+   "boutId": "60497",
+   "fighter": "Lerone Murphy",
+   "opponent": "Aaron Pico",
+   "date": "2025-08-17",
+   "event": "UFC 319: Du Plessis vs Chimaev",
+   "videoId": "sXfHpR9ENhg",
+   "kind": "highlights",
+   "title": "INSANE SPINNING ELBOW KO! 🫨 | Lerone Murphy vs Aaron Pico | #UFC319 Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "61542",
+   "fighter": "Mackenzie Dern",
+   "opponent": "Nina Nunes",
+   "date": "2021-04-10",
+   "event": "UFC Fight Night: Vettori vs Holland",
+   "videoId": "rZ5IgMydsT4",
+   "kind": "full-fight",
+   "title": "UFC Vegas 39: Mackenzie Dern vs Nina Nunes",
+   "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60341",
+   "fighter": "Mackenzie Dern",
+   "opponent": "Amanda Ribas",
+   "date": "2025-01-11",
+   "event": "UFC Fight Night: Dern vs Ribas 2",
+   "videoId": "6zVc-6ai26o",
+   "kind": "finish",
+   "title": "Mackenzie Dern submits Amanda Ribas with armbar in rematch | #UFCVegas101",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "83032",
+   "fighter": "Magomed Ankalaev",
+   "opponent": "Bogdan Guskov",
+   "date": "2026-07-25",
+   "event": "UFC Fight Night: Ankalaev vs Guskov",
+   "videoId": "mUDDB5rJecc",
+   "kind": "highlights",
+   "title": "UFC Abu Dhabi Highlights: Magomed Ankalaev vs. Bogdan Guskov | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60331",
+   "fighter": "Manel Kape",
+   "opponent": "Asu Almabayev",
+   "date": "2025-03-01",
+   "event": "UFC Fight Night: Kape vs Almabayev",
+   "videoId": "zMcB1HXlS44",
+   "kind": "finish",
+   "title": "Manel Kape stops Asu Almabayev in the main event of #UFCVegas103 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60647",
+   "fighter": "Manel Kape",
+   "opponent": "Brandon Royval",
+   "date": "2025-12-14",
+   "event": "UFC Fight Night: Royval vs Kape",
+   "videoId": "ZvwX-BoNl7g",
+   "kind": "finish",
+   "title": "Manel Kape knocks out Brandon Royval in main event of #UFCVegas112 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "65999",
+   "fighter": "Manel Kape",
+   "opponent": "Kyoji Horiguchi",
+   "date": "2026-06-20",
+   "event": "UFC Fight Night: Kape vs Horiguchi",
+   "videoId": "Otv64NkLtuA",
+   "kind": "highlights",
+   "title": "STATEMENT FINISH! 💥 | Manel Kape vs. Kyoji Horiguchi | #UFCVegas Fight Night Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "38145",
+   "fighter": "Manon Fiorot",
+   "opponent": "Jasmine Jasudavicius",
+   "date": "2025-10-18",
+   "event": "UFC Vancouver: De Ridder vs Hernandez",
+   "videoId": "eqi7eT7bGXo",
+   "kind": "finish",
+   "title": "Manon Fiorot makes quick work of Jasmine Jasudavicius at #UFCVancouver | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60725",
+   "fighter": "Mario Bautista",
+   "opponent": "Vinicius Oliveira",
+   "date": "2026-02-07",
+   "event": "UFC Fight Night: Bautista vs Oliveira",
+   "videoId": "MJsYXy_WxmU",
+   "kind": "highlights",
+   "title": "EMPHATIC SUBMISSION! 💥 | Mario Bautista vs Vinicius Oliviera | #UFCVegas Fight Night Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
   },
   {
    "boutId": "65849",
@@ -343,6 +824,18 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "61864",
+   "fighter": "Merab Dvalishvili",
+   "opponent": "Marlon Moraes",
+   "date": "2021-09-25",
+   "event": "UFC 266: Volkanovski vs Ortega",
+   "videoId": "6SRCNssHg9s",
+   "kind": "full-fight",
+   "title": "FULL FIGHT: Merab Dvalishvili vs. Marlon Moraes from UFC 266 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60861",
    "fighter": "Merab Dvalishvili",
    "opponent": "Sean O'Malley",
@@ -359,6 +852,42 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "60231",
+   "fighter": "Michael Morales",
+   "opponent": "Neil Magny",
+   "date": "2024-08-24",
+   "event": "UFC Fight Night: Cannonier vs Borralho",
+   "videoId": "b_KTqFhasdE",
+   "kind": "finish",
+   "title": "Michael Morales TKOs Neil Magny to stay undefeated at #UFCVegas96 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60841",
+   "fighter": "Michael Morales",
+   "opponent": "Gilbert Burns",
+   "date": "2025-05-17",
+   "event": "UFC Fight Night: Burns vs Morales",
+   "videoId": "sHDLnK03nyU",
+   "kind": "finish",
+   "title": "Michael Morales beats Gilbert Burns via 1st-round TKO at #UFCVegas106 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "38197",
+   "fighter": "Michael Morales",
+   "opponent": "Sean Brady",
+   "date": "2025-11-16",
+   "event": "VeChain UFC 322: Della Maddalena vs Makhachev",
+   "videoId": "3KD7oAwb-Yo",
+   "kind": "highlights",
+   "title": "NASTY KNOCKOUT VICTORY! 🫨 | Sean Brady vs. Michael Morales | #UFC322 Fight Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "66089",
    "fighter": "Mike Malott",
    "opponent": "Gilbert Burns",
@@ -368,6 +897,30 @@
    "kind": "full-fight",
    "title": "Mike Malott vs Gilbert Burns  | FULL FIGHT | UFC Edmonton",
    "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "38552",
+   "fighter": "Nassourdine Imavov",
+   "opponent": "Israel Adesanya",
+   "date": "2025-02-01",
+   "event": "UFC Saudi Arabia: Adesanya vs Imavov",
+   "videoId": "OWQFoom0pDk",
+   "kind": "finish",
+   "title": "Nassourdine Imavov KNOCKS OUT Israel Adesanya at #UFCSaudiArabia | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "66001",
+   "fighter": "Navajo Stirling",
+   "opponent": "Ion Cuțelaba",
+   "date": "2026-06-20",
+   "event": "UFC Fight Night: Kape vs Horiguchi",
+   "videoId": "5wuhS5KmetQ",
+   "kind": "highlights",
+   "title": "UNSTOPPABLE! 😮‍💨 | Ion Cuțelaba vs. Navajo Stirling | #UFCVegas Fight Night Highlights",
+   "publisher": "TNT Fight Sports",
    "checkedOn": "2026-11-25"
   },
   {
@@ -383,6 +936,30 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "ufc-qatar-2026-11-21-jiriprochazka",
+   "fighter": "Navajo Stirling",
+   "opponent": "Jiri Prochazka",
+   "date": "2026-11-21",
+   "event": "UFC Fight Night: Procházka vs Stirling",
+   "videoId": "FZ-7oEF9u8w",
+   "kind": "highlights",
+   "title": "PUT TO SLEEP 💥 | Jiří Procházka vs. Navajo Stirling | #UFCQatar Fight Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "61079",
+   "fighter": "Paddy Pimblett",
+   "opponent": "King Green",
+   "date": "2024-07-27",
+   "event": "UFC 304: Edwards vs Muhammad 2",
+   "videoId": "Oi7GsmgJ7L8",
+   "kind": "finish",
+   "title": "Paddy Pimblett submits King Green in the first round at #UFC304 with a triangle choke",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60967",
    "fighter": "Paddy Pimblett",
    "opponent": "Michael Chandler",
@@ -395,6 +972,18 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "66440",
+   "fighter": "Paddy Pimblett",
+   "opponent": "Benoit Saint Denis",
+   "date": "2026-07-11",
+   "event": "UFC 329: McGregor vs Holloway 2",
+   "videoId": "wB5KS6QtDgQ",
+   "kind": "highlights",
+   "title": "INCREDIBLE PERFORMANCE! 🤩 | Benoit Saint-Denis vs Paddy Pimblett | #UFC329 Fight Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "62043",
    "fighter": "Petr Yan",
    "opponent": "Urijah Faber",
@@ -403,6 +992,18 @@
    "videoId": "64Ji8E6KV14",
    "kind": "full-fight",
    "title": "Petr Yan vs Urijah Faber | FULL FIGHT | UFC 333",
+   "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "65665",
+   "fighter": "Petr Yan",
+   "opponent": "Jose Aldo",
+   "date": "2020-07-11",
+   "event": "UFC 251: Usman vs Masvidal",
+   "videoId": "WhAhURo9Lic",
+   "kind": "finish",
+   "title": "Crowning Moment: Petr Yan Claims Vacant Title With Late KO Finish Over José Aldo 👑",
    "publisher": "UFC",
    "checkedOn": "2026-11-25"
   },
@@ -460,6 +1061,54 @@
    "auVerifiedAt": "2026-11-25T05:22:37Z"
   },
   {
+   "boutId": "66007",
+   "fighter": "Sean O'Malley",
+   "opponent": "Aiemann Zahabi",
+   "date": "2026-06-15",
+   "event": "UFC Freedom 250",
+   "videoId": "3bXDgH4B05o",
+   "kind": "highlights",
+   "title": "UFC Freedom 250 Highlights: Sean O'Malley vs. Aiemann Zahabi | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60659",
+   "fighter": "Sean Strickland",
+   "opponent": "Anthony Hernandez",
+   "date": "2026-02-21",
+   "event": "UFC Fight Night: Strickland vs Hernandez",
+   "videoId": "V8Vv-ngALFo",
+   "kind": "highlights",
+   "title": "Sean Strickland vs Anthony Hernandez Highlights 👊 | UFC Houston",
+   "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "59768",
+   "fighter": "Sergei Pavlovich",
+   "opponent": "Tai Tuivasa",
+   "date": "2022-12-04",
+   "event": "UFC Fight Night: Thompson vs Holland",
+   "videoId": "c05u61CZR14",
+   "kind": "finish",
+   "title": "Sergei Pavlovich knocks out Tai Tuivasa in first round #UFCOrlando | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "66103",
+   "fighter": "Sergei Pavlovich",
+   "opponent": "Tallison Teixeira",
+   "date": "2026-05-30",
+   "event": "UFC Fight Night: Song vs Figueiredo",
+   "videoId": "XL2uTUuFgA4",
+   "kind": "highlights",
+   "title": "UNREAL BEATDOWN! 😳 | Sergei Pavlovich vs Tallison Teixeira | #UFCMacau Fight Night Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60182",
    "fighter": "Shara Magomedov",
    "opponent": "Armen Petrosyan",
@@ -472,6 +1121,30 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "66101",
+   "fighter": "Song Yadong",
+   "opponent": "Deiveson Figueiredo",
+   "date": "2026-05-30",
+   "event": "UFC Fight Night: Song vs Figueiredo",
+   "videoId": "QrmdGHa8ovs",
+   "kind": "highlights",
+   "title": "SUPER GUILLOTINE CHOKE! 🔥 | Song Yadong vs Deiveson Figueiredo | #UFCMacau Fight Night Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "83010",
+   "fighter": "Song Yadong",
+   "opponent": "Umar Nurmagomedov",
+   "date": "2026-08-29",
+   "event": "UFC Fight Night: Nurmagomedov vs Song",
+   "videoId": "2joMs7riMzY",
+   "kind": "highlights",
+   "title": "STUNNING KNOCKOUT! 🔥 | Umar Nurmagomedov vs Song Yadong | #UFCShanghai Highlights",
+   "publisher": "TNT Fight Sports",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60418",
    "fighter": "Steve Garcia",
    "opponent": "David Onama",
@@ -481,6 +1154,42 @@
    "kind": "full-fight",
    "title": "Steve Garcia vs David Onama | FULL FIGHT | UFC Freedom 250",
    "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "59707",
+   "fighter": "Tatiana Suarez",
+   "opponent": "Montana De La Rosa",
+   "date": "2023-02-25",
+   "event": "UFC Fight Night: Muniz vs Allen",
+   "videoId": "nHzL3Ve1poM",
+   "kind": "finish",
+   "title": "Tatiana Suarez submits Montana De La Rosa in her first fight since 2019 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60752",
+   "fighter": "Tatsuro Taira",
+   "opponent": "HyunSung Park",
+   "date": "2025-08-03",
+   "event": "UFC Fight Night: Taira vs Park",
+   "videoId": "R-mMseN-ub0",
+   "kind": "finish",
+   "title": "Tatsuro Taira submits HyunSung Park in main event of #UFCVegas108 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "60522",
+   "fighter": "Tatsuro Taira",
+   "opponent": "Brandon Moreno",
+   "date": "2025-12-07",
+   "event": "UFC 323: Dvalishvili vs Yan 2",
+   "videoId": "jd1i5P8j-_k",
+   "kind": "highlights",
+   "title": "VICIOUS GROUND & POUND ATTACK! 😮‍💨 | Brandon Moreno vs. Tatsuro Taira | #UFC323 Fight Highlights",
+   "publisher": "TNT Fight Sports",
    "checkedOn": "2026-11-25"
   },
   {
@@ -512,6 +1221,18 @@
    "checkedOn": "2026-11-25"
   },
   {
+   "boutId": "59758",
+   "fighter": "Umar Nurmagomedov",
+   "opponent": "Raoni Barcelos",
+   "date": "2023-01-14",
+   "event": "UFC Fight Night: Strickland vs Imavov",
+   "videoId": "eyzZlP1Tz80",
+   "kind": "finish",
+   "title": "Umar Nurmagomedov wins in highlight-reel fashion at #UFCVegas67 | ESPN MMA",
+   "publisher": "ESPN MMA",
+   "checkedOn": "2026-11-25"
+  },
+  {
    "boutId": "60660",
    "fighter": "Uros Medic",
    "opponent": "Geoff Neal",
@@ -521,6 +1242,18 @@
    "kind": "full-fight",
    "title": "KNOCKED OUT COLD | Uroš Medić vs Geoff Neal | FULL FIGHT",
    "publisher": "UFC",
+   "checkedOn": "2026-11-25"
+  },
+  {
+   "boutId": "59585",
+   "fighter": "Zhang Weili",
+   "opponent": "Joanna Jedrzejczyk",
+   "date": "2022-06-11",
+   "event": "UFC 275: Teixeira vs Prochazka",
+   "videoId": "f8B4cKnKlU8",
+   "kind": "full-fight",
+   "title": "Zhang Weili vs. Joanna Jedrzejczyk 2 FULL FIGHT [UFC 275 – June 12, 2022] | ESPN MMA",
+   "publisher": "ESPN MMA",
    "checkedOn": "2026-11-25"
   }
  ]
