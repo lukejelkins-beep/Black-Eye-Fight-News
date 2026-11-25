@@ -2,7 +2,11 @@
    The sport is the area you are in: Boxing or MMA here, Sumo on its own pages. "all" is the
    mixed front page, reached from the logo. Grappling is hidden from the navigation for now
    (owner: a separate project), so a saved "grappling" falls back to the front page.
-   This only selects local views; it does not change any data polling, workflows or endpoints. */
+   This only selects local views; it does not change any data polling, workflows or endpoints.
+   The sport is also kept in the address as ?sport=mma or ?sport=boxing (before the #), so a
+   shared or reopened link shows the same sport (QA audit D02, 25 Nov 2026). The front page
+   ("all") has no parameter. Routes after the # are unchanged, and the browser keeps the query
+   through every '#…' navigation. A link without ?sport falls back to the saved choice. */
 (() => {
  'use strict';
  const KEY='befn-selected-sport-v1.0.3';
@@ -10,6 +14,18 @@
  const NAMES={all:'All sports',boxing:'Boxing',mma:'MMA'};
  let value='all';
  try{const saved=localStorage.getItem(KEY);if(allowed.has(saved))value=saved}catch(_){}
+ /* A sport in the address wins over the saved choice, and becomes the saved choice. */
+ const fromURL=(()=>{try{return new URLSearchParams(location.search).get('sport')}catch(_){return null}})();
+ if(allowed.has(fromURL)){value=fromURL;try{localStorage.setItem(KEY,value)}catch(_){}}
+ function writeURL(){
+  try{
+   const url=new URL(location.href);
+   if(value==='all')url.searchParams.delete('sport');else url.searchParams.set('sport',value);
+   const next=url.pathname+url.search+url.hash;
+   if(next!==location.pathname+location.search+location.hash)history.replaceState(history.state,'',next);
+  }catch(_){}
+ }
+ writeURL();
  function refreshUI(){
   if(!document.body)return;
   document.body.dataset.befnSport=value;
@@ -27,6 +43,7 @@
   if(!allowed.has(next)||next===value)return;
   value=next;
   try{localStorage.setItem(KEY,next)}catch(_){}
+  writeURL();
   refreshUI();
   document.dispatchEvent(new CustomEvent('befn:sport-change',{detail:{sport:value}}));
  }
@@ -49,7 +66,7 @@
  document.addEventListener('DOMContentLoaded',refreshUI);
  window.addEventListener('storage',event=>{
   if(event.key===KEY&&allowed.has(event.newValue)&&value!==event.newValue){
-   value=event.newValue;refreshUI();
+   value=event.newValue;writeURL();refreshUI();
    document.dispatchEvent(new CustomEvent('befn:sport-change',{detail:{sport:value}}));
   }
  });
