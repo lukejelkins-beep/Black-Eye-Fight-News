@@ -1,18 +1,14 @@
 {
-  "checkedAt": "2026-11-25T08:51:57.233Z",
+  "checkedAt": "2026-11-25T14:47:45.845Z",
   "sitesConfigured": 34,
-  "sitesChecked": 26,
-  "sitesFailed": 8,
+  "sitesChecked": 25,
+  "sitesFailed": 9,
   "added": 0,
   "discovered": [],
   "failures": [
     {
       "name": "Cage Warriors",
       "reason": "HTTP 403"
-    },
-    {
-      "name": "Invicta FC",
-      "reason": "fetch failed"
     },
     {
       "name": "BoxingScene",
@@ -23,11 +19,15 @@
       "reason": "HTTP 403"
     },
     {
-      "name": "Premier Boxing Champions",
-      "reason": "HTTP 403"
+      "name": "Queensberry Promotions",
+      "reason": "fetch failed"
     },
     {
       "name": "DAZN Boxing",
+      "reason": "HTTP 403"
+    },
+    {
+      "name": "Premier Boxing Champions",
       "reason": "HTTP 403"
     },
     {
@@ -37,6 +37,10 @@
     {
       "name": "First Round Management",
       "reason": "Unexpected redirect"
+    },
+    {
+      "name": "Invicta FC",
+      "reason": "The operation was aborted due to timeout"
     }
   ],
   "conflicts": [
