@@ -5,16 +5,16 @@ const filmSource=fs.readFileSync('assets/fight-film.js','utf8');
 assert(fullSite.includes('assets/news-list.css'),'Compact news-list stylesheet loads');
 assert(fullSite.includes('assets/news-page.css'),'News page stylesheet loads');
 assert(fullSite.includes('assets/news-page.js'),'News page module loads before the app');
-assert(fullSite.includes('BEFNNewsPage.rowHTML'),'News list uses the photo-led row');
+assert(fullSite.includes('BEFNNewsFront.feedHTML'),'News list uses the design A timeline (owner, 25 Nov 2026)');
 assert(fullSite.includes('summaryPoints'),'News summaries require verified source data');
 assert(fullSite.includes('editorial-compact.css'),'Editorial-first CSS linked');
 assert(fullSite.includes('function topStories()'),'Headline ranking implemented on public home');
 const installedAppSource=fs.readFileSync('assets/mobile-app.js','utf8');
 assert(fullSite.includes('function newsFeedItems()'),'Home and News share the same underlying article feed');
 assert(fullSite.includes('function renderNews(){return renderHome();}'),'Old news links use unified home');
-assert(!fullSite.includes('data-nav="news"'),'Duplicate News section removed');
+assert((fullSite.match(/data-nav="news"/g)||[]).length===1,'News is one section in the section bar (owner, 25 Nov 2026)');
 assert(!installedAppSource.includes("['news','News','news']"),'Mobile duplicate News tab removed');
-assert(installedAppSource.includes("route==='news'?'home':(groupOf[route]||route)"),'Old News deep links highlight the new News tab');
+assert(installedAppSource.includes("['#news','News']")&&installedAppSource.includes('const key=groupOf[route]||route;'),'News is in the phone menu; no bottom tab claims #news');
 assert(!installedAppSource.includes('Newsletter editions'),'Private newsletter remains separate from public website');
 
 assert(!fullSite.includes('THE FIGHT<br>WORLD'),'Promotional home hero removed');
@@ -47,7 +47,7 @@ assert(!ctx.topStories().some(a=>a.title.includes('Main Card Results')),'Routine
 const home=ctx.renderHome();
 assert(home.includes('np-head')&&home.includes('np-leads'),'Home page opens with the news header and two leads');
 assert(home.includes('id="news-feed"'),'Featured stories and full news feed are unified');
-assert(!fullSite.includes('data-nav="news"'),'No duplicate desktop News page');
+assert((fullSite.match(/data-nav="news"/g)||[]).length===1,'No duplicate desktop News link');
 assert(fullSite.includes('pages={home:renderLanding,news:renderHome,'),'#home is the landing page and #news still opens the news page');
 const mobileNav=fs.readFileSync('assets/mobile-app.js','utf8');
 assert(['Home','Fights','Fighters','Analysis','Fight Talk'].every(l=>mobileNav.includes("'"+l+"'")),'Mobile tabs are the five primary items');
