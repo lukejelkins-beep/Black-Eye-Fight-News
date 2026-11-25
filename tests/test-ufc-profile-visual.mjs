@@ -167,12 +167,13 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
   },profile.id,{timeout:12000});
-  // The sumo-style profile shows a hero rating panel, a Ratings card and
-  // nine Recent Performance tiles. Wait for the lifted panel and tiles.
+  // Profile design A (owner, 2026-11-25): a hero rating or recent-form panel, the tab bar, and the nine Recent
+  // Performance tiles moved into the Stats tab. The Ratings card holds only the ratings that have a value, so it is
+  // no longer waited for (a fighter with none has no card).
   await page.waitForFunction(()=>{
    const d=document.querySelector("#fighterDialog.befn-pro-dialog");
    return !!d?.querySelector("[data-befn-pro-rating] .befn-pro-score")&&
-    !!d?.querySelector(".befn-pro-ratings .befn-pro-meters")&&
+    !!d?.querySelector(".befn-pa-tabs [role=tab]")&&
     !!d?.querySelector(".befn-pro-stats .befn-pro-tiles");
   },null,{timeout:12000});
   // A fighter in the stats build first shows a placeholder ("—") while their stats file loads; count the rating
@@ -241,8 +242,10 @@ async function checkProfile(page,profile,screen){
       photoVerified:!!f?.photoRightsVerified};
     })(),
     closeVisible:!!d?.querySelector("button#closeFighter"),
-    renderedClassification:d?.querySelector(".befn-v3-status")?.textContent||"",
-    formStage:d?.querySelector(".befn-pro-score .befn-form-chip")?.textContent||"",
+    // Design A: classification and the Fighters hub stage are pills under the record.
+    renderedClassification:d?.querySelector(".befn-pa-pills")?.textContent||"",
+    formStage:d?.querySelector(".befn-pa-pills .befn-form-chip")?.textContent||"",
+    placeholderText:["Not rated","No credentials listed","No title history listed","Unassessed"].filter(w=>(d?.innerText||"").includes(w)),
     championshipBelt:!!d?.querySelector(".befn-title-belts"),
     clippedElements:[...(d?.querySelectorAll(".befn-pro-card h3,.befn-pro-hero h2,.befn-pro-meter-head,.befn-profile-block h3,.befn-classifier-indices strong")||[])]
       .filter(x=>{const c=getComputedStyle(x);return (x.scrollWidth>x.clientWidth+5&&c.overflowX==="hidden")||
@@ -264,9 +267,10 @@ async function checkProfile(page,profile,screen){
   assert.equal(details.category,expectedCategory,"classification display mismatch");
   assert(details.historyV3,"UFC profile is not using the sumo-style profile design");
   // Rating model 2026-11: a fighter rated by the stats build shows Results, Striking, Wrestling, Grappling and Recent
-  // form (each skill includes its own defence since 2026-11-24); one the build cannot rate keeps the older five bars.
-  const expectedBars=5;
-  assert.equal(details.metrics,expectedBars,"Ratings card requires exactly "+expectedBars+" rating bars");
+  // form (each skill includes its own defence since 2026-11-24). Design A (owner, 2026-11-25): a rating with no value
+  // is left out rather than shown as "Not rated", so the card holds at most five bars, each with a value.
+  assert(details.metrics<=5,"Ratings card holds at most five rating bars");
+  assert.deepEqual(details.placeholderText,[],"profile shows a placeholder or Unassessed");
   assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
   const saved=verifiedV3?.schema===4?verifiedV3.fighters?.[normalized(profile.name)]:null;
   const vettedPerformance=Object.values(saved?.metrics||{}).some(m=>
@@ -312,6 +316,16 @@ async function checkProfile(page,profile,screen){
   // On mobile all outcome/method fields must fit within the dialog itself,
   // not merely exist in the DOM beyond the right-hand edge of the viewport.
   if(screen==="mobile"&&profile.latest.length){
+   // Design A: the full fight cards (with round by round) are under the Fights tab; the Overview has compact rows.
+   const overview=await page.evaluate(()=>{
+    const dialog=document.querySelector("#fighterDialog"),edge=dialog.getBoundingClientRect();
+    return [...dialog.querySelectorAll(".befn-pa-panel[data-pa-panel=overview] .befn-pa-fight")].map(row=>{
+     const r=row.getBoundingClientRect();
+     return r.width>4&&r.left>=edge.left-5&&r.right<=edge.right+5&&!!row.querySelector(".befn-pa-chip")?.textContent.trim();
+    });
+   });
+   assert(overview.length&&overview.every(Boolean),"mobile Overview recent fights must fit without sideways scrolling");
+   await page.locator('#fighterDialog .befn-pa-tabs [data-pa-tab="fights"]').click({timeout:5000});
    const mobile=await page.evaluate(()=>{
     const dialog=document.querySelector("#fighterDialog");
     const edge=dialog.getBoundingClientRect();
@@ -326,6 +340,7 @@ async function checkProfile(page,profile,screen){
    });
    assert(mobile.every(x=>x.visible&&x.outcome&&x.method),
     "mobile UFC recent fight outcomes and methods must fit without sideways scrolling");
+   await page.locator('#fighterDialog .befn-pa-tabs [data-pa-tab="overview"]').click({timeout:5000});
   }
   // A source URL by itself is not a verified credential. Athlete-reported
   // achievements, including unsupported credential kinds, earn no badge.

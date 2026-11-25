@@ -35,14 +35,14 @@ BY_EYE = {
 }
 
 
-def judge(alpha):
+def judge(alpha, min_cover=MIN_COVER, max_cover=MAX_COVER):
     """alpha: 2-D uint8 array. Returns (ok, reason, cleaned_alpha)."""
     import numpy as np
     from scipy import ndimage
     mask = alpha > 128
     cover = float(mask.mean())
-    if not MIN_COVER <= cover <= MAX_COVER:
-        return False, f"coverage {cover:.2f} outside {MIN_COVER}-{MAX_COVER}", alpha
+    if not min_cover <= cover <= max_cover:
+        return False, f"coverage {cover:.2f} outside {min_cover}-{max_cover}", alpha
     labels, n = ndimage.label(mask)
     if n == 0:
         return False, "empty", alpha
@@ -153,6 +153,61 @@ def check_framed(im):
     if semi > 0.1:
         return False, f"soft halo ({semi:.2f} semi-transparent)"
     return True, ""
+
+
+# Full-body cut-outs (owner, 25 Nov 2026: "Drop-folder full bodies"). Only photographs the owner supplies through
+# `scripts/photo-runner.py drop <folder> --kind fullbody` with a dated attestation; the champions carousel shows them
+# large, so the whole figure is kept rather than cropped to head and shoulders. Same model and connectivity checks;
+# a standing figure is narrower, so the coverage range is wider, and it has to run most of the frame's height.
+FULLBODY_MIN_COVER, FULLBODY_MAX_COVER = 0.08, 0.80
+FULLBODY_MIN_SPAN = 0.60  # the figure runs at least 60% of the photograph's height
+FULLBODY_MAX_H = 1400  # shown at up to 600 px tall, so this stays sharp on 2x screens
+FULLBODY_MIN_H = 800
+
+
+def judge_fullbody(alpha):
+    """alpha: 2-D uint8 array of a full-length photograph. Returns (ok, reason, cleaned_alpha)."""
+    import numpy as np
+    if alpha.shape[0] < FULLBODY_MIN_H:
+        return False, f"source under {FULLBODY_MIN_H}px tall", alpha
+    ok, reason, cleaned = judge(alpha, FULLBODY_MIN_COVER, FULLBODY_MAX_COVER)
+    if not ok:
+        return ok, reason, alpha
+    rows = np.where((cleaned > 128).any(axis=1))[0]
+    span = (rows[-1] - rows[0] + 1) / alpha.shape[0]
+    if span < FULLBODY_MIN_SPAN:
+        return False, f"not a full-length figure: it runs {span:.0%} of the height", alpha
+    return True, f"{reason}, figure runs {span:.0%} of the height", cleaned
+
+
+def frame_fullbody(im):
+    """Trim a full-body RGBA cut-out to the figure (a 2% margin), no taller than FULLBODY_MAX_H."""
+    import numpy as np
+    from PIL import Image
+    a = np.array(im)[:, :, 3] > 128
+    rows, cols = np.where(a.any(axis=1))[0], np.where(a.any(axis=0))[0]
+    pad = int(round(0.02 * (rows[-1] - rows[0] + 1)))
+    box = (max(0, cols[0] - pad), max(0, rows[0] - pad), min(a.shape[1], cols[-1] + 1 + pad), min(a.shape[0], rows[-1] + 1 + pad))
+    out = im.crop(box)
+    if out.height > FULLBODY_MAX_H:
+        out = out.resize((max(1, round(out.width * FULLBODY_MAX_H / out.height)), FULLBODY_MAX_H), Image.LANCZOS)
+    return out
+
+
+def fullbody_cutout(src, out, remove):
+    """Cut the figure out of a full-length photograph. remove: PIL RGB image -> RGBA image (rembg).
+    Writes `out` (WebP) only when the checks pass. Returns (ok, reason)."""
+    import numpy as np
+    from PIL import Image
+    arr = np.array(remove(Image.open(src).convert("RGB")).convert("RGBA"))
+    ok, reason, cleaned = judge_fullbody(arr[:, :, 3])
+    if not ok:
+        return False, reason
+    arr[:, :, 3] = cleaned
+    out = Path(out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    frame_fullbody(Image.fromarray(arr)).save(out, quality=88, method=6)
+    return True, reason
 
 
 def main() -> int:

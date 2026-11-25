@@ -19,6 +19,8 @@ PAGES = [  # register, page, sport label, attestation wording for press-kit phot
      "Published under the BEFN operator's attestation of 24 November 2026 that press-kit and media fighter "
      "photographs from PFL, ONE Championship, KSW, RIZIN and Cage Warriors may be republished with the promoter credited"),
 ]
+FULLBODY = ROOT / "data/fullbody-cutout-register.json"
+FULLBODY_ON = {"Boxing": "boxing", "MMA": "ufc"}  # which page lists which sport's full-body cut-outs
 e = html.escape
 
 STYLE = ("body{max-width:850px;margin:3rem auto;padding:0 1rem;font:16px/1.6 'DM Sans',system-ui,sans-serif;"
@@ -29,7 +31,7 @@ STYLE = ("body{max-width:850px;margin:3rem auto;padding:0 1rem;font:16px/1.6 'DM
          "a{color:#cf1824}li{margin:1rem 0}")
 
 
-def page(reg, sport, who, press_wording):
+def page(reg, sport, who, press_wording, fullbody=None):
     images = sorted(reg["images"], key=lambda r: r["name"])
     commons = [r for r in images if r.get("rights") == "wikimedia-cc"]
     press = [r for r in images if r.get("rights") == "promoter-press-kit"]
@@ -79,15 +81,28 @@ def page(reg, sport, who, press_wording):
                          "Changes: cropped to BEFN's portrait, card and thumbnail shapes and converted to WebP.</li>")
         parts.append("</ul>")
 
+    full = sorted(((k, v) for k, v in (fullbody or {}).items()
+                   if v.get("ok") is True and v.get("sport") == FULLBODY_ON.get(sport)), key=lambda kv: kv[0])
+    if full:
+        parts.append("<h2>Full-body cut-outs supplied by the BEFN operator</h2><p>Full-length photographs the operator "
+                     "supplied for the champions pages, each with its credit and the operator's own statement of "
+                     "permission.</p><ul>")
+        for k, v in full:
+            parts.append(f"<li><strong>{e(v.get('name') or k.replace('-', ' ').title())}</strong> — {e(v.get('credit', ''))}. "
+                         f"Permission: {e(v.get('attestation', ''))} · "
+                         "Changes: background removed, trimmed to the figure and converted to WebP.</li>")
+        parts.append("</ul>")
+
     parts.append(f"<p>{len(images)} photographs in all. A {who} with no photograph here is shown by name alone, "
                  "or by their initials; BEFN does not use a photograph it cannot account for.</p></body></html>")
     return "\n".join(parts) + "\n", len(commons), len(press), len(owner), len(images)
 
 
 def main():
+    fullbody = json.loads(FULLBODY.read_text(encoding="utf-8")).get("cutouts", {}) if FULLBODY.exists() else {}
     for register, out, sport, who, wording in PAGES:
         reg = json.loads(register.read_text(encoding="utf-8")) if register.exists() else {"images": []}
-        text, commons, press, owner, total = page(reg, sport, who, wording)
+        text, commons, press, owner, total = page(reg, sport, who, wording, fullbody)
         out.write_text(text, encoding="utf-8")
         print(f"{out.name}: {commons} Commons, {press} press-kit, {owner} owner-supplied, {total} in all")
 

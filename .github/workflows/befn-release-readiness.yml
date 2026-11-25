@@ -25,6 +25,7 @@ jobs:
           node --check assets/fighter-insights.js
           node --check assets/ufc-prospect-contender.js
           node --check assets/upcoming-cards.js
+          node --check assets/fighter-profile-a.js
       - name: Verify reviewed UFC profile integrity and scoring
         run: |
           node --test tests/test-ufc-fighter-v3.mjs
@@ -51,6 +52,7 @@ jobs:
           node --test tests/test-ufc-profile-queue.mjs
           node --test tests/test-ufc-postfight-metrics.mjs
           node --test tests/test-ufc-qa-freshness.mjs
+          node --test tests/test-fighter-profile-a.cjs
       - name: Validate fight cards and results without API calls
         run: |
           node tests/test-upcoming-ui.cjs

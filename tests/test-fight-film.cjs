@@ -39,6 +39,8 @@ assert.strictEqual(F.tagOf({ title: 'A vs B', kind: 'TKO · R2 4:39' }), 'finish
 assert.strictEqual(F.tagOf({ title: 'CLINICAL RD 1 FINISH | A VS B | CW 215 FREE FIGHT' }), 'finish');
 assert.strictEqual(F.tagOf({ title: 'A vs B | FULL FIGHT | UFC Qatar' }), 'full');
 assert.strictEqual(F.tagOf({ title: 'HIGHLIGHTS | A vs. B' }), 'highlights');
+assert.strictEqual(F.isShort({ title: 'WHAT A FINISH Jarred Brooks and Mansur Malachiev', url: 'https://www.youtube.com/watch?v=mUKBT9jY--w', isShort: true }), true, 'A Short marked by the collector is a Short even without #shorts');
+assert.strictEqual(F.isShort({ title: 'A vs B', url: 'https://www.youtube.com/watch?v=08tvCDKpPRo', isShort: false }), false);
 // Owner, 24 Nov 2026: compilations are not fight finishes.
 for (const t of ['AND NEW! 5 CRAZY Knockouts That Won Championships | HIGHLIGHTS', '4 Forgotten Knockouts, Do You Remember Them?', 'Every Knockout & Submission From UFC Qatar | UFC Highlights', "PFL's Most Dominant Performances | Full Fight Compilation", 'AND THE CROWD WAS STUNNED! | 100 Knockouts In PFL MMA!'])
   assert.strictEqual(F.tagOf({ title: t }), 'highlights', t);
