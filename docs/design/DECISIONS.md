@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-25 (Profile fight videos: ESPN MMA and TNT clips)
+- **Broadcaster clips are allowed in the profile video list: ESPN MMA (@ESPNMMA) and TNT Fight Sports (@TNTFightSports), alongside UFC (@ufc).** The film feed already uses both channels. Every other channel stays out: UFC on Paramount+, UFC Brasil/Español/India, Eurosport, DAZN, Sony and fan uploads. A broadcaster clip's button names its channel ("Watch the finish · ESPN MMA"). The rules are the same: oEmbed author on the allowed list, the title names the winner, and a rematch must be identified by number, event or the word "rematch". The Australian-playback check is the same too.
+- **61 clips added (99 in all: 42 UFC, 38 ESPN MMA, 19 TNT; 41 full fights, 29 highlights, 29 finishes),** from a pass over the champions' and top-5 fighters' KO/sub wins since 2019 that still had no video (162 bouts). UFC's "FINISH FIGHT" Pereira vs Rountree video is labelled highlights, because its title does not say what it shows. The "Crowning Moment" Gaethje vs Ferguson clip stays out. — Owner (picked "Add broadcaster clips") — `data/ufc-finish-clips.json`, `assets/fighter-finish-clips.js`.
+
 ## 2026-11-25 (Profile fight videos: second pass)
 - **21 more official UFC fight videos in `data/ufc-finish-clips.json` (38 in all: 35 full fights, 2 highlights, 1 finish).** The second pass covered the ~90 bouts the first pass did not reach and the last three KO/sub wins of the 102 fighters ranked 6–15 (360 bouts, one search per fighter). The rules were the same: oEmbed author "UFC" (@ufc), the title names the bout, and a rematch number has to match this meeting. Two were dropped for that reason: "Figueiredo vs Moreno 3" is their third fight, while our bout is the fourth (UFC 283), and Grasso vs Barber has two meetings and no number in the title. Most UFC full-fight uploads have embedding turned off (oEmbed 403), so they can be neither checked nor shown; that, and broadcaster channels (ESPN, TNT, Paramount+), is why coverage stays low. — Owner (picked "Yes, and widen") — `data/ufc-finish-clips.json`.
 
