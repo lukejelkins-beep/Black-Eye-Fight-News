@@ -1,42 +1,46 @@
 # Fighters without an approved photo
 
-Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`. Sorted by prominence: current champion, upcoming main event, upcoming card, recent result, roster.
+Generated 2026-11-26T03:44:32+00:00 by `python3 scripts/photo-runner.py missing`. Sorted by prominence: current champion, upcoming main event, upcoming card, recent result, roster.
 
-## BOXING: 237 without a photo, 18 with a photo but no cut-out (320 on the site)
+## BOXING: 247 without a photo, 18 with a photo but no cut-out (330 on the site)
 
 | Fighter | Why they matter | Last attempt |
 | --- | --- | --- |
-| Aaron McKenna | IBF middleweight champion | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Agit Kabayel | WBC heavyweight champion; main event: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Anthony Cacace | WBA super featherweight champion; main event: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Daniel Dubois | WBO heavyweight champion | 2026-11-24: rejected by eye (no press kit, and Commons: lead photograph reviewed and not used: the lead photograph is a ring walk in a crowd: a dozen people in frame and) |
-| Erislandy Lara | WBA middleweight champion; main event: Erislandy Lara vs Tim Tszyu (2026-12-13) | 2026-11-24: rejected by eye (no press kit, and Commons: lead photograph reviewed and not used: the lead photograph is mid-fight, side-on, and the face is small at thumbn) |
-| Floyd Schofield | WBA lightweight champion | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Gary Antuanne Russell | WBA super lightweight champion | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| José Salas Reyes | IBF bantamweight champion | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
-| Michał Cieślak | WBC cruiserweight champion; main event: David Benavidez vs Michał Cieślak (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Murat Gassiev | WBA heavyweight champion | 2026-11-24: no source (no press kit, and Commons: only 201px wide) |
-| Osleys Iglesias | IBF super middleweight champion | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Sebastian Fundora | WBC super welterweight champion | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Takuma Inoue | WBC bantamweight champion | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| William Zepeda | WBC lightweight champion | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Gabriel Gollaz Valenzuela | main event: Adam Azim vs Gabriel Gollaz Valenzuela (2026-12-04) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
-| Michel Soro | main event: Michel Soro vs George Liddard: Monte-Carlo Showdown VII (2026-12-12) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Nelson Hysa | main event: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Nick Ball | main event: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
-| Tim Tszyu | main event: Erislandy Lara vs Tim Tszyu (2026-12-13); scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Aaron McKenna | IBF middleweight champion | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Agit Kabayel | WBC heavyweight champion; main event: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Anthony Cacace | WBA super featherweight champion; main event: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Daniel Dubois | WBO heavyweight champion | 2026-11-25: rejected by eye (no press kit, and Commons: lead photograph reviewed and not used: the lead photograph is a ring walk in a crowd: a dozen people in frame and) |
+| Erislandy Lara | WBA middleweight champion; main event: Erislandy Lara vs Tim Tszyu (2026-12-13) | 2026-11-25: rejected by eye (no press kit, and Commons: lead photograph reviewed and not used: the lead photograph is mid-fight, side-on, and the face is small at thumbn) |
+| Floyd Schofield | WBA lightweight champion | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Gary Antuanne Russell | WBA super lightweight champion | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| José Salas Reyes | IBF bantamweight champion | 2026-11-25: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Michał Cieślak | WBC cruiserweight champion; main event: David Benavidez vs Michał Cieślak (2026-12-05) | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Murat Gassiev | WBA heavyweight champion | 2026-11-25: no source (no press kit, and Commons: only 201px wide) |
+| Osleys Iglesias | IBF super middleweight champion | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Sebastian Fundora | WBC super welterweight champion | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Takuma Inoue | WBC bantamweight champion | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| William Zepeda | WBC lightweight champion | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Gabriel Gollaz Valenzuela | main event: Adam Azim vs Gabriel Gollaz Valenzuela (2026-12-04) | 2026-11-25: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Michel Soro | main event: Michel Soro vs George Liddard: Monte-Carlo Showdown VII (2026-12-12) | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Nelson Hysa | main event: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Nick Ball | main event: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Tim Tszyu | main event: Erislandy Lara vs Tim Tszyu (2026-12-13); scouting roster (contender) | 2026-11-25: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Abel Ramos | on the card: Devin Haney vs Liam Paro (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Albert Ramirez | on the card: Dmitry Bivol vs Callum Smith (2026-12-12) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Alex Vallecillo | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Aloys Junior | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Angel Barrientes | on the card: Christopher Diaz vs Alan Chaves (2026-12-10); scouting roster (prospect) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Antonio Fechner | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Arbnor Jashari | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Arman Khudoyan | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Arnold Gonzalez | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Arthur Mann | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Ayman Oudriss | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Billy Stanbury | on the card: Conah Walker vs Alexis Rocha (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Bobby Faulkner | on the card: Adam Azim vs Gabriel Gollaz Valenzuela (2026-12-04) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Brandon Ortiz | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Brock Jarvis | on the card: Erislandy Lara vs Tim Tszyu (2026-12-13) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Charlie Senior | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: only 355px wide) |
 | Connor Goulding | on the card: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Cruse Stewart | on the card: David Benavidez vs Michał Cieślak (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Daniel Bär | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -53,6 +57,7 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Granit Shala | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Henry Turner | on the card: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Igor Adiel Macedo | on the card: Tyson Fury vs Anthony Joshua (2026-12-11) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| James Chereji | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Jeremy Adorno | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Jesus Dominguez | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Jesus Ramos Jr. | on the card: Devin Haney vs Liam Paro (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -77,6 +82,7 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Malik Lewis | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Marco Romero | on the card: David Benavidez vs Michał Cieślak (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Martel Washpun | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Max Schultz | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Michael Essomba | on the card: Tyson Fury vs Anthony Joshua (2026-12-11) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Moses Jolly | on the card: Tyson Fury vs Anthony Joshua (2026-12-11) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Moussa Gholam | on the card: Michel Soro vs George Liddard: Monte-Carlo Showdown VII (2026-12-12) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
@@ -84,6 +90,7 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Omar Juarez | on the card: David Benavidez vs Michał Cieślak (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Orlando González | on the card: Litzy Vázquez vs Stephanie Piñeiro (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Owen Cooper | on the card: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
+| Ozan Karadogan | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Paddy Walsh | on the card: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Patrick Korte | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Pedro Veitia | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -95,6 +102,7 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Ruben Torres | on the card: Adam Azim vs Gabriel Gollaz Valenzuela (2026-12-04) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Ruslan Nikitin | on the card: Dmitry Bivol vs Callum Smith (2026-12-12) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Serhat Parlak | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Serkay Comart | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Sharabutdin Ataev | on the card: Dmitry Bivol vs Callum Smith (2026-12-12) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Simon Zachenhuber | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Solomon Adebayo | on the card: Tyson Fury vs Anthony Joshua (2026-12-11) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -103,7 +111,9 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Tyrone McKenna | on the card: Anthony Cacace vs Nick Ball (2026-12-19) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Vergil Ortiz Jr. | on the card: David Benavidez vs Michał Cieślak (2026-12-05); scouting roster (contender) | 2026-11-24: no source (no press kit, and Commons: the article carries no free lead photograph) |
 | Veronica Tosi | on the card: Litzy Vázquez vs Stephanie Piñeiro (2026-12-05) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Willi Knorpp | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Willie Jones | on the card: Christopher Diaz vs Alan Chaves (2026-12-10) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
+| Yoel Rivas Perez | on the card: Agit Kabayel vs Nelson Hysa (2026-11-28) | 2026-11-26: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Abdulaziz Alotaibi | result: Zuffa Boxing 13: Adames vs Warburton (2026-11-14) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Abisai Torres Diaz | result: Diego Pacheco vs Darius Fulghum (2026-11-14) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
 | Adan Palma | result: Zuffa Boxing 12 (2026-11-07) | 2026-11-24: no source (no press kit, and Commons: no English Wikipedia article calling them a boxer) |
@@ -267,7 +277,7 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 
 </details>
 
-## UFC: 58 without a photo, 53 with a photo but no cut-out (958 on the site)
+## UFC: 48 without a photo, 42 with a photo but no cut-out (958 on the site)
 
 | Fighter | Why they matter | Last attempt |
 | --- | --- | --- |
@@ -279,20 +289,14 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Modestino Rodrigues | on the card: UFC Fight Night: Adesanya vs Magomedov (2026-12-05) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Quentin Pasley | on the card: UFC 335: Oliveira vs Lopes (2026-12-12) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Ahejiang Ailinuer | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
-| Alatengheili | result: UFC Fight Night: Rosas Jr. vs Barcelos (2026-09-26); result: UFC 334: Gane vs Hokit (2026-11-14) | 2026-11-24: staged (awaiting approval) |
 | BoHyun Park | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
-| Cam Nelson | result: UFC Fight Night: Nurmagomedov vs Song (2026-08-29) | 2026-11-24: staged (awaiting approval) |
 | Chungreng Koren | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Dagiisuren Chagnaadorj | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Farida Abdueva | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | George Mangos | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Ilimbek Akylbek | result: UFC Fight Night: Rosas Jr. vs Barcelos (2026-09-26) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
-| Joe Kropschot | result: UFC: Moicano vs Nolan (2026-10-31) | 2026-11-24: staged (awaiting approval) |
-| John Mitchell | result: UFC Fight Night: Procházka vs Stirling (2026-11-21) | 2026-11-24: staged (awaiting approval) |
 | Joseph Larcinese | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
-| José Souza | result: UFC: Cortes Acosta vs Walker (2026-11-07); result: UFC Fight Night: Song vs Figueiredo (2026-05-30) | 2026-11-24: staged (awaiting approval) |
 | Kasib Murdoch | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
-| Liu Ce | result: UFC Fight Night: Nurmagomedov vs Song (2026-08-29) | 2026-11-24: staged (awaiting approval) |
 | Machi Fukuda | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Mahammadali Osmanli | result: UFC Fight Night: Rosas Jr. vs Barcelos (2026-09-26) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Matthieu Duclos | result: UFC Fight Night: Hooker vs Parnasse (2026-09-05); Fighters hub (UFC form file) (+1 more) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
@@ -300,11 +304,7 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Michael Venom Page | result: UFC Fight Night: Hooker vs Parnasse (2026-09-05) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Rabindra Dhant | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Ryo Tajima | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
-| Sean King III | result: UFC Fight Night: Silva vs Delgado (2026-09-12) | 2026-11-24: staged (awaiting approval) |
-| Shoaib Yousaf | result: UFC Fight Night: Procházka vs Stirling (2026-11-21) | 2026-11-24: staged (awaiting approval) |
 | Takaya Suzuki | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
-| Tina Black | result: UFC Fight Night: Rosas Jr. vs Barcelos (2026-09-26) | 2026-11-24: staged (awaiting approval) |
-| Tommy Gantt | result: UFC Fight Night: Silva vs Delgado (2026-09-12); result: UFC Fight Night: Allen vs Costa (2026-05-16) | 2026-11-24: staged (awaiting approval) |
 | Xiong Jingnan | result: UFC Fight Night: Nurmagomedov vs Song (2026-08-29); result: UFC Fight Night: Song vs Figueiredo (2026-05-30) (+2 more) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | Yilizhati Maimaitijiang | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
 | YoungJae Song | result: UFC: Maheshate vs Flowers (2026-08-28) | 2026-11-24: no source (no known ESPN id (search not used: --no-search)) |
@@ -335,7 +335,7 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 - Alexander Volkanovski: soft halo (0.13 semi-transparent)
 - Islam Makhachev: shoulders missing (bottom band 0.52 filled)
 - Alexander Poppeck: soft halo (0.23 semi-transparent)
-- Alik Lorenz: shoulders missing (bottom band 0.33 filled); with the 24 Nov framing fix it passes the checks but the source is a face close-up, dropped by owner review
+- Alik Lorenz: soft halo (0.20 semi-transparent)
 - Allen Frye Jr.: shoulders missing (bottom band 0.48 filled)
 - Curtis Blaydes: shoulders missing (bottom band 0.53 filled); with the 24 Nov framing fix it passes the checks but the source is a face close-up, dropped by owner review
 - Eduarda Moura: lopsided figure (0.23)
@@ -348,47 +348,36 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 - Mickey Gall: lopsided figure (0.21)
 - Shamil Gaziev: coverage 0.25 outside 0.25-0.75
 - Alexander Romanov: source portrait under 300px wide
-- Andrei Arlovski: shoulders missing (bottom band 0.10 filled)
-- Baergeng Jieleyisi: soft halo (0.18 semi-transparent)
 - Belal Muhammad: shoulders missing (bottom band 0.46 filled)
-- Bryan Battle: soft halo (0.17 semi-transparent)
 - Caio Machado: source portrait under 300px wide
 - Cameron Nelson: source portrait under 300px wide
 - Ce Liu: source portrait under 300px wide
-- Chris Barnett: shoulders missing (bottom band 0.35 filled)
-- Daniel Frunza: shoulders missing (bottom band 0.36 filled)
+- Chris Barnett: shoulders missing (bottom band 0.34 filled)
+- Daniel Frunza: soft halo (0.23 semi-transparent)
 - Derrick Lewis: shoulders missing (bottom band 0.44 filled)
 - Ethyn Ewing: lopsided figure (0.29)
 - Fatima Kline: shoulders missing (bottom band 0.43 filled)
-- Guram Kutateladze: shoulders missing (bottom band 0.07 filled)
-- Hamdy Abdelwahab: shoulders missing (bottom band 0.46 filled)
+- Hamdy Abdelwahab: soft halo (0.14 semi-transparent)
 - Heili Alateng: source portrait under 300px wide
 - Jacqueline Cavalcanti: soft halo (0.32 semi-transparent)
-- Jairzinho Rozenstruik: shoulders missing (bottom band 0.33 filled)
+- Jairzinho Rozenstruik: shoulders missing (bottom band 0.35 filled)
 - Jake Hadley: dropped by owner review: background speck at the bottom edge
 - Jose Daniel Medina: dropped by owner review: background speck at the bottom edge
 - Jose Henrique: source portrait under 300px wide
 - Joseph Kropschot: source portrait under 300px wide
-- Josh Fremd: soft halo (0.11 semi-transparent)
-- Josh Parisian: shoulders missing (bottom band 0.43 filled)
-- Karl Williams: coverage 0.24 outside 0.25-0.75
+- Josh Parisian: shoulders missing (bottom band 0.16 filled)
 - Kleydson Rodrigues: lopsided figure (0.25)
 - Kyung Ho Kang: lopsided figure (0.21)
-- Marcin Prachnio: soft halo (0.27 semi-transparent)
-- Martin Buday: shoulders missing (bottom band 0.27 filled)
 - Mohammad Yahya: source portrait under 300px wide
-- Nathan Fletcher: shoulders missing (bottom band 0.56 filled)
 - Nazim Sadykhov: shoulders missing (bottom band 0.32 filled)
 - Rafael Cerqueira: source portrait under 300px wide
 - Thomas Gantt: source portrait under 300px wide
 - Valesca Machado: source portrait under 300px wide
-- Viacheslav Borshchev: soft halo (0.16 semi-transparent)
-- Yohan Lainesse: soft halo (0.23 semi-transparent)
 - Zachary Scroggin: source portrait under 300px wide
 
 </details>
 
-## MMA: 137 without a photo, 134 with a photo but no cut-out (377 on the site)
+## MMA: 139 without a photo, 140 with a photo but no cut-out (401 on the site)
 
 | Fighter | Why they matter | Last attempt |
 | --- | --- | --- |
@@ -396,12 +385,23 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Anastasia Nikolakakos (ONE Championship) | main event: ONE SAMURAI 6 (2026-12-02); result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Bhupen Mutum (ONE Championship) | main event: ONE Friday Fights 180 & The Inner Circle 40 (2026-11-27) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Paweł Pawlak (KSW) | main event: XTB KSW 124: Pawlak vs Kuberski (2026-12-19) | 2026-11-24: no source (KSW: no fighter page for this name on the KSW site) |
+| Amin Bouazza (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
+| Andreeas Binder (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
 | Arti Khatri (ONE Championship) | on the card: ONE Friday Fights 180 & The Inner Circle 40 (2026-11-27) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
+| Bafode Gassama (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
+| Boris Mbarga Atangana (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: no source (PFL: no fighter page for this name on the PFL site) |
+| Brandon Brachet (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
 | Fabio Henrique (ONE Championship) | on the card: ONE SAMURAI 6 (2026-12-02) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
+| Gocha Shainidze (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
+| Ilian Bouafia (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
+| Mauricio Partida (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
 | Norika Ryu (ONE Championship) | on the card: ONE Friday Fights 180 & The Inner Circle 40 (2026-11-27) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Rafał Haratyk (KSW) | on the card: XTB KSW 124: Pawlak vs Kuberski (2026-12-19) | 2026-11-24: no source (KSW: no fighter page for this name on the KSW site) |
 | Ryo Hirayama (ONE Championship) | on the card: ONE SAMURAI 6 (2026-12-02) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
+| Shelda Chipito (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19); result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
+| Stiven Shehu (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
 | Taiga Orii (ONE Championship) | on the card: ONE SAMURAI 6 (2026-12-02); result: ONE Friday Fights 157 & The Inner Circle 17 (2026-06-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
+| Zakaria Hamou (PFL) | on the card: PFL Lyon: Lapilus vs. McKee (2026-12-19) | 2026-11-26: staged (awaiting approval) |
 | Ahmed El Sisy (PFL) | result: PFL MENA: Riyadh (2026-10-02); result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Alridah Alnemar (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Antonio Cesar (ONE Championship) | result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18); result: ONE Fight Night 48: Erdogan vs. Elliott (2026-10-03) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
@@ -430,7 +430,6 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Jane Osigwe (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Javier Cabrera (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 175 (2026-10-16) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Jawany Scott (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Jinnosuke Kashimura (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Kalandar Tabarov (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Kentaro Okumura (ONE Championship) | result: ONE Friday Fights 177 (2026-11-06) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Koyuru Tanoue (ONE Championship) | result: ONE SAMURAI 2 (2026-08-08) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
@@ -438,7 +437,6 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | MN (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Magdalena Czaban (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07); result: ONE Fight Night 46: Hemetsberger vs. Diachkova (2026-08-15) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Magomed Magomedov (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07); result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Makoto Shinryu (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Manoel Silva (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Marcos Aurelio (ONE Championship) | result: ONE Fight Night 46: Hemetsberger vs. Diachkova (2026-08-15) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Mathew Gesto (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
@@ -449,7 +447,6 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Mostafa Rashed Nada (PFL) | result: PFL MENA: Riyadh (2026-10-02) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Mouhamed Ba (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Moustapha Diakhate (PFL) | result: PFL New York: Nurmagomedov vs Colgan (2026-07-31) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
-| Naoki Inoue (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08); result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Nattakorn Kesorn (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Nauris Bartoska (ONE Championship) | result: ONE Friday Fights 167 & The Inner Circle 27 (2026-08-21) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Nazareth Lalthazuala (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07); result: ONE Friday Fights 157 & The Inner Circle 17 (2026-06-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
@@ -468,30 +465,25 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Ryohei Kurosawa (ONE Championship) | result: ONE Fight Night 47: Stamp vs. Flores (2026-09-05) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Ryoto Nishiyama (ONE Championship) | result: ONE Friday Fights 168 & The Inner Circle 28 (2026-08-28) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Ryugo Takeuchi (ONE Championship) | result: ONE SAMURAI 5: Pacio vs Yamakita (2026-11-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Ryuya Fukuda (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Sabrinna de Sousa (PFL) | result: PFL Tampa: Cyborg vs Vieira (2026-08-22) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Sado Ucar (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Salim Mhamdi (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Sanaa Mandar (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Sanjaya Hutagaol (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 175 (2026-10-16) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Shido Boris Esperança (PFL) | result: PFL Africa: Morocco (2026-10-10) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
-| Shinobu Ota (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Shirzad Qadrian (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Shosuke Kinoshita (ONE Championship) | result: ONE SAMURAI 5: Pacio vs Yamakita (2026-11-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
-| Soo Chul Kim (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Steven Hill (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Subaru Mori (ONE Championship) | result: ONE SAMURAI 2 (2026-08-08) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Suhyeon Kim (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Takumi Fukamachi (ONE Championship) | result: ONE Friday Fights 178 & The Inner Circle 38 (2026-11-13) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Takuya Shibamura (ONE Championship) | result: ONE SAMURAI 5: Pacio vs Yamakita (2026-11-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Tariq Pell (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Tony Laramie (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Vick Souza (ONE Championship) | result: ONE Fight Night 49: Gabriel vs Magomedov (2026-11-07) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Viet Anh Do (ONE Championship) | result: ONE Friday Fights 155 & The Inner Circle 15 (2026-05-22); result: ONE Fight Night 46: Hemetsberger vs. Diachkova (2026-08-15) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Wellington Lopes (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Will Fox (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
 | Willians Nogueira (Cage Warriors) | result: CW 213 London: Bagley vs Souza (2026-11-14) | 2026-11-24: blocked host (Cage Warriors: www.cagewarriors.com: robots.txt unreadable: HTTP Error 403: Forbidden) |
-| Yrysbek Tilenov (RIZIN) | result: RIZIN 55 — verified main-card results (2026-11-08) | 2026-11-24: blocked host (RIZIN: d1uzk9o9cg136f.cloudfront.net: robots.txt unreadable: HTTP Error 404: Not Found) |
 | Yusuke Sato (ONE Championship) | result: ONE SAMURAI 2 (2026-08-08) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Yuto Shioya (ONE Championship) | result: ONE CHAMPIONSHIP - ONE FRIDAY FIGHTS 175 (2026-10-16) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | A.J. McKee (PFL) | result: PFL San Diego: McKee vs Isbulaev (2026-06-27) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
@@ -525,13 +517,23 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 | Saher Qasmieh (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Salah Eddine Hamli (PFL) | result: PFL MENA 9: Pride of Arabia (2026-05-24) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Shane Campbell (PFL) | result: PFL Brussels: Habirora vs Henderson (2026-05-23) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
-| Shelda Chipito (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: no source (PFL: no fighter page for this name on the PFL site) |
 | Thimna Mhlauli (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 | Victoria Souza (ONE Championship) | result: ONE Fight Night 45: Lessei vs. Rabah (2026-07-18) | 2026-11-24: no source (ONE Championship: no fighter page for this name on the ONE Championship site) |
 | Yahaya Yahuza (PFL) | result: PFL Africa: Nigeria (2026-06-13) | 2026-11-24: rejected by eye (PFL silhouette placeholder, not a photo) |
 
 <details><summary>Photo but no cut-out</summary>
 
+- Mitch McKee: source portrait under 300px wide
+- Adam Meskini: source portrait under 300px wide
+- Alex Lohoré: source portrait under 300px wide
+- Baris Adiguzel: source portrait under 300px wide
+- Bryce Meredith: source portrait under 300px wide
+- Coby Bradford: source portrait under 300px wide
+- Dean Garnett: source portrait under 300px wide
+- Jack Cartwright: source portrait under 300px wide
+- Jan Cieplowski: source portrait under 300px wide
+- Lorenzo Parente: source portrait under 300px wide
+- Oualy Tandia: source portrait under 300px wide
 - Aaron Jeffery: source portrait under 300px wide
 - Abderrahman Errachidy: source portrait under 300px wide
 - Abraham Bably: source portrait under 300px wide
@@ -601,7 +603,6 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 - Nkosi Ndebele: source portrait under 300px wide
 - Noah Hermosillo: source portrait under 300px wide
 - Oleg Popov: source portrait under 300px wide
-- Oualy Tandia: source portrait under 300px wide
 - Patrick Habirora: source portrait under 300px wide
 - Patrick Ocheme: source portrait under 300px wide
 - Paulina Wisniewska: source portrait under 300px wide
@@ -624,21 +625,17 @@ Generated 2026-11-25T01:16:12+00:00 by `python3 scripts/photo-runner.py missing`
 - Valentin Moldavsky: source portrait under 300px wide
 - Wilson Lopshire: source portrait under 300px wide
 - Yabna N’Tchala: source portrait under 300px wide
-- Adam Meskini: source portrait under 300px wide
 - Alain Majorique: source portrait under 300px wide
 - Alexander Shabliy: source portrait under 300px wide
 - Andrea Vazquez: source portrait under 300px wide
 - Asaël Adjoudj: source portrait under 300px wide
 - Ashley Reece: source portrait under 300px wide
 - Ashley Thiner: source portrait under 300px wide
-- Baris Adiguzel: source portrait under 300px wide
 - Benson Henderson: source portrait under 300px wide
 - Borena Tsertsvadze: source portrait under 300px wide
 - Boris Atangana: source portrait under 300px wide
 - Brandon Davis: source portrait under 300px wide
-- Bryce Meredith: source portrait under 300px wide
 - Chad Yard: source portrait under 300px wide
-- Coby Bradford: source portrait under 300px wide
 - Donegi Abena: source portrait under 300px wide
 - Gustavo Oliveira: source portrait under 300px wide
 - Hattan Alsaif: source portrait under 300px wide
