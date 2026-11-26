@@ -26,3 +26,32 @@ What it says:
 - mmamodel.ai reports 67.6% accuracy and log loss 0.598 on an unstated test set and reportedly with odds movements in its training data. Not comparable: ours is 65.0% and 0.633 without any odds.
 
 What was not tried: market odds (no licensed UFC source here), method and round prediction, short-notice and weight-cut information, Elo variants beyond the rating's own, a larger archive (the usable bout table starts with the 2013 archive and both fighters must be on the current roster).
+
+## Part 2: finish and method (`python3 scripts/ufc-method-research.py`), same walk-forward, 1,255 bouts from 2024
+
+Unlike the winner, these clear their baselines.
+
+**Does it end in a finish (KO/TKO or submission)?** Finish rate in the test bouts 48.8%.
+
+| Model | Accuracy | Brier | Log loss | Brier gain vs division finish rate (95% interval) |
+|---|---:|---:|---:|---|
+| All-time finish rate | 47.8% | 0.2506 | 0.6944 | -0.0074 (-0.0116 to -0.0033) |
+| Division finish rate | 56.1% | 0.2432 | 0.6795 | |
+| **Logistic on pairing features** | 59.4% | **0.2378** | 0.6681 | **+0.0055 (+0.0010 to +0.0101)** |
+| LightGBM | 57.3% | 0.2413 | 0.6756 | +0.0019 (-0.0043 to +0.0077) |
+
+**How does the winner win, given who wins?** KO/TKO 32.0%, submission 16.9%, decision 51.2%.
+
+| Model | Top-method accuracy | Log loss | Gain vs division rates (95% interval) |
+|---|---:|---:|---|
+| All-time method rates | 51.2% | 1.0104 | -0.0240 (-0.0337 to -0.0145) |
+| Division method rates | 52.7% | 0.9864 | |
+| **Multinomial: winner's offence against the loser's defence** | 52.5% | **0.9390** | **+0.0474 (+0.0287 to +0.0669)** |
+
+Both gains exclude zero. The finish gain is modest (about 3 points of accuracy over the division rate); the method model's gain is in the probabilities, not the top pick (decision is the commonest outcome). The two parts are scored separately: method uses the true winner. On a card the method split is the winner probability times the method given that winner. LightGBM is again no better than logistic regression.
+
+## Market odds (not tested: no data, and no call was made)
+- No odds data is in the repository (the "Polymarket" hits are the UFC 334 title sponsor).
+- UFCalendar, the provider BEFN already collects from, sells a UFC Odds API: consensus moneyline, opening and closing lines, de-vigged fair probability, and props (KO/TKO, submission, decision, total rounds, distance). Its consensus archive starts in 2012 (11,347 completed fights with a closing line across all promotions; closing props from 2021). Plans: Free 100 requests a month, Hobby $19 (30,000), Pro $49 (200,000, adds line-movement history). BEFN's own cap is the whole free 100 (`docs/ufcalendar-budget.md`), and its terms forbid redistributing a substantial raw dataset. Its page does not state public display terms.
+- Other sources: The Odds API (historical MMA from June 2020, paid), SportsDataIO (paid), OpticOdds, and a one-off dataset of 4,249 UFC fights from 2018 sold on Whop. Polymarket publishes free public prices through its Gamma API for current UFC markets, but only live ones, not a history to train on.
+- Needs an owner decision: a paid plan or a different budget split, a read of the provider's terms for showing market probabilities, and AGENTS.md's rule of one paid UFCalendar collector. Market odds would most likely lift the winner model (mmamodel.ai trains on them) and give a "market says" comparison, but that is untested here.

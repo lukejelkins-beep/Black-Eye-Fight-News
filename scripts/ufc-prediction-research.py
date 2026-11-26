@@ -203,7 +203,8 @@ def build_rows():
     for p in sorted((ROOT / "data/ufc-stats/fighters").glob("*.json")):
         d = json.loads(p.read_text(encoding="utf-8"))
         files[d["slug"]] = sorted(d["fights"], key=lambda f: (f["date"], str(f["boutId"])))
-        meta[d["slug"]] = {"women": str(d.get("divisionSlug") or "").startswith("womens-"), "name": d["name"]}
+        meta[d["slug"]] = {"women": str(d.get("divisionSlug") or "").startswith("womens-"), "name": d["name"],
+                           "div": d.get("divisionSlug") or ""}
     PRIOR.update(population_prior(files, TEST_FROM))
     rows, seen = [], set()
     for slug, fights in files.items():
@@ -220,6 +221,7 @@ def build_rows():
                 continue
             seen.add(bout)
             rows.append({"id": bout, "date": f["date"], "y": 1 if f["outcome"] == "W" else 0, "a": a, "b": b,
+                         "method": f.get("method"), "round": f.get("endRound"), "div": meta[slug]["div"],
                          "eloA": r[slug], "eloB": r[opp], "title": 1.0 if f.get("titleFight") else 0.0,
                          "women": 1.0 if meta[slug]["women"] else 0.0})
     rows.sort(key=lambda r: (r["date"], r["id"]))
