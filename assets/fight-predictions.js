@@ -49,33 +49,60 @@
       top: { name: topWho.name, how: topHow, pct: cells[top] }, pool: bout.pool, low: bout.confidence === 'low', lowFor: bout.lowConfidenceFor || [] };
   }
 
+
+  /* Confidence: "high" when the favourite is at 70% or more and neither fighter is flagged. The track record backs the cut:
+   * favourites at 70%+ have won about three in four (reliability bands in data/ufc-prediction-model.json). */
+  const HIGH = 0.70;
+  const tier = bout => bout.confidence === 'low' ? 'low' : Math.max(...bout.winProbability) >= HIGH ? 'high' : 'normal';
+  const initials = n => String(n || '').trim().split(/\s+/).map(w => w[0] || '').join('').slice(0, 2).toUpperCase();
+  /* Portraits are BEFN's own owner-cleared files (assets/img/ufc/<slug>-<crop>.webp). The image removes itself if it is
+   * missing, which leaves the initials underneath. */
+  const photo = (f, size) => '<span class="fp-ph fp-ph-' + size + '"><span class="fp-ini" aria-hidden="true">' + esc(initials(f.name)) + '</span>' +
+    (f.slug ? '<img src="assets/img/ufc/' + esc(f.slug) + '-' + (size === 'l' ? 'card' : 'thumb') + '.webp" alt="Portrait of ' + esc(f.name) + '" loading="lazy" width="' + (size === 'l' ? 56 : 40) + '" height="' + (size === 'l' ? 56 : 40) + '">' : '') + '</span>';
+  const TIER_LABEL = { high: 'High confidence', low: 'Low confidence' };
+  const badge = t => TIER_LABEL[t] ? '<span class="fp-tier fp-tier-' + t + '">' + TIER_LABEL[t] + '</span>' : '';
+  /* The tug-of-war drivers: each side's bar is its value against the larger of the two. */
+  const DRIVERS = [['diffPm', 'Strike differential per min', v => (v > 0 ? '+' : '') + v.toFixed(1)], ['ctrlShare', 'Time in control', v => Math.round(v * 100) + '%'],
+    ['td15', 'Takedowns per 15 min', v => v.toFixed(1)], ['sub15', 'Submission attempts per 15 min', v => v.toFixed(1)]];
+  function driversHTML(bout) {
+    const [da, db] = bout.details.map(d => d.drivers || {}), sn = bout.fighters.map(f => surname(f.name));
+    const rows = DRIVERS.filter(([k]) => typeof da[k] === 'number' && typeof db[k] === 'number').map(([k, label, f]) => {
+      const m = Math.max(Math.abs(da[k]), Math.abs(db[k]), 1e-6), w = v => Math.round(Math.max(0, v) / m * 100);
+      return '<div class="fp-drv-row"><div class="fp-drv-top"><b>' + f(da[k]) + '</b><span>' + label + '</span><b>' + f(db[k]) + '</b></div>' +
+        '<div class="fp-drv-bar"><span class="fp-drv-l"><i style="width:' + w(da[k]) + '%"></i></span><span class="fp-drv-r"><i style="width:' + w(db[k]) + '%"></i></span></div></div>'; }).join('');
+    return rows ? '<details class="fp-drv"><summary>What decides it</summary><div class="fp-drv-names"><span>' + esc(sn[0]) + '</span><span>' + esc(sn[1]) + '</span></div>' + rows +
+      '<p class="fp-note">These show each fighter’s edge on that stat. The winner estimate comes from the overall rating, which already uses them.</p></details>' : '';
+  }
+
   /* Compact reference on a fight card. */
   function refHTML(hit) {
-    const s = summary(hit.bout);
-    return '<a class="fp-ref" href="#predictions/' + esc(hit.event.id + '--' + hit.bout.id) + '"><span class="fp-ref-k">Model estimate</span>' +
-      '<span class="fp-ref-v"><b>' + esc(surname(s.favName)) + ' ' + s.favPct + '%</b> · ' + s.finish + '% finish' + (s.low ? ' · low confidence' : '') + '</span>' +
-      '<span class="fp-ref-go">Full analysis</span></a>';
+    const s = summary(hit.bout), t = tier(hit.bout), sn = hit.bout.fighters.map(f => surname(f.name));
+    return '<a class="fp-ref fp-ref-' + t + '" href="#predictions/' + esc(hit.event.id + '--' + hit.bout.id) + '">' +
+      '<span class="fp-ref-top"><span class="fp-ref-k">BEFN pick</span>' + badge(t) + '</span>' +
+      '<span class="fp-ref-pcts"><b class="' + (s.fav === 0 ? 'is-fav' : '') + '">' + s.win[0] + '%</b><b class="' + (s.fav === 1 ? 'is-fav' : '') + '">' + s.win[1] + '%</b></span>' +
+      '<span class="fp-bar" role="img" aria-label="' + esc(sn[0] + ' ' + s.win[0] + ' percent, ' + sn[1] + ' ' + s.win[1] + ' percent') + '"><i style="width:' + s.win[0] + '%"></i><i style="width:' + s.win[1] + '%"></i></span>' +
+      '<span class="fp-ref-foot"><span class="fp-chip">' + s.finish + '% ends early</span><span class="fp-ref-go">Full breakdown</span></span></a>';
   }
 
   const poolWord = p => p === 'women' ? 'women’s' : 'men’s';
-  function boutHTML(event, bout) {
-    const s = summary(bout), [a, b] = bout.fighters, [da, db] = bout.details;
-    const sn = [surname(a.name), surname(b.name)];
+  function boutHTML(event, bout, main) {
+    const s = summary(bout), [a, b] = bout.fighters, [da, db] = bout.details, t = tier(bout);
+    const sn = [surname(a.name), surname(b.name)], size = main ? 'l' : 's';
     const rank = d => d.rank ? '#' + d.rank + ' of ' + d.rankOf + ' ' + poolWord(bout.pool) : 'Unranked';
-    const rows = METHODS.map(([k, label]) => '<tr><th scope="row">' + label + '</th><td>' + s.cells['a-' + k] + '%</td><td>' + s.cells['b-' + k] + '%</td></tr>').join('');
+    const ends = Object.entries(s.cells).sort((x, y) => y[1] - x[1]).map(([k, v]) => { const who = k[0] === 'a' ? a : b, how = METHODS.find(m => m[0] === k.slice(2))[1];
+      return '<div class="fp-end"><span>' + esc(surname(who.name)) + ' ' + esc(how === 'Decision' ? 'decision' : how) + '</span><i style="width:' + Math.max(v * 2.4, 2) + '%" class="' + (k[0] === 'a' ? 'is-a' : 'is-b') + '"></i><b>' + v + '%</b></div>'; }).join('');
     const detail = [['BEFN rating', d => d.rating.toFixed(1)], ['Rank', rank], ['Age', d => d.age == null ? 'Not known' : Math.floor(d.age)], ['UFC fights', d => d.ufcFights]]
       .map(([k, f]) => '<tr><td>' + esc(f(da)) + '</td><th scope="row">' + k + '</th><td>' + esc(f(db)) + '</td></tr>').join('');
-    return '<article class="fp-bout" id="' + esc(anchor(event.id, bout.id)) + '" aria-label="' + esc(a.name + ' versus ' + b.name) + '">' +
-      '<header class="fp-bout-h"><span>' + esc((bout.division || '') + (bout.title ? ' · Title fight' : '') + ' · ' + (bout.pool === 'women' ? 'Women’s' : 'Men’s') + ' rankings') + '</span>' +
-      (s.low ? '<span class="fp-low">Low confidence</span>' : '') + '</header>' +
-      '<div class="fp-names"><b>' + esc(a.name) + '</b><span>vs</span><b>' + esc(b.name) + '</b></div>' +
-      '<div class="fp-sec"><div class="fp-sec-k">Who wins</div><div class="fp-pcts"><b class="' + (s.fav === 0 ? 'is-fav' : '') + '">' + s.win[0] + '%</b><b class="' + (s.fav === 1 ? 'is-fav' : '') + '">' + s.win[1] + '%</b></div>' +
-      '<div class="fp-bar" role="img" aria-label="' + esc(sn[0] + ' ' + s.win[0] + ' percent, ' + sn[1] + ' ' + s.win[1] + ' percent') + '"><i style="width:' + s.win[0] + '%"></i><i style="width:' + s.win[1] + '%"></i></div></div>' +
-      '<div class="fp-sec"><div class="fp-sec-k">How it ends</div><div class="fp-fin"><span><b>' + s.finish + '%</b> KO or submission</span><span><b>' + s.distance + '%</b> goes the distance</span></div>' +
-      '<table class="fp-tbl"><thead><tr><th></th><th scope="col">' + esc(sn[0]) + ' wins</th><th scope="col">' + esc(sn[1]) + ' wins</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-      '<p class="fp-top">Likeliest single result: ' + esc(s.top.name) + ' by ' + esc(s.top.how.toLowerCase()) + ', ' + s.top.pct + '%.</p></div>' +
-      '<div class="fp-sec"><div class="fp-sec-k">Key details</div><table class="fp-tbl fp-det"><thead><tr><th scope="col">' + esc(sn[0]) + '</th><th></th><th scope="col">' + esc(sn[1]) + '</th></tr></thead><tbody>' + detail + '</tbody></table>' +
-      (s.low ? '<p class="fp-note">Less than three UFC fights or no birth date on file for ' + esc(s.lowFor.join(' and ')) + ', so treat this one with extra care.</p>' : '') + '</div></article>';
+    return '<details class="fp-bout fp-t-' + t + (main ? ' is-main' : '') + '" id="' + esc(anchor(event.id, bout.id)) + '" aria-label="' + esc(a.name + ' versus ' + b.name) + '">' +
+      '<summary class="fp-row"><span class="fp-row-h"><span>' + esc((main ? 'Main event · ' : '') + (bout.division || '') + (bout.title ? ' · Title fight' : '')) + '</span>' + badge(t) + '</span>' +
+      '<span class="fp-row-names">' + photo(a, size) + '<span class="fp-row-vs"><b>' + esc(sn[0]) + '</b> <i>vs</i> <b>' + esc(sn[1]) + '</b></span>' + photo(b, size) + '</span>' +
+      '<span class="fp-pcts"><b class="' + (s.fav === 0 ? 'is-fav' : '') + '">' + s.win[0] + '%</b><b class="' + (s.fav === 1 ? 'is-fav' : '') + '">' + s.win[1] + '%</b></span>' +
+      '<span class="fp-bar" role="img" aria-label="' + esc(sn[0] + ' ' + s.win[0] + ' percent, ' + sn[1] + ' ' + s.win[1] + ' percent') + '"><i style="width:' + s.win[0] + '%"></i><i style="width:' + s.win[1] + '%"></i></span></summary>' +
+      '<div class="fp-body"><div class="fp-tiles"><div><span>Ends early</span><b>' + s.finish + '%</b></div><div><span>Most likely</span><b>' + esc(surname(s.top.name)) + ' ' + esc(s.top.how === 'Decision' ? 'dec.' : s.top.how) + '</b></div></div>' +
+      '<div class="fp-sec-k">How it could end</div><div class="fp-ends">' + ends + '</div>' +
+      driversHTML(bout) +
+      '<table class="fp-tbl fp-det"><thead><tr><th scope="col">' + esc(sn[0]) + '</th><th></th><th scope="col">' + esc(sn[1]) + '</th></tr></thead><tbody>' + detail + '</tbody></table>' +
+      '<p class="fp-note">' + (bout.pool === 'women' ? 'Women’s' : 'Men’s') + ' rankings.' + (s.low ? ' Less than three UFC fights or no birth date on file for ' + esc(s.lowFor.join(' and ')) + ', so treat this one with extra care.' : '') + '</p></div></details>';
   }
 
   const pct = v => (v * 100).toFixed(1).replace(/\.0$/, '') + '%';
@@ -131,17 +158,30 @@
       (rows ? '<div class="fp-rec-card"><h3>Latest results</h3><div class="fa-scroll"><table class="fp-tbl fp-hist"><thead><tr><th scope="col">Date</th><th scope="col">Fight</th><th scope="col">We picked</th><th scope="col">Result</th><th scope="col"></th></tr></thead><tbody>' + rows + '</tbody></table></div></div>' : '') + '</section>';
   }
 
+  /* The evidence strip: overall hit rate, the hit rate at 70%+, and the live record. */
+  function stripHTML(model, log) {
+    const w = (model && model.winner) || {}, pools = Object.values(w).filter(x => x && x.bouts);
+    const n = pools.reduce((a, x) => a + x.bouts, 0), acc = n ? pools.reduce((a, x) => a + x.accuracy * x.bouts, 0) / n : null;
+    const hi = pools.flatMap(x => (x.reliability || []).filter(r => r.from >= HIGH)), hn = hi.reduce((a, r) => a + r.n, 0), hacc = hn ? hi.reduce((a, r) => a + r.actual * r.n, 0) / hn : null;
+    const L = liveSummary(log), fights = Object.values(L.pools).reduce((a, x) => a + x.fights, 0), right = Object.values(L.pools).reduce((a, x) => a + x.right, 0);
+    const tile = (big, small) => '<div class="fp-stat"><b>' + big + '</b><span>' + small + '</span></div>';
+    return '<div class="fp-strip">' + (acc == null ? '' : tile(Math.round(acc * 100) + '%', 'winners right since 2024')) +
+      (hacc == null ? '' : tile(Math.round(hacc * 100) + '%', 'right when 70%+ (' + hn + ' fights)')) +
+      (L.since ? tile(fights ? right + '–' + (fights - right) : L.pending, fights ? 'live record' : 'live picks saved') : '') + '</div>';
+  }
   function pageHTML(data, model, now, log) {
     const floor = dayKey(now - 2 * DAY);
     const events = ((data && data.events) || []).filter(e => e.date >= floor).sort((a, b) => a.date.localeCompare(b.date));
     const body = events.map(e => {
       const ok = e.bouts.filter(b => b.status === 'ok'), skipped = e.bouts.filter(b => b.status !== 'ok');
-      return '<section class="fp-event"><h2>' + esc(e.title) + '</h2><p class="fp-when">' + esc(fmt(e.date)) + '</p>' + ok.map(b => boutHTML(e, b)).join('') +
+      return '<section class="fp-event"><h2>' + esc(e.title) + '</h2><p class="fp-when">' + esc(fmt(e.date)) + '</p><div class="fp-list">' + ok.map((b, i) => boutHTML(e, b, i === 0)).join('') + '</div>' +
         (skipped.length ? '<p class="fp-skip">No estimate for ' + skipped.map(b => esc(b.fighters.map(f => f.name || 'a fighter').join(' vs '))).join('; ') + ': a fighter is new to the UFC or has no UFC record here yet.</p>' : '') + '</section>';
     }).join('');
+    const records = liveHTML(log) + recordHTML(model);
     return '<div class="fp"><a class="fp-back" href="#analysis">Analysis</a><h1 class="fa-h1">Fight predictions</h1>' +
-      '<p class="fp-lede">A model estimate for each fight on the announced UFC cards: who wins, whether it ends in a finish, and how. Built from BEFN’s ratings and past UFC results and statistics. Not betting advice. <a href="#fp-live">Live record</a> · <a href="#fp-record">Track record since 2024</a>.</p>' +
-      (body || '<p class="fp-skip">No announced UFC cards to estimate right now.</p>') + liveHTML(log) + recordHTML(model) + '</div>';
+      '<p class="fp-lede">Model picks for every announced UFC card. <span class="fp-key">' + badge('high') + ' favourite at 70% or more</span> Not betting advice.</p>' + stripHTML(model, log) +
+      (body || '<p class="fp-skip">No announced UFC cards to estimate right now.</p>') +
+      (records ? '<details class="fp-more" id="fp-how"><summary>See how it did</summary>' + records + '</details>' : '') + '</div>';
   }
 
   /* ---------- browser ---------- */
@@ -167,7 +207,7 @@
       m.innerHTML = pageHTML(st.data, st.model, Date.now(), st.log);
       const sub = String(root.location.hash || '').split('/')[1];
       const t = sub && root.document.getElementById('fp-' + decodeURIComponent(sub));
-      if (t) t.scrollIntoView({ block: 'start' });
+      if (t) { if (t.tagName === 'DETAILS') t.open = true; t.scrollIntoView({ block: 'start' }); }
     });
   }
   function scan() {
@@ -175,7 +215,8 @@
     if (!document.querySelector('.fp-ref[data-fp-ev]:not([data-fp-done]), [data-befn-predictions]:not([data-fp-done])')) return;
     load().then(fill);
   }
-  const api = { fold, wholePercents, lookup, summary, refHTML, boutHTML, recordHTML, liveSummary, liveHTML, pageHTML, anchor };
+  if (typeof document !== 'undefined') document.addEventListener('error', e => { const t = e.target; if (t && t.matches && t.matches('.fp-ph img')) t.remove(); }, true);
+  const api = { tier, stripHTML, driversHTML, fold, wholePercents, lookup, summary, refHTML, boutHTML, recordHTML, liveSummary, liveHTML, pageHTML, anchor };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNPredictions = api;
   if (typeof document !== 'undefined') {
