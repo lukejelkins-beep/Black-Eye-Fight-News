@@ -319,7 +319,8 @@ def results_walk(bouts: list[dict], p: dict | None = None, prior: dict | None = 
         prior = prior or {}
         sa = state.setdefault(bout["a"], {"rating": prior.get(bout["a"], p["start"]), "fights": 0, "last": None})
         sb = state.setdefault(bout["b"], {"rating": prior.get(bout["b"], p["start"]), "fights": 0, "last": None})
-        ra, rb = _idle(sa["rating"], sa["last"], bout["date"], p), _idle(sb["rating"], sb["last"], bout["date"], p)
+        ra = sa["rating"] if TITLE_NO_DRIFT and sa.get("title") else _idle(sa["rating"], sa["last"], bout["date"], p)
+        rb = sb["rating"] if TITLE_NO_DRIFT and sb.get("title") else _idle(sb["rating"], sb["last"], bout["date"], p)
         pre.append((bout, ra, rb, sa["fights"], sb["fights"]))
         expected = 1 / (1 + 10 ** ((rb - ra) / 400))
         y = 1.0 if bout["outcome"] == "W" else 0.0 if bout["outcome"] == "L" else 0.5
@@ -329,6 +330,7 @@ def results_walk(bouts: list[dict], p: dict | None = None, prior: dict | None = 
         sa["fights"] += 1
         sb["fights"] += 1
         sa["last"] = sb["last"] = bout["date"]
+        sa["title"] = sb["title"] = bool(bout.get("titleFight"))
     return state, pre
 
 
@@ -372,6 +374,12 @@ def age_points(born: str | None, as_of: str | None) -> float:
     return -AGE_POINTS_PER_YEAR * (age - AGE_CENTRE)
 
 
+def recent_title_win(history: list, as_of: str, months: int = 24) -> bool:
+    """True when the fighter won a title fight in the `months` before as_of (history: fights with date, outcome, titleFight)."""
+    cutoff = (_dt.date.fromisoformat(as_of[:10]) - _dt.timedelta(days=round(months * 30.44))).isoformat()
+    return any(h.get("titleFight") and h.get("outcome") == "W" and cutoff <= str(h.get("date") or "") <= as_of[:10] for h in history)
+
+
 def division_heights(fighters: dict) -> dict:
     """divisionSlug -> mean height in inches of the fighters given (the roster being rated) with a known height."""
     groups = {}
@@ -404,6 +412,14 @@ def overall(scores: dict):
     total = sum(scores[k] * OVERALL_WEIGHTS[k] for k in skills + ["form"])
     return round(total / sum(OVERALL_WEIGHTS[k] for k in skills + ["form"]))
 
+
+# Experiment knobs (26 Nov 2026, owner: "test both versions"). Both default OFF; scripts/ufc-rating-variants.py sets them.
+# TITLE_NO_DRIFT: a fighter whose last fight was a title fight is not drifted back toward 1500 while idle, when they are
+# an opponent's strength or when their own rating is updated (the walk, not the final aged rating).
+# AGE_TITLE_FACTOR: the age penalty (never the bonus) is multiplied by this for a fighter who won a title fight in the
+# 24 months before the rating date; 1.0 = no change.
+TITLE_NO_DRIFT = False
+AGE_TITLE_FACTOR = 1.0
 
 POOLS = ("men", "women")
 
@@ -514,8 +530,13 @@ def _rate_pool(fighters: dict, results: dict, as_of: str | None = None) -> dict:
     # decimal score in steps of an eighth.
     height_avg = division_heights(fighters)
     height_adj = {slug: height_points(f.get("height"), height_avg.get(f.get("divisionSlug"))) for slug, f in fighters.items()}
+    def age_adj(slug):
+        a = age_points(fighters[slug].get("born"), as_of)
+        if a < 0 and AGE_TITLE_FACTOR != 1.0 and as_of and recent_title_win(fighters[slug].get("history") or [], as_of):
+            a *= AGE_TITLE_FACTOR
+        return a
     headline = {slug: round(HEADLINE_CENTRE + HEADLINE_SCALE * (v - centre)
-                            + age_points(fighters[slug].get("born"), as_of) + height_adj[slug], 2) for slug, v in logits.items()}
+                            + age_adj(slug) + height_adj[slug], 2) for slug, v in logits.items()}
     headline_pop = sorted(headline[x] for x in established)
     # Rank among established fighters by the full rating; equal ratings share a rank.
     ordered = sorted(established, key=lambda x: -headline[x])
@@ -554,7 +575,7 @@ def _rate_pool(fighters: dict, results: dict, as_of: str | None = None) -> dict:
                 for fight in [x for x in f["history"] if x["outcome"] in ("W", "L", "D")][:5]]},
             "overall": score_100(headline.get(slug)),
             "overallRating": headline.get(slug),
-            "ageAdjustment": round(age_points(f.get("born"), as_of), 2) if slug in headline else None,
+            "ageAdjustment": round(age_adj(slug), 2) if slug in headline else None,
             "heightAdjustment": round(height_adj[slug], 2) if slug in headline else None,
             "overallRank": rank.get(slug) if rated else None,
             "rankOf": len(established),

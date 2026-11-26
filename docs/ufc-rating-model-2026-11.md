@@ -26,6 +26,25 @@ men's fall by 0.2 (at most 0.7), because the men's centre is now the men's media
 Left as it was: the rating-board page (all divisions) mixes both pools, so it is ordered by score, and the board's rank column is used
 only when the rows are one pool. The `Previous` figures elsewhere in this note are the pooled model.
 
+## 26 Nov 2026: title-winner variants tested on the rating, not adopted
+Owner, after Kayla Harrison's submission win over Amanda Nunes left her at 75.96: test "a title win over a former champion counts
+without the idle decay" and "the age penalty is waived for champions". Two knobs in `scripts/ufc_ratings.py`, both off:
+`TITLE_NO_DRIFT` (a fighter whose last fight was a title fight is not drifted back toward 1500 while idle, so Nunes entered at
+about 1667, not 1589) and `AGE_TITLE_FACTOR` (the age penalty, never the bonus, times this for a fighter who won a title fight in
+the last 24 months). `python3 scripts/ufc-rating-variants.py run ...` then `compare ...`: the same quarterly point-in-time
+snapshots and walk-forward k as `ufc-rating-evaluate.py`, 1,135 bouts from 2024, on the pooled-by-sex engine.
+
+| Variant | Accuracy | Brier | Gain vs base (95% interval) | Kayla Harrison |
+|---|---:|---:|---|---|
+| Base | 65.0% | 0.2211 | | 75.96, #8 of 127 |
+| No idle drift after a title fight | 65.0% | 0.2211 | +0.0000 (-0.0003 to +0.0003) | 82.49, #3 |
+| No age penalty for recent title winners | 65.1% | 0.2212 | -0.0000 (-0.0004 to +0.0004) | 79.60, #4 |
+| Half the age penalty for recent title winners | 65.0% | 0.2212 | -0.0000 (-0.0002 to +0.0002) | |
+| Both (no drift, no penalty) | 65.1% | 0.2212 | -0.0001 (-0.0006 to +0.0005) | 86.13, #2 |
+
+Neither improves prediction: every difference is under 0.0001 Brier, far inside the interval. They would change how champions
+read, not how well the number predicts, so they are an owner's choice, not a fitted one. The rating is unchanged.
+
 ## Update 25 Nov 2026: age in the headline (owner request: "can we improve the BEFN rating as well")
 Each fighter's rating now includes an age adjustment: **5.4 rating points per year away from 31** (the median fighter's
 age), younger up and older down, measured on the rating's own date (`AGE_CENTRE`, `AGE_POINTS_PER_YEAR`,
