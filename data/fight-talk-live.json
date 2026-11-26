@@ -1,7 +1,7 @@
 {
-  "attemptedAt": "2026-11-26T15:41:23.797Z",
-  "checkedAt": "2026-11-26T15:41:23.797Z",
-  "updatedAt": "2026-11-26T12:08:14Z",
+  "attemptedAt": "2026-11-26T16:49:53.262Z",
+  "checkedAt": "2026-11-26T16:49:53.262Z",
+  "updatedAt": "2026-11-26T16:01:12Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
   "sourcesChecked": 4,
@@ -18,7 +18,7 @@
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 43,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -55,22 +55,94 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 43,
-      "X": 26,
+      "Threads": 12,
+      "X": 27,
+      "Instagram": 39,
       "Bluesky": 4,
-      "Threads": 9,
       "Reddit": 2
     },
     "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3a2arjvxj2m",
+      "cid": "bafyreihjvxw52fblyrqe6erz6dhzqmlpwi4vbexaohzl5ibo5ymevjqqty",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Navajo Stirling told to ‘find a new gym’ or live with ‘regret’ by ex-UFC star",
+      "postedAt": "2026-11-26T16:01:12Z",
+      "date": "27 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3a2arjvxj2m",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n37wya3poo27",
+      "cid": "bafyreieanef74g2dyawofkeedqad3avtj2hga7m32qijylrrs2uucogjxy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Chris Leben confirms retirement after earning career-high purse for first MMA fight in 13 years",
+      "postedAt": "2026-11-26T15:02:44Z",
+      "date": "27 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n37wya3poo27",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n37tpqwl372g",
+      "cid": "bafyreiarkvdjdovxhvmevzosrw46myopqp5stckjqrgcbyvcb34q73srqm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Dricus du Plessis claims Ian Garry’s fight against 30-1 opponent is punishment from UFC bosses",
+      "postedAt": "2026-11-26T14:04:18Z",
+      "date": "27 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n37tpqwl372g",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n37na7kvas2b",
       "cid": "bafyreifhiz2gl4c37y3tz3efoupyw6jy77k5f6sz2wtufbkemmsol646jm",
@@ -92,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -140,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -164,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -236,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -524,7 +596,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -620,7 +692,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -692,7 +764,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -741,30 +813,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n35gisj7ii2e",
-      "cid": "bafyreifujkzuaxc5bu7f37yiceg3m32wc2dk4lpnmxkzgse6w5j4xsy6fa",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Record-breaking champion’s UFC debut after win over Alex Pereira’s sister among ten new fights",
-      "postedAt": "2026-11-25T15:02:27Z",
-      "date": "26 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n35gisj7ii2e",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -840,30 +888,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n357rvqb6t27",
-      "cid": "bafyreiexvjjfdcgjolczl3g4fjvf4crhgvdpqabdxzo6fiqh56golr77le",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ex-UFC fighter Lee Murray’s health said to be ‘failing’ during prison sentence for $92 million robbery",
-      "postedAt": "2026-11-25T13:02:16Z",
-      "date": "26 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n357rvqb6t27",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n357rfryca2t",
       "cid": "bafyreigoy4us3oqnepnluw3jn43kw56kvlfczqijc563q2sgmcvpyiezlq",
       "platform": "Bluesky",
@@ -909,30 +933,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n34exstqsu2d",
-      "cid": "bafyreidysze6cnztqhdevrl7vi373apntau4vzz6vq4dzobk5bcku5rnci",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Carlos Prates dismisses interim belt as ‘not a real title’ ahead of Michael Morales clash at UFC 336",
-      "postedAt": "2026-11-25T05:02:23Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n34exstqsu2d",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1724,7 +1724,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1868,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1892,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1916,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1940,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1964,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1988,7 +1988,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2012,7 +2012,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2456,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T12:48:45.733Z",
+      "engagementCheckedAt": "2026-11-26T16:49:53.262Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
