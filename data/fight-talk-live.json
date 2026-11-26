@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-26T06:09:29.111Z",
-  "checkedAt": "2026-11-26T06:09:29.111Z",
-  "updatedAt": "2026-11-25T23:57:18.902896Z",
+  "attemptedAt": "2026-11-26T06:45:36.337Z",
+  "checkedAt": "2026-11-26T06:45:36.337Z",
+  "updatedAt": "2026-11-26T02:01:15Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 4,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 18,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 53,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,70 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 53,
-      "X": 18,
-      "Bluesky": 3,
-      "Threads": 10
+      "Threads": 12,
+      "X": 27,
+      "Instagram": 39,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 3,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n36lctemmk2e",
+      "cid": "bafyreihgnceczmcfjfm7sjkkcrj7dyqnhuc7rv7volloqohjc3x6qb4vi4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Floyd Mayweather vs. Ryan Garcia blocked with warm-up fight also in jeopardy",
+      "postedAt": "2026-11-26T02:01:15Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n36lctemmk2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n36i2mrgpt2c",
+      "cid": "bafyreiar7b6amub2cnlowe4oozur65ioyquqgh5w4k3qztavt74kkaxseu",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "‘It’s not like America’: Navajo Stirling responds to criticism for not wanting to fight Carlos Ulberg",
+      "postedAt": "2026-11-26T01:02:58Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n36i2mrgpt2c",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n36efbnair23",
       "cid": "bafyreihm5df6f6v6h2keekaxfxzrpfocftlcck2ulew5o4oa535zmh27nm",
@@ -116,6 +165,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n365z5q23c2b",
+      "cid": "bafyreiayqu7cfad2huolnrtdp2s5btnt46caucwdhhpiglztd5aa2ujtfe",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "King Green calls out Dan Hooker after the UFC turned down ‘Hangman’s’ Max Holloway proposal",
+      "postedAt": "2026-11-25T22:03:12Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n365z5q23c2b",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -383,6 +456,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n35qhrljiu2z",
+      "cid": "bafyreih7b5wmrb73ptscr4qqzi7reb6k6huz3jowwrytlta5tkagtdhoza",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC Qatar star shares gruesome hospital photo revealing facial damage after defeat",
+      "postedAt": "2026-11-25T18:00:50Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n35qhrljiu2z",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n35pgkbdgc2a",
       "cid": "bafyreiaprny65ec7gz24i5laqi363hy2ro5k7rigrgrjuydjg34wa3oatq",
       "platform": "Bluesky",
@@ -455,6 +552,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n35naclpik22",
+      "cid": "bafyreiewhyn24kaomlcjcppeiu67fxfngf34neumbi7sspfofudyvsduwa",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Justin Gaethje vs Mike Perry floated by ex-champion who believes UFC is ‘lacking stars’",
+      "postedAt": "2026-11-25T17:02:58Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n35naclpik22",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n35mmnkeph2q",
       "cid": "bafyreibxvb7an2lopmwthqfu62dele5yiazgsd2tygtymuadrax5wrot2y",
       "platform": "Bluesky",
@@ -519,11 +640,11 @@
       "source": "Bluesky public author API",
       "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
       "engagement": {
-        "likes": 0,
-        "comments": 0,
+        "likes": 1,
+        "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -592,10 +713,10 @@
       "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
       "engagement": {
         "likes": 0,
-        "comments": 0,
+        "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -691,7 +812,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -787,7 +908,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -811,55 +932,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n33xoeam5422",
-      "cid": "bafyreieu66gtfyomhqgce63sh7l6li2wor4wj4pfyfd5ung4koz72wjwgy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Kayla Harrison’s undefeated teammate admits she is open to title fight against champion",
-      "postedAt": "2026-11-25T01:04:27Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n33xoeam5422",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n33twjo5or2z",
-      "cid": "bafyreibfuniym7slkn6nyxnooiv2djwwl5d24jmvehvixmfpg45b3vtmxm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Kevin Holland names Mike Perry among UFC legends on his five-fight hitlist",
-      "postedAt": "2026-11-24T23:57:27Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n33twjo5or2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -887,30 +960,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n33igle3u32p",
-      "cid": "bafyreibifymk3keirppobdwj3bcqszfp6o5y2xukqarfpboc5jxkuruh6i",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Sean Strickland and Bryce Mitchell lose ‘whites v blacks’ basketball game featuring fellow UFC stars",
-      "postedAt": "2026-11-24T20:31:40Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n33igle3u32p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n33hfrt7vl2l",
       "cid": "bafyreiambma3m5bgan3qy7ngxe53ttlcflc67nsjdkucnhcnm3fdu4qzk4",
       "platform": "Bluesky",
@@ -935,30 +984,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n33dfvpmlc2r",
-      "cid": "bafyreicn4ss2crje7kru4qyrsqh2jtct6cj336uwa6bnoiaisnqm33tqye",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "UFC re-signs 24-year-old prospect despite claim that the promotion weren’t re-signing unranked fighters",
-      "postedAt": "2026-11-24T19:01:49Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n33dfvpmlc2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:ukajoiyhrbbiiu7qpcz43aha/app.bsky.feed.post/3n33aebq47s2v",
       "cid": "bafyreif46myq4prna326idsikn2uxq5aciwxxco6w3llzib3664gq67kry",
       "platform": "Bluesky",
@@ -980,30 +1005,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n33a5hhjro2r",
-      "cid": "bafyreigsyhevq4rhawtclfhsr7tczlvwzuaviya2ddoqcelip4s6lepn7q",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Paddy Pimblett says he and Ilia Topuria would ‘bring The Ultimate Fighter back’ as he sends message to UFC",
-      "postedAt": "2026-11-24T18:03:24Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n33a5hhjro2r",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 1,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1723,7 +1724,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1867,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1891,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1915,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1939,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1963,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1987,7 +1988,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2011,7 +2012,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2455,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "engagementCheckedAt": "2026-11-26T06:45:36.337Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
