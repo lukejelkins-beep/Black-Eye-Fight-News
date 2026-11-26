@@ -413,12 +413,15 @@ def overall(scores: dict):
     return round(total / sum(OVERALL_WEIGHTS[k] for k in skills + ["form"]))
 
 
-# Experiment knobs (26 Nov 2026, owner: "test both versions"). Both default OFF; scripts/ufc-rating-variants.py sets them.
-# TITLE_NO_DRIFT: a fighter whose last fight was a title fight is not drifted back toward 1500 while idle, when they are
-# an opponent's strength or when their own rating is updated (the walk, not the final aged rating).
-# AGE_TITLE_FACTOR: the age penalty (never the bonus) is multiplied by this for a fighter who won a title fight in the
-# 24 months before the rating date; 1.0 = no change.
-TITLE_NO_DRIFT = False
+# Title fights and idle drift (owner, 26 Nov 2026: Kayla Harrison's submission win over Amanda Nunes moved her only about
+# 55 points because Nunes, idle 3.5 years after her last title fight, entered at 1589 instead of about 1667). A fighter
+# whose last fight was a title fight is not drifted back toward 1500 while idle, either as an opponent's strength or when
+# their own rating is next updated. The final rating shown for someone still idle is aged as before (results_as_of).
+# Walk-forward Brier on 1,135 bouts from 2024: 0.2211 with and without it (level), so this is a choice about how champions
+# read, not a fitted one. See docs/ufc-rating-model-2026-11.md.
+TITLE_NO_DRIFT = True
+# Experiment knob, off: the age penalty (never the bonus) times this for a fighter who won a title fight in the last 24
+# months. Tested with no gain (scripts/ufc-rating-variants.py); 1.0 = no change.
 AGE_TITLE_FACTOR = 1.0
 
 POOLS = ("men", "women")
