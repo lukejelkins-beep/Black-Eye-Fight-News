@@ -1,0 +1,67 @@
+name: Weekly UFC bonuses refresh (draft PR)
+# Fight / Performance of the Night bonuses for fighter profiles, from the free UFC Stats API (no key; about 30
+# requests/min and 1,000/day per IP, see scripts/refresh-ufc-bonuses.py). The refresh is incremental: it lists events
+# (4 calls) and refetches only events from the last 14 days before the newest one stored, so a weekly run is about 10
+# calls. Results reach main only through the draft PR this job opens or updates, merged by the owner ("Merge N").
+on:
+  workflow_dispatch:
+  schedule:
+    # Mondays 05:23 UTC: after Saturday and Sunday cards, once the API has the bonus awards.
+    - cron: '23 5 * * 1'
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: befn-ufc-bonuses-refresh
+  cancel-in-progress: false
+jobs:
+  bonuses:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      BRANCH: auto/ufc-bonuses-refresh
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Tests for the bonus build (offline)
+        run: python -m unittest tests/test_ufc_bonuses.py
+      - name: Pull new events (incremental, capped at 60 calls)
+        run: python scripts/refresh-ufc-bonuses.py --max-calls 60
+      - name: Rebuild the per-fighter file
+        run: python scripts/build-ufc-bonuses.py
+      - name: Open or update the weekly draft PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add data/ufc-bonus-fights.json data/ufc-bonuses.json
+          if git diff --cached --quiet; then
+            echo "No new bonuses this week." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          asof=$(python3 -c "import json;print(json.load(open('data/ufc-bonuses.json'))['asOf'])")
+          git config user.name 'befn-bonuses-bot'
+          git config user.email 'befn-bonuses-bot@users.noreply.github.com'
+          git commit -q -m "Refresh UFC bonuses: events to $asof"
+          # The branch belongs to this job and is rebuilt from main every week.
+          git push -q --force origin "HEAD:$BRANCH"
+          {
+            echo "Weekly UFC bonuses refresh, events to **$asof**."
+            echo
+            echo "Merge with \"Merge N\" as usual. Counts only change for fighters with a new bonus; estimated earnings follow data/ufc-bonus-rates.json."
+            echo
+            git diff --cached --stat
+          } > "$RUNNER_TEMP/body.md"
+          if [ "$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')" != "0" ]; then
+            gh pr edit "$BRANCH" --title "Weekly UFC bonuses: events to $asof" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --draft --base main --head "$BRANCH" \
+              --title "Weekly UFC bonuses: events to $asof" --body-file "$RUNNER_TEMP/body.md" || {
+              echo "::error::Could not open the draft PR. Allow GitHub Actions to create pull requests (Settings > Actions > General), or open one from branch $BRANCH."
+              exit 1; }
+          fi
+          cat "$RUNNER_TEMP/body.md" >> "$GITHUB_STEP_SUMMARY"

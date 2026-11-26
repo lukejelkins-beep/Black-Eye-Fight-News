@@ -261,7 +261,41 @@
    'Average of '+div.fighters+' '+esc(div.label)+' fighters with 3+ UFC fights in that time.</small></div>';
  }
 
- const api={periodMode,careerState,breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
+ // ---- Bonuses (Fight / Performance of the Night) ----
+ // From data/ufc-bonuses.json (scripts/build-ufc-bonuses.py). Counts are facts; money is an ESTIMATE from
+ // the rate table in the bonus file and is shown only for the awards that have a sourced amount. A fighter with no
+ // bonus gets no section (nothing is claimed about them).
+ const KIND_LABEL={fotn:"Fight of the Night",potn:"Performance of the Night",kotn:"Knockout of the Night",sotn:"Submission of the Night"};
+ const usd=n=>"$"+Math.round(n).toLocaleString("en-US");
+ const rateText=doc=>(doc.rates||[]).map(x=>usd(x.amount)+" per award from "+(x.from>="2026"?"January 2026":x.from.slice(0,4))).join(", ");
+ // cutoutFor(slug) -> url or "" (owner-cleared cutouts only; the caller knows the register). No cutout: muted initials, same spot.
+ function bonuses(slug,doc,cutoutFor){
+  const r=doc?.schema===1?doc.fighters?.[slug]:null;
+  if(!r||!r.total)return "";
+  const priced=r.total-(r.unpriced||0);
+  const tiles=[[String(r.total),"Bonuses",""],[String(r.fotn),"Fight of the Night",""],[String(r.potn),"Performance of the Night",""]];
+  const old=(r.kotn||0)+(r.sotn||0);
+  if(old)tiles.push([String(old),"Knockout / Submission of the Night","Awarded before 2014"]);
+  if(priced>0)tiles.push([usd(r.estimate),"Estimated bonus earnings",r.unpriced?priced+" of "+r.total+" bonuses priced":"Estimate"]);
+  const chip=k=>'<span class="bsp-chip is-'+k+'">'+esc(KIND_LABEL[k])+'</span>';
+  const initials=n=>String(n||"").split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+  const rows=(r.bouts||[]).map(b=>{
+   const url=b.opponentSlug&&cutoutFor?cutoutFor(b.opponentSlug):"";
+   const klass=b.outcome==="W"?"is-win":b.outcome==="L"?"is-loss":"is-draw";
+   return '<li class="'+klass+'"><span class="befn-power-result '+klass+'" aria-label="'+(b.outcome==="W"?"Win":b.outcome==="L"?"Loss":"Result")+'">'+esc(b.outcome||"–")+'</span>'+
+   '<div class="bsp-bonus-info"><strong>'+esc(b.opponent)+'</strong><small>'+esc(b.date)+' · '+esc(eventTitle(b.event))+'</small></div>'+
+   '<div class="bsp-bonus-kinds">'+(b.kinds||[]).map(chip).join("")+
+   '<span class="bsp-bonus-est">'+(b.est?esc(usd(b.est)):"—")+'</span></div>'+
+   (url?'<img class="bsp-cut" src="'+esc(url)+'" alt="" loading="lazy">':'<span class="bsp-cut is-none" aria-hidden="true">'+esc(initials(b.opponent))+'</span>')+'</li>';}).join("");
+  return '<div class="befn-pro-tiles bsp-bonus-tiles">'+tiles.map(([v,l,sm])=>'<div><strong>'+esc(v)+'</strong><span>'+esc(l)+'</span>'+
+   (sm?'<small>'+esc(sm)+'</small>':'')+'</div>').join("")+'</div>'+
+   '<details class="bsp-history"><summary>Bonus history <small>'+r.bouts.length+(r.bouts.length===1?' fight':' fights')+'</small></summary><ul class="bsp-bonus-list">'+rows+'</ul></details>'+
+   '<small class="bsp-note">Fight of the Night counts for both fighters; Performance, Knockout and Submission of the Night for the winner. '+
+   'Earnings are an estimate: '+rateText(doc)+'. Earlier awards varied by event and are counted but not priced, '+
+   'and special-event amounts and the $25,000 finish bonus are not included.</small>';
+ }
+
+ const api={bonuses,periodMode,careerState,breakdownsSound,glance,fightDetail,history,statsPanel,compare,findFight,methodText};
  scope.BEFNStatsProfile=api;
  if(typeof module==="object"&&module?.exports)module.exports=api;
 })(typeof window!=="undefined"?window:globalThis);
