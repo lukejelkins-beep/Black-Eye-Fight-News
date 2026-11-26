@@ -120,6 +120,19 @@ assert.strictEqual(R.videoHTML(null, sides), '');
 const vid = R.videoHTML({ id: 'FZ-7oEF9u8w', kind: 'finish', publisher: 'UFC', title: 'T' }, sides, { finish: 'Watch the finish' }, 0);
 assert.ok(vid.includes('befn-finish-play') && vid.includes('data-finish-id="FZ-7oEF9u8w"') && vid.includes('Watch the finish') && !vid.includes('<iframe'), 'the player is not loaded until the tap');
 assert.ok(!/i\.ytimg|youtube/.test(vid.replace(/data-finish-id="[^"]*"/, '')), 'no third-party picture on the poster');
+// ---- total strikes are context, not notable (Horiguchi 158 total vs 17 significant, 21 Nov 2026) ----
+const hor = { sigLanded: 17, totalLanded: 158 }, alm = { sigLanded: 8, totalLanded: 22 };
+const wideRows = R.statRows([{ ...alm, mins: 15 }, { ...hor, mins: 15 }]);
+const totalRow = wideRows[0].rows.find(r => r.key === 'totalLanded');
+assert.strictEqual(totalRow.hot, false, 'total strikes are never marked notable');
+assert.strictEqual(totalRow.note, true, 'a total far above significant gets the explanation');
+assert.strictEqual(wideRows[0].rows.find(r => r.key === 'sigLanded').hot, true, 'significant strikes can still be notable');
+assert.ok(R.statsHTML({ rows: wideRows, chips: [] }).includes('sr-rownote'));
+const normalRows = R.statRows([{ sigLanded: 40, totalLanded: 50, mins: 15 }, { sigLanded: 30, totalLanded: 45, mins: 15 }]);
+assert.strictEqual(normalRows[0].rows.find(r => r.key === 'totalLanded').note, false, 'no note for an ordinary gap');
+assert.ok(!R.statsHTML({ rows: normalRows, chips: [] }).includes('sr-rownote'));
+assert.ok(!R.chips([{ sigLanded: 8, totalLanded: 22, knockdowns: 0, headLanded: 0, bodyLanded: 0, legLanded: 0, groundLanded: 0, controlSec: 0, takedowns: 0, subAttempts: 0 }, { sigLanded: 17, totalLanded: 158, knockdowns: 0, headLanded: 0, bodyLanded: 0, legLanded: 0, groundLanded: 0, controlSec: 0, takedowns: 0, subAttempts: 0 }], ['A', 'B']).some(c => /total/i.test(c.small)), 'no chip for total strikes');
+
 // ---- tale of the tape ----
 const B = require('../assets/snapshot-b.js');
 const tp = n => ({ tape: n });
