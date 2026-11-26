@@ -141,3 +141,50 @@
  #main .fa-tf-p{width:96px;height:60px}
  #main .fa-h1{font-size:22px}
 }
+
+/* Fight predictions (fight-predictions.js): the #predictions page and the reference on a fight card. */
+.fp-ref[data-fp-ev]{display:none}
+.upcoming-bout a.fp-ref{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;min-height:44px;margin:0;padding:8px 12px;border-top:1px solid var(--line,#e4ddd0);color:var(--ink,#111013);text-decoration:none;font:500 13px/1.4 'DM Sans',sans-serif}
+.fp-ref-k{font:700 12px 'DM Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute,#6b665e)}
+.fp-ref-v b{font-weight:700}
+.fp-ref-go{margin-left:auto;font-weight:700;color:var(--ac,#cf1824)}
+.fp-ref-go::after{content:" →"}
+#main .fp{max-width:760px;margin:0 auto;padding:0 12px 40px}
+#main .fp-back{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font:700 13px 'DM Sans',sans-serif;color:var(--ac,#cf1824);text-decoration:none}
+#main .fp-back::before{content:"← "}
+#main .fp-lede{margin:8px 0 18px;font-size:15px;line-height:1.5;color:var(--mute,#6b665e)}
+#main .fp-event h2,#main .fp-rec h2{font:800 20px/1.25 var(--display,'Unbounded',sans-serif);margin:26px 0 2px;color:var(--ink,#111013)}
+#main .fp-when{margin:0 0 12px;font-size:13px;color:var(--mute,#6b665e)}
+#main .fp-bout{background:#fff;border:1px solid var(--line,#e4ddd0);border-radius:12px;padding:14px;margin:0 0 14px;scroll-margin-top:72px}
+#main .fp-bout-h{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--mute,#6b665e)}
+#main .fp-low{flex:none;padding:2px 8px;border-radius:6px;background:#fbeed0;color:#6a4a00;font-weight:700}
+#main .fp-names{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:8px 0 12px}
+#main .fp-names b{font:700 16px/1.25 'DM Sans',sans-serif;min-width:0}
+#main .fp-names b:last-child{text-align:right}
+#main .fp-names span{font-size:12px;color:var(--mute,#6b665e)}
+#main .fp-sec{margin-top:14px;padding-top:12px;border-top:1px solid var(--line,#e4ddd0)}
+#main .fp-sec-k{font:700 12px 'DM Sans',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mute,#6b665e);margin-bottom:6px}
+#main .fp-pcts{display:flex;justify-content:space-between;font:800 26px var(--display,'Unbounded',sans-serif);color:#6b665e}
+#main .fp-pcts .is-fav{color:var(--ac,#cf1824)}
+#main .fp-bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:#eee;margin-top:6px}
+#main .fp-bar i{display:block;background:#9a948a}
+#main .fp-bar i:last-child{background:var(--ac,#cf1824)}
+#main .fp-fin{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+#main .fp-fin b{font:800 18px var(--display,'Unbounded',sans-serif)}
+#main .fp-tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+#main .fp-tbl th,#main .fp-tbl td{padding:6px 4px;text-align:center;border-bottom:1px solid #f0eadf}
+#main .fp-tbl thead th{font-size:12px;font-weight:700;color:var(--mute,#6b665e)}
+#main .fp-tbl tbody th{text-align:left;font-weight:500;color:var(--mute,#6b665e)}
+#main .fp-det tbody th{text-align:center;font-size:12px}
+#main .fp-top,#main .fp-note,#main .fp-skip,#main .fp-foot{margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--mute,#6b665e)}
+#main .fp-rec-card{background:#fff;border:1px solid var(--line,#e4ddd0);border-radius:12px;padding:14px;margin:0 0 14px}
+#main .fp-rec-card h3{margin:0 0 6px;font:700 15px 'DM Sans',sans-serif}
+#main .fp-rec-card p,#main .fp-rec-card li{font-size:14px;line-height:1.5}
+#main .fp-rec-card ul{margin:6px 0 0;padding-left:18px}
+#main .fp-rel td,#main .fp-rel th{font-size:13px}
+@media (min-width:900px){#main .fp{max-width:900px}#main .fp-rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}#main .fp-rec-grid .fp-rec-card{margin:0}}
+#main .fp-teaser{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;margin:14px 0 4px;padding:10px 14px;background:#fff;border:1px solid var(--line,#e4ddd0);border-radius:12px;color:var(--ink,#111013);text-decoration:none}
+#main .fp-teaser b{display:block;font:700 15px 'DM Sans',sans-serif}
+#main .fp-teaser small{display:block;font-size:13px;color:var(--mute,#6b665e)}
+#main .fp-teaser-go{font:700 13px 'DM Sans',sans-serif;color:var(--ac,#cf1824)}
+#main .fp-teaser-go::after{content:" →"}

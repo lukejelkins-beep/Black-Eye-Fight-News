@@ -26,6 +26,11 @@ on:
       - 'tests/test_ufc_card_scores.py'
       - 'tests/test_ufc_snapshot_scores.py'
       - 'scripts/build-ufc-fighter-form.py'
+      - 'scripts/build-ufc-fight-predictions.py'
+      - 'scripts/ufc-method-research.py'
+      - 'scripts/ufc-prediction-research.py'
+      - 'data/ufc-prediction-model.json'
+      - 'tests/test_ufc_fight_predictions.py'
       - 'data/ufc-fighter-status.json'
       - 'data/ufc-fighter-born.json'
       - 'data/ufc-overall-records.json'
@@ -54,6 +59,11 @@ on:
       - 'assets/fighter-power-index.js'
       - 'assets/snapshot-tiles.js'
       - 'scripts/build-ufc-fighter-form.py'
+      - 'scripts/build-ufc-fight-predictions.py'
+      - 'scripts/ufc-method-research.py'
+      - 'scripts/ufc-prediction-research.py'
+      - 'data/ufc-prediction-model.json'
+      - 'tests/test_ufc_fight_predictions.py'
       - 'tests/test_ufc_fighter_form.py'
       - '.github/workflows/build-ufc-stats.yml'
 permissions:
@@ -64,7 +74,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -85,6 +95,10 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_ufc_ratings.py' -v
       - name: Fighter Form score tests (Fighters hub handover, offline)
         run: python -m unittest discover -s tests -p 'test_ufc_fighter_form.py' -v
+      - name: Install numpy for the fight predictions
+        run: python -m pip install numpy
+      - name: Test fight predictions (reconciliation, committed file consistency)
+        run: python -m unittest discover -s tests -p 'test_ufc_fight_predictions.py' -v
       - name: Test card snapshot build (tiles, coverage, nulls)
         run: python -m unittest discover -s tests -p 'test_ufc_card_snapshots.py' -v
       - name: Test snapshot scores (formulas, gates, division rule; scores stay off in the site)
@@ -114,7 +128,8 @@ jobs:
             python scripts/build-ufc-card-snapshots.py
             python scripts/build-ufc-card-scores.py
             python scripts/build-ufc-fighter-form.py
-            git add -A data/ufc-stats data/ufc-card-snapshots.json data/ufc-card-scores.json data/ufc-fighter-form.json data/ufc-fighter-status.json
+            python scripts/build-ufc-fight-predictions.py
+            git add -A data/ufc-stats data/ufc-card-snapshots.json data/ufc-card-scores.json data/ufc-fighter-form.json data/ufc-fighter-status.json data/ufc-fight-predictions.json
             if git diff --cached --quiet; then echo 'No statistics changed'; exit 0; fi
             git commit -q -m 'Refresh UFC fighter statistics and ratings from saved round data'
             if git push -q origin "HEAD:$branch"; then exit 0; fi

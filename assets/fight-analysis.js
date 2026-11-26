@@ -355,7 +355,7 @@
   function mmaTop(ctx) {
     const H = helpers(), D = ctx.data || {}, now = ctx.now;
     const slides = mmaSlides({ champions: D.champions && D.champions.mma, now, events: ctx.events, form: ctx.form, regs: regsOf(ctx, 'ufc'), portrait: portraitOf(ctx) });
-    return '<div class="sov fa fa-mma">' + carouselHTML(slides, { title: 'UFC champions', sub: 'From BEFN’s title tracker. Heavyweight first, women’s divisions after the men’s.' }) +
+    return '<div class="sov fa fa-mma"><a class="fp-teaser" href="#predictions"><span><b>Fight predictions</b><small>Who wins, whether it ends in a finish and how, for the announced UFC cards</small></span><span class="fp-teaser-go">Open</span></a>' + carouselHTML(slides, { title: 'UFC champions', sub: 'From BEFN’s title tracker. Heavyweight first, women’s divisions after the men’s.' }) +
       '<div class="fa-two">' + endedHTML(H, withClips(ended(recent(ctx.results, 'MMA', now)), ctx, 'mma'), 'mma') + fightsHTML(H, titleFights(ctx.events, 'mma', now), 'UFC title fights coming up') + '</div></div>';
   }
 
