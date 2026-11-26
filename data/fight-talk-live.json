@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-25T23:12:45.958Z",
-  "checkedAt": "2026-11-25T23:12:45.958Z",
-  "updatedAt": "2026-11-25T16:04:44Z",
+  "attemptedAt": "2026-11-26T01:32:23.764Z",
+  "checkedAt": "2026-11-26T01:32:23.764Z",
+  "updatedAt": "2026-11-25T20:11:07.837Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 26,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 0,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,117 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 2,
+    "batchIndex": 0,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
       "Instagram": 43,
-      "X": 26,
-      "Bluesky": 4,
-      "Threads": 9,
-      "Reddit": 2
+      "Bluesky": 6,
+      "X": 27,
+      "Threads": 8
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n35xqqoyks2a",
+      "cid": "bafyreifxwr25r266b2bnhynytkqphnqrt657y6sfwuukabmwuiivuxkj4u",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Jack Wannan",
+      "handle": "@jackwannan.bsky.social",
+      "role": "commentator",
+      "quote": "Fight Ready MMA Gym releases first statement since passing of Eddie Cha.\n\n\"His impact reached far beyond the walls of our gym ... We are incredibly grateful to have been a part of his life and to have shared so many memories with him.\"",
+      "postedAt": "2026-11-25T20:11:07.837Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n35xqqoyks2a",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
+      "engagement": {
+        "likes": 3,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n35wizq5tf2t",
+      "cid": "bafyreietemhx7ylp5l4azz2siomptzbuchzqazpxhi2vkv4onuo6st26um",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "Sad Scenes as Floyd Mayweather Shadowboxes in Half-Empty Arena #boxing #boxingnews",
+      "postedAt": "2026-11-25T19:48:55Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n35wizq5tf2t",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n35pgkbdgc2a",
+      "cid": "bafyreiaprny65ec7gz24i5laqi363hy2ro5k7rigrgrjuydjg34wa3oatq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Jack Wannan",
+      "handle": "@jackwannan.bsky.social",
+      "role": "commentator",
+      "quote": "Reading a ufc.com profile of Eddie Cha, who just passed away, written by Thomas Gerbasi, who passed away last year, and it was a harsh reminder of how time is moving along. You gotta love those around you because tomorrow is never promised",
+      "postedAt": "2026-11-25T17:42:15.621Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n35pgkbdgc2a",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 1
+      },
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n35mmnkeph2q",
+      "cid": "bafyreibxvb7an2lopmwthqfu62dele5yiazgsd2tygtymuadrax5wrot2y",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "Phil Jay [World Boxing News]",
+      "handle": "@philjwbn.bsky.social",
+      "role": "commentator",
+      "quote": "15-Year-Old Prince Fury Forced to Explain Why Boxing Debut is PPV #boxing #boxingnews",
+      "postedAt": "2026-11-25T16:51:59Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n35mmnkeph2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n35jy5w3de2p",
       "cid": "bafyreid4togjezv7fy6dmgu3s5uk2s6jard55ocrn5kbaqv55ivcx3oumm",
@@ -93,6 +188,30 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n35gsoe3ak2a",
+      "cid": "bafyreigncehgbclnxct4awarmg2j2yutxvys7mnqazpdectiupbqa5nrkm",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Jack Wannan",
+      "handle": "@jackwannan.bsky.social",
+      "role": "commentator",
+      "quote": "A blueprint of what a renovated Korakuen Hall could look like was provided to Bout Review and it feels like the proportions are off because it looks like shinjuku face here",
+      "postedAt": "2026-11-25T15:07:58.856Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n35gsoe3ak2a",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
+      "engagement": {
+        "likes": 1,
+        "comments": 2,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -212,7 +331,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -548,7 +667,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -644,7 +763,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -788,7 +907,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -860,7 +979,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -932,7 +1051,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -956,7 +1075,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -980,7 +1099,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1028,7 +1147,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1052,7 +1171,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1076,7 +1195,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1100,7 +1219,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1124,55 +1243,7 @@
         "comments": 0,
         "shares": 1
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2wj7jpsru2u",
-      "cid": "bafyreigpf22pqbwjl5y5wn5dvla3t7zjeyuqtnwpsd7afw46lzqvll3rxm",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Tank Davis, Haney ‘Fought to the Death’ as Floyd, Broner Watched #boxing #boxingnews",
-      "postedAt": "2026-11-22T21:02:19Z",
-      "date": "23 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2wj7jpsru2u",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n2w7ccletm2l",
-      "cid": "bafyreiabguzvih74su3xxaceow7rfglhyyhjxvhlzglyfkxjxi5g4xwhoq",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "Phil Jay [World Boxing News]",
-      "handle": "@philjwbn.bsky.social",
-      "role": "commentator",
-      "quote": "Muhammad Ali’s Grandson Trashed for Celebrating Boxing Bill Pass #boxing #boxingnews",
-      "postedAt": "2026-11-22T18:04:55Z",
-      "date": "23 Nov 2026",
-      "url": "https://bsky.app/profile/philjwbn.bsky.social/post/3n2w7ccletm2l",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:awkln6xh4u5zzpsjngsu6xrr/bafkreibkfgej7hithfc3tqdfjpvj6vorttlbjmhtnvh2h3btmrx3ktw3m4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:awkln6xh4u5zzpsjngsu6xrr",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1196,7 +1267,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1220,7 +1291,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1244,7 +1315,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1268,7 +1339,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1292,7 +1363,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1316,7 +1387,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1364,7 +1435,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1388,7 +1459,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1412,7 +1483,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1484,7 +1555,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1580,7 +1651,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-25T14:00:21.007Z",
+      "engagementCheckedAt": "2026-11-26T01:32:23.764Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1629,30 +1700,6 @@
         "shares": 4
       },
       "engagementCheckedAt": "2026-11-18T18:33:14.095Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n2h6ejcf5s2z",
-      "cid": "bafyreiesicybgiaoke7p45owol43q3hj6awcq3fxnkpn6hywq475uxnnry",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Jack Wannan",
-      "handle": "@jackwannan.bsky.social",
-      "role": "commentator",
-      "quote": "Looks like... Matt Riddle will be boxing next month?",
-      "postedAt": "2026-11-16T18:38:19.635Z",
-      "date": "17 Nov 2026",
-      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n2h6ejcf5s2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
-      "engagement": {
-        "likes": 0,
-        "comments": 3,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-18T07:34:54.796Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1773,30 +1820,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-21T19:31:21.281Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n2dcum6zbs2m",
-      "cid": "bafyreialtuba5eaxbemxnbiro2wi7bc3vbnkqbh2yaleswacycp5eca5ma",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Jack Wannan",
-      "handle": "@jackwannan.bsky.social",
-      "role": "commentator",
-      "quote": "This is an incredible R5 from Gane. He's fighting his fight here. This is what he was hoping all 25 minutes would be like",
-      "postedAt": "2026-11-15T05:48:15.563Z",
-      "date": "15 Nov 2026",
-      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n2dcum6zbs2m",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
-      "engagement": {
-        "likes": 3,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-16T11:01:52.264Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1989,30 +2012,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-25T16:47:02.975Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:u6b6v2jhqpe6hfezjffq7zrh/app.bsky.feed.post/3n23f6gzzxk2k",
-      "cid": "bafyreifj2juciq56mceyokhl5xptfg6qqt6r4ew7b6qdvuapftnia3jbiy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Jack Wannan",
-      "handle": "@jackwannan.bsky.social",
-      "role": "commentator",
-      "quote": "Winner of FTR vs. MCMG tonight gets tag title shot next.",
-      "postedAt": "2026-11-12T02:08:15.279Z",
-      "date": "12 Nov 2026",
-      "url": "https://bsky.app/profile/jackwannan.bsky.social/post/3n23f6gzzxk2k",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:u6b6v2jhqpe6hfezjffq7zrh/bafkreieqcjv6rcvaozy2eikgm52rql3rmtpyj4w5l7r3hhbvmm65zyiks4",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:u6b6v2jhqpe6hfezjffq7zrh",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-16T11:01:52.264Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
