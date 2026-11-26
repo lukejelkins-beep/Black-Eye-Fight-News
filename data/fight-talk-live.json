@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-26T08:15:53.648Z",
-  "checkedAt": "2026-11-26T08:15:53.648Z",
-  "updatedAt": "2026-11-26T02:01:15Z",
+  "attemptedAt": "2026-11-26T10:24:28.064Z",
+  "checkedAt": "2026-11-26T10:24:28.064Z",
+  "updatedAt": "2026-11-26T06:26:58Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 4,
+  "sourcesChecked": 6,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 4,
+      "checked": 6,
       "failed": 0,
-      "configured": 4,
-      "message": "4 of 4 scheduled sources checked."
+      "configured": 6,
+      "message": "6 of 6 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 34,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 39,
+      "configured": 36,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 2,
+      "configured": 1,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,46 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 3,
+    "batchIndex": 4,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Threads": 12,
-      "X": 27,
-      "Instagram": 39,
-      "Bluesky": 4,
-      "Reddit": 2
+      "Instagram": 36,
+      "X": 34,
+      "Bluesky": 6,
+      "Threads": 7,
+      "Reddit": 1
     },
-    "directlyChecked": 4,
+    "directlyChecked": 6,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n3725x7rty2q",
+      "cid": "bafyreidt3hdb7nascy56ombm77jagqod36v6mdkcugp52cfxxcbiel4gay",
+      "platform": "Bluesky",
+      "sport": "boxing",
+      "type": "post",
+      "name": "World Boxing News",
+      "handle": "@worldboxingnews.com",
+      "role": "media",
+      "quote": "Chaos in Cardiff! 🏴󠁧󠁢󠁷󠁬󠁳󠁿\n\nLocal residents, a lot of whom opposed a 3.30am finish for Fury vs. Joshua, are expecting carnage in the early hours. 🥊⏰\n\nOrganizers at Sela, TKO, and Zuffa Boxing lobbied for a later finish to attract interest from the USA, which is reported to be low.",
+      "postedAt": "2026-11-26T06:26:58Z",
+      "date": "26 Nov 2026",
+      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n3725x7rty2q",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n36lctemmk2e",
       "cid": "bafyreihgnceczmcfjfm7sjkkcrj7dyqnhuc7rv7volloqohjc3x6qb4vi4",
@@ -140,7 +164,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -164,7 +188,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -212,7 +236,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -236,7 +260,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -260,7 +284,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -284,7 +308,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -308,7 +332,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -380,7 +404,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -404,7 +428,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -428,7 +452,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -452,7 +476,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -524,7 +548,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -548,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -620,7 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -692,7 +716,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -740,7 +764,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -764,7 +788,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -836,7 +860,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -860,31 +884,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n34sab3jn62w",
-      "cid": "bafyreidouptbyw72gsp2riyzqim3kddjj7kfowhpq7vcisrsnxv2gq56vy",
-      "platform": "Bluesky",
-      "sport": "boxing",
-      "type": "post",
-      "name": "World Boxing News",
-      "handle": "@worldboxingnews.com",
-      "role": "media",
-      "quote": "Tyson Fury vs. Anthony Joshua is reportedly generating little interest in the United States. 🇺🇸\n\nDespite years of anticipation in Britain, the heavyweight showdown barely appears to register with American boxing fans.",
-      "postedAt": "2026-11-25T08:59:45Z",
-      "date": "25 Nov 2026",
-      "url": "https://bsky.app/profile/worldboxingnews.com/post/3n34sab3jn62w",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:5kcx5a2jedlsz6n5adrjgy3e/bafkreifwt24bgnyu4mnbcklzxjk27nknrqydootsmpiev2qt43nsczamom",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:5kcx5a2jedlsz6n5adrjgy3e",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-26T04:52:00.461Z",
+      "engagementCheckedAt": "2026-11-26T10:24:28.064Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
