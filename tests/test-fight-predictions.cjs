@@ -32,8 +32,17 @@ assert.strictEqual(Object.values(s.cells).reduce((x, y) => x + y, 0), 100);
 
 // Card reference: favourite surname and chance, finish chance, link to the bout on the page, low confidence marked.
 const ref = P.refHTML(P.lookup(data, 'ev1', 'b1', ['Israel Adesanya', 'Shara Magomedov']));
-assert(/href="#predictions\/ev1--b1"/.test(ref)); assert(/Magomedov 65%/.test(ref)); assert(/42% finish/.test(ref)); assert(!/low confidence/.test(ref));
-assert(/low confidence/.test(P.refHTML(P.lookup(data, 'ev1', 'b2', ['Maycee Barber', 'Carli Judice']))));
+assert(/href="#predictions\/ev1--b1"/.test(ref)); assert(/Magomedov 65 percent/.test(ref)); assert(/>65%</.test(ref)); assert(/42% ends early/.test(ref)); assert(!/Low confidence|High confidence/.test(ref));
+assert(/Low confidence/.test(P.refHTML(P.lookup(data, 'ev1', 'b2', ['Maycee Barber', 'Carli Judice']))));
+// Confidence: high only at 70% or more with nobody flagged; a flagged fighter is low whatever the chance.
+assert.strictEqual(P.tier({ confidence: 'normal', winProbability: [.3, .7] }), 'high'); assert.strictEqual(P.tier({ confidence: 'normal', winProbability: [.35, .65] }), 'normal');
+assert.strictEqual(P.tier({ confidence: 'low', winProbability: [.1, .9] }), 'low');
+assert(/fp-tier-high/.test(P.refHTML({ event: { id: 'e' }, bout: { ...data.events[0].bouts[0], winProbability: [.2, .8] } })));
+// Photos: BEFN's own files by slug, initials underneath; drivers show only when both fighters have them.
+const rowHtml = P.pageHTML(data, null, now);
+assert(/assets\/img\/ufc\/israeladesanya-card\.webp/.test(rowHtml) && /class="fp-ini"[^>]*>IA</.test(rowHtml));
+const withDrivers = JSON.parse(JSON.stringify(data.events[0].bouts[0])); withDrivers.details.forEach((d, i) => d.drivers = { diffPm: i ? 1.8 : .3, ctrlShare: .03 + i / 10, td15: 0, sub15: 0 });
+assert(/What decides it/.test(P.driversHTML(withDrivers)) && /\+1\.8/.test(P.driversHTML(withDrivers))); assert.strictEqual(P.driversHTML(data.events[0].bouts[0]), '');
 
 // Page: only cards from two days ago on, a women's bout says so, skipped bouts are named once, not predicted, the disclaimer is there.
 const model = { testFrom: '2024-01-01', winner: {

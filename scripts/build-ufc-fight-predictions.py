@@ -45,6 +45,21 @@ def load(name, path):
     return mod
 
 
+# Shown on the page as "what decides it" (descriptive only; the winner odds come from the overall rating, which the
+# 26 Nov 2026 weight sweep found already uses these stats at about the right amounts).
+DRIVER_KEYS = (("diffPm", "striking"), ("ctrlShare", "grappling"), ("sub15", "grappling"), ("td15", "wrestling"))
+
+
+def drivers_of(ratings) -> dict:
+    out = {}
+    skills = ratings.get("skills") or {}
+    for key, skill in DRIVER_KEYS:
+        for d in (skills.get(skill) or {}).get("drivers", []):
+            if d.get("key") == key and d.get("value") is not None:
+                out[key] = round(float(d["value"]), 3)
+    return out
+
+
 def is_title(cards_bout) -> bool:
     text = f"{cards_bout.get('division') or ''} {cards_bout.get('note') or ''}".lower()
     return "title" in text or "championship" in text
@@ -132,7 +147,8 @@ def build(as_of_override=None):
                 "confidence": "low" if low else "normal",
                 "lowConfidenceFor": low,
                 "details": [{"rating": r["overall"], "rank": r.get("overallRank"), "rankOf": r.get("rankOf"),
-                             "age": None if s["age"] is None else round(s["age"], 1), "ufcFights": s["n"]}
+                             "age": None if s["age"] is None else round(s["age"], 1), "ufcFights": s["n"],
+                             "drivers": drivers_of(r)}
                             for r, s in zip(rts, sts)],
             })
         events.append({"id": e["id"], "title": e.get("title"), "date": e["date"], "bouts": out_bouts})
