@@ -51,6 +51,7 @@ WINDOW_FIGHTS = 8                # v3: up to 8 fights (v2: 5)
 WINDOW_MONTHS = 60               # v3: within 5 years (v2: 3)
 ELIGIBLE_MONTHS = 36             # at least 2 fights in the last 36 months, or no Form ("limited data")
 STRENGTH_MONTHS = 36             # opponent strength: percentile among pre-bout ratings in the 36 months before a bout
+CHAMP_AGE_FLOOR = 0.5            # owner, 26 Nov 2026 ("Gane under 80 and Volk at 85 as defending champs?"): a title holder's age part is at least this (scripts/ufc-form-champion-age.py; accuracy unchanged)
 POSITION = (1.0,) * WINDOW_FIGHTS  # flat (owner, 25 Nov); only age (the half-life) weights recency
 HALF_LIFE_MONTHS = 36            # v3 (v2: 24, v1: 18)
 # Fight statistics: margin per fight mapped by 0.5 + 0.5 tanh(margin / scale), so a margin of one scale is 0.88.
@@ -80,6 +81,16 @@ MAX_PRE_UFC_FIGHTS = 15          # owner, 2026-11-24: Rising star / Prospect nee
 
 
 # ---------- small helpers ----------
+def holds_title(history) -> bool:
+    """True when the fighter's latest title-fight result is a win with no loss since (history is newest first)."""
+    for f in history:
+        if f.get("outcome") == "L":
+            return False
+        if f.get("titleFight") and f.get("outcome") == "W":
+            return True
+    return False
+
+
 def months_between(a: str, b: str) -> float:
     return (dt.date.fromisoformat(b) - dt.date.fromisoformat(a)).days / MONTH
 
@@ -326,7 +337,7 @@ def points_for(fighter, history, as_of, ratings, strength, injured, after=None, 
     parts = {"results": round(R, 3), "dominance": round(D, 3), "opposition": round(Q, 3),
              "momentum": None if M is None else round(M, 3), "activity": round(A, 3),
              **{k: None if v is None else round(v, 3) for k, v in stats.items()},
-             "age": None if not born else round(clamp((AGE_TOP - years_between(born, as_of)) / AGE_SPAN), 3)}
+             "age": None if not born else round(max(clamp((AGE_TOP - years_between(born, as_of)) / AGE_SPAN), CHAMP_AGE_FLOOR if holds_title(history) else 0), 3)}
     used = {k: v for k, v in parts.items() if v is not None}
     points = 100 * sum(WEIGHTS[k] * v for k, v in used.items()) / sum(WEIGHTS[k] for k in used if WEIGHTS[k])
 
