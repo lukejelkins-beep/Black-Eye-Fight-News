@@ -1,13 +1,13 @@
 {
-  "attemptedAt": "2026-11-26T07:53:03.950Z",
-  "checkedAt": "2026-11-26T07:53:03.950Z",
+  "attemptedAt": "2026-11-26T08:55:57.322Z",
+  "checkedAt": "2026-11-26T08:55:57.322Z",
   "windowDays": 28,
   "articlesChecked": 29,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 42,
-  "publisherSourcesConfigured": 32,
-  "linksFound": 12,
+  "publisherSourcesConfigured": 33,
+  "linksFound": 17,
   "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
@@ -198,6 +198,27 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DgLsEijDIyc/"
+    },
+    {
+      "type": "post",
+      "platform": "X",
+      "sport": "boxing",
+      "name": "Dan Rafael",
+      "role": "media",
+      "handle": "@DanRafael1",
+      "nativeEmbed": true,
+      "originalDateUnverified": false,
+      "postedAt": "2026-11-25T18:03:48.818Z",
+      "sourceLinkedAt": "2026-11-25T18:40:18.000Z",
+      "discoveredAt": "2026-11-26T08:55:57.322Z",
+      "sourcePublisher": "Boxing News",
+      "evidenceUrl": "https://boxingnewsonline.net/news/wba-makes-decision-on-lopez-vs-garcia/",
+      "summary": "Original social post linked in Boxing News coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://x.com/DanRafael1/status/2125651683988693317"
     },
     {
       "type": "post",
@@ -2325,25 +2346,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://x.com/ringmagazine/status/2123819092305961384"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-20T17:50:56+00:00",
-      "discoveredAt": "2026-11-21T00:11:36.280Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/news/brian-ortega-educating-and-entertaining-masses-ufc-qatar",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/DfFyg3GEkxW/"
     }
   ],
   "seenOriginals": [
@@ -3734,6 +3736,10 @@
     {
       "url": "https://www.instagram.com/p/DgJpappm-hI/",
       "firstSeen": "2026-11-26T07:53:03.950Z"
+    },
+    {
+      "url": "https://x.com/DanRafael1/status/2125651683988693317",
+      "firstSeen": "2026-11-26T08:55:57.322Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
