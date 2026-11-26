@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-26T00:28:17.819Z",
-  "checkedAt": "2026-11-26T00:28:17.819Z",
+  "attemptedAt": "2026-11-26T01:57:19.162Z",
+  "checkedAt": "2026-11-26T01:57:19.162Z",
   "windowDays": 28,
   "articlesChecked": 29,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 42,
   "publisherSourcesConfigured": 32,
-  "linksFound": 33,
-  "newEmbedsVerified": 0,
+  "linksFound": 12,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -82,6 +82,25 @@
       "embedVerified": true,
       "linkPriority": 60,
       "url": "https://x.com/funkmasterMMA/status/2125224762473669041"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-25T23:56:07+00:00",
+      "discoveredAt": "2026-11-26T01:57:19.162Z",
+      "sourcePublisher": "MMA Fighting",
+      "evidenceUrl": "https://www.mmafighting.com/ufc/523375/charges-dismissed-against-anthony-smith-after-july-arrest-smith-releases-statement",
+      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DgLsEijDIyc/"
     },
     {
       "type": "post",
@@ -2323,25 +2342,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/Df7tX7Vh16H/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "boxing",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-20T13:00:00+00:00",
-      "discoveredAt": "2026-11-20T19:45:03.868Z",
-      "sourcePublisher": "MMA Fighting",
-      "evidenceUrl": "https://www.mmafighting.com/ufc/522374/morning-report-tito-ortiz-looks-back-at-cancelled-dana-white-boxing-match-i-would-have-knocked-his-ass-out",
-      "summary": "Original social post linked in MMA Fighting coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/Df879okFcz5/"
     }
   ],
   "seenOriginals": [
@@ -3708,6 +3708,10 @@
     {
       "url": "https://www.instagram.com/p/DgIycNczZLa/",
       "firstSeen": "2026-11-25T16:26:45.309Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DgLsEijDIyc/",
+      "firstSeen": "2026-11-26T01:57:19.162Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
