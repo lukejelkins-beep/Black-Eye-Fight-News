@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-26T17:57:59.677Z",
-  "checkedAt": "2026-11-26T17:57:59.677Z",
+  "attemptedAt": "2026-11-26T19:01:31.959Z",
+  "checkedAt": "2026-11-26T19:01:31.959Z",
   "windowDays": 28,
-  "articlesChecked": 28,
+  "articlesChecked": 29,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 1,
   "rssArticleCandidates": 15,
-  "publisherSourcesConfigured": 32,
-  "linksFound": 11,
-  "newEmbedsVerified": 0,
+  "publisherSourcesConfigured": 33,
+  "linksFound": 16,
+  "newEmbedsVerified": 2,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -85,6 +85,25 @@
       "role": "media",
       "nativeEmbed": true,
       "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-26T06:01:13+00:00",
+      "discoveredAt": "2026-11-26T19:01:31.959Z",
+      "sourcePublisher": "Sherdog",
+      "evidenceUrl": "https://www.sherdog.com/news/news/Josh-Hokit-hits-back-after-Ethyn-Ewing-predicts-his-fame-wont-last-203751",
+      "summary": "Original social post linked in Sherdog coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/reel/DgJsQrDMrQr/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
       "sourceLinkedAt": "2026-11-26T03:56:05+00:00",
       "discoveredAt": "2026-11-26T05:15:46.832Z",
       "sourcePublisher": "ONE Championship",
@@ -152,6 +171,25 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DgJpappm-hI/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-26T01:55:42+00:00",
+      "discoveredAt": "2026-11-26T19:01:31.959Z",
+      "sourcePublisher": "UFC",
+      "evidenceUrl": "https://www.ufc.com/news/remembering-eddie-cha-1973-2026",
+      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DgL11A0PGPS/"
     },
     {
       "type": "post",
@@ -2308,44 +2346,6 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2123662071611167122"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-20T21:27:12.098Z",
-      "discoveredAt": "2026-11-20T21:27:12.098Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 12,
-      "url": "https://www.threads.com/t/Df9-iMpjzB4/"
-    },
-    {
-      "type": "post",
-      "platform": "Threads",
-      "sport": "mma",
-      "name": "Original Threads post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-20T21:27:12.098Z",
-      "discoveredAt": "2026-11-20T21:27:12.098Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 12,
-      "url": "https://www.threads.com/t/Df990xFlWDU/"
     }
   ],
   "seenOriginals": [
@@ -3752,6 +3752,14 @@
     {
       "url": "https://www.instagram.com/reel/DfV2aDZGaz-/",
       "firstSeen": "2026-11-26T16:56:55.148Z"
+    },
+    {
+      "url": "https://www.instagram.com/reel/DgJsQrDMrQr/",
+      "firstSeen": "2026-11-26T19:01:31.959Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DgL11A0PGPS/",
+      "firstSeen": "2026-11-26T19:01:31.959Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
