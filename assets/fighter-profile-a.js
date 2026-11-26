@@ -234,7 +234,7 @@
    const r=m.rating;
    return '<aside class="befn-pro-score befn-pa-score" aria-label="BEFN rating"><span class="befn-pa-label">BEFN rating'+(r.provisional?' · provisional':'')+'</span>'+
     '<div class="befn-pa-scoreline"><strong class="befn-v3-score">'+esc(Number.isFinite(r.value)?r.value.toFixed(2):r.value)+'<small>/100</small></strong>'+
-    (r.rank&&r.of?'<p class="befn-pa-standing">#'+esc(r.rank)+' of '+esc(r.of)+' rated UFC fighters</p>':'')+'</div>'+
+    (r.rank&&r.of?'<p class="befn-pa-standing">#'+esc(r.rank)+' of '+esc(r.of)+' rated UFC '+(r.pool==="women"?"women":r.pool==="men"?"men":"fighters")+'</p>':'')+'</div>'+
     (chips?'<div class="befn-pa-formwrap">'+chips+'<p class="befn-pa-formlabel">'+esc(m.formLabel)+'</p></div>':'')+'</aside>';
   }
   return '<aside class="befn-pro-score befn-pa-score is-form" aria-label="Recent form"><span class="befn-pa-label">Recent form</span>'+
@@ -258,10 +258,10 @@
  function skillsHTML(m){
   if(!m.skills.length)return "";
   const pct=m.ufc;
-  return '<section class="befn-pa-sec befn-pa-skills"><h3>'+(pct?'Skills vs the UFC roster':'BEFN ratings')+'</h3>'+
+  return '<section class="befn-pa-sec befn-pa-skills"><h3>'+(pct?'Skills vs '+(m.rating&&m.rating.pool==="women"?'UFC women':m.rating&&m.rating.pool==="men"?'UFC men':'the UFC roster'):'BEFN ratings')+'</h3>'+
    m.skills.map(s=>'<div class="befn-pa-meter"><div><span>'+esc(s.label)+'</span><b>'+(pct?esc(ordinal(s.score))+' pct':esc(s.score)+' / 100')+'</b></div>'+
     '<i role="meter" aria-label="'+esc(s.label)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+esc(s.score)+'"><s style="width:'+Math.max(2,Math.min(100,+s.score))+'%"></s></i></div>').join("")+
-   (pct?'<p class="befn-pa-note">Percentiles against every rated UFC fighter. <button type="button" class="befn-pa-link" data-pa-tab="stats">How the rating works</button></p>':
+   (pct?'<p class="befn-pa-note">Percentiles against every rated UFC '+(m.rating&&m.rating.pool==="women"?"woman":m.rating&&m.rating.pool==="men"?"man":"fighter")+'. <button type="button" class="befn-pa-link" data-pa-tab="stats">How the rating works</button></p>':
     '<p class="befn-pa-note">BEFN’s estimate from the record and results on file.</p>')+'</section>';
  }
  function ordinal(n){n=+n;const t=n%100,o=n%10;return n+(t>=11&&t<=13?"th":o===1?"st":o===2?"nd":o===3?"rd":"th");}

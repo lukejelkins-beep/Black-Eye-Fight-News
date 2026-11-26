@@ -243,6 +243,34 @@ class Roster(unittest.TestCase):
         self.assertTrue(all(v["rankOf"] == len(rated) for v in out.values()))
         self.assertGreater(out["f39"]["overallPercentile"], out["f00"]["overallPercentile"])
 
+    def test_women_and_men_are_rated_as_separate_pools(self):
+        # 40 fighters, the top and bottom halves split between women and men: ranks, percentiles and the centre must
+        # each be worked out inside the pool (owner, 26 Nov 2026), so each pool has its own #1 and its own median.
+        fighters = self.roster()
+        for i, f in enumerate(fighters.values()):
+            f["divisionSlug"] = ("womens-strawweight" if i % 4 < 2 else "lightweight")
+        out = self.rate(fighters)
+        women = {s for s, f in fighters.items() if r.pool_of(f) == "women"}
+        self.assertEqual(len(women), 20)
+        self.assertTrue(all((out[s]["pool"] == "women") == (s in women) for s in out))
+        for pool, members in (("women", women), ("men", set(fighters) - women)):
+            rated = [out[s] for s in members if out[s]["eligible"]]
+            self.assertTrue(rated, pool)
+            self.assertTrue(all(v["rankOf"] == len(rated) for v in rated), pool + ": rankOf is the pool size")
+            self.assertEqual(sorted(v["overallRank"] for v in rated)[0], 1, pool + " has its own #1")
+            best = max(rated, key=lambda v: v["overallRating"])
+            self.assertEqual(best["overallRank"], 1)
+        # a skill percentile is placed against the pool: the weakest woman is near 0 even if she beats some men
+        weakest = min((out[s] for s in women), key=lambda v: v["skills"]["striking"]["roster"])
+        self.assertLessEqual(weakest["skills"]["striking"]["roster"], 15)
+
+    def test_pool_override_and_default(self):
+        self.assertEqual(r.pool_of({"divisionSlug": "womens-flyweight"}), "women")
+        self.assertEqual(r.pool_of({"divisionSlug": "flyweight"}), "men")
+        self.assertEqual(r.pool_of({"divisionSlug": None}), "men", "no evidence: men, as before")
+        self.assertEqual(r.pool_of({"divisionSlug": None, "pool": "women"}), "women", "the builder infers the pool")
+        self.assertEqual(r.pool_of({"divisionSlug": "flyweight", "pool": "bogus"}), "men")
+
     def test_no_bouts_means_no_headline(self):
         out = r.rate_roster(self.roster())
         self.assertIsNone(out["f20"]["overall"])

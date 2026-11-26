@@ -113,3 +113,19 @@ test("the rated count on profiles equals the established ratings in the stats fi
  const established=Object.keys(index).filter(slug=>read("data/ufc-stats/fighters/"+slug+".json").ratings?.eligible).length;
  assert.equal(names.rated,established);
 });
+
+test("women and men are counted as separate rated pools, and every rank runs inside its pool",()=>{
+ const index=read("data/ufc-stats/index.json").fighters,names=read("data/ufc-stats/names.json");
+ const byPool={men:[],women:[]};
+ for(const slug of Object.keys(index)){
+  const r=read("data/ufc-stats/fighters/"+slug+".json").ratings;
+  if(r?.eligible)byPool[r.pool].push(r);
+ }
+ assert.deepEqual(names.ratedByPool,{men:byPool.men.length,women:byPool.women.length});
+ assert.equal(names.rated,names.ratedByPool.men+names.ratedByPool.women);
+ for(const [pool,rows] of Object.entries(byPool)){
+  assert(rows.length>20,pool+" pool is large enough to rank");
+  assert(rows.every(r=>r.rankOf===rows.length),pool+": rankOf is the pool size");
+  assert.equal(Math.min(...rows.map(r=>r.overallRank)),1,pool+" has its own #1");
+ }
+});

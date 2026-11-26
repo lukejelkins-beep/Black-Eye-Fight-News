@@ -405,13 +405,40 @@ def overall(scores: dict):
     return round(total / sum(OVERALL_WEIGHTS[k] for k in skills + ["form"]))
 
 
+POOLS = ("men", "women")
+
+
+def pool_of(fighter: dict) -> str:
+    """Which rating pool a fighter belongs to: an explicit "pool" on the input (the builder infers it for fighters with
+    no division), else women when the division slug is a women's one, else men."""
+    if fighter.get("pool") in POOLS:
+        return fighter["pool"]
+    return "women" if str(fighter.get("divisionSlug") or "").startswith("womens-") else "men"
+
+
 def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | None = None,
                 prior: dict | None = None) -> dict:
-    """fighters: slug -> {"window": weighted window, "history": newest-first fights,
+    """Women and men are rated as separate pools (owner, 26 Nov 2026, "separate the women in terms of their
+    stats/ranking"): skill percentiles, shrinkage means, the headline centre, the rank, the overall percentile and the
+    results percentile are each worked out inside the fighter's own pool, so "rankOf" is the pool's size and "pool" says
+    which pool. Women only fight women, so the two Elo ratings are never anchored to each other and a shared centre or
+    percentile would compare numbers that were never on one scale. The results Elo itself is unchanged: it runs once
+    over every bout, and each fighter's rating only ever moves against their own opponents."""
+    results = results_as_of(bouts or [], as_of or "9999-12-31", None, prior) if bouts else {}
+    out = {}
+    for pool in POOLS:
+        members = {slug: f for slug, f in fighters.items() if pool_of(f) == pool}
+        if members:
+            for slug, r in _rate_pool(members, results, as_of).items():
+                out[slug] = {**r, "pool": pool}
+    return out
+
+
+def _rate_pool(fighters: dict, results: dict, as_of: str | None = None) -> dict:
+    """One pool of rate_roster. fighters: slug -> {"window": weighted window, "history": newest-first fights,
     "divisionSlug": str|None, "born": ISO birth date or None (age adjustment), "height": inches or None (height
-    adjustment against the division's average on this roster)}. bouts: every archived UFC bout (all fighters, including those who have left), for
-    the results rating; as_of: ISO date the results are aged to; prior: slug -> starting rating (pre_ufc_priors).
-    Returns slug -> ratings dict."""
+    adjustment against the division's average on this pool)}. results: slug -> results rating for every fighter (rate_roster
+    runs the Elo once over all bouts); as_of: ISO date the ratings are aged to. Returns slug -> ratings dict."""
     raw, eligible = {}, {}
     for slug, f in fighters.items():
         w = f["window"]
@@ -475,7 +502,6 @@ def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | No
         skill = sum(best) / 2
         strength[slug] = ((skill + form) / 2 if form is not None else skill) / 100
 
-    results = results_as_of(bouts or [], as_of or "9999-12-31", None, prior) if bouts else {}
     composite = {slug: skills_composite(skill_pct.get(slug) or prov_pct.get(slug) or {}) for slug in fighters}
     logits = {}
     for slug in fighters:
