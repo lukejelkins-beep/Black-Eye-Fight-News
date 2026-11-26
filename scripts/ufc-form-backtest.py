@@ -16,6 +16,7 @@ import datetime as dt
 import importlib.util
 import json
 import math
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,9 +35,10 @@ def report(name, pairs):
         print(f"{name:34s} no bouts")
         return
     acc = sum((d > 0) == (y == 1) for y, d in pts) / len(pts)
-    ll = min(sum(math.log1p(math.exp(-k * d * (1 if y else -1))) for y, d in pts) / len(pts)
-             for k in [i / 2000 for i in range(1, 400)])
-    print(f"{name:34s} n={len(pts):5d}  accuracy {acc:.3f}  log loss {ll:.4f}")
+    ll, best = min((sum(math.log1p(math.exp(-k * d * (1 if y else -1))) for y, d in pts) / len(pts), k)
+                   for k in [i / 2000 for i in range(1, 400)])
+    brier = sum((1 / (1 + math.exp(-best * d)) - y) ** 2 for y, d in pts) / len(pts)   # at the log-loss-best k
+    print(f"{name:34s} n={len(pts):5d}  accuracy {acc:.3f}  log loss {ll:.4f}  Brier {brier:.4f}")
 
 
 def main() -> int:
@@ -44,6 +46,8 @@ def main() -> int:
     ap.add_argument("--start", default="2022-01-01")
     ap.add_argument("--end", default="9999-12-31")
     args = ap.parse_args()
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import ufc_ratings
     fb = load_form()
     as_of = json.loads((ROOT / "data/ufc-stats/index.json").read_text())["asOf"]
     ratings, after, timeline = fb.rating_history(fb.load_build(), dt.date.fromisoformat(as_of))

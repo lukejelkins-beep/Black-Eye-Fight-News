@@ -22,10 +22,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path("/tmp/ufc-variants")
 VARIANTS = {
-    "base": {},
+    # TITLE_NO_DRIFT is on in the engine since 26 Nov; "base" is the engine without it, as tested that day.
+    "base": {"TITLE_NO_DRIFT": False},
     "title_no_drift": {"TITLE_NO_DRIFT": True},
-    "age_title0": {"AGE_TITLE_FACTOR": 0.0},
-    "age_title_half": {"AGE_TITLE_FACTOR": 0.5},
+    "age_title0": {"TITLE_NO_DRIFT": False, "AGE_TITLE_FACTOR": 0.0},
+    "age_title_half": {"TITLE_NO_DRIFT": False, "AGE_TITLE_FACTOR": 0.5},
     "both": {"TITLE_NO_DRIFT": True, "AGE_TITLE_FACTOR": 0.0},
 }
 

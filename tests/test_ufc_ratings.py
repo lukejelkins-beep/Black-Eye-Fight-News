@@ -283,6 +283,18 @@ def bout(a, b, outcome="W", date="2025-01-01", method="dec", detail="Unanimous",
 
 
 class Results(unittest.TestCase):
+    def test_a_title_fighter_is_not_drifted_while_idle(self):
+        # x's last fight is a title fight (or not); three years later x fights again. A title fighter's rating is
+        # not drifted back toward 1500 before that fight, so an opponent who beats them is not discounted for the layoff.
+        def walk(title):
+            bouts = [bout("x", "y", date="2020-01-01", method="sub", detail="", bid="1") | {"titleFight": title},
+                     bout("z", "x", date="2023-06-01", bid="2")]
+            _, pre = r.results_walk(bouts)
+            return pre[1][2]    # x's rating going into the second fight (x is corner b there)
+        title, plain = walk(True), walk(False)
+        self.assertGreater(title, plain, "the idle title fighter keeps their rating")
+        self.assertGreater(plain, r.RESULTS_MEAN, "the plain fighter has drifted toward 1500 but is still above it")
+
     def test_beating_a_strong_opponent_counts_more(self):
         # "strong" has beaten three fighters; "weak" has lost three. x beats strong, y beats weak.
         history = [bout("strong", "o%d" % i, date="2024-0%d-01" % (i + 1)) for i in range(3)]

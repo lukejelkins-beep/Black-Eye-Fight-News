@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-26 (No idle drift after a title fight)
+- **A fighter whose last fight was a title fight is not drifted toward 1500 while idle.** Owner, after Kayla Harrison's win over Nunes read only 75.96: "Go" to the recommended variant. Brier is level (0.2211 both ways, 1,135 bouts from 2024). Kayla 75.96 to 82.49 (#3 of 127 women); inactive former champions also rise (Jones #128 to #17 of the men, Nunes #58 to #27 of the women). The age waiver for title winners was tested and not adopted. Details in `docs/ufc-rating-model-2026-11.md`.
+
 ## 2026-11-26 (Women and men are rated as separate pools)
 - **Women and men are rated as separate pools.** Owner: "separate the women in terms of their stats/ranking", then "Full split". Skill percentiles, the score centre (50 = the pool's median), ranks and percentiles are inside the pool, so a profile reads "#8 of 127 rated UFC women". Prediction is level (Brier 0.2213 to 0.2211); women's scores rise by about 1, men's fall by about 0.2. Details in `docs/ufc-rating-model-2026-11.md`. Shows on fighter profiles and the stats page.
 

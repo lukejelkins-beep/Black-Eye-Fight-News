@@ -26,7 +26,7 @@ men's fall by 0.2 (at most 0.7), because the men's centre is now the men's media
 Left as it was: the rating-board page (all divisions) mixes both pools, so it is ordered by score, and the board's rank column is used
 only when the rows are one pool. The `Previous` figures elsewhere in this note are the pooled model.
 
-## 26 Nov 2026: title-winner variants tested on the rating, not adopted
+## 26 Nov 2026: title-winner variants tested; no idle drift after a title fight adopted (owner's choice), age waiver not
 Owner, after Kayla Harrison's submission win over Amanda Nunes left her at 75.96: test "a title win over a former champion counts
 without the idle decay" and "the age penalty is waived for champions". Two knobs in `scripts/ufc_ratings.py`, both off:
 `TITLE_NO_DRIFT` (a fighter whose last fight was a title fight is not drifted back toward 1500 while idle, so Nunes entered at
@@ -42,8 +42,23 @@ snapshots and walk-forward k as `ufc-rating-evaluate.py`, 1,135 bouts from 2024,
 | Half the age penalty for recent title winners | 65.0% | 0.2212 | -0.0000 (-0.0002 to +0.0002) | |
 | Both (no drift, no penalty) | 65.1% | 0.2212 | -0.0001 (-0.0006 to +0.0005) | 86.13, #2 |
 
-Neither improves prediction: every difference is under 0.0001 Brier, far inside the interval. They would change how champions
-read, not how well the number predicts, so they are an owner's choice, not a fitted one. The rating is unchanged.
+Neither improves prediction: every difference is under 0.0001 Brier, far inside the interval. They change how champions
+read, not how well the number predicts, so they are an owner's choice, not a fitted one.
+
+**Adopted (owner: "Go", after the recommendation):** no idle drift after a title fight (`TITLE_NO_DRIFT = True`). The age waiver
+stays off: age is the one adjustment that clearly helped prediction and champions age like everyone else. Effect on the
+2026-11-21 build: Kayla Harrison 75.96 to 82.49 (#8 to #3 of 127 women; Shevchenko 89.68, Silva 82.96). Side effects, because
+every fighter whose last fight was a title fight keeps their rating through a layoff, in the walk: Jon Jones 63.62 to 81.99 (#128 to
+#17 of the men), Amanda Nunes 48.43 to 63.53 (#58 to #27 of the women), Stipe Miocic +10.3, Henry Cejudo +9.3, Ciryl Gane +2.3;
+Holly Holm -2.0 and Pannie Kianzad -2.1 (their opponents' ratings no longer fall with a layoff). Nearly everyone moves a little
+(under 0.7) as the pool median shifts. An inactive former champion therefore reads higher than before; the final rating of a
+fighter still idle is aged as it was.
+
+**Effect on Form** (decided 26 Nov 2026: Form stays on the old ratings): Form values each fight by the opponent's point-in-time
+results rating, so the no-drift rule would have moved saved Form for 422 of 736 fighters (mean 0.22 points, 18 by a point or
+more, 9 rank changes, 3 stage changes) for no gain in Form's own accuracy (Brier 0.2286 against 0.2287 from 2024). So
+`rating_history` in `scripts/build-ufc-fighter-form.py` turns `TITLE_NO_DRIFT` off for the walk it uses: Form values are
+unchanged by this rule. The no-drift rule applies to the headline rating only.
 
 ## Update 25 Nov 2026: age in the headline (owner request: "can we improve the BEFN rating as well")
 Each fighter's rating now includes an age adjustment: **5.4 rating points per year away from 31** (the median fighter's
