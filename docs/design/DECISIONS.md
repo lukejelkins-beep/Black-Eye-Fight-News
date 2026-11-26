@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-26 (Fight predictions: reverses #432, behind a research gate)
+- **UFC fight predictions will be shown in a dedicated Analysis page, with a short reference on each upcoming fight card.** Owner: "Yes I do [reverse #432] but I want a specific page in the analysis area of the website and then a reference in the fight card with key details/info". This replaces the 23 Nov rule that prediction is only ever the objective test and never shown. The BEFN rating itself stays descriptive. Gate: the model is built offline first and ships only if it beats the current rating's walk-forward Brier (0.2211, 1,135 bouts from 2024) with a bootstrap interval that excludes zero. Shown as a model estimate, never betting advice, with a public track record.
+
 ## 2026-11-26 (No idle drift after a title fight)
 - **A fighter whose last fight was a title fight is not drifted toward 1500 while idle.** Owner, after Kayla Harrison's win over Nunes read only 75.96: "Go" to the recommended variant. Brier is level (0.2211 both ways, 1,135 bouts from 2024). Kayla 75.96 to 82.49 (#3 of 127 women); inactive former champions also rise (Jones #128 to #17 of the men, Nunes #58 to #27 of the women). The age waiver for title winners was tested and not adopted. Details in `docs/ufc-rating-model-2026-11.md`.
 
