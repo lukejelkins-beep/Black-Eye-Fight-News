@@ -400,3 +400,23 @@
  #fighterDialog.befn-pro-dialog .befn-hero-flag{width:70%}
  #fighterDialog.befn-pro-dialog .befn-hero-cut::after{background:linear-gradient(90deg,rgba(21,17,21,.1) 0%,#151115 70%),linear-gradient(0deg,#151115 0%,rgba(21,17,21,0) 45%)}
 }
+
+/* Bonuses: Fight of the Night is a filled gold chip, Performance of the Night an outlined one (differ by more than colour) */
+.bsp-chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.bsp-chip.is-fotn{background:var(--pro-gold);color:var(--pro-ink);border:2px solid var(--pro-gold)}
+.bsp-chip.is-potn,.bsp-chip.is-kotn,.bsp-chip.is-sotn{background:transparent;color:var(--pro-ink);border:2px solid var(--pro-ink)}
+.bsp-bonus-list{list-style:none;margin:6px 0 0;padding:0}
+.bsp-bonus-list li{position:relative;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:8px 92px 8px 10px;min-height:76px;border-bottom:1px solid var(--pro-border);border-left:4px solid #c8bdb5}
+.bsp-bonus-list li.is-win{border-left-color:#2f9a69}.bsp-bonus-list li.is-loss{border-left-color:#c34f55}
+.bsp-bonus-list li:first-child{margin-top:18px}
+.bsp-bonus-info{flex:1 1 150px;min-width:0}
+.bsp-bonus-list strong{display:block;font:800 17px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--pro-ink)}
+.bsp-bonus-list small{display:block;font-size:12px;color:var(--pro-muted)}
+/* the other fighter's cutout: no frame, no disc, standing on the row line, head above it */
+.bsp-cut{position:absolute;right:0;bottom:0;width:76px;height:95px;object-fit:contain;object-position:bottom;pointer-events:none}
+.bsp-cut.is-none{display:flex;align-items:flex-end;justify-content:center;height:76px;padding-bottom:12px;box-sizing:border-box;font:900 26px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.04em;color:#c8bdb5}
+@media(max-width:560px){.bsp-bonus-list li{padding-right:84px}.bsp-cut,.bsp-cut.is-none{width:68px}.bsp-cut{height:85px}}
+.bsp-bonus-kinds{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bsp-bonus-est{min-width:64px;text-align:right;font-weight:800;color:var(--pro-text)}
+.bsp-bonus-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:720px){.bsp-bonus-tiles{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}

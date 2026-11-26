@@ -64,7 +64,7 @@ test('internal files and research data stay off the public site', () => {
   ]);
   const published = readdirSync(join(out, 'data'));
   assert.ok(published.every(name => name.endsWith('.json') || allowedDirs.has(name)), published.join(', '));
-  assert.ok(published.filter(name => name.endsWith('.json')).length <= 40, 'only referenced data files are published');
+  assert.ok(published.filter(name => name.endsWith('.json')).length <= 41, 'only referenced data files are published');
   // Widening allowedDirs must not let a research file ride along inside a published folder:
   // only the files a page actually asks for are copied.
   for (const ref of ['data/sumo/official-portrait-research.json', 'data/sumo/portrait-intake-status.json']) {
