@@ -138,7 +138,13 @@ def rating_history(build, as_of: dt.date):
         build.ACTIVE_MONTHS, build.results_bouts = old, real
     ur = build.ufc_ratings
     p = ur.RESULTS
-    _, pre = ur.results_walk(captured["b"], p, build.pre_ufc_priors())
+    # Form keeps the decayed idle rating: the "no drift after a title fight" rule (ufc_ratings.TITLE_NO_DRIFT)
+    # is a headline-rating decision; it did not change Form's accuracy and would only shift saved Form values.
+    keep, ur.TITLE_NO_DRIFT = ur.TITLE_NO_DRIFT, False
+    try:
+        _, pre = ur.results_walk(captured["b"], p, build.pre_ufc_priors())
+    finally:
+        ur.TITLE_NO_DRIFT = keep
     by_bout, after, timeline = {}, {}, []
     for bout, ra, rb, na, nb in pre:
         bid = str(bout["boutId"])

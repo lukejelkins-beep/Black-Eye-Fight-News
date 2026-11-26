@@ -45,12 +45,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--start", default="2022-01-01")
     ap.add_argument("--end", default="9999-12-31")
-    ap.add_argument("--old-drift", action="store_true",
-                    help="results ratings drift while idle after a title fight too (the engine before 26 Nov 2026)")
     args = ap.parse_args()
     sys.path.insert(0, str(ROOT / "scripts"))
     import ufc_ratings
-    ufc_ratings.TITLE_NO_DRIFT = not args.old_drift   # the build module imports this same module
     fb = load_form()
     as_of = json.loads((ROOT / "data/ufc-stats/index.json").read_text())["asOf"]
     ratings, after, timeline = fb.rating_history(fb.load_build(), dt.date.fromisoformat(as_of))
