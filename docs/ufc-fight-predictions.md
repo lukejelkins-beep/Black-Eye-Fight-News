@@ -22,9 +22,13 @@ The finish and method models are scored separately, so their product does not ad
 - No estimate when a fighter has no UFC record here yet, or the two are in different pools.
 - Market odds are not used. UFCalendar sells a UFC odds API (closing and opening lines, props, history from 2012); using it needs a paid plan, because BEFN's free 100 requests a month are already allocated (`docs/ufcalendar-budget.md`), and a check of the provider's terms for showing market probabilities.
 
+## Live record (prediction history)
+`scripts/update-ufc-prediction-log.py` runs hourly in the stats workflow after the generator. It writes each predicted bout on a not-yet-held card once, frozen, to `data/ufc-prediction-log.json` (never changed or removed, and only for cards dated after today), then scores an entry when `data/results.json` has the same event and the same two fighters: winner (as an index into the logged fighters) and how it ended. Draws and no contests are kept but not scored. The Predictions page shows the record per pool ("N of M winners picked", finish call, latest 20 results) and says "too few fights to judge yet" under 30 fights. The log started 26 Nov 2026, with the 17 bouts on the four announced cards.
+
 ## Files and how to refresh
 - `scripts/ufc-prediction-calibrate.py` (slow, by hand when the rating engine or fight data change materially) writes `data/ufc-prediction-model.json`: slopes, track record, reliability tables, finish and method gains. Refresh the rating rows with `python3 scripts/ufc-rating-variants.py run current` first, or let it run them.
 - `scripts/build-ufc-fight-predictions.py` (fast, in the stats workflow after the Form build) writes `data/ufc-fight-predictions.json` for the announced cards.
 - `assets/fight-predictions.js` draws the page and fills the `.fp-ref` placeholder that `assets/upcoming-cards.js` leaves on each UFC bout.
+- `data/ufc-prediction-log.json`: the live record (see above).
 - Tests: `tests/test_ufc_fight_predictions.py`, `tests/test-fight-predictions.cjs`.
 - A bug found while building (so keep the note): the finish model uses each fighter's results rating as a feature. Feeding it zeros instead of the real rating moved Adesanya vs Magomedov from 42% to 58% finish. The generator passes the fighters' real results ratings.

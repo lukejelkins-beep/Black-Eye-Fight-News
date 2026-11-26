@@ -27,6 +27,7 @@ on:
       - 'tests/test_ufc_snapshot_scores.py'
       - 'scripts/build-ufc-fighter-form.py'
       - 'scripts/build-ufc-fight-predictions.py'
+      - 'scripts/update-ufc-prediction-log.py'
       - 'scripts/ufc-method-research.py'
       - 'scripts/ufc-prediction-research.py'
       - 'data/ufc-prediction-model.json'
@@ -60,6 +61,7 @@ on:
       - 'assets/snapshot-tiles.js'
       - 'scripts/build-ufc-fighter-form.py'
       - 'scripts/build-ufc-fight-predictions.py'
+      - 'scripts/update-ufc-prediction-log.py'
       - 'scripts/ufc-method-research.py'
       - 'scripts/ufc-prediction-research.py'
       - 'data/ufc-prediction-model.json'
@@ -129,7 +131,8 @@ jobs:
             python scripts/build-ufc-card-scores.py
             python scripts/build-ufc-fighter-form.py
             python scripts/build-ufc-fight-predictions.py
-            git add -A data/ufc-stats data/ufc-card-snapshots.json data/ufc-card-scores.json data/ufc-fighter-form.json data/ufc-fighter-status.json data/ufc-fight-predictions.json
+            python scripts/update-ufc-prediction-log.py
+            git add -A data/ufc-stats data/ufc-card-snapshots.json data/ufc-card-scores.json data/ufc-fighter-form.json data/ufc-fighter-status.json data/ufc-fight-predictions.json data/ufc-prediction-log.json
             if git diff --cached --quiet; then echo 'No statistics changed'; exit 0; fi
             git commit -q -m 'Refresh UFC fighter statistics and ratings from saved round data'
             if git push -q origin "HEAD:$branch"; then exit 0; fi

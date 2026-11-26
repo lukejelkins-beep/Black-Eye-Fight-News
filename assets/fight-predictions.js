@@ -100,7 +100,38 @@
       '<p class="fp-foot">Ratings, fight statistics and the models are rebuilt as results come in. These are estimates from past UFC results and statistics, not betting advice, and a fighter with little UFC history is flagged because the model knows less about them.</p></section>';
   }
 
-  function pageHTML(data, model, now) {
+  /* The live record: predictions logged before each fight (scripts/update-ufc-prediction-log.py), scored afterwards. */
+  const HOW = { ko: 'KO/TKO', sub: 'submission', dec: 'decision' };
+  function liveSummary(log) {
+    const entries = (log && log.entries) || [];
+    const out = { since: log && log.since, pending: entries.filter(e => !e.result).length, pools: {}, scored: [] };
+    for (const e of entries) {
+      if (!e.result || e.result.winner === null || e.result.winner === undefined) continue;
+      const pick = e.winProbability[0] >= e.winProbability[1] ? 0 : 1, right = pick === e.result.winner;
+      const finish = e.result.method === 'ko' || e.result.method === 'sub';
+      const p = out.pools[e.pool] || (out.pools[e.pool] = { fights: 0, right: 0, finishCalls: 0, finishRight: 0 });
+      p.fights++; if (right) p.right++;
+      if (e.result.method !== 'other') { p.finishCalls++; if ((e.finishProbability >= .5) === finish) p.finishRight++; }
+      out.scored.push({ e, pick, right, pct: Math.round(Math.max(...e.winProbability) * 100) });
+    }
+    out.scored.sort((a, b) => (b.e.result.date || b.e.date).localeCompare(a.e.result.date || a.e.date));
+    return out;
+  }
+  function liveHTML(log) {
+    const L = liveSummary(log);
+    if (!L.since) return '';
+    const pools = ['men', 'women'].map(p => { const x = L.pools[p] || { fights: 0, right: 0, finishCalls: 0, finishRight: 0 };
+      return '<div class="fp-rec-card"><h3>' + (p === 'women' ? 'Women’s' : 'Men’s') + ' fights so far</h3>' + (x.fights ?
+        '<p><b>' + x.right + ' of ' + x.fights + '</b> winners picked · finish or distance called right in ' + x.finishRight + ' of ' + x.finishCalls + (x.fights < 30 ? ' · too few fights to judge yet' : '') + '</p>' :
+        '<p>No fights scored yet.</p>') + '</div>'; }).join('');
+    const rows = L.scored.slice(0, 20).map(r => { const [a, b] = r.e.fighters, w = r.e.fighters[r.e.result.winner];
+      return '<tr><td>' + esc(fmt(r.e.result.date || r.e.date)) + '</td><td>' + esc(a + ' vs ' + b) + '</td><td>' + esc(surname(r.e.fighters[r.pick])) + ' ' + r.pct + '%</td><td>' + esc(surname(w)) + (HOW[r.e.result.method] ? ' by ' + HOW[r.e.result.method] : '') + '</td><td>' + (r.right ? 'Right' : 'Wrong') + '</td></tr>'; }).join('');
+    return '<section class="fp-rec" id="fp-live"><h2>Live record</h2><p class="fp-lede">Each estimate is saved before the fight and never changed, then scored when the result is in. Started ' + esc(fmt(L.since)) + '. ' + L.pending + ' saved and waiting for their fight.</p>' +
+      '<div class="fp-rec-grid">' + pools + '</div>' +
+      (rows ? '<div class="fp-rec-card"><h3>Latest results</h3><div class="fa-scroll"><table class="fp-tbl fp-hist"><thead><tr><th scope="col">Date</th><th scope="col">Fight</th><th scope="col">We picked</th><th scope="col">Result</th><th scope="col"></th></tr></thead><tbody>' + rows + '</tbody></table></div></div>' : '') + '</section>';
+  }
+
+  function pageHTML(data, model, now, log) {
     const floor = dayKey(now - 2 * DAY);
     const events = ((data && data.events) || []).filter(e => e.date >= floor).sort((a, b) => a.date.localeCompare(b.date));
     const body = events.map(e => {
@@ -109,8 +140,8 @@
         (skipped.length ? '<p class="fp-skip">No estimate for ' + skipped.map(b => esc(b.fighters.map(f => f.name || 'a fighter').join(' vs '))).join('; ') + ': a fighter is new to the UFC or has no UFC record here yet.</p>' : '') + '</section>';
     }).join('');
     return '<div class="fp"><a class="fp-back" href="#analysis">Analysis</a><h1 class="fa-h1">Fight predictions</h1>' +
-      '<p class="fp-lede">A model estimate for each fight on the announced UFC cards: who wins, whether it ends in a finish, and how. Built from BEFN’s ratings and past UFC results and statistics. Not betting advice. <a href="#fp-record">See the track record</a>.</p>' +
-      (body || '<p class="fp-skip">No announced UFC cards to estimate right now.</p>') + recordHTML(model) + '</div>';
+      '<p class="fp-lede">A model estimate for each fight on the announced UFC cards: who wins, whether it ends in a finish, and how. Built from BEFN’s ratings and past UFC results and statistics. Not betting advice. <a href="#fp-live">Live record</a> · <a href="#fp-record">Track record since 2024</a>.</p>' +
+      (body || '<p class="fp-skip">No announced UFC cards to estimate right now.</p>') + liveHTML(log) + recordHTML(model) + '</div>';
   }
 
   /* ---------- browser ---------- */
@@ -119,7 +150,8 @@
   function load() {
     if (!pending) pending = Promise.all([
       fetch('data/ufc-fight-predictions.json').then(r => r.ok ? r.json() : null).catch(() => null),
-      fetch('data/ufc-prediction-model.json').then(r => r.ok ? r.json() : null).catch(() => null)]).then(([d, m]) => { st.data = d; st.model = m; st.done = true; });
+      fetch('data/ufc-prediction-model.json').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('data/ufc-prediction-log.json').then(r => r.ok ? r.json() : null).catch(() => null)]).then(([d, m, l]) => { st.data = d; st.model = m; st.log = l; st.done = true; });
     return pending;
   }
   function fill() {
@@ -132,7 +164,7 @@
     document.querySelectorAll('[data-befn-predictions]').forEach(m => {
       if (m.dataset.fpDone) return;
       m.dataset.fpDone = '1';
-      m.innerHTML = pageHTML(st.data, st.model, Date.now());
+      m.innerHTML = pageHTML(st.data, st.model, Date.now(), st.log);
       const sub = String(root.location.hash || '').split('/')[1];
       const t = sub && root.document.getElementById('fp-' + decodeURIComponent(sub));
       if (t) t.scrollIntoView({ block: 'start' });
@@ -143,7 +175,7 @@
     if (!document.querySelector('.fp-ref[data-fp-ev]:not([data-fp-done]), [data-befn-predictions]:not([data-fp-done])')) return;
     load().then(fill);
   }
-  const api = { fold, wholePercents, lookup, summary, refHTML, boutHTML, recordHTML, pageHTML, anchor };
+  const api = { fold, wholePercents, lookup, summary, refHTML, boutHTML, recordHTML, liveSummary, liveHTML, pageHTML, anchor };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNPredictions = api;
   if (typeof document !== 'undefined') {

@@ -66,3 +66,52 @@ class Committed(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Log(unittest.TestCase):
+    """scripts/update-ufc-prediction-log.py: frozen before the fight, scored after, never rewritten."""
+
+    @classmethod
+    def setUpClass(cls):
+        s = importlib.util.spec_from_file_location("ufc_prediction_log", ROOT / "scripts/update-ufc-prediction-log.py")
+        cls.log = importlib.util.module_from_spec(s)
+        s.loader.exec_module(cls.log)
+
+    def preds(self, p=0.35):
+        bout = {"id": "b1", "status": "ok", "pool": "men", "fighters": [{"name": "Israel Adesanya"}, {"name": "Shara Magomedov"}],
+                "winProbability": [p, round(1 - p, 4)], "finishProbability": 0.42, "confidence": "normal"}
+        return {"statsAsOf": "2026-11-21", "events": [{"id": "ev1", "title": "T", "date": "2026-12-05", "bouts": [bout]},
+                                                      {"id": "ev0", "title": "Today", "date": "2026-11-26", "bouts": [dict(bout, id="b9")]}]}
+
+    def result(self, winner_first):
+        names = ["Shara Magomedov", "Israel Adesanya"]          # result lists them in the other order
+        return {"results": [{"sport": "MMA", "status": "completed", "eventId": "ev1", "date": "2026-12-05", "winner": 0 if winner_first else 1,
+                             "method": "TKO (punches)", "round": 2, "fighters": [{"name": n} for n in names]}]}
+
+    def test_logs_future_cards_only_and_once(self):
+        log = self.log.update({}, self.preds(), {"results": []}, "2026-11-26")
+        self.assertEqual([e["eventId"] for e in log["entries"]], ["ev1"])      # a card dated today is not logged
+        again = self.log.update(log, self.preds(0.9), {"results": []}, "2026-11-27")
+        self.assertEqual(len(again["entries"]), 1)
+        self.assertEqual(again["entries"][0]["winProbability"][0], 0.35)       # frozen: a later prediction changes nothing
+        self.assertEqual(again["since"], "2026-11-26")
+
+    def test_scores_by_names_whatever_the_order(self):
+        log = self.log.update({}, self.preds(), {"results": []}, "2026-11-26")
+        log = self.log.update(log, self.preds(), self.result(True), "2026-12-06")
+        r = log["entries"][0]["result"]
+        self.assertEqual((r["winner"], r["method"], r["round"]), (1, "ko", 2))   # Magomedov is index 1 in the logged order
+
+    def test_draw_is_recorded_not_scored(self):
+        log = self.log.update({}, self.preds(), {"results": []}, "2026-11-26")
+        res = self.result(True); res["results"][0].update(winner=None, method="draw")
+        log = self.log.update(log, self.preds(), res, "2026-12-06")
+        self.assertEqual(log["entries"][0]["result"]["winner"], None)
+        self.assertEqual(log["entries"][0]["result"]["method"], "other")
+
+    def test_committed_log_is_well_formed(self):
+        log = json.loads((ROOT / "data/ufc-prediction-log.json").read_text())
+        keys = [e["key"] for e in log["entries"]]
+        self.assertEqual(len(keys), len(set(keys)))
+        for e in log["entries"]:
+            self.assertLess(e["loggedOn"], e["date"])                          # always saved before the card's day

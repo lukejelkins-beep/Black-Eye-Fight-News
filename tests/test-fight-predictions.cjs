@@ -52,4 +52,16 @@ assert(/Men’s winners/.test(page) && /Women’s winners/.test(page)); assert(/
 assert(/Men:<\/b> \+0\.0037 Brier[^<]*not clearly better/.test(page)); assert(/Women:<\/b> \+0\.0144 Brier[^<]*, better than the division finish rate/.test(page));
 // No card, no page content: nothing to estimate says so.
 assert(/No announced UFC cards/.test(P.pageHTML({ events: [] }, null, now)));
+// Live record: only scored fights with a winner count; a draw is not scored; small samples say so; pending ones are counted.
+const ent = (key, pool, win, fin, result, date = '2026-12-05') => ({ key, pool, date, fighters: ['A ' + key, 'B ' + key], winProbability: win, finishProbability: fin, result });
+const log = { since: '2026-11-26', entries: [
+  ent('1', 'men', [.35, .65], .4, { winner: 1, method: 'dec', date: '2026-12-05' }), ent('2', 'men', [.7, .3], .6, { winner: 1, method: 'ko', date: '2026-12-05' }),
+  ent('3', 'women', [.55, .45], .3, { winner: 0, method: 'sub', date: '2026-12-12' }), ent('4', 'men', [.5, .5], .5, { winner: null, method: 'other', date: '2026-12-12' }), ent('5', 'men', [.6, .4], .5, null)] };
+const L = P.liveSummary(log);
+assert.deepStrictEqual(L.pools.men, { fights: 2, right: 1, finishCalls: 2, finishRight: 2 }); assert.strictEqual(L.pools.women.right, 1);
+assert.strictEqual(L.pending, 1); assert.strictEqual(L.scored.length, 3);
+const live = P.liveHTML(log);
+assert(/1 of 2<\/b> winners picked/.test(live) && /too few fights to judge yet/.test(live)); assert(/1 saved and waiting/.test(live));
+assert(/Right/.test(live) && /Wrong/.test(live)); assert.strictEqual(P.liveHTML(null), '');
+assert(/id="fp-live"/.test(P.pageHTML(data, model, now, log)) && !/id="fp-live"/.test(P.pageHTML(data, model, now, null)));
 console.log('fight predictions: ok');
