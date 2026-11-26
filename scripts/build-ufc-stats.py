@@ -867,6 +867,38 @@ def results_bouts(per_fighter: dict) -> list[dict]:
     return out
 
 
+def bout_weight_labels(path: Path | None = None) -> dict[str, str]:
+    """boutId -> weight-class label from data/ufc-bout-weight-classes.json."""
+    path = path or DATA / "ufc-bout-weight-classes.json"
+    try:
+        return {str(k): v for k, v in (json.loads(path.read_text(encoding="utf-8")).get("bouts") or {}).items()}
+    except (OSError, ValueError):
+        return {}
+
+
+def rating_pools(computed: dict, labels: dict[str, str]) -> dict[str, str]:
+    """slug -> "women" or "men" for the rating pools (scripts/ufc_ratings.py). A fighter is a woman when their resolved
+    division is a women's one, or, with no division, when any of their bouts is labelled a women's weight class, or, with
+    no labelled bout either, when most of their opponents are women (women only fight women in the UFC). Nothing else is
+    guessed: a fighter with no evidence stays in the men's pool, as before."""
+    def own(slug, c):
+        if str(c.get("divisionSlug") or "").startswith("womens-"):
+            return "women"
+        if c.get("divisionSlug"):
+            return "men"
+        known = [labels[str(f["boutId"])] for f in c["history"] if str(f["boutId"]) in labels]
+        if any(str(x).startswith("Women") for x in known):
+            return "women"
+        return "men" if known else None
+    pools = {slug: own(slug, c) for slug, c in computed.items()}
+    for slug, c in computed.items():
+        if pools[slug] is None:
+            seen = [pools.get(f.get("opponentSlug")) for f in c["history"]]
+            seen = [x for x in seen if x]
+            pools[slug] = "women" if seen and seen.count("women") * 2 > len(seen) else "men"
+    return pools
+
+
 def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs: bool = True,
           before: dt.date | None = None) -> dict:
     archive = load("ufc-research-archive.json")["fights"]
@@ -875,6 +907,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
     divisions = known_divisions()
     official = official_divisions()
     weight = weight_class_divisions()
+    weight_labels = bout_weight_labels()
 
     showcases = attested_showcase_ids()
     fights, skipped = [], {"noResult": 0, "unaligned": 0, "unresolved": 0, "feederSeries": 0}
@@ -935,10 +968,12 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
     born_path = DATA / "ufc-fighter-born.json"   # birth dates for the rating's age adjustment (scripts/ufc_ratings.py)
     born_file = json.loads(born_path.read_text(encoding="utf-8")) if born_path.exists() else {}
     born, heights = born_file.get("fighters") or {}, born_file.get("heightInches") or {}
+    pools = rating_pools(computed, weight_labels)
     for slug, c in computed.items():
         h = [f for f in c["history"] if is_rated(f)]
         w = c["windows"]["weighted"] if len(h) == len(c["history"]) else windows_for(h, as_of)["weighted"]
-        rate_inputs[slug] = {"window": w, "history": h, "divisionSlug": c["divisionSlug"], "born": born.get(slug), "height": heights.get(slug)}
+        rate_inputs[slug] = {"window": w, "history": h, "divisionSlug": c["divisionSlug"], "born": born.get(slug),
+                             "height": heights.get(slug), "pool": pools[slug]}
     ratings = ufc_ratings.rate_roster(rate_inputs,
                                       results_bouts(per_fighter), as_of.isoformat(), pre_ufc_priors())
 
@@ -1013,8 +1048,11 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
         names.setdefault(norm(row["name"]), slug)
     rated = sum(1 for row in index_rows.values()  # skill slots only, not form (Defence left the skills on 2026-11-24)
                 if row["rating"] and any(v is not None for v in row["rating"][1:1 + len(ufc_ratings.SKILLS)]))
+    rated_by_pool = {pool: sum(1 for slug, row in index_rows.items()
+                               if row["rating"] and any(v is not None for v in row["rating"][1:1 + len(ufc_ratings.SKILLS)])
+                               and (ratings.get(slug) or {}).get("pool") == pool) for pool in ufc_ratings.POOLS}
     (out_dir / "names.json").write_text(json.dumps({"schema": SCHEMA, "asOf": as_of.isoformat(), "rated": rated,
-                                                    "names": names},
+                                                    "ratedByPool": rated_by_pool, "names": names},
                                                    separators=(",", ":"), sort_keys=True), encoding="utf-8")
     (out_dir / "divisions.json").write_text(json.dumps(division_averages(index_rows, as_of), separators=(",", ":")),
                                             encoding="utf-8")
@@ -1085,7 +1123,7 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         if r and r.get("eligible"):
             rated.append([position[slug], r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
                           r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"],
-                          r.get("overallRank")])
+                          r.get("overallRank"), r.get("pool")])
     labels = {}
     for c in computed.values():
         if c["divisionSlug"] and c["division"]:
@@ -1100,7 +1138,7 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         "fighters": fighters,
         "rowFields": ["fighter", "statFights", *[b[0] for b in BOARD_STATS]],
         "rows": windows,
-        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank"],
+        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank", "pool"],
         "ratings": rated,
     }
 

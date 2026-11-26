@@ -2,6 +2,49 @@
 
 The owner chose, on 2026-11-23 (PR #453): blend results with skills in the headline, score the skill bars for effectiveness, and use a wider rating number. After reviewing the first build the owner also chose: title fights count more, a weaker inactivity drift (10% a year), and a 60/40 results/skills mix. This note says what was built and how well it works. The rating stays **descriptive**: prediction is only the objective test, never shown (owner decision #432).
 
+## Update 26 Nov 2026: women and men are rated as separate pools (owner request: "separate the women in terms of their stats/ranking")
+The rating is now worked out once for women (divisions starting `womens-`) and once for men (`POOLS`, `pool_of`, `rate_roster`
+and `_rate_pool` in `scripts/ufc_ratings.py`). Inside each pool: skill percentiles and their shrinkage means, the headline centre
+(the pool's median established fighter is 50, before the age and height adjustments), the rank (`overallRank` of `rankOf`, where
+`rankOf` is the pool's size), the overall percentile and the results percentile. The results Elo itself is unchanged: it runs once
+over every bout. Profiles carry `pool` and show "#8 of 127 rated UFC women"; `names.json` has `ratedByPool`.
+
+Why: women only fight women, so the two Elo ratings are never anchored to each other. The women's median rating sat 14 points (1.8 on
+the score) below the men's, and women's striking was being ranked against men's, with their knockdowns and KO finishes.
+
+Pool for a fighter with no division (10 on 21 Nov): a women's bout label in `data/ufc-bout-weight-classes.json`, else most opponents
+are women (`rating_pools` in `scripts/build-ufc-stats.py`); no evidence at all stays in the men's pool as before. That moved Lipski,
+Feng Xiaocan and Lindgren Knutsson into the women's pool.
+
+Result (`python3 scripts/ufc-rating-evaluate.py --previous origin/main`, 1,135 bouts from 2024): accuracy 65.0% to 65.0%, Brier 0.2213
+to 0.2211 (+0.0002, interval -0.0000 to +0.0004: level). Official-ranking check: ranked fighters or champions in the top 100 80 to 79,
+champions in the top 50 8 to 8, rank correlation inside each division 0.69 to 0.68. Women's scores rise by 1.0 on average (up to +2.4),
+men's fall by 0.2 (at most 0.7), because the men's centre is now the men's median alone. Kayla Harrison 74.15 (#63 of 719) to 75.96
+(#8 of 127 women); Valentina Shevchenko 87.32 to 89.57 (#1 of 127). The evaluation's own tables still rank everyone together, so its
+"position" columns are the combined order, not the profile rank.
+
+Left as it was: the rating-board page (all divisions) mixes both pools, so it is ordered by score, and the board's rank column is used
+only when the rows are one pool. The `Previous` figures elsewhere in this note are the pooled model.
+
+## 26 Nov 2026: title-winner variants tested on the rating, not adopted
+Owner, after Kayla Harrison's submission win over Amanda Nunes left her at 75.96: test "a title win over a former champion counts
+without the idle decay" and "the age penalty is waived for champions". Two knobs in `scripts/ufc_ratings.py`, both off:
+`TITLE_NO_DRIFT` (a fighter whose last fight was a title fight is not drifted back toward 1500 while idle, so Nunes entered at
+about 1667, not 1589) and `AGE_TITLE_FACTOR` (the age penalty, never the bonus, times this for a fighter who won a title fight in
+the last 24 months). `python3 scripts/ufc-rating-variants.py run ...` then `compare ...`: the same quarterly point-in-time
+snapshots and walk-forward k as `ufc-rating-evaluate.py`, 1,135 bouts from 2024, on the pooled-by-sex engine.
+
+| Variant | Accuracy | Brier | Gain vs base (95% interval) | Kayla Harrison |
+|---|---:|---:|---|---|
+| Base | 65.0% | 0.2211 | | 75.96, #8 of 127 |
+| No idle drift after a title fight | 65.0% | 0.2211 | +0.0000 (-0.0003 to +0.0003) | 82.49, #3 |
+| No age penalty for recent title winners | 65.1% | 0.2212 | -0.0000 (-0.0004 to +0.0004) | 79.60, #4 |
+| Half the age penalty for recent title winners | 65.0% | 0.2212 | -0.0000 (-0.0002 to +0.0002) | |
+| Both (no drift, no penalty) | 65.1% | 0.2212 | -0.0001 (-0.0006 to +0.0005) | 86.13, #2 |
+
+Neither improves prediction: every difference is under 0.0001 Brier, far inside the interval. They would change how champions
+read, not how well the number predicts, so they are an owner's choice, not a fitted one. The rating is unchanged.
+
 ## Update 25 Nov 2026: age in the headline (owner request: "can we improve the BEFN rating as well")
 Each fighter's rating now includes an age adjustment: **5.4 rating points per year away from 31** (the median fighter's
 age), younger up and older down, measured on the rating's own date (`AGE_CENTRE`, `AGE_POINTS_PER_YEAR`,

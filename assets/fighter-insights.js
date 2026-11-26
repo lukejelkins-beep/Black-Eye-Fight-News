@@ -319,8 +319,8 @@
    '</aside>'+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
    '<div class="befn-pro-grid">'+
-   (structureMeters?proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC roster'):'Percentile vs. UFC roster','<div class="befn-pro-meters">'+structureMeters+'</div>'+
-    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':'')):
+   (structureMeters?proSection('ratings','Ratings',v2?(v2.provisional?'Provisional · percentile vs. UFC roster':'Percentile vs. UFC '+(v2.pool?poolWord(v2.pool):'roster')):'Percentile vs. UFC roster','<div class="befn-pro-meters">'+structureMeters+'</div>'+
+    (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote(v2.pool))+'</p>':'')):
     (stats?.ratings?'<p class="befn-pro-note" data-pa-about>Unrated: a rating needs '+stats.ratings.sample.minimum+
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
    proSection('fights','Recent fights','Up to five recorded UFC fights',
@@ -361,13 +361,15 @@
  }
  // Rating model 2026-11: the headline is a rating (1500 = median established UFC fighter), not out of 100. Its bar
  // and colour use the fighter's percentile on that rating; the number itself is shown as is.
- const RATING_HINT="50 is the average UFC fighter. Built from results against opponent strength, plus measured skills.";
+ const RATING_HINT="50 is the average UFC fighter of the same sex: women and men are rated as separate pools. Built from results against opponent strength, plus measured skills.";
+ // Women and men are rated as separate pools (2026-11-26): ranks, percentiles and the 50 mark are each within the fighter's pool.
+ const poolWord=p=>p==="women"?"women":p==="men"?"men":"fighters";
  const RESULTS_HINT="Who they beat and how: stronger opponents and finishes count more";
  // Each skill includes its own defence (2026-11-24), so there is no separate Defence bar for rated fighters.
  const SKILL_IDS=['striking','wrestling','grappling'];
  const V2_METERS=[['results','Results'],['striking','Striking'],['wrestling','Wrestling'],['grappling','Grappling'],['form','Form']];
- function ratingsNote(){
-  return 'Results and skill ratings are percentiles against '+(statsMeta?.rated||'all rated')+' rated UFC fighters. '+
+ function ratingsNote(pool){
+  return 'Results and skill ratings are percentiles against the '+(statsMeta?.ratedByPool?.[pool]||statsMeta?.rated||'all rated')+' rated UFC '+poolWord(pool)+'. '+
    'Results come from every UFC fight, weighting wins over strong opponents and finishes. Skills use the whole UFC career, '+
    'recent fights counting most, and each includes its own defence: what a fighter stops counts as well as what they land. Recent form is out of 100.';
  }
@@ -401,7 +403,7 @@
  const dec2=v=>window.BEFNFormRule?.score?window.BEFNFormRule.score(v):Number(v).toFixed(2);
  const headlineHTML=v=>dec2(v)+'<small>/100</small>';
  const rankHTML=r=>Number.isInteger(r?.overallRank)&&Number.isInteger(r?.rankOf)?
-  '<p class="befn-pro-standing"><strong>#'+r.overallRank+'</strong> of '+r.rankOf+' rated UFC fighters</p>':'';
+  '<p class="befn-pro-standing"><strong>#'+r.overallRank+'</strong> of '+r.rankOf+' rated UFC '+poolWord(r.pool)+'</p>':'';
  function scoreTier(value){
   return value===null?'unrated':value>=90?'legendary':value>=80?'emerald':value>=70?'lime':value>=50?'amber':'red';
  }
@@ -616,7 +618,7 @@
  // A fighter with one or two measured fights is rated provisionally (scripts/ufc_ratings.py): the same percentiles,
  // placed against the established roster, and clearly tagged. They are never counted in the roster or a leaderboard.
  const provisionalNote=r=>'Provisional: based on '+r.sample.statFights+' measured UFC '+(r.sample.statFights===1?'fight':'fights')+
-  '. A full rating needs '+(r.sample.minimum||3)+'. Percentiles are placed against the '+(statsMeta?.rated||'rated')+' established UFC fighters and do not change theirs.';
+  '. A full rating needs '+(r.sample.minimum||3)+'. Percentiles are placed against the '+(statsMeta?.ratedByPool?.[r.pool]||statsMeta?.rated||'rated')+' established UFC '+poolWord(r.pool)+' and do not change theirs.';
  function statsFor(f){
   const slug=f?.statsSlug||statsNames.get(norm(f?.name));
   if(!slug)return null;
@@ -781,7 +783,7 @@
     }
     return proMeter(label,s,isPercentile(id),scoreTier(s),hint,v2&&SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
    }).join('')+'</div>'+
-   (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote())+'</p>':
+   (v2?.provisional?'<p class="befn-pro-note">'+escapeHTML(provisionalNote(v2))+'</p>':v2?'<p class="befn-pro-note">'+escapeHTML(ratingsNote(v2.pool))+'</p>':
    built?(stats?.ratings?'<p class="befn-pro-note">Unrated: a rating needs '+stats.ratings.sample.minimum+
     ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''):
    computed.scale==="percentile"?'<p class="befn-pro-note">Skill ratings are percentiles against '+
@@ -888,11 +890,11 @@
   if(rating){
    const col=d.ratingFields.indexOf(st.metric);
    sampleIndex=d.ratingFields.indexOf("statFights");
-   const rankCol=d.ratingFields.indexOf("overallRank");
+   const rankCol=d.ratingFields.indexOf("overallRank"),poolCol=d.ratingFields.indexOf("pool");
    // The score out of 100 is rounded, so the overall board is ordered by the stored rank (full-precision rating).
    // Form is the one Form score (data/ufc-fighter-form.json), the same number as the profile and the hub.
    const formOf=i=>{const e=formData?.fighters?.[d.fighters[i][0]];return formShown(e)?e.form:null;};
-   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"?(formData?formOf(r[0]):null):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null}));
+   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"?(formData?formOf(r[0]):null):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null,p:poolCol>=0?r[poolCol]:null}));
    unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
   }else{
    const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];
@@ -903,7 +905,8 @@
   const minimum=rating?Math.max(d.minFights,BOARD_RATING_MIN_FIGHTS):d.minFights;
   rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&
    (st.division==="all"||fighters[r.f][2]===st.division));
-  const ranked=rows.length&&rows.every(r=>Number.isInteger(r.k));
+  // Ranks run inside a pool (women, men), so a board that mixes pools is ordered by score instead.
+  const ranked=rows.length&&rows.every(r=>Number.isInteger(r.k))&&new Set(rows.map(r=>r.p)).size<=1;
   rows.sort((a,b)=>(ranked?a.k-b.k:0)||(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
   let rank=0,prev=null;
   rows.forEach((r,i)=>{const key=ranked?r.k:r.v;if(prev===null||key!==prev)rank=i+1;r.rank=rank;prev=key;});
@@ -1492,7 +1495,7 @@
   if(e?.stage)about.push("Stage (for example “Title contender”) and Form are BEFN’s own, from UFC results only; they are not predictions.");
   return {ufc:true,division:stats?.division||f.division||"",
    rating:v2&&Number.isFinite(v2.overall)?{value:v2.overall,rank:Number.isInteger(v2.overallRank)?v2.overallRank:null,
-    of:Number.isInteger(v2.rankOf)?v2.rankOf:null,provisional:!!v2.provisional}:null,
+    of:Number.isInteger(v2.rankOf)?v2.rankOf:null,pool:v2.pool||null,provisional:!!v2.provisional}:null,
    form:recent.map(x=>x.outcome),formLabel:recent.length===1?"Last UFC fight":"Last "+recent.length+" UFC fights",
    keyNumbers,recent,skills,pills,about,credentials:credentialsHTML(f),
    statsReady:!!stats||!ratedByBuild(f)};
