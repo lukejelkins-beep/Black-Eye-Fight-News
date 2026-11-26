@@ -34,6 +34,19 @@ KIND = {"fight_of_the_night": "fotn", "performance_of_the_night": "potn",
         "knockout_of_the_night": "kotn", "submission_of_the_night": "sotn"}
 
 
+# UFC Stats API spelling -> BEFN spelling. Reviewed 26 Nov 2026 against same-date fights: in each case one corner
+# matched exactly and the other differs only in spelling. Add a name here only after the same check.
+ALIASES = {
+    "Philip De Fries": "Phil De Fries", "Alatengheili": "Heili Alateng", "Ariane da Silva": "Ariane Lipski da Silva",
+    "Alexandr Romanov": "Alexander Romanov", "Liu Ce": "Ce Liu", "Marcus Buchecha": "Marcus Almeida",
+    "Jose Delgado": "Jose Miguel Delgado", "Sean King III": "Sean King", "Joe Kropschot": "Joseph Kropschot",
+}
+
+
+def alias(name):
+    return ALIASES.get(name, name)
+
+
 def fold(s):
     t = unicodedata.normalize("NFKD", str(s or ""))
     return re.sub(r"[^a-z0-9]", "", "".join(c for c in t if not unicodedata.combining(c)).lower())
@@ -88,7 +101,7 @@ def main():
                     unplaced.append({"fightId": fight["fightId"], "date": fight["date"], "why": "unknown label " + label})
             if not kinds:
                 continue
-            slugs = slug_for(fight["date"], me["name"], other["name"])
+            slugs = slug_for(fight["date"], alias(me["name"]), alias(other["name"]))
             if not slugs:
                 outside += 1  # not one of BEFN's fighter files (mostly retired fighters): nothing to show
                 continue
@@ -106,7 +119,7 @@ def main():
             r["unpriced"] += 0 if p else len(kinds)
             r["bouts"].append({"est": p * len(kinds) if p else None, "date": fight["date"], "event": fight["event"], "opponent": other["name"],
                                "outcome": me.get("result"), "kinds": kinds,
-                               "opponentSlug": opp_slug.get((s, fight["date"], fold(other["name"])))})
+                               "opponentSlug": opp_slug.get((s, fight["date"], fold(alias(other["name"]))))})
     for r in out.values():
         r["bouts"].sort(key=lambda x: x["date"], reverse=True)
     doc = {"schema": 1, "asOf": src.get("asOf"), "fighters": dict(sorted(out.items())),

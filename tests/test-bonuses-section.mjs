@@ -29,3 +29,11 @@ test('money is an estimate and unpriced awards show a dash', () => {
   assert.match(html, /Earnings are an estimate/);
   assert.match(html, /bsp-bonus-est">—</);
 });
+
+test('every bonus kind the build can emit has a chip style', () => {
+  const css = readFileSync(new URL('../assets/fighter-profile-pro.css', import.meta.url), 'utf8');
+  const html = ['alexandre-pantoja', 'chris-weidman'].map(s => SP.bonuses(s, doc, () => '')).join('');
+  const kinds = new Set([...html.matchAll(/bsp-chip is-([a-z]+)/g)].map(m => m[1]));
+  assert.deepEqual([...kinds].sort(), ['fotn', 'kotn', 'potn', 'sotn']);
+  for (const k of kinds) assert.match(css, new RegExp('\\.bsp-chip\\.is-' + k + '[,{]'), k);
+});
