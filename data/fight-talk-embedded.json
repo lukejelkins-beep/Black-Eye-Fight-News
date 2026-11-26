@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-26T06:19:15.059Z",
-  "checkedAt": "2026-11-26T06:19:15.059Z",
+  "attemptedAt": "2026-11-26T07:53:03.950Z",
+  "checkedAt": "2026-11-26T07:53:03.950Z",
   "windowDays": 28,
-  "articlesChecked": 28,
+  "articlesChecked": 29,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
   "rssArticleCandidates": 42,
   "publisherSourcesConfigured": 32,
   "linksFound": 12,
-  "newEmbedsVerified": 0,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -74,6 +74,25 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/reel/DVTp3YgkhbB/"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-26T03:07:17+00:00",
+      "discoveredAt": "2026-11-26T07:53:03.950Z",
+      "sourcePublisher": "Sherdog",
+      "evidenceUrl": "https://www.sherdog.com/news/news/MMA-coach-Eddie-Cha-dies-at-53-fighters-pay-tribute-203744",
+      "summary": "Original social post linked in Sherdog coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DgJpappm-hI/"
     },
     {
       "type": "post",
@@ -2325,25 +2344,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DfFyg3GEkxW/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-20T17:28:47+00:00",
-      "discoveredAt": "2026-11-20T22:25:02.753Z",
-      "sourcePublisher": "UFC",
-      "evidenceUrl": "https://www.ufc.com/news/jake-matthews-25-not-out-ufc-qatar",
-      "summary": "Original social post linked in UFC coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Publisher permalink + official embed verification",
-      "verification": "official-oembed",
-      "embedVerified": true,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/Df5eYREkW7v/"
     }
   ],
   "seenOriginals": [
@@ -3730,6 +3730,10 @@
     {
       "url": "https://www.instagram.com/reel/DVTp3YgkhbB/",
       "firstSeen": "2026-11-26T05:15:46.832Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DgJpappm-hI/",
+      "firstSeen": "2026-11-26T07:53:03.950Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
