@@ -138,10 +138,17 @@
   const CHIP_ORDER = [['knockdowns', 'Knockdowns'], ['legLanded', 'Leg strikes'], ['bodyLanded', 'Body strikes'], ['headLanded', 'Head strikes'],
     ['groundLanded', 'Ground strikes'], ['controlSec', 'Control time'], ['takedowns', 'Takedowns'], ['subAttempts', 'Submission attempts']];
 
+  // Total strikes count every strike landed, including light ones the stats do not class as significant, so they can sit far
+  // above the significant figure (more than 4 times for about 3% of saved fighter-fights, whose fights were under someone's
+  // control for a median 78% of the time against 31% for the rest). It is context, never "notable", and a one-line note
+  // explains it when either side is that far above its own significant strikes.
+  const TOTAL_NOTE_RATIO = 4;
   function statRows(T) {
+    const wide = [0, 1].some(i => T[i].sigLanded >= 5 && T[i].totalLanded > T[i].sigLanded * TOTAL_NOTE_RATIO);
     return ROWS.map(([group, rows]) => ({
       group,
-      rows: rows.map(([key, label]) => ({ key, label, v: [T[0][key], T[1][key]], hot: isNotable(key, T[0][key], T[1][key]) }))
+      rows: rows.map(([key, label]) => ({ key, label, v: [T[0][key], T[1][key]],
+        hot: key === 'totalLanded' ? false : isNotable(key, T[0][key], T[1][key]), note: key === 'totalLanded' && wide }))
         // a row nobody scored in is still shown (a dash would claim we did not measure it), except submission attempts at 0-0
         .filter(r => !(r.key === 'subAttempts' && r.v[0] === 0 && r.v[1] === 0))
     }));
@@ -335,7 +342,8 @@
       return '<div class="sr-row' + (r.hot ? ' is-hot' : '') + '" role="group" aria-label="' + esc(r.label) + (r.hot ? ', notable' : '') + '">' +
         '<span class="sr-n' + (la ? ' is-lead' : '') + '">' + num(r.key, x) + '</span><span class="sr-tr sr-a"><i class="' + (la ? 'is-lead' : '') + '" style="width:' + (x / top * 100).toFixed(1) + '%"></i></span>' +
         '<span class="sr-l">' + (r.hot ? '<em>Notable</em>' : '') + esc(r.label) + '</span>' +
-        '<span class="sr-tr sr-b"><i class="' + (lb ? 'is-lead' : '') + '" style="width:' + (y / top * 100).toFixed(1) + '%"></i></span><span class="sr-n' + (lb ? ' is-lead' : '') + '">' + num(r.key, y) + '</span></div>';
+        '<span class="sr-tr sr-b"><i class="' + (lb ? 'is-lead' : '') + '" style="width:' + (y / top * 100).toFixed(1) + '%"></i></span><span class="sr-n' + (lb ? ' is-lead' : '') + '">' + num(r.key, y) + '</span></div>' +
+        (r.note ? '<p class="sr-rownote">Total strikes include light strikes the stats do not count as significant, so they can run far above the significant figure, most often in fights with a lot of grappling control.</p>' : '');
     }).join('')).join('');
     const chipHTML = m.chips.length ? '<div class="sr-chips">' + m.chips.map(c => '<div class="sr-chip"><b>' + esc(c.big) + '</b><span>' + esc(c.small) + '</span></div>').join('') + '</div>' : '';
     return '<section class="sr-stats" aria-label="Fight statistics"><h3 class="sr-h3">Fight statistics</h3>' + chipHTML + rows +
