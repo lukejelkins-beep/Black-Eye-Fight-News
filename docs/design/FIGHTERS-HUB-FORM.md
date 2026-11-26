@@ -30,6 +30,8 @@ A working prototype of everything below is in the project: `claude/fighters-heat
 
 ## 3. Form score: the exact calculation
 
+**Form v4.1 (owner, 26 Nov 2026): a title holder's age part is at least 0.5** (latest title-fight result a win with no loss since), so a 36-38-year-old champion is not held down by age. Backtest unchanged; see DECISIONS.md.
+
 **Form v4 (owner, 25 Nov 2026: "Yes, add age" and "keep trying to get it higher").** v3 plus the fighter's **age**,
 and Results reported but no longer weighted. New candidate signals were also tested and left out because they added
 nothing once v3's parts were in: opponent-weighted strike margin, strikes absorbed per minute, strike accuracy and

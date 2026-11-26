@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-26 (Form: title holders keep half their age credit)
+- **A title holder's age part in Form is at least 0.5** (owner: "Gane under 80 and Volk at 85 as defending champs?", then "Half credit"). A title holder is a fighter whose latest title-fight result is a win with no loss since. Age was 15% of Form and reached zero at 38, which held 36-38-year-old champions down (Gane 76.6 to 83.5, Volkanovski 86.2 to 93.0, Gaethje 81.8 to 90.0). Backtest unchanged (Brier 0.2331 from 2022, 0.2401 against 0.2404 in 2018-2021). 160 fighters move by more than 0.05, because former champions who have not lost since a title win count too; non-champions can slip a little as the percentile rescales (Valter Walker 94.16 to 93.73, rank unchanged). `scripts/ufc-form-champion-age.py` re-runs the test.
+- **A title-win bonus on opponent strength was tested and not added** (owner: "No"). Accuracy flat; champions gained 0.4 on average and the biggest rises went to former title winners.
+
 ## 2026-11-26 (Fight predictions redesign; stat weights left alone)
 - **Fight predictions page redesigned** (owner approved "A and B together, C as a fold-out", the whole-page layout, "highlight high confidence" and "more fighter photos"). Compact rows with BEFN's own owner-cleared fighter portraits (initials if a file is missing), a win bar, tap to open the detail (finish, six outcomes as bars, key details) and a closed "What decides it" fold-out of strike differential, time in control, takedowns and submission attempts. An evidence strip leads the page (winners right since 2024, right at 70%+, live record); the track and live records sit behind "See how it did". The Fights-page reference is now a pick strip with the win bar.
 - **High confidence = favourite at 70% or more with neither fighter flagged.** Backed by the track record: favourites at 70%+ won about 3 in 4 (men 75-78%, women 78-82%, 298 fights). Shown as a gold badge and edge. Low confidence is unchanged (under 3 UFC fights, no birth date or provisional rating).

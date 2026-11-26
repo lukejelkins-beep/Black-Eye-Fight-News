@@ -25,9 +25,9 @@ class Saved(unittest.TestCase):
     def test_section_9_cases(self):
         f = self.F
         self.assertEqual((f["valter-walker"]["form"], f["valter-walker"]["stage"], f["valter-walker"]["formRank"]),
-                         (94.16, "Contender", 2))
+                         (93.73, "Contender", 2))
         self.assertIn("On fire", f["valter-walker"]["badges"])
-        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 95.75))
+        self.assertEqual((f["elijah-smith"]["stage"], f["elijah-smith"]["form"]), ("Rising star", 95.46))
         self.assertIn("On fire", f["elijah-smith"]["badges"])
         self.assertEqual((f["alexandre-pantoja"]["stage"], f["alexandre-pantoja"]["lossCap"]), ("Contender", 65))
         self.assertIn("Cooling", f["alexandre-pantoja"]["badges"])
