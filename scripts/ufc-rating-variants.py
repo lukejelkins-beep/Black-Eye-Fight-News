@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path("/tmp/ufc-variants")
 VARIANTS = {
+    "current": {},   # the engine exactly as committed (scripts/ufc-prediction-calibrate.py uses this)
     # TITLE_NO_DRIFT is on in the engine since 26 Nov; "base" is the engine without it, as tested that day.
     "base": {"TITLE_NO_DRIFT": False},
     "title_no_drift": {"TITLE_NO_DRIFT": True},

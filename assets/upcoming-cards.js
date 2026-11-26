@@ -95,7 +95,8 @@ window.UpcomingCards=(()=>{
    '<span class="upcoming-matchup-status">'+esc(provisional?'REPORTED':'SCHEDULED')+'</span>'+
    contender(first,false,fighterRecord(b,0),fighterLabels(b,0,first,event))+
    contender(second,true,fighterRecord(b,1),fighterLabels(b,1,second,event))+'</div>'+
-   '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span>'+roundText+'</div></article>';
+   '<div class="result-bout-detail"><span class="result-bout-division">'+esc(b.division||'Weight class not confirmed')+'</span>'+roundText+'</div>'+
+   (/^ufc/i.test(event.promotion||'')?'<span class="fp-ref" data-fp-ev="'+esc(event.id)+'" data-fp-bout="'+esc(b.id||'')+'" data-fp-names="'+esc(f.join('|'))+'"></span>':'')+'</article>';
  }
  /* MMA promotions for the Fights chips (owner, 24 Nov 2026: "All" first). Shared with results.js. */
  const PROMOTIONS={ufc:/\bufc\b|ultimate fighting championship/,one:/\bone\b|one championship/,pfl:/\bpfl\b|professional fighters league/,
