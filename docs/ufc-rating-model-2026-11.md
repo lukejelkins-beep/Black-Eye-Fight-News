@@ -54,6 +54,12 @@ Holly Holm -2.0 and Pannie Kianzad -2.1 (their opponents' ratings no longer fall
 (under 0.7) as the pool median shifts. An inactive former champion therefore reads higher than before; the final rating of a
 fighter still idle is aged as it was.
 
+**Effect on Form** (Form values each fight by the opponent's point-in-time results rating, so it moves too): saved Form changes for
+422 of 736 fighters, mean 0.22 points, 18 by a point or more (Mick Parkin +19.3, Aljamain Sterling -13.8), 9 rank changes, 3 stage
+changes. `python3 scripts/ufc-form-backtest.py --start 2024-01-01 [--old-drift]`, 985 bouts, Form difference fitted with one
+parameter: accuracy 63.7% against 63.9% with the old drift, Brier 0.2286 against 0.2287, log loss 0.6490 against 0.6492; from
+2022 (1,404 bouts) Brier 0.2331 both ways. Form's prediction is level too.
+
 ## Update 25 Nov 2026: age in the headline (owner request: "can we improve the BEFN rating as well")
 Each fighter's rating now includes an age adjustment: **5.4 rating points per year away from 31** (the median fighter's
 age), younger up and older down, measured on the rating's own date (`AGE_CENTRE`, `AGE_POINTS_PER_YEAR`,
