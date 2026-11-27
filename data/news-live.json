@@ -1,13 +1,14 @@
 {
-  "attemptedAt": "2026-11-27T08:18:33.923211+00:00",
-  "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00",
+  "attemptedAt": "2026-11-27T09:35:53.134076+00:00",
+  "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-27T06:50:24.269440+00:00",
-      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.worldboxingnews.net/feed/",
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -15,14 +16,15 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "MMA Junkie",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-27T06:50:24.269440+00:00",
-      "error": "mmajunkie.usatoday.com: HTTP Error 402: Payment Required | mmajunkie.com: HTTP Error 402: Payment Required | api.gdeltproject.org: HTTP Error 429: Too Many Requ"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "Sherdog",
@@ -30,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "UFC",
@@ -38,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "ONE MMA",
@@ -46,7 +48,7 @@
       "ok": true,
       "items": 7,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "ONE Submission Grappling",
@@ -61,7 +63,7 @@
       "ok": true,
       "items": 4,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "RIZIN",
@@ -69,21 +71,22 @@
       "ok": true,
       "items": 5,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "KSW",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-27T06:50:24.269440+00:00",
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Akswmma.com%2Fen&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "ADCC",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -91,7 +94,7 @@
       "ok": true,
       "items": 2,
       "feedUrl": "https://www.ncaa.com/news/wrestling-men/d1/rss.xml",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "NCAA Division II Wrestling",
@@ -127,7 +130,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -141,7 +144,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "error": "www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "ONE Live Results",
@@ -149,7 +152,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "Bloody Elbow",
@@ -157,7 +160,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bloodyelbow.com/feed",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "MMA Weekly",
@@ -165,7 +168,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmaweekly.com/feed",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "GracieMag",
@@ -173,14 +176,15 @@
       "ok": true,
       "items": 8,
       "feedUrl": "https://www.graciemag.com/feed/",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "D3 Wrestle",
       "sport": "grappling",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-27T06:50:24.269440+00:00",
-      "error": "d3wrestle.com: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://d3wrestle.com/feed",
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "BoxingScene",
@@ -188,7 +192,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingscene.com/feed",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "BBC Sport Boxing",
@@ -196,7 +200,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://feeds.bbci.co.uk/sport/boxing/rss.xml",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "Boxing News 24",
@@ -204,7 +208,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingnews24.com/feed/",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "Boxing Insider",
@@ -219,7 +223,7 @@
       "ok": true,
       "items": 6,
       "feedUrl": "https://www.theguardian.com/sport/boxing/rss",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "BBC Sport MMA",
@@ -227,7 +231,7 @@
       "ok": true,
       "items": 8,
       "feedUrl": "https://www.bbc.co.uk/sport/mixed-martial-arts/rss.xml",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "MMA News",
@@ -235,7 +239,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmanews.com/feed",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     },
     {
       "name": "Cageside Press",
@@ -243,10 +247,36 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.cagesidepress.com/feed/",
-      "lastSuccessfulAt": "2026-11-27T08:18:33.923211+00:00"
+      "lastSuccessfulAt": "2026-11-27T09:35:53.134076+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "499d092c503e462c8af6",
+      "title": "Sawada Vs. Nikolakakos World Title Fight Postponed, Wajima Vs. Siasarani Elevated To ONE SAMURAI 6 Main Event",
+      "url": "https://www.onefc.com/news/sawada-vs-nikolakakos-world-title-fight-postponed-wajima-vs-siasarani-elevated-to-one-samurai-6-main-event/",
+      "source": "ONE MMA",
+      "sport": "mma",
+      "publishedAt": "2026-11-27T08:35:30+00:00",
+      "score": 4,
+      "image": {
+        "url": "https://cdn.onefc.com/wp-content/uploads/2026/10/photo-output-8-1200x802.jpeg",
+        "alt": "Chihiro Sawada and Anastasia Nikolakakos lock horns in a World Title duel at ONE SAMURAI 6.",
+        "credit": "",
+        "sourceUrl": "https://www.onefc.com/news/sawada-vs-nikolakakos-world-title-fight-postponed-wajima-vs-siasarani-elevated-to-one-samurai-6-main-event/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-27T09:35:53.134076+00:00"
+      },
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "The December 2 card gets reshuffled after Nikolakakos suffers an injury.",
+        "Fans will have to wait a little longer for the coronation of the new undisputed queen.",
+        "The fight between Chihiro Sawada and Anastasia “Anniemale” Nikolakakos has been postponed due to an injury sustained by Nikolakakos two days ago."
+      ],
+      "firstSeenAt": "2026-11-27T09:35:53.134076+00:00",
+      "coverage": 1
+    },
     {
       "id": "4d0e1b6345a65fa81672",
       "title": "Sports quiz of the week: champions, finals, goals, arguments and animals",
@@ -256,11 +286,11 @@
       "publishedAt": "2026-11-27T08:00:58+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-27T08:18:33.923211+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Have you followed the big stories in football, chess, tennis, rugby union, boxing, cricket and snooker?"
       ],
+      "summaryCheckedAt": "2026-11-27T08:18:33.923211+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-27T08:18:33.923211+00:00",
       "coverage": 1
     },
@@ -273,11 +303,11 @@
       "publishedAt": "2026-11-27T06:51:53+00:00",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-27T08:18:33.923211+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Before their long-awaited heavyweight bout, BBC Sport explores the impact Tyson Fury and Anthony Joshua have had on British boxing."
       ],
+      "summaryCheckedAt": "2026-11-27T08:18:33.923211+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-27T08:18:33.923211+00:00",
       "coverage": 1
     },
@@ -960,7 +990,7 @@
       "publishedAt": "2026-11-26T19:46:30+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-26T20:37:39.726698+00:00",
       "coverage": 1
@@ -1622,11 +1652,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-27T06:50:24.269440+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Navajo Stirling wants Josh Hokit to stand behind his words after ripping the \"bum\" UFC light heavyweight division."
       ],
+      "summaryCheckedAt": "2026-11-27T06:50:24.269440+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-26T18:24:01.166432+00:00",
       "coverage": 1,
       "fighterImage": {
@@ -1702,11 +1732,11 @@
         "kind": "publisher",
         "checkedAt": "2026-11-27T08:18:33.923211+00:00"
       },
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Eugene Bareman says City Kickboxing fighters will never fight each other."
       ],
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-26T07:50:51.501230+00:00",
       "coverage": 1
     },
@@ -1745,7 +1775,10 @@
       "summaryCheckedAt": "2026-11-26T06:19:35.885959+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-26T06:19:35.885959+00:00",
-      "coverage": 1,
+      "coverage": 2,
+      "alsoCoveredBy": [
+        "MMA Junkie"
+      ],
       "fighterImage": {
         "url": "assets/img/ufc/dricus-du-plessis-card.webp",
         "name": "Dricus Du Plessis",
@@ -2611,7 +2644,7 @@
       "publishedAt": "2026-11-25T18:31:53+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-25T19:24:38.893559+00:00",
       "coverage": 1
@@ -3206,11 +3239,8 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
-      "summaryPoints": [
-        "Elijah Smith gathered a lot of attention when he revealed the UFC made him fight out his contract despite his 3-0 record."
-      ],
       "firstSeenAt": "2026-11-25T19:24:38.893559+00:00",
       "coverage": 1,
       "fighterImage": {
@@ -3218,7 +3248,10 @@
         "name": "Elijah Smith",
         "kind": "cached-fighter",
         "credit": "File photo of Elijah Smith (owner-cleared)"
-      }
+      },
+      "summaryPoints": [
+        "Elijah Smith gathered a lot of attention when he revealed the UFC made him fight out his contract despite his 3-0 record."
+      ]
     },
     {
       "id": "56fb55a36dc7a703dc36",
@@ -3300,7 +3333,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-25T18:21:28.130073+00:00",
       "coverage": 1,
@@ -3629,7 +3662,7 @@
         "kind": "publisher",
         "checkedAt": "2026-11-25T06:20:38.292211+00:00"
       },
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-25T06:20:38.292211+00:00",
       "coverage": 1,
@@ -4454,7 +4487,7 @@
       "publishedAt": "2026-11-24T17:40:29+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T17:43:48.549219+00:00",
       "coverage": 1
@@ -4700,7 +4733,7 @@
       "publishedAt": "2026-11-24T15:42:24+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T16:51:30.073453+00:00",
       "coverage": 1
@@ -5139,11 +5172,11 @@
       "publishedAt": "2026-11-24T12:10:42+00:00",
       "score": 1,
       "image": null,
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Nikolas Motta shared a photo of his battered face after losing a decision to Dom Mar Fan at UFC Qatar, insisting he is not injured and wants to return soon."
       ],
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T17:43:48.549219+00:00",
       "coverage": 1,
       "fighterImage": {
@@ -5162,7 +5195,7 @@
       "publishedAt": "2026-11-24T12:10:33+00:00",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T17:43:48.549219+00:00",
       "coverage": 1,
@@ -5340,7 +5373,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T17:43:48.549219+00:00",
       "coverage": 1,
@@ -5365,7 +5398,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T16:51:30.073453+00:00",
       "coverage": 1,
@@ -6472,11 +6505,11 @@
       "sourceMethod": "Original official domain indexed by Bing News",
       "score": 1,
       "image": null,
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Fight week has arrived for CW 215: Manchester as Cage Warriors returns with their biggest fight night of 2026, including a highly anticipated main event!"
       ],
-      "summaryCheckedAt": "2026-11-26T20:37:39.726698+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T16:51:30.073453+00:00",
       "coverage": 1
     },
@@ -6543,6 +6576,23 @@
       ]
     },
     {
+      "id": "15c2dc842847c7267272",
+      "title": "Wilder to fight Bakole on Fury-Joshua undercard",
+      "url": "https://www.bbc.co.uk/sport/boxing/articles/cmvg2v0rlzeko?at_medium=RSS&at_campaign=rss",
+      "source": "BBC Sport Boxing",
+      "sport": "boxing",
+      "publishedAt": "2026-11-23T15:12:52+00:00",
+      "score": 1,
+      "image": null,
+      "summaryCheckedAt": "2026-11-27T09:35:53.134076+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Heavyweight Martin Bakole will face former world champion Deontay Wilder on the undercard of Tyson Fury's fight with Anthony Joshua in Cardiff on 11 December."
+      ],
+      "firstSeenAt": "2026-11-27T09:35:53.134076+00:00",
+      "coverage": 1
+    },
+    {
       "id": "07c439862e871e5ac78f",
       "title": "Jon Jones hints at UFC return with deleted social media post",
       "url": "https://www.sherdog.com/news/news/Jon-Jones-hints-at-UFC-return-with-deleted-social-media-post-203727",
@@ -6593,60 +6643,22 @@
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-24T09:13:51.098380+00:00",
       "coverage": 1
-    },
-    {
-      "id": "04503c6c3f7dfd2af911",
-      "title": "Deontay Wilder gets new opponent for Fury vs. Joshua co-main event",
-      "url": "https://www.mmafighting.com/boxing/523007/deontay-wilder-gets-new-opponent-for-fury-vs-joshua-co-main-event",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-23T15:00:00+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2269842539.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Deontay Wilder",
-        "credit": "Richard Pelham/Getty Images",
-        "sourceUrl": "https://www.mmafighting.com/boxing/523007/deontay-wilder-gets-new-opponent-for-fury-vs-joshua-co-main-event",
-        "kind": "publisher",
-        "checkedAt": "2026-11-24T21:41:59.030201+00:00"
-      },
-      "summaryPoints": [
-        "The card will take place at the Principality Stadium in Cardiff, Wales, and air live on Netflix.",
-        "Bakole was originally slated to face Solomon Adebayo on the event but was elevated to the co-headliner after Opetaia was forced out due to a hand injury.",
-        "Wilder enters the ring with a 45-4-1 record and 43 knockouts, beating Derek Chisora by split decision and knocking out Tyrrell Anthony Herndon in his most recent matches."
-      ],
-      "summaryCheckedAt": "2026-11-23T15:07:23.923749+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-23T15:07:23.923749+00:00",
-      "coverage": 1
-    },
-    {
-      "id": "3fd15eb2999724b081f1",
-      "title": "Josh Hokit reveals lingering vision problems, regrets not fouling Ciryl Gane",
-      "url": "https://www.sherdog.com/news/news/Josh-Hokit-reveals-lingering-vision-problems-regrets-not-fouling-Ciryl-Gane-203730",
-      "source": "Sherdog",
-      "sport": "mma",
-      "publishedAt": "2026-11-23T14:55:43+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://www1-cdn.sherdog.com/_images/headers/20261123024243_hokit_gane_vision_issues.JPG",
-        "alt": "Article image: Josh Hokit reveals lingering vision problems, regrets not fouling Ciryl Gane",
-        "credit": "",
-        "sourceUrl": "https://www.sherdog.com/news/news/Josh-Hokit-reveals-lingering-vision-problems-regrets-not-fouling-Ciryl-Gane-203730",
-        "kind": "publisher",
-        "checkedAt": "2026-11-24T09:13:51.098380+00:00"
-      },
-      "summaryCheckedAt": "2026-11-26T23:40:38.715154+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-24T09:13:51.098380+00:00",
-      "coverage": 1,
-      "summaryPoints": [
-        "Josh Hokit says his vision is still compromised following his heavyweight title fight against Ciryl Gane.",
-        "A post shared by Josh Hokit (@theincredible_hok)"
-      ]
     }
   ],
   "resultReports": [
+    {
+      "id": "5c6127158ae95da2aadd",
+      "title": "ONE Friday Fights 180 & The Inner Circle 40 Live Stream and Results",
+      "url": "https://cagesidepress.com/2026/11/27/one-friday-fights-180-the-inner-circle-40-live-stream-and-results/",
+      "source": "Cageside Press",
+      "sport": "mma",
+      "publishedAt": "2026-11-27T09:00:44+00:00",
+      "score": 4,
+      "_summaryText": "<p>ONE Championship&#8217;s latest offering saw ONE Friday Fights 180 and The Inner Circle 40 take place on Friday, November 27. Denkriangkrai Mavinn Muaythai faced off against Myanmar’s Thway Lin Htet in strawweight Muay Thai action to cap off the night. A $100,000 U.S. ONE Championship contract was on the line for one of the night&#8217;s [&#8230;]</p>\n<p>The post <a href=\"https://cagesidepress.com/2026/11/27/one-friday-fights-180-the-inner-circle-40-live-stream-and-results/\" data-wpel-link=\"internal\">ONE Friday Fights 180 &#038; The Inner Circle 40 Live Stream and Results</a> appeared first on <a href=\"https://cagesidepress.com\" data-wpel-link=\"internal\">Cageside Press</a>.</p>\n <p>ONE Championship&#8217;s latest offering saw ONE Friday Fights 180 and The Inner Circle 40 take place on Friday, November 27.</p>\n<p>Denkriangkrai Mavinn Muaythai faced off against Myanmar’s Thway Lin Htet in strawweight Muay Thai action to cap off the night. A $100,000 U.S. ONE Championship contract was on the line for one of the night&#8217;s unsigned winners.</p>\n<h3>Where to Watch ONE Championship</h3>\n<p><em>ONE Friday Fights 180 takes place on Friday, November 27, 2026 at the Lumpinee Stadium in Bangkok, Thailand. Inner Circle fights are available via the<a href=\"http://watch.onefc.com/\" target=\"_blank\" rel=\"external noopener noreferrer\" data-wpel-link=\"external\"> ONE Championship website</a>, while the main card streams live on Youtube for western fight fans. Full results from the event can be found below; the action gets underway at 7:30AM ET, 4:30AM PT.</em></p>\n<div class=\"youtube-embed\" data-video_id=\"T3yglbAoE9A\"><iframe title=\"🔴 [Live in HD] ONE Friday Fights 180: Denkriangkrai vs. Thway Lin Htet\" width=\"696\" height=\"522\" src=\"https://www.youtube.com/embed/T3yglbAoE9A?feature=oembed&#038;enablejsapi=1\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe></div>\n<h3>ONE Friday Fights 180 Results</h3>\n<p>Denkriangkrai Mavinn Muaythai vs. Thway Lin Htet &#8211; <em>Muay Thai</em><br />\nNuatoranee Jitmuangnon vs. Yodchanachai Tor Pitakchai &#8211;<em> Muay Thai</em><br />\nSaencherngnoi Tor Muangsema vs. Petthanawat Sor Jaruwan &#8211; <em>Muay Thai</em><br />\nJaxson Hayman vs. Sixten Larsson &#8211; <em>Muay Thai</em><br />\nAlistair Fitzharris vs. Bhupen Mutum &#8211;<em> MMA</em><br />\nPanpet Sor Dechapan vs. Youssef Erraji &#8211;<em> Muay Thai</em><br />\nArti Khatri vs. Norika Ryu &#8211; <em>MMA</em><br />\nEfe Caliskan vs. Fuga Onodera &#8211; <em>Muay Thai</em><br />\nChen Jiayi vs. Taku Takaiwa &#8211; <em>Kickboxing</em></p>\n<p><strong>The Inner Circle</strong></p>\n<p>Yodkhunpon vs. Detchawalit Silkmuaythai &#8211; <em>Muay Thai</em><br />\nWorapon Lukjaoporongtom vs. Kongklai Sor Sommai &#8211; <em>Muay Thai</em><br />\nRungrawee Tingnotepadriew PK vs. Harry Purvis &#8211; <em>Muay Thai</em><br />\nTom Keogh vs. Abdelali Zahidi &#8211; <em>Muay Thai</em><br />\nPetprapaporn Sor Dechapan vs. Enzo Clarisse &#8211; <em>Muay Thai</em></p>\n<p>The post <a href=\"https://cagesidepress.com/2026/11/27/one-friday-fights-180-the-inner-circle-40-live-stream-and-results/\" data-wpel-link=\"internal\">ONE Friday Fights 180 &#038; The Inner Circle 40 Live Stream and Results</a> appeared first on <a href=\"https://cagesidepress.com\" data-wpel-link=\"internal\">Cageside Press</a>.</p>\n",
+      "image": null,
+      "firstSeenAt": "2026-11-27T09:35:53.134076+00:00",
+      "coverage": 1
+    },
     {
       "id": "cf642943448f8ba0cfe6",
       "title": "CW 214 Unplugged Weigh-in Results",
@@ -8050,11 +8062,11 @@
     }
   ],
   "leads": {
-    "newest": "https://www.theguardian.com/sport/2026/nov/27/sports-quiz-week-football-chess-tennis-rugby-boxing-cricket-snooker",
-    "mostCovered": "https://www.bbc.co.uk/sport/boxing/articles/c9772vyzr342o?at_medium=RSS&at_campaign=rss"
+    "newest": "https://www.onefc.com/news/sawada-vs-nikolakakos-world-title-fight-postponed-wajima-vs-siasarani-elevated-to-one-samurai-6-main-event/",
+    "mostCovered": "https://www.mmaweekly.com/news/dricus-du-plessis-on-next-opponent-the-big-news-will-be-out-soon"
   },
   "deduplication": {
-    "checkedAt": "2026-11-27T08:18:33.923211+00:00",
+    "checkedAt": "2026-11-27T09:35:53.134076+00:00",
     "removedArticles": 3,
     "removedResultReports": 0,
     "examples": [
@@ -8065,9 +8077,9 @@
         "reason": "same story"
       },
       {
-        "url": "https://www.bbc.co.uk/sport/boxing/articles/cmvg2v0rlzeko?at_medium=RSS&at_campaign=rss",
-        "title": "Wilder to fight Bakole on Fury-Joshua undercard",
-        "keptUrl": "https://www.boxingscene.com/articles/martin-bakole-confirmed-as-deontay-wilder-opponent-for-fury-joshua-undercaard",
+        "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/26/dricus-du-plessis-next-ufc-fight-announced-soon-middleweight/92969023007/",
+        "title": "Dricus Du Plessis confirms next UFC fight: 'Big news will be out soon'",
+        "keptUrl": "https://www.mmaweekly.com/news/dricus-du-plessis-on-next-opponent-the-big-news-will-be-out-soon",
         "reason": "same story"
       },
       {
