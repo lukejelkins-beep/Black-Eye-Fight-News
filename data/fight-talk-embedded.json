@@ -1,14 +1,14 @@
 {
-  "attemptedAt": "2026-11-27T11:39:12.672Z",
-  "checkedAt": "2026-11-27T11:39:12.672Z",
+  "attemptedAt": "2026-11-27T12:47:15.849Z",
+  "checkedAt": "2026-11-27T12:47:15.849Z",
   "windowDays": 28,
-  "articlesChecked": 30,
+  "articlesChecked": 29,
   "publisherFeedsChecked": 3,
   "publisherFeedsFailed": 0,
-  "rssArticleCandidates": 43,
-  "publisherSourcesConfigured": 33,
-  "linksFound": 7,
-  "newEmbedsVerified": 0,
+  "rssArticleCandidates": 42,
+  "publisherSourcesConfigured": 32,
+  "linksFound": 13,
+  "newEmbedsVerified": 1,
   "newPublisherLinksDiscovered": 0,
   "paidXApiCalls": 0,
   "xApiBudgetUsd": 2,
@@ -59,6 +59,25 @@
       "embedVerified": true,
       "linkPriority": 55,
       "url": "https://x.com/ufc/status/2126073513895428327"
+    },
+    {
+      "type": "post",
+      "platform": "Instagram",
+      "sport": "mma",
+      "name": "Original Instagram post",
+      "role": "media",
+      "nativeEmbed": true,
+      "originalDateUnverified": true,
+      "sourceLinkedAt": "2026-11-27T11:56:53+00:00",
+      "discoveredAt": "2026-11-27T12:47:15.849Z",
+      "sourcePublisher": "ONE Championship",
+      "evidenceUrl": "https://www.onefc.com/news/sawada-vs-nikolakakos-world-title-fight-postponed-wajima-vs-siasarani-elevated-to-one-samurai-6-main-event/",
+      "summary": "Original social post linked in ONE Championship coverage. Its author, caption and publication date appear in the official embed.",
+      "source": "Publisher permalink + official embed verification",
+      "verification": "official-oembed",
+      "embedVerified": true,
+      "linkPriority": 10,
+      "url": "https://www.instagram.com/p/DgPhgGritI1/"
     },
     {
       "type": "post",
@@ -2315,25 +2334,6 @@
       "embedVerified": true,
       "linkPriority": 10,
       "url": "https://www.instagram.com/p/DgBoXPJDcBo/"
-    },
-    {
-      "type": "post",
-      "platform": "Instagram",
-      "sport": "mma",
-      "name": "Original Instagram post",
-      "role": "media",
-      "nativeEmbed": true,
-      "originalDateUnverified": true,
-      "sourceLinkedAt": "2026-11-22T09:10:00+00:00",
-      "discoveredAt": "2026-11-22T21:45:18.461Z",
-      "sourcePublisher": "MMA Junkie",
-      "evidenceUrl": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/22/ufc-336-marc-andre-barriault-vs-tresean-gore-joins-lineup-toronto/92912918007/",
-      "summary": "Original social post linked in MMA Junkie coverage. Its author, caption and publication date appear in the official embed.",
-      "source": "Trusted publisher permalink (embed unconfirmed)",
-      "verification": "trusted-publisher-link",
-      "embedVerified": false,
-      "linkPriority": 10,
-      "url": "https://www.instagram.com/p/DgBoXPJDcBoembed/"
     }
   ],
   "seenOriginals": [
@@ -3844,6 +3844,10 @@
     {
       "url": "https://www.instagram.com/reel/DbxvSeiu3U4/",
       "firstSeen": "2026-11-27T09:45:22.855Z"
+    },
+    {
+      "url": "https://www.instagram.com/p/DgPhgGritI1/",
+      "firstSeen": "2026-11-27T12:47:15.849Z"
     }
   ],
   "note": "Only public original-post links found on vetted fight-publisher pages, official sites or curated references are collected. A trusted publisher link proves a link was present, NOT that platform oEmbed confirmed the post; embedVerified tracks this separately. Post dates are NEVER inferred from news article or discovery timestamps. No paid X API calls (US$0 of US$2 cap). Native embeds render client-side with source links as fallback. Discovery is not a complete Instagram/Threads feed."
