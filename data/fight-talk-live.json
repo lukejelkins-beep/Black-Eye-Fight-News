@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-27T18:02:01.928Z",
-  "checkedAt": "2026-11-27T18:02:01.928Z",
+  "attemptedAt": "2026-11-27T19:12:54.258Z",
+  "checkedAt": "2026-11-27T19:12:54.258Z",
   "updatedAt": "2026-11-27T16:02:41.305633Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 27,
+      "configured": 26,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,18 +55,19 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 0,
+    "batchIndex": 2,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
       "Instagram": 43,
-      "Bluesky": 6,
-      "X": 27,
-      "Threads": 8
+      "X": 26,
+      "Bluesky": 4,
+      "Threads": 9,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
@@ -1291,7 +1292,7 @@
         "comments": 4,
         "shares": 10
       },
-      "engagementCheckedAt": "2026-11-27T15:42:06.439Z",
+      "engagementCheckedAt": "2026-11-27T19:12:54.258Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -4487,7 +4488,7 @@
         "comments": 0,
         "shares": 3
       },
-      "engagementCheckedAt": "2026-11-27T15:42:06.439Z",
+      "engagementCheckedAt": "2026-11-27T19:12:54.258Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
