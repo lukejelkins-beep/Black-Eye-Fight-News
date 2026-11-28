@@ -451,12 +451,14 @@ try{
   await page.waitForFunction(ids=>
    ids.every(id=>window.COMBAT_DATA?.fighters?.some(f=>f.id===id)),
    profiles.map(x=>x.id),{timeout:30000});
-  const fighterGrid=page.locator("#fighterGrid");
-  await fighterGrid.waitFor({state:"visible",timeout:12000});
+  // The Fighters page: the all-sports grid on a deployment before 28 Nov 2026, or a sport's Fighters hub after
+  // ("Front page only" navigation: #fighters with no saved sport opens the last sport's hub, MMA on a first visit).
+  const fightersPage=page.locator("#fighterGrid, [data-befn-fighters-hub], [data-befn-boxing-hub]").first();
+  await fightersPage.waitFor({state:"visible",timeout:12000});
   // Open a reviewed card through the live Fighter Profiles interface.
   await page.evaluate(()=>{document.querySelector('[data-nav="fighters"]')?.click()});
   await page.waitForTimeout(350);
-  if(!await fighterGrid.count())pushError(screen,"Fighter Profiles grid missing");
+  if(!await page.locator("#fighterGrid, [data-befn-fighters-hub], [data-befn-boxing-hub]").count())pushError(screen,"Fighters page missing");
   for(const f of profiles)await checkProfile(page,f,screen);
   // Production must display actual qualified statistics at both breakpoints,
   // not only a static navigation link or a stale unverified placeholder.
