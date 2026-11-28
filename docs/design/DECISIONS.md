@@ -2,6 +2,16 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Sumo: chances on the Bouts page, phone checklist)
+- **Owner's picks from the selector:** merge #583 when green (done: `3be28d0`, live and checked); the refit gate stays as built; "Allow GitHub Actions to create pull requests" is already on; next: a Safari and phone checklist, and the predictor on the Bouts page.
+- **Bouts page.**
+  - Under each Makuuchi and Juryo bout, a strip shows the predictor's favourite and his chance that morning: saved chances for archived basho, the live replay for a live one, and the morning's pick for a bout still to come.
+  - A fought bout is marked Called, Missed, or Upset. "Upset" means the winner had under 40%, the same rule as the Basho review.
+  - The strip links to the Predictor with the two wrestlers. Makushita and cross-division bouts have no chance, so no strip.
+  - The strip sits after the bout's fact line, which the fact-engine test expects directly under the row.
+- **Checklist:** `docs/design/PHONE-CHECKLIST-2026-11-28-sumo.md`, for the owner to run on an iPhone and in Safari. Testing so far is Chromium only.
+- — Owner 28 Nov — awaiting owner "Merge N".
+
 ## 2026-11-28 (Sumo: live prediction record, Juryo day view, phone pills, refit job)
 - **Owner's picks from the selector:** merge #581 when green (done: `4d62932`, live and checked), and build all four next items, in one PR.
 - **Live prediction record.**
@@ -14,7 +24,7 @@ Format: date — decision — who — where it shows up.
   - A scheduled job (3 Feb, 3 Aug) recollects, refits on a rolling window and opens a draft PR only if the gate holds: all-bout gain interval above zero, Makuuchi gain positive.
   - The Predictor page's track-record text now follows the model's own window, not fixed years.
   - The predictor test now checks the gate's rule; a one-year test window is too small for the stricter Makuuchi interval.
-- — Owner 28 Nov — awaiting owner "Merge N".
+- — Owner 28 Nov — merged on the owner's selector choice ("Merge when green"), live at 3be28d0 (checked on the live site).
 
 ## 2026-11-28 (Sumo design review: owner's picks)
 - **Owner's choices, from the selector:** all four design fixes from the #575 review; keep birthplace in the predictor; one PR.
