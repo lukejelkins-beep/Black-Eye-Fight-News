@@ -104,3 +104,6 @@
 #main #results-content .sb-result-snap .befn-comparison-heading{color:#111013!important;-webkit-text-fill-color:#111013!important}
 /* Boxing face-off (24 Nov 2026): same face-off; its "Last five fights" heading sits on the light card, so it needs ink. */
 #main :is(#upcoming-cards-root,#results-content) .sb-boxing .befn-comparison-heading{margin:4px 0 8px!important;color:#111013!important;-webkit-text-fill-color:#111013!important}
+/* Gym line under the form dots on upcoming UFC cards (2026-11-28): small plain context, 12 px minimum. */
+#main #upcoming-cards-root .sb-gym{display:block;margin-top:6px;color:#111013;font:600 13px/1.3 "DM Sans",sans-serif;overflow-wrap:anywhere}
+#main #upcoming-cards-root .sb-gym small{display:block;color:#6b6468;font:700 12px/1.2 "DM Sans",sans-serif;letter-spacing:.04em;text-transform:uppercase}

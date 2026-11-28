@@ -7,11 +7,14 @@
    - Replays every saved Makuuchi/Juryo/Makushita basho from 2000 (cache, plus any newer file in
      data/sumo/basho-archive), recording each bout's inputs as known that morning. 2000-2002 only
      warm the ratings up.
-   - Fits an L2 logistic model on 2003-2022, picks the penalty on 2023-2024, then a calibration
-     slope on 2023-2024 that may soften but never sharpen the chances. Refits on 2003-2024 and
-     scores 2025 onwards against the v1 method (rank, rating against rank, form) on the same bouts.
+   - Fits an L2 logistic model on 2003 to T-3, picks the penalty on T-2 and T-1, then a calibration
+     slope on T-2 and T-1 that may soften but never sharpen the chances. Refits on 2003 to T-1 and
+     scores T onwards against the v1 method (rank, rating against rank, form) on the same bouts.
+     T is --test-from (default 2025: train 2003-2022, tune 2023-2024, test 2025-2026).
+   - --gate: exit 2 unless the refit beats v1 on the test bouts (interval of the all-bout gain above
+     zero, and a positive Makuuchi gain). The twice-yearly refit job uses it.
    - The weights the site uses are refitted on every bout from 2003 with the same penalty and slope.
-   - Chances saved for the basho archive come from the 2003-2024 fit, so 2025-2026 are out of sample.
+   - Chances saved for the basho archive come from the 2003 to T-1 fit, so the test years are out of sample.
 
    Update (no cache, no network; the daily release watch runs this after saving a new basho):
      node scripts/sumo-build-model.mjs --update
@@ -41,7 +44,7 @@ function replay(R, list, onBout) {
       for (const { w, l } of today) {
         const [a, b] = position(w.rank) <= position(l.rank) ? [w, l] : [l, w];
         const F = R.features(a.rikishiID, b.rikishiID, day);
-        onBout({ basho: id, day, a, b, y: a === w ? 1 : 0, v: vectorize(F), maku: isMakuuchi(a.rank) && isMakuuchi(b.rank) });
+        onBout({ basho: id, day, a, b, y: a === w ? 1 : 0, v: vectorize(F), maku: isMakuuchi(a.rank) && isMakuuchi(b.rank), juryo: /^Juryo /.test(a.rank) && /^Juryo /.test(b.rank) });
       }
       R.updateDay(today);
     }
@@ -134,7 +137,7 @@ if (process.argv.includes('--update')) {
   const m = { keys: FEATURES, weights: model.weights, intercept: model.intercept };
   let latestRows = [];
   replay(R, todo.map(id => ({ id, rows: (latestRows = archiveRows(readArchive(id))) })), r => {
-    if (!r.maku) return;
+    if (!r.maku && !r.juryo) return;
     (model.archive[r.basho] ||= {})[r.day + ':' + r.a.rikishiID + ':' + r.b.rikishiID] = r4(sigmoid(model.temperature * logit(m, r.v)));
   });
   model.state = siteState(R, attrs, latestRows);
@@ -156,38 +159,44 @@ const R = new SumoReplay(attrs);
 const data = [];
 replay(R, list, r => { if (r.basho >= '200301') data.push(r); });
 const yr = r => +r.basho.slice(0, 4);
-const train = data.filter(r => yr(r) <= 2022), valid = data.filter(r => yr(r) >= 2023 && yr(r) <= 2024), test = data.filter(r => yr(r) >= 2025), early = data.filter(r => yr(r) <= 2024);
+const T = Number(arg('test-from') || 2025);
+if (!(T >= 2008 && T <= 2100)) throw new Error('--test-from must be a year');
+const train = data.filter(r => yr(r) <= T - 3), valid = data.filter(r => yr(r) >= T - 2 && yr(r) <= T - 1), test = data.filter(r => yr(r) >= T), early = data.filter(r => yr(r) <= T - 1);
+if (!test.length) throw new Error('No bouts from ' + T + ' on to test');
 const Y = a => a.map(r => r.y), V = a => a.map(r => r.v);
 const brier = (rows, f) => rows.reduce((s, r) => s + (f(r) - r.y) ** 2, 0) / rows.length;
-/* Penalty and calibration chosen on 2023-2024. */
+/* Penalty and calibration chosen on the two years before the test. */
 let best = null;
 for (const C of [0.1, 0.3, 1, 3]) { const m = fitLogistic(V(train), Y(train), C); const b = brier(valid, r => sigmoid(logit(m, r.v))); if (!best || b < best.b) best = { C, b, m }; }
-let T = 1, tb = Infinity;
-for (let t = 0.6; t <= 1.0001; t += 0.02) { const b = brier(valid, r => sigmoid(t * logit(best.m, r.v))); if (b < tb) { tb = b; T = r4(t); } }
+let T2 = 1, tb = Infinity;
+for (let t = 0.6; t <= 1.0001; t += 0.02) { const b = brier(valid, r => sigmoid(t * logit(best.m, r.v))); if (b < tb) { tb = b; T2 = r4(t); } }
 const C = best.C;
 const mEarly = fitLogistic(V(early), Y(early), C);
 const base = ['d_rs', 'd_r16', 'd_f'];
 const m0 = fitLogistic(V(early), Y(early), 1, base);
-const pv2 = r => sigmoid(T * logit(mEarly, r.v)), pv1 = r => sigmoid(logit(m0, r.v));
+const pv2 = r => sigmoid(T2 * logit(mEarly, r.v)), pv1 = r => sigmoid(logit(m0, r.v));
 const sets = { all: test, makuuchi: test.filter(r => r.maku) };
 const backtest = {
-  note: 'Fitted on 2003-2024 (penalty and calibration chosen on 2023-2024); every 2025-2026 bout predicted the morning of its day. v1 = rank, rating against rank and form, fitted on the same bouts.',
+  note: 'Fitted on 2003-' + (T - 1) + ' (penalty and calibration chosen on ' + (T - 2) + '-' + (T - 1) + '); every bout from ' + T + ' predicted the morning of its day. v1 = rank, rating against rank and form, fitted on the same bouts.',
   test: Object.fromEntries(Object.entries(sets).map(([k, rows]) => [k, { model: metrics(rows, pv2), v1: metrics(rows, pv1), higherRankWins: { accuracy: r4(rows.reduce((s, r) => s + (r.y === 1 ? 1 : 0), 0) / rows.length) } }])),
   gainVsV1: { all: gain(test, pv2, pv1), makuuchi: gain(sets.makuuchi, pv2, pv1) },
-  byYear: Object.fromEntries([2025, 2026].map(y => { const rows = sets.makuuchi.filter(r => yr(r) === y); return [y, { makuuchi: { bouts: rows.length, model: metrics(rows, pv2).accuracy, v1: metrics(rows, pv1).accuracy } }]; })),
+  byYear: Object.fromEntries([...new Set(test.map(yr))].sort().map(y => { const rows = sets.makuuchi.filter(r => yr(r) === y); return [y, { makuuchi: { bouts: rows.length, model: metrics(rows, pv2).accuracy, v1: metrics(rows, pv1).accuracy } }]; })),
   calibration: calibration(test, pv2),
-  penalty: C, temperature: T
+  penalty: C, temperature: T2
 };
 const shipped = fitLogistic(V(data), Y(data), C);
 const archive = {};
-for (const r of data) if (r.maku && archiveIds.includes(r.basho)) (archive[r.basho] ||= {})[r.day + ':' + r.a.rikishiID + ':' + r.b.rikishiID] = r4(pv2(r));
+/* Saved chances for the archive basho: Makuuchi and Juryo bouts (the review's day view shows both). */
+for (const r of data) if ((r.maku || r.juryo) && archiveIds.includes(r.basho)) (archive[r.basho] ||= {})[r.day + ':' + r.a.rikishiID + ':' + r.b.rikishiID] = r4(pv2(r));
 const latestRows = list[list.length - 1].rows;
 const model = {
   schemaVersion: 2, builtAt: new Date().toISOString().slice(0, 10), updatedThrough: R.lastBasho,
-  data: { from: list[0].id, to: R.lastBasho, bouts: data.length, basho: list.filter(x => x.rows.length).length, train: '2003-2022', valid: '2023-2024', test: '2025-' },
-  features: FEATURES, weights: shipped.weights.map(w => Math.round(w * 1e6) / 1e6), intercept: Math.round(shipped.intercept * 1e6) / 1e6, temperature: T,
+  data: { from: list[0].id, to: R.lastBasho, bouts: data.length, basho: list.filter(x => x.rows.length).length, train: '2003-' + (T - 3), valid: (T - 2) + '-' + (T - 1), test: T + '-' },
+  features: FEATURES, weights: shipped.weights.map(w => Math.round(w * 1e6) / 1e6), intercept: Math.round(shipped.intercept * 1e6) / 1e6, temperature: T2,
   backtest, archive, state: siteState(R, attrs, latestRows)
 };
 writeFileSync(OUT, JSON.stringify(model) + '\n');
 writeFileSync(STATE, JSON.stringify(fullState(R, attrs, latestRows)) + '\n');
-console.log(JSON.stringify({ C, T, data: model.data, backtest }, null, 1));
+const gate = backtest.gainVsV1.all.interval95[0] > 0 && backtest.gainVsV1.makuuchi.mean > 0;
+console.log(JSON.stringify({ C, temperature: T2, data: model.data, gate, backtest }, null, 1));
+if (process.argv.includes('--gate') && !gate) { console.error('Gate not met: the refit does not clearly beat v1 on ' + T + ' onwards.'); process.exit(2); }

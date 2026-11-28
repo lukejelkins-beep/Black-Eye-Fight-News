@@ -17,9 +17,9 @@ import { buildHome, bashoStart, bashoFinished, rows as bzRows } from './sumo-hom
 import { renderHome as renderOverview, exploreBlock } from './sumo-home.mjs?v=20261128-brief1';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview, selector as reviewSelector } from './sumo-review.mjs?v=20261128-brief1';
-import { analysis as bashoAnalysis, picks as dayPicks } from './sumo-analysis-data.mjs?v=20261128-brief1';
-import { raceChart, dayBlock, expectationsBlock, scoreBlock, renderLiveAnalysis } from './sumo-analysis.mjs?v=20261128-brief1';
-import { renderPredictor } from './sumo-predictor-view.mjs?v=20261128-brief1';
+import { analysis as bashoAnalysis, picks as dayPicks } from './sumo-analysis-data.mjs?v=20261128-log1';
+import { raceChart, dayBlock, expectationsBlock, scoreBlock, renderLiveAnalysis } from './sumo-analysis.mjs?v=20261128-log1';
+import { renderPredictor } from './sumo-predictor-view.mjs?v=20261128-log1';
 import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
 import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-next1';
 import { fromArchive, fromDetails, runs, stables, rivalries, records, sizeExtremes } from './sumo-insights-data.mjs?v=20261124-size1';
@@ -1634,17 +1634,20 @@ function renderSumoInsights(){
   return renderInsights({power,runs:runs(basho),rivalries:rivalries(STATE.h2hSummary,STATE.roster),stables:stables(latest,STATE.roster),records:records(basho,STATE.careerHistory,STATE.roster),size:sizeExtremes(basho,STATE.careerHistory,STATE.roster),latestId:latest.bashoId},homeHelpers());
 }
 /* The predictor's saved model (data/sumo/predictor.json), loaded on the analysis pages only. */
-const PRED={model:null,loading:false,failed:false};
+const PRED={model:null,log:null,loading:false,failed:false};
 function loadPredictor(){
   if(PRED.model||PRED.loading||PRED.failed)return;
   PRED.loading=true;
-  loadJson('data/sumo/predictor.json').then(x=>{PRED.model=x;}).catch(()=>{PRED.failed=true;})
+  /* The live record (data/sumo/prediction-log.json) is optional: the page shows without it. */
+  Promise.all([loadJson('data/sumo/predictor.json'),loadJson('data/sumo/prediction-log.json').catch(()=>null)]).then(([x,l])=>{PRED.model=x;PRED.log=l;}).catch(()=>{PRED.failed=true;})
     .finally(()=>{PRED.loading=false;if(/^#(review|predict|insights)/.test(location.hash))render();});
 }
 /* The live basho, if one is on: its id, or null. #review?liveday=N replays the latest saved basho as of day N. */
 function liveBashoId(){return STATE.details&&!bashoFinished(STATE.details)?String(STATE.details.bashoId):null;}
 function reviewQuery(){return new URLSearchParams(location.hash.split('?')[1]||'');}
 function chosenDay(){const d=Number(STATE.analysisDay||reviewQuery().get('day'));return Number.isInteger(d)&&d>=1&&d<=15?d:null;}
+/* The day view's division: Makuuchi unless Juryo is chosen (?div=juryo). */
+function chosenDivision(){return (STATE.analysisDivision||reviewQuery().get('div'))==='juryo'?'Juryo':'Makuuchi';}
 function renderBashoReview(id){
   if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
   loadPredictor();
@@ -1663,14 +1666,16 @@ function renderBashoReview(id){
   const hh={...homeHelpers(),index:ARCHIVE.index,liveId};
   const model=PRED.model;
   const A=bashoAnalysis(det,model,{day:chosenDay()});
+  const D=chosenDivision()==='Juryo'?bashoAnalysis(det,model,{day:chosenDay(),division:'Juryo'}):A;
   const start=file.startDate;
   return renderReview(buildReview(file,ARCHIVE.files[prevBashoId(want)]||null,STATE.careerHistory),file,{...hh,
-    analysis:raceChart(hh,A)+dayBlock(hh,A,{recap:liveRecap(det,A.day),start}),
+    analysis:raceChart(hh,A)+dayBlock(hh,D,{recap:D===A?liveRecap(det,A.day):null,start}),
     expectations:model?expectationsBlock(hh,A):'',score:model?scoreBlock(hh,A,model):''});
 }
 function liveAnalysisPage(details,preview){
   const model=PRED.model,day=completedDay(details);
   const A=bashoAnalysis(details,model,{day:chosenDay()});
+  const D=chosenDivision()==='Juryo'?bashoAnalysis(details,model,{day:chosenDay(),division:'Juryo'}):A;
   const hh={...homeHelpers(),index:ARCHIVE.index,liveId:preview?null:String(details.bashoId)};
   /* Tomorrow's picks: the announced torikumi (live), or the next day's bouts of the replayed basho (preview). */
   let pairs=[];
@@ -1679,7 +1684,7 @@ function liveAnalysisPage(details,preview){
     else{const t=getAnnouncedTorikumi('Makuuchi',day+1);pairs=announcedTorikumiMatches(t,{bashoId:details.bashoId,division:'Makuuchi',day:day+1}).filter(m=>!m.finished);}
   }
   const home=buildHome({details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
-  return renderLiveAnalysis({bashoId:details.bashoId,preview,model,picks:dayPicks(details,model,pairs,day+1),recap:day?liveRecap(details,A.day):null,
+  return renderLiveAnalysis({bashoId:details.bashoId,preview,model,dayA:D,picks:dayPicks(details,model,pairs,day+1),recap:day?liveRecap(details,A.day):null,
     start:details.basho?.data?.startDate,sanyakuView:home},A,
     {...hh,selector:preview?'':reviewSelector(hh,{bashoId:String(details.bashoId)},ARCHIVE.index)});
 }
@@ -1688,7 +1693,7 @@ function renderPredictorPage(){
   if(PRED.failed)return '<div class="sumo-home"><p class="srev-loading">The predictor could not be loaded. Try again later.</p></div>';
   if(!PRED.model)return '<div class="sumo-home"><p class="srev-loading">Loading the predictor…</p></div>';
   const q=reviewQuery();
-  return renderPredictor({model:PRED.model,roster:STATE.roster,details:STATE.details,h2h:STATE.h2hSummary,a:q.get('a'),b:q.get('b')},homeHelpers());
+  return renderPredictor({model:PRED.model,log:PRED.log,roster:STATE.roster,details:STATE.details,h2h:STATE.h2hSummary,a:q.get('a'),b:q.get('b')},homeHelpers());
 }
 function render() {
   const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
@@ -1893,20 +1898,28 @@ let lastRoute=location.hash.slice(1).split('?')[0];
 /* Basho analysis: a day button (or a day column on the race chart) shows that day, keeping the scroll
    place; the day is kept in the link (?day=N) so it can be shared. */
 document.addEventListener('click',ev=>{
-  const pick=ev.target.closest&&ev.target.closest('[data-analysis-day]');
+  const pick=ev.target.closest&&ev.target.closest('[data-analysis-day],[data-analysis-division]');
   if(!pick||pick.disabled)return;
-  const d=Number(pick.dataset.analysisDay);
-  if(!(d>=1&&d<=15))return;
-  STATE.analysisDay=d;
   const [route,query]=location.hash.slice(1).split('?');
-  const q=new URLSearchParams(query||'');q.set('day',String(d));
-  history.replaceState(null,'','#'+route+'?'+q.toString());
+  const q=new URLSearchParams(query||'');
+  if(pick.dataset.analysisDivision){
+    /* Division tab: Makuuchi or Juryo for the day view, kept in the link as ?div=juryo. */
+    const juryo=pick.dataset.analysisDivision==='Juryo';
+    STATE.analysisDivision=juryo?'juryo':'makuuchi';
+    if(juryo)q.set('div','juryo');else q.delete('div');
+  }else{
+    const d=Number(pick.dataset.analysisDay);
+    if(!(d>=1&&d<=15))return;
+    STATE.analysisDay=d;q.set('day',String(d));
+  }
+  q.delete('at');
+  history.replaceState(null,'','#'+route+(q.toString()?'?'+q.toString():''));
   const y=window.scrollY,anchor=document.getElementById('day-by-day'),top=anchor?anchor.getBoundingClientRect().top:null;
   render();
   /* Keep the day section where it was on screen (the chart above does not change height). */
   const again=document.getElementById('day-by-day');
   window.scrollTo({top:again&&top!==null?window.scrollY+again.getBoundingClientRect().top-top:y,behavior:'instant'});
-  document.querySelector('[data-analysis-day="'+d+'"][aria-pressed]')?.focus({preventScroll:true});
+  (pick.dataset.analysisDivision?document.querySelector('[data-analysis-division="'+pick.dataset.analysisDivision+'"]'):document.querySelector('[data-analysis-day="'+pick.dataset.analysisDay+'"][aria-pressed]'))?.focus({preventScroll:true});
 });
 document.addEventListener('click',ev=>{
   const dayBtn=ev.target.closest&&ev.target.closest('[data-recap-day]');
@@ -1977,7 +1990,7 @@ window.addEventListener('hashchange',()=>{
     STATE.matchupDay=STATE.h2hReturn.matchupDay;
   }
   if(route==='predict'&&lastRoute==='predict'){const y=window.scrollY;render();window.scrollTo({top:y,behavior:'instant'});return;}
-  if(route!==lastRoute){STATE.analysisDay=null;STATE.reviewAt=null;}
+  if(route!==lastRoute){STATE.analysisDay=null;STATE.analysisDivision=null;STATE.reviewAt=null;}
   lastRoute=route;STATE.h2hOldestFirst=false;render();
   const requestedTerm=route==='kimarite'?new URLSearchParams(location.hash.split('?')[1]||'').get('term'):null;
   if(requestedTerm&&/^[a-z-]+$/.test(requestedTerm)&&document.getElementById('kimarite-'+requestedTerm)){

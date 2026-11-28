@@ -160,3 +160,18 @@ console.log('snapshot-b result: ok');
   assert.ok(!B.tapeHTML(s2, { tape: {} }, { tape: {} }, { esc, today }).includes('sb-rows'));
 }
 console.log('snapshot-b boxing: ok');
+
+// Gym line under each fighter (upcoming UFC cards). Plain context: shown only when a side has a gym, a dash for the other,
+// at most two gyms, escaped, and absent when no side has one (results and boxing cards pass none).
+{
+  const base = [{ name: 'A One', record: '10-2', fig: null }, { name: 'B Two', record: '8-1', fig: null }];
+  const none = B.tapeHTML(base, { tape: {} }, { tape: {} }, { esc, today });
+  assert.ok(!none.includes('sb-gym'), 'no gym line without gyms');
+  const one = B.tapeHTML([{ ...base[0], gym: ['City Kickboxing', 'Second Gym', 'Third <b>'] }, base[1]], { tape: {} }, { tape: {} }, { esc, today });
+  assert.strictEqual((one.match(/class="sb-gym"/g) || []).length, 2, 'both sides get the line so columns stay level');
+  assert.ok(one.includes('City Kickboxing, Second Gym</span>') && !one.includes('Third'), 'two gyms at most');
+  assert.ok(one.includes('<small>Trains at</small> —</span>'), 'missing gym shows a dash, never blank');
+  const bad = B.tapeHTML([{ ...base[0], gym: ['<img src=x>'] }, base[1]], { tape: {} }, { tape: {} }, { esc, today });
+  assert.ok(!bad.includes('<img src=x>') && bad.includes('&lt;img src=x&gt;'), 'escaped');
+}
+console.log('snapshot-b gyms: ok');
