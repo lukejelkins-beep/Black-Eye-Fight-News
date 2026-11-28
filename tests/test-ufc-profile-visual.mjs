@@ -173,14 +173,14 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
   },profile.id,{timeout:12000});
-  // Profile design A (owner, 2026-11-25): a hero rating or recent-form panel, the tab bar, and the nine Recent
-  // Performance tiles moved into the Stats tab. The Ratings card holds only the ratings that have a value, so it is
+  // Profile design A (owner, 2026-11-25): a hero rating or recent-form panel, the tab bar, and the Stats tab. The Ratings card holds only the ratings that have a value, so it is
   // no longer waited for (a fighter with none has no card).
   await page.waitForFunction(()=>{
    const d=document.querySelector("#fighterDialog.befn-pro-dialog");
    return !!d?.querySelector("[data-befn-pro-rating] .befn-pro-score")&&
     !!d?.querySelector(".befn-pa-tabs [role=tab]")&&
-    !!d?.querySelector(".befn-pro-stats .befn-pro-tiles");
+    // Stats tab: the numbers table against the division average (28 Nov 2026), or the nine V3 tiles without a stats file.
+    !!d?.querySelector(".befn-pro-stats .bsp-table,.befn-pro-stats .befn-pro-tiles");
   },null,{timeout:12000});
   // A fighter in the stats build first shows a placeholder ("—") while their stats file loads; count the rating
   // bars only once the real card is in (rating model 2026-11, PR #453: the live site is slower than a local server).
@@ -218,6 +218,8 @@ async function checkProfile(page,profile,screen){
    const metrics=d?.querySelectorAll(".befn-pro-ratings .befn-pro-meter").length??0;
    const credential=d?.querySelector(".befn-top-credentials .befn-credential-list");
    const tiles=[...(d?.querySelectorAll(".befn-pro-stats .befn-pro-tiles > div")||[])];
+   // With the stats file the Stats tab is one table against the division average (owner, 28 Nov 2026).
+   const statRows=d?.querySelectorAll(".befn-pro-stats .bsp-table .bsp-row").length??0;
    const historyRows=[...(d?.querySelectorAll(".befn-v3-fights li")||[])];
    const rect=d?.getBoundingClientRect();
    const rootWidth=document.documentElement.clientWidth;
@@ -225,7 +227,7 @@ async function checkProfile(page,profile,screen){
    const viewportOverflow=document.documentElement.scrollWidth>rootWidth+4;
    return {
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
-    metrics,recentRows,credentialsVisible:!!credential,performanceTiles:tiles.length,
+    metrics,recentRows,credentialsVisible:!!credential,performanceTiles:tiles.length,statRows,
     recentFiveCount:historyRows.length,historyV3:!!ins?.classList.contains("befn-pro-insights"),
     noProvisionalRanks:!d?.querySelector(".befn-performance-highlights,.befn-v3-top-ten"),
     noLegacyTable:!d?.querySelector("table[data-befn-recent-results]"),
@@ -289,7 +291,8 @@ async function checkProfile(page,profile,screen){
   // is left out rather than shown as "Not rated", so the card holds at most five bars, each with a value.
   assert(details.metrics<=5,"Ratings card holds at most five rating bars");
   assert.deepEqual(details.placeholderText,[],"profile shows a placeholder or Unassessed");
-  assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
+  // The stats table (stats file present) or, without it, the nine V3 tiles.
+  assert(details.statRows>0||details.performanceTiles===9,"Stats needs the numbers table or exactly nine V3 tiles");
   const saved=verifiedV3?.schema===4?verifiedV3.fighters?.[normalized(profile.name)]:null;
   const vettedPerformance=Object.values(saved?.metrics||{}).some(m=>
    Number.isFinite(m.value)&&m.bouts>=3&&m.bouts<=5&&
