@@ -258,10 +258,11 @@
  function skillsHTML(m){
   if(!m.skills.length)return "";
   const pct=m.ufc;
-  return '<section class="befn-pa-sec befn-pa-skills"><h3>'+(pct?'Skills vs '+(m.rating&&m.rating.pool==="women"?'UFC women':m.rating&&m.rating.pool==="men"?'UFC men':'the UFC roster'):'BEFN ratings')+'</h3>'+
+  // Owner, 28 Nov 2026: "Remove the noise please - just needs to say 'skills'".
+  return '<section class="befn-pa-sec befn-pa-skills"><h3>'+(pct?'Skills':'BEFN ratings')+'</h3>'+
    m.skills.map(s=>'<div class="befn-pa-meter"><div><span>'+esc(s.label)+'</span><b>'+(pct&&s.percentile===false?esc(Number(s.score).toFixed(2)):pct?esc(ordinal(s.score))+' pct':esc(s.score)+' / 100')+'</b></div>'+
     '<i role="meter" aria-label="'+esc(s.label)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+esc(s.score)+'"><s style="width:'+Math.max(2,Math.min(100,+s.score))+'%"></s></i></div>').join("")+
-   (pct?'<p class="befn-pa-note">Percentiles against every rated UFC '+(m.rating&&m.rating.pool==="women"?"woman":m.rating&&m.rating.pool==="men"?"man":"fighter")+'. <button type="button" class="befn-pa-link" data-pa-tab="stats">How the rating works</button></p>':
+   (pct?'<p class="befn-pa-note"><button type="button" class="befn-pa-link" data-pa-tab="stats">How the rating works</button></p>':
     '<p class="befn-pa-note">BEFN’s estimate from the record and results on file.</p>')+'</section>';
  }
  function ordinal(n){n=+n;const t=n%100,o=n%10;return n+(t>=11&&t<=13?"th":o===1?"st":o===2?"nd":o===3?"rd":"th");}
