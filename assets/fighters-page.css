@@ -33,3 +33,18 @@
 #main .fighters-unified #fighterGrid :is(.fighter-image,.befn-portrait-fallback)::before,#main .fighters-unified #fighterGrid :is(.fighter-image,.befn-portrait-fallback)::after{display:none!important;content:none!important}
 #main .fighters-unified #fighterGrid .befn-portrait-fallback{position:absolute;inset:0;width:100%}
 #main .fighters-unified #fighterGrid .fighter-tag{width:auto!important;height:auto!important;min-height:0!important;min-width:0!important;right:auto!important;bottom:auto!important;inset:10px auto auto 10px!important;transform:none!important;display:inline-block!important;line-height:1.2!important;white-space:nowrap}
+/* Compact row for a card with no photo (owner, 28 Nov 2026: "Compact no-photo rows"). A card whose photo is missing
+   or fails to load (img.is-error, set by the page's existing portrait handler) becomes one full-width row with a small
+   initials disc instead of a 130-200 px "Photo unavailable" tile. They move to the end of the grid (order), so they stack
+   together: one per row on the phone, two per row on desktop, and the photo cards above keep their order. */
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))){grid-column:1/-1;flex-direction:row!important;align-items:center;order:1}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .fighter-image{position:relative;flex:0 0 56px;width:56px;height:56px!important;margin:10px 0 10px 12px;border:0;border-radius:50%;overflow:hidden}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .befn-portrait-fallback strong{font-size:22px!important}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .befn-portrait-fallback span{display:none}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .fighter-image img{display:none}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .fighter-tag{display:none!important}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .fighter-body{padding:10px 12px!important;gap:2px;min-width:0}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .fighter-body h3{font-size:20px!important}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .fighter-body p{-webkit-line-clamp:1;margin:0!important}
+#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))) .fighter-link{display:none}
+@media(min-width:900px){#main .fighters-unified #fighterGrid .fighter-card:is(:has(.fighter-image img.is-error),:has(.fighter-image:not(:has(img)))){grid-column:span 2}}
