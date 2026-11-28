@@ -218,6 +218,8 @@ async function checkProfile(page,profile,screen){
    const metrics=d?.querySelectorAll(".befn-pro-ratings .befn-pro-meter").length??0;
    const credential=d?.querySelector(".befn-top-credentials .befn-credential-list");
    const tiles=[...(d?.querySelectorAll(".befn-pro-stats .befn-pro-tiles > div")||[])];
+   // With the stats file the Stats tab is one table against the division average (owner, 28 Nov 2026).
+   const statRows=d?.querySelectorAll(".befn-pro-stats .bsp-table .bsp-row").length??0;
    const historyRows=[...(d?.querySelectorAll(".befn-v3-fights li")||[])];
    const rect=d?.getBoundingClientRect();
    const rootWidth=document.documentElement.clientWidth;
@@ -225,7 +227,7 @@ async function checkProfile(page,profile,screen){
    const viewportOverflow=document.documentElement.scrollWidth>rootWidth+4;
    return {
     identity:!!f,title,record:f?.record,division:f?.division,category:f?.category,
-    metrics,recentRows,credentialsVisible:!!credential,performanceTiles:tiles.length,
+    metrics,recentRows,credentialsVisible:!!credential,performanceTiles:tiles.length,statRows,
     recentFiveCount:historyRows.length,historyV3:!!ins?.classList.contains("befn-pro-insights"),
     noProvisionalRanks:!d?.querySelector(".befn-performance-highlights,.befn-v3-top-ten"),
     noLegacyTable:!d?.querySelector("table[data-befn-recent-results]"),
@@ -289,7 +291,8 @@ async function checkProfile(page,profile,screen){
   // is left out rather than shown as "Not rated", so the card holds at most five bars, each with a value.
   assert(details.metrics<=5,"Ratings card holds at most five rating bars");
   assert.deepEqual(details.placeholderText,[],"profile shows a placeholder or Unassessed");
-  assert.equal(details.performanceTiles,9,"V3 Recent Performance requires exactly nine tiles");
+  // The stats table (stats file present) or, without it, the nine V3 tiles.
+  assert(details.statRows>0||details.performanceTiles===9,"Stats needs the numbers table or exactly nine V3 tiles");
   const saved=verifiedV3?.schema===4?verifiedV3.fighters?.[normalized(profile.name)]:null;
   const vettedPerformance=Object.values(saved?.metrics||{}).some(m=>
    Number.isFinite(m.value)&&m.bouts>=3&&m.bouts<=5&&

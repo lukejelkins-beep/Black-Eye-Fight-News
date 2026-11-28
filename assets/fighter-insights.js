@@ -306,7 +306,6 @@
    return proMeter(label,sc,id==='form'||hasFine(v2,id)?'plain':true,scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
   }).join(''):'';
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
-  const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
   const tier=scoreTier(headlineBar(v2));
   // Only bars with a value (design A); while the stats file loads there are none, and the card is left out.
   const structureMeters=v2?v2Meters:(ratedByBuild(f)?'':known.map(m=>proMeter(m.label,Number.isFinite(m.score)?m.score:null,false,scoreTier(Number.isFinite(m.score)?m.score:null))).join(''));
@@ -328,12 +327,12 @@
     (history?'<ul class="befn-v3-fights befn-pro-fight-list">'+history+'</ul>':'')+
     (SP&&stats?SP.history(stats,matched,careerFor(stats)):''))+
    '</div>'+
-   proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages appear once UFC statistics are recorded',
-    SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags)):
+   // Stats and Compare are one table (owner, 28 Nov 2026): the fighter beside the division average.
+   proSection('stats',SP&&stats?statsTitle(stats):'Recent performance',SP&&stats?'':'Per-fight averages appear once UFC statistics are recorded',
+    SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags),statsDivisions):
     '<div class="befn-pro-tiles">'+metric.map(([label,value,note])=>'<div><strong>'+escapeHTML(String(value))+'</strong>'+
     '<span>'+escapeHTML(label)+'</span><small>'+escapeHTML(note)+'</small></div>').join('')+'</div>')+
    bonusSection(stats)+
-   (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
    '</section>';
  }
  function renderProfile(f){
@@ -462,6 +461,7 @@
   return '<span class="befn-pro-opp-photo" aria-hidden="true"><b>'+escapeHTML(initials)+'</b>'+
    (url?'<img src="'+escapeHTML(url)+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'')+'</span>';
  }
+ const statsTitle=stats=>statsDivisions?.divisions?.[stats.divisionSlug]?'Numbers vs '+statsDivisions.divisions[stats.divisionSlug].label:'Numbers';
  function proSection(id,title,note,body,extra){
   return '<section class="befn-pro-card befn-pro-'+id+(extra?' '+extra:'')+'" data-pro-section="'+id+'">'+
    '<header><h3>'+escapeHTML(title)+'</h3>'+(note?'<small>'+escapeHTML(note)+'</small>':'')+'</header>'+body+'</section>';
@@ -813,10 +813,9 @@
     (band?'<small class="befn-pro-opp is-'+band.toLowerCase()+'" title="Opponent strength: '+Math.round(q*100)+'th percentile">'+band+' opp.</small>':'')+
     '</div>'+(SP&&stats?SP.fightDetail(stats,{boutId:b.boutId,date:b.date,opponent:b.opponent}):'')+'</li>';
   }).join('')+'</ul>'+(SP&&stats?SP.history(stats,v3.recent.map(b=>b.boutId),careerFor(stats)):'');
-  const statsBody=SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags)):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
+  const statsBody=SP&&stats?SP.statsPanel(stats,SP.periodMode(stats,careerList,careerFlags),statsDivisions):'<div class="befn-pro-tiles">'+tiles.map(([value,label,sample,rank])=>
    '<div><strong>'+escapeHTML(value)+'</strong><span>'+escapeHTML(label)+'</span><small>'+escapeHTML(sample)+'</small>'+
    (rank?'<b class="befn-pro-rank">'+escapeHTML(rank)+'</b>':'')+'</div>').join('')+'</div>';
-  const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
   return '<section class="befn-profile-insights befn-pro-insights" data-befn-profile="'+escapeHTML(f.id)+'" aria-label="UFC fighter profile">'+
    scorePanel+
    (SP&&stats?proSection('overview','At a glance','UFC career',SP.glance(stats)):'')+
@@ -826,11 +825,11 @@
      ' UFC fights with full round statistics, and this fighter has '+stats.ratings.sample.statFights+'.</p>':''))+
    proSection('fights','Recent fights','Last five UFC bouts',fightCards)+
    '</div>'+
-   proSection('stats','Recent performance',SP&&stats?'Averages per window, UFC fights only':'Per-fight averages, last five UFC bouts',statsBody+
-    renderPerformanceHighlights(f,v3)+
-    (statRows?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':''))+
+   // With the stats file, one table against the division average; the older last-five highlights and rank list only without it.
+   proSection('stats',SP&&stats?statsTitle(stats):'Recent performance',SP&&stats?'':'Per-fight averages, last five UFC bouts',statsBody+
+    (SP&&stats?'':renderPerformanceHighlights(f,v3))+
+    (statRows&&!(SP&&stats)?'<details class="befn-v3-statistics befn-v3-rank-full"><summary>All recent statistics</summary><ul class="befn-v3-rank-tiles">'+statRows+'</ul></details>':''))+
    bonusSection(stats)+
-   (compareHTML?proSection('compare','Compare',stats.division?'vs '+stats.division+' average':'vs division average',compareHTML):'')+
    '</section>';
  }
  // UFC stats leaderboards (stage 5): data/ufc-stats/leaderboards.json from the stats build.
@@ -1602,6 +1601,9 @@
   else if(Number.isFinite(c?.rates?.diffPm))keyNumbers.push({value:(c.rates.diffPm>0?"+":"")+c.rates.diffPm.toFixed(2),label:"Strike difference per min"});
   const skills=[];
   if(v2){
+   // Results first (owner, 28 Nov 2026: the Overview's Skills list shows every rating; the Stats tab no longer repeats the bars).
+   const rf=v2.results?.score,rv=Number.isFinite(rf)?rf:v2.results?.percentile;
+   if(Number.isFinite(rv))skills.push({label:"Results",score:rv,percentile:!Number.isFinite(rf)});
    for(const [id,label] of [["striking","Striking"],["wrestling","Wrestling"],["grappling","Grappling"]]){
     const fine=v2.skills?.[id]?.score,v=Number.isFinite(fine)?fine:v2.skills?.[id]?.roster;
     if(Number.isFinite(v))skills.push({label,score:v,percentile:!Number.isFinite(fine)});

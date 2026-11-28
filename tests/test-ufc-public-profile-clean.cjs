@@ -12,10 +12,10 @@ const boards=section("function renderV3Boards(){","function applyV3(f){");
 const snapshot=insights.slice(insights.indexOf("function renderSnapshot(article){"),insights.indexOf("let timer=null;"));
 const tracked=insights.slice(insights.indexOf("function trackedMetricHTML(f){"),insights.indexOf("function classificationHTML(f){"));
 // Profile design A (owner, 2026-11-25): openFighter hands the dialog to assets/fighter-profile-a.js, whose Overview
-// lists the recent fights (it replaced the "Five most recent results" table).
+// shows the latest fight (owner, 28 Nov 2026), with the rest on the Fights tab.
 const profileA=fs.readFileSync("assets/fighter-profile-a.js","utf8");
 assert(modal.includes("PA.render(dialog,f,"),"openFighter renders the design A profile");
-assert(profileA.includes("<h3>Recent fights</h3>"),"Keep fight outcomes");
+assert(profileA.includes("<h3>Latest fight"),"Keep fight outcomes");
 assert(profile.includes("Fighter ratings"),"Keep fighter skill ratings");
 assert(profile.includes("trackedMetricHTML(f)"),"Keep UFC statistics");
 for(const [name,markup] of [["modal",modal],["ratings",profile],["V3 ratings",v3Profile],["fight snapshot",snapshot],["postfight stats",tracked],["profile A",profileA]]){

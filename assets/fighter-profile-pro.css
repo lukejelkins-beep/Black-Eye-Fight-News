@@ -289,6 +289,28 @@
 .bsp-pace strong{display:block;font:900 34px/1 'Barlow Condensed',Impact,sans-serif;color:var(--pro-ink)}
 .bsp-pace small{font-size:12px;color:var(--pro-muted)}
 
+/* Stats + Compare in one table (owner, 28 Nov 2026): the fighter beside the division average. */
+.bsp-table{background:#fff;border:1px solid var(--pro-border);border-radius:12px;padding:6px 14px 12px}
+.bsp-table-head,.bsp-row{display:grid;grid-template-columns:minmax(0,1fr) 64px 84px;gap:4px 10px;align-items:center}
+.bsp-table.is-solo .bsp-table-head,.bsp-table.is-solo .bsp-row{grid-template-columns:minmax(0,1fr) 64px}
+.bsp-table-head{padding:8px 0 4px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--pro-muted)}
+.bsp-table-head span+span{text-align:right}
+.bsp-group{margin:12px 0 0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--pro-red)}
+.bsp-row{padding:8px 0 6px;border-top:1px solid #f0ebe2}
+.bsp-group+.bsp-row{border-top:0}
+.bsp-row-label{font-size:14px;color:var(--pro-text)}
+.bsp-row-label small{display:block;font-size:12px;color:var(--pro-muted)}
+.bsp-row-own{text-align:right;font-size:16px;font-weight:800;color:var(--pro-ink)}
+.bsp-row-avg{text-align:right;font-size:14px;color:var(--pro-muted)}
+.bsp-row-bar{grid-column:1/-1;position:relative;height:6px;border-radius:3px;background:#eee8de}
+.bsp-row-bar>span{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#a99c95}
+.bsp-row-bar>span.is-better{background:#1f8a4c}.bsp-row-bar>span.is-worse{background:#c34f55}
+.bsp-row-bar>i{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--pro-ink)}
+.bsp-table+.bsp-note{display:block;margin:8px 0 0;font-size:12px;color:var(--pro-muted)}
+.bsp-more{margin-top:12px;background:#fff;border:1px solid var(--pro-border);border-radius:12px;padding:0 14px}
+.bsp-more>summary{min-height:44px;display:flex;align-items:center;font-weight:800;cursor:pointer}
+.bsp-more .bsp-split-grid{margin:0 0 14px}
+
 /* Compare with division average. */
 .bsp-compare{display:grid;gap:10px}
 .bsp-compare-key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;font-weight:800}

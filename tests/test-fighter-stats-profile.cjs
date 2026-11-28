@@ -39,10 +39,20 @@ assert.match(detail,/class="is-won">10–9/);assert.match(detail,/class="is-lost
 assert.match(sp.fightDetail(stats,{boutId:"8"}),/not recorded/,"a fight without rounds says so");
 assert.equal(sp.fightDetail(stats,{boutId:"404"}),"","unknown fights render nothing");
 
-const panel=sp.statsPanel(stats);
-assert.equal((panel.match(/<div><strong>/g)||[]).length,9,"stats keep exactly nine tiles");
+// Stats + Compare in one table (owner, 28 Nov 2026): each number beside the division average (last 36 months).
+const solo=sp.statsPanel(stats);
+assert.match(solo,/bsp-table is-solo/,"no division file: the fighter's numbers alone");
+assert.doesNotMatch(solo,/average/);
+const panel=sp.statsPanel(stats,null,divisions);
 assert.match(panel,/aria-pressed="true">Last 5/);
+assert.match(panel,/2–1 · 1 KO\/TKO · 0 sub/,"window record in the table head");
+assert.match(panel,/<span>Test<\/span><span>Welterweight<\/span>/,"columns: fighter, division");
+assert.match(panel,/Sig\. strikes landed \/ min[^]*?4\.20<\/b><span class="bsp-row-avg">3\.90/,"last-5 number beside the 36-month average");
+assert.match(panel,/is-better/);
+assert.match(panel,/Welterweight average: 24 fighters with 3\+ UFC fights in the last 36 months/);
 assert.match(panel,/Where strikes land/);assert.match(panel,/90%/);
+assert.match(panel,/Strike defence[^]*?—<\/b><span class="bsp-row-avg">55%/,"a missing number stays —");
+assert.doesNotMatch(panel,/Submission attempts/,"a row with neither number is left out");
 
 const cmp=sp.compare(stats,divisions);
 assert.match(cmp,/Welterweight average/);

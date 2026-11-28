@@ -123,9 +123,29 @@
 #fighterDialog.befn-pa-dialog .befn-pa-skills .befn-pa-meter>i>s{display:block;height:100%;border-radius:4px;background:var(--pa-green);text-decoration:none}
 #fighterDialog.befn-pa-dialog .befn-pa-note{margin:8px 0 0;font-size:13px;color:var(--pa-muted)}
 #fighterDialog.befn-pa-dialog .befn-pa-link{min-height:44px;padding:0 2px;border:0;background:none;color:#1d4fd8;font:inherit;text-decoration:underline;cursor:pointer}
+/* "All fights ›" / "All news ›" (owner, 28 Nov 2026: one latest fight on the Overview). */
+#fighterDialog.befn-pa-dialog .befn-pa-recent h3{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#fighterDialog.befn-pa-dialog .befn-pa-more{min-height:44px;padding:0 2px;border:0;background:none;color:#b3121c;font:800 14px 'DM Sans',sans-serif;cursor:pointer}
+#fighterDialog.befn-pa-dialog .befn-pa-news1>.befn-pa-more{display:block;margin-left:auto}
+#fighterDialog.befn-pa-dialog .befn-pa-news1 .rn-head span{display:none}
+/* Stats tab: what drives each rating, one row per skill. Readable line length on desktop. */
+#fighterDialog.befn-pa-dialog [data-pa-deep="stats"]>.befn-pro-stats,#fighterDialog.befn-pa-dialog [data-pa-deep="stats"]>.befn-pa-drivers{max-width:760px}
+#fighterDialog.befn-pa-dialog .befn-pa-drivers h3{margin:0 0 10px;font:800 18px/1.3 'Unbounded','DM Sans',sans-serif;color:var(--pa-text);text-transform:none;letter-spacing:0}
+#fighterDialog.befn-pa-dialog .befn-pa-driver,#fighterDialog.befn-pa-dialog .befn-pa-how{margin:0 0 8px;padding:0 14px;background:var(--pa-card);border:1px solid var(--pa-line);border-radius:12px}
+#fighterDialog.befn-pa-dialog .befn-pa-driver>summary,#fighterDialog.befn-pa-dialog .befn-pa-how>summary{min-height:48px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 12px;padding:6px 0;cursor:pointer;font-weight:800;list-style:none}
+#fighterDialog.befn-pa-dialog .befn-pa-driver>summary::-webkit-details-marker,#fighterDialog.befn-pa-dialog .befn-pa-how>summary::-webkit-details-marker{display:none}
+#fighterDialog.befn-pa-dialog .befn-pa-driver>summary small{grid-column:1;grid-row:2;font-weight:500;font-size:12px;color:var(--pa-muted)}
+#fighterDialog.befn-pa-dialog .befn-pa-driver>summary b{grid-column:2;grid-row:1/span 2}
+#fighterDialog.befn-pa-dialog .befn-pa-driver>summary b::after,#fighterDialog.befn-pa-dialog .befn-pa-how>summary::after{content:' ▸';color:var(--pa-muted)}
+#fighterDialog.befn-pa-dialog .befn-pa-driver[open]>summary b::after,#fighterDialog.befn-pa-dialog .befn-pa-how[open]>summary::after{content:' ▾'}
+#fighterDialog.befn-pa-dialog .befn-pa-driver ul{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:8px}
+#fighterDialog.befn-pa-dialog .befn-pa-driver li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;font-size:13px}
+#fighterDialog.befn-pa-dialog .befn-pa-driver li small{grid-column:1/-1;font-size:12px;color:var(--pa-muted)}
+#fighterDialog.befn-pa-dialog .befn-pa-how>summary{display:flex;justify-content:space-between;color:#1d4fd8}
+#fighterDialog.befn-pa-dialog .befn-pa-how p{margin:0 0 12px;font-size:13px;color:var(--pa-muted)}
 #fighterDialog.befn-pa-dialog .befn-pa-news1 .rn-block,#fighterDialog.befn-pa-dialog [data-pa-panel="news"] .rn-block{margin:0}
 
-/* The deeper UFC sections (fighter-insights.js) inside the Fights, Stats and Compare tabs. */
+/* The deeper UFC sections (fighter-insights.js) inside the Fights and Stats tabs. */
 #fighterDialog.befn-pa-dialog .befn-pa-deep{display:flex;flex-direction:column;gap:28px;min-width:0}
 #fighterDialog.befn-pa-dialog .befn-pa-deep:empty,#fighterDialog.befn-pa-dialog .befn-pa-amateur:empty{display:none}
 #fighterDialog.befn-pa-dialog .befn-pa-deep>*{margin:0}

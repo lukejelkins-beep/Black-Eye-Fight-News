@@ -1,12 +1,13 @@
 /* BEFN fighter profile, design A "One profile" (owner, 2026-11-25).
  * One layout for UFC, boxing and other MMA (PFL, ONE, KSW, RIZIN, Cage Warriors):
  *   top bar (Back, sport and division, close) · hero (picture, name, record, rank pills, next fight) and, on the right,
- *   the BEFN rating or recent form with the last five · tabs Overview / Fights / Stats / Compare / News (only those
+ *   the BEFN rating or recent form with the last five · tabs Overview / Fights / Stats / News (only those
  *   with content) · a closed "About this profile" at the foot for provenance and verification notes (DIRECTION rule 6).
  * Fail closed: every field comes from data BEFN holds (the roster, the UFC stats build, data/results.json,
  * data/upcoming-cards.json, the title tracker); a missing field is left out, never shown as a placeholder.
  * The UFC depth (ratings, round by round, compare, amateur career) is still drawn by assets/fighter-insights.js; this
- * file moves those sections into the Fights, Stats and Compare tabs each time that file re-renders them.
+ * file moves those sections into the Fights and Stats tabs each time that file re-renders them.
+ * Owner, 28 Nov 2026 ("cut the noise"): the Overview shows only the latest fight, Compare is merged into Stats.
  * Other-MMA and boxers without a roster profile open as #fighter/mma--<slug> and #fighter/boxing--<slug>: a basic
  * profile from results and upcoming cards only. */
 (function(root){
@@ -248,7 +249,8 @@
  }
  function nextHTML(m){
   const n=m.next;
-  if(!n)return '<p class="befn-pa-next">Next fight: <b>not announced</b></p>';
+  // Nothing booked: no line (owner, 28 Nov 2026: cut the noise).
+  if(!n)return "";
   return '<p class="befn-pa-next">Next fight: <b>vs '+esc(n.opponent)+' · '+esc(dateText(n.date))+'</b>'+
    (n.event&&!(slugOf(n.event).includes(slugOf(n.opponent).split("-").pop()))?'<span> · '+esc(n.event)+'</span>':'')+(n.reported?'<span> · reported</span>':'')+'</p>';
  }
@@ -262,28 +264,30 @@
   return '<section class="befn-pa-sec befn-pa-skills"><h3>'+(pct?'Skills':'BEFN ratings')+'</h3>'+
    m.skills.map(s=>'<div class="befn-pa-meter"><div><span>'+esc(s.label)+'</span><b>'+(pct&&s.percentile===false?esc(Number(s.score).toFixed(2)):pct?esc(ordinal(s.score))+' pct':esc(s.score)+' / 100')+'</b></div>'+
     '<i role="meter" aria-label="'+esc(s.label)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+esc(s.score)+'"><s style="width:'+Math.max(2,Math.min(100,+s.score))+'%"></s></i></div>').join("")+
-   (pct?'<p class="befn-pa-note"><button type="button" class="befn-pa-link" data-pa-tab="stats">How the rating works</button></p>':
+   (pct?'<p class="befn-pa-note"><button type="button" class="befn-pa-link" data-pa-tab="stats" data-pa-open-how>How the rating works</button></p>':
     '<p class="befn-pa-note">BEFN’s estimate from the record and results on file.</p>')+'</section>';
  }
  function ordinal(n){n=+n;const t=n%100,o=n%10;return n+(t>=11&&t<=13?"th":o===1?"st":o===2?"nd":o===3?"rd":"th");}
  function overviewHTML(m,h){
-  const fights=m.recent.length?'<section class="befn-pa-sec befn-pa-recent"><h3>Recent fights</h3><ul class="befn-pa-fights">'+m.recent.map(r=>fightRow(r,h)).join("")+'</ul></section>':"";
+  // One latest fight; the rest are a tap away on the Fights tab (owner, 28 Nov 2026: no double-up).
+  const more=fightsPanelHTML(m,h)?'<button type="button" class="befn-pa-more" data-pa-tab="fights">All fights ›</button>':"";
+  const fights=m.recent.length?'<section class="befn-pa-sec befn-pa-recent"><h3>Latest fight'+more+'</h3><ul class="befn-pa-fights">'+fightRow(m.recent[0],h)+'</ul></section>':"";
   const skills=skillsHTML(m);
   return keysHTML(m)+(fights||skills?'<div class="befn-pa-two'+(fights&&skills?'':' is-one')+'">'+fights+skills+'</div>':"")+
-   (h.newsOne?'<div class="befn-pa-news1">'+h.newsOne+'</div>':"");
+   (h.newsOne?'<div class="befn-pa-news1">'+h.newsOne+(h.news&&h.news!==h.newsOne?'<button type="button" class="befn-pa-more" data-pa-tab="news">All news ›</button>':"")+'</div>':"");
  }
  function fightsPanelHTML(m,h){
   if(m.ufc)return (h.reign||"")+'<div class="befn-pa-deep" data-pa-deep="fights"></div>';
-  // A non-UFC Fights tab only when it holds more than the five on the Overview.
-  if(m.fights.length<=m.recent.length)return "";
+  // A non-UFC Fights tab only when it holds more than the one fight on the Overview.
+  if(m.fights.length<=1)return "";
   return '<section class="befn-pa-sec"><h3>'+(m.basic?'Fights BEFN holds':'Recent results')+'</h3><ul class="befn-pa-fights is-full">'+m.fights.map(r=>fightRow(r,h,true)).join("")+'</ul></section>';
  }
- const TABS=[["overview","Overview"],["fights","Fights"],["stats","Stats"],["compare","Compare"],["news","News"]];
+ const TABS=[["overview","Overview"],["fights","Fights"],["stats","Stats"],["news","News"]];
  // The whole dialog body. h: {portrait, src, news, newsOne, belts, reign}.
  function shellHTML(f,m,h){
   const panels={overview:overviewHTML(m,h),fights:fightsPanelHTML(m,h),
    stats:(m.ufc||!m.basic?'<div class="befn-pa-deep" data-pa-deep="stats"></div><div class="befn-pa-amateur" data-befn-amateur-slot></div>':""),
-   compare:m.ufc?'<div class="befn-pa-deep" data-pa-deep="compare"></div>':"",news:h.news||""};
+   news:h.news||""};
   return '<div class="befn-pro befn-pa" data-pa-kind="'+esc(m.kind)+'" data-pa-id="'+esc(f.id)+'">'+
    '<div class="befn-pro-bar befn-pa-bar"><button type="button" class="befn-pro-back befn-pa-back" data-close-fighter>← Back</button>'+
    '<span class="befn-pro-crumb befn-pa-crumb">'+esc(m.crumb)+'</span>'+
@@ -436,7 +440,7 @@
   tabsVisible(pa);
   select(pa,dialog.dataset.paTab||"overview",false);
  }
- const DEEP={overview:"fights",fights:"fights",bonuses:"fights",ratings:"stats",stats:"stats",profile:"stats",titles:"stats",compare:"compare"};
+ const DEEP={overview:"fights",fights:"fights",bonuses:"fights",ratings:"stats",stats:"stats",profile:"stats",titles:"stats",compare:"stats"};
  function distribute(pa,m){
   const ins=pa.querySelector(".befn-pa-src .befn-profile-insights");
   if(!ins||!ins.children.length)return;
@@ -451,9 +455,13 @@
    if(k==="profile")continue;
    let node=sec;
    if(k==="overview"){node=sec.querySelector(".bsp-latest");if(!node)continue;}
+   if(m.ufc&&k==="ratings")node=driversOnly(sec);
    const slot=pa.querySelector('[data-pa-deep="'+DEEP[k]+'"]');
    if(slot&&node)slot.appendChild(node);
   }
+  // Stats tab: the numbers first, then what drives each rating.
+  const st=pa.querySelector('[data-pa-deep="stats"]'),dr=st&&st.querySelector(':scope>[data-pro-section="ratings"]');
+  if(dr)st.appendChild(dr);
   mergeLatest(pa);
   // The career line inside the full UFC history ("verified to …") is staff text: it moves to About.
   for(const sum of pa.querySelectorAll(".befn-pa-body .bsp-history>summary")){
@@ -466,6 +474,24 @@
   }
   ins.replaceChildren();
   pa._paDeepAbout=about;
+ }
+ // UFC ratings on the Stats tab (owner, 28 Nov 2026): the bars are on the Overview already, so here each skill opens to
+ // what drives it, and the method note sits behind "How the rating works". Results and Form have no drivers.
+ function driversOnly(sec){
+  const doc=sec.ownerDocument,out=doc.createElement("section");
+  out.className="befn-pro-card befn-pa-drivers";out.dataset.proSection="ratings";
+  let html="";
+  for(const meter of sec.querySelectorAll(".befn-pro-meter")){
+   const d=meter.querySelector(".befn-pro-drivers ul");if(!d)continue;
+   const label=meter.querySelector(".befn-pro-meter-head span"),val=meter.querySelector(".befn-pro-meter-head b"),hint=meter.querySelector(".befn-pro-meter-hint");
+   html+='<details class="befn-pa-driver"><summary><span>'+esc(label&&label.textContent)+'</span>'+(hint?'<small>'+esc(hint.textContent)+'</small>':'')+
+    '<b>'+esc(val&&val.textContent)+'</b></summary><ul>'+d.innerHTML+'</ul></details>';
+  }
+  const note=sec.querySelector(".befn-pro-note");
+  if(!html&&!note)return null;
+  out.innerHTML=(html?'<header><h3>What drives each rating</h3></header>'+html:'')+
+   (note?'<details class="befn-pa-how" data-pa-how><summary>How the rating works</summary><p>'+esc(note.textContent)+'</p></details>':'');
+  return out;
  }
  // "Latest bout" (owner, 25 Nov 2026: it took a lot of space on desktop and repeated the first fight): its numbers
  // (sig. strikes, takedowns, control) go inside the first Recent fights row when that row is the same bout, and the
@@ -531,6 +557,9 @@
    const tabs=pa.querySelector(".befn-pa-tabs"),dialog=pa.closest("dialog");
    // Bring the tab bar to the top of the dialog when the reader was further down.
    if(tabs&&dialog&&tabs.getBoundingClientRect().top<dialog.getBoundingClientRect().top)tabs.scrollIntoView({block:"start"});
+   // "How the rating works" on the Overview opens the note on the Stats tab.
+   const how=b.hasAttribute("data-pa-open-how")&&pa.querySelector("[data-pa-how]");
+   if(how){how.open=true;how.scrollIntoView({block:"nearest"});}
   });
   root.document.addEventListener("keydown",e=>{
    const tab=e.target.closest&&e.target.closest('#fighterDialog .befn-pa-tabs [role="tab"]');

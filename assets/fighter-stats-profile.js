@@ -159,7 +159,7 @@
    }).join("")+'</ul></details>';
  }
 
- // ---- Stats with a window switcher (keeps the nine tiles) ----
+ // ---- Stats with a window switcher ----
  // R3 period views (release tracker #171), OFF by default (periodViews in data/ufc-v4-flags.json). Only for a fighter
  // whose full UFC career is independently verified and matches the certificate (the R2 rule): the switcher is then
  // Last 5 / Last 10 / Career, a "Last N" view only when the fighter has N official fights (never a shorter window under
@@ -176,11 +176,14 @@
   const n=(stats.fights||[]).length;
   return PERIOD_VIEWS.filter(([k])=>k==="career"||n>=(k==="last10"?10:5));
  }
- function statsPanel(stats,period){
+ // divisions: data/ufc-stats/divisions.json (optional). With it, each number sits beside the division average.
+ function statsPanel(stats,period,divisions){
   cache.set(stats.slug,stats);
   periods.set(stats.slug,period||{on:false});
+  if(divisions)divs.set(stats.slug,divisions);
   return '<div class="bsp-stats" data-bsp-stats="'+esc(stats.slug)+'">'+statsInner(stats)+'</div>';
  }
+ const divs=new Map();       // slug -> divisions file
  // Head, body and legs, like distance, clinch and ground, must add up to the
  // strikes landed. Some archived rounds do not, so their shares would be false.
  function breakdownsSound(stats){
@@ -190,38 +193,52 @@
    return !v.every(Number.isInteger)||v[0]+v[1]+v[2]===side[i.sigLanded];
   }))));
  }
+ // Stats + Compare in one table (owner, 28 Nov 2026: "Merge Stats + Compare"). The fighter's number for the chosen
+ // window beside the division average, which is always the last 36 months (the only window divisions.json holds) and
+ // says so. Missing numbers stay "—"; a row with neither number is left out.
+ const TABLE=[["Striking",[["slpm","Sig. strikes landed / min","rate"],["sapm","Sig. strikes absorbed / min","rate",true],
+   ["strAcc","Strike accuracy","pct"],["strDef","Strike defence","pct"],["kd15","Knockdowns / 15 min","rate"]]],
+  ["Grappling",[["td15","Takedowns / 15 min","rate"],["tdAcc","Takedown accuracy","pct"],["tdDef","Takedown defence","pct"],
+   ["ctrlShare","Control time","pct",false,"Share of fight time"],["sub15","Submission attempts / 15 min","rate"]]]];
+ function divisionOf(stats){
+  const d=divs.get(stats.slug),div=d?.divisions?.[stats.divisionSlug],fields=d?.rateFields||[];
+  if(!div||!Array.isArray(div.rates))return null;
+  return {label:div.label,fighters:div.fighters,avg:k=>{const i=fields.indexOf(k);return i<0?null:div.rates[i];}};
+ }
  function statsInner(stats){
   const period=periods.get(stats.slug),list=views(stats,period);
   const chosen=selected.get(stats.slug);
   const key=list.some(([k])=>k===chosen)?chosen:list[0][0];
   const w=stats.windows?.[key]||{};const r=w.rates||{};
-  const sample=w.statFights?(period?.on&&w.fights>w.statFights?w.statFights+" of "+w.fights+" fights measured":
-   w.statFights+" fight"+(w.statFights===1?"":"s")+" with stats"):"No fights in this window";
-  const tiles=[
-   [record(w),"Record",w.fights?w.fights+" fights":""],
-   [w.fights?String(w.winsBy?.ko??0):"—","KO/TKO wins",""],
-   [w.fights?String(w.winsBy?.sub??0):"—","Submission wins",""],
-   [num(r.slpm),"Sig. strikes/min",sample],
-   [pct(r.strAcc),"Strike accuracy",sample],
-   [num(r.kd15),"Knockdowns/15 min",sample],
-   [num(r.td15),"Takedowns/15 min",sample],
-   [pct(r.tdDef),"TD defence",Number.isFinite(r.tdDef)?sample:"Too few attempts against"],
-   [pct(r.ctrlShare),"Control time",Number.isFinite(r.ctrlShare)?"Share of fight time":sample]
-  ];
+  const div=divisionOf(stats);
+  const first=(stats.name||"").split(/\s+/)[0]||"Fighter";
+  const summary=w.fights?[record(w),(w.winsBy?.ko??0)+" KO/TKO",(w.winsBy?.sub??0)+" sub",
+   w.statFights?(w.fights>w.statFights?w.statFights+" of "+w.fights+" with stats":""):"no stats"].filter(Boolean).join(" · "):"No fights in this window";
+  const row=([k,name,unit,lower,sub])=>{
+   const v=r[k],a=div?div.avg(k):null,show=unit==="pct"?pct:num;
+   if(!Number.isFinite(v)&&!Number.isFinite(a))return "";
+   const has=Number.isFinite(v),cmp=has&&Number.isFinite(a);
+   const better=cmp&&(lower?v<=a:v>=a),max=Math.max(has?v:0,Number.isFinite(a)?a:0)*1.25||1;
+   return '<div class="bsp-row"><span class="bsp-row-label">'+esc(name)+(lower?'<small>Lower is better</small>':sub?'<small>'+esc(sub)+'</small>':'')+'</span>'+
+    '<b class="bsp-row-own">'+show(v)+'</b>'+(div?'<span class="bsp-row-avg">'+show(a)+'</span>':'')+
+    '<span class="bsp-row-bar" aria-hidden="true"><span class="'+(cmp?(better?'is-better':'is-worse'):'')+'" style="width:'+Math.round(100*(has?v:0)/max)+'%"></span>'+
+    (Number.isFinite(a)?'<i style="left:'+Math.round(100*a/max)+'%"></i>':'')+'</span></div>';
+  };
+  const groups=TABLE.map(([g,rows])=>{const body=rows.map(row).join("");return body?'<div class="bsp-group">'+esc(g)+'</div>'+body:"";}).join("");
   const bars=(title,obj,labels)=>obj?'<div class="bsp-split"><span class="bsp-tag">'+esc(title)+'</span>'+
    labels.map(([k,l])=>'<div class="bsp-split-row"><span>'+esc(l)+'</span><span class="bsp-bar is-own"><span style="width:'+
     Math.round((obj[k]||0)*100)+'%"></span></span><b>'+pct(obj[k])+'</b></div>').join("")+'</div>':"";
   const pace=Number.isFinite(r.paceRetention)?'<div class="bsp-pace"><span class="bsp-tag">Pace</span><strong>'+
    Math.round(r.paceRetention*100)+'%</strong><small>Output after round 1, compared with round 1'+
    (r.paceRetention>=1?' (keeps or raises the pace)':' (slows after round 1)')+'</small></div>':"";
+  const split=bars("Where strikes land",r.target,[["head","Head"],["body","Body"],["leg","Legs"]])+
+   bars("Where strikes are thrown",r.position,[["distance","Distance"],["clinch","Clinch"],["ground","Ground"]])+pace;
   return '<div class="bsp-windows" role="group" aria-label="Time window">'+list.map(([k,l])=>
    '<button type="button" data-bsp-window="'+k+'" aria-pressed="'+(k===key)+'">'+esc(l)+'</button>').join("")+'</div>'+
-   '<div class="befn-pro-tiles">'+tiles.map(([v,l,s])=>'<div><strong>'+esc(v)+'</strong><span>'+esc(l)+'</span>'+
-    (s?'<small>'+esc(s)+'</small>':'')+'</div>').join("")+'</div>'+
-   '<div class="bsp-split-grid">'+
-   bars("Where strikes land",r.target,[["head","Head"],["body","Body"],["leg","Legs"]])+
-   bars("Where strikes are thrown",r.position,[["distance","Distance"],["clinch","Clinch"],["ground","Ground"]])+
-   pace+'</div>';
+   '<div class="bsp-table'+(div?'':' is-solo')+'"><div class="bsp-table-head"><span>'+esc(summary)+'</span><span>'+esc(first)+'</span>'+
+   (div?'<span>'+esc(div.label)+'</span>':'')+'</div>'+groups+'</div>'+
+   (div?'<p class="bsp-note">'+esc(div.label)+' average: '+esc(div.fighters)+' fighters with 3+ UFC fights in the last 36 months. Green: better than average.</p>':'')+
+   (split?'<details class="bsp-more"><summary>Where strikes land and pace</summary><div class="bsp-split-grid">'+split+'</div></details>':'');
  }
  if(typeof document!=="undefined")document.addEventListener("click",e=>{
   const btn=e.target.closest?.("[data-bsp-window]");

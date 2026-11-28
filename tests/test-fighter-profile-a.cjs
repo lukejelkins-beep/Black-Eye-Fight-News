@@ -73,7 +73,11 @@ test("other MMA: a basic profile from results and cards, with only sourced field
  assert.equal(m.rating,null);assert.deepEqual(m.skills,[]);
  const html=PA.shellHTML(f,m,h);
  assert.match(html,/<h2 data-profile-name>Vadim Nemkov<\/h2>/);
- assert.match(html,/Next fight: <b>not announced<\/b>/);
+ // Nothing booked: no "Next fight" line at all (owner, 28 Nov 2026: cut the noise).
+ assert.doesNotMatch(html,/Next fight/);
+ // The Overview shows one latest fight; a single fight needs no Fights tab or "All fights" link.
+ assert.match(html,/<h3>Latest fight<\/h3>/);assert.equal((html.match(/class="befn-pa-fight"/g)||[]).length,1);
+ assert.doesNotMatch(html,/All fights/);
  assert.match(html,/About this profile/);assert.match(html,/from schedule\.fightmag\.com/);
  assert.doesNotMatch(html,PLACEHOLDERS);
  // Staff text sits only inside the closed About details, after the body.
