@@ -1123,7 +1123,8 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         if r and r.get("eligible"):
             rated.append([position[slug], r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
                           r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"],
-                          r.get("overallRank"), r.get("pool")])
+                          r.get("overallRank"), r.get("pool"),
+                          *[r["skills"][k].get("score") for k in ufc_ratings.SKILLS], (r.get("results") or {}).get("score")])
     labels = {}
     for c in computed.values():
         if c["divisionSlug"] and c["division"]:
@@ -1138,7 +1139,9 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         "fighters": fighters,
         "rowFields": ["fighter", "statFights", *[b[0] for b in BOARD_STATS]],
         "rows": windows,
-        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank", "pool"],
+        # The *Score columns are the same percentiles to 2 decimal places, for display (appended so older readers still work).
+        "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank", "pool",
+                         *[k + "Score" for k in ufc_ratings.SKILLS], "resultsScore"],
         "ratings": rated,
     }
 

@@ -5,7 +5,12 @@
   const window=typeof globalThis.window!=='undefined'?globalThis.window:globalThis;
   const stop=new Set('a an the to and or of in on at for from after before with as by is are was were will be has have had new latest report reports says said reveals breaking exclusive video'.split(' '));
   const updates=new Set('confirmed announced rumored rumoured injured withdraws withdrawn cancelled postponed wins won loses lost knockout stopped weigh weighin signed signs suspended returns retired'.split(' '));
-  function url(value){
+  // Pairwise matching runs on every story pair, so each per-string result is worked out once and kept (28 Nov 2026:
+  // re-parsing URLs and headlines per pair cost about 2.4 s on the front page). Same results; the caches are cleared
+  // when they grow large.
+  const memo=fn=>{const m=new Map();return v=>{const k=String(v??'');let r=m.get(k);if(r===undefined){if(m.size>20000)m.clear();r=fn(v);m.set(k,r);}return r;};};
+  const url=memo(urlRaw);
+  function urlRaw(value){
     try{
       const u=new URL(value);
       u.hash='';u.hostname=u.hostname.toLowerCase().replace(/^www\./,'');
@@ -15,7 +20,8 @@
       return u.protocol+'//'+u.host+u.pathname+u.search;
     }catch{return String(value||'');}
   }
-  function terms(s){return (String(s||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>!stop.has(w));}
+  const terms=memo(termsRaw);
+  function termsRaw(s){return (String(s||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>!stop.has(w));}
 
   // Publisher-to-publisher same-event matching. Require identical incident
   // type plus shared distinctive subjects; do not dedupe just by fighter name.
@@ -30,7 +36,8 @@
    ['injury',/\b(?:injured|injury|hospitalized|hospitalised)\b/i],
    ['suspension',/\b(?:suspended|suspension)\b/i]
   ];
-  function eventKind(title){return eventRules.find(([,re])=>re.test(title||''))?.[0]||'';}
+  const eventKind=memo(eventKindRaw);
+  function eventKindRaw(title){return eventRules.find(([,re])=>re.test(title||''))?.[0]||'';}
   function sameEvent(a,b){
    const kind=eventKind(a.title);
    if(!kind||kind!==eventKind(b.title))return false;
@@ -44,8 +51,10 @@
   // Catch syndicated rewrites without collapsing every article about the same card.
   // Compare distinctive headline terms (not promotion, card number or common fight words).
   const boilerplate=new Set('ufc mma boxing pfl one rizin raf fight fights fighter fighters bout card title champion championship world heavyweight lightweight bantamweight featherweight middleweight welterweight event match vs versus at the news video live stream report reports official preview previews prediction predictions interview reaction recap highlights countdown conference press media day updates update coach conversation polymarket'.split(' '));
-  function distinctive(title){return new Set(terms(title).filter(w=>!boilerplate.has(w)&&!/^\d+$/.test(w)));}
-  function stage(title){
+  const distinctive=memo(distinctiveRaw);
+  function distinctiveRaw(title){return new Set(terms(title).filter(w=>!boilerplate.has(w)&&!/^\d+$/.test(w)));}
+  const stage=memo(stageRaw);
+  function stageRaw(title){
     const t=String(title||'').toLowerCase();
     if(/\b(?:turns? down|declines?|rejects?)\b/.test(t))return 'declined';
     if(/\b(?:offered?|offer)\b/.test(t))return 'offered';
@@ -78,11 +87,28 @@
     return !!card(a.title)&&card(a.title)===card(b.title)&&!!kind(a.title)&&kind(a.title)===kind(b.title)&&
       /\b(?:video|stream|watch|live)\b/i.test(a.title)&&/\b(?:video|stream|watch|live)\b/i.test(b.title);
   }
+  // Per story, worked out once (keyed by the story object): its normalised URL, time, headline terms as a list, a
+  // joined string and a set. same() used to rebuild these for every pair.
+  const prepared=new WeakMap();
+  function prep(a){
+    let p=prepared.get(a);
+    if(!p){const t=terms(a.title);p={u:url(a.url),at:when(a.publishedAt),t,j:t.join(' '),set:new Set(t)};prepared.set(a,p);}
+    return p;
+  }
+  // The page runs this over overlapping story lists (leads, the pool, the feed), so each pair's answer is kept.
+  const pairs=new WeakMap();
   function same(a,b){
-    if(url(a.url)===url(b.url))return true;
-    if(a.sport!==b.sport||Math.abs(Date.parse(a.publishedAt)-Date.parse(b.publishedAt))>72*3600e3)return false;
-    const x=terms(a.title),y=terms(b.title),sx=new Set(x),sy=new Set(y);
-    if(x.join(' ')==y.join(' '))return true;
+    let m=pairs.get(a);if(!m){m=new WeakMap();pairs.set(a,m);}
+    let r=m.get(b);
+    if(r===undefined){r=sameRaw(a,b);m.set(b,r);}
+    return r;
+  }
+  function sameRaw(a,b){
+    const pa=prep(a),pb=prep(b);
+    if(pa.u===pb.u)return true;
+    if(a.sport!==b.sport||Math.abs(pa.at-pb.at)>72*3600e3)return false;
+    const sx=pa.set,sy=pb.set;
+    if(pa.j==pb.j)return true;
     if(sameEvent(a,b)||sameRewordedHeadline(a,b)||matchingBooking(a,b)||matchingEventMedia(a,b))return true;
     if(Math.min(sx.size,sy.size)<6)return false;
     const stages=s=>[...s].filter(w=>updates.has(w)).sort().join(',');
@@ -90,6 +116,7 @@
     const both=[...sx].filter(w=>sy.has(w)).length;
     return both/new Set([...sx,...sy]).size>=.88&&both/Math.min(sx.size,sy.size)>=.90;
   }
+  const when=memo(v=>Date.parse(v));
   function quality(a){
     return (a.image?.url?10:0)+(Array.isArray(a.summaryPoints)?Math.min(3,a.summaryPoints.length):0)+(a.sourceMethod?0:2);
   }

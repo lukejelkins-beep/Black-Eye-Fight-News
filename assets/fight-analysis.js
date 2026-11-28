@@ -266,6 +266,29 @@
       '<p class="fa-cs-hint">Swipe for the next ' + esc(word) + '</p></section>';
   }
 
+  /* Compact champion strip (owner, 28 Nov 2026: "Compact strip"): every champion on one row of small tiles, so the
+     leaderboards below start within two phone screens. A swipe rail on the phone, two rows on desktop. Tap a tile for the
+     profile; the division name opens that division in the Fighters hub. */
+  function champStripHTML(slides, o) {
+    if (!slides.length) return '';
+    const chip = x => '<b class="is-' + (x === 'W' ? 'w' : x === 'L' ? 'l' : 'd') + '">' + esc(x === 'NC' ? 'NC' : x) + '</b>';
+    const stat = (s, label) => (s.stats.find(x => x.label === label) || {}).value || '';
+    const hubDiv = d => String(d || '').toLowerCase().replace(/[\u2019']/g, '').replace(/^women?s\s+/, 'womens-').replace(/\s+/g, '-');
+    const tile = (s, i) => {
+      const f = s.figure, pic = f.kind === 'none' ? '<span class="fa-ch-ini" aria-hidden="true">' + esc(f.initials) + '</span>' :
+        '<img src="' + esc(f.url) + '" alt="" ' + (i < 4 ? '' : 'loading="lazy" ') + 'decoding="async" onerror="this.remove()">';
+      const days = stat(s, 'Days as champion'), def = stat(s, 'Title defences'), rec = stat(s, 'UFC record') || stat(s, 'Pro record');
+      const name = s.href ? '<a class="fa-ch-name" href="' + esc(s.href) + '">' + esc(s.name) + '</a>' : '<span class="fa-ch-name">' + esc(s.name) + '</span>';
+      return '<li class="fa-ch"><span class="fa-ch-pic is-' + esc(f.kind) + '">' + pic + '</span><span class="fa-ch-body">' +
+        '<a class="fa-ch-div" href="#fighters" data-hub-division="' + esc(hubDiv(s.division)) + '">' + esc(shortDiv(s.division)) + '</a>' + name +
+        '<span class="fa-ch-meta">' + esc([rec, days ? days + ' days' : '', def ? def + (def === '1' ? ' defence' : ' defences') : ''].filter(Boolean).join(' · ')) + '</span>' +
+        (s.form ? '<span class="fa-cs-l5" role="img" aria-label="' + esc('Last ' + s.form.length + ', newest first: ' + s.form.join(' ')) + '">' + s.form.map(chip).join('') + '</span>' : '') +
+        (s.next ? '<span class="fa-ch-next">Next: vs ' + esc(s.next.opponent) + ' · ' + esc(fmt(s.next.date)) + '</span>' : '') + '</span></li>';
+    };
+    return '<section class="sov-blk fa-champs-strip" data-portrait-ignore><div class="sov-hd fa-cs-hd"><h2>' + esc(o.title) + '</h2></div>' +
+      '<ul class="fa-ch-list">' + slides.map(tile).join('') + '</ul></section>';
+  }
+
   /* ---------- rendering ---------- */
   function helpers() {
     const img = n => root.BEFNLocalImages ? root.BEFNLocalImages.url(n, 'thumb') : '';
@@ -297,8 +320,16 @@
   }
   function endedHTML(H, e, sport) {
     if (!e.total) return '';
-    const bar = (n, label, cls) => '<div class="fa-bar"><span>' + label + '</span><i class="' + cls + '" style="width:' + (n / e.total * 100).toFixed(1) + '%"></i><b>' + n + '</b></div>';
     const inside = e.ko + e.sub;
+    if (sport === 'mma') {
+      /* MMA (owner, 28 Nov 2026: one short strip): one stacked bar and a legend instead of four bars. */
+      const parts = [[e.ko, 'KO/TKO', 'is-ko'], [e.sub, 'Submission', 'is-sub'], [e.dec, 'Decision', 'is-dec'], [e.other, 'Other', 'is-oth']].filter(x => x[0]);
+      return '<section class="sov-blk fa-ended-strip">' + head('How fights ended', e.total + ' MMA results, last two weeks · ' + Math.round(inside / e.total * 100) + '% inside the distance') +
+        '<div class="fa-stack" role="img" aria-label="' + esc(parts.map(x => x[1] + ' ' + x[0]).join(', ')) + '">' + parts.map(x => '<i class="' + x[2] + '" style="width:' + (x[0] / e.total * 100).toFixed(1) + '%"></i>').join('') + '</div>' +
+        '<ul class="fa-legend">' + parts.map(x => '<li><i class="' + x[2] + '"></i>' + x[1] + ' <b>' + x[0] + '</b></li>').join('') + '</ul>' +
+        (e.stoppages.length ? '<div class="fa-stops"><span class="sov-ev">Latest stoppages</span><div class="fa-stop-grid">' + e.stoppages.map(s => stopHTML(H, s)).join('') + '</div></div>' : '') + '</section>';
+    }
+    const bar = (n, label, cls) => '<div class="fa-bar"><span>' + label + '</span><i class="' + cls + '" style="width:' + (n / e.total * 100).toFixed(1) + '%"></i><b>' + n + '</b></div>';
     return '<section class="sov-blk">' + head('How fights ended', 'All ' + e.total + ' ' + (sport === 'mma' ? 'MMA' : 'boxing') + ' results BEFN holds from the last two weeks') +
       '<div class="fa-bars">' + bar(e.ko, 'KO / TKO', 'is-ko') + (sport === 'mma' ? bar(e.sub, 'Submission', 'is-sub') : '') + bar(e.dec, 'Decision', 'is-dec') + bar(e.other, 'Draw, no contest, other', 'is-oth') +
       '<p class="sov-sub fa-note">' + Math.round(inside / e.total * 100) + '% ended inside the distance.</p></div>' +
@@ -356,8 +387,7 @@
     const H = helpers(), D = ctx.data || {}, now = ctx.now;
     const slides = mmaSlides({ champions: D.champions && D.champions.mma, now, events: ctx.events, form: ctx.form, regs: regsOf(ctx, 'ufc'), portrait: portraitOf(ctx) });
     return '<div class="sov fa fa-mma"><a class="fp-teaser" href="#predictions"><span><b>Fight predictions</b><small>Who wins, whether it ends in a finish and how, for the announced UFC cards</small></span><span class="fp-teaser-go">Open</span></a>' +
-      '<a class="fp-teaser" href="analysis-ufc-gyms.html"><span><b>Do UFC gyms decide fights?</b><small>UFC fights in 2025 and 2026: gym records against what was expected</small></span><span class="fp-teaser-go">Read</span></a>' +
-      carouselHTML(slides, { title: 'UFC champions', sub: 'From BEFN’s title tracker. Heavyweight first, women’s divisions after the men’s.' }) +
+      '<a class="fp-teaser" href="analysis-ufc-gyms.html"><span><b>Do UFC gyms decide fights?</b><small>UFC fights in 2025 and 2026: gym records against what was expected</small></span><span class="fp-teaser-go">Read</span></a>' + champStripHTML(slides, { title: 'UFC champions' }) +
       '<div class="fa-two">' + endedHTML(H, withClips(ended(recent(ctx.results, 'MMA', now)), ctx, 'mma'), 'mma') + fightsHTML(H, titleFights(ctx.events, 'mma', now), 'UFC title fights coming up') + '</div></div>';
   }
 
@@ -447,7 +477,7 @@
   }
   if (typeof document !== 'undefined') document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-fa-play]'); if (t && t.closest('.fa')) { e.preventDefault(); play(t); } });
   const api = { technique, stoppageClips, titleGrid, titleFights, recent, ended, zerosEnded, defences, boxingPage, mmaTop, methodKind,
-    divisionRank, figureFor, nextTitleFight, mmaSlides, boxingSlides, carouselHTML };
+    divisionRank, figureFor, nextTitleFight, mmaSlides, boxingSlides, carouselHTML, champStripHTML };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.BEFNFightAnalysis = api;
   if (typeof document !== 'undefined') {

@@ -86,7 +86,8 @@ test("rows link to profiles internally and show sample and tags",()=>{
  const {api}=sandbox();api.set(data);
  const html=api.boardRowHTML({f:0,v:6.5,n:4,rank:1},"rate");
  assert.match(html,/<a href="#fighter\/ufc--verified-athlete">Verified Athlete<\/a>/);
- assert.match(html,/4 UFC fights with full stats · Welterweight/);
+ // The division name opens that division in the Fighters hub (owner, 28 Nov 2026).
+ assert.match(html,/4 UFC fights with full stats · <a href="#fighters" data-hub-division="welterweight">Welterweight<\/a>/);
  assert.match(html,/#3/);
  assert.match(api.boardRowHTML({f:2,v:5,n:6,rank:1},"rate"),/Champion/);
  assert.equal(api.boardValue(.555,"pct"),"56%");

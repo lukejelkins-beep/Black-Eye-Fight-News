@@ -1,6 +1,6 @@
 /* BEFN Sumo live basho mode: the Sumo home during a basho, and the day-by-day recap on the Basho
    review. Renders sumo-live-data.mjs. h = { e, head(id), cutout(id), known(id) }. */
-import { face, who, head, sanyakuBlock } from './sumo-home.mjs?v=20261124-live1';
+import { face, who, head } from './sumo-home.mjs?v=20261128-brief1';
 import { shortRank, plainRank, bashoName, bashoStart } from './sumo-home-data.mjs?v=20261124-live1';
 
 const photo = (h, id, cls) => { const s = h.cutout(id); return s ? '<img class="' + cls + '" src="' + h.e(s) + '" alt="" loading="lazy">' : ''; };
@@ -57,7 +57,8 @@ export function renderLiveHome(d, h) {
   }
   return '<div class="sumo-home sumo-live">' + liveHero(h, d) + '<section class="shome-block">' + recapCard(h, d.recap) + '</section>' +
     raceBlock(h, d.recap.race) + highlightBlock(h, d.recap.highlights) +
-    '<section class="shome-block">' + sanyakuBlock(h, d.sanyakuView) + '</section>' + (h.extra || '') + (h.explore || '') +
+    /* The sanyaku scorecard and the day-by-day detail live on the live basho page (#review), not here too. */
+    '<section class="shome-block"><a class="shome-card shome-bcard is-wide" href="#review"><span><strong>Live basho analysis</strong><em>Every Makuuchi result with the predictor’s chance, the title-race chart, the sanyaku scorecard and tomorrow’s picks</em></span><b aria-hidden="true">›</b></a></section>' + (h.extra || '') + (h.explore || '') +
     '<p class="shome-source">From the Sumo API record of the ' + h.e(bashoName(d.bashoId)) + ' basho, refreshed during the tournament. Wins are counted from each wrestler’s bouts.</p></div>';
 }
 

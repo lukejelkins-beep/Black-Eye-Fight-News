@@ -14,19 +14,19 @@ import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
 import { buildHome, bashoStart, bashoFinished, rows as bzRows } from './sumo-home-data.mjs?v=20261124-banzuke2';
-import { renderHome as renderOverview, exploreBlock } from './sumo-home.mjs?v=20261124-live1';
+import { renderHome as renderOverview, exploreBlock } from './sumo-home.mjs?v=20261128-brief1';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
-import { renderReview, selector as reviewSelector } from './sumo-review.mjs?v=20261128-model2';
-import { analysis as bashoAnalysis, picks as dayPicks } from './sumo-analysis-data.mjs?v=20261128-model2';
-import { raceChart, dayBlock, expectationsBlock, scoreBlock, renderLiveAnalysis } from './sumo-analysis.mjs?v=20261128-model2';
-import { renderPredictor } from './sumo-predictor-view.mjs?v=20261128-model2';
+import { renderReview, selector as reviewSelector } from './sumo-review.mjs?v=20261128-brief1';
+import { analysis as bashoAnalysis, picks as dayPicks } from './sumo-analysis-data.mjs?v=20261128-brief1';
+import { raceChart, dayBlock, expectationsBlock, scoreBlock, renderLiveAnalysis } from './sumo-analysis.mjs?v=20261128-brief1';
+import { renderPredictor } from './sumo-predictor-view.mjs?v=20261128-brief1';
 import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
 import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-next1';
 import { fromArchive, fromDetails, runs, stables, rivalries, records, sizeExtremes } from './sumo-insights-data.mjs?v=20261124-size1';
-import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261128-model2';
-import { powerGaps } from './sumo-storylines.mjs?v=20261128-model2';
+import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261128-brief1';
+import { powerGaps } from './sumo-storylines.mjs?v=20261128-brief1';
 import { completedDay, recap as liveRecap, asOfDay } from './sumo-live-data.mjs?v=20261124-live1';
-import { renderLiveHome, dayByDay } from './sumo-live.mjs?v=20261124-live1';
+import { renderLiveHome, dayByDay } from './sumo-live.mjs?v=20261128-brief1';
 import { asDetails } from './sumo-review-data.mjs?v=20261124-live1';
 import { KIMARITE, renderKimariteGallery, hydrateKimariteGallery, linkKimariteMentions, setKimariteMediaManifest } from './sumo-kimarite-gallery.mjs?v=20261117-inline-gifs-v4';
 
@@ -1716,7 +1716,14 @@ function render() {
     case 'h2h': ROOT.innerHTML=renderBoard(id);
       if(STATE.boardRecent&&!STATE.h2hFull&&!STATE.h2hLoading&&!STATE.h2hLoadFailed)void loadCompleteH2h();break;
     case 'home': ROOT.innerHTML=renderSumoHome();break;
-    case 'review': ROOT.innerHTML=renderBashoReview(id);break;
+    case 'review': ROOT.innerHTML=renderBashoReview(id);
+      /* Phones show the day buttons as a strip: keep the chosen day in view (no vertical scroll). */
+      {const strip=document.querySelector('.sana-pick'),on=strip?.querySelector('[aria-pressed="true"]');
+        if(strip&&on&&strip.scrollWidth>strip.clientWidth)strip.scrollLeft=on.offsetLeft-strip.offsetLeft-(strip.clientWidth-on.offsetWidth)/2;}
+      /* #review?at=stars (from the home's "basho in brief"): once the review has loaded, scroll to that section, once per visit. */
+      {const at=reviewQuery().get('at'),el=at&&/^[a-z]+$/.test(at)?document.getElementById('at-'+at):null;
+        if(el&&STATE.reviewAt!==location.hash){STATE.reviewAt=location.hash;requestAnimationFrame(()=>el.scrollIntoView({block:'start'}));}}
+      break;
     case 'changes': ROOT.innerHTML=renderBanzukeChanges(id);break;
     case 'predict': ROOT.innerHTML=renderPredictorPage();break;
     case 'insights': ROOT.innerHTML=renderSumoInsights();
@@ -1970,7 +1977,7 @@ window.addEventListener('hashchange',()=>{
     STATE.matchupDay=STATE.h2hReturn.matchupDay;
   }
   if(route==='predict'&&lastRoute==='predict'){const y=window.scrollY;render();window.scrollTo({top:y,behavior:'instant'});return;}
-  if(route!==lastRoute)STATE.analysisDay=null;
+  if(route!==lastRoute){STATE.analysisDay=null;STATE.reviewAt=null;}
   lastRoute=route;STATE.h2hOldestFirst=false;render();
   const requestedTerm=route==='kimarite'?new URLSearchParams(location.hash.split('?')[1]||'').get('term'):null;
   if(requestedTerm&&/^[a-z-]+$/.test(requestedTerm)&&document.getElementById('kimarite-'+requestedTerm)){
