@@ -29,7 +29,7 @@ function division(value) {
   if (!DIVISIONS.has(v)) throw new Error('Invalid sumo division');
   return v;
 }
-function listParams({ limit = 100, skip = 0, shikona } = {}) {
+function listParams({ limit = 100, skip = 0, shikona, measurements, ranks, intai } = {}) {
   if (!Number.isInteger(limit) || limit < 1 || limit > 1000) throw new Error('limit must be 1..1000');
   if (!Number.isInteger(skip) || skip < 0 || skip > 100000) throw new Error('skip must be 0..100000');
   const p = new URLSearchParams({ limit: String(limit), skip: String(skip) });
@@ -37,6 +37,10 @@ function listParams({ limit = 100, skip = 0, shikona } = {}) {
     if (typeof shikona !== 'string' || !shikona.trim() || shikona.length > 90) throw new Error('Invalid shikona search');
     p.set('shikona', shikona.trim());
   }
+  /* Optional history flags (model research): measurement and rank history, retired wrestlers included. */
+  if (measurements === true) p.set('measurements', 'true');
+  if (ranks === true) p.set('ranks', 'true');
+  if (intai === true) p.set('intai', 'true');
   return p.toString();
 }
 export function createSumoClient({ fetchImpl = globalThis.fetch, maxCalls = DEFAULT_MAX_CALLS, timeoutMs = 16000 } = {}) {

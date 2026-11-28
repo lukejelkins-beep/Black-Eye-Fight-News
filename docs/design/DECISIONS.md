@@ -11,6 +11,29 @@ Format: date — decision — who — where it shows up.
   - Result at 4x throttle: front page longest block 12.0 s to 0.5 s, total blocking 13.9 s to 1.1 s; News 2.9 s to 0.1 s.
   - Not measured: the live Render site, real phones, network latency. — Owner; Claude — separate PR.
 
+## 2026-11-28 (Sumo predictor v2: every known fact, 2000-2026)
+- **The Sumo predictor is rebuilt on 2000-2026** (owner: "consider all known facts about the sumo wrestler and stats about their bouts and create an algorithm that is as accurate as possible"). It learns from 125,791 Makuuchi, Juryo and Makushita bouts collected from the Sumo API (paced, about 500 requests, under the 24 Nov permission). For each bout it uses what was known that morning:
+  - rank;
+  - an Elo that starts from rank and learns fast for newcomers, plus a rating against rank;
+  - this basho's form and absences, and kachi-koshi pressure (needs every remaining win while the opponent's record is decided);
+  - age, years in sumo and time in Makuuchi;
+  - head-to-head;
+  - last basho's record, absences and rank change;
+  - fighting style from winning techniques;
+  - birthplace.
+- **Calibrated logistic model.** Fitted 2003-2022, tuned 2023-2024, tested on 2025-2026: Makuuchi 60.1% called (v1 method 59.6%, higher rank 56.1%), Brier 0.2355 v 0.2377 (gain interval 0.0004 to 0.0036). Over all bouts, 0.2377 v 0.2417.
+- **Left out after testing:** height and weight (no gain), a LightGBM model (no better), sharpening (already over-confident above 70%).
+- **Birthplace is kept for accuracy** (0.0002 Brier in Makuuchi), shown under "Style and background"; the owner can drop it.
+- **Bug fixed while testing:** a replay changed the saved state's head-to-head and style arrays in place, so later replays on the same page started from altered data. Found by the no-lookahead test.
+- The Predictor page explains each chance in seven groups. The power table is each man's average chance against the rest of Makuuchi. Method in `docs/sumo-predictor.md`. — Built 28 Nov — awaiting owner "Merge N".
+
+## 2026-11-28 (Sumo: predictor, live/review analysis, photo-led stories)
+- **Sumo bout predictor** (owner asked for "a fight predictor algorithm and % fight predictor"). Rank (log scale), an Elo-style rating against rank, and this basho's form; fitted on Jan 2025 to Mar 2026 and scored on the four newest basho: 59.8% of Makuuchi bouts called against 56.8% for "higher rank wins", Brier gain over rank alone 0.0049 (interval 0.0026 to 0.0073). Head-to-head tested and left out (no clear gain). Slightly over-confident above 70%, shown on the page. Method in `docs/sumo-predictor.md`. New page `sumo.html#predict` under Analysis ("Predictor"). — Built 28 Nov — awaiting owner "Merge N".
+- **Basho analysis: live, then review** (owner: "selecting the day by day doesn't do anything really except change the highlights ... an analysis area for when the basho is currently going then a basho in review"). The day picker now changes the whole day view: that day's Makuuchi results with each winner's morning chance and an "Upset" tag under 40%, the standings after the day with W/L marks, the predictor's score for the day and the biggest shock. A title-race chart (wins minus losses by day for the top four, tap a day) sits above. While a basho is on, the Analysis pill reads "Live basho" and `#review` shows the tournament so far plus the next day's picks; finished basho stay under the same selector. The chosen day is kept in the link (`?day=N`). `#review?liveday=N` previews live mode on a finished basho.
+- **Who did well, who didn't: photos** (owner: "need photos"). Best and toughest records are cut-out tiles (blue for good, red for bad); kyujo men are a list with faces; then "Beat the odds / Fell short" against the predictor's expected wins (men who missed bouts are never called failures).
+- **Stories and insights.** Every story card has a photo band (approved cut-outs, head crop as fallback, same checks as `sumo.js`). New Stories row "The <month> basho": beat the odds, biggest shock, fell short, hot streak, underrated. New Insights section "Underrated and overrated" (banzuke place v predictor power place).
+- **Design review notes, not acted on** (for the owner to choose): see the PR. Main ones: the Home and Basho review repeat champions, gold stars and sanyaku; Stories still uses Barlow Condensed uppercase headings and its own page head; the five Analysis pills overflow at 390 px; the 15 day buttons wrap to three rows on phones.
+
 ## 2026-11-26 (Form: title holders keep half their age credit)
 - **A title holder's age part in Form is at least 0.5** (owner: "Gane under 80 and Volk at 85 as defending champs?", then "Half credit"). A title holder is a fighter whose latest title-fight result is a win with no loss since. Age was 15% of Form and reached zero at 38, which held 36-38-year-old champions down (Gane 76.6 to 83.5, Volkanovski 86.2 to 93.0, Gaethje 81.8 to 90.0). Backtest unchanged (Brier 0.2331 from 2022, 0.2401 against 0.2404 in 2018-2021). 160 fighters move by more than 0.05, because former champions who have not lost since a title win count too; non-champions can slip a little as the percentile rescales (Valter Walker 94.16 to 93.73, rank unchanged). `scripts/ufc-form-champion-age.py` re-runs the test.
 - **A title-win bonus on opponent strength was tested and not added** (owner: "No"). Accuracy flat; champions gained 0.4 on average and the biggest rises went to former title winners.
