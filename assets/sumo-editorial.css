@@ -1835,3 +1835,12 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-released-note{margin:0 0 10px;padding:9px 12px;background:#fff7dd;border:1px solid #ecd58a;border-radius:8px;font-size:13.5px}
 .sumo-released-note a{color:var(--red);font-weight:800}
 .sumo-released{background:var(--gold)!important;color:#151115!important;border:0;font-weight:800}
+/* Bouts page: the predictor's chance under each bout (28 Nov 2026) */
+.bout-chance{display:flex;align-items:center;gap:10px;min-height:44px;margin:6px 0 0;padding:0 12px;border-radius:10px;background:#f4efe7;color:#111013;text-decoration:none;font:500 13.5px 'DM Sans',sans-serif}
+.bout-chance b{font-weight:800}
+.bout-chance em{font-style:normal;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-left:auto}
+.bout-chance.is-hit em{color:#1d6b41}
+.bout-chance.is-miss em{color:#a32a25}
+.bout-chance i{font-style:normal;font-weight:800;color:#cf1824}
+.bout-chance:not(:has(em)) i{margin-left:auto}
+.bout-chance:hover{background:#ece5db}

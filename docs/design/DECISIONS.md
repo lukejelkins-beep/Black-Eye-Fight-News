@@ -2,6 +2,17 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Sumo: chances on the Bouts page, phone checklist)
+- **Owner's picks from the selector:** merge #583 when green (done: `3be28d0`, live and checked); the refit gate stays as built; "Allow GitHub Actions to create pull requests" is already on; next: a Safari and phone checklist, and the predictor on the Bouts page.
+- **Bouts page.**
+  - Under each Makuuchi and Juryo bout, a strip shows the predictor's favourite and his chance that morning: saved chances for archived basho, the live replay for a live one, and the morning's pick for a bout still to come.
+  - A fought bout is marked Called, Missed, or Upset. "Upset" means the winner had under 40%, the same rule as the Basho review.
+  - The strip links to the Predictor with the two wrestlers. Makushita and cross-division bouts have no chance, so no strip.
+  - The strip sits after the bout's fact line, which the fact-engine test expects directly under the row.
+- **Checklist:** `docs/design/PHONE-CHECKLIST-2026-11-28-sumo.md`, for the owner to run on an iPhone and in Safari.
+- **Owner: "Can u do the checks pls".** Ran the checklist as a script on an emulated iPhone 13 and iPhone SE (Chromium with touch and finger swipes; no WebKit here, no phone attached). 69 of 69 pass after one fix: on 320 x 568 screens the wrapped pills had pushed a profile's name to 544 px of 568, so on narrow, short screens (`max-width:360px` and `max-height:620px`) the profile photo stage is 50 px shorter (name back at 494 px). The share sheet, Safari's engine and native pickers still need a real iPhone.
+- — Owner 28 Nov — awaiting owner "Merge N".
+
 ## 2026-11-28 (UFC gyms analysis article)
 - Article `analysis-ufc-gyms.html` ("Do UFC gyms decide fights?") on 1,084 UFC bouts, 2025 and 2026 to 21 Nov: gym wins against expected wins from fighters' records going in. Finding: most gyms sit within a win or two of expectation and one-season swings reverse; shuffled gym labels match the real spread 14% of the time (p = 0.14). Exception: City Kickboxing, 30-11 (+9.5), ahead of expectation in both seasons, about once in 14 by luck across 33 gyms, so presented as suggestive, not proven. (The first version covered 2025 only and said "no gym effect"; the 2026 rerun added City Kickboxing as an exception, so the headline was changed.) Figures come from `data/ufc-gym-analysis.json`, and `scripts/build-ufc-gym-article.py` builds the page from it. Lives in the MMA analysis area (owner, 28 Nov 2026): a "Do UFC gyms decide fights?" link under the Fight predictions link on the MMA analysis page; the page is indexable like the rest of the site. Chart is HTML and CSS (12 px minimum, reflows at 390 px), not an image.
 
@@ -23,7 +34,7 @@ Format: date — decision — who — where it shows up.
   - A scheduled job (3 Feb, 3 Aug) recollects, refits on a rolling window and opens a draft PR only if the gate holds: all-bout gain interval above zero, Makuuchi gain positive.
   - The Predictor page's track-record text now follows the model's own window, not fixed years.
   - The predictor test now checks the gate's rule; a one-year test window is too small for the stricter Makuuchi interval.
-- — Owner 28 Nov — awaiting owner "Merge N".
+- — Owner 28 Nov — merged on the owner's selector choice ("Merge when green"), live at 3be28d0 (checked on the live site).
 
 ## 2026-11-28 (Sumo design review: owner's picks)
 - **Owner's choices, from the selector:** all four design fixes from the #575 review; keep birthplace in the predictor; one PR.

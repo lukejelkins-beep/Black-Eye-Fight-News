@@ -644,6 +644,9 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   await open(page,'matchups','.sumo-daily-page');
   await page.locator('#sumo-matchup-day').selectOption('1');
   assert.ok(await page.locator('.sumo-daily-grid .bout-row').count()>0,'Makuuchi Day 1 matchup rows rendered');
+  // The predictor's chance under each Makuuchi bout (owner, 28 Nov 2026), linking to the Predictor page.
+  await page.waitForFunction(()=>document.querySelectorAll('.sumo-daily-grid .bout-chance').length>0,null,{timeout:8000});
+  assert.ok(await page.locator('.sumo-daily-grid .bout-chance[href^="#predict?a="]').count()>=10,'Predictor chance shown under Makuuchi bouts');
   await assertRankedHeadToHeads('Makuuchi');
   const firstRow=page.locator('.sumo-daily-grid .bout-row').first();
   assert.equal(await firstRow.locator('.bout-photo').count(),2,'Portraits for both wrestlers');

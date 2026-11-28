@@ -13,7 +13,8 @@ import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailyS
 import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
-import { buildHome, bashoStart, bashoFinished, rows as bzRows } from './sumo-home-data.mjs?v=20261124-banzuke2';
+import { buildHome, bashoStart, bashoFinished, rows as bzRows, position as rankPosition } from './sumo-home-data.mjs?v=20261124-banzuke2';
+import { bashoPredictions } from './sumo-predict.mjs?v=20261128-log1';
 import { renderHome as renderOverview, exploreBlock } from './sumo-home.mjs?v=20261128-brief1';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
 import { renderReview, selector as reviewSelector } from './sumo-review.mjs?v=20261128-brief1';
@@ -381,6 +382,7 @@ function centreDay(division='Makuuchi'){
     releasedAhead:!!upcoming&&Number.isInteger(today)&&announced>today&&day!==announced};
 }
 function renderDailyMatchups(){
+  loadPredictor();
   const division=STATE.matchupDivision,banzuke=getBanzuke(division);
   const cd=centreDay(division);
   const {startDate,today,announced,upcoming,lastCompleted,concluded}=cd;
@@ -1382,10 +1384,41 @@ function boutSections(pairings,rowFn) {
   return '<div class="hl-list">'+top.map((m,i)=>headlineBout(m,labels[i])).join('')+'</div>'+
     (rest.length?'<h3 class="hl-section">More bouts <span>'+rest.length+'</span></h3><div class="sumo-compact-results">'+rest.map(rowFn).join('')+'</div>':'');
 }
+/* The predictor's chance for a bout on the Bouts page (owner, 28 Nov 2026): a fought bout shows the chance
+   it was given that morning (saved for archived basho, replayed for a live one); a bout still to come in a
+   live basho shows the pick for that morning. Makuuchi and Juryo; nothing is shown when there is no chance. */
+const BOUTCHANCE={key:null,map:null};
+function boutChances(){
+  const d=details(),key=d?.bashoId+'|'+(PRED.model?.builtAt||'')+'|'+completedDay(d);
+  if(BOUTCHANCE.key===key)return BOUTCHANCE.map;
+  const map=new Map();
+  for(const q of (PRED.model&&d?bashoPredictions(d,PRED.model)||[]:[]))map.set(q.day+':'+q.a.rikishiID+':'+q.b.rikishiID,q.p);
+  BOUTCHANCE.key=key;BOUTCHANCE.map=map;return map;
+}
+function boutChanceMarkup(match,day){
+  if(!PRED.model||!Number.isInteger(day))return '';
+  const x=Number(match.rikishiId),y=Number(match.opponentId),wx=wrestler(x),wy=wrestler(y);
+  const rx=bzRows(details()?.banzuke).find(r=>Number(r.rikishiID)===x)?.rank,ry=bzRows(details()?.banzuke).find(r=>Number(r.rikishiID)===y)?.rank;
+  if(!rx||!ry)return '';
+  const xHigh=rankPosition(rx)<=rankPosition(ry),[a,b]=xHigh?[x,y]:[y,x];
+  let pa=boutChances().get(day+':'+a+':'+b);
+  if(pa==null&&match.finished!==true){
+    const live=dayPicks(details(),PRED.model,[{rikishiId:a,opponentId:b}],day);
+    pa=live[0]?.p;
+  }
+  if(pa==null)return '';
+  const fav=pa>=0.5?a:b,pf=pa>=0.5?pa:1-pa,name=Number(fav)===x?(wx?.shikonaEn||match.rikishi):(wy?.shikonaEn||match.opponent);
+  const finished=match.finished===true&&match.winnerId;
+  const called=finished?Number(match.winnerId)===Number(fav):null;
+  return '<a class="bout-chance'+(called===true?' is-hit':called===false&&pf>0.6?' is-miss':'')+'" href="#predict?a='+x+'&b='+y+'">'+
+    '<span>Predictor'+(finished?' that morning':'')+': <b>'+e(name)+' '+Math.round(pf*100)+'%</b></span>'+
+    /* Same words as the Basho review: "Upset" only when the winner had under 40%; a closer miss is "Missed". */
+    (finished?'<em>'+(called?'Called':pf>0.6?'Upset':'Missed')+'</em>':'')+'<i aria-hidden="true">›</i></a>';
+}
 function dailyMatchupRow(match) {
   const first=wrestler(match.rikishiId),second=wrestler(match.opponentId);
   const history=headToHeadFor(match.rikishiId,match.opponentId);
-  return '<div class="bout-item">'+boutRowMarkup(match)+matchupFactMarkup(match)+
+  return '<div class="bout-item">'+boutRowMarkup(match)+matchupFactMarkup(match)+boutChanceMarkup(match,Number(match.day))+
     '<details class="bout-compare"><summary>Compare</summary>'+
     comparisonGrid(first,second,match.division||STATE.matchupDivision)+dailyMeetingMarkup(match,match.rikishiId,match.opponentId)+
     (history&&!history.complete?'<p class="sumo-daily-result-note">Individual history is source-limited; open the full series for coverage.</p>':'')+
@@ -1640,7 +1673,7 @@ function loadPredictor(){
   PRED.loading=true;
   /* The live record (data/sumo/prediction-log.json) is optional: the page shows without it. */
   Promise.all([loadJson('data/sumo/predictor.json'),loadJson('data/sumo/prediction-log.json').catch(()=>null)]).then(([x,l])=>{PRED.model=x;PRED.log=l;}).catch(()=>{PRED.failed=true;})
-    .finally(()=>{PRED.loading=false;if(/^#(review|predict|insights)/.test(location.hash))render();});
+    .finally(()=>{PRED.loading=false;if(/^#(review|predict|insights|matchups)/.test(location.hash))render();});
 }
 /* The live basho, if one is on: its id, or null. #review?liveday=N replays the latest saved basho as of day N. */
 function liveBashoId(){return STATE.details&&!bashoFinished(STATE.details)?String(STATE.details.bashoId):null;}
