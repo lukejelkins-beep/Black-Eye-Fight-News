@@ -1,6 +1,6 @@
 /* BEFN Sumo Insights page (sumo.html#insights) and the Sumo home teaser.
    Renders sumo-insights-data.mjs. h = { e, head(id), cutout(id), known(id) }. */
-import { face, who, head } from './sumo-home.mjs?v=20261124-insights1';
+import { face, who, head } from './sumo-home.mjs?v=20261128-brief1';
 import { shortRank, plainRank, bashoName } from './sumo-home-data.mjs?v=20261124-insights1';
 import { OZEKI_BAR, GIANT_GAP } from './sumo-insights-data.mjs?v=20261124-size1';
 

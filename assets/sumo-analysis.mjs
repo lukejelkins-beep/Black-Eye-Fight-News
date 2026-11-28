@@ -1,7 +1,7 @@
 /* BEFN Sumo basho analysis (Basho review and live basho). Renders sumo-analysis-data.mjs.
    h = { e, head(id), cutout(id), known(id) } as for the Sumo home. Day buttons carry
    data-analysis-day; sumo.js re-renders the page for the chosen day and keeps the scroll place. */
-import { face, who, head, sanyakuBlock } from './sumo-home.mjs?v=20261124-review1';
+import { face, who, head, sanyakuBlock } from './sumo-home.mjs?v=20261128-brief1';
 import { shortRank, plainRank, bashoName } from './sumo-home-data.mjs?v=20261124-review1';
 import { recapCard } from './sumo-live.mjs?v=20261124-live1';
 

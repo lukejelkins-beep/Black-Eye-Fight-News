@@ -1,6 +1,6 @@
 /* BEFN Basho review page (sumo.html#review/YYYYMM). Renders buildReview() from sumo-review-data.mjs.
    h = { e, head(id), cutout(id), known(id) } as for the Sumo home. index = archive index.json. */
-import { face, who, head, championsBlock, starsBlock, sanyakuBlock, moversBlock } from './sumo-home.mjs?v=20261124-review1';
+import { face, who, head, championsBlock, starsBlock, sanyakuBlock, moversBlock } from './sumo-home.mjs?v=20261128-brief1';
 import { plainRank, bashoName, shortRank } from './sumo-home-data.mjs?v=20261124-review1';
 
 const fmtDate = iso => iso ? new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', timeZone: 'UTC' }) : '';

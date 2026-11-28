@@ -2,7 +2,7 @@
    and what decides it, a power table, and the predictor's track record. Model: sumo-predict.mjs (v2)
    with the saved data/sumo/predictor.json. h = { e, head(id), cutout(id), known(id) } as for the Sumo home. */
 import { nextMorning, pickWith, power } from './sumo-predict.mjs?v=20261128-model2';
-import { face, who, head } from './sumo-home.mjs?v=20261124-review1';
+import { face, who, head } from './sumo-home.mjs?v=20261128-brief1';
 import { position, isMakuuchi, tierOf, shortRank, plainRank, rows } from './sumo-home-data.mjs?v=20261124-review1';
 import { completedDay, through } from './sumo-live-data.mjs?v=20261124-live1';
 
