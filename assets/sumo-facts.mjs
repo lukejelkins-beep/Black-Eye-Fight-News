@@ -140,7 +140,7 @@ function winPctView(){
   return g.length?'<section class="facts-rolling-division"><div class="facts-section-title"><h3>'+div+'</h3><span>'+g.length+' ranked wrestlers</span></div><div class="facts-rolling-grid">'+g.map((w,i)=>rollingCard(w,i+1)).join('')+'</div></section>':'';}).join('');
  const empty=!S.feed.fresh?'The latest results snapshot is more than 48 hours old. Win % figures are hidden until the source refreshes.':
   !ready?'The complete-basho history for this period has not been generated yet. It arrives with the next successful results refresh.':'No wrestlers have complete, qualifying histories across this period. Try a shorter one.';
- return '<section class="facts-rolling"><div class="facts-rolling-head"><div><span class="facts-kicker">WIN % LEADERS · COMPLETE CACHED BOUT RECORDS</span><h2>Winning across '+n+' basho</h2></div></div>'+
+ return '<section class="facts-rolling"><div class="facts-rolling-head"><div><span class="facts-kicker">Win % leaders · complete saved bout records</span><h2>Winning across '+n+' basho</h2></div></div>'+
   '<div class="st-presets" role="group" aria-label="Win % window">'+presets.filter(p=>p[0]<=ROLLING_BASHO_MAX).map(([v,l])=>'<button type="button" data-win="'+v+'" aria-pressed="'+(v===n)+'">'+l+'</button>').join('')+'</div>'+
   '<p class="facts-rolling-note">Win % = wins ÷ (wins + losses), including the current tournament plus '+(n-1)+' completed before it. Historical basho count only when every regular bout is recorded. Division shown is each wrestler’s current division.</p>'+
   (rows.length?blocks:'<div class="facts-empty">'+esc(empty)+'</div>')+'</section>';
@@ -168,10 +168,11 @@ function storiesBody(){
 function render(){
  const f=S.feed,highPct=f.fresh?f.rows.filter(w=>w.bouts>=(w.division==='Makushita'?3:5)&&w.wins*100>=HIGH_WIN_PCT_THRESHOLD*w.bouts).length:'—';
  const stories=S.view==='stories';
- ROOT.innerHTML='<div class="sumo-facts sumo-stories"><header class="facts-top"><span class="facts-kicker">BEFN SUMO · THE DOHYO DIARIES</span>'+
- '<h1>Sumo <em>Stories</em></h1><p>True, surprising, sourced. Every story features a currently tracked rikishi, and each one shows exactly where it comes from.</p></header>'+
- '<div class="facts-status"><b'+(f.fresh?'':' class="is-stale"')+'>'+(f.fresh?'Current tournament snapshot':'Live form paused — source data out of date')+'</b>'+
- '<span>'+esc(f.bashoLabel)+' · Updated '+esc(dateLabel(f.asOf))+'</span></div>'+
+ /* Same page head as the other Sumo pages: dark band, gold kicker, Unbounded sentence-case title (28 Nov 2026). */
+ ROOT.innerHTML='<div class="sumo-facts sumo-stories"><header class="facts-top st-hero"><span class="st-hero-kicker">Sumo stories</span>'+
+ '<h1>True, surprising and sourced</h1><p>Every story features a wrestler on today’s banzuke and shows where it comes from.</p>'+
+ '<div class="facts-status"><b'+(f.fresh?'':' class="is-stale"')+'>'+(f.fresh?'Current tournament':'Live form paused: source data out of date')+'</b>'+
+ '<span>'+esc(f.bashoLabel)+' · Updated '+esc(dateLabel(f.asOf))+'</span></div></header>'+
  '<nav class="st-tabs" aria-label="Stories views"><button type="button" data-view="stories" aria-pressed="'+stories+'">Stories</button>'+
  '<button type="button" data-view="winpct" aria-pressed="'+!stories+'">Win % Leaders <small>'+highPct+' at 80%+ basho win rate</small></button>'+
  (stories?'<label class="facts-find"><input id="facts-search" type="search" aria-label="Search by wrestler or pair" placeholder="A wrestler, or a pair: Ura v Daieisho" value="'+esc(S.query)+'" autocomplete="off"></label>':'')+'</nav>'+

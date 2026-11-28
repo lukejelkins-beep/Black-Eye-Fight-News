@@ -175,8 +175,9 @@
     if (loading || index || Date.now()-lastAttempt<30000) return;
     loading=true;
     lastAttempt=Date.now();
-    fetch("data/ufcalendar-card-enhancements.json",{cache:"no-store"})
-      .then(r => { if (!r.ok) throw Error("UFCalendar feed unavailable");return r.json();})
+    // Shared with upcoming-cards.js (assets/feed-cache.js): one download of this 1.4 MB file per page per hour.
+    (window.BEFNFeed?window.BEFNFeed.local:p=>fetch(p,{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null))("data/ufcalendar-card-enhancements.json")
+      .then(data => { if (!data) throw Error("UFCalendar feed unavailable");return data;})
       .then(data => { if (data && data.schema===1 && data.events &&
                       typeof data.events==="object") { index=data;
                         // Reuse the already downloaded curated round preview rather than

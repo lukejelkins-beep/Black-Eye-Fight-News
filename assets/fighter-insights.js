@@ -293,16 +293,17 @@
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form'){const e=formEntry(stats);return formShown(e)?e.form:null;}
-   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
-   const base=v2.skills?.[id]?.roster;
-   return Number.isFinite(base)?base:null;
+   // 2-decimal score when the stats build publishes it (owner, 28 Nov 2026), else the whole percentile.
+   if(id==='results')return Number.isFinite(v2.results?.score)?v2.results.score:Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
+   const fine=v2.skills?.[id]?.score,base=v2.skills?.[id]?.roster;
+   return Number.isFinite(fine)?fine:Number.isFinite(base)?base:null;
   };
   const v2Overall=Number.isFinite(v2?.overall)?v2.overall:null;
   const v2Meters=v2?V2_METERS.map(([id,label])=>{
    const sc=v2Score(id),d=SKILL_IDS.includes(id)?v2.skills?.[id]?.division:null;
    const hint=id==='form'?formHint(stats):id==='results'?RESULTS_HINT:
     Number.isFinite(d)&&stats.division?ordinal(d)+' in '+stats.division:null;
-   return proMeter(label,sc,id==='form'?'plain':true,scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
+   return proMeter(label,sc,id==='form'||hasFine(v2,id)?'plain':true,scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
   }).join(''):'';
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
@@ -399,6 +400,8 @@
   return '<div class="befn-form-tags">'+chips.join('')+'</div>'+ranks+why;
  }
  const headlineBar=r=>Number.isFinite(r?.overall)?r.overall:null;
+ // A skill or results rating printed as a 2-decimal score ("99.92"), not "99th" (owner, 28 Nov 2026).
+ const hasFine=(r,id)=>id==='results'?Number.isFinite(r?.results?.score):Number.isFinite(r?.skills?.[id]?.score);
  // Overall and Form to 2 decimal places on every page (assets/form-rule.js score()).
  const dec2=v=>window.BEFNFormRule?.score?window.BEFNFormRule.score(v):Number(v).toFixed(2);
  const headlineHTML=v=>dec2(v)+'<small>/100</small>';
@@ -574,6 +577,7 @@
  fetch("data/ufc-fighter-form.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.fighters)return;
   formData=d;update();
+  if(boardData)window.dispatchEvent(new CustomEvent("befn:boards"));
  }).catch(()=>{});
  const namesLoading=fetch("data/ufc-stats/names.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.names)return;
@@ -701,14 +705,15 @@
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form'){const e=formEntry(stats);return formShown(e)?e.form:null;}
-   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
-   const base=v2.skills?.[id]?.roster;
-   return Number.isFinite(base)?base:null;
+   // 2-decimal score when the stats build publishes it (owner, 28 Nov 2026), else the whole percentile.
+   if(id==='results')return Number.isFinite(v2.results?.score)?v2.results.score:Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
+   const fine=v2.skills?.[id]?.score,base=v2.skills?.[id]?.roster;
+   return Number.isFinite(fine)?fine:Number.isFinite(base)?base:null;
   };
   const technicalScoreV1=technicalScore;
   const built=ratedByBuild(f);
   const ratingScore=id=>v2?v2Score(id):built?null:technicalScoreV1(id);
-  const isPercentile=id=>v2?(id==='form'?'plain':true):!built&&isPercentileV1(id);
+  const isPercentile=id=>v2?(id==='form'||hasFine(v2,id)?'plain':true):!built&&isPercentileV1(id);
   const score=v2?(Number.isFinite(v2.overall)?v2.overall:null):built?null:Number.isFinite(v3.power)?v3.power:computed.overall;
   const tier=scoreTier(v2?headlineBar(v2):score);
   // Six bars once rated, and also while the stats file is still loading (same layout, empty), so nothing jumps.
@@ -831,18 +836,25 @@
  // UFC stats leaderboards (stage 5): data/ufc-stats/leaderboards.json from the stats build.
  // Ratings are career-based; every other board uses the chosen window. A row needs
  // the file's minimum of complete-stat UFC fights and cage time in that window.
+ // Two views (owner, 28 Nov 2026: "leaderboards for each of the ratings and then an area for striking, grappling etc
+ // with top 10 on each"): "Top 10s" shows every board as a compact card, grouped; "Full table" is the one long board.
+ // The same cards are used on each division page of the Fighters hub (window.BEFNBoards), so the two areas agree.
+ function loadBoards(){
+  if(boardData||boardLoading||boardFailed)return;
+  boardLoading=true;
+  fetch("data/ufc-stats/leaderboards.json").then(r=>r.ok?r.json():null).then(d=>{
+   boardLoading=false;
+   if(d?.schema===1&&Array.isArray(d.fighters)&&d.rows)boardData=d;else boardFailed=true;
+   boardDone();
+  }).catch(()=>{boardLoading=false;boardFailed=true;boardDone();});
+ }
+ const boardWaiters=[];
+ function boardDone(){renderV3Boards();boardWaiters.splice(0).forEach(fn=>{try{fn()}catch(_){}});if(typeof window!=="undefined")window.dispatchEvent(new CustomEvent("befn:boards"));}
  function renderV3Boards(){
   const root=document.querySelector("[data-befn-v3-leaderboards]");
   if(!root||root.dataset.ready)return;
   if(!boardData){
-   if(!boardLoading&&!boardFailed){
-    boardLoading=true;
-    fetch("data/ufc-stats/leaderboards.json").then(r=>r.ok?r.json():null).then(d=>{
-     boardLoading=false;
-     if(d?.schema===1&&Array.isArray(d.fighters)&&d.rows)boardData=d;else boardFailed=true;
-     renderV3Boards();
-    }).catch(()=>{boardLoading=false;boardFailed=true;renderV3Boards();});
-   }
+   loadBoards();
    const msg=boardFailed?"UFC statistics are not published yet. Leaderboards will appear when they are ready.":"Loading UFC statistics…";
    if(root.dataset.status!==(boardFailed?"failed":"pending")){
     root.dataset.status=boardFailed?"failed":"pending";
@@ -853,36 +865,57 @@
   root.dataset.ready="true";
   const groups={};
   for(const s of boardData.stats)(groups[s.group]=groups[s.group]||[]).push(s);
+  const divs=Object.entries(boardData.divisions);
   root.innerHTML='<label class="befn-board-field befn-board-search"><span>Find a fighter</span>'+
    '<input id="befn-board-search" class="field" type="search" autocomplete="off" placeholder="Search '+boardData.fighters.length+' UFC fighters"></label>'+
-   '<div class="befn-board-controls">'+
-   '<label class="befn-board-field"><span>Leaderboard</span><select id="befn-board-metric" class="field" aria-label="Choose UFC leaderboard">'+
+   '<div class="befn-board-bar">'+
+   '<div class="befn-board-views segment" role="group" aria-label="Leaderboard view">'+
+   [["grid","Top 10s"],["table","Full table"]].map(([k,l])=>'<button type="button" data-board-view="'+k+'" aria-pressed="false">'+l+'</button>').join("")+'</div>'+
+   '<label class="befn-board-field befn-board-metric-field"><span>Leaderboard</span><select id="befn-board-metric" class="field" aria-label="Choose UFC leaderboard">'+
    '<optgroup label="Ratings">'+BOARD_RATINGS.map(([id,l])=>'<option value="'+id+'">'+escapeHTML(l)+'</option>').join("")+'</optgroup>'+
    Object.entries(groups).map(([g,list])=>'<optgroup label="'+escapeHTML(g)+'">'+list.map(s=>
     '<option value="'+escapeHTML(s.id)+'">'+escapeHTML(s.label)+'</option>').join("")+'</optgroup>').join("")+
    '</select></label>'+
    '<label class="befn-board-field"><span>Division</span><select id="befn-board-division" class="field" aria-label="Choose division">'+
-   '<option value="all">All divisions</option>'+Object.entries(boardData.divisions).map(([k,l])=>
-    '<option value="'+escapeHTML(k)+'">'+escapeHTML(l)+'</option>').join("")+'</select></label>'+
+   '<option value="all">All divisions</option><option value="men">All men</option><option value="women">All women</option>'+
+   divs.map(([k,l])=>'<option value="'+escapeHTML(k)+'">'+escapeHTML(l)+'</option>').join("")+'</select></label>'+
    '</div><div class="befn-board-windows segment" role="group" aria-label="Time window">'+
    Object.entries(boardData.windows).map(([k,l])=>'<button type="button" data-board-window="'+escapeHTML(k)+'" aria-pressed="false">'+escapeHTML(l)+'</button>').join("")+
    '</div><div class="befn-v3-board-results" aria-live="polite"></div>';
   const metric=root.querySelector("#befn-board-metric"),division=root.querySelector("#befn-board-division");
   metric.value=boardState.metric;division.value=boardState.division;
+  if(division.value!==boardState.division){boardState.division="all";division.value="all";}
   const search=root.querySelector("#befn-board-search");
   search.value=boardState.query;
   search.addEventListener("input",()=>{boardState.query=search.value;showBoard(root);});
   metric.addEventListener("change",()=>{boardState.metric=metric.value;showBoard(root);});
   division.addEventListener("change",()=>{boardState.division=division.value;showBoard(root);});
-  root.querySelectorAll("[data-board-window]").forEach(b=>b.addEventListener("click",()=>{boardState.window=b.dataset.boardWindow;showBoard(root);}));
+  root.addEventListener("click",e=>{
+   const w=e.target.closest("[data-board-window]"),v=e.target.closest("[data-board-view]"),open=e.target.closest("[data-board-open]");
+   if(w){boardState.window=w.dataset.boardWindow;showBoard(root);}
+   else if(v){boardState.view=v.dataset.boardView;showBoard(root);}
+   else if(open){boardState.metric=open.dataset.boardOpen;boardState.view="table";metric.value=boardState.metric;showBoard(root);
+    root.scrollIntoView({block:"start",behavior:"smooth"});}
+  });
   showBoard(root);
+  // Arriving from a hub link: go to the boards. The Analysis top section fills in after this, so settle twice.
+  if(boardState.jump){boardState.jump=false;const go=()=>root.closest(".befn-boards-unified")?.scrollIntoView({block:"start"});[80,700].forEach(ms=>setTimeout(go,ms));}
  }
  let boardData=null,boardLoading=false,boardFailed=false;
- const boardState={metric:"overall",window:"l36",division:"all",query:""};
+ const boardState={metric:"overall",window:"l36",division:"all",query:"",view:"grid",jump:false};
+ // A link from a Fighters hub division page opens these boards on that division.
+ if(typeof document.addEventListener==="function")document.addEventListener("click",e=>{
+  const a=e.target.closest?.("a[data-board-division]");
+  if(!a)return;
+  boardState.division=a.dataset.boardDivision;boardState.query="";boardState.jump=true;
+  if(a.dataset.boardMetric){boardState.metric=a.dataset.boardMetric;boardState.view="table";}else boardState.view="grid";
+ });
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
  const BOARD_RATINGS=[["overall","BEFN rating","score"],["results","Results rating","pct"],["striking","Striking rating","pct"],
   ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["form","Form","score"]];
+ // Card order for the Top 10s view and the hub: the headline ratings first.
+ const BOARD_RATING_ORDER=["overall","form","results","striking","grappling","wrestling"];
  function boardValue(v,unit){
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";
@@ -891,8 +924,10 @@
   if(unit==="ordinal")return ordinal(Math.round(v));
   return v.toFixed(2);
  }
- function boardRows(){
-  const d=boardData,st=boardState;
+ const boardPool=div=>String(div||"").startsWith("womens-")?"women":"men";
+ const inBoardScope=(div,scope)=>scope==="all"||(scope==="men"||scope==="women"?boardPool(div)===scope:div===scope);
+ function boardRows(s=boardState){
+  const d=boardData,st=s;
   const fighters=d.fighters,rating=BOARD_RATINGS.find(r=>r[0]===st.metric);
   let rows,unit,lower=false,label,sampleIndex;
   if(rating){
@@ -902,8 +937,11 @@
    // The score out of 100 is rounded, so the overall board is ordered by the stored rank (full-precision rating).
    // Form is the one Form score (data/ufc-fighter-form.json), the same number as the profile and the hub.
    const formOf=i=>{const e=formData?.fighters?.[d.fighters[i][0]];return formShown(e)?e.form:null;};
-   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"?(formData?formOf(r[0]):null):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null,p:poolCol>=0?r[poolCol]:null}));
-   unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
+   // Skill and Results boards print the 2-decimal score when the file carries it (owner, 28 Nov 2026), so fighters
+   // who share a whole percentile no longer tie; an older file falls back to the whole percentile.
+   const fineCol=rating[2]==="pct"?d.ratingFields.indexOf(st.metric+"Score"):-1;
+   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"?(formData?formOf(r[0]):null):fineCol>=0&&Number.isFinite(r[fineCol])?r[fineCol]:r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null,p:poolCol>=0?r[poolCol]:null}));
+   unit=rating[2]==="pct"&&fineCol<0?"ordinal":"score";label=rating[1];
   }else{
    const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];
    const col=d.rowFields.indexOf(stat.id);
@@ -911,8 +949,7 @@
    unit=stat.unit;lower=!!stat.lowerIsBetter;label=stat.label;
   }
   const minimum=rating?Math.max(d.minFights,BOARD_RATING_MIN_FIGHTS):d.minFights;
-  rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&
-   (st.division==="all"||fighters[r.f][2]===st.division));
+  rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&inBoardScope(fighters[r.f][2],st.division));
   // Ranks run inside a pool (women, men), so a board that mixes pools is ordered by score instead.
   const ranked=rows.length&&rows.every(r=>Number.isInteger(r.k))&&new Set(rows.map(r=>r.p)).size<=1;
   rows.sort((a,b)=>(ranked?a.k-b.k:0)||(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
@@ -949,18 +986,59 @@
    '<b class="befn-board-tag">#'+officialRank+'</b>':'';
   return '<li class="'+(r.rank<=3?'befn-board-podium':r.rank<=10?'befn-board-topten':'')+'">'+
    '<span class="befn-board-place">'+r.rank+'</span>'+boardPhoto(name)+
-   '<span class="befn-board-name">'+who+tag+'<small>'+r.n+' UFC fights with full stats'+(division?' · '+escapeHTML(division):'')+'</small></span>'+
+   '<span class="befn-board-name">'+who+tag+'<small>'+r.n+' UFC fights with full stats'+(division?' · <a href="#fighters" data-hub-division="'+escapeHTML(div)+'">'+escapeHTML(division)+'</a>':'')+'</small></span>'+
    '<strong class="befn-board-value">'+escapeHTML(boardValue(r.v,unit))+'</strong></li>';
+ }
+ const shortDivision=div=>String(boardData.divisions[div]||"").replace("Women's ","W ").replace("Light Heavyweight","Light heavy");
+ const scopeLabel=scope=>scope==="all"?"All divisions":scope==="men"?"All men":scope==="women"?"All women":boardData.divisions[scope]||"Division";
+ // One compact top-N card. In a single division the official rank tag replaces the division name.
+ // opts.link: a link to the full table on the Analysis page (hub); otherwise a button that opens it in place.
+ function boardCardHTML(metric,s,n,opts={}){
+  const view=boardRows({...s,metric});
+  const stat=boardData.stats.find(x=>x.id===metric);
+  const single=s.division!=="all"&&s.division!=="men"&&s.division!=="women";
+  const note=view.isRating?(metric==="overall"||metric==="form"?"Out of 100":"Percentile")+(metric==="form"?" · right now":" · career"):
+   (stat?.unit==="pct"?"Share":stat?.unit==="signed"?"Per minute, + is better":"Rate")+(view.lower?" · lower is better":"");
+  const rows=view.rows.slice(0,n);
+  const body=rows.length?'<ol>'+rows.map(r=>{
+   const [slug,name,div,officialRank,champion]=boardData.fighters[r.f];
+   const tag=single?(champion?'<i class="is-champ">C</i>':Number.isInteger(officialRank)&&officialRank>0?'<i>#'+officialRank+'</i>':''):
+    '<a class="befn-bc-div" href="#fighters" data-hub-division="'+escapeHTML(div)+'">'+escapeHTML(shortDivision(div))+'</a>';
+   return '<li'+(r.rank<=3?' class="is-top"':'')+'><span class="befn-bc-place">'+r.rank+'</span><span class="befn-bc-name">'+boardLink(slug,name)+tag+'</span>'+
+    '<b class="befn-bc-value">'+escapeHTML(boardValue(r.v,view.unit))+'</b></li>';
+  }).join("")+'</ol>':'<p class="befn-bc-empty">'+(view.formLoading?'Loading Form…':'No fighters qualify yet.')+'</p>';
+  const more=view.total>n?(opts.link?'<a class="befn-bc-more" href="#analysis" data-board-division="'+escapeHTML(s.division)+'" data-board-metric="'+escapeHTML(metric)+'">All '+view.total+' ›</a>':
+   '<button type="button" class="befn-bc-more" data-board-open="'+escapeHTML(metric)+'">All '+view.total+' ›</button>'):'';
+  return '<section class="befn-bcard'+(view.isRating?' is-rating':'')+'"><header><h4>'+escapeHTML(view.label)+'</h4><small>'+escapeHTML(note)+'</small></header>'+body+more+'</section>';
+ }
+ function boardGridHTML(s){
+  const groups={};
+  // Finishing (2 boards) and Pace (1) share a row so no group is a lone card.
+  for(const x of boardData.stats){const g=x.group==="Finishing"||x.group==="Pace"?"Finishing and pace":x.group;(groups[g]=groups[g]||[]).push(x.id);}
+  const win=boardData.windows[s.window]||"";
+  const sec=(title,sub,ids)=>'<section class="befn-bgroup"><div class="befn-bgroup-head"><h3>'+escapeHTML(title)+'</h3><span>'+escapeHTML(sub)+'</span></div>'+
+   '<div class="befn-bgrid" style="--cols:'+(ids.length>5?3:ids.length)+'">'+ids.map(id=>boardCardHTML(id,s,10)).join("")+'</div></section>';
+  return sec("Ratings",scopeLabel(s.division),BOARD_RATING_ORDER)+
+   Object.entries(groups).map(([g,ids])=>sec(g,win+(s.division==="all"?"":" · "+scopeLabel(s.division)),ids)).join("");
  }
  function showBoard(root){
   const results=root.querySelector(".befn-v3-board-results");
   const windows=root.querySelector(".befn-board-windows");
+  const grid=boardState.view==="grid";
   const view=boardRows();
   const found=searchRows(boardState.query);
-  if(windows)windows.hidden=!!found||view.isRating;
+  root.classList.toggle("is-grid",grid&&!found);
+  if(windows)windows.hidden=!!found||(!grid&&view.isRating);
+  root.querySelectorAll("[data-board-view]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.boardView===boardState.view)));
   if(found){results.innerHTML=searchHTML(found);return;}
   root.querySelectorAll("[data-board-window]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.boardWindow===boardState.window)));
-  const scope=boardState.division==="all"?"All divisions":boardData.divisions[boardState.division]||"Division";
+  if(grid){
+   results.innerHTML=boardGridHTML(boardState)+'<p class="befn-board-rule">Ratings need '+Math.max(boardData.minFights,BOARD_RATING_MIN_FIGHTS)+
+    ' UFC fights with full round-by-round statistics; stat boards need '+boardData.minFights+' and '+Math.round(boardData.minCageSeconds/60)+
+    ' minutes in the cage in the window. Updated '+escapeHTML(boardData.asOf)+'.</p>';
+   return;
+  }
+  const scope=scopeLabel(boardState.division);
   const when=view.isRating?"Whole UFC career, recent fights count most":boardData.windows[boardState.window];
   const display=view.rows.slice(0,30);
   results.innerHTML='<div class="befn-board-result-head"><h3>'+escapeHTML(view.label)+'</h3><p>'+
@@ -971,6 +1049,17 @@
    '<p class="befn-board-rule">A fighter needs '+view.minimum+' UFC fights with full round-by-round statistics'+
    (view.isRating?'':' and '+Math.round(boardData.minCageSeconds/60)+' minutes in the cage in this window')+'. Updated '+escapeHTML(boardData.asOf)+'.</p>';
  }
+ // Shared with the Fighters hub: the rating cards for one division, from the same data and rules as the Analysis page.
+ if(typeof window!=="undefined")window.BEFNBoards={
+  ready:()=>!!boardData,
+  failed:()=>boardFailed,
+  load(fn){if(boardData||boardFailed){fn&&fn();return;}if(fn)boardWaiters.push(fn);loadBoards();},
+  cards(division,metrics,n){
+   if(!boardData)return "";
+   const s={...boardState,division,window:"l36"};
+   return (metrics||BOARD_RATING_ORDER).map(m=>boardCardHTML(m,s,n||5,{link:true})).join("");
+  }
+ };
  function applyV3(f){
   const record=v3For(f);
   // A schema-4 statistical snapshot never supersedes an independently
@@ -1416,11 +1505,35 @@
    '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
  }
  let timer=null;
+ // Speed (28 Nov 2026): a closed fight snapshot goes into the page as its summary line only. The Fights page held
+ // about 17,500 elements inside closed snapshots; the body is now drawn, fresh, the first time a snapshot is opened.
+ // An open snapshot (or one the reader had open) is drawn in full as before.
+ function lazySnapshot(html){
+  if(!html)return html;
+  const key=(html.match(/data-snapshot-key="([^"]*)"/)||[])[1];
+  if(key!==undefined&&openSnapshots.has(key.replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,"<").replace(/&gt;/g,">")))return html;
+  const end=html.indexOf("</summary>");
+  if(!/^<details\b/.test(html)||end<0)return html;
+  return html.slice(0,8)+' data-lazy="1"'+html.slice(8,end+10)+"</details>";
+ }
+ function fillSnapshot(el){
+  loadProfileData();   // the panel redraws with the post-fight totals when they arrive (update())
+  const article=el.closest("article.result-bout-compact");
+  const html=article&&renderSnapshot(article);
+  if(!html){el.removeAttribute("data-lazy");return;}
+  const hadFocus=el.contains(document.activeElement);
+  el.outerHTML=html;
+  if(hadFocus)article.querySelector(':scope > .befn-fight-snapshot > summary')?.focus({preventScroll:true});
+ }
+ let profileDataAsked=false;
+ const wantsProfileData=()=>String(window.location?.hash||"").startsWith("#fighter/")||
+  !!document.querySelector?.("#fighterDialog[open],#fighterGrid,.befn-fight-snapshot[open],.befn-history");
  function hydrate(){
+  if(!profileDataAsked&&wantsProfileData())loadProfileData();
   renderV3Boards();
   for(const article of document.querySelectorAll("article.result-bout-compact")){
    if(article.querySelector(":scope > .befn-fight-snapshot"))continue;
-   const html=renderSnapshot(article);
+   const html=lazySnapshot(renderSnapshot(article));
    if(html)article.insertAdjacentHTML("beforeend",html);
   }
  }
@@ -1485,9 +1598,11 @@
   const skills=[];
   if(v2){
    for(const [id,label] of [["striking","Striking"],["wrestling","Wrestling"],["grappling","Grappling"]]){
-    const v=v2.skills?.[id]?.roster;if(Number.isFinite(v))skills.push({label,score:v,percentile:true});
+    const fine=v2.skills?.[id]?.score,v=Number.isFinite(fine)?fine:v2.skills?.[id]?.roster;
+    if(Number.isFinite(v))skills.push({label,score:v,percentile:!Number.isFinite(fine)});
    }
-   if(formShown(e))skills.push({label:"Form",score:e.form,percentile:true});
+   // Form is a 2-decimal score (25 Nov 2026), so it prints as "94.74", never "94.74th pct".
+   if(formShown(e))skills.push({label:"Form",score:e.form,percentile:false});
   }
   const pills=[];
   const champion=stats?.champion===true||(isReviewedUfc(f)&&f.category==="Champion");
@@ -1569,7 +1684,7 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot")){
    if(el.open)openSnapshots.add(el.dataset.snapshotKey);
    const article=el.closest("article.result-bout-compact");
-   if(article){const html=renderSnapshot(article);if(html)el.outerHTML=html}
+   if(article){const html=lazySnapshot(renderSnapshot(article));if(html)el.outerHTML=html}
   }
   layoutV3Dialog();
   schedule();
@@ -1615,6 +1730,7 @@
   if(!el?.matches?.(".befn-fight-snapshot"))return;
   if(el.open)openSnapshots.add(el.dataset.snapshotKey);
   else openSnapshots.delete(el.dataset.snapshotKey);
+  if(el.open&&el.dataset.lazy)fillSnapshot(el);
  },true);
  const mount=document.getElementById("main")||document.body;
  if(mount&&typeof MutationObserver!=="undefined")new MutationObserver(schedule).observe(mount,{subtree:true,childList:true});
@@ -1890,9 +2006,16 @@
  }).catch(()=>{});
 
 
+ // Speed (28 Nov 2026): the post-fight totals (6.8 MB) and the V3 snapshot (1.7 MB) are only used by fighter profiles,
+ // the old all-sports fighter grid and opened fight snapshots, so they load the first time one of those is on screen
+ // instead of on every page, and are cached by the browser for up to an hour.
+ function loadProfileData(){
+ if(profileDataAsked)return;
+ profileDataAsked=true;
+ const hour=Math.floor(Date.now()/3600000);
  // Live-derived post-fight sample totals are independent of the career-wide
  // rating snapshot; they must not silently replace a longer audited sample.
- fetch("data/ufc-postfight-metrics.json",{cache:"no-store"})
+ fetch("data/ufc-postfight-metrics.json?h="+hour)
   .then(r=>r.ok?r.json():null).then(d=>{
    if(!d||d.schema!==1||d.scope!=="ufc-only"||!d.fighters)return;
    let added=0;
@@ -1910,7 +2033,7 @@
    }
   }).catch(()=>{});
 
- fetch("data/ufc-fighter-v3.json").then(r=>r.ok?r.json():null).then(data=>{
+ fetch("data/ufc-fighter-v3.json?h="+hour).then(r=>r.ok?r.json():null).then(data=>{
   if(![3,4].includes(data?.schema)||!Array.isArray(data.boards)||!data.fighters)return;
   ufcV3=data;
   v3Population=null;
@@ -1919,6 +2042,10 @@
   if(document.querySelector('#fighterGrid'))window.dispatchEvent(new Event('hashchange'));
   update();
  }).catch(()=>{});
+ }
+ window.addEventListener("hashchange",()=>{if(!profileDataAsked&&wantsProfileData())loadProfileData();});
+ document.addEventListener("click",e=>{if(!profileDataAsked&&e.target.closest?.("[data-fighter],a[href^='#fighter/']"))loadProfileData();},true);
+ if(wantsProfileData())loadProfileData();
  fetch("data/fighter-intelligence.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!Array.isArray(d.fighters))return;
   for(const rec of d.fighters){if(rec?.organisation==="UFC"&&rec.name)stats.set(norm(rec.name),rec)}

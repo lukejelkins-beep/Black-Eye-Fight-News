@@ -1,7 +1,7 @@
 /* BEFN Banzuke changes page (sumo.html#changes/YYYYMM), design A with a desktop slope chart
    (owner, 24 Nov 2026: "A but I want a slope chart on desktop"). Renders buildChanges() from
    sumo-banzuke-changes.mjs. h = { e, head(id), cutout(id), known(id), releases: [YYYYMM newest first] }. */
-import { face, who } from './sumo-home.mjs?v=20261124-banzuke2';
+import { face, who } from './sumo-home.mjs?v=20261128-brief1';
 import { shortRank, bashoName, position, tierOf, parseRank } from './sumo-home-data.mjs?v=20261124-banzuke2';
 
 /* Move size: exact rank numbers within Maegashira or Juryo; otherwise an arrow only, because

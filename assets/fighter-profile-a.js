@@ -259,7 +259,7 @@
   if(!m.skills.length)return "";
   const pct=m.ufc;
   return '<section class="befn-pa-sec befn-pa-skills"><h3>'+(pct?'Skills vs '+(m.rating&&m.rating.pool==="women"?'UFC women':m.rating&&m.rating.pool==="men"?'UFC men':'the UFC roster'):'BEFN ratings')+'</h3>'+
-   m.skills.map(s=>'<div class="befn-pa-meter"><div><span>'+esc(s.label)+'</span><b>'+(pct?esc(ordinal(s.score))+' pct':esc(s.score)+' / 100')+'</b></div>'+
+   m.skills.map(s=>'<div class="befn-pa-meter"><div><span>'+esc(s.label)+'</span><b>'+(pct&&s.percentile===false?esc(Number(s.score).toFixed(2)):pct?esc(ordinal(s.score))+' pct':esc(s.score)+' / 100')+'</b></div>'+
     '<i role="meter" aria-label="'+esc(s.label)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+esc(s.score)+'"><s style="width:'+Math.max(2,Math.min(100,+s.score))+'%"></s></i></div>').join("")+
    (pct?'<p class="befn-pa-note">Percentiles against every rated UFC '+(m.rating&&m.rating.pool==="women"?"woman":m.rating&&m.rating.pool==="men"?"man":"fighter")+'. <button type="button" class="befn-pa-link" data-pa-tab="stats">How the rating works</button></p>':
     '<p class="befn-pa-note">BEFN’s estimate from the record and results on file.</p>')+'</section>';

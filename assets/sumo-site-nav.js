@@ -58,6 +58,8 @@
       });
       /* A section with a single sumo page needs no second row. */
       sub.hidden = shown.length < 2;
+      /* Lets CSS wrap the five Analysis pills on phones (other sections stay one row). */
+      sub.dataset.section = here.section;
     }
   }
 

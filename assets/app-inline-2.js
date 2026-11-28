@@ -119,20 +119,10 @@ const desk={language:null,articles:[],sources:[],lastSuccessfulAt:null,events:[]
 const displayDate=v=>window.FightTime.localDateTime(v);
 const dayLabel=v=>new Date(v+'T12:00:00Z').toLocaleDateString('en-AU',{dateStyle:'medium',timeZone:'UTC'});
 async function deskJSON(path){
- const base='https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/';
- const results=await Promise.all([base+path,path].map(async url=>{
-  try{
-   const r=await fetch(url+'?t='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(15000)});
-   if(!r.ok)return null;
-   const data=await r.json();
-   if(path.endsWith('news-live.json')&&!Array.isArray(data.articles))return null;
-   if(path.endsWith('grappling-events.json')&&!Array.isArray(data.events))return null;
-   return data;
-  }catch{return null;}
- }));
- const valid=results.filter(Boolean);
- valid.sort((a,b)=>(Date.parse(b.lastSuccessfulAt||b.reviewedAt)||0)-(Date.parse(a.lastSuccessfulAt||a.reviewedAt)||0));
- if(valid.length)return valid[0];
+ // GitHub's raw copy and the site's copy, newest wins; shared with the other scripts on the page (assets/feed-cache.js).
+ const ok=data=>!(path.endsWith('news-live.json')&&!Array.isArray(data.articles))&&!(path.endsWith('grappling-events.json')&&!Array.isArray(data.events));
+ const best=await (window.BEFNFeed?window.BEFNFeed.newest:(p,ok)=>fetch(p+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>d&&(!ok||ok(d))?d:null).catch(()=>null))(path,ok,{timeoutMs:15000});
+ if(best)return best;
  throw Error('Feed unavailable');
 }
 async function loadDesk(background=false){
@@ -614,7 +604,7 @@ function scoutDivisionKey(d){return scoutDivisionName(d).normalize('NFKD').toLow
 function divisionFilter(){const seen=new Map();for(const x of D.fighters){if(state.fightersSport!=='All'&&x.sport!==state.fightersSport)continue;const k=scoutDivisionKey(x.division);if(k&&k!=='mma'&&!seen.has(k))seen.set(k,scoutDivisionName(x.division))}return `<select class="field" id="divisionFilter" aria-label="Choose weight division"><option value="All">All divisions</option>${[...seen].map(([k,d])=>`<option value="${esc(k)}" ${k===state.fightersDivision?'selected':''}>${esc(d)}</option>`).join('')}</select>`}
 function renderFighterCards(){const list=filteredFighters();const grid=document.querySelector('#fighterGrid');const count=document.querySelector('#fighterCount');if(grid){grid.innerHTML=list.length?list.map(fighterCard).join(''):'<div class="empty">No fighters match those filters.</div>';syncFighterPortraits(grid)}if(count)count.textContent=`${list.length} PROFILES`}
 function renderFighters(){const count=filteredFighters().length;const hub=state.fightersSport==='MMA';if(hub)return renderFrame(`<section class="fighters-unified"><h1 class="befn-sr">MMA fighters</h1><section class="fh" data-befn-fighters-hub aria-label="Fighters hub"></section></section>`);if(state.fightersSport==='Boxing')return renderFrame(`<section class="fighters-unified"><h1 class="befn-sr">Boxing fighters</h1><section class="fh fh-boxing" data-befn-boxing-hub aria-label="Boxing fighters hub"></section></section>`);return renderFrame(`<section class="fighters-unified">${viewTitle('','Fighter profiles')}<div class="filter-row">${segments('fightersCategory',['All','Champion','Contender','Prospect','Roster','Unassessed'],state.fightersCategory)}${divisionFilter()}<input class="field search" id="fighterSearch" placeholder="Search fighter, promotion, style, form…" aria-label="Search fighter profiles" value="${esc(state.fightersQuery)}"><span class="result-count" id="fighterCount">${count} PROFILES</span></div><details class="compact-note"><summary>About these records</summary><p>Historical roster from 7 November 2026. Some records, fixtures and notes require reconfirmation.</p></details><div class="fighters-grid" id="fighterGrid">${filteredFighters().length?filteredFighters().map(fighterCard).join(''):'<p class="empty">No verified scouting profiles are available for this selection.</p>'}</div></section>`)}
-function renderLeaderboards(withTop){return renderFrame(`${withTop?'<h1 class="fa-h1 fa-mma-h1">MMA analysis</h1><section class="fa-mount" data-befn-analysis="mma"></section>':''}<section class="fighters-unified befn-boards-unified">${viewTitle('','UFC stats leaderboards')}<p class="befn-board-lede">From every UFC fight with full round-by-round statistics. Pick a board, a division and a time window.</p><section class="befn-stat-board-page" data-befn-v3-leaderboards aria-live="polite"><p class="befn-board-placeholder">Loading UFC statistics…</p></section></section>`)}
+function renderLeaderboards(withTop){return renderFrame(`${withTop?'<h1 class="fa-h1 fa-mma-h1">MMA analysis</h1><nav class="fa-jump" aria-label="On this page"><button type="button" data-jump=".befn-boards-unified">Stats leaderboards</button><button type="button" data-jump=".fa-cs-hd">Champions</button><button type="button" data-jump=".fa-tf">Title fights</button><a href="#fighters">Fighters hub ›</a></nav><section class="fa-mount" data-befn-analysis="mma"></section>':''}<section class="fighters-unified befn-boards-unified">${viewTitle('','UFC stats leaderboards')}<section class="befn-stat-board-page" data-befn-v3-leaderboards aria-live="polite"><p class="befn-board-placeholder">Loading UFC statistics…</p></section></section>`)}
 const talkPlatforms = {
  X: {mark:'𝕏', hosts:['x.com','twitter.com']},
  Instagram: {mark:'◎', hosts:['instagram.com']},
@@ -1256,7 +1246,8 @@ let fighterOpener=null,pendingFighter='';
    assets/fighter-profile-a.js. UFC depth (ratings, round by round, compare) still comes from fighter-insights.js and is
    moved into the Fights, Stats and Compare tabs. #fighter/mma--<slug> and #fighter/boxing--<slug> open a basic profile
    from results and upcoming cards for fighters without a roster profile. */
-function openFighter(id){if(!dialog.open){const a=document.activeElement;fighterOpener={el:a&&a!==document.body&&!dialog.contains(a)?a:null,id};}
+let shownFighterId='';
+function openFighter(id){shownFighterId=id;if(!dialog.open){const a=document.activeElement;fighterOpener={el:a&&a!==document.body&&!dialog.contains(a)?a:null,id};}
  const ins=window.BEFNFighterInsights,PA=window.BEFNProfileA;
  // Data still loading: open once it has, if the reader is still waiting for this profile.
  const retry=()=>{if(pendingFighter===id||location.hash==='#fighter/'+id||decodeURIComponent(location.hash.slice(9))===id)openFighter(id)};
@@ -1285,7 +1276,7 @@ if(location.hash.startsWith('#fighter/')){const fid=decodeURIComponent(location.
  if(pageShown&&main.children.length){openFighter(fid);return;}
  const sp=fighterSport(fid);
  if(sp&&activeSport()!==sp&&window.BEFNSport?.set){window.BEFNSport.set(sp);if(activeSport()===sp)return;}
- key='fighters';pageHash='#fighters';}const fr=window.BEFNFightsRoute&&window.BEFNFightsRoute.parse(location.hash);if(fr){fightDesk.view=fr.view;if(location.hash!==fr.canonical)history.replaceState(null,'',fr.canonical);key='fights';}const all=['home','news','champions','fighters','leaderboards','social','fights','highlights','analysis','predictions'];if(!all.includes(key))key='home';const pages={home:renderLanding,news:renderHome,champions:renderChampions,fighters:renderFighters,leaderboards:renderLeaderboards,social:renderSocial,fights:renderFights,highlights:renderHighlights,analysis:renderAnalysis,predictions:renderPredictions};const sub=document.getElementById('sh-sub');if(sub)sub.innerHTML=subNavHTML(key);main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===(navGroup[key]||key);x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}else pageHash=location.hash||'#home';pageShown=true;window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
+ key='fighters';pageHash='#fighters';}const fr=window.BEFNFightsRoute&&window.BEFNFightsRoute.parse(location.hash);if(fr){fightDesk.view=fr.view;if(location.hash!==fr.canonical)history.replaceState(null,'',fr.canonical);key='fights';}const all=['home','news','champions','fighters','leaderboards','social','fights','highlights','analysis','predictions'];if(!all.includes(key))key='home';/* The front page is the only all-sports page (owner, 28 Nov 2026): a section opened with "all" moves to the last sport; the sport change re-runs navigate(). */if(key!=='home'&&activeSport()==='all'&&window.BEFNSport?.last){window.BEFNSport.set(window.BEFNSport.last());if(activeSport()!=='all')return;}const pages={home:renderLanding,news:renderHome,champions:renderChampions,fighters:renderFighters,leaderboards:renderLeaderboards,social:renderSocial,fights:renderFights,highlights:renderHighlights,analysis:renderAnalysis,predictions:renderPredictions};const sub=document.getElementById('sh-sub');if(sub)sub.innerHTML=subNavHTML(key);main.innerHTML=pages[key]();syncFighterPortraits(main);if(key==='highlights')window.FightFilm.load();hydrateTalkEmbeds();document.querySelectorAll('[data-nav]').forEach(x=>{const yes=x.dataset.nav===(navGroup[key]||key)&&!(key==='home'&&activeSport()==='all');x.classList.toggle('active',yes);if(yes)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(location.hash.startsWith('#fighter/')){openFighter(decodeURIComponent(location.hash.slice(9)))}else pageHash=location.hash||'#home';pageShown=true;window.scrollTo({top:0,behavior:'instant'});hydrateMissingPortraits().catch(()=>{});if(key==='social'&&!liveTalk.loading&&Date.now()-liveTalk.lastAttempt>10*60*1000)loadLiveTalk().catch(()=>{});}
 document.addEventListener('click',e=>{
  const fightButton=e.target.closest('button[data-fights-view],button[data-fights-promotion]');
  if(fightButton){
@@ -1386,7 +1377,9 @@ if(ratio<.8&&img.closest('.thumb'))img.style.objectPosition='50% 6%';},true);
 window.addEventListener('hashchange',navigate);
 // Closing a profile opened from an address (a link or a deep link) gives the address back to the page behind it, so
 // the same name opens again and reloading shows that page.
-document.addEventListener('close',e=>{pendingFighter='';if(e.target===dialog&&location.hash.startsWith('#fighter/'))history.replaceState(null,'',pageHash||'#fighters')},true);
+/* The dialog's close event arrives a moment after it closes. If another profile was opened in that moment (its #fighter/
+   link is already in the address), leave the address alone: resetting it would cancel the new profile (28 Nov 2026). */
+document.addEventListener('close',e=>{pendingFighter='';if(e.target===dialog&&location.hash.startsWith('#fighter/')&&(!shownFighterId||decodeURIComponent(location.hash.slice(9))===shownFighterId))history.replaceState(null,'',pageHash||'#fighters')},true);
 /* Keyboard users return to the card they opened the profile from (QA audit D04). */
 dialog?.addEventListener('close',()=>{const o=fighterOpener;fighterOpener=null;if(!o)return;const back=(o.el&&document.contains(o.el))?o.el:main.querySelector('[data-fighter="'+CSS.escape(o.id)+'"],a[href="#fighter/'+CSS.escape(o.id)+'"]');if(!back){/* The page behind may have changed (a UFC profile from the hub swaps it to the leaderboards); land on its heading, not <body>. */const h=main.querySelector('h1,h2');if(h){if(!h.hasAttribute('tabindex'))h.setAttribute('tabindex','-1');h.focus({preventScroll:true});}return;}back.focus({preventScroll:false});});
 /* Fights Upcoming/Results tabs follow the ARIA tabs pattern: arrows, Home and End move and select. */
@@ -1477,3 +1470,5 @@ window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.lo
 })();
 
 })();
+/* Analysis "On this page" row (28 Nov 2026): jump straight to the leaderboards instead of scrolling past the champions. */
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-jump]');if(!b)return;const t=document.querySelector('#main '+b.dataset.jump);if(t)t.scrollIntoView({block:'start',behavior:'smooth'});});

@@ -116,7 +116,9 @@ test("deep links: the route puts the sport's Fighters hub behind a profile and c
  assert.match(nav,/key='fighters';pageHash='#fighters';/);
  assert.doesNotMatch(nav,/key='leaderboards'/,"a UFC profile no longer swaps the page behind it");
  // Closing gives the address back to the page behind.
- assert.match(app,/location\.hash\.startsWith\('#fighter\/'\)\)history\.replaceState\(null,'',pageHash\|\|'#fighters'\)/);
+ assert.match(app,/location\.hash\.startsWith\('#fighter\/'\)&&\(!shownFighterId\|\|decodeURIComponent\(location\.hash\.slice\(9\)\)===shownFighterId\)\)history\.replaceState\(null,'',pageHash\|\|'#fighters'\)/,
+ "closing resets the address only while it still names the closed profile (a profile opened in the same moment is kept)");
+assert.match(app,/function openFighter\(id\)\{shownFighterId=id;/);
  // Data that loads later opens a profile the reader is still waiting for (the deep link or a click).
  assert.match(app,/PA\?\.basicFor\?\.\(id,retry\)/);
 });
