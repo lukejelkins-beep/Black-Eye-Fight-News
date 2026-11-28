@@ -9,6 +9,9 @@ const fightTalkCSS=fs.readFileSync('assets/fight-talk.css','utf8');
 assert(html.includes("memes:'Meme pages'"),'Fight Talk shows an explicit Meme pages feed filter');
 assert(html.includes("state.talkRole==='memes'?p.role==='meme'"),'Fight Talk isolates meme sources in their own filter');
 assert(html.includes('fight-talk.css?v=20261111-instagram-embed-height'),'The updated Fight Talk stylesheet must bypass stale mobile caches');
+// 28 Nov 2026: posts open by themselves near the viewport (no tap), and the page-title underline has an anchor.
+assert(html.includes('function talkAutoOpen')&&html.includes("rootMargin:'700px 0px'"),'Fight Talk posts open as they near the screen, without a tap');
+assert(/html body #main \.section-heading h1[\s\S]{0,400}all:unset;display:block;position:relative/.test(fs.readFileSync('assets/site-theme.css','utf8')),'all:unset on page titles keeps position:relative so the red underline stays under the title');
 assert(!html.includes('id="original-talk-posts"'),'Remove legacy mobile embed styles with zoom and fixed iframe heights');
 
 assert(html.includes("const xApiFeed='data/fight-talk-x-api.json';"),'Read original verified X API posts from own dataset');
