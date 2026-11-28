@@ -46,6 +46,28 @@ Calibration on test: 50-60% → favourite won 55%; 60-70% → 66%; 70-80% → 69
 - **Sharpening the chances.** The 2023-2024 fit asked for a little, but the test shows over-confidence already, so it is capped at 1.0.
 - **Dropping style and birthplace** costs 0.0003 Brier overall and 0.0002 in Makuuchi, so both are kept. Birthplace is a single born-abroad or born-in-Japan flag, shown under "Style and background". The owner can drop it at that small cost.
 
+## Live record (from January 2027)
+- `assets/sumo-prediction-log.mjs`, run by `scripts/sumo-log-predictions.mjs` after every live refresh (`.github/workflows/sumo-preview-live-refresh.yml`). Output: `data/sumo/prediction-log.json`, published.
+- When the next day's torikumi is announced, the job saves that day's Makuuchi and Juryo picks, with the time and the model version.
+  - It saves only if no bout of that day has been fought, and the results through the day before are all in.
+  - A saved day is never saved again or changed.
+- Once a day is fought, each saved pick gets its result: `a`, `b`, or `void` for a fusen, an absence or a changed pairing. Chances are never touched.
+- The Predictor page shows the record by division and by basho, plus the latest scored day's picks. Void bouts are left out.
+- A simulated full basho (November 2026 replayed as January) is in `tests/test-sumo-prediction-log.mjs`. Saved chances match the live replay to 4 decimal places.
+
+## Juryo
+Chances are saved for Juryo bouts too, so the Basho review's day view has a Makuuchi | Juryo switch (`?div=juryo`). Adding them changed no weight and no Makuuchi chance. The title race, kinboshi, "beat the odds" and next-day picks stay Makuuchi.
+
+## Twice-yearly refit (`.github/workflows/sumo-predictor-refit.yml`)
+- Runs 3 Feb and 3 Aug, between basho, and on demand.
+- Steps:
+  - Restores the research cache and fetches only new basho plus the wrestler list (about 20 requests).
+  - Refits with `--test-from` set to last year: train 2003 to T-3, tune T-2 to T-1, test T onwards.
+  - **Gate** (`--gate`): the all-bout Brier gain over v1 must have its 95% interval above zero, and the Makuuchi gain must be positive. If the gate fails, there is no PR and a warning goes in the run summary.
+  - If the gate passes, it runs the Sumo predictor tests and opens or updates a draft PR from `auto/sumo-predictor-refit` with the numbers. Merging needs the owner's "Merge N".
+- A dry run on 28 Nov with T = 2026: gate met. All-bout gain 0.0036 (0.0019 to 0.0049). The Makuuchi gain was positive (0.0019), but with one test year its interval included zero (−0.0002 to 0.0040). That is why the gate asks for a positive Makuuchi gain, not an interval above zero.
+- Needs "Allow GitHub Actions to create pull requests" (Settings > Actions > General), like the weekly UFC job.
+
 ## Upkeep
 - After the daily release watch saves a new basho, `--update` rolls the ratings and state forward and saves that basho's chances with the current weights. It makes no requests and does not refit.
 - Refit by hand once or twice a year: collect with `scripts/sumo-collect-model-data.mjs --cache <dir>` (cached files are not fetched again), then `scripts/sumo-build-model.mjs --cache <dir>`. Check that the test results above still hold before committing.
