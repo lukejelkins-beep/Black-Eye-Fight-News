@@ -125,3 +125,32 @@ test("the KO/TKO count in Performance Highlights cannot contradict the fights",(
  const js=fs.readFileSync("assets/fighter-insights.js","utf8");
  assert.match(js,/if\(b\.type==='count'&&\(m\.value<1\|\|m\.value!==countFromRecent\(v3,b\.id\)\)\)return \[\];/);
 });
+
+test("a UFC fighter with a Sherdog gym shows one 'Trains at' line, and nobody else gets a placeholder",()=>{
+ // data/ufc-fighter-gyms.json (used with Sherdog's permission, 28 Nov 2026): where Sherdog lists the fighter as training now.
+ const base=PA.model({id:"x",name:"Islam Makhachev",sport:"Boxing",record:"1-0",latest:[]},null,{...data,today:"2026-11-26"});
+ const ufc={...base,ufc:true},other={...base,ufc:false};
+ const keep=PA._data.gyms;
+ try{
+  PA._data.gyms={islammakhachev:["Eagles MMA","American Kickboxing Academy"],janedoe:["Some Gym"]};
+  const withGym=PA.shellHTML({id:"x"},ufc,h);
+  assert.match(withGym,/<p class="befn-pa-gym">Trains at: <b>Eagles MMA, American Kickboxing Academy<\/b><\/p>/);
+  assert.equal((withGym.match(/befn-pa-gym/g)||[]).length,1);
+  assert.doesNotMatch(PA.shellHTML({id:"x"},other,h),/befn-pa-gym/,"only UFC profiles show the line");
+  assert.doesNotMatch(PA.shellHTML({id:"x"},{...ufc,name:"Nobody Listed"},h),/befn-pa-gym|Trains at/,"no entry: no line, no placeholder");
+  PA._data.gyms=null;
+  assert.doesNotMatch(PA.shellHTML({id:"x"},ufc,h),/befn-pa-gym/,"data not loaded: no line");
+  PA._data.gyms={islammakhachev:["<b>x</b>"]};
+  assert.doesNotMatch(PA.shellHTML({id:"x"},ufc,h),/<b>x<\/b>/,"gym names are escaped");
+ }finally{PA._data.gyms=keep;}
+});
+
+test("the saved gym file is keyed by folded name and every entry is a non-empty list of names",()=>{
+ const g=read("data/ufc-fighter-gyms.json");
+ assert.equal(g.schema,1);
+ assert.ok(Object.keys(g.fighters).length>500);
+ for(const [k,v] of Object.entries(g.fighters)){
+  assert.match(k,/^[a-z0-9]+$/);
+  assert.ok(Array.isArray(v)&&v.length&&v.every(x=>typeof x==="string"&&x.trim()),k);
+ }
+});

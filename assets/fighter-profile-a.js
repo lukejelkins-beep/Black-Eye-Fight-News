@@ -300,21 +300,32 @@
    '<details class="befn-pa-about"><summary>About this profile</summary><ul data-pa-about-list>'+m.about.map(a=>'<li>'+esc(a)+'</li>').join("")+'</ul></details>'+
    '</div>';
  }
+ // Where Sherdog lists a UFC fighter as training now (data/ufc-fighter-gyms.json, used with Sherdog's permission, 28 Nov 2026).
+ // Not the gym at the time of any fight, so the label says "Trains at". No entry: no line, never a placeholder.
+ function gymsOf(m){
+  const g=m&&m.ufc&&typeof data!=="undefined"&&data.gyms?data.gyms[foldName(m.name)]:null;
+  return Array.isArray(g)&&g.length?g:null;
+ }
+ function gymHTML(m){
+  const g=gymsOf(m);
+  return g?'<p class="befn-pa-gym">Trains at: <b>'+g.map(esc).join(", ")+'</b></p>':"";
+ }
  function whoHTML(m,h){
   return '<small class="befn-pro-eyebrow befn-pa-eyebrow">'+esc(m.eyebrow)+'</small><h2 data-profile-name>'+esc(m.name)+'</h2>'+
    (m.record?'<div class="befn-pa-record"><strong>'+esc(m.record)+'</strong><span>'+esc(m.recordSmall)+'</span></div>':'')+
-   pillsHTML(m,h)+nextHTML(m)+'<div class="befn-top-credentials" data-befn-top-credentials></div>';
+   pillsHTML(m,h)+gymHTML(m)+nextHTML(m)+'<div class="befn-top-credentials" data-befn-top-credentials></div>';
  }
 
  // ---------- browser ----------
- const data={results:null,upcoming:null,cuts:{ufc:null,boxing:null,mma:null},countries:null,loading:null,loaded:false};
+ const data={results:null,upcoming:null,cuts:{ufc:null,boxing:null,mma:null},countries:null,gyms:null,loading:null,loaded:false};
  const basics=new Map();
  function load(){
   if(data.loading||typeof fetch!=="function")return data.loading||Promise.resolve();
   const get=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
   data.loading=Promise.all([get("data/results.json"),get("data/upcoming-cards.json"),get("data/ufc-cutout-register.json"),
-   get("data/boxing-cutout-register.json"),get("data/mma-cutout-register.json"),get("data/ufc-fighter-countries.json")]).then(([r,u,c1,c2,c3,cc])=>{
+   get("data/boxing-cutout-register.json"),get("data/mma-cutout-register.json"),get("data/ufc-fighter-countries.json"),get("data/ufc-fighter-gyms.json")]).then(([r,u,c1,c2,c3,cc,gg])=>{
    data.countries=cc&&cc.schema===1&&cc.fighters||null;
+   data.gyms=gg&&gg.schema===1&&gg.fighters||null;
    data.results=r&&Array.isArray(r.results)?r:null;data.upcoming=u&&Array.isArray(u.events)?u:null;
    data.cuts={ufc:c1&&c1.cutouts||null,boxing:c2&&c2.cutouts||null,mma:c3&&c3.cutouts||null};
    data.loaded=true;
