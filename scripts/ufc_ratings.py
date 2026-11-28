@@ -446,15 +446,42 @@ def pool_of(fighter: dict) -> str:
     return "women" if str(fighter.get("divisionSlug") or "").startswith("womens-") else "men"
 
 
+def results_in_window(pre: list, bout_ids: dict, as_of: str, p: dict | None = None) -> dict:
+    """Results rating built from only the bouts in a time window (owner, 28 Nov 2026: BEFN ratings for 12, 24, 36 months).
+
+    pre: the second value of results_walk (every bout with both fighters' career ratings going in, drift applied).
+    bout_ids: slug -> set of boutIds that count for that fighter in the window.
+    Each fighter starts from the neutral rating and is moved only by their own in-window bouts, one-sided: the
+    opponent is valued at their career rating going into the bout, so a window of a few fights is not scored against
+    opponents who also start from scratch. Returns slug -> {"rating", "fights", "last"} aged to as_of like results_as_of."""
+    p = p or RESULTS
+    state = {}
+    for bout, ra, rb, _fa, _fb in pre:
+        for me, opp, mine, theirs, y in (
+                (bout["a"], bout["b"], ra, rb, 1.0 if bout["outcome"] == "W" else 0.0 if bout["outcome"] == "L" else 0.5),
+                (bout["b"], bout["a"], rb, ra, 0.0 if bout["outcome"] == "W" else 1.0 if bout["outcome"] == "L" else 0.5)):
+            if bout["boutId"] not in bout_ids.get(me, ()):
+                continue
+            s = state.setdefault(me, {"rating": RESULTS_MEAN, "fights": 0, "last": None})
+            r = _idle(s["rating"], s["last"], bout["date"], p)
+            expected = 1 / (1 + 10 ** ((theirs - r) / 400))
+            s["rating"] = r + p["k"] * (1 + p["boost"] / (s["fights"] + 1)) * result_margin(bout, p) * (y - expected)
+            s["fights"] += 1
+            s["last"] = bout["date"]
+    return {slug: {**v, "rating": _idle(v["rating"], v["last"], as_of, p)} for slug, v in state.items()}
+
+
 def rate_roster(fighters: dict, bouts: list[dict] | None = None, as_of: str | None = None,
-                prior: dict | None = None) -> dict:
+                prior: dict | None = None, results: dict | None = None) -> dict:
     """Women and men are rated as separate pools (owner, 26 Nov 2026, "separate the women in terms of their
     stats/ranking"): skill percentiles, shrinkage means, the headline centre, the rank, the overall percentile and the
     results percentile are each worked out inside the fighter's own pool, so "rankOf" is the pool's size and "pool" says
     which pool. Women only fight women, so the two Elo ratings are never anchored to each other and a shared centre or
     percentile would compare numbers that were never on one scale. The results Elo itself is unchanged: it runs once
     over every bout, and each fighter's rating only ever moves against their own opponents."""
-    results = results_as_of(bouts or [], as_of or "9999-12-31", None, prior) if bouts else {}
+    # results: a ready-made slug -> {"rating", "fights"} (results_in_window) in place of the whole-career walk.
+    if results is None:
+        results = results_as_of(bouts or [], as_of or "9999-12-31", None, prior) if bouts else {}
     out = {}
     for pool in POOLS:
         members = {slug: f for slug, f in fighters.items() if pool_of(f) == pool}
