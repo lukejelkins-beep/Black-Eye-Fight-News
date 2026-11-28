@@ -175,3 +175,16 @@ for (const tz of [TZ, 'UTC', 'America/New_York']) {
 }
 
 console.log('news page A: ok');
+
+/* Speed (28 Nov 2026): the display-time dedupe works out each story's URL and headline terms once, not once per pair.
+   Same clusters as before on the saved news feed, and well under the old ~0.6 s in Node. */
+{
+  const fs = require('fs');
+  const feed = JSON.parse(fs.readFileSync('data/news-live.json', 'utf8')).articles || [];
+  const t = Date.now();
+  const a = window.BEFNNewsClusters(feed);
+  const ms = Date.now() - t;
+  const b = window.BEFNNewsClusters(feed);
+  assert.deepStrictEqual(a.map(c => [c.item.url, c.dupes.length]), b.map(c => [c.item.url, c.dupes.length]), 'repeat calls give the same clusters');
+  assert.ok(ms < 1500, 'dedupe of the saved feed took ' + ms + ' ms');
+}

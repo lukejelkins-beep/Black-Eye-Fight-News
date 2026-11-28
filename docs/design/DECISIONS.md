@@ -2,6 +2,15 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Speed: the site was slow for measurable reasons)
+- **Owner: "the website/app can be a bit laggy/slow"; chose all four fixes.** Measured in Chromium at 4x CPU throttle (about a mid-range phone), site files served locally:
+  - **News dedupe** compared every pair of stories and re-parsed URLs and headlines per pair: one 12.0 s block on the front page (2.4 s unthrottled), 2.9 s on News. Each story is now prepared once and each pair's answer kept; output identical (checked on the saved feed plus 220 planted duplicates, over three overlapping runs).
+  - **18 MB of data on the front page.** The post-fight totals (6.8 MB, fetched with no-store, so on every visit) and the V3 snapshot (1.7 MB) now load only when a profile, an opened fight snapshot or the old fighter grid needs them, with an hourly cache key. The live feeds (news, results, upcoming cards) were fetched by several scripts, each from GitHub and from the site; now once per page per source (`assets/feed-cache.js`), same "newest copy wins" rule. Front page: 18.3 MB to 6.1 MB of site data.
+  - **Fights page built ~9,200 elements**, ~17,500 more inside closed fight snapshots counted in depth. A closed snapshot is now its summary line; the body is drawn, fresh, when opened. 9,172 to 2,291 elements.
+  - **Stylesheets bundled at build time:** each unbroken run of stylesheet links (inline `<style>` blocks split the runs, so the cascade order is unchanged) becomes one `assets/site.<hash>.css`; about 40 stylesheet requests to 9. Built pages checked pixel-identical to the source on five pages at 390 and 1280 px. **Scripts were not bundled:** in one file, an error in any script would stop every script after it, and their real costs (above) are fixed.
+  - Result at 4x throttle: front page longest block 12.0 s to 0.5 s, total blocking 13.9 s to 1.1 s; News 2.9 s to 0.1 s.
+  - Not measured: the live Render site, real phones, network latency. — Owner; Claude — separate PR.
+
 ## 2026-11-28 (Sumo predictor v2: every known fact, 2000-2026)
 - **The Sumo predictor is rebuilt on 2000-2026** (owner: "consider all known facts about the sumo wrestler and stats about their bouts and create an algorithm that is as accurate as possible"). It learns from 125,791 Makuuchi, Juryo and Makushita bouts collected from the Sumo API (paced, about 500 requests, under the 24 Nov permission). For each bout it uses what was known that morning:
   - rank;

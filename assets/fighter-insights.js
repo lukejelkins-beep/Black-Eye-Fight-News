@@ -1408,11 +1408,35 @@
    '<div class="befn-history-panel">'+(active==="stats"?statsPanel(f,names):lastFivePanel(f,names))+'</div></section>';
  }
  let timer=null;
+ // Speed (28 Nov 2026): a closed fight snapshot goes into the page as its summary line only. The Fights page held
+ // about 17,500 elements inside closed snapshots; the body is now drawn, fresh, the first time a snapshot is opened.
+ // An open snapshot (or one the reader had open) is drawn in full as before.
+ function lazySnapshot(html){
+  if(!html)return html;
+  const key=(html.match(/data-snapshot-key="([^"]*)"/)||[])[1];
+  if(key!==undefined&&openSnapshots.has(key.replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,"<").replace(/&gt;/g,">")))return html;
+  const end=html.indexOf("</summary>");
+  if(!/^<details\b/.test(html)||end<0)return html;
+  return html.slice(0,8)+' data-lazy="1"'+html.slice(8,end+10)+"</details>";
+ }
+ function fillSnapshot(el){
+  loadProfileData();   // the panel redraws with the post-fight totals when they arrive (update())
+  const article=el.closest("article.result-bout-compact");
+  const html=article&&renderSnapshot(article);
+  if(!html){el.removeAttribute("data-lazy");return;}
+  const hadFocus=el.contains(document.activeElement);
+  el.outerHTML=html;
+  if(hadFocus)article.querySelector(':scope > .befn-fight-snapshot > summary')?.focus({preventScroll:true});
+ }
+ let profileDataAsked=false;
+ const wantsProfileData=()=>String(window.location?.hash||"").startsWith("#fighter/")||
+  !!document.querySelector?.("#fighterDialog[open],#fighterGrid,.befn-fight-snapshot[open],.befn-history");
  function hydrate(){
+  if(!profileDataAsked&&wantsProfileData())loadProfileData();
   renderV3Boards();
   for(const article of document.querySelectorAll("article.result-bout-compact")){
    if(article.querySelector(":scope > .befn-fight-snapshot"))continue;
-   const html=renderSnapshot(article);
+   const html=lazySnapshot(renderSnapshot(article));
    if(html)article.insertAdjacentHTML("beforeend",html);
   }
  }
@@ -1561,7 +1585,7 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot")){
    if(el.open)openSnapshots.add(el.dataset.snapshotKey);
    const article=el.closest("article.result-bout-compact");
-   if(article){const html=renderSnapshot(article);if(html)el.outerHTML=html}
+   if(article){const html=lazySnapshot(renderSnapshot(article));if(html)el.outerHTML=html}
   }
   layoutV3Dialog();
   schedule();
@@ -1607,6 +1631,7 @@
   if(!el?.matches?.(".befn-fight-snapshot"))return;
   if(el.open)openSnapshots.add(el.dataset.snapshotKey);
   else openSnapshots.delete(el.dataset.snapshotKey);
+  if(el.open&&el.dataset.lazy)fillSnapshot(el);
  },true);
  const mount=document.getElementById("main")||document.body;
  if(mount&&typeof MutationObserver!=="undefined")new MutationObserver(schedule).observe(mount,{subtree:true,childList:true});
@@ -1882,9 +1907,16 @@
  }).catch(()=>{});
 
 
+ // Speed (28 Nov 2026): the post-fight totals (6.8 MB) and the V3 snapshot (1.7 MB) are only used by fighter profiles,
+ // the old all-sports fighter grid and opened fight snapshots, so they load the first time one of those is on screen
+ // instead of on every page, and are cached by the browser for up to an hour.
+ function loadProfileData(){
+ if(profileDataAsked)return;
+ profileDataAsked=true;
+ const hour=Math.floor(Date.now()/3600000);
  // Live-derived post-fight sample totals are independent of the career-wide
  // rating snapshot; they must not silently replace a longer audited sample.
- fetch("data/ufc-postfight-metrics.json",{cache:"no-store"})
+ fetch("data/ufc-postfight-metrics.json?h="+hour)
   .then(r=>r.ok?r.json():null).then(d=>{
    if(!d||d.schema!==1||d.scope!=="ufc-only"||!d.fighters)return;
    let added=0;
@@ -1902,7 +1934,7 @@
    }
   }).catch(()=>{});
 
- fetch("data/ufc-fighter-v3.json").then(r=>r.ok?r.json():null).then(data=>{
+ fetch("data/ufc-fighter-v3.json?h="+hour).then(r=>r.ok?r.json():null).then(data=>{
   if(![3,4].includes(data?.schema)||!Array.isArray(data.boards)||!data.fighters)return;
   ufcV3=data;
   v3Population=null;
@@ -1911,6 +1943,10 @@
   if(document.querySelector('#fighterGrid'))window.dispatchEvent(new Event('hashchange'));
   update();
  }).catch(()=>{});
+ }
+ window.addEventListener("hashchange",()=>{if(!profileDataAsked&&wantsProfileData())loadProfileData();});
+ document.addEventListener("click",e=>{if(!profileDataAsked&&e.target.closest?.("[data-fighter],a[href^='#fighter/']"))loadProfileData();},true);
+ if(wantsProfileData())loadProfileData();
  fetch("data/fighter-intelligence.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!Array.isArray(d.fighters))return;
   for(const rec of d.fighters){if(rec?.organisation==="UFC"&&rec.name)stats.set(norm(rec.name),rec)}
