@@ -370,16 +370,10 @@ function hydrateResultPhotos(){
  pending=(async()=>{
   let changed=false;
   try{
-   let d;
-   for(const path of ['https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/data/results.json','data/results.json']){
-    try{
-     const res=await fetch(path+'?t='+Math.floor(Date.now()/30000),{cache:'no-store',signal:AbortSignal.timeout(12000)});
-     if(!res.ok)throw Error('Results unavailable');
-     const candidate=await res.json();
-     if(!Array.isArray(candidate.events)||!Array.isArray(candidate.results)||candidate.results.some(r=>r.fighters?.length!==2))throw Error('Invalid results');
-     d=candidate;break;
-    }catch{}
-   }
+   // The GitHub copy first, else the site's copy (unchanged rule); the download is shared with the rest of the page
+   // (assets/feed-cache.js), so results.json is fetched once per source, not once per script.
+   const okResults=c=>Array.isArray(c.events)&&Array.isArray(c.results)&&!c.results.some(r=>r.fighters?.length!==2);
+   const d=await (window.BEFNFeed?window.BEFNFeed.newest:(p,ok)=>fetch(p+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>d&&(!ok||ok(d))?d:null).catch(()=>null))('data/results.json',okResults,{bucketMs:30000,timeoutMs:12000,stamp:()=>0});
    if(!d)throw Error('No verified results data');
    const newest=x=>Math.max(0,...(x?.events||[]).map(e=>Date.parse(e.checkedAt)||0));
    if(data&&newest(d)<newest(data))throw Error('Older published data');

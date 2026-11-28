@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { build, referencedDataFiles, DATA_DIRS, OPTIONAL_DATA } from '../scripts/build-site.mjs';
@@ -94,3 +94,30 @@ test('the build does not grow unexpectedly', () => {
 });
 
 test.after(() => rmSync(out, { recursive: true, force: true }));
+
+test('stylesheets are bundled per unbroken run, in order, without crossing an inline <style>', () => {
+  const fixture = mkdtempSync(join(tmpdir(), 'befn-css-'));
+  const fixtureOut = join(fixture, 'dist');
+  try {
+    mkdirSync(join(fixture, 'assets'));
+    for (const n of ['a', 'b', 'c', 'd']) writeFileSync(join(fixture, 'assets', n + '.css'), '.' + n + '{color:red}');
+    writeFileSync(join(fixture, 'sw.js'), "const SHELL = [\n  '/',\n];\n");
+    writeFileSync(join(fixture, 'index.html'),
+      '<link rel="stylesheet" href="assets/a.css?v=1"><script src="x.js"></script><link rel="stylesheet" href="assets/b.css">' +
+      '<style>.inline{}</style><link rel="stylesheet" href="assets/c.css"><link rel="stylesheet" href="assets/d.css?v=2">');
+    const r = build(fixture, fixtureOut);
+    assert.equal(r.styles.length, 2, 'two runs, split by the inline style');
+    const html = readFileSync(join(fixtureOut, 'index.html'), 'utf8');
+    assert.match(html, /^<link rel="stylesheet" href="assets\/site\.[a-f0-9]{12}\.css"><script src="x\.js"><\/script><style>\.inline\{\}<\/style><link rel="stylesheet" href="assets\/site\.[a-f0-9]{12}\.css">$/);
+    const first = readFileSync(join(fixtureOut, r.styles[0]), 'utf8');
+    assert.ok(first.indexOf('.a{') < first.indexOf('.b{'), 'page order kept');
+    const sw = readFileSync(join(fixtureOut, 'sw.js'), 'utf8');
+    for (const n of r.styles) assert.ok(sw.includes("'/" + n + "'"), 'service worker caches ' + n);
+  } finally { rmSync(fixture, { recursive: true, force: true }); }
+});
+
+test('the real build bundles the site stylesheets', () => {
+  assert.ok(report.styles.length >= 1);
+  const html = readFileSync(join(out, 'index.html'), 'utf8');
+  assert.ok((html.match(/rel="stylesheet"/g) || []).length < 15, 'far fewer stylesheet requests than the ~40 in the source page');
+});

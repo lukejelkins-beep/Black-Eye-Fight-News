@@ -426,23 +426,17 @@ window.UpcomingCards=(()=>{
     if(feed&&location.hash.startsWith('#fights')&&window.BEFNFightsUI?.view!=='results'){const root=document.getElementById('upcoming-cards-root');if(root)root.innerHTML=listing(root.dataset.upcomingSport||'all');}
    });
    try{
-    const urls=['https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/data/upcoming-cards.json','data/upcoming-cards.json'];
-    const results=await Promise.all(urls.map(async u=>{
-     try{const response=await fetch(u+'?t='+Math.floor(Date.now()/60000),{cache:'no-store',signal:AbortSignal.timeout(14000)});if(!response.ok)return null;const d=await response.json();return valid(d)?d:null;}catch{return null}
-    }));
-    const next=results.filter(Boolean).sort((a,b)=>(Date.parse(b.lastCheckedAt||b.reviewedAt)||0)-(Date.parse(a.lastCheckedAt||a.reviewedAt)||0))[0];
+    // Shared with the rest of the page (assets/feed-cache.js); same check and same "newest" rule as before.
+    const next=await (window.BEFNFeed?window.BEFNFeed.newest:(p,ok)=>fetch(p+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>d&&(!ok||ok(d))?d:null).catch(()=>null))('data/upcoming-cards.json',valid,{timeoutMs:14000,stamp:d=>Date.parse(d.lastCheckedAt||d.reviewedAt)||0});
     if(!next)throw Error('No source available');
     let enriched=next;
     try{
-      const bonus=await fetch('data/ufcalendar-card-enhancements.json?t='+Math.floor(Date.now()/3600000),
-        {cache:'no-store',signal:AbortSignal.timeout(9000)});
-      if(bonus.ok)enriched=mergeUfcResearch(next,await bonus.json());
+      const bonus=await (window.BEFNFeed?window.BEFNFeed.local:p=>fetch(p,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null))('data/ufcalendar-card-enhancements.json',{timeoutMs:9000});
+      if(bonus)enriched=mergeUfcResearch(next,bonus);
     }catch{}
     let newsChanged=false;
     try{
-     const base='https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/data/news-live.json';
-     const sets=await Promise.all([base,'data/news-live.json'].map(async u=>{try{const r=await fetch(u+'?t='+Math.floor(Date.now()/300000),{cache:'no-store',signal:AbortSignal.timeout(9000)});if(!r.ok)return null;const d=await r.json();return Array.isArray(d.articles)?d:null}catch{return null}}));
-     const fresh=sets.filter(Boolean).sort((a,b)=>(Date.parse(b.lastSuccessfulAt)||0)-(Date.parse(a.lastSuccessfulAt)||0))[0];
+     const fresh=await (window.BEFNFeed?window.BEFNFeed.newest:(p,ok)=>fetch(p+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>d&&(!ok||ok(d))?d:null).catch(()=>null))('data/news-live.json',d=>Array.isArray(d.articles),{timeoutMs:9000,stamp:d=>Date.parse(d.lastSuccessfulAt)||0});
      if(fresh&&JSON.stringify(fresh.articles)!==JSON.stringify(newsStories)){newsStories=fresh.articles;newsChanged=true}
     }catch{}
     if(!feed||JSON.stringify(feed)!==JSON.stringify(enriched)||newsChanged){feed=enriched;update()}
