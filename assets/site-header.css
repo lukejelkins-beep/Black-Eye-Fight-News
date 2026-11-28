@@ -1,28 +1,28 @@
 /* Compact header, five-item navigation and labelled sport filter (design option A).
    Loaded last so it replaces the old logo band, seven-tab bar and round sport buttons. */
-.sh{position:sticky;top:0;z-index:40;display:flex;align-items:stretch;gap:32px;height:56px;padding:0 max(16px,4.2vw);background:#111013;color:#fff;border-bottom:1px solid #2c262b}
+.sh{position:sticky;top:0;z-index:40;display:flex;align-items:stretch;gap:32px;height:56px;padding:0 max(16px,4.2vw);background:#14181c;color:#fff;border-bottom:1px solid #303437}
 .sh-brand{display:flex;align-items:center;flex:0 0 auto;font:900 22px/.9 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:#fff;text-decoration:none}
 .sh .navrail{position:static;display:flex;flex:1;align-items:stretch;justify-content:flex-start;gap:12px;min-width:0;padding:0;background:transparent;border:0;min-height:0}
 .sh .mainnav{display:flex;align-items:stretch;gap:4px;min-height:0;overflow:visible}
-.sh .mainnav a{display:flex;align-items:center;padding:0 16px;border-bottom:3px solid transparent;background:transparent;color:#d9d2d5;font:700 13px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.sh .mainnav a{display:flex;align-items:center;padding:0 16px;border-bottom:3px solid transparent;background:transparent;color:#d9d2d5;font:700 13px/1 'Inter',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 .sh .mainnav a:hover{background:transparent;color:#fff}
-.sh .mainnav a.active{background:transparent;color:#fff;border-bottom-color:#cf1824}
+.sh .mainnav a.active{background:transparent;color:#fff;border-bottom-color:#b3001b}
 .sh .navrail .befn-install-button{align-self:center;margin-left:auto}
-.sh a:focus-visible,.sh-sports button:focus-visible{outline:3px solid #f3c332;outline-offset:-3px}
+.sh a:focus-visible,.sh-sports button:focus-visible{outline:3px solid #c5ccd3;outline-offset:-3px}
 
-.sh-sports{display:flex;align-items:center;gap:8px;padding:12px max(16px,4.2vw);background:#1d171c;border-bottom:3px solid #cf1824}
-.sh-sports-label{margin-right:8px;font:700 12px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#b8b0b3}
+.sh-sports{display:flex;align-items:center;gap:8px;padding:12px max(16px,4.2vw);background:#14181c;border-bottom:3px solid #b3001b}
+.sh-sports-label{margin-right:8px;font:700 12px/1 'Inter',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#b8b0b3}
 .sh-sports-group{display:flex;flex-wrap:wrap;gap:8px}
-.sh-sports button{min-height:44px;padding:0 18px;border:0;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;cursor:pointer}
-.sh-sports button[aria-pressed="true"]{background:#f3c332;color:#111013}
-.sh-sports .sh-sport-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;text-decoration:none}
-.sh-sports .sh-sport-link[aria-current="page"]{background:#f3c332;color:#111013}
-.sh-sports .sh-sport-link:focus-visible{outline:3px solid #f3c332;outline-offset:2px}
+.sh-sports button{min-height:44px;padding:0 18px;border:0;border-radius:22px;background:#303437;color:#fff;font:700 14px/1 'Inter',system-ui,sans-serif;cursor:pointer}
+.sh-sports button[aria-pressed="true"]{background:#c5ccd3;color:#14181c}
+.sh-sports .sh-sport-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:22px;background:#303437;color:#fff;font:700 14px/1 'Inter',system-ui,sans-serif;text-decoration:none}
+.sh-sports .sh-sport-link[aria-current="page"]{background:#c5ccd3;color:#14181c}
+.sh-sports .sh-sport-link:focus-visible{outline:3px solid #c5ccd3;outline-offset:2px}
 
 /* Sub-links inside a section (Fighters: scout, champions, UFC stats; Fights: fight film). */
 .sh-sub{display:flex;flex-wrap:wrap;gap:8px;max-width:1540px;margin:0 auto;padding:16px max(16px,4.2vw) 0}
-.sh-sub a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:22px;background:#111013;color:#fff;font:700 13px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
-.sh-sub a[aria-current="page"]{background:#cf1824}
+.sh-sub a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:22px;background:#14181c;color:#fff;font:700 13px/1 'Inter',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.sh-sub a[aria-current="page"]{background:#b3001b}
 
 @media(max-width:760px){
   .sh{height:auto;min-height:45px;padding:0;gap:0}
@@ -49,8 +49,8 @@
   .sh .befn-mobile-topbar{align-items:center;gap:12px;min-height:56px;padding:6px 0}
   .sh .befn-mobile-title{display:block!important;flex:1 1 auto;min-width:0;color:#fff;font:900 20px/1.04 'Barlow Condensed',Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase;white-space:normal;overflow-wrap:break-word}
   .sh .befn-mobile-actions{gap:8px}
-  .sh .befn-mobile-actions button,.sh .befn-mobile-actions .befn-install-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 12px;color:#fff;font:800 11px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.02em}
-  .sh .befn-mobile-actions .befn-install-button{color:#211417}
+  .sh .befn-mobile-actions button,.sh .befn-mobile-actions .befn-install-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 12px;color:#fff;font:800 11px/1 'Inter',system-ui,sans-serif;letter-spacing:.02em}
+  .sh .befn-mobile-actions .befn-install-button{color:#14181c}
 }
 @media(max-width:370px){
   .sh .befn-mobile-title{font-size:18px}
@@ -62,7 +62,7 @@
    (the logo is the all-sports front page); the row below names the area and holds its five
    sections. Phone: the row below the masthead lists the sports and the bottom tab bar holds
    the sections, so the section row is hidden there. Sport colours from DIRECTION.md. */
-:root{--area-colour:#cf1824}
+:root{--area-colour:#b3001b}
 html[data-befn-area="mma"]{--area-colour:#e0a400}
 .sh .sh-areas a{font-size:15px;letter-spacing:.06em;padding:0 18px}
 .sh .sh-areas a[aria-current]{color:#fff;border-bottom-color:var(--area-colour)}
@@ -70,20 +70,20 @@ html[data-befn-area="mma"]{--area-colour:#e0a400}
 .sh .sh-areas a[aria-current]:hover{border-bottom-color:var(--area-colour)}
 .sh-sports{border-bottom-color:var(--area-colour)}
 .sh-sections{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-.sh-area-name{margin-right:8px;font:800 13px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b8b0b3}
+.sh-area-name{margin-right:8px;font:800 13px/1 'Inter',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b8b0b3}
 html[data-befn-area="boxing"] .sh-area-name,html[data-befn-area="mma"] .sh-area-name{color:var(--area-colour)}
-.sh-sections a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;text-decoration:none;white-space:nowrap}
+.sh-sections a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:22px;background:#303437;color:#fff;font:700 14px/1 'Inter',system-ui,sans-serif;text-decoration:none;white-space:nowrap}
 .sh-sections a:hover{background:#3a3238}
-.sh-sections a.active{background:#f3c332;color:#111013}
-.sh-sections a:focus-visible,.sh-areas-phone a:focus-visible{outline:3px solid #f3c332;outline-offset:2px}
+.sh-sections a.active{background:#c5ccd3;color:#14181c}
+.sh-sections a:focus-visible,.sh-areas-phone a:focus-visible{outline:3px solid #c5ccd3;outline-offset:2px}
 .sh-areas-phone{display:none}
-.sh-areas-phone a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:22px;background:#2c262b;color:#fff;font:700 14px/1 'DM Sans',system-ui,sans-serif;text-decoration:none}
-.sh-areas-phone a[aria-current]{background:#f3c332;color:#111013}
+.sh-areas-phone a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:22px;background:#303437;color:#fff;font:700 14px/1 'Inter',system-ui,sans-serif;text-decoration:none}
+.sh-areas-phone a[aria-current]{background:#c5ccd3;color:#14181c}
 .sh .befn-mobile-title{color:#fff;text-decoration:none}
 @media(max-width:760px){
   .sh-sections{display:none}
   .sh-areas-phone{display:flex;flex-wrap:nowrap;gap:6px;width:100%}
   .sh-areas-phone a{flex:1 1 0;padding:0 6px;font-size:13px}
 }
-.befn-mobile-sheet .befn-mobile-sheet-sub{margin:16px 0 8px;font:800 12px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6b6266}
-.befn-mobile-sheet .befn-mobile-sheet-grid a[aria-current]{background:#111013;color:#fff;border-color:#111013}
+.befn-mobile-sheet .befn-mobile-sheet-sub{margin:16px 0 8px;font:800 12px/1 'Inter',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6b6266}
+.befn-mobile-sheet .befn-mobile-sheet-grid a[aria-current]{background:#14181c;color:#fff;border-color:#14181c}

@@ -1,5 +1,5 @@
 /* BEFN Sumo — stables (heya) directory. Scoped, mobile-first. */
-.sumo-stables{--heya-ink:#21191c;--heya-gold:#d3aa46;--heya-red:#84243a;--heya-edge:#ded6ce}
+.sumo-stables{--heya-ink:#14181c;--heya-gold:#d3aa46;--heya-red:#84243a;--heya-edge:#ded6ce}
 .sumo-stables *{min-width:0}
 .heya-top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;border-bottom:1px solid var(--heya-edge);padding:6px 0 20px;margin-bottom:22px}
 .heya-kicker{font-size:12px;letter-spacing:.16em;font-weight:900;color:#84243a;text-transform:uppercase}
@@ -15,15 +15,15 @@
 .heya-sort{flex:0 1 220px}
 .heya-field{display:grid;gap:5px}
 .heya-field span{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#61595d}
-.heya-field input,.heya-field select{border:1px solid #bcb1aa;border-radius:8px;background:#fff;color:#2b2024;padding:11px 13px;min-height:46px;width:100%;font:600 15px 'DM Sans',sans-serif}
+.heya-field input,.heya-field select{border:1px solid #bcb1aa;border-radius:8px;background:#fff;color:#2b2024;padding:11px 13px;min-height:46px;width:100%;font:600 15px 'Inter',sans-serif}
 .heya-filterbar{display:flex;gap:7px;overflow-x:auto;padding:0 0 14px;scrollbar-width:thin}
-.heya-filterbar button{font:800 12px 'DM Sans',sans-serif;white-space:nowrap;border:1px solid #cfc4bc;background:white;color:#44393d;padding:10px 13px;border-radius:30px;min-height:42px}
+.heya-filterbar button{font:800 12px 'Inter',sans-serif;white-space:nowrap;border:1px solid #cfc4bc;background:white;color:#44393d;padding:10px 13px;border-radius:30px;min-height:42px}
 .heya-filterbar button[aria-pressed="true"]{background:#2a2024;color:#fff;border-color:#2a2024}
 .heya-countline{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:#665b5f;margin:0 0 12px}
 .heya-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .heya-card{display:block;background:#fff;border:1px solid var(--heya-edge);text-decoration:none;border-radius:12px;overflow:hidden;transition:transform .15s,border-color .15s}
 .heya-card:hover{transform:translateY(-2px);border-color:#a58040}
-.heya-card-visual{background:radial-gradient(circle at 50% 54%,#4e3741 0 28%,#21191c 29% 100%);height:174px;position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.heya-card-visual{background:radial-gradient(circle at 50% 54%,#4e3741 0 28%,#14181c 29% 100%);height:174px;position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
 .heya-card-visual::before{content:'';position:absolute;inset:20px 24% 0;border-radius:50% 50% 0 0;background:#7e3239;opacity:.45}
 .heya-card-visual img{height:100%;width:auto;max-width:85%;object-fit:contain;object-position:bottom;position:relative;z-index:2;filter:drop-shadow(0 1px 10px rgba(0,0,0,.35))}
 .heya-image-fallback{font:900 92px/1 'Barlow Condensed',sans-serif;color:rgba(255,255,255,.18);position:relative;z-index:2;align-self:center}
@@ -39,7 +39,7 @@
 .heya-empty{border:1px dashed #c9bfb6;border-radius:12px;background:#fff;padding:36px;text-align:center;color:#5f5557}
 .heya-disclaimer{padding:14px 18px;margin-top:24px;background:#eee7dc;border-left:3px solid #a77836;border-radius:0 6px 6px 0;color:#4f484a;font-size:13px;line-height:1.6}
 .heya-back{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:900;text-decoration:none;color:#84243a;margin:8px 0 20px}
-.heya-hero{background:#21191c;border-radius:12px;display:grid;grid-template-columns:minmax(0,1fr) 38%;overflow:hidden;min-height:260px;color:white;position:relative}
+.heya-hero{background:#14181c;border-radius:12px;display:grid;grid-template-columns:minmax(0,1fr) 38%;overflow:hidden;min-height:260px;color:white;position:relative}
 .heya-hero-content{padding:clamp(22px,3vw,39px);z-index:2;align-self:center}
 .heya-hero-kicker{color:#edc87a;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
 .heya-hero h1{font:900 clamp(44px,6vw,76px)/.98 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:8px 0 8px}

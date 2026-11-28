@@ -1,13 +1,13 @@
 /* Site theme (owner request 22 Nov 2026: "apply this colour and font across all areas of the site").
  * The landing page is the style guide: cream page, white cards, ink text, red/gold accents,
- * sport colours (boxing red, MMA amber, sumo blue), Unbounded for headings and big numbers,
- * DM Sans for everything else. Loaded last on every page so it wins over older rules.
- * Unbounded is much wider than Barlow Condensed, so sizes here are smaller than the old ones
+ * sport colours (boxing red, MMA amber, sumo blue), Oswald for headings and big numbers,
+ * Inter for everything else. Loaded last on every page so it wins over older rules.
+ * Oswald is much wider than Barlow Condensed, so sizes here are smaller than the old ones
  * and headings are sentence case. Posters, photos and the top bar stay dark on purpose. */
 :root{
-  --display:'Unbounded','Arial Black',system-ui,sans-serif;
-  --t-ink:#111013;--t-red:#cf1824;--t-gold:#f3c332;--t-cream:#f8f4ed;--t-card:#fff;--t-mute:#5b565d;--t-line:#e5e1d8;
-  --sport-boxing:#cf1824;--sport-mma:#e0a400;--sport-sumo:#2a4a8f;
+  --display:'Oswald','Arial Black',system-ui,sans-serif;
+  --t-ink:#14181c;--t-red:#b3001b;--t-gold:#c5ccd3;--t-cream:#eef0f2;--t-card:#fff;--t-mute:#5b565d;--t-line:#e5e1d8;
+  --sport-boxing:#b3001b;--sport-mma:#e0a400;--sport-sumo:#2a4a8f;
 }
 
 /* ---- Headings: page titles ---- */
@@ -144,11 +144,11 @@ html body #main .fights-unified #upcoming-cards-root .upcoming-list-heading,html
 
 /* ====================================================================
  * Second pass, 22 Nov 2026. Found by walking every page in a real browser
- * at exactly 390 and 1280 px with Unbounded actually loaded. The rules above
+ * at exactly 390 and 1280 px with Oswald actually loaded. The rules above
  * lose to older page CSS that uses ID selectors, `all:unset` or `!important`,
  * so these repeat the original selectors exactly; this file loads last, so an
  * equal-specificity rule with `!important` wins. Sizes are roughly 55-60% of
- * the Barlow Condensed ones they replace, because Unbounded is far wider.
+ * the Barlow Condensed ones they replace, because Oswald is far wider.
  * ==================================================================== */
 
 /* ---- Fighter profile: the stats dialog was not converted at all ---- */

@@ -171,15 +171,15 @@
 #upcoming-cards-root .upcoming-hero-fighter-slot.has-photo .upcoming-hero-fighter{opacity:1}
 #upcoming-cards-root .upcoming-hero-fighter-initials{font:900 20px/1 'Barlow Condensed',Impact,sans-serif;color:#a6c5ce}
 #upcoming-cards-root .upcoming-hero-fighter-slot.has-photo .upcoming-hero-fighter-initials{display:none}
-#upcoming-cards-root .upcoming-hero-fighter-name{position:absolute;z-index:4;left:0;right:0;bottom:0;padding:5px 2px;background:#07151fd9;color:#e7f4f6;font:800 8px/1.1 'DM Sans',sans-serif;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#upcoming-cards-root .upcoming-hero-fighter-name{position:absolute;z-index:4;left:0;right:0;bottom:0;padding:5px 2px;background:#07151fd9;color:#e7f4f6;font:800 8px/1.1 'Inter',sans-serif;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #upcoming-cards-root .upcoming-hero-poster[hidden],#upcoming-cards-root .upcoming-hero-fighter[hidden]{display:none!important}
 #upcoming-cards-root .upcoming-hero-content{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-width:0;gap:7px;padding:0!important;background:transparent!important}
 #upcoming-cards-root .upcoming-row-kicker{font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#88b3c2}
 #upcoming-cards-root .upcoming-hero-title{display:block;width:100%;max-width:100%;font:900 clamp(20px,2.3vw,28px)/1.12 'Barlow Condensed',Impact,sans-serif;letter-spacing:.005em;color:#f4f6fa;overflow-wrap:break-word;text-wrap:pretty}
-#upcoming-cards-root .upcoming-hero-times{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;color:#a4afbb;font:600 clamp(11px,1.15vw,13px)/1.4 'DM Sans',sans-serif}
+#upcoming-cards-root .upcoming-hero-times{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;color:#a4afbb;font:600 clamp(11px,1.15vw,13px)/1.4 'Inter',sans-serif}
 #upcoming-cards-root .upcoming-hero-times strong{font-weight:900;color:#f3f6fa}
 #upcoming-cards-root .upcoming-dot{color:#697c87}
-#upcoming-cards-root .upcoming-hero-location{width:100%;color:#98a8b3;font:500 clamp(11px,1.12vw,13px)/1.35 'DM Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#upcoming-cards-root .upcoming-hero-location{width:100%;color:#98a8b3;font:500 clamp(11px,1.12vw,13px)/1.35 'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #upcoming-cards-root .upcoming-row-provisional{font-size:10px;color:#f2c18e;font-weight:800}
 #upcoming-cards-root .upcoming-row-chevron{display:block;justify-self:center;font-size:24px;line-height:1;color:#99abb6;transition:transform .17s}
 #upcoming-cards-root .upcoming-event[open] .upcoming-row-chevron{transform:rotate(180deg)}
@@ -267,7 +267,7 @@
 }
 #upcoming-cards-root .upcoming-hero-fallback.is-single-fighter .upcoming-hero-fighter-name{
  left:0;right:0;bottom:0;padding:6px 2px;z-index:4;
- font:800 9px/1.2 'DM Sans',system-ui,sans-serif;
+ font:800 9px/1.2 'Inter',system-ui,sans-serif;
  color:#eaf7f8;background:rgba(5,15,23,.94);
  white-space:normal;overflow:hidden;text-overflow:ellipsis;
  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;

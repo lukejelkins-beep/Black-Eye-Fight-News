@@ -1,11 +1,11 @@
 /* Fighters hub (MMA). docs/design/FIGHTERS-HUB-FORM.md section 6; canvas B v4 (390 px) and Desktop (1280 px).
-   Site tokens: cream #f8f4ed, ink #111013, red #cf1824, gold #f3c332. Nothing under 12 px; 44 px tap targets. */
-.fh{--fh-ink:#111013;--fh-cream:#f8f4ed;--fh-red:#cf1824;--fh-gold:#f3c332;--fh-mute:#4a4650;--fh-soft:#6b6570;
+   Site tokens: cream #eef0f2, ink #14181c, red #b3001b, gold #c5ccd3. Nothing under 12 px; 44 px tap targets. */
+.fh{--fh-ink:#14181c;--fh-cream:#eef0f2;--fh-red:#b3001b;--fh-gold:#c5ccd3;--fh-mute:#4a4650;--fh-soft:#6b6570;
  --fh-sand:#efe9de;--fh-blue:#3b5b9a;
- background:var(--fh-cream);color:var(--fh-ink);font-family:'DM Sans',system-ui,sans-serif;font-size:14px;
+ background:var(--fh-cream);color:var(--fh-ink);font-family:'Inter',system-ui,sans-serif;font-size:14px;
  margin:0 calc(-4.2vw) 36px;padding-bottom:4px;scroll-margin-top:60px}
 .fh a{color:inherit;text-decoration:none}
-.fh h2{margin:0;font:700 18px/1.2 Unbounded,sans-serif}
+.fh h2{margin:0;font:700 18px/1.2 Oswald,sans-serif}
 .fh-red{color:var(--fh-red)}
 .fh-face{display:block;object-fit:cover;object-position:top;-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 97%);
  mask-image:linear-gradient(to bottom,#000 60%,transparent 97%)}
@@ -30,7 +30,7 @@
 
 /* top bar, division pills, men/women */
 .fh-top{background:var(--fh-ink);border-bottom:3px solid var(--fh-red);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.fh-top h2{color:#fff;font:900 16px/1.2 Unbounded,sans-serif;white-space:nowrap}
+.fh-top h2{color:#fff;font:900 16px/1.2 Oswald,sans-serif;white-space:nowrap}
 .fh-top .fh-find{font-size:12px;font-weight:700;color:var(--fh-gold);letter-spacing:.08em;text-transform:uppercase;min-height:44px;display:flex;align-items:center;padding:0 2px}
 .fh-pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;background:#fff;border-bottom:1px solid #e6dfd2;scrollbar-width:none}
 .fh-pills::-webkit-scrollbar,.fh-rail::-webkit-scrollbar{display:none}
@@ -58,7 +58,7 @@
 .fh-podium .fh-kicker{padding:0 6px}
 .fh-podium-row{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:4px;align-items:end}
 .fh-pod{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;min-width:0}
-.fh-pod .fh-big{font:900 20px/1.2 Unbounded,sans-serif;color:var(--fh-red)}
+.fh-pod .fh-big{font:900 20px/1.2 Oswald,sans-serif;color:var(--fh-red)}
 .fh-pod.is-top .fh-big{font-size:26px}
 .fh-pod .fh-name{color:#fff}
 .fh-pod .fh-face{width:100px;height:122px;margin-top:6px;max-width:100%}
@@ -69,7 +69,7 @@
 .fh-card .fh-pic{height:124px;background:var(--fh-sand);display:flex;justify-content:center;align-items:flex-end}
 .fh-card .fh-face{width:118px;height:124px}
 .fh-body{padding:8px 10px 10px;display:flex;flex-direction:column;gap:2px}
-.fh-mid b{font:900 16px Unbounded,sans-serif}
+.fh-mid b{font:900 16px Oswald,sans-serif}
 .fh-mid small{font-size:12px;font-weight:700;color:var(--fh-soft)}
 .fh-card.is-slip{flex-basis:150px;background:#e9edf4}
 .fh-card.is-slip .fh-pic{height:116px;background:transparent}
@@ -110,7 +110,7 @@
 .fh-row-body .fh-name{font-size:14px}
 .fh-row-body .fh-l5{margin-top:4px}
 .fh-row-score{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
-.fh-row-score b{font:900 16px Unbounded,sans-serif}
+.fh-row-score b{font:900 16px Oswald,sans-serif}
 .fh-row-score small{font-size:12px;color:var(--fh-soft)}
 
 /* division pulse */
@@ -127,7 +127,7 @@
 .fh-tile-body button{border:0;background:none;padding:0;color:#fff;text-align:left;display:flex;flex-direction:column;gap:2px;min-height:44px;font-weight:700;font-size:14px;line-height:1.2}
 .fh-tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 .fh-tile.is-top .fh-tag{color:var(--fh-gold)}
-.fh-depth{font:900 30px/1 Unbounded,sans-serif}
+.fh-depth{font:900 30px/1 Oswald,sans-serif}
 .fh-tile.is-top .fh-depth{font-size:44px}
 .fh-tile .fh-soft{color:rgba(255,255,255,.8);margin-top:-4px}
 .fh-counts{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700}
@@ -137,9 +137,9 @@
 /* division tab: champion, ladder, coming through */
 .fh-champ{margin:14px 16px 0;background:var(--fh-ink);color:#fff;border-radius:20px;overflow:hidden;display:flex;min-height:236px;border-top:4px solid var(--fh-gold)}
 .fh-champ-body{flex:1;min-width:0;padding:18px 0 18px 18px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
-.fh-champ-name{font:900 22px/1.1 Unbounded,sans-serif;color:#fff!important}
+.fh-champ-name{font:900 22px/1.1 Oswald,sans-serif;color:#fff!important}
 .fh-champ-form{display:flex;align-items:baseline;gap:6px;margin-top:6px}
-.fh-champ-form b{font:900 34px/1 Unbounded,sans-serif}
+.fh-champ-form b{font:900 34px/1 Oswald,sans-serif}
 .fh-champ-ovr{font-size:13px}
 .fh-champ-pic{display:flex;align-self:flex-end}
 .fh-champ-pic .fh-face{width:180px;height:236px}
@@ -153,8 +153,8 @@
 .fh-lrow{background:#fff;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:44px 56px minmax(0,1fr) auto;grid-template-areas:"rank pic name stage" "rank pic bar bar";
  align-items:center;column-gap:8px;min-height:64px;padding-right:12px}
 .fh-lrow.is-slip{background:#e9edf4}
-.fh-lrank{grid-area:rank;display:flex;flex-direction:column;align-items:center;font:900 14px Unbounded,sans-serif}
-.fh-mv{font:700 12px 'DM Sans',sans-serif}
+.fh-lrank{grid-area:rank;display:flex;flex-direction:column;align-items:center;font:900 14px Oswald,sans-serif}
+.fh-mv{font:700 12px 'Inter',sans-serif}
 .fh-mv.is-up{color:#2e7d32}.fh-mv.is-down{color:var(--fh-blue)}
 .fh-mvtext{display:block;margin-top:2px;font-size:11px}
 .fh-lfr .fh-mv{margin-right:2px}
@@ -185,7 +185,7 @@
 .fh-foot{margin:24px 16px 20px;font-size:12px;color:var(--fh-mute);line-height:1.5}
 /* Top 15 sort (owner, 28 Nov 2026). Column headings on desktop, a chip row on the phone. */
 .fh-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end}
-.fh-sort{font:700 12px 'DM Sans',sans-serif;color:var(--fh-mute);background:none;border:0;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px;min-height:32px}
+.fh-sort{font:700 12px 'Inter',sans-serif;color:var(--fh-mute);background:none;border:0;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px;min-height:32px}
 .fh-sort.is-on{color:var(--fh-ink)}
 .fh-sort i{font-style:normal;font-size:12px;color:var(--fh-red)}
 .fh-sort:focus-visible{outline:2px solid var(--fh-red);outline-offset:2px;border-radius:4px}
@@ -256,8 +256,8 @@
  .fh-lpic .fh-face{width:44px;height:50px}
  .fh-lname .fh-l5{display:inline-flex}
  .fh-lbar{padding-bottom:0}
- .fh-lovr{grid-area:ovr;display:block;font:900 16px Unbounded,sans-serif}
- .fh-lovr small{font:700 12px 'DM Sans',sans-serif;color:var(--fh-soft)}
+ .fh-lovr{grid-area:ovr;display:block;font:900 16px Oswald,sans-serif}
+ .fh-lovr small{font:700 12px 'Inter',sans-serif;color:var(--fh-soft)}
  .fh-lfr{grid-area:fr;display:block;font-size:12px;font-weight:700;color:var(--fh-mute)}
  .fh-next{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
  .fh-padded{padding-left:24px;padding-right:24px}
@@ -294,7 +294,7 @@
 /* search inside the hub (owner, 28 Nov 2026) */
 .fh-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .fh-search{display:block;padding:12px 16px 0}
-.fh-search input{width:100%;min-height:44px;border:1px solid #d9d2c4;border-radius:12px;padding:0 14px;font:500 15px 'DM Sans',sans-serif;background:#fff;color:var(--fh-ink)}
+.fh-search input{width:100%;min-height:44px;border:1px solid #d9d2c4;border-radius:12px;padding:0 14px;font:500 15px 'Inter',sans-serif;background:#fff;color:var(--fh-ink)}
 .fh-search input:focus-visible{outline:2px solid var(--fh-red);outline-offset:1px}
 .fh-results:empty{display:none}
 .fh-results{padding:10px 16px 0}

@@ -1,24 +1,24 @@
 /* UFC stats leaderboards (stage 5): light "Fight night" rows on the cream page.
    The page sits inside #main .fighters-unified, so its heading, pill buttons and
    fields come from assets/fighters-page.css. Nothing here is under 12 px. */
-#main .befn-boards-unified .befn-board-lede{margin:0 0 18px;max-width:680px;font:500 15px/1.5 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+#main .befn-boards-unified .befn-board-lede{margin:0 0 18px;max-width:680px;font:500 15px/1.5 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
 .befn-stat-board-page{min-width:0}
 .befn-board-controls{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:12px;margin:0 0 12px}
 .befn-board-field{display:flex;flex-direction:column;gap:6px;min-width:0}
-.befn-board-field>span{font:800 12px 'DM Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--fp-mute,#5c5660)}
+.befn-board-field>span{font:800 12px 'Inter',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--fp-mute,#5c5660)}
 #main .befn-boards-unified .befn-board-field .field{width:100%;min-height:44px;padding:0 12px}
 .befn-board-windows{margin:0 0 18px}
 .befn-board-windows[hidden]{display:none!important}
 #main .befn-boards-unified .befn-board-windows button{min-height:44px}
 .befn-board-result-head{display:flex;flex-direction:column;gap:4px;padding:0 0 10px;margin:0 0 4px;border-bottom:1px solid var(--fp-line,#e3dccf)}
-.befn-board-result-head h3{margin:0;font:900 clamp(26px,3.4vw,34px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--fp-ink,#111013)}
-.befn-board-result-head p{margin:0;font:600 13px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-board-result-head h3{margin:0;font:900 clamp(26px,3.4vw,34px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--fp-ink,#14181c)}
+.befn-board-result-head p{margin:0;font:600 13px 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
 .befn-board-list{list-style:none;margin:0;padding:0}
 .befn-board-list>li{display:grid;grid-template-columns:40px 44px minmax(0,1fr) auto;gap:12px;align-items:center;
  min-height:60px;padding:8px 6px 8px 0;margin:0;border-bottom:1px solid var(--fp-line,#e3dccf);background:none}
 .befn-board-place{font:900 24px/1 'Barlow Condensed',Impact,sans-serif;color:#9a8d86;text-align:right}
-.befn-board-topten .befn-board-place{color:var(--fp-ink,#111013)}
-.befn-board-podium .befn-board-place{color:var(--fp-red,#cf1824)}
+.befn-board-topten .befn-board-place{color:var(--fp-ink,#14181c)}
+.befn-board-podium .befn-board-place{color:var(--fp-red,#b3001b)}
 .befn-board-list .befn-pro-opp-photo{position:relative;width:44px;height:44px;border-radius:50%;overflow:hidden;background:#e9e1d6;display:grid;place-items:center}
 .befn-board-list .befn-pro-opp-photo b{font:900 16px/1 'Barlow Condensed',Impact,sans-serif;color:#9a8d86}
 .befn-board-list .befn-pro-opp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
@@ -26,15 +26,15 @@
 .befn-board-list.is-search .befn-board-value{font-size:16px;white-space:nowrap}
 .befn-board-name>a{display:inline-block;min-height:44px;padding:12px 0}
 .befn-board-name{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;min-width:0}
-.befn-board-name>a,.befn-board-name>span{font:800 19px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--fp-ink,#111013);text-decoration:none;overflow-wrap:anywhere}
-.befn-board-name>a:hover,.befn-board-name>a:focus-visible{color:var(--fp-red,#cf1824);text-decoration:underline}
-.befn-board-name small{flex-basis:100%;font:500 12px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
-.befn-board-tag{font:800 12px 'DM Sans',sans-serif;padding:2px 8px;border-radius:999px;background:#ebe3d8;color:var(--fp-ink,#111013)}
-.befn-board-tag.is-champ{background:var(--fp-red,#cf1824);color:#fff}
-.befn-board-value{font:900 28px/1 'Barlow Condensed',Impact,sans-serif;color:var(--fp-ink,#111013);text-align:right;white-space:nowrap}
-.befn-board-podium .befn-board-value{color:var(--fp-red,#cf1824)}
-.befn-board-rule{margin:14px 0 0;font:500 12px/1.5 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
-.befn-board-placeholder{margin:16px 0;font:500 14px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-board-name>a,.befn-board-name>span{font:800 19px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:var(--fp-ink,#14181c);text-decoration:none;overflow-wrap:anywhere}
+.befn-board-name>a:hover,.befn-board-name>a:focus-visible{color:var(--fp-red,#b3001b);text-decoration:underline}
+.befn-board-name small{flex-basis:100%;font:500 12px 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-board-tag{font:800 12px 'Inter',sans-serif;padding:2px 8px;border-radius:999px;background:#ebe3d8;color:var(--fp-ink,#14181c)}
+.befn-board-tag.is-champ{background:var(--fp-red,#b3001b);color:#fff}
+.befn-board-value{font:900 28px/1 'Barlow Condensed',Impact,sans-serif;color:var(--fp-ink,#14181c);text-align:right;white-space:nowrap}
+.befn-board-podium .befn-board-value{color:var(--fp-red,#b3001b)}
+.befn-board-rule{margin:14px 0 0;font:500 12px/1.5 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-board-placeholder{margin:16px 0;font:500 14px 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
 
 @media (max-width:680px){
  .befn-board-controls{grid-template-columns:minmax(0,1fr)}
@@ -55,29 +55,29 @@
 .befn-stat-board-page.is-grid .befn-board-metric-field{display:none}
 .befn-bgroup{margin:0 0 22px}
 .befn-bgroup-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:14px 0 10px}
-.befn-bgroup-head h3{margin:0;font:800 20px/1.1 Unbounded,'DM Sans',sans-serif;color:var(--fp-ink,#111013)}
-.befn-bgroup-head span{font:500 12px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-bgroup-head h3{margin:0;font:800 20px/1.1 Oswald,'Inter',sans-serif;color:var(--fp-ink,#14181c)}
+.befn-bgroup-head span{font:500 12px 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
 .befn-bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .befn-bcard{background:#fff;border:1px solid var(--fp-line,#e3dccf);border-radius:12px;padding:12px 14px 6px;display:flex;flex-direction:column;min-width:0}
-.befn-bcard.is-rating{border-top:3px solid var(--fp-red,#cf1824)}
+.befn-bcard.is-rating{border-top:3px solid var(--fp-red,#b3001b)}
 .befn-bcard header{display:flex;flex-direction:column;gap:2px;margin:0 0 6px}
-.befn-bcard h4{margin:0;font:800 14px/1.2 'DM Sans',sans-serif;color:var(--fp-ink,#111013)}
-.befn-bcard header small{font:500 12px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-bcard h4{margin:0;font:800 14px/1.2 'Inter',sans-serif;color:var(--fp-ink,#14181c)}
+.befn-bcard header small{font:500 12px 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
 .befn-bcard ol{list-style:none;margin:0;padding:0}
 .befn-bcard li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:center;min-height:34px;border-top:1px solid #f0ebe2;margin:0;padding:0;background:none}
-.befn-bc-place{font:800 13px 'DM Sans',sans-serif;color:#9a8d86;text-align:right}
-.befn-bcard li.is-top .befn-bc-place{color:var(--fp-red,#cf1824)}
+.befn-bc-place{font:800 13px 'Inter',sans-serif;color:#9a8d86;text-align:right}
+.befn-bcard li.is-top .befn-bc-place{color:var(--fp-red,#b3001b)}
 .befn-bc-name{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:6px;min-width:0;padding:3px 0}
-.befn-bc-name a{font:700 13px/1.2 'DM Sans',sans-serif;color:var(--fp-ink,#111013)!important;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:2px 0}
-.befn-bc-name a:hover,.befn-bc-name a:focus-visible{color:var(--fp-red,#cf1824)!important;text-decoration:underline}
-.befn-bc-name small,.befn-bc-name .befn-bc-div{flex-basis:100%;font:500 12px/1.2 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660);white-space:nowrap}
-.befn-bc-name i{font:700 12px 'DM Sans',sans-serif;font-style:normal;color:var(--fp-mute,#5c5660);flex:0 0 auto}
-.befn-bc-name i.is-champ{color:#fff;background:var(--fp-red,#cf1824);border-radius:4px;padding:0 5px}
-.befn-bc-value{font:800 14px 'DM Sans',sans-serif;font-variant-numeric:tabular-nums;color:var(--fp-ink,#111013);white-space:nowrap}
-.befn-bcard li.is-top .befn-bc-value{color:var(--fp-red,#cf1824)}
-.befn-bc-empty{margin:6px 0 10px;font:500 13px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-bc-name a{font:700 13px/1.2 'Inter',sans-serif;color:var(--fp-ink,#14181c)!important;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:2px 0}
+.befn-bc-name a:hover,.befn-bc-name a:focus-visible{color:var(--fp-red,#b3001b)!important;text-decoration:underline}
+.befn-bc-name small,.befn-bc-name .befn-bc-div{flex-basis:100%;font:500 12px/1.2 'Inter',sans-serif;color:var(--fp-mute,#5c5660);white-space:nowrap}
+.befn-bc-name i{font:700 12px 'Inter',sans-serif;font-style:normal;color:var(--fp-mute,#5c5660);flex:0 0 auto}
+.befn-bc-name i.is-champ{color:#fff;background:var(--fp-red,#b3001b);border-radius:4px;padding:0 5px}
+.befn-bc-value{font:800 14px 'Inter',sans-serif;font-variant-numeric:tabular-nums;color:var(--fp-ink,#14181c);white-space:nowrap}
+.befn-bcard li.is-top .befn-bc-value{color:var(--fp-red,#b3001b)}
+.befn-bc-empty{margin:6px 0 10px;font:500 13px 'Inter',sans-serif;color:var(--fp-mute,#5c5660)}
 .befn-bc-more{align-self:flex-start;display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;background:none;cursor:pointer;
- font:700 13px 'DM Sans',sans-serif;color:var(--fp-red,#cf1824)!important;text-decoration:none}
+ font:700 13px 'Inter',sans-serif;color:var(--fp-red,#b3001b)!important;text-decoration:none}
 .befn-bgrid.is-hub{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
 @media (max-width:680px){
  .befn-board-bar{gap:10px}
@@ -94,6 +94,6 @@
  /* one row per group (Ratings: two rows of three) so no card sits alone */
  .befn-bgroup .befn-bgrid{grid-template-columns:repeat(var(--cols,4),minmax(0,1fr))}
 }
-.befn-bc-name .befn-bc-div{flex-basis:100%;font:500 12px/1.2 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)!important;padding:0;text-decoration:none}
+.befn-bc-name .befn-bc-div{flex-basis:100%;font:500 12px/1.2 'Inter',sans-serif;color:var(--fp-mute,#5c5660)!important;padding:0;text-decoration:none}
 .befn-bc-name .befn-bc-div:hover{text-decoration:underline}
 .befn-board-name small a{color:inherit}

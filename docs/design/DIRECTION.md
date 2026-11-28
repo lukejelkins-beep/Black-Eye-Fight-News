@@ -17,9 +17,9 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 7. **Fast.** Images sized to their slot and lazy-loaded. No page loads data it does not show.
 
 ## Tokens (current)
-- Red `#cf1824` (accent, active states) · Gold `#f3c332` (secondary highlight) · Cream `#f8f4ed` (page) · Ink `#111013` (text, dark bands) · Dark band `#151115`.
-- Headlines and big numbers: **Unbounded** 700–900, sentence case (owner's choice from the options, 22 Nov). Body and UI: **DM Sans**. Two families only. **Barlow Condensed** is being phased out of headings: until the site-wide theme ships, existing pages keep it. Russo One is still imported in `index.html` and is probably unused; remove it once confirmed.
-- Sport colours: boxing red, MMA amber `#e0a400`, sumo blue `#2a4a8f`.
+- **Blood and steel** (owner, 28 Nov 2026; replaces red/gold/cream): Blood red `#b3001b` (accent, active states; darker `#8f0016`) · Steel `#c5ccd3` (secondary highlight, where gold was) · Cool grey `#eef0f2` (page) · Gunmetal `#14181c` (text, dark bands) · Raised dark `#303437` (pills and chips on dark bands). Flags keep their real colours (Japan's red sun stays `#cf1824`).
+- Headlines and big numbers: **Oswald** 600–700, sentence case (owner, 28 Nov 2026, "Blood and steel"; was Unbounded). Body and UI: **Inter** (was DM Sans). Two families only. **Barlow Condensed** is being phased out of headings: until the site-wide theme ships, existing pages keep it. Russo One is still imported in `index.html` and is probably unused; remove it once confirmed.
+- Sport colours: boxing red (the blood red `#b3001b`), MMA amber `#e0a400`, sumo blue `#2a4a8f`.
 - Radius 8–12 px. One shadow level. Spacing in multiples of 4.
 
 ## Patterns
@@ -32,7 +32,7 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 - **Stats:** bars and big numbers, not strings of small text.
 
 ## We will not
-- Add a third typeface beyond Unbounded and DM Sans, image-based headings, chrome or bevel effects, or emoji/icon-only navigation.
+- Add a third typeface beyond Oswald and Inter, image-based headings, chrome or bevel effects, or emoji/icon-only navigation.
 - Show placeholder text to readers (for example "Start time TBC · venue date").
 - Put internal research on public pages.
 - Use an image without a recorded source and rights status (see IMAGE-GUIDE.md).

@@ -2,6 +2,13 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 — Site-wide style: "Blood and steel"
+- Owner asked to see the site with different font and colour combinations. Round 1: six options on the front page; owner liked "Fight poster" (Anton / Inter) and "Ringside" (Bebas Neue / Barlow). Round 2: eight more condensed, poster-style options with their own colour themes. Owner: "This is for the whole site - not just the main page", so all ten were shown on seven pages (front page, Fights, Fighters, a profile, Analysis, News, Sumo). Owner: "I like blood and steel".
+- **Fonts:** headings Oswald (was Unbounded), text Inter (was DM Sans), everywhere the old two were used. The logo and phone masthead keep Barlow Condensed.
+- **Colours:** red `#cf1824` → blood red `#b3001b` (boxing's sport colour follows it); gold `#f3c332` → steel `#c5ccd3`; cream page → cool grey `#eef0f2`; the near-black inks and dark bands → gunmetal `#14181c`, and the slightly lighter dark pills → `#303437`. MMA amber and sumo blue are unchanged. Japan's red sun (Sumo flags) keeps its real red.
+- **How:** one mechanical swap of those exact values in the CSS, JS and HTML (and the two scripts that write the credits page and gym article), so every page follows. Anything that used a different shade of cream or gold (for example the warm card tints in the profile panel and fighter tiles, Sumo's editorial gold) is unchanged, as it was in the mock-up the owner chose.
+- Mock-ups and screenshots of the built pages: `docs/design/screenshots/blood-and-steel-20261128/`. — Owner; Claude — awaiting owner "Merge N".
+
 ## 2026-11-28 — Fighter profile: cut the noise
 - Owner: "Remove the noise please - just needs to say 'skills' - also there is double up on the fighter profiles with recent fights and stats". Owner chose, from a mock-up: one latest fight on the Overview, Stats and Compare merged, cut the noise. Then "Build it".
 - Tabs are now Overview, Fights, Stats, News. Overview: key numbers, one "Latest fight" card with "All fights ›" (Fights tab), Skills (Results, Striking, Wrestling, Grappling, Form; heading just "Skills", no explanation), a "How the rating works" link, one news headline with "All news ›". "Next fight: not announced" is gone; the line shows only when a fight is booked.

@@ -2,9 +2,9 @@
    Big latest clip with a "Latest finishes" column, a type / promotion bar, a 4-column wall
    (2 on phones) with "More film", and a closed "About this film" panel at the foot.
    Scoped under #main .ff so the older site stylesheets that load later cannot reach it. */
-#main .ff{--ff-ink:#111013;--ff-red:#cf1824;--ff-gold:#f3c332;--ff-line:#e5e1d8;--ff-mute:#5b565d;--ff-dark:#1b171a;
- --ff-display:'Unbounded','Arial Black',system-ui,sans-serif;
- max-width:1120px;margin:0 auto;padding:4px 16px 56px;min-width:0;font-family:'DM Sans',system-ui,sans-serif;color:var(--ff-ink)}
+#main .ff{--ff-ink:#14181c;--ff-red:#b3001b;--ff-gold:#c5ccd3;--ff-line:#e5e1d8;--ff-mute:#5b565d;--ff-dark:#1b171a;
+ --ff-display:'Oswald','Arial Black',system-ui,sans-serif;
+ max-width:1120px;margin:0 auto;padding:4px 16px 56px;min-width:0;font-family:'Inter',system-ui,sans-serif;color:var(--ff-ink)}
 #main .ff *{box-sizing:border-box}
 
 /* hero: big latest clip + latest finishes */
@@ -29,7 +29,7 @@
 #main .ff .ff-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 #main .ff .ff-body{display:flex;flex-direction:column;gap:4px;padding:10px 12px 4px;min-width:0;flex:1}
 #main .ff .ff-meta{margin:0;color:var(--ff-mute);font-size:12px;font-weight:700;line-height:1.4}
-#main .ff .ff-title{margin:0;font:700 15px/1.3 'DM Sans',system-ui,sans-serif;color:var(--ff-ink);letter-spacing:0;text-transform:none;overflow-wrap:anywhere}
+#main .ff .ff-title{margin:0;font:700 15px/1.3 'Inter',system-ui,sans-serif;color:var(--ff-ink);letter-spacing:0;text-transform:none;overflow-wrap:anywhere}
 #main .ff .ff-hook{margin:0;font-size:13px;line-height:1.35;color:#4a454c;overflow-wrap:anywhere}
 #main .ff .ff-out{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:4px;min-height:44px;font-size:13px;font-weight:800;color:#b0141f;text-decoration:none}
 #main .ff .ff-out:hover{text-decoration:underline;text-underline-offset:3px}
@@ -49,17 +49,17 @@
 /* bar: type segment + promotion chips */
 #main .ff .ff-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
 #main .ff .ff-seg{display:flex;gap:4px;background:var(--ff-ink);border-radius:12px;padding:4px}
-#main .ff .ff-seg button{min-height:44px;border:0;border-radius:9px;background:transparent;color:#fff;font:800 14px/1 'DM Sans',system-ui,sans-serif;padding:0 14px;cursor:pointer}
+#main .ff .ff-seg button{min-height:44px;border:0;border-radius:9px;background:transparent;color:#fff;font:800 14px/1 'Inter',system-ui,sans-serif;padding:0 14px;cursor:pointer}
 #main .ff .ff-seg button.is-on{background:var(--ff-gold);color:var(--ff-ink)}
 #main .ff .ff-chips{display:flex;gap:6px;flex-wrap:wrap;min-width:0}
-#main .ff .ff-chips button{flex:0 0 auto;min-height:44px;border:1px solid #d9d2c4;border-radius:999px;background:#fff;color:var(--ff-ink);font:700 13px/1 'DM Sans',system-ui,sans-serif;padding:0 14px;cursor:pointer;white-space:nowrap}
+#main .ff .ff-chips button{flex:0 0 auto;min-height:44px;border:1px solid #d9d2c4;border-radius:999px;background:#fff;color:var(--ff-ink);font:700 13px/1 'Inter',system-ui,sans-serif;padding:0 14px;cursor:pointer;white-space:nowrap}
 #main .ff .ff-chips button.is-on{background:var(--ff-ink);border-color:var(--ff-ink);color:#fff}
 #main .ff .ff-seg button:focus-visible,#main .ff .ff-chips button:focus-visible,#main .ff .ff-more:focus-visible{outline:3px solid var(--ff-red);outline-offset:2px}
 
 /* wall */
 #main .ff .ff-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 #main .ff .ff-grid>.is-playing{grid-column:span 2}
-#main .ff .ff-more{display:block;margin:18px auto 0;min-height:44px;border:0;border-radius:999px;background:var(--ff-ink);color:#fff;font:800 14px/1 'DM Sans',system-ui,sans-serif;padding:0 26px;cursor:pointer}
+#main .ff .ff-more{display:block;margin:18px auto 0;min-height:44px;border:0;border-radius:999px;background:var(--ff-ink);color:#fff;font:800 14px/1 'Inter',system-ui,sans-serif;padding:0 26px;cursor:pointer}
 #main .ff .ff-empty,#main .ff .ff-loading{background:#fff;border:1px dashed var(--ff-line);border-radius:12px;padding:24px;color:var(--ff-mute);font-size:14px;line-height:1.5;margin:0 0 14px}
 
 /* about: staff notes, closed by default */

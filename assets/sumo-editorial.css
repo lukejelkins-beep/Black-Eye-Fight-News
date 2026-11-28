@@ -1,7 +1,7 @@
 /* BEFN SUMO — Editorial Profile + Results Desk. Scoped visual overrides, no data pipeline changes. */
-:root{--cream:#F6F2EA;--card:#fff;--ink:#21191C;--panel:#21191C;--border:#D9D1C8;--muted:#625A5D;--gold:#D3AA46;--red:#84243A;--green:#17664F;--shadow:none}
+:root{--cream:#eef0f2;--card:#fff;--ink:#14181c;--panel:#14181c;--border:#D9D1C8;--muted:#625A5D;--gold:#D3AA46;--red:#84243A;--green:#17664F;--shadow:none}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{font:400 16px/1.5 'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink)}
+body{font:400 16px/1.5 'Inter',system-ui,sans-serif;background:var(--cream);color:var(--ink)}
 button,input,select,summary{font-size:16px;line-height:1.5}
 :where(a,button,input,select,summary,[tabindex]):focus-visible{outline:3px solid #17664F;outline-offset:3px}
 .frame{max-width:1280px;padding-inline:clamp(16px,3vw,48px)}
@@ -48,7 +48,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .profile-hero .profile-current .tag{color:#f0cc75;font-size:14px}
 .sumo-current-record{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 9px}
 .sumo-current-record>span{display:flex;flex-direction:column;align-items:start;gap:2px;min-width:0}
-.sumo-current-record b{font:800 32px/1.1 'DM Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.sumo-current-record b{font:800 32px/1.1 'Inter',system-ui,sans-serif;font-variant-numeric:tabular-nums}
 .sumo-current-record small{font-size:13px;color:#e4d5d5}
 .sumo-current-record .unavailable{font-size:17px}
 .profile-hero .profile-current p{font-size:13px;line-height:1.5;color:#eee0df;margin-bottom:0}
@@ -246,7 +246,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero>.profile-facts{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
  .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}}
 .sumo-photo-fallback{display:none}
-.profile-hero .sumo-photo-fallback{display:block;font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#21191c;background:#f6f2eadb;padding:4px;z-index:2}
+.profile-hero .sumo-photo-fallback{display:block;font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#14181c;background:#f6f2eadb;padding:4px;z-index:2}
 .profile-hero .profile-icon.sumo-photo:not(.has-photo)>span{display:none}
 .profile-hero .profile-icon:not(.has-photo){background:#e4d9cc}
 .profile-hero .profile-icon:not(.has-photo):before,.profile-hero .profile-icon:not(.has-photo):after{opacity:.18}
@@ -291,7 +291,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-rank-card-body .profile-icon.sumo-photo.lg{width:54px;height:68px;min-height:0;flex:none}
 .sumo-rank-name{font:800 23px/1.08 'Barlow Condensed',Impact,sans-serif}
 .sumo-rank-name a{color:var(--ink)}
-.sumo-rank-name .sumo-country-name{display:inline;font:400 13px/1.4 'DM Sans',sans-serif}
+.sumo-rank-name .sumo-country-name{display:inline;font:400 13px/1.4 'Inter',sans-serif}
 .sumo-rank-strong{font-size:14px;font-weight:800;color:var(--red);margin:3px 0}
 .sumo-rank-info{font-size:13px;color:var(--muted);gap:3px 14px}
 .sumo-rank-change{font-size:13px;color:var(--muted);margin-top:4px}
@@ -314,7 +314,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* Keep detailed chart labels readable; contain scrolling within labelled regions. */
 .sumo-weight-scroll,.sumo-rank-scroll{overflow-x:auto;overflow-y:hidden;padding:4px 0 10px}
 .sumo-weight-svg,.sumo-rank-svg{min-width:900px;max-width:none;max-height:none}
-.sumo-chart-axis,.sumo-chart-ranklabel,.sumo-chart-number{font-family:'DM Sans',system-ui,sans-serif}
+.sumo-chart-axis,.sumo-chart-ranklabel,.sumo-chart-number{font-family:'Inter',system-ui,sans-serif}
 .sumo-chart-scroll-hint{font-size:13px;color:var(--muted);line-height:1.5}
 .sumo-career-summary span{font-size:13px}
 .sumo-ed-person>.profile-icon.sumo-photo{width:40px;height:50px;min-height:0;flex:0 0 40px}
@@ -374,7 +374,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  display:grid;grid-template-columns:minmax(280px,390px) minmax(0,1fr)!important;
  grid-template-rows:auto auto auto;align-items:start;column-gap:24px;row-gap:12px;
  padding:0 24px 20px 0!important;min-width:0;border-radius:10px;
- background:#21191c;color:#fff;overflow:hidden;
+ background:#14181c;color:#fff;overflow:hidden;
 }
 .profile-hero>.profile-icon.sumo-photo.xl{
  grid-column:1;grid-row:1/span 3;align-self:stretch;width:100%!important;
@@ -538,10 +538,10 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-home-grid .section-head{margin-top:20px}
 .sumo-home-feature{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .sumo-inline-action{display:inline-flex;font-weight:700;font-size:14px;margin:12px 0}
-.sumo-basho-views{display:flex;gap:4px;background:#21191c;padding:5px;margin:18px 0 8px;border-radius:6px}
+.sumo-basho-views{display:flex;gap:4px;background:#14181c;padding:5px;margin:18px 0 8px;border-radius:6px}
 .sumo-basho-views button{flex:1;min-width:0;background:transparent;border:0;color:#fff;padding:9px 15px;border-radius:4px;min-height:44px;cursor:pointer;font-weight:750}
 @media(max-width:360px){.sumo-basho-views button{padding:9px 6px}}
-.sumo-basho-views button[aria-pressed=true]{background:#f6f2ea;color:#21191c}
+.sumo-basho-views button[aria-pressed=true]{background:#f6f2ea;color:#14181c}
 .sumo-day-quick{font-size:14px;color:var(--muted);margin:14px 0 6px}
 .sumo-empty-bout{background:#fff;padding:18px;border:1px solid var(--border);font-size:14px}
 .sumo-empty-bout button{display:inline-flex;margin-left:10px}
@@ -559,7 +559,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* Banzuke: aligned rank/person/previous/movement/current record. */
 .sumo-rank-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0;background:#fff;border:1px solid var(--border)}
 .sumo-rank-table-head,.sumo-rank-card{display:grid;grid-template-columns:minmax(130px,.95fr) minmax(180px,1.4fr) minmax(125px,1fr) minmax(125px,1fr) minmax(105px,1fr);gap:10px;align-items:center;padding:10px 14px}
-.sumo-rank-table-head{background:#21191c;color:#fff;font-size:13px;font-weight:800}
+.sumo-rank-table-head{background:#14181c;color:#fff;font-size:13px;font-weight:800}
 .sumo-rank-card{border:0;border-bottom:1px solid var(--border);border-radius:0;min-height:72px;box-shadow:none}
 .sumo-rank-card:last-child{border-bottom:0}
 .sumo-rank-published strong{font-weight:800;font-size:14px}
@@ -597,7 +597,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-h2h-hero .sumo-photo img{transform:none!important;object-position:center top}
 .sumo-h2h-score>small:not(:last-child){display:none}
 .sumo-h2h-comparison{margin:14px 0}
-.sumo-h2h-bout .sumo-h2h-winner{color:#21191c!important;background:transparent!important}
+.sumo-h2h-bout .sumo-h2h-winner{color:#14181c!important;background:transparent!important}
 .technical-terms .term{scroll-margin-top:80px}
 @media(max-width:900px){
  .sumo-home-grid{grid-template-columns:minmax(0,1fr)}
@@ -649,13 +649,13 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* F01: first-screen paths to results and full licensed source photograph. */
 .sumo-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px}
 .sumo-hero-actions a{display:inline-flex;align-items:center;min-height:40px;padding:7px 12px;border:1px solid #ad9184;border-radius:5px;color:#fff;font-size:13px;font-weight:800;text-decoration:none}
-.sumo-hero-actions .sumo-quick-results{background:#d3aa46;color:#21191c;border-color:#d3aa46}
+.sumo-hero-actions .sumo-quick-results{background:#d3aa46;color:#14181c;border-color:#d3aa46}
 .sumo-hero-actions a:hover{text-decoration:underline}
 .sumo-hero-actions a:focus-visible{outline:3px solid #d3aa46;outline-offset:3px}
 /* F15: opt-in density for visitors scanning a full 190-rikishi directory. */
 .sumo-directory-layout{display:flex;gap:6px;justify-content:flex-end;margin:8px 0 12px}
-.sumo-directory-layout button{min-height:44px;padding:8px 12px;font-size:14px;font-weight:750;border-radius:5px;border:1px solid var(--border);background:#fff;color:#21191c;cursor:pointer}
-.sumo-directory-layout button[aria-pressed=true]{background:#21191c;color:#fff}
+.sumo-directory-layout button{min-height:44px;padding:8px 12px;font-size:14px;font-weight:750;border-radius:5px;border:1px solid var(--border);background:#fff;color:#14181c;cursor:pointer}
+.sumo-directory-layout button[aria-pressed=true]{background:#14181c;color:#fff}
 .directory-grid.is-list{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:6px!important}
 .directory-grid.is-list .directory-card{display:grid!important;grid-template-columns:92px minmax(0,1fr) minmax(120px,.6fr)!important;align-items:center!important;gap:14px!important;min-height:100px!important;border-radius:7px;padding:4px 16px 4px 4px}
 .directory-grid.is-list .directory-upper{display:contents!important}
@@ -676,9 +676,9 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 
 
 /* One page header everywhere: dark band, uppercase title, one context line. */
-.sumo-page-head{margin:16px 0 18px;padding:clamp(16px,3vw,26px) clamp(16px,3vw,28px);background:#151115;color:#fff;border-radius:6px;border-left:4px solid var(--brand-red,#cf1824)}
+.sumo-page-head{margin:16px 0 18px;padding:clamp(16px,3vw,26px) clamp(16px,3vw,28px);background:#14181c;color:#fff;border-radius:6px;border-left:4px solid var(--brand-red,#b3001b)}
 .sumo-page-head h1{margin:0;font:900 clamp(34px,6vw,56px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;color:#fff;overflow-wrap:anywhere}
-.sumo-page-head p{margin:8px 0 0;color:#d9cfcd;font:600 14px/1.4 'DM Sans',system-ui,sans-serif}
+.sumo-page-head p{margin:8px 0 0;color:#d9cfcd;font:600 14px/1.4 'Inter',system-ui,sans-serif}
 .back-link+.sumo-page-head{margin-top:10px}
 
 /* PR #230 follow-up: image-first rikishi hero; source-grounded Career tiles; readable H2H. */
@@ -692,7 +692,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-career-strip>div>span{font-size:clamp(14px,1.6vw,17px);font-weight:800;color:#413639}
 .sumo-career-strip>div>strong{
   font:900 clamp(38px,4vw,54px)/1 'Barlow Condensed',Impact,sans-serif;
-  color:#21191c;font-variant-numeric:tabular-nums;
+  color:#14181c;font-variant-numeric:tabular-nums;
 }
 .sumo-career-caveat{margin:8px 0 18px;font-size:13px;line-height:1.5;color:#625a5d}
 .sumo-rival .sumo-rival-record{
@@ -1014,7 +1014,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   padding:15px 18px;
 }
 #sumo-charts .sumo-career-panel-head small{
-  color:#dfd7d1;font:800 11px/1.3 'DM Sans',system-ui,sans-serif;
+  color:#dfd7d1;font:800 11px/1.3 'Inter',system-ui,sans-serif;
   letter-spacing:.08em;
 }
 #sumo-charts .sumo-career-panel-head h3{
@@ -1649,7 +1649,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   display:inline-block;padding:3px 8px;
   border:1px solid rgba(238,222,210,.35);border-radius:4px;
   color:#e8dcda;background:rgba(33,25,28,.3);
-  font:700 12px/1.2 'DM Sans',system-ui,sans-serif;
+  font:700 12px/1.2 'Inter',system-ui,sans-serif;
   letter-spacing:.015em;
 }
 .profile-hero .profile-meta strong{font-variant-numeric:tabular-nums}
@@ -1694,12 +1694,12 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .bout-side.left .bout-id{margin-left:-14px}
 .bout-side.right .bout-id{margin-right:-14px}
 .bout-side.right .bout-id{align-items:flex-end}
-.bout-name{font:800 20px/1.02 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em;text-transform:uppercase;color:var(--ink,#111013);text-decoration:none;overflow-wrap:anywhere;hyphens:none}
+.bout-name{font:800 20px/1.02 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em;text-transform:uppercase;color:var(--ink,#14181c);text-decoration:none;overflow-wrap:anywhere;hyphens:none}
 .bout-id small{font-size:12px;font-weight:600;color:#5f5760;margin-top:3px}
 .bout-form{display:inline-flex;gap:2px;align-items:center}
 .bout-form i{display:block;width:9px;height:5px;border-radius:2px;background:#d9d2c7}
 .bout-form i.w{background:#1f8a4c}
-.bout-form i.l{background:#cf1824}
+.bout-form i.l{background:#b3001b}
 .bout-side.is-loser .bout-name,.bout-side.is-loser .bout-id small{color:#5f5760}
 .bout-side.is-loser .bout-photo{opacity:.7}
 .bout-side.is-winner .bout-name{box-shadow:inset 0 -3px 0 var(--gold)}
@@ -1707,17 +1707,17 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .bout-vs{font-size:10px;letter-spacing:.08em;color:#5f5760}
 .bout-stats{grid-area:s;margin:0;padding:7px 0 5px;border-top:1px solid #efe9df;display:grid;gap:4px}
 .bout-stats>div{display:grid;grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);align-items:center;gap:6px}
-.bout-stats dd{margin:0;font:700 13px/1.25 'DM Sans',sans-serif;color:#111013}
+.bout-stats dd{margin:0;font:700 13px/1.25 'Inter',sans-serif;color:#14181c}
 .bout-stats dd.l{text-align:left}
 .bout-stats dd.r{text-align:right}
 .bout-stats .is-basho dd{display:flex;align-items:center;gap:8px;min-height:24px}
 .bout-stats .is-basho dd.r{justify-content:flex-end}
 .bout-stats .is-basho b{font:900 22px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em}
-.bout-stats .is-basho dt{color:#111013}
-.bout-stats dt{font:700 10px/1 'DM Sans',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6d646e;text-align:center;white-space:nowrap}
+.bout-stats .is-basho dt{color:#14181c}
+.bout-stats dt{font:700 10px/1 'Inter',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6d646e;text-align:center;white-space:nowrap}
 .bout-foot{grid-area:f;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding-top:4px;border-top:1px solid #efe9df;font-size:12.5px;color:#4a434b}
 .bout-verdict{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bout-verdict a{color:inherit;text-decoration:underline;text-decoration-color:#cf182466;text-underline-offset:2px}
+.bout-verdict a{color:inherit;text-decoration:underline;text-decoration-color:#b3001b66;text-underline-offset:2px}
 .bout-h2h{flex:none;display:inline-flex;align-items:center;min-height:36px;padding:0 4px;font-weight:800;color:var(--red);text-decoration:none;white-space:nowrap}
 .bout-compare{border-top:1px solid #efe9df;background:#faf7f1}
 .bout-compare>summary{cursor:pointer;list-style:none;padding:0 12px;min-height:40px;display:flex;align-items:center;font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#4a434b}
@@ -1750,7 +1750,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-h2h-hero .sumo-match-person>:not(.sumo-hero-flag){position:relative;z-index:1}
 .sumo-h2h-hero .sumo-hero-country{
   display:inline-block;padding:3px 8px;border:1px solid rgba(238,222,210,.35);border-radius:4px;
-  color:#e8dcda;background:rgba(33,25,28,.3);font:700 12px/1.2 'DM Sans',system-ui,sans-serif;letter-spacing:.015em;
+  color:#e8dcda;background:rgba(33,25,28,.3);font:700 12px/1.2 'Inter',system-ui,sans-serif;letter-spacing:.015em;
 }
 
 /* Stage 3: profile hero band and compact rankings rows. Final overrides, kept
@@ -1781,7 +1781,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-rank-card>.sumo-rank-person{grid-area:per;display:flex;align-items:center;gap:10px;min-width:0}
   .sumo-rank-card>.sumo-rank-person .profile-icon{width:38px;height:46px;min-height:0;flex:none}
   .sumo-rank-card>.sumo-rank-person .sumo-photo>small{display:none}
-  .sumo-rank-card>.sumo-rank-person a{font:800 20px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;text-decoration:none;color:var(--ink,#111013)}
+  .sumo-rank-card>.sumo-rank-person a{font:800 20px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;text-decoration:none;color:var(--ink,#14181c)}
   .sumo-rank-card>.sumo-rank-person small{display:block;font-size:12px;color:#5f5760}
   .sumo-rank-card>.sumo-rank-record{grid-area:rec;align-self:center;text-align:right;white-space:nowrap;font-size:14px}
   .sumo-rank-card>.sumo-rank-published{grid-area:pub;font-size:13px}
@@ -1793,12 +1793,12 @@ button,input,select,summary{font-size:16px;line-height:1.5}
    the middle. Portrait backgrounds are blended into the page with CSS only
    (the original image files are never edited). */
 .hl-list{display:grid;gap:26px;margin-bottom:6px}
-.stage{position:relative;padding:4px 0 10px;--lc:#cf1824;--rc:#2b3a9a}
+.stage{position:relative;padding:4px 0 10px;--lc:#b3001b;--rc:#2b3a9a}
 .stage-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"lab lab" "l r";gap:2px 10px;align-items:end}
 .stage-name.left{grid-area:l}.stage-name.right{grid-area:r}.stage-label{grid-area:lab}
 .stage-name{margin:0;font:900 clamp(22px,6.4vw,40px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:normal;word-break:normal;hyphens:none}
 .stage-name.right{text-align:right}
-.stage-name a{color:#111013;text-decoration:none}
+.stage-name a{color:#14181c;text-decoration:none}
 .stage-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5f5760;text-align:center;padding-bottom:4px}
 .stage-rule{height:3px;margin:8px 0 0;background:linear-gradient(90deg,var(--lc) 0 50%,var(--rc) 50% 100%)}
 .stage-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"l r" "s s";gap:0 4px;align-items:end}
@@ -1813,7 +1813,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .stage-photo.is-loser{opacity:.7}
 .stage-stats{grid-area:s;margin:10px 0 0;padding:0}
 .stage-stats>div{display:grid;grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr);gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #e6dfd3}
-.stage-stats dt{margin:0;text-align:center;font:800 12px/1.2 'Barlow Condensed',Impact,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#111013}
+.stage-stats dt{margin:0;text-align:center;font:800 12px/1.2 'Barlow Condensed',Impact,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#14181c}
 .stage-stats dd{margin:0;font-size:15px;font-weight:500;min-width:0;overflow-wrap:anywhere}
 .stage-stats dd.l{color:var(--lc);text-align:left}
 .stage-stats dd.r{color:var(--rc);text-align:right}
@@ -1827,21 +1827,21 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .stage-name{font-size:clamp(28px,3.4vw,46px)}
   .hl-list>.stage:not(:first-child) .stage-photo{max-height:460px}}
 .hl-section{display:flex;align-items:center;gap:8px;margin:18px 0 8px;font:900 22px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em}
-.hl-section span{background:#151115;color:#f3c332;font:800 12px/1 'DM Sans',sans-serif;padding:4px 8px;border-radius:999px}
+.hl-section span{background:#14181c;color:#c5ccd3;font:800 12px/1 'Inter',sans-serif;padding:4px 8px;border-radius:999px}
 }
 
 /* Day flow: released-ahead notice and the home centre stage. */
 .sumo-centre-stage{margin:0 0 28px}
 .sumo-released-note{margin:0 0 10px;padding:9px 12px;background:#fff7dd;border:1px solid #ecd58a;border-radius:8px;font-size:13.5px}
 .sumo-released-note a{color:var(--red);font-weight:800}
-.sumo-released{background:var(--gold)!important;color:#151115!important;border:0;font-weight:800}
+.sumo-released{background:var(--gold)!important;color:#14181c!important;border:0;font-weight:800}
 /* Bouts page: the predictor's chance under each bout (28 Nov 2026) */
-.bout-chance{display:flex;align-items:center;gap:10px;min-height:44px;margin:6px 0 0;padding:0 12px;border-radius:10px;background:#f4efe7;color:#111013;text-decoration:none;font:500 13.5px 'DM Sans',sans-serif}
+.bout-chance{display:flex;align-items:center;gap:10px;min-height:44px;margin:6px 0 0;padding:0 12px;border-radius:10px;background:#f4efe7;color:#14181c;text-decoration:none;font:500 13.5px 'Inter',sans-serif}
 .bout-chance b{font-weight:800}
 .bout-chance em{font-style:normal;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-left:auto}
 .bout-chance.is-hit em{color:#1d6b41}
 .bout-chance.is-miss em{color:#a32a25}
-.bout-chance i{font-style:normal;font-weight:800;color:#cf1824}
+.bout-chance i{font-style:normal;font-weight:800;color:#b3001b}
 .bout-chance:not(:has(em)) i{margin-left:auto}
 .bout-chance:hover{background:#ece5db}
 /* Compact bout rows on profiles (28 Nov 2026): one ~60 px line per bout, details one tap deeper.
@@ -1851,23 +1851,23 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-results-desk.is-compact .sumo-ed-row.is-compact>.sumo-ed-row-main{display:grid;grid-template-columns:30px 40px minmax(0,1fr) auto 14px;grid-template-areas:none;align-items:center;column-gap:10px;row-gap:0;min-height:60px;padding:8px 12px;cursor:pointer;list-style:none;font-size:14px}
 .sumo-ed-row.is-compact>summary::-webkit-details-marker{display:none}
 .sumo-ed-row.is-compact>summary::marker{content:""}
-.sumo-ed-row.is-compact .sumo-ed-result{grid-area:auto;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:800 14px 'DM Sans',sans-serif;background:#eee8df;color:var(--muted)}
+.sumo-ed-row.is-compact .sumo-ed-result{grid-area:auto;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:800 14px 'Inter',sans-serif;background:#eee8df;color:var(--muted)}
 .sumo-ed-row.is-compact .sumo-ed-result.win{background:#dcefe3;color:#1d6b41}
 .sumo-ed-row.is-compact .sumo-ed-result.loss{background:#fbe3e4;color:#a32a25}
 .sumo-ed-row.is-compact .sumo-ed-result.scheduled{font-size:12px;width:auto;padding:0 4px}
 .sumo-ed-row.is-compact .sumo-ed-date{grid-area:auto;display:flex;flex-direction:column;line-height:1.1;font-size:14px}
-.sumo-ed-row.is-compact .sumo-ed-date strong{font:800 15px 'DM Sans',sans-serif;font-variant-numeric:tabular-nums}
+.sumo-ed-row.is-compact .sumo-ed-date strong{font:800 15px 'Inter',sans-serif;font-variant-numeric:tabular-nums}
 .sumo-ed-row.is-compact .sumo-ed-date small{font-size:12px;color:var(--muted);white-space:nowrap}
 .sumo-ed-row.is-compact .sumo-ed-person{grid-area:auto;display:flex;align-items:center;gap:10px;min-width:0}
 .sumo-ed-row.is-compact .sumo-ed-person .profile-icon{width:40px;height:40px;border-radius:50%;flex:none}
 .sumo-ed-row.is-compact .sumo-ed-person .profile-icon img{object-position:top}
 .sumo-ed-who{display:flex;flex-direction:column;min-width:0}
-.sumo-ed-row.is-compact .sumo-ed-who>a,.sumo-ed-row.is-compact .sumo-ed-who>span{font:700 15px 'DM Sans',sans-serif;color:#111013;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sumo-ed-row.is-compact .sumo-ed-who>a,.sumo-ed-row.is-compact .sumo-ed-who>span{font:700 15px 'Inter',sans-serif;color:#14181c;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sumo-ed-row.is-compact .sumo-ed-tech{grid-area:auto;display:block;text-align:left;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sumo-ed-row.is-compact .sumo-ed-tech a{color:var(--muted);font-weight:600}
 .sumo-ed-row.is-compact .sumo-ed-h2h{grid-area:auto;text-align:right;white-space:nowrap}
-.sumo-ed-row.is-compact .sumo-ed-h2h a{display:inline-flex;flex-direction:column;align-items:flex-end;justify-content:center;min-height:44px;min-width:44px;text-decoration:none;color:#84243A;font:800 14px 'DM Sans',sans-serif}
-.sumo-ed-row.is-compact .sumo-ed-h2h small{font:700 12px 'DM Sans',sans-serif;color:var(--muted);letter-spacing:.04em}
+.sumo-ed-row.is-compact .sumo-ed-h2h a{display:inline-flex;flex-direction:column;align-items:flex-end;justify-content:center;min-height:44px;min-width:44px;text-decoration:none;color:#84243A;font:800 14px 'Inter',sans-serif}
+.sumo-ed-row.is-compact .sumo-ed-h2h small{font:700 12px 'Inter',sans-serif;color:var(--muted);letter-spacing:.04em}
 .sumo-ed-more::after{content:"";display:block;width:8px;height:8px;border-right:2px solid #b7aca0;border-bottom:2px solid #b7aca0;transform:rotate(45deg);margin-top:-4px;transition:transform .15s}
 .sumo-ed-row.is-compact[open] .sumo-ed-more::after{transform:rotate(225deg);margin-top:4px}
 .sumo-ed-row.is-compact>.sumo-details-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;padding:4px 12px 12px 92px;font-size:13px;color:var(--muted);background:#fff}

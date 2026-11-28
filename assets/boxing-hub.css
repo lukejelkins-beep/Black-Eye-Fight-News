@@ -2,11 +2,11 @@
 .befn-sr,.bxh-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .fh-boxing .fh-top{flex-wrap:wrap}
 .bxh-find{flex:0 1 260px;min-width:0}
-.bxh-find input{width:100%;min-height:44px;border-radius:999px;border:1px solid #4a4248;background:#1d181c;color:#fff;padding:0 16px;font:500 14px 'DM Sans',system-ui,sans-serif}
+.bxh-find input{width:100%;min-height:44px;border-radius:999px;border:1px solid #4a4248;background:#1d181c;color:#fff;padding:0 16px;font:500 14px 'Inter',system-ui,sans-serif}
 .bxh-find input::placeholder{color:#b8b0b3}
 .bxh-belts{display:flex;flex-wrap:wrap;gap:4px}
-.bxh-belts i{font-style:normal;font-size:12px;font-weight:800;background:#111013;color:var(--fh-gold);border-radius:4px;padding:2px 6px}
-.fh-champ .bxh-belts i{background:var(--fh-gold);color:#111013}
+.bxh-belts i{font-style:normal;font-size:12px;font-weight:800;background:#14181c;color:var(--fh-gold);border-radius:4px;padding:2px 6px}
+.fh-champ .bxh-belts i{background:var(--fh-gold);color:#14181c}
 .bxh-champs{display:grid;grid-template-columns:1fr;gap:10px}
 @media (min-width:600px){.bxh-champs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .bxh-champ{display:flex;align-items:flex-end;gap:10px;min-height:104px;width:100%;background:#fff;border:1px solid #e6dfd2;border-radius:16px;overflow:hidden;padding:0 10px 0 0;text-align:left;font:inherit;color:inherit;cursor:pointer}

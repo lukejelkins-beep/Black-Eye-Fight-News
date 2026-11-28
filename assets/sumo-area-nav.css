@@ -13,11 +13,11 @@ html[data-befn-area="sumo"] .sh-area-name{color:#8ea6dc}
   /* site-header.css re-shows the desktop sports bar after its phone rule; the main site hides it in mobile-app.css. */
   .sh .mainnav.sh-areas{display:none}
   .sh .befn-mobile-topbar{display:flex;align-items:center;width:100%}
-  .befn-mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));left:0;right:0;bottom:0;z-index:1100;min-height:calc(64px + env(safe-area-inset-bottom));padding:5px 5px calc(5px + env(safe-area-inset-bottom));background:#171315;border-top:3px solid var(--area-colour);box-shadow:0 -7px 25px rgba(15,8,9,.25)}
+  .befn-mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));left:0;right:0;bottom:0;z-index:1100;min-height:calc(64px + env(safe-area-inset-bottom));padding:5px 5px calc(5px + env(safe-area-inset-bottom));background:#14181c;border-top:3px solid var(--area-colour);box-shadow:0 -7px 25px rgba(15,8,9,.25)}
   .befn-mobile-tabs.befn-mobile-tabs-four{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .befn-mobile-tabs a{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:44px;text-align:center;text-decoration:none;color:#f3e8e2;font:800 12px 'DM Sans',system-ui,sans-serif;border-radius:6px;padding:6px 1px}
+  .befn-mobile-tabs a{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:44px;text-align:center;text-decoration:none;color:#f3e8e2;font:800 12px 'Inter',system-ui,sans-serif;border-radius:6px;padding:6px 1px}
   .befn-mobile-tabs a svg{height:19px;width:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .befn-mobile-tabs a[aria-current="page"]{background:#f3c332;color:#211417}
+  .befn-mobile-tabs a[aria-current="page"]{background:#c5ccd3;color:#14181c}
   .befn-mobile-tabs a:focus-visible{outline:2px solid #fff}
   /* Pills wrap to a second row instead of running off the screen (28 Nov 2026). Measured: a profile's
      name still starts about 540 px down at 320 x 740, inside the first screen (scripts/sumo-browser-qa.mjs).

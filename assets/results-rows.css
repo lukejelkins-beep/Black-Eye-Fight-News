@@ -3,15 +3,15 @@
    bold with a tick, the loser faded, a method chip and the round in the middle. The row opens the fight snapshot.
    The poster and title band above stay dark (DIRECTION: posters and photo leads stay dark). Loaded after the older
    results styles, so it overrides them with the same selectors and !important where those used it. */
-#main #results-content .befn-result-expanded{background:var(--t-cream,#f8f4ed)!important;padding:10px 10px 12px!important}
+#main #results-content .befn-result-expanded{background:var(--t-cream,#eef0f2)!important;padding:10px 10px 12px!important}
 /* tabs */
 #main #results-content .befn-result-expanded .result-card-tabs{display:flex!important;gap:6px!important;background:none!important;border:0!important;padding:0!important;margin:0 0 10px!important;box-shadow:none!important}
-#main #results-content .befn-result-expanded .result-card-tab{flex:1;min-height:44px;border-radius:999px!important;border:1px solid #e3dccf!important;background:#fff!important;color:#111013!important;font:700 14px 'DM Sans',sans-serif!important;box-shadow:none!important}
-#main #results-content .befn-result-expanded .result-card-tab.is-active{background:#111013!important;border-color:#111013!important;color:#fff!important}
+#main #results-content .befn-result-expanded .result-card-tab{flex:1;min-height:44px;border-radius:999px!important;border:1px solid #e3dccf!important;background:#fff!important;color:#14181c!important;font:700 14px 'Inter',sans-serif!important;box-shadow:none!important}
+#main #results-content .befn-result-expanded .result-card-tab.is-active{background:#14181c!important;border-color:#14181c!important;color:#fff!important}
 #main #results-content .befn-result-expanded .result-card-tab::after{display:none!important}
 /* the row */
-#main #results-content .befn-result-expanded .result-bout-compact{background:#fff!important;border:1px solid #e3dccf!important;border-radius:12px!important;margin:0 0 8px!important;padding:0!important;box-shadow:none!important;overflow:hidden;color:#111013}
-#main #results-content .befn-result-expanded .result-bout-compact.is-main-event{border-top:3px solid #f3c332!important}
+#main #results-content .befn-result-expanded .result-bout-compact{background:#fff!important;border:1px solid #e3dccf!important;border-radius:12px!important;margin:0 0 8px!important;padding:0!important;box-shadow:none!important;overflow:hidden;color:#14181c}
+#main #results-content .befn-result-expanded .result-bout-compact.is-main-event{border-top:3px solid #c5ccd3!important}
 #main #results-content .befn-result-expanded .result-bout-compact .result-matchup{display:grid!important;grid-template-columns:60px minmax(0,1fr) auto minmax(0,1fr) 60px!important;align-items:center!important;gap:0 8px!important;min-height:78px!important;padding:0!important;margin:0!important;background:none!important;border:0!important;box-shadow:none!important;position:relative;cursor:pointer}
 #main #results-content .befn-result-expanded .result-matchup::before,#main #results-content .befn-result-expanded .result-matchup::after{display:none!important}
 #main #results-content .befn-result-expanded .result-contender{display:contents!important}
@@ -31,37 +31,37 @@
 #main #results-content .befn-result-expanded .result-photo.rr-fit.is-gone{visibility:hidden}
 /* names and records */
 #main #results-content .befn-result-expanded .result-contender-info{display:flex!important;flex-direction:column!important;gap:2px!important;min-width:0}
-#main #results-content .befn-result-expanded .result-contender-info>strong{font:800 14px/1.2 'DM Sans',sans-serif!important;color:#111013!important;text-transform:none!important;letter-spacing:0!important}
+#main #results-content .befn-result-expanded .result-contender-info>strong{font:800 14px/1.2 'Inter',sans-serif!important;color:#14181c!important;text-transform:none!important;letter-spacing:0!important}
 #main #results-content .befn-result-expanded .result-contender-info>strong a{color:inherit!important}
-#main #results-content .befn-result-expanded .result-bout-record{font:500 12px 'DM Sans',sans-serif!important;color:#5c5660!important}
+#main #results-content .befn-result-expanded .result-bout-record{font:500 12px 'Inter',sans-serif!important;color:#5c5660!important}
 #main #results-content .befn-result-expanded .result-bout-record small{display:none}
 #main #results-content .befn-result-expanded .result-fighter-tier{display:none!important}
 #main #results-content .befn-result-expanded .result-fighter-rank{font-size:11px!important;padding:0 4px!important}
 /* The winner's tick is drawn by CSS, not text: the fight snapshot reads the name (and surname) from this element. */
-#main #results-content .befn-result-expanded .result-contender.is-winner .result-contender-info>strong::after{content:"✓";display:inline-grid;place-items:center;width:16px;height:16px;margin-left:4px;border-radius:50%;background:#2e7d32;color:#fff;font:800 10px/1 'DM Sans',sans-serif;vertical-align:1px}
+#main #results-content .befn-result-expanded .result-contender.is-winner .result-contender-info>strong::after{content:"✓";display:inline-grid;place-items:center;width:16px;height:16px;margin-left:4px;border-radius:50%;background:#2e7d32;color:#fff;font:800 10px/1 'Inter',sans-serif;vertical-align:1px}
 #main #results-content .befn-result-expanded .has-winner .result-contender:not(.is-winner) :is(.result-contender-info,.result-photo){opacity:.55}
 #main #results-content .befn-result-expanded .has-winner .result-contender:not(.is-winner) .result-contender-info>strong{font-weight:600!important}
 /* the middle: label, method chip, round and time */
 #main #results-content .befn-result-expanded .result-matchup-result{position:static!important;transform:none!important;display:flex!important;flex-direction:column;align-items:center;gap:2px;background:none!important;border:0!important;padding:0!important;margin:0!important;min-width:56px;width:auto!important;text-align:center;inset:auto!important}
 #main #results-content .befn-result-expanded .result-matchup-result>:is(.result-matchup-finished,strong){display:none!important}
-#main #results-content .befn-result-expanded .rr-chip{display:inline-block;font:800 11px/1.5 'DM Sans',sans-serif;letter-spacing:.04em;padding:1px 7px;border-radius:5px;color:#fff;background:#57525c;white-space:nowrap}
-#main #results-content .befn-result-expanded .rr-chip.is-ko{background:#cf1824}
+#main #results-content .befn-result-expanded .rr-chip{display:inline-block;font:800 11px/1.5 'Inter',sans-serif;letter-spacing:.04em;padding:1px 7px;border-radius:5px;color:#fff;background:#57525c;white-space:nowrap}
+#main #results-content .befn-result-expanded .rr-chip.is-ko{background:#b3001b}
 #main #results-content .befn-result-expanded .rr-chip.is-sub{background:#a8770a}
-#main #results-content .befn-result-expanded .rr-chip.is-dec{background:#111013}
+#main #results-content .befn-result-expanded .rr-chip.is-dec{background:#14181c}
 #main #results-content .befn-result-expanded .rr-chip.is-draw,#main #results-content .befn-result-expanded .rr-chip.is-nc{background:#8a8490}
-#main #results-content .befn-result-expanded .rr-when{font:600 12px 'DM Sans',sans-serif;color:#5c5660;white-space:nowrap}
+#main #results-content .befn-result-expanded .rr-when{font:600 12px 'Inter',sans-serif;color:#5c5660;white-space:nowrap}
 #main #results-content .befn-result-expanded .result-matchup-scores{display:none!important}
-#main #results-content .befn-result-expanded .result-featured-bout-label{position:absolute!important;top:5px;left:50%;transform:translateX(-50%);margin:0!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;font:800 10px/1 'DM Sans',sans-serif!important;letter-spacing:.06em;color:#7a5a12!important;white-space:nowrap}
+#main #results-content .befn-result-expanded .result-featured-bout-label{position:absolute!important;top:5px;left:50%;transform:translateX(-50%);margin:0!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;font:800 10px/1 'Inter',sans-serif!important;letter-spacing:.06em;color:#7a5a12!important;white-space:nowrap}
 #main #results-content .befn-result-expanded :is(.is-main-event,.is-co-main-event) .result-matchup{padding-top:12px!important}
 /* division and rounds: one quiet line under the row */
-#main #results-content .befn-result-expanded .result-bout-detail{display:flex!important;justify-content:center!important;gap:6px!important;background:none!important;border:0!important;padding:0 8px 6px!important;margin:-4px 0 0!important;font:500 12px 'DM Sans',sans-serif!important;color:#5c5660!important;min-height:0!important;box-shadow:none!important}
+#main #results-content .befn-result-expanded .result-bout-detail{display:flex!important;justify-content:center!important;gap:6px!important;background:none!important;border:0!important;padding:0 8px 6px!important;margin:-4px 0 0!important;font:500 12px 'Inter',sans-serif!important;color:#5c5660!important;min-height:0!important;box-shadow:none!important}
 #main #results-content .befn-result-expanded .result-bout-detail>*{font:inherit!important;color:inherit!important;background:none!important;padding:0!important;text-transform:none!important;letter-spacing:0!important}
 #main #results-content .befn-result-expanded .result-bout-rounds::before{content:"· "}
 #main #results-content .befn-result-expanded .result-bout-secondary:not(:has(a)){display:none!important}
 #main #results-content .befn-result-expanded .result-bout-secondary{background:none!important;border:0!important;padding:0 10px 8px!important;text-align:center}
 /* the fight snapshot opener: a slim bar; the opened snapshot itself is unchanged */
 #main #results-content .befn-result-expanded .result-bout-compact>.befn-fight-snapshot{margin:0!important;border-radius:0!important;border-left:0!important;border-right:0!important;border-bottom:0!important}
-#main #results-content .befn-result-expanded .result-bout-compact>.befn-fight-snapshot:not([open])>summary{min-height:40px!important;padding:8px 12px!important;background:#faf7f1!important;border:0!important;border-radius:0!important;box-shadow:none!important;font:700 13px 'DM Sans',sans-serif!important;color:#111013!important}
+#main #results-content .befn-result-expanded .result-bout-compact>.befn-fight-snapshot:not([open])>summary{min-height:40px!important;padding:8px 12px!important;background:#faf7f1!important;border:0!important;border-radius:0!important;box-shadow:none!important;font:700 13px 'Inter',sans-serif!important;color:#14181c!important}
 /* round statistics and scorecards: only once the fight is opened */
 #main #results-content .befn-result-expanded .result-bout-compact>.befn-fight-snapshot:not([open])~details.befn-cal-stats{display:none!important}
 #main #results-content .befn-result-expanded .result-bout-compact>details.befn-cal-stats{margin:6px 10px!important}

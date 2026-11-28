@@ -1,16 +1,16 @@
 /* Boxing and MMA Overviews (sport-overview.js). Light theme, site tokens from site-theme.css. */
-#main .sov{--ac:var(--sport-boxing,#cf1824);--ink:var(--t-ink,#111013);--mute:var(--t-mute,#5b565d);--line:var(--t-line,#e5e1d8);--gold:var(--t-gold,#f3c332);--dark:#151115;max-width:1200px;margin:0 auto;padding:0 0 32px;color:var(--ink)}
+#main .sov{--ac:var(--sport-boxing,#b3001b);--ink:var(--t-ink,#14181c);--mute:var(--t-mute,#5b565d);--line:var(--t-line,#e5e1d8);--gold:var(--t-gold,#c5ccd3);--dark:#14181c;max-width:1200px;margin:0 auto;padding:0 0 32px;color:var(--ink)}
 #main .sov-mma{--ac:var(--sport-mma,#e0a400)}
-#main .sov h1,#main .sov h2{font-family:var(--display,'Unbounded',sans-serif);font-weight:800;margin:0;letter-spacing:0}
+#main .sov h1,#main .sov h2{font-family:var(--display,'Oswald',sans-serif);font-weight:800;margin:0;letter-spacing:0}
 #main .sov a{color:inherit;text-decoration:none}
-#main .sov-k,#main .sov-ev{font:800 12px/1.25 'DM Sans',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase}
+#main .sov-k,#main .sov-ev{font:800 12px/1.25 'Inter',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase}
 #main .sov-ev{display:block;color:var(--mute);margin-bottom:4px}
 #main .sov-nw{white-space:nowrap}
 /* next fight night */
 #main .sov-next{display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;margin:20px 0 0;background:#fff;border:1px solid var(--line);border-left:5px solid var(--ac);border-radius:10px;padding:12px 16px}
 #main .sov-next .sov-k{color:var(--ac)}#main .sov-mma .sov-next .sov-k{color:#8a6500}
 #main .sov-next>b{font-size:17px}#main .sov-next-when{color:var(--mute)}
-#main .sov-cd{margin-left:auto;white-space:nowrap}#main .sov-cd b{font:800 24px var(--display,'Unbounded',sans-serif)}
+#main .sov-cd{margin-left:auto;white-space:nowrap}#main .sov-cd b{font:800 24px var(--display,'Oswald',sans-serif)}
 /* hero */
 #main .sov-hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:end;margin-top:20px;background:var(--dark);color:#fff;border-radius:12px;padding:0 32px;min-height:320px;border-bottom:4px solid var(--ac);overflow:hidden}
 #main .sov-hero.is-flat{grid-template-columns:1fr;min-height:0}
@@ -34,7 +34,7 @@
 /* blocks */
 #main .sov-blk{padding-top:32px}
 #main .sov-hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:10px;margin-bottom:14px}
-#main .sov-hd h2{font-size:22px}#main .sov-hd a{color:var(--t-red,#cf1824);font-weight:700;font-size:13px;white-space:nowrap;padding:12px 0;margin:-12px 0}
+#main .sov-hd h2{font-size:22px}#main .sov-hd a{color:var(--t-red,#b3001b);font-weight:700;font-size:13px;white-space:nowrap;padding:12px 0;margin:-12px 0}
 #main .sov-sub{color:var(--mute);margin:-6px 0 12px;font-size:14px}
 /* faces */
 #main .sov-f{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top;background:#ece6dc;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--mute);border:2px solid var(--ac)}
@@ -48,7 +48,7 @@
 /* coming up */
 #main .sov-ups{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 #main .sov-up{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-#main .sov-up-art{display:flex;align-items:flex-end;height:150px;background:linear-gradient(#2c262b,var(--dark))}
+#main .sov-up-art{display:flex;align-items:flex-end;height:150px;background:linear-gradient(#303437,var(--dark))}
 #main .sov-pc{flex:1;display:flex;justify-content:center;align-items:flex-end;height:100%;min-width:0}
 #main .sov-pc img{height:100%;max-width:100%;object-fit:contain;object-position:bottom}
 #main .sov-pc .sov-f.is-big{width:84px;height:84px;margin-bottom:30px;font-size:22px;object-fit:cover}
@@ -71,8 +71,8 @@
 #main .sov-news{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 #main .sov-news a{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}#main .sov-news strong{display:block;font-size:15px;line-height:1.3}
 #main .sov-exp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-#main .sov-exp a{background:#111013;color:#fff;border-radius:10px;padding:18px;border-bottom:4px solid var(--ac)}
-#main .sov-exp b{display:block;font:800 17px var(--display,'Unbounded',sans-serif)}#main .sov-exp span{color:#c4bcbf;font-size:14px}
+#main .sov-exp a{background:#14181c;color:#fff;border-radius:10px;padding:18px;border-bottom:4px solid var(--ac)}
+#main .sov-exp b{display:block;font:800 17px var(--display,'Oswald',sans-serif)}#main .sov-exp span{color:#c4bcbf;font-size:14px}
 #main .sov a:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
 @media (max-width:760px){
  #main .sov-next{margin-top:12px}#main .sov-next>b{font-size:15px;width:100%}#main .sov-cd b{font-size:20px}
@@ -87,19 +87,19 @@
 }
 
 /* All-sports front page (buildFront): sport tags, next fight night per sport, Pick a sport cards, mixed results. */
-#main .fp-tag{display:inline-block;align-self:flex-start;font:800 11px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:4px;color:#fff;margin-bottom:8px}
-#main .fp-tag.fp-boxing{background:#cf1824;color:#fff}#main .fp-tag.fp-mma{background:#e0a400;color:#111013}#main .fp-tag.fp-sumo{background:#2a4a8f;color:#fff}
+#main .fp-tag{display:inline-block;align-self:flex-start;font:800 11px/1 'Inter',system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:4px;color:#fff;margin-bottom:8px}
+#main .fp-tag.fp-boxing{background:#b3001b;color:#fff}#main .fp-tag.fp-mma{background:#e0a400;color:#14181c}#main .fp-tag.fp-sumo{background:#2a4a8f;color:#fff}
 #main .fp-next3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
-#main .fp-n{position:relative;display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line);border-top:4px solid #cf1824;border-radius:10px;padding:12px 76px 12px 14px;min-width:0}
+#main .fp-n{position:relative;display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line);border-top:4px solid #b3001b;border-radius:10px;padding:12px 76px 12px 14px;min-width:0}
 #main .fp-n.fp-mma{border-top-color:#e0a400}#main .fp-n.fp-sumo{border-top-color:#2a4a8f}
 #main .fp-n b{font-size:16px;line-height:1.25}#main .fp-n span:not(.fp-tag){color:var(--mute);font-size:14px}
-#main .fp-n em{position:absolute;top:12px;right:14px;font:800 15px var(--display,'Unbounded',sans-serif);font-style:normal;white-space:nowrap}
+#main .fp-n em{position:absolute;top:12px;right:14px;font:800 15px var(--display,'Oswald',sans-serif);font-style:normal;white-space:nowrap}
 #main .fp-hero .fp-tag{margin-bottom:10px}
 #main .fp-scs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-#main .fp-sc{display:flex;justify-content:space-between;align-items:flex-end;gap:6px;min-height:190px;background:var(--dark);color:#fff;border-radius:12px;overflow:hidden;padding:0 0 0 16px;border-bottom:4px solid #cf1824;min-width:0}
+#main .fp-sc{display:flex;justify-content:space-between;align-items:flex-end;gap:6px;min-height:190px;background:var(--dark);color:#fff;border-radius:12px;overflow:hidden;padding:0 0 0 16px;border-bottom:4px solid #b3001b;min-width:0}
 #main .fp-sc.fp-mma{border-bottom-color:#e0a400}#main .fp-sc.fp-sumo{border-bottom-color:#2a4a8f}
 #main .fp-sc-copy{display:flex;flex-direction:column;gap:4px;padding:16px 0;align-self:stretch;min-width:0}
-#main .fp-sc .sov-ev{color:var(--gold)}#main .fp-sc strong{font:800 18px/1.15 var(--display,'Unbounded',sans-serif)}
+#main .fp-sc .sov-ev{color:var(--gold)}#main .fp-sc strong{font:800 18px/1.15 var(--display,'Oswald',sans-serif)}
 #main .fp-sc-copy>span:not(.fp-tag):not(.sov-ev){color:#ddd5d8;font-size:14px}
 #main .fp-sc em{font-style:normal;font-weight:800;color:var(--gold);margin-top:auto;padding-top:8px;font-size:14px}
 #main .fp-sc img{height:180px;width:auto;max-width:46%;object-fit:contain;object-position:bottom;flex:none}
@@ -113,39 +113,39 @@
  #main .fp-scs{grid-template-columns:1fr}#main .fp-sc{min-height:150px}#main .fp-sc img{height:150px}
 }
 #main .fp-sc strong{color:#fff}
-#main .fp-h-boxing{border-bottom-color:#cf1824}#main .fp-h-mma{border-bottom-color:#e0a400}#main .fp-h-sumo{border-bottom-color:#2a4a8f}
+#main .fp-h-boxing{border-bottom-color:#b3001b}#main .fp-h-mma{border-bottom-color:#e0a400}#main .fp-h-sumo{border-bottom-color:#2a4a8f}
 
 /* UFC champion spotlight (MMA Overview): the centre champion large, the neighbours small and blurred, all borderless
    cut-outs sitting on the page itself. Positions come from the is-c / is-l / is-r / is-ll / is-rr / is-off classes. */
 #main .sov-spot{position:relative;outline:none}
-#main .sov-spot:focus-visible{outline:3px solid var(--ac,#cf1824);outline-offset:4px;border-radius:12px}
-#main .sov-spot-bar{position:absolute;top:4px;right:0;z-index:7;display:flex;align-items:center;gap:8px;color:var(--mute,#6b6266);font:800 13px/1 'DM Sans',system-ui,sans-serif;letter-spacing:.08em}
-#main .sov-spot-play{width:44px;height:44px;border-radius:50%;border:1px solid var(--line,#d9cfc3);background:#fff;color:#111013;font:700 14px/1 system-ui,sans-serif;cursor:pointer}
+#main .sov-spot:focus-visible{outline:3px solid var(--ac,#b3001b);outline-offset:4px;border-radius:12px}
+#main .sov-spot-bar{position:absolute;top:4px;right:0;z-index:7;display:flex;align-items:center;gap:8px;color:var(--mute,#6b6266);font:800 13px/1 'Inter',system-ui,sans-serif;letter-spacing:.08em}
+#main .sov-spot-play{width:44px;height:44px;border-radius:50%;border:1px solid var(--line,#d9cfc3);background:#fff;color:#14181c;font:700 14px/1 system-ui,sans-serif;cursor:pointer}
 #main .sov-spot-stage{position:relative;height:470px;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
 #main .sov-spot-stage:active{cursor:grabbing}
 #main .sov-spot-f{position:absolute;left:50%;bottom:0;height:460px;transform-origin:50% 100%;transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .55s,opacity .55s;will-change:transform;-webkit-user-drag:none}
 #main .sov-spot-f img{height:100%;width:auto;display:block;pointer-events:none;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
 #main .sov-spot-f.is-photo img{height:80%;margin-top:20%;border-radius:12px}
-#main .sov-spot-none{display:flex;align-items:center;justify-content:center;width:240px;height:240px;margin-top:180px;border-radius:50%;background:#efe8dd;color:var(--mute,#6b6266);font:800 56px var(--display,'Unbounded',sans-serif)}
+#main .sov-spot-none{display:flex;align-items:center;justify-content:center;width:240px;height:240px;margin-top:180px;border-radius:50%;background:#efe8dd;color:var(--mute,#6b6266);font:800 56px var(--display,'Oswald',sans-serif)}
 #main .sov-spot-f.is-c{transform:translateX(-50%) scale(1);opacity:1;filter:none;z-index:3}
 #main .sov-spot-f.is-l{transform:translateX(calc(-50% - 330px)) scale(.62);opacity:.55;filter:blur(4px) saturate(.7);z-index:2;cursor:pointer}
 #main .sov-spot-f.is-r{transform:translateX(calc(-50% + 330px)) scale(.62);opacity:.55;filter:blur(4px) saturate(.7);z-index:2;cursor:pointer}
 #main .sov-spot-f.is-ll{transform:translateX(calc(-50% - 560px)) scale(.45);opacity:0;filter:blur(7px);z-index:1;pointer-events:none}
 #main .sov-spot-f.is-rr{transform:translateX(calc(-50% + 560px)) scale(.45);opacity:0;filter:blur(7px);z-index:1;pointer-events:none}
 #main .sov-spot-f.is-off{transform:translateX(-50%) scale(.3);opacity:0;pointer-events:none;z-index:0}
-#main .sov-spot-f.is-c:focus-visible{outline:3px solid var(--ac,#cf1824);outline-offset:-3px}
-#main .sov-spot-nav{position:absolute;top:200px;z-index:7;width:52px;height:52px;border-radius:50%;border:0;background:#111013;color:#fff;font:700 28px/1 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer}
+#main .sov-spot-f.is-c:focus-visible{outline:3px solid var(--ac,#b3001b);outline-offset:-3px}
+#main .sov-spot-nav{position:absolute;top:200px;z-index:7;width:52px;height:52px;border-radius:50%;border:0;background:#14181c;color:#fff;font:700 28px/1 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer}
 #main .sov-spot-nav.is-prev{left:20px}#main .sov-spot-nav.is-next{right:20px}
-#main .sov-spot-play:focus-visible,#main .sov-spot-nav:focus-visible,#main .sov-spot-pills button:focus-visible{outline:3px solid var(--ac,#cf1824);outline-offset:2px}
+#main .sov-spot-play:focus-visible,#main .sov-spot-nav:focus-visible,#main .sov-spot-pills button:focus-visible{outline:3px solid var(--ac,#b3001b);outline-offset:2px}
 #main .sov-spot-info{text-align:center;padding:10px 0 0}
-#main .sov-spot-div{display:block;font:800 13px/1.2 'DM Sans',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a6500}
-#main a.sov-spot-name{display:inline-block;font:900 34px/1.15 var(--display,'Unbounded',sans-serif);color:#111013;text-decoration:none;margin:6px 0 4px}
+#main .sov-spot-div{display:block;font:800 13px/1.2 'Inter',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a6500}
+#main a.sov-spot-name{display:inline-block;font:900 34px/1.15 var(--display,'Oswald',sans-serif);color:#14181c;text-decoration:none;margin:6px 0 4px}
 #main a.sov-spot-name:hover{text-decoration:underline;text-decoration-thickness:2px}
 #main .sov-spot-info small{display:block;font-size:14px;color:var(--mute,#6b6266)}
 #main .sov-spot-pills{display:flex;gap:6px;overflow-x:auto;padding:14px 2px 4px;scrollbar-width:none}
 #main .sov-spot-pills::-webkit-scrollbar{display:none}
-#main .sov-spot-pills button{flex:none;min-height:44px;padding:0 14px;border:1px solid var(--line,#d9cfc3);border-radius:999px;background:#fff;color:#111013;font:600 13px 'DM Sans',system-ui,sans-serif;white-space:nowrap;cursor:pointer}
-#main .sov-spot-pills button[aria-current="true"]{background:#111013;border-color:#111013;color:var(--gold,#f3c332)}
+#main .sov-spot-pills button{flex:none;min-height:44px;padding:0 14px;border:1px solid var(--line,#d9cfc3);border-radius:999px;background:#fff;color:#14181c;font:600 13px 'Inter',system-ui,sans-serif;white-space:nowrap;cursor:pointer}
+#main .sov-spot-pills button[aria-current="true"]{background:#14181c;border-color:#14181c;color:var(--gold,#c5ccd3)}
 @media (max-width:1000px){
  #main .sov-spot-f.is-l{transform:translateX(calc(-50% - 240px)) scale(.6)}#main .sov-spot-f.is-r{transform:translateX(calc(-50% + 240px)) scale(.6)}
  #main .sov-spot-f.is-ll{transform:translateX(calc(-50% - 400px)) scale(.42)}#main .sov-spot-f.is-rr{transform:translateX(calc(-50% + 400px)) scale(.42)}

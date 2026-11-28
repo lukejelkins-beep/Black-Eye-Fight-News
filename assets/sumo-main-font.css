@@ -1,10 +1,10 @@
 /* Sumo area: main-site typography (owner request 23 Nov 2026).
  * Applies the main-site fonts to Sumo with no change to Sumo layout, colour or content:
- * headings and big numbers use Unbounded (--display, as in site-theme.css), small labels and
- * body text use DM Sans. Unbounded is much wider than Barlow Condensed, so sizes are scaled
+ * headings and big numbers use Oswald (--display, as in site-theme.css), small labels and
+ * body text use Inter. Oswald is much wider than Barlow Condensed, so sizes are scaled
  * down and headings are sentence case, matching site-theme.css. Generated from the Barlow
  * Condensed rules in the sumo-*.css files; loaded last on sumo.html. */
-:root{--display:'Unbounded','Arial Black',system-ui,sans-serif}
+:root{--display:'Oswald','Arial Black',system-ui,sans-serif}
 /* sumo.css:3 */
 
 /* sumo.css:3 */
@@ -122,7 +122,7 @@
 /* sumo-editorial.css:1862 */
 .stage-name{font-family:var(--display);font-weight:800;font-size:clamp(15px,4.2vw,26px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
 /* sumo-editorial.css:1879 */
-.stage-stats dt{font-family:'DM Sans',system-ui,sans-serif;font-weight:800}
+.stage-stats dt{font-family:'Inter',system-ui,sans-serif;font-weight:800}
 /* sumo-editorial.css:1893 */
 .hl-section{font-family:var(--display);font-weight:800;font-size:15px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
 /* sumo-daily.css:6 */
@@ -178,7 +178,7 @@ button.h2h-rec{font-family:var(--display);font-weight:800;font-size:13px;line-he
 /* sumo-modern.css:41 */
 .fo-score strong{font-family:var(--display);font-weight:800;font-size:clamp(37px,4.6vw,63px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
 /* sumo-fact-lines.css:6 */
-.sumo-fact-tag{font-family:'DM Sans',system-ui,sans-serif;font-weight:800}
+.sumo-fact-tag{font-family:'Inter',system-ui,sans-serif;font-weight:800}
 /* sumo-fact-lines.css:16 */
 .sumo-fact-panel h2{font-family:var(--display);font-weight:800;font-size:clamp(16px,2vw,21px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
 /* sumo-fact-lines.css:20 */
@@ -232,7 +232,7 @@ button.h2h-rec{font-family:var(--display);font-weight:800;font-size:13px;line-he
 /* sumo-stables.css:63 */
 .heya-member-name{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.12;letter-spacing:-.02em;text-transform:none}
 /* sumo-stories.css:6 */
-.st-tabs>button,.st-presets button,.st-all{font-family:'DM Sans',system-ui,sans-serif;font-weight:800}
+.st-tabs>button,.st-presets button,.st-all{font-family:'Inter',system-ui,sans-serif;font-weight:800}
 /* sumo-stories.css:15 */
 .st-bignum{font-family:var(--display);font-weight:800;font-size:clamp(42px,7.9vw,79px);line-height:1.12;letter-spacing:-.02em;text-transform:none}
 /* sumo-stories.css:16 */
