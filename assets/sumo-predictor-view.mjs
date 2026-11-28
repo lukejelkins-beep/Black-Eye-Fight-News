@@ -1,10 +1,12 @@
 /* BEFN Sumo predictor page (sumo.html#predict?a=ID&b=ID): pick two wrestlers, see each man's chance
    and what decides it, a power table, and the predictor's track record. Model: sumo-predict.mjs (v2)
    with the saved data/sumo/predictor.json. h = { e, head(id), cutout(id), known(id) } as for the Sumo home. */
-import { nextMorning, pickWith, power } from './sumo-predict.mjs?v=20261128-model2';
+import { nextMorning, pickWith, power } from './sumo-predict.mjs?v=20261128-log1';
 import { face, who, head } from './sumo-home.mjs?v=20261128-brief1';
 import { position, isMakuuchi, tierOf, shortRank, plainRank, rows } from './sumo-home-data.mjs?v=20261124-review1';
 import { completedDay, through } from './sumo-live-data.mjs?v=20261124-live1';
+import { summary as logSummary } from './sumo-prediction-log.mjs?v=20261128-log1';
+import { bashoName } from './sumo-home-data.mjs?v=20261124-review1';
 
 const pct = p => Math.round(p * 100) + '%';
 
@@ -81,8 +83,10 @@ function powerBlock(h, v) {
 
 function trackBlock(h, model) {
   const t = model.backtest.test, g = model.backtest.gainVsV1, y = model.backtest.byYear;
+  /* The window comes from the model (a refit moves it): "2003-2022" + "2023-2024" fit, "2025-" test. */
+  const testFrom = String(model.data.test).slice(0, 4), fitYears = '2003 to ' + (Number(testFrom) - 1), years = Object.keys(y), testYears = testFrom + (years.length > 1 ? ' to ' + years[years.length - 1] : '');
   const cal = model.backtest.calibration.filter(c => c.bouts >= 10);
-  return '<section class="shome-block" id="track-record">' + head(h, 'Track record', null, 'Fitted on 2003 to 2024, then scored on every bout of 2025 and 2026, which it had not seen. Each bout was predicted the morning of its day.') +
+  return '<section class="shome-block" id="track-record">' + head(h, 'Track record', null, 'Fitted on ' + fitYears + ', then scored on every bout from ' + testYears + ', which it had not seen. Each bout was predicted the morning of its day.') +
     '<div class="spr-stats"><div class="shome-card"><b>' + pct(t.makuuchi.model.accuracy) + '</b><span>of ' + t.makuuchi.model.bouts.toLocaleString('en-AU') + ' Makuuchi bouts called</span></div>' +
     '<div class="shome-card"><b>' + pct(t.makuuchi.higherRankWins.accuracy) + '</b><span>“higher rank wins” on the same bouts</span></div>' +
     '<div class="shome-card"><b>' + pct(t.all.model.accuracy) + '</b><span>of ' + t.all.model.bouts.toLocaleString('en-AU') + ' bouts in Makuuchi, Juryo and Makushita</span></div></div>' +
@@ -92,8 +96,25 @@ function trackBlock(h, model) {
     '<li>It learns from ' + model.data.bouts.toLocaleString('en-AU') + ' bouts in Makuuchi, Juryo and Makushita from ' + model.data.from.slice(0, 4) + ' to ' + model.data.to.slice(0, 4) + ', using only what was known the morning of each bout.</li>' +
     '<li>What it weighs: rank; a rating that starts from rank and moves after every bout (faster for newcomers); wins, losses and absences so far this basho, and whether a man still needs wins for a winning record while his opponent’s is settled; age, years in sumo and time in Makuuchi; head-to-head; the last basho’s record, absences and promotion or demotion; fighting style from past winning techniques; and birthplace (born abroad or in Japan).</li>' +
     '<li>Tested and left out: height and weight (no gain, and dated measurements are sparse), a tree model (no better than this one), and sharpening the chances (it would make the favourite even more over-confident).</li>' +
-    '<li>Against the earlier BEFN predictor (rank, rating against rank and form) on the same 2025-2026 bouts: Brier score ' + t.all.model.brier.toFixed(4) + ' v ' + t.all.v1.brier.toFixed(4) + ' over all bouts, ' + t.makuuchi.model.brier.toFixed(4) + ' v ' + t.makuuchi.v1.brier.toFixed(4) + ' in Makuuchi (95% interval of the gain ' + g.makuuchi.interval95[0].toFixed(4) + ' to ' + g.makuuchi.interval95[1].toFixed(4) + '). Makuuchi bouts called: ' + pct(y[2025].makuuchi.model) + ' v ' + pct(y[2025].makuuchi.v1) + ' in 2025, ' + pct(y[2026].makuuchi.model) + ' v ' + pct(y[2026].makuuchi.v1) + ' in 2026.</li>' +
+    '<li>Against the earlier BEFN predictor (rank, rating against rank and form) on the same bouts from ' + testYears + ': Brier score ' + t.all.model.brier.toFixed(4) + ' v ' + t.all.v1.brier.toFixed(4) + ' over all bouts, ' + t.makuuchi.model.brier.toFixed(4) + ' v ' + t.makuuchi.v1.brier.toFixed(4) + ' in Makuuchi (95% interval of the gain ' + g.makuuchi.interval95[0].toFixed(4) + ' to ' + g.makuuchi.interval95[1].toFixed(4) + '). Makuuchi bouts called, new v earlier: ' + Object.entries(y).map(([yy, r]) => pct(r.makuuchi.model) + ' v ' + pct(r.makuuchi.v1) + ' in ' + yy).join(', ') + '.</li>' +
     '<li>It does not know about injuries until a man misses bouts, or anything said in the stable. Fusen and absences are never rated.</li></ul></details></section>';
+}
+
+/* The live record: picks saved before each day of a live basho, scored after (sumo-prediction-log.mjs). */
+function liveRecordBlock(h, log) {
+  const S = logSummary(log), M = S.total.Makuuchi, J = S.total.Juryo;
+  const intro = 'Every morning of a basho, the day’s picks are saved before the bouts and never changed. Results are added once the bouts are fought. Fusen and absences do not count.';
+  if (!M.bouts && !M.pending) return '<section class="shome-block" id="live-record">' + head(h, 'Live record', null, intro) +
+    '<div class="shome-card spr-live-empty"><b>Starts with the January 2027 basho</b><span>The first picks are saved the evening before day 1, once the bouts are announced.</span></div></section>';
+  const stat = (t, label) => '<div class="shome-card"><b>' + (t.bouts ? pct(t.rate) : '–') + '</b><span>' + t.called + ' of ' + t.bouts + ' ' + label + ' bouts called' + (t.pending ? ' · ' + t.pending + ' to come' : '') + '</span></div>';
+  const rows = S.basho.slice().reverse().map(b => '<li><span>' + h.e(bashoName(b.bashoId)) + '</span><b>' + (b.Makuuchi.bouts ? pct(b.Makuuchi.rate) : '–') + '</b><small>' + b.Makuuchi.called + '/' + b.Makuuchi.bouts + ' Makuuchi · ' + b.Juryo.called + '/' + b.Juryo.bouts + ' Juryo</small></li>').join('');
+  const L = S.latest;
+  const latest = L ? '<details class="spr-live-day"><summary>' + h.e(bashoName(L.bashoId)) + ', day ' + L.day + ': the saved Makuuchi picks</summary><ul>' + L.picks.map(pk => {
+    const fav = pk.p >= 0.5 ? [pk.an, pk.bn, pk.p] : [pk.bn, pk.an, 1 - pk.p], ok = pk.r === 'void' ? null : (pk.p >= 0.5) === (pk.r === 'a');
+    return '<li><span><strong>' + h.e(fav[0]) + '</strong> v ' + h.e(fav[1]) + '</span><b>' + pct(fav[2]) + '</b><em class="' + (ok == null ? '' : ok ? 'is-hit' : 'is-miss') + '">' + (pk.r == null ? 'to come' : ok == null ? 'void' : ok ? 'called' : 'missed') + '</em></li>';
+  }).join('') + '</ul><p class="shome-note">Saved ' + h.e(new Date(L.savedAt).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Tokyo' })) + ' Japan time.</p></details>' : '';
+  return '<section class="shome-block" id="live-record">' + head(h, 'Live record', null, intro) + '<div class="spr-stats">' + stat(M, 'Makuuchi') + stat(J, 'Juryo') + '</div>' +
+    (rows ? '<ul class="shome-card spr-live-basho">' + rows + '</ul>' : '') + latest + '</section>';
 }
 
 export function renderPredictor(input, h) {
@@ -102,6 +123,6 @@ export function renderPredictor(input, h) {
   return '<div class="sumo-home spr">' +
     '<section class="shome-hero spr-hero"><div class="shome-hero-copy"><div class="shome-kicker">Sumo predictor</div><h1>Who wins?</h1><p>Pick any two men in Makuuchi or Juryo. The chance weighs rank, a rating built from every bout since 2000, this basho’s form, age and career, head-to-head, the last basho and style.</p>' + chooser(h, v) + '</div></section>' +
     '<section class="shome-block"><div class="shome-card spr-face">' + side(h, v.A, v.p.p, 'is-a') + '<div class="spr-mid"><span class="spr-split" aria-hidden="true"><i style="width:' + (v.p.p * 100).toFixed(1) + '%"></i></span><span class="spr-v">v</span></div>' + side(h, v.B, 1 - v.p.p, 'is-b') + '</div>' + why(h, v) + '</section>' +
-    powerBlock(h, v) + trackBlock(h, input.model) +
+    powerBlock(h, v) + liveRecordBlock(h, input.log) + trackBlock(h, input.model) +
     '<p class="shome-source">From BEFN’s saved Sumo API basho records. A chance, not a tip: ' + pct(input.model.backtest.test.makuuchi.model.accuracy) + ' of Makuuchi bouts called in testing.</p></div>';
 }

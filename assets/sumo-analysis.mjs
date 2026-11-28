@@ -88,15 +88,18 @@ function tableBlock(h, A) {
 export function dayBlock(h, A, { recap, start, live } = {}) {
   if (!A.completed) return '';
   const s = A.dayScore, sh = A.dayShock;
-  const summary = A.hasModel && s.n ? '<p class="sana-sum"><b>The predictor called ' + s.hit + ' of ' + s.n + '</b> Makuuchi bouts on day ' + A.day + '.' +
+  const div = A.division || 'Makuuchi';
+  /* Division tabs: Makuuchi (default) and Juryo; the chosen one is kept in the link (?div=juryo). */
+  const tabs = '<div class="sana-divs" role="group" aria-label="Division">' + ['Makuuchi', 'Juryo'].map(d => '<button type="button" data-analysis-division="' + d + '" aria-pressed="' + (d === div) + '">' + d + '</button>').join('') + '</div>';
+  const summary = A.hasModel && s.n ? '<p class="sana-sum"><b>The predictor called ' + s.hit + ' of ' + s.n + '</b> ' + div + ' bouts on day ' + A.day + '.' +
     (sh ? ' Biggest shock: ' + who(h, sh.winner.id, sh.winner.name) + ' over ' + who(h, sh.loser.id, sh.loser.name) + ', given ' + pct(sh.p) + ' that morning.' : ' No upsets.') + '</p>' : '';
   return '<section class="shome-block sana-days" id="day-by-day">' + head(h, 'Day by day', ['#predict', 'How the predictor works'], (live ? 'Pick any day fought so far.' : 'Pick a day.') + ' Results with each winner’s chance that morning, and the table after the day.') +
-    dayPicker(h, A) +
+    tabs + dayPicker(h, A) +
     '<div class="sana-dayhead"><h3>Day ' + A.day + '</h3><span>' + h.e(dateOf(start, A.day)) + '</span>' +
     (A.day > 1 ? '<button type="button" data-analysis-day="' + (A.day - 1) + '">‹ Day ' + (A.day - 1) + '</button>' : '') +
     (A.day < A.completed ? '<button type="button" data-analysis-day="' + (A.day + 1) + '">Day ' + (A.day + 1) + ' ›</button>' : '') + '</div>' +
     summary +
-    '<div class="sana-grid2"><div class="shome-card sana-bouts"><h3>Makuuchi results <span>Winner’s chance that morning</span></h3>' + folded(A.bouts.map(b => boutRow(h, b)), 10, 'results') + '</div>' + tableBlock(h, A) + '</div>' +
+    '<div class="sana-grid2"><div class="shome-card sana-bouts"><h3>' + div + ' results <span>Winner’s chance that morning</span></h3>' + folded(A.bouts.map(b => boutRow(h, b)), 10, 'results') + '</div>' + tableBlock(h, A) + '</div>' +
     (recap ? recapCard(h, recap, { label: 'After day ' + A.day }) : '') + '</section>';
 }
 
@@ -146,7 +149,7 @@ export function renderLiveAnalysis(d, A, h) {
     '<div class="shome-hero-copy"><div class="shome-kicker"><span class="slive-dot" aria-hidden="true"></span>Live basho · ' + h.e(name) + (A.completed ? ' · Day ' + A.completed + ' of 15' : '') + '</div><h1>' + title + '</h1>' +
     '<p>The tournament so far, day by day: the race, every Makuuchi result with the predictor’s chance, and who is beating expectations. Past tournaments are under Basho review.</p>' +
     (h.selector || '') + '</div>' + (pics.length ? '<div class="slive-cast">' + pics.map(x => '<img src="' + h.e(h.cutout(x.id)) + '" alt="' + h.e(x.name) + '">').join('') + '</div>' : '') + '</section>' +
-    picksBlock(h, d.picks || []) + raceChart(h, A) + dayBlock(h, A, { recap: d.recap, start: d.start, live: true }) + expectationsBlock(h, A, { live: true }) + scoreBlock(h, A, d.model) +
+    picksBlock(h, d.picks || []) + raceChart(h, A) + dayBlock(h, d.dayA || A, { recap: d.dayA && d.dayA !== A ? null : d.recap, start: d.start, live: true }) + expectationsBlock(h, A, { live: true }) + scoreBlock(h, A, d.model) +
     (d.sanyakuView ? '<section class="shome-block">' + sanyakuBlock(h, d.sanyakuView) + '</section>' : '') +
     '<p class="shome-source">From the Sumo API record of the ' + h.e(name) + ' basho, refreshed during the tournament. Chances are BEFN’s predictor, made with only what was known the morning of each bout.</p></div>';
 }
