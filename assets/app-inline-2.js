@@ -119,20 +119,10 @@ const desk={language:null,articles:[],sources:[],lastSuccessfulAt:null,events:[]
 const displayDate=v=>window.FightTime.localDateTime(v);
 const dayLabel=v=>new Date(v+'T12:00:00Z').toLocaleDateString('en-AU',{dateStyle:'medium',timeZone:'UTC'});
 async function deskJSON(path){
- const base='https://raw.githubusercontent.com/lukejelkins-beep/Black-Eye-Fight-News/main/';
- const results=await Promise.all([base+path,path].map(async url=>{
-  try{
-   const r=await fetch(url+'?t='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(15000)});
-   if(!r.ok)return null;
-   const data=await r.json();
-   if(path.endsWith('news-live.json')&&!Array.isArray(data.articles))return null;
-   if(path.endsWith('grappling-events.json')&&!Array.isArray(data.events))return null;
-   return data;
-  }catch{return null;}
- }));
- const valid=results.filter(Boolean);
- valid.sort((a,b)=>(Date.parse(b.lastSuccessfulAt||b.reviewedAt)||0)-(Date.parse(a.lastSuccessfulAt||a.reviewedAt)||0));
- if(valid.length)return valid[0];
+ // GitHub's raw copy and the site's copy, newest wins; shared with the other scripts on the page (assets/feed-cache.js).
+ const ok=data=>!(path.endsWith('news-live.json')&&!Array.isArray(data.articles))&&!(path.endsWith('grappling-events.json')&&!Array.isArray(data.events));
+ const best=await (window.BEFNFeed?window.BEFNFeed.newest:(p,ok)=>fetch(p+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>d&&(!ok||ok(d))?d:null).catch(()=>null))(path,ok,{timeoutMs:15000});
+ if(best)return best;
  throw Error('Feed unavailable');
 }
 async function loadDesk(background=false){
