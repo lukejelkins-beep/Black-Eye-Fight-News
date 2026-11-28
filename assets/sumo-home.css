@@ -613,3 +613,21 @@
 .sana-fold[open] summary{border-bottom:1px dashed var(--sh-line)}
 .srev-tile-bd strong,.sana-ex-bd strong{overflow-wrap:anywhere;line-height:1.2}
 @media(max-width:760px){.srev-tiles{grid-auto-columns:46%}.srev-tile-bd strong{font-size:13px}.srev-tile-bd b{font-size:22px}}
+/* The basho in brief (home): four link cards into the Basho review (28 Nov 2026) */
+.shome-brief{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.shome-bcard{display:flex;flex-direction:column;gap:10px;padding:14px 16px;text-decoration:none;color:inherit;position:relative;min-height:44px}
+.shome-bcard:hover{border-color:var(--sh-ink)}
+.shome-bcard strong{display:block;font:700 16px Unbounded,sans-serif;padding-right:18px}
+.shome-bcard em{display:block;font-style:normal;font-size:13.5px;color:var(--sh-muted);margin-top:4px}
+.shome-bcard>b{position:absolute;top:12px;right:14px;font:800 20px 'DM Sans',sans-serif;color:var(--sh-red)}
+.shome-bf{display:flex}
+.shome-bf .shome-face{width:40px;height:40px;border:2px solid #fff;margin-right:-10px}
+.shome-bcard.is-wide{flex-direction:row;align-items:center}
+@media(max-width:900px){.shome-brief{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.shome-brief{grid-template-columns:1fr;gap:10px}.shome-bcard{gap:8px;padding:12px 14px}.shome-bf .shome-face{width:34px;height:34px}.shome-bcard strong{font-size:15px}}
+/* Day buttons on phones: one swipeable strip, the chosen day kept in view (28 Nov 2026). */
+@media(max-width:600px){
+  .sana-pick{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:2px;margin-right:-16px;padding-right:16px}
+  .sana-pick::-webkit-scrollbar{display:none}
+  .sana-pick button{flex:none;scroll-snap-align:center}
+}

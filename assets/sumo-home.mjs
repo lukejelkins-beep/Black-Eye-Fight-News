@@ -41,7 +41,7 @@ function hero(h, d) {
 
 function championsBlock(h, d, link = ['#basho', 'Standings']) {
   if (!d.finished || !d.champions.length) return '';
-  return '<section class="shome-block">' + head(h, 'Champions and prizes', link) + '<div class="shome-champs">' +
+  return '<section class="shome-block" id="at-champions">' + head(h, 'Champions and prizes', link) + '<div class="shome-champs">' +
     d.champions.map(c => '<div class="shome-champ">' + face(h, c.id) + '<div><small>' + h.e(c.label) + '</small><strong>' + who(h, c.id, c.name) + '</strong></div></div>').join('') + '</div></section>';
 }
 
@@ -50,7 +50,7 @@ function starsBlock(h, d) {
   const body = k.length ? '<div class="shome-stars">' + k.map(s => '<div class="shome-star">' + face(h, s.id) + '<div><strong>' + who(h, s.id, s.name) + '</strong><span>' + h.e(shortRank(s.rank)) + ' · ' + dayWord(s.day) + (s.kimarite ? ' · <a href="#kimarite?term=' + h.e(encodeURIComponent(s.kimarite)) + '">' + h.e(s.kimarite) + '</a>' : '') + '</span><span>beat Yokozuna ' + h.e(s.yokozuna) + '</span></div><b class="shome-gold" aria-hidden="true">★</b></div>').join('') + '</div>' +
     (new Set(k.map(s => s.yokozunaId)).size === 1 && k.length > 1 ? '<p class="shome-note">' + (k.length === 2 ? 'Both' : 'All ' + count(k.length).toLowerCase()) + ' came against ' + h.e(k[0].yokozuna) + '.</p>' : '')
     : '<p class="shome-note">No Maegashira beat a Yokozuna this basho.</p>';
-  return '<div>' + head(h, 'Gold stars', null, 'A Maegashira who beats a Yokozuna earns a kinboshi, a bonus paid for the rest of his career.') + body + '</div>';
+  return '<div id="at-stars">' + head(h, 'Gold stars', null, 'A Maegashira who beats a Yokozuna earns a kinboshi, a bonus paid for the rest of his career.') + body + '</div>';
 }
 
 function sanyakuBlock(h, d) {
@@ -62,7 +62,7 @@ function sanyakuBlock(h, d) {
       '<div class="shome-bar" role="img" aria-label="' + r.wins + ' wins, ' + r.losses + ' losses' + (r.absences ? ', ' + r.absences + ' absent' : '') + '"><i style="width:' + (r.wins / total * 100).toFixed(1) + '%"></i><u style="width:' + (r.losses / total * 100).toFixed(1) + '%"></u><em style="left:' + (8 / total * 100).toFixed(2) + '%"></em></div>' +
       '<div class="shome-rec">' + r.wins + '–' + r.losses + (r.absences ? '–' + r.absences : '') + '</div></div>';
   };
-  return '<div>' + head(h, 'Sanyaku scorecard', ['#banzuke', 'Rankings'], 'The top ranks. The line marks 8 wins, a winning record (kachi-koshi).') + '<div class="shome-card shome-sanyaku">' + d.sanyaku.map(row).join('') + '</div></div>';
+  return '<div id="at-sanyaku">' + head(h, 'Sanyaku scorecard', ['#banzuke', 'Rankings'], 'The top ranks. The line marks 8 wins, a winning record (kachi-koshi).') + '<div class="shome-card shome-sanyaku">' + d.sanyaku.map(row).join('') + '</div></div>';
 }
 
 function risingBlock(h, d) {
@@ -83,7 +83,7 @@ function moversBlock(h, d) {
   const m = d.movers;
   if (!m.up.length && !m.down.length) return '';
   const item = x => '<div class="shome-mv">' + face(h, x.id) + '<div><strong>' + who(h, x.id, x.name) + '</strong><span>' + h.e(plainRank(x.from)) + ' → ' + h.e(plainRank(x.to)) + '</span></div><em>' + h.e(x.note) + '</em></div>';
-  return '<section class="shome-block">' + head(h, 'On the move', ['#banzuke', 'Full rankings'], 'Biggest changes from the ' + bashoName(m.from) + ' to the ' + bashoName(m.to) + ' rankings.') +
+  return '<section class="shome-block" id="at-movers">' + head(h, 'On the move', ['#banzuke', 'Full rankings'], 'Biggest changes from the ' + bashoName(m.from) + ' to the ' + bashoName(m.to) + ' rankings.') +
     '<div class="shome-moves"><div class="shome-card is-up"><div class="shome-colhead">▲ Up</div>' + m.up.map(item).join('') + '</div><div class="shome-card is-down"><div class="shome-colhead">▼ Down</div>' + m.down.map(item).join('') + '</div></div></section>';
 }
 
@@ -115,11 +115,34 @@ function exploreBlock(h) {
     EXPLORE.map(([g, t, href, s]) => '<a class="shome-card shome-ex" href="' + h.e(href) + '"><small>' + h.e(g) + '</small><strong>' + h.e(t) + '</strong><span>' + h.e(s) + '</span></a>').join('') + '</div></section>';
 }
 
+/* The basho in brief: one card each for the champions, gold stars, sanyaku and movers, linking to that
+   section of the Basho review, which holds the detail (owner 28 Nov 2026: no repeats between the two). */
+function briefBlock(h, d) {
+  const faces = ids => '<span class="shome-bf">' + [...new Set(ids)].slice(0, 4).map(id => face(h, id)).join('') + '</span>';
+  const cards = [];
+  const c = d.headline.champion;
+  if (d.finished && d.champions.length) {
+    const prizes = d.champions.filter(x => /prize/i.test(x.label)).length;
+    cards.push(['champions', 'Champions and prizes', d.champions.map(x => x.id), (c ? c.name + ' won Makuuchi' : 'Division champions') + (prizes ? ' · ' + prizes + ' special prize' + (prizes > 1 ? 's' : '') : '')]);
+  }
+  const k = d.kinboshi;
+  const kn = [...new Set(k.map(x => x.name))];
+  cards.push(['stars', 'Gold stars', k.map(x => x.id), k.length ? count(k.length) + ' kinboshi: ' + (kn.length > 3 ? kn.slice(0, 3).join(', ') + ' and ' + (kn.length - 3) + ' more' : andList(kn)) : 'No Maegashira beat a Yokozuna']);
+  if (d.sanyaku.length) {
+    const kk = d.sanyaku.filter(r => r.wins >= 8).length, flags = d.sanyaku.filter(r => r.flag);
+    cards.push(['sanyaku', 'Sanyaku scorecard', (flags.length ? flags : d.sanyaku).map(r => r.id), kk + ' of ' + d.sanyaku.length + ' winning records' + (flags.length ? ' · ' + andList(flags.map(r => r.name + (r.flag === 'kadoban' ? ' kadoban' : ' to Sekiwake'))) : '')]);
+  }
+  const m = d.movers;
+  if (m.up.length || m.down.length) cards.push(['movers', 'On the move', [...m.up, ...m.down].map(x => x.id), (m.up[0] ? m.up[0].name + ' up to ' + plainRank(m.up[0].to) : '') + (m.up[0] && m.down[0] ? ' · ' : '') + (m.down[0] ? m.down[0].name + ' down to ' + plainRank(m.down[0].to) : '')]);
+  if (!cards.length) return '';
+  return '<section class="shome-block">' + head(h, 'The basho in brief', ['#review', 'Basho review'], 'The detail is in the Basho review.') + '<div class="shome-brief">' +
+    cards.map(([at, title, ids, line]) => '<a class="shome-card shome-bcard" href="#review?at=' + at + '">' + faces(ids) + '<span><strong>' + h.e(title) + '</strong><em>' + h.e(line) + '</em></span><b aria-hidden="true">›</b></a>').join('') + '</div></section>';
+}
+
 export function renderHome(d, h) {
   /* The next-banzuke card sits under the hero on desktop and above it on phones (CSS order). */
-  return '<div class="sumo-home">' + (h.afterHero ? '<div class="shome-next">' + h.afterHero + '</div>' : '') + hero(h, d) + championsBlock(h, d) +
-    '<section class="shome-block shome-two">' + starsBlock(h, d) + sanyakuBlock(h, d) + '</section>' +
-    risingBlock(h, d) + moversBlock(h, d) + watchBlock(h, d) + (h.extra || '') + factBlock(h, d) + exploreBlock(h) +
+  return '<div class="sumo-home">' + (h.afterHero ? '<div class="shome-next">' + h.afterHero + '</div>' : '') + hero(h, d) + briefBlock(h, d) +
+    risingBlock(h, d) + watchBlock(h, d) + (h.extra || '') + factBlock(h, d) + exploreBlock(h) +
     '<p class="shome-source">Worked out from the Sumo API snapshot of the ' + h.e(d.headline.name) + ' basho and BEFN’s saved rank history. Photographs: Japan Sumo Association.</p></div>';
 }
 

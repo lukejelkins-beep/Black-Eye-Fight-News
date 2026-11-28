@@ -2,6 +2,25 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Sumo design review: owner's picks)
+- **Owner's choices, from the selector:** all four design fixes from the #575 review; keep birthplace in the predictor; one PR.
+- **No repeats between the Sumo home and the Basho review.**
+  - The finished-basho home drops the champions and prizes, gold stars, sanyaku scorecard and "On the move" blocks.
+  - In their place is "The basho in brief": four photo-face cards, each with a one-line summary, linking to that section of the review (`#review?at=champions|stars|sanyaku|movers`; the review scrolls there once it has loaded).
+  - The live home drops its sanyaku scorecard for a link card to the live basho page, which has it.
+- **Stories page in the house style.**
+  - The page head is a dark band with a blue edge, like Insights and Basho review: kicker "Sumo stories", title "True, surprising and sourced". This replaces the light "Sumo Stories" head with the red word and "The Dohyo Diaries".
+  - Headings, big numbers and card titles are Unbounded in sentence case. Tabs and buttons are DM Sans with 44 px tap targets. The Barlow Condensed uppercase rules are removed from `sumo-stories.css`.
+- **Even story cards.**
+  - Every card is a column, with the people chips and the source line pinned to the bottom (two lines reserved), so a row lines up.
+  - A card without a photo gets the plain blue band, so bands match.
+  - Descriptions are capped at six lines.
+- **Phone navigation.**
+  - On phones the five Analysis pills wrap to two even rows. Other sections keep one scrolling row, because a profile's name must stay on the first screen at 320 px.
+  - The 15 day buttons are a single swipeable strip, with the chosen day kept in view.
+  - Not changed, and flagged: at 320 px the fourth Fighters pill (Stables) still sits off the edge of its scrolling row.
+- — Owner 28 Nov — awaiting owner "Merge N".
+
 ## 2026-11-28 (Owner's choices from the clicks and space review)
 - **MMA Analysis: UFC champions become a compact strip** (owner chose "Compact strip"). Eleven small tiles (photo, division, name, UFC record, days as champion, defences, last five, next title fight), a swipe row on the phone and two rows of six on desktop; the name opens the profile, the division opens that division in the Fighters hub. On a phone the stats leaderboards now start about 1,250 px down instead of about 2,000. Boxing keeps its carousel (separate sport, not asked). — `assets/fight-analysis.js` `champStripHTML`.
 - **How fights ended (MMA) is one short strip**: one stacked bar, a legend with counts and the inside-the-distance share in the subtitle; stoppage clips sit as a thumbnail beside the line and open full width when played.
@@ -41,10 +60,10 @@ Format: date — decision — who — where it shows up.
 - **Left out after testing:** height and weight (no gain), a LightGBM model (no better), sharpening (already over-confident above 70%).
 - **Birthplace is kept for accuracy** (0.0002 Brier in Makuuchi), shown under "Style and background"; the owner can drop it.
 - **Bug fixed while testing:** a replay changed the saved state's head-to-head and style arrays in place, so later replays on the same page started from altered data. Found by the no-lookahead test.
-- The Predictor page explains each chance in seven groups. The power table is each man's average chance against the rest of Makuuchi. Method in `docs/sumo-predictor.md`. — Built 28 Nov — awaiting owner "Merge N".
+- The Predictor page explains each chance in seven groups. The power table is each man's average chance against the rest of Makuuchi. Method in `docs/sumo-predictor.md`. — Built 28 Nov — merged by the owner ("Merge 575", 28 Nov), live on Render at 990e801 (checked on the live site the same day).
 
 ## 2026-11-28 (Sumo: predictor, live/review analysis, photo-led stories)
-- **Sumo bout predictor** (owner asked for "a fight predictor algorithm and % fight predictor"). Rank (log scale), an Elo-style rating against rank, and this basho's form; fitted on Jan 2025 to Mar 2026 and scored on the four newest basho: 59.8% of Makuuchi bouts called against 56.8% for "higher rank wins", Brier gain over rank alone 0.0049 (interval 0.0026 to 0.0073). Head-to-head tested and left out (no clear gain). Slightly over-confident above 70%, shown on the page. Method in `docs/sumo-predictor.md`. New page `sumo.html#predict` under Analysis ("Predictor"). — Built 28 Nov — awaiting owner "Merge N".
+- **Sumo bout predictor** (owner asked for "a fight predictor algorithm and % fight predictor"). Rank (log scale), an Elo-style rating against rank, and this basho's form; fitted on Jan 2025 to Mar 2026 and scored on the four newest basho: 59.8% of Makuuchi bouts called against 56.8% for "higher rank wins", Brier gain over rank alone 0.0049 (interval 0.0026 to 0.0073). Head-to-head tested and left out (no clear gain). Slightly over-confident above 70%, shown on the page. Method in `docs/sumo-predictor.md`. New page `sumo.html#predict` under Analysis ("Predictor"). — Built 28 Nov — merged by the owner ("Merge 575", 28 Nov), live on Render at 990e801 (checked on the live site the same day).
 - **Basho analysis: live, then review** (owner: "selecting the day by day doesn't do anything really except change the highlights ... an analysis area for when the basho is currently going then a basho in review"). The day picker now changes the whole day view: that day's Makuuchi results with each winner's morning chance and an "Upset" tag under 40%, the standings after the day with W/L marks, the predictor's score for the day and the biggest shock. A title-race chart (wins minus losses by day for the top four, tap a day) sits above. While a basho is on, the Analysis pill reads "Live basho" and `#review` shows the tournament so far plus the next day's picks; finished basho stay under the same selector. The chosen day is kept in the link (`?day=N`). `#review?liveday=N` previews live mode on a finished basho.
 - **Who did well, who didn't: photos** (owner: "need photos"). Best and toughest records are cut-out tiles (blue for good, red for bad); kyujo men are a list with faces; then "Beat the odds / Fell short" against the predictor's expected wins (men who missed bouts are never called failures).
 - **Stories and insights.** Every story card has a photo band (approved cut-outs, head crop as fallback, same checks as `sumo.js`). New Stories row "The <month> basho": beat the odds, biggest shock, fell short, hot streak, underrated. New Insights section "Underrated and overrated" (banzuke place v predictor power place).

@@ -47,13 +47,15 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
    assert.equal(new Set(roster.rikishi.map(w=>w.sourceId)).size,roster.count,'Stable IDs are unique');
   assert.equal(research.profileCount,roster.count,'Full tracked roster has corresponding research records');
   assert.equal(research.certified,false,'Research cache must not imply JSA certification');
-  // #home is the Sumo Overview (owner, 24 Nov 2026): the latest basho, champions and prizes, gold stars, the sanyaku
-  // scorecard, rising stars, movers, the next-banzuke watch list, a fact and links to every Sumo page.
+  // #home is the Sumo Overview (owner, 24 Nov 2026): the latest basho, "the basho in brief" (champions, gold stars,
+  // sanyaku and movers as cards linking into the Basho review, which holds the detail: owner 28 Nov 2026, no repeats),
+  // rising stars, the next-banzuke watch list, a fact and links to every Sumo page.
   await open(page,'home','.sumo-home');
   const overview=await page.locator('#sumo-main').innerText();
   assert.ok(await page.locator('.shome-hero h1').count()===1,'Overview has one headline');
-  assertContains(overview,'Sanyaku scorecard','Sanyaku scorecard shown');
-  assert.ok(await page.locator('.shome-srow').count()>=4,'Sanyaku rows listed');
+  assertContains(overview,'The basho in brief','Basho in brief shown');
+  assert.ok(await page.locator('.shome-bcard[href^="#review?at="]').count()>=3,'Brief cards link into the Basho review');
+  assert.equal(await page.locator('.shome-srow').count(),0,'Sanyaku detail is not repeated on the Overview');
   assert.equal(await page.locator('.shome-ex').count(),11,'Explore links to every Sumo page');
   assert.ok(await page.locator('.shome-hero-photo img, .shome-face[src]').count()>0,'Overview shows wrestler photographs');
   {
@@ -66,6 +68,8 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   assert.equal(await page.locator('.sumo-review h1').count(),1,'Review has one headline');
   assert.ok(await page.locator('[data-review-select] option').count()>=13,'Two years of tournaments selectable');
   assertContains(await page.locator('#sumo-main').innerText(),'Technique of the basho','Technique of the basho shown');
+  assert.ok(await page.locator('.shome-srow').count()>=4,'Sanyaku rows listed on the Basho review');
+  for(const at of ['champions','stars','sanyaku','movers'])assert.equal(await page.locator('#at-'+at).count(),1,'Basho in brief target #at-'+at+' on the review');
   {
     const widths=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
     assert.ok(widths.page<=widths.viewport+6,'No horizontal overflow on the Basho review: '+JSON.stringify(widths));
