@@ -76,27 +76,27 @@ def build(d: dict) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#151115">
+  <meta name="theme-color" content="#14181c">
   <meta name="robots" content="index,follow">
   <title>Do UFC gyms decide fights? | Black Eye Fight News</title>
   <meta name="description" content="We compared gym records across {d['decidedBouts']:,} UFC fights in 2025 and 2026. Allowing for each fighter's record going in, most gyms look alike. One does not.">
   <link rel="icon" href="assets/site-favicon-192.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Unbounded:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{{--red:#cf1824;--gold:#f3c332;--cream:#f8f4ed;--ink:#111013;--band:#151115;--muted:#5b565d;--line:#e5e1d8}}
+    :root{{--red:#b3001b;--gold:#c5ccd3;--cream:#eef0f2;--ink:#14181c;--band:#14181c;--muted:#5b565d;--line:#d8dee5}}
     *{{box-sizing:border-box}}
     html{{-webkit-text-size-adjust:100%}}
-    body{{margin:0;background:var(--cream);color:var(--ink);font:400 16px/1.55 "DM Sans",system-ui,sans-serif}}
+    body{{margin:0;background:var(--cream);color:var(--ink);font:400 16px/1.55 "Inter",system-ui,sans-serif}}
     .skip{{position:absolute;left:-999px}} .skip:focus{{left:12px;top:12px;background:#fff;padding:8px 12px;z-index:9}}
     .bar-top{{background:var(--band);border-bottom:4px solid var(--red);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}}
     .bar-top .back{{color:var(--gold)}}
     .bar-top a{{color:#fff;text-decoration:none;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:14px;display:inline-flex;align-items:center;min-height:44px}}
     main{{max-width:720px;margin:0 auto;padding:24px 16px 56px}}
     .kicker{{margin:0 0 8px;color:var(--red);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase}}
-    h1{{font:800 clamp(26px,7vw,40px)/1.12 "Unbounded",system-ui,sans-serif;margin:0 0 12px}}
-    h2{{font:700 clamp(19px,5vw,24px)/1.2 "Unbounded",system-ui,sans-serif;margin:36px 0 12px}}
+    h1{{font:800 clamp(26px,7vw,40px)/1.12 "Oswald",system-ui,sans-serif;margin:0 0 12px}}
+    h2{{font:700 clamp(19px,5vw,24px)/1.2 "Oswald",system-ui,sans-serif;margin:36px 0 12px}}
     .dek{{font-size:18px;color:var(--muted);margin:0 0 8px}}
     .by{{font-size:14px;color:var(--muted);margin:0 0 24px}}
     .card{{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0;box-shadow:0 1px 2px rgba(17,16,19,.06)}}
@@ -109,7 +109,7 @@ def build(d: dict) -> str:
     .gdiff{{font-weight:700;font-size:15px;min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}}
     .gdiff.up{{color:#1f6e3f}} .gdiff.down{{color:var(--red)}} .gdiff.flat{{color:var(--muted)}}
     .seas{{font-size:13px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}}
-    .track{{position:relative;height:12px;margin-top:6px;background:#f1ece2;border-radius:6px}}
+    .track{{position:relative;height:12px;margin-top:6px;background:#e5eaee;border-radius:6px}}
     .axis{{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.5}}
     .bar{{position:absolute;top:2px;height:8px;border-radius:4px}} .bar.up{{background:#1f6e3f}} .bar.down{{background:var(--red)}} .bar.flat{{background:var(--muted)}}
     .legend{{font-size:13px;color:var(--muted);margin:12px 0 0}}

@@ -23,12 +23,12 @@ FULLBODY = ROOT / "data/fullbody-cutout-register.json"
 FULLBODY_ON = {"Boxing": "boxing", "MMA": "ufc"}  # which page lists which sport's full-body cut-outs
 e = html.escape
 
-STYLE = ("body{max-width:850px;margin:3rem auto;padding:0 1rem;font:16px/1.6 'DM Sans',system-ui,sans-serif;"
-         "background:#f8f4ed;color:#111013}"
-         "h1{font-family:'Unbounded','Arial Black',system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;"
+STYLE = ("body{max-width:850px;margin:3rem auto;padding:0 1rem;font:16px/1.6 'Inter',system-ui,sans-serif;"
+         "background:#eef0f2;color:#14181c}"
+         "h1{font-family:'Oswald','Arial Black',system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;"
          "font-size:clamp(22px,3.4vw,34px);line-height:1.15;margin:0 0 16px}"
-         "h2{font-family:'Unbounded','Arial Black',system-ui,sans-serif;font-weight:700;font-size:20px;margin:2rem 0 .5rem}"
-         "a{color:#cf1824}li{margin:1rem 0}")
+         "h2{font-family:'Oswald','Arial Black',system-ui,sans-serif;font-weight:700;font-size:20px;margin:2rem 0 .5rem}"
+         "a{color:#b3001b}li{margin:1rem 0}")
 
 
 def page(reg, sport, who, press_wording, fullbody=None):
@@ -42,7 +42,7 @@ def page(reg, sport, who, press_wording, fullbody=None):
              f"<title>{sport} Photo Credits | BEFN</title>",
              "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">",
              "<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>",
-             "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Unbounded:wght@700;800&display=swap\">",
+             "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap\">",
              f"<style>{STYLE}</style></head><body>",
              "<a href=\"index.html#home\">Return to Black Eye Fight News</a>",
              f"<h1>{sport} photograph credits</h1>",

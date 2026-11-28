@@ -70,7 +70,7 @@ function slope(h, c, tagMap) {
   const yL = new Map(left.map((m, i) => [m.id, top + i * row])), yR = new Map(right.map((m, i) => [m.id, top + i * row]));
   const H = top + people.length * row + 6;
   const strong = m => tagMap.has(m.id) || Math.abs(m.change) >= 10;
-  const col = m => m.change > 0 ? 'var(--sh-up)' : m.change < 0 ? 'var(--sh-down)' : '#bdb6ad';
+  const col = m => m.change > 0 ? 'var(--sh-up)' : m.change < 0 ? 'var(--sh-down)' : '#adb5bd';
   const sanyakuEnd = right.findIndex(m => tierOf(m.to) === 'Maegashira' || tierOf(m.to) === 'Juryo');
   const esc = h.e;
   return '<section class="shome-block sbz-chart-wrap"><div class="shome-head"><h2>The reshuffle at a glance</h2></div><p class="shome-sub-line">Makuuchi, ' + esc(c.previousName) + ' rank on the left and ' + esc(c.name) + ' rank on the right. Green climbed, red fell; thick lines crossed a line or moved ten places or more.</p>' +

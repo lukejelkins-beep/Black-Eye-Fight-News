@@ -5,7 +5,7 @@
 .befn-v3-dialog .dialog-bio{
  display:grid;grid-template-columns:minmax(145px,196px) minmax(195px,1fr) minmax(255px,.98fr);
  gap:12px;align-items:stretch;min-height:248px;padding:12px;background:#252327;
- border:1px solid #65513b;border-radius:12px}
+ border:1px solid #46505a;border-radius:12px}
 .befn-v3-dialog .dialog-bio>.befn-portrait-slot{width:100%;min-width:0;min-height:225px;height:100%;max-height:310px;border-radius:9px}
 .befn-v3-dialog .befn-bio-meta{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px}
 .befn-v3-dialog .befn-bio-meta .befn-v3-identity h2{font-size:clamp(26px,3.1vw,38px);line-height:1.04;margin:2px 0 5px}
@@ -13,52 +13,52 @@
 .befn-v3-dialog .befn-v3-hero{
  position:static;display:flex;flex-direction:column;align-items:stretch;justify-content:center;
  flex-wrap:nowrap;gap:3px;padding:9px 11px;margin:3px 0 0;width:min(100%,290px);
- background:#2a2626;border:1px solid #69563b;border-radius:9px;text-align:left;box-shadow:none}
+ background:#26282a;border:1px solid #48525c;border-radius:9px;text-align:left;box-shadow:none}
 .befn-v3-dialog .befn-v3-hero .befn-overall-main{
  display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
  gap:5px 10px;width:100%;min-width:0}
-.befn-v3-dialog .befn-overall-label{font-size:11px;font-weight:950;color:#e8c486;letter-spacing:.04em;text-transform:uppercase}
+.befn-v3-dialog .befn-overall-label{font-size:11px;font-weight:950;color:#aeb7c0;letter-spacing:.04em;text-transform:uppercase}
 .befn-v3-dialog .befn-v3-hero .befn-v3-score{
  font-size:clamp(21px,2.3vw,27px);font-weight:950;line-height:1;
- white-space:nowrap;background:linear-gradient(110deg,#eeb46b,#dbea82);
+ white-space:nowrap;background:linear-gradient(110deg,#a3acb6,#dbea82);
  -webkit-background-clip:text;background-clip:text;color:transparent;
  -webkit-text-fill-color:transparent}
-.befn-v3-dialog .befn-v3-score.is-red{background-image:linear-gradient(100deg,#ff7479,#ffad86)}
-.befn-v3-dialog .befn-v3-score.is-amber{background-image:linear-gradient(100deg,#e99c64,#f3d27b)}
-.befn-v3-dialog .befn-v3-score.is-lime{background-image:linear-gradient(100deg,#e8bb70,#b5df83)}
+.befn-v3-dialog .befn-v3-score.is-red{background-image:linear-gradient(100deg,#ff7489,#ffad86)}
+.befn-v3-dialog .befn-v3-score.is-amber{background-image:linear-gradient(100deg,#e99c64,#aeb7c0)}
+.befn-v3-dialog .befn-v3-score.is-lime{background-image:linear-gradient(100deg,#a2acb6,#b5df83)}
 .befn-v3-dialog .befn-v3-score.is-emerald{background-image:linear-gradient(100deg,#c9e982,#51d2a5)}
-.befn-v3-dialog .befn-v3-score.is-legendary{background-image:linear-gradient(100deg,#f3c363,#fff0a8,#c79639)}
-.befn-v3-dialog .befn-v3-score small{font-size:10px;font-weight:700;-webkit-text-fill-color:initial;color:#c8bfb4}
+.befn-v3-dialog .befn-v3-score.is-legendary{background-image:linear-gradient(100deg,#a1abb5,#cad3dd,#71808f)}
+.befn-v3-dialog .befn-v3-score small{font-size:10px;font-weight:700;-webkit-text-fill-color:initial;color:#b6bec6}
 .befn-v3-dialog .befn-overall-meter{
- grid-column:1/-1;width:100%;height:6px;background:#4b4240;border-radius:20px;display:block;overflow:hidden}
+ grid-column:1/-1;width:100%;height:6px;background:#40464b;border-radius:20px;display:block;overflow:hidden}
 .befn-v3-dialog .befn-overall-meter>span{
- display:block;height:100%;min-width:0;background:linear-gradient(90deg,#ed7b7b 0%,#e9a96e 30%,#e8d475 57%,#b8d976 78%,#58d4a8 100%);
+ display:block;height:100%;min-width:0;background:linear-gradient(90deg,#ed7b8c 0%,#e9a96e 30%,#a5aeb8 57%,#b8d976 78%,#58d4a8 100%);
  border-radius:20px}
 .befn-v3-dialog .befn-overall-meter>span.is-legendary{
- background:linear-gradient(90deg,#9c702c,#e7b35a,#fff1ae)}
+ background:linear-gradient(90deg,#586470,#95a0ac,#ced6df)}
 .befn-v3-dialog .befn-v3-hero .befn-v3-status{display:none}
 .befn-v3-dialog .dialog-bio>.befn-v3-technical{
- margin:0;min-width:0;background:#292729;border:1px solid #5d4c3d;border-radius:9px;
+ margin:0;min-width:0;background:#292729;border:1px solid #444d56;border-radius:9px;
  display:flex;flex-direction:column;overflow:hidden;align-self:stretch}
 .befn-v3-dialog .befn-v3-technical>h3{
  margin:0!important;padding:9px 12px!important;min-height:0;
- background:#343035!important;color:#f1c879!important;border-bottom:1px solid #564737;
+ background:#343035!important;color:#acb5be!important;border-bottom:1px solid #3b4652;
  font:900 17px/1.1 'Barlow Condensed',Impact,sans-serif!important;text-transform:uppercase}
 .befn-v3-dialog .befn-v3-technical .befn-profile-body{padding:11px 12px;flex:1}
 .befn-v3-dialog .befn-v3-technical .befn-power-bars{display:grid;grid-template-columns:1fr;gap:9px}
 .befn-v3-dialog .befn-v3-technical .befn-power-metric-label{
  display:flex;align-items:baseline;justify-content:space-between;margin:0 0 4px;
- font-size:11px;line-height:1.1;font-weight:750;color:#e8e1d9;gap:6px}
-.befn-v3-dialog .befn-v3-technical .befn-power-metric-label b{font-size:11px;color:#f6f1eb}
+ font-size:11px;line-height:1.1;font-weight:750;color:#dae0e7;gap:6px}
+.befn-v3-dialog .befn-v3-technical .befn-power-metric-label b{font-size:11px;color:#edf0f4}
 .befn-v3-dialog .befn-v3-technical .befn-power-track{
- display:block;height:7px;border:0;border-radius:7px;box-shadow:none;background:#464145}
+ display:block;height:7px;border:0;border-radius:7px;box-shadow:none;background:#414446}
 .befn-v3-dialog .befn-v3-technical .befn-power-track::after{display:none}
 .befn-v3-dialog .befn-v3-technical .befn-power-fill{border:0;box-shadow:none;border-radius:7px}
-.befn-v3-dialog .befn-v3-technical .befn-power-track.is-red .befn-power-fill{background:linear-gradient(90deg,#bd505d,#ff8791)}
-.befn-v3-dialog .befn-v3-technical .befn-power-track.is-amber .befn-power-fill{background:linear-gradient(90deg,#bd7548,#f3bb73)}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-red .befn-power-fill{background:linear-gradient(90deg,#bd5060,#ff8799)}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-amber .befn-power-fill{background:linear-gradient(90deg,#bd7548,#aab3bc)}
 .befn-v3-dialog .befn-v3-technical .befn-power-track.is-lime .befn-power-fill{background:linear-gradient(90deg,#91ad4e,#c4de70)}
 .befn-v3-dialog .befn-v3-technical .befn-power-track.is-emerald .befn-power-fill{background:linear-gradient(90deg,#388d7a,#66d6ac)}
-.befn-v3-dialog .befn-v3-technical .befn-power-track.is-legendary .befn-power-fill{background:linear-gradient(90deg,#9d762e,#f7d978)}
+.befn-v3-dialog .befn-v3-technical .befn-power-track.is-legendary .befn-power-fill{background:linear-gradient(90deg,#596672,#afb8c0)}
 
 .befn-v3-dialog .befn-performance-highlights{margin:4px 0 12px;max-width:100%}
 .befn-v3-dialog .befn-v3-rank-full{margin-top:8px}
@@ -92,9 +92,9 @@
 .befn-v3-dialog .dialog-bio>.befn-portrait-slot{
  position:relative;align-self:center;isolation:isolate;
  aspect-ratio:4/5;width:100%;height:auto!important;min-height:0!important;max-height:none!important;
- overflow:hidden;border-radius:9px;border:1px solid #756650;
- background:radial-gradient(ellipse 85% 65% at 50% 38%,#4b7373 0%,#315453 72%,transparent 100%),
-  linear-gradient(155deg,#2b5050,#1d3339);
+ overflow:hidden;border-radius:9px;border:1px solid #57626e;
+ background:radial-gradient(ellipse 85% 65% at 50% 38%,#4c5f72 0%,#354250 72%,transparent 100%),
+  linear-gradient(155deg,#313d4a,#222b34);
 }
 .befn-v3-dialog .dialog-bio>.befn-portrait-slot img{
  position:absolute;inset:0;display:block;width:100%;height:100%;
@@ -114,11 +114,11 @@
 /* Consistent V3 rhythm and typography from portrait to the analytics panels. */
 .befn-v3-dialog{
  --v3-section-gap:12px;
- font-family:'DM Sans',system-ui,Arial,sans-serif;
+ font-family:'Inter',system-ui,Arial,sans-serif;
 }
 .befn-v3-dialog .dialog-content{
  display:block;
- font-family:'DM Sans',system-ui,Arial,sans-serif;
+ font-family:'Inter',system-ui,Arial,sans-serif;
 }
 .befn-v3-dialog .dialog-bio{margin:0}
 .befn-v3-dialog .befn-profile-insights.befn-v3{
@@ -156,7 +156,7 @@
 .befn-v3-dialog .befn-highlight-card,
 .befn-v3-dialog .befn-highlight-card>span,
 .befn-v3-dialog .befn-highlight-card footer{
- font-family:'DM Sans',system-ui,Arial,sans-serif;
+ font-family:'Inter',system-ui,Arial,sans-serif;
 }
 .befn-v3-dialog .befn-v3-history>summary,
 .befn-v3-dialog .befn-v3-stat-panel>h3{
@@ -165,7 +165,7 @@
  align-items:center;
 }
 .befn-v3-dialog .befn-v3-tiles small{
- color:#cfc7bf;
+ color:#c0c7ce;
  font-size:10px;
  line-height:1.25;
 }

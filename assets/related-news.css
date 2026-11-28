@@ -1,25 +1,25 @@
 /* Related news on fight cards and fighter profiles (Phase 2, step 3). Fight night look: cream, ink, red. */
 #main #upcoming-cards-root .upcoming-expanded .rn-block,
-#fighterDialog .befn-pro .rn-block{margin:16px 0 0;padding:12px 14px;background:#f8f4ed;border:1px solid #e2dbcf;border-left:3px solid #cf1824;border-radius:10px;color:#111013;box-shadow:none}
+#fighterDialog .befn-pro .rn-block{margin:16px 0 0;padding:12px 14px;background:#eef0f2;border:1px solid #d0d8e1;border-left:3px solid #b3001b;border-radius:10px;color:#14181c;box-shadow:none}
 #fighterDialog .befn-pro .rn-block{background:#fff;margin:16px 0}
 .rn-block .rn-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 8px}
-.rn-block .rn-head strong{font:700 15px/1 "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#111013}
-.rn-block .rn-head span{font:600 12px "DM Sans",sans-serif;color:#6b6468}
+.rn-block .rn-head strong{font:700 15px/1 "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#14181c}
+.rn-block .rn-head span{font:600 12px "Inter",sans-serif;color:#64686b}
 .rn-block .rn-list{list-style:none;margin:0;padding:0;display:grid;gap:0}
-.rn-block .rn-item{display:grid;gap:3px;padding:10px 0;border-top:1px solid #e2dbcf}
+.rn-block .rn-item{display:grid;gap:3px;padding:10px 0;border-top:1px solid #d0d8e1}
 .rn-block .rn-item:first-child{border-top:0;padding-top:2px}
 .rn-block .rn-item:last-child{padding-bottom:0}
-.rn-block .rn-link{display:block;box-sizing:border-box;min-height:44px;padding:12px 0 2px;font:700 15px/1.3 "DM Sans",sans-serif;color:#111013;text-decoration:none;-webkit-text-fill-color:#111013}
-.rn-block .rn-link:hover,.rn-block .rn-link:focus-visible{color:#cf1824;-webkit-text-fill-color:#cf1824;text-decoration:underline}
-.rn-block .rn-meta{font:500 12px/1.4 "DM Sans",sans-serif;color:#6b6468}
-.rn-block .rn-source{font-weight:700;color:#111013}
-.rn-block .rn-names{color:#cf1824;font-weight:600}
+.rn-block .rn-link{display:block;box-sizing:border-box;min-height:44px;padding:12px 0 2px;font:700 15px/1.3 "Inter",sans-serif;color:#14181c;text-decoration:none;-webkit-text-fill-color:#14181c}
+.rn-block .rn-link:hover,.rn-block .rn-link:focus-visible{color:#b3001b;-webkit-text-fill-color:#b3001b;text-decoration:underline}
+.rn-block .rn-meta{font:500 12px/1.4 "Inter",sans-serif;color:#64686b}
+.rn-block .rn-source{font-weight:700;color:#14181c}
+.rn-block .rn-names{color:#b3001b;font-weight:600}
 /* Legacy card rules colour every <strong> and <span> inside #main; set ours explicitly. */
 #main #upcoming-cards-root .upcoming-expanded .rn-block .rn-head strong,
-#fighterDialog .befn-pro .rn-block .rn-head strong{color:#111013!important;-webkit-text-fill-color:#111013!important;background:none!important}
+#fighterDialog .befn-pro .rn-block .rn-head strong{color:#14181c!important;-webkit-text-fill-color:#14181c!important;background:none!important}
 #main #upcoming-cards-root .upcoming-expanded .rn-block .rn-head span,
-#fighterDialog .befn-pro .rn-block .rn-head span{color:#6b6468!important;-webkit-text-fill-color:#6b6468!important}
+#fighterDialog .befn-pro .rn-block .rn-head span{color:#64686b!important;-webkit-text-fill-color:#64686b!important}
 #main #upcoming-cards-root .upcoming-expanded .rn-block .rn-source,
-#fighterDialog .befn-pro .rn-block .rn-source{color:#111013!important;-webkit-text-fill-color:#111013!important}
+#fighterDialog .befn-pro .rn-block .rn-source{color:#14181c!important;-webkit-text-fill-color:#14181c!important}
 #main #upcoming-cards-root .upcoming-expanded .rn-block .rn-names,
-#fighterDialog .befn-pro .rn-block .rn-names{color:#cf1824!important;-webkit-text-fill-color:#cf1824!important}
+#fighterDialog .befn-pro .rn-block .rn-names{color:#b3001b!important;-webkit-text-fill-color:#b3001b!important}

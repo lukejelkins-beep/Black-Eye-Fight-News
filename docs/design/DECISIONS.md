@@ -2,6 +2,29 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 — Blood and steel in every area; no photo pop-up on fighter names
+- Owner: "Lets do that across the whole website in every area please - also please remove the function where you tap a fighters name and a photo pops up - its clunky and i dont like the underlining of names".
+- **Every area:** after the first swap, the colours still on screen were collected from 36 pages (front page, News, Fights, Results, Fighters, a profile, Analysis and Fight Talk for MMA and Boxing; every Sumo page and sub-page; Sumo stables, stories and fun facts; the three photo-credit pages; the gym article; About, Privacy, Terms and Data deletion). The rest were converted by rule, keeping each colour's lightness (rules recorded here):
+  - warm creams and tints → the same lightness in cool grey (hue 210)
+  - warm greys, plums and browns, light or dark → cool grey or gunmetal
+  - golds and yellows → steel
+  - other reds → the blood-red hue
+  - old teal leftovers → steel
+- **Kept on purpose:**
+  - MMA amber, sumo blue, the win and form greens and the blue/purple family
+  - flags (anything under `data-country`, and Japan's red)
+  - social-platform logo colours
+  - the orange-to-green rating scales
+- Sumo's head-to-head "Level" tone was gold; it is now a mid steel.
+- **Names:** the tap/hover photo pop-up is gone everywhere. `assets/fighter-hover.js` is deleted; it wrapped every known fighter name in a dotted teal underline. The champions table's photo pop-up in `app-inline-2.js` is removed too: names are plain bold text and thumbnails are plain photos. News links to a fighter's profile keep working but are no longer underlined. `tests/test-fighter-photo-close.cjs` is replaced by `tests/test-no-fighter-photo-popup.cjs`, which checks the pop-up stays gone.
+- Checked in a browser at 390 and 1280 px on all 36 pages: no horizontal scroll, no pop-up elements, no page errors. — Owner; Claude — PR #594, awaiting owner "Merge 594".
+
+## 2026-11-28 — Site-wide style: "Blood and steel"
+- Owner asked to see the site with different font and colour combinations. Round 1: six options on the front page; owner liked "Fight poster" (Anton / Inter) and "Ringside" (Bebas Neue / Barlow). Round 2: eight more condensed, poster-style options with their own colour themes. Owner: "This is for the whole site - not just the main page", so all ten were shown on seven pages (front page, Fights, Fighters, a profile, Analysis, News, Sumo). Owner: "I like blood and steel".
+- **Fonts:** headings Oswald (was Unbounded), text Inter (was DM Sans), everywhere the old two were used. The logo and phone masthead keep Barlow Condensed.
+- **Colours:** red `#cf1824` → blood red `#b3001b` (boxing's sport colour follows it); gold `#f3c332` → steel `#c5ccd3`; cream page → cool grey `#eef0f2`; the near-black inks and dark bands → gunmetal `#14181c`, and the slightly lighter dark pills → `#303437`. MMA amber and sumo blue are unchanged. Japan's red sun (Sumo flags) keeps its real red.
+- **How:** one mechanical swap of those exact values in the CSS, JS and HTML (and the two scripts that write the credits page and gym article), so every page follows. Anything that used a different shade of cream or gold (for example the warm card tints in the profile panel and fighter tiles, Sumo's editorial gold) is unchanged, as it was in the mock-up the owner chose.
+- Mock-ups and screenshots of the built pages: `docs/design/screenshots/blood-and-steel-20261128/`. — Owner; Claude — awaiting owner "Merge N".
 ## 2026-11-28 — News test no longer depends on the live translation feed
 - The 07:45 UTC "Refresh Japanese and Spanish headlines" run committed `data/news-language-live.json` with 0 stories (`lastSuccessfulAt` null), so `tests/test-news-page-a.cjs` failed "sumo box with its translated note", `release-preflight` went red on #592's merge and Render (deploys on checks passing) held every later main commit.
 - Owner chose: make the test accept an empty feed. With fewer than four live translated stories the box rules run on five fixed stories, and a new check says an empty feed shows no sumo box. The feed file, the workflow and the page code are untouched. — Owner; Claude — `tests/test-news-page-a.cjs`; awaiting owner "Merge N".

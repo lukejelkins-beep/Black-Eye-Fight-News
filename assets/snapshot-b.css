@@ -1,68 +1,68 @@
 /* Fight snapshot layout B (Phase 3 redesign): tale of the tape, analysis, tabs. Light card surface (see fights-page.css).
-   Tokens from docs/design/DIRECTION.md: red #cf1824, gold #f3c332, ink #111013, cream #f8f4ed. Nothing under 12 px, tap targets 44 px.
+   Tokens from docs/design/DIRECTION.md: red #b3001b, gold #c5ccd3, ink #14181c, cream #eef0f2. Nothing under 12 px, tap targets 44 px.
    Face-off (owner chose option B, 24 Nov 2026): opening the snapshot hides the card row, so each fighter is shown once,
    large, facing the other; every picture box (cutout, photo or initials) is the same size so names line up. */
 #main :is(#upcoming-cards-root,#results-content) .result-bout-compact:has(> .befn-fight-snapshot[data-b][open])>.result-matchup,
 #main :is(#upcoming-cards-root,#results-content) .result-bout-compact:has(> .befn-fight-snapshot[data-b][open])>.result-bout-detail{display:none}
-#main :is(#upcoming-cards-root,#results-content) .sb-tape,#main :is(#upcoming-cards-root,#results-content) .sb-analysis{margin:0 0 14px;padding:4px 0 14px;border-bottom:1px solid #ece6dc;color:#111013}
+#main :is(#upcoming-cards-root,#results-content) .sb-tape,#main :is(#upcoming-cards-root,#results-content) .sb-analysis{margin:0 0 14px;padding:4px 0 14px;border-bottom:1px solid #dee4ea;color:#14181c}
 #main :is(#upcoming-cards-root,#results-content) .sb-title-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-#main :is(#upcoming-cards-root,#results-content) .sb-title{margin:0!important;color:#111013!important;-webkit-text-fill-color:#111013!important;font-family:Unbounded,"Barlow Condensed",sans-serif;font-size:18px!important;font-weight:800;line-height:1.2}
-#main :is(#upcoming-cards-root,#results-content) .sb-chip{display:table;max-width:100%;margin:0 auto 8px!important;padding:4px 12px;border-radius:14px;text-align:center;background:#cf1824;color:#fff!important;-webkit-text-fill-color:#fff!important;font:700 12px "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;line-height:1.35;text-wrap:balance}
+#main :is(#upcoming-cards-root,#results-content) .sb-title{margin:0!important;color:#14181c!important;-webkit-text-fill-color:#14181c!important;font-family:Oswald,"Barlow Condensed",sans-serif;font-size:18px!important;font-weight:800;line-height:1.2}
+#main :is(#upcoming-cards-root,#results-content) .sb-chip{display:table;max-width:100%;margin:0 auto 8px!important;padding:4px 12px;border-radius:14px;text-align:center;background:#b3001b;color:#fff!important;-webkit-text-fill-color:#fff!important;font:700 12px "Inter",sans-serif;letter-spacing:.06em;text-transform:uppercase;line-height:1.35;text-wrap:balance}
 #main :is(#upcoming-cards-root,#results-content) .sb-stage{position:relative;display:flex;justify-content:space-between;align-items:flex-end;max-width:420px;margin:0 auto}
-#main :is(#upcoming-cards-root,#results-content) .sb-vs{position:absolute;left:50%;bottom:38px;transform:translateX(-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;border:3px solid #fff;background:#111013;color:#f3c332!important;-webkit-text-fill-color:#f3c332!important;font:900 14px Unbounded,sans-serif}
+#main :is(#upcoming-cards-root,#results-content) .sb-vs{position:absolute;left:50%;bottom:38px;transform:translateX(-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;border:3px solid #fff;background:#14181c;color:#c5ccd3!important;-webkit-text-fill-color:#c5ccd3!important;font:900 14px Oswald,sans-serif}
 #main :is(#upcoming-cards-root,#results-content) .sb-fig{position:relative;display:block;flex:none;width:128px;height:146px;clip-path:inset(0 round 0 0 64px 64px)}
-#main :is(#upcoming-cards-root,#results-content) .sb-disc{position:absolute;left:0;right:0;bottom:0;height:128px;border-radius:50%;background:#cf1824;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#main :is(#upcoming-cards-root,#results-content) .sb-disc{position:absolute;left:0;right:0;bottom:0;height:128px;border-radius:50%;background:#b3001b;overflow:hidden;display:flex;align-items:center;justify-content:center}
 #main :is(#upcoming-cards-root,#results-content) .sb-disc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
-#main :is(#upcoming-cards-root,#results-content) .sb-disc b{position:relative;color:#fff!important;-webkit-text-fill-color:#fff!important;font:800 34px Unbounded,sans-serif}
-#main :is(#upcoming-cards-root,#results-content) .sb-disc.has-flag{background:#f8f4ed}
+#main :is(#upcoming-cards-root,#results-content) .sb-disc b{position:relative;color:#fff!important;-webkit-text-fill-color:#fff!important;font:800 34px Oswald,sans-serif}
+#main :is(#upcoming-cards-root,#results-content) .sb-disc.has-flag{background:#eef0f2}
 #main :is(#upcoming-cards-root,#results-content) .sb-disc .sb-flag{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 #main :is(#upcoming-cards-root,#results-content) .sb-cut{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:146px;width:auto;max-width:none}
 #main :is(#upcoming-cards-root,#results-content) .sb-head{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:420px;margin:10px auto 12px}
 #main :is(#upcoming-cards-root,#results-content) .sb-fighter{display:flex;flex-direction:column;gap:3px;min-width:0;align-items:flex-start;text-align:left}
 #main :is(#upcoming-cards-root,#results-content) .sb-fighter.sb-b{align-items:flex-end;text-align:right}
-#main :is(#upcoming-cards-root,#results-content) .sb-name{display:block;border:0!important;text-decoration:none!important;color:#111013!important;-webkit-text-fill-color:#111013!important;font-size:15px;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+#main :is(#upcoming-cards-root,#results-content) .sb-name{display:block;border:0!important;text-decoration:none!important;color:#14181c!important;-webkit-text-fill-color:#14181c!important;font-size:15px;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
 #main :is(#upcoming-cards-root,#results-content) .sb-tags{display:flex;flex-wrap:wrap;gap:4px;min-height:18px}
-#main :is(#upcoming-cards-root,#results-content) .sb-tags em{font:700 12px "DM Sans",sans-serif;font-style:normal;letter-spacing:.04em;color:#8a6a00!important;-webkit-text-fill-color:#8a6a00!important}
-#main :is(#upcoming-cards-root,#results-content) .sb-record{display:block;color:#111013;font-family:Unbounded,"Barlow Condensed",sans-serif;font-size:26px;font-weight:800;line-height:1.05}
+#main :is(#upcoming-cards-root,#results-content) .sb-tags em{font:700 12px "Inter",sans-serif;font-style:normal;letter-spacing:.04em;color:#8a6a00!important;-webkit-text-fill-color:#8a6a00!important}
+#main :is(#upcoming-cards-root,#results-content) .sb-record{display:block;color:#14181c;font-family:Oswald,"Barlow Condensed",sans-serif;font-size:26px;font-weight:800;line-height:1.05}
 #main :is(#upcoming-cards-root,#results-content) .sb-form{display:flex;gap:4px;margin-top:2px}
-#main :is(#upcoming-cards-root,#results-content) .sb-form i{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font:700 12px "DM Sans",sans-serif;font-style:normal;color:#fff!important;-webkit-text-fill-color:#fff!important;background:#8a8387}
+#main :is(#upcoming-cards-root,#results-content) .sb-form i{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font:700 12px "Inter",sans-serif;font-style:normal;color:#fff!important;-webkit-text-fill-color:#fff!important;background:#8a8387}
 #main :is(#upcoming-cards-root,#results-content) .sb-form i.is-win{background:#2f8f2b}
-#main :is(#upcoming-cards-root,#results-content) .sb-form i.is-loss{background:#cf1824}
+#main :is(#upcoming-cards-root,#results-content) .sb-form i.is-loss{background:#b3001b}
 /* Rows. Phone: the label sits on its own line above the two values; desktop: one line, value | bar | label | bar | value. */
 #main :is(#upcoming-cards-root,#results-content) .sb-rows{display:grid}
-#main :is(#upcoming-cards-root,#results-content) .sb-row{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr) auto;column-gap:8px;row-gap:2px;align-items:center;padding:8px 0;border-top:1px solid #ece6dc}
+#main :is(#upcoming-cards-root,#results-content) .sb-row{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr) auto;column-gap:8px;row-gap:2px;align-items:center;padding:8px 0;border-top:1px solid #dee4ea}
 #main :is(#upcoming-cards-root,#results-content) .sb-row>.sb-lab{grid-column:1/-1;grid-row:1}
 #main :is(#upcoming-cards-root,#results-content) .sb-row>:nth-child(1){grid-column:1;grid-row:2}
 #main :is(#upcoming-cards-root,#results-content) .sb-row>:nth-child(2){grid-column:2;grid-row:2}
 #main :is(#upcoming-cards-root,#results-content) .sb-row>:nth-child(4){grid-column:3;grid-row:2}
 #main :is(#upcoming-cards-root,#results-content) .sb-row>:nth-child(5){grid-column:4;grid-row:2;justify-self:end}
-#main :is(#upcoming-cards-root,#results-content) .sb-val{color:#111013!important;-webkit-text-fill-color:#111013!important;font-size:16px;font-weight:700;padding:2px 6px;border-radius:6px;margin:0 -6px;white-space:nowrap}
-#main :is(#upcoming-cards-root,#results-content) .sb-val.is-lead{background:#fbeeb8;font-weight:800}
-#main :is(#upcoming-cards-root,#results-content) .sb-lab{color:#6b6468;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-align:center;line-height:1.2}
+#main :is(#upcoming-cards-root,#results-content) .sb-val{color:#14181c!important;-webkit-text-fill-color:#14181c!important;font-size:16px;font-weight:700;padding:2px 6px;border-radius:6px;margin:0 -6px;white-space:nowrap}
+#main :is(#upcoming-cards-root,#results-content) .sb-val.is-lead{background:#d1dae2;font-weight:800}
+#main :is(#upcoming-cards-root,#results-content) .sb-lab{color:#64686b;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-align:center;line-height:1.2}
 #main :is(#upcoming-cards-root,#results-content) .sb-bar{display:flex;height:10px}
 #main :is(#upcoming-cards-root,#results-content) .sb-bar-a{justify-content:flex-end}
-#main :is(#upcoming-cards-root,#results-content) .sb-bar i{display:block;height:10px;border-radius:5px;background:#e7a3a7}
-#main :is(#upcoming-cards-root,#results-content) .sb-bar-b i{background:#f6dc8a}
-#main :is(#upcoming-cards-root,#results-content) .sb-bar-a.is-lead i{background:#cf1824}
-#main :is(#upcoming-cards-root,#results-content) .sb-bar-b.is-lead i{background:#f3c332}
+#main :is(#upcoming-cards-root,#results-content) .sb-bar i{display:block;height:10px;border-radius:5px;background:#e7a3ad}
+#main :is(#upcoming-cards-root,#results-content) .sb-bar-b i{background:#b8c0c8}
+#main :is(#upcoming-cards-root,#results-content) .sb-bar-a.is-lead i{background:#b3001b}
+#main :is(#upcoming-cards-root,#results-content) .sb-bar-b.is-lead i{background:#c5ccd3}
 /* Closed card row: the fighter's cutout on their flag disc, inside the existing photo slot. */
 #main #upcoming-cards-root .upcoming-photo.sb-row-cut>img{display:none}
-#main :is(#upcoming-cards-root,#results-content) .sb-row-fig{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#cf1824}
+#main :is(#upcoming-cards-root,#results-content) .sb-row-fig{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#b3001b}
 #main :is(#upcoming-cards-root,#results-content) .sb-row-fig img{position:absolute;display:block;border-radius:0!important;background:none!important}
 #main :is(#upcoming-cards-root,#results-content) .sb-row-fig .sb-row-flag{inset:0;width:100%;height:100%;object-fit:cover}
 #main :is(#upcoming-cards-root,#results-content) .sb-row-fig .sb-row-cutimg{bottom:0;left:50%;transform:translateX(-50%);width:auto!important;height:100%!important;max-width:none;object-fit:contain}
-#main :is(#upcoming-cards-root,#results-content) .sb-note{margin:10px 0 0;color:#6b6468;font-size:12px;line-height:1.45}
+#main :is(#upcoming-cards-root,#results-content) .sb-note{margin:10px 0 0;color:#64686b;font-size:12px;line-height:1.45}
 #main :is(#upcoming-cards-root,#results-content) .sb-analysis ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
-#main :is(#upcoming-cards-root,#results-content) .sb-analysis li{margin:0;padding:6px 0 6px 12px;border-left:4px solid #cfc8bd;color:#111013;font-size:15px;line-height:1.4}
-#main :is(#upcoming-cards-root,#results-content) .sb-analysis li.is-a{border-left-color:#cf1824}
-#main :is(#upcoming-cards-root,#results-content) .sb-analysis li.is-b{border-left-color:#f3c332}
-#main :is(#upcoming-cards-root,#results-content) .sb-tabs{display:flex;gap:0;border-bottom:1px solid #ece6dc;margin:0 0 12px}
-#main :is(#upcoming-cards-root,#results-content) .sb-tabs button{flex:1;min-height:44px;border:0;border-bottom:3px solid transparent;background:transparent;color:#6b6468!important;-webkit-text-fill-color:#6b6468!important;font:700 14px "DM Sans",sans-serif;cursor:pointer;border-radius:0}
-#main :is(#upcoming-cards-root,#results-content) .sb-tabs button.is-active{color:#111013!important;-webkit-text-fill-color:#111013!important;border-bottom-color:#cf1824}
+#main :is(#upcoming-cards-root,#results-content) .sb-analysis li{margin:0;padding:6px 0 6px 12px;border-left:4px solid #bfc6cd;color:#14181c;font-size:15px;line-height:1.4}
+#main :is(#upcoming-cards-root,#results-content) .sb-analysis li.is-a{border-left-color:#b3001b}
+#main :is(#upcoming-cards-root,#results-content) .sb-analysis li.is-b{border-left-color:#c5ccd3}
+#main :is(#upcoming-cards-root,#results-content) .sb-tabs{display:flex;gap:0;border-bottom:1px solid #dee4ea;margin:0 0 12px}
+#main :is(#upcoming-cards-root,#results-content) .sb-tabs button{flex:1;min-height:44px;border:0;border-bottom:3px solid transparent;background:transparent;color:#64686b!important;-webkit-text-fill-color:#64686b!important;font:700 14px "Inter",sans-serif;cursor:pointer;border-radius:0}
+#main :is(#upcoming-cards-root,#results-content) .sb-tabs button.is-active{color:#14181c!important;-webkit-text-fill-color:#14181c!important;border-bottom-color:#b3001b}
 #main :is(#upcoming-cards-root,#results-content) .sb-panel .st-tiles,#main :is(#upcoming-cards-root,#results-content) .sb-panel .st-scores{border-bottom:0;padding-top:0}
 #main :is(#upcoming-cards-root,#results-content) .sb-panel .st-title{display:none}
 #main :is(#upcoming-cards-root,#results-content) .sb-totals{margin-top:8px}
-#main :is(#upcoming-cards-root,#results-content) .sb-totals>summary{display:flex;align-items:center;min-height:44px;color:#cf1824;font:700 12px "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+#main :is(#upcoming-cards-root,#results-content) .sb-totals>summary{display:flex;align-items:center;min-height:44px;color:#b3001b;font:700 12px "Inter",sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
 @media(min-width:900px){
  #main :is(#upcoming-cards-root,#results-content) .befn-fight-snapshot[data-b] .befn-snapshot-body{max-width:640px;margin-inline:auto}
  #main :is(#upcoming-cards-root,#results-content) .sb-row{grid-template-columns:72px minmax(0,1fr) 140px minmax(0,1fr) 72px;padding:6px 0;min-height:30px}
@@ -92,18 +92,18 @@
 }
 /* Finished bouts on Results (owner, 24 Nov 2026): the same face-off on a light panel inside the dark result card,
    led by the result. The winner is tagged; the loser's picture is greyed. */
-#main #results-content .befn-fight-snapshot.sb-result-snap .befn-snapshot-body{background:#fff;color:#111013;border-radius:0 0 10px 10px;padding:16px 12px}
-#main #results-content .sb-result-snap .sb-result{display:block;margin:0 0 10px!important;text-align:center;color:#111013!important;-webkit-text-fill-color:#111013!important;font-size:14px;font-weight:700;line-height:1.35}
+#main #results-content .befn-fight-snapshot.sb-result-snap .befn-snapshot-body{background:#fff;color:#14181c;border-radius:0 0 10px 10px;padding:16px 12px}
+#main #results-content .sb-result-snap .sb-result{display:block;margin:0 0 10px!important;text-align:center;color:#14181c!important;-webkit-text-fill-color:#14181c!important;font-size:14px;font-weight:700;line-height:1.35}
 #main #results-content .sb-result-snap .sb-result b{margin-right:6px;padding:2px 8px;border-radius:6px;background:#2f8f2b;color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
-#main #results-content .sb-won-a>.sb-fig:last-of-type .sb-disc,#main #results-content .sb-won-b>.sb-fig:first-child .sb-disc{background:#e6e0d7}
+#main #results-content .sb-won-a>.sb-fig:last-of-type .sb-disc,#main #results-content .sb-won-b>.sb-fig:first-child .sb-disc{background:#d7dee6}
 #main #results-content .sb-won-a>.sb-fig:last-of-type .sb-flag,#main #results-content .sb-won-b>.sb-fig:first-child .sb-flag{display:none}
 #main #results-content .sb-won-a>.sb-fig:last-of-type :is(.sb-cut,.sb-disc img),#main #results-content .sb-won-b>.sb-fig:first-child :is(.sb-cut,.sb-disc img){filter:grayscale(1);opacity:.6}
 #main #results-content .sb-fighter.is-loser .sb-record,#main #results-content .sb-fighter.is-loser .sb-name{opacity:.7}
 #main #results-content .sb-fighter.is-winner .sb-tags em{padding:1px 8px;border-radius:6px;background:#2f8f2b;color:#fff!important;-webkit-text-fill-color:#fff!important}
-#main :is(#upcoming-cards-root,#results-content) .sb-record small{display:block;margin-top:2px;font:700 12px "DM Sans",sans-serif;color:#6b6468;letter-spacing:0}
-#main #results-content .sb-result-snap .befn-comparison-heading{color:#111013!important;-webkit-text-fill-color:#111013!important}
+#main :is(#upcoming-cards-root,#results-content) .sb-record small{display:block;margin-top:2px;font:700 12px "Inter",sans-serif;color:#64686b;letter-spacing:0}
+#main #results-content .sb-result-snap .befn-comparison-heading{color:#14181c!important;-webkit-text-fill-color:#14181c!important}
 /* Boxing face-off (24 Nov 2026): same face-off; its "Last five fights" heading sits on the light card, so it needs ink. */
-#main :is(#upcoming-cards-root,#results-content) .sb-boxing .befn-comparison-heading{margin:4px 0 8px!important;color:#111013!important;-webkit-text-fill-color:#111013!important}
+#main :is(#upcoming-cards-root,#results-content) .sb-boxing .befn-comparison-heading{margin:4px 0 8px!important;color:#14181c!important;-webkit-text-fill-color:#14181c!important}
 /* Gym line under the form dots on upcoming UFC cards (2026-11-28): small plain context, 12 px minimum. */
-#main #upcoming-cards-root .sb-gym{display:block;margin-top:6px;color:#111013;font:600 13px/1.3 "DM Sans",sans-serif;overflow-wrap:anywhere}
-#main #upcoming-cards-root .sb-gym small{display:block;color:#6b6468;font:700 12px/1.2 "DM Sans",sans-serif;letter-spacing:.04em;text-transform:uppercase}
+#main #upcoming-cards-root .sb-gym{display:block;margin-top:6px;color:#14181c;font:600 13px/1.3 "Inter",sans-serif;overflow-wrap:anywhere}
+#main #upcoming-cards-root .sb-gym small{display:block;color:#64686b;font:700 12px/1.2 "Inter",sans-serif;letter-spacing:.04em;text-transform:uppercase}

@@ -168,7 +168,7 @@ function storiesBody(){
 function render(){
  const f=S.feed,highPct=f.fresh?f.rows.filter(w=>w.bouts>=(w.division==='Makushita'?3:5)&&w.wins*100>=HIGH_WIN_PCT_THRESHOLD*w.bouts).length:'—';
  const stories=S.view==='stories';
- /* Same page head as the other Sumo pages: dark band, gold kicker, Unbounded sentence-case title (28 Nov 2026). */
+ /* Same page head as the other Sumo pages: dark band, gold kicker, Oswald sentence-case title (28 Nov 2026). */
  ROOT.innerHTML='<div class="sumo-facts sumo-stories"><header class="facts-top st-hero"><span class="st-hero-kicker">Sumo stories</span>'+
  '<h1>True, surprising and sourced</h1><p>Every story features a wrestler on today’s banzuke and shows where it comes from.</p>'+
  '<div class="facts-status"><b'+(f.fresh?'':' class="is-stale"')+'>'+(f.fresh?'Current tournament':'Live form paused: source data out of date')+'</b>'+
