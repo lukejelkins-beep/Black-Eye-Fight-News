@@ -36,7 +36,7 @@ summary:focus-visible,[role="button"]:focus-visible {
 }
 /* Header / navigation — bold black field, logo-red underline and gold selection */
 .topline {background:#14181c;color:#c6ccd3}
-.topline-right {color:#fff8e7}
+.topline-right {color:#f0f3f6}
 .live-point {background:var(--brand-red);box-shadow:0 0 0 3px rgba(207,24,36,.22)}
 .masthead {background:#14181c}
 .navrail {background:#14181c;border-bottom:3px solid var(--brand-red);color:#f5f6f8}
@@ -68,10 +68,10 @@ summary:focus-visible,[role="button"]:focus-visible {
 .befn-mobile-sheet {background:#eff2f4;color:#14181c}
 .befn-mobile-sheet h2 {color:#181d23}
 .befn-mobile-sheet-grid a,.befn-mobile-sheet-grid button {
-  background:#fffdf8;border-color:#cbd4de;color:#22282f
+  background:#fbfcfc;border-color:#cbd4de;color:#22282f
 }
 .befn-mobile-sheet-grid a:hover,.befn-mobile-sheet-grid button:hover {
-  background:#fff0cf;border-color:var(--brand-red)
+  background:#e2e7ec;border-color:var(--brand-red)
 }
 .befn-mobile-sheet-head button {background:#94192b;color:#fff}
 .befn-mobile-sheet-grid a:focus-visible,.befn-mobile-sheet-grid button:focus-visible {
@@ -95,9 +95,9 @@ summary:focus-visible,[role="button"]:focus-visible {
 .btn-primary:hover {background:#ffdb59;border-color:#ffdb59;color:#161a1f}
 /* Editorial topic ticker: preserve the existing portrait grid and landscape row. */
 .ticker {background:var(--brand-gold);color:#181d23}
-.ticker .ticker-label {background:#ae162d;color:#fffaf1}
+.ticker .ticker-label {background:#ae162d;color:#f6f8fa}
 .ticker-dot {background:#9b1d30}
-.issue-alert {background:#fff0d0;color:#5b242c;border-bottom:1px solid #aeb6bf}
+.issue-alert {background:#e2e8ed;color:#5b242c;border-bottom:1px solid #aeb6bf}
 .issue-alert strong {background:var(--brand-red-dark);color:#fff}
 /* General cards, headings and filters */
 .eyebrow,.card-kicker,.fighter-body .fighter-link {color:#aa192f}
@@ -133,36 +133,36 @@ summary:focus-visible,[role="button"]:focus-visible {
 /* Champions, schedules and data grids */
 .champ-table th,.calendar-block .subheader {background:#1a1f25;color:#f6f8f9}
 .champ-table td {border-bottom-color:#dce2e8;border-right-color:#e5eaef}
-.champ-table tbody tr:hover td {background:#fff4e0}
+.champ-table tbody tr:hover td {background:#ecf0f3}
 .champ-table .division-head {color:#252c33}
 .champ-cell small,.muted-cell {color:#5f666c}
 .champ-table .reign-source {color:#a51a2f}
 .data-table th {background:#d4dce4;color:#2d363f}
 .data-table td {color:#393f45;border-top-color:#d7dee5}
-.data-table tbody tr:nth-child(even) {background:#fffcf6}
+.data-table tbody tr:nth-child(even) {background:#fafbfb}
 .fighter-tag {background:var(--brand-gold);color:#1c2228}
 .archive-card {background:#14181c;color:#f4f6f8}
 .archive-card p {color:#d4dce4}
 .source-list a {background:#d6dde4;color:#80202e}
-.archive-gate {background:#fff1d7;border-left-color:var(--brand-red)}
+.archive-gate {background:#e7ebef;border-left-color:var(--brand-red)}
 /* Upcoming fights: expanders, main/prelim tabs and poster overlays */
 .upcoming-event-summary {background:#e2e8ed;border-left:4px solid #b3001b}
 .upcoming-event-summary:hover {background:#e7ebef}
 .upcoming-event-heading>strong {color:#1c2228}
 .upcoming-location,.upcoming-summary-meta {color:#4e5863}
 .upcoming-chevron,.upcoming-expand-copy {color:#a7162c}
-.upcoming-loading,.upcoming-feed-warning {border-color:#cdd6df;background:#fffdf9}
+.upcoming-loading,.upcoming-feed-warning {border-color:#cdd6df;background:#fbfcfd}
 .upcoming-event-note,.upcoming-disclaimer,.upcoming-intro {color:#525c67}
 .upcoming-card-bar {background:#1d2228;color:#f1f3f6}
 .upcoming-tabs .result-card-tab.is-active,
 .upcoming-event .result-card-tab.is-active {background:#8895a2;color:#14181c;border-color:#8895a2}
 .upcoming-hero-media,.upcoming-hero-fallback {background:#14181c}
-.upcoming-hero-content {color:#fff7e9}
+.upcoming-hero-content {color:#f2f4f6}
 /* Completed and live results retain semantic status colours. */
 .results-note,.results-count {color:#515b66}
 .results-toolbar {background:#dde3ea}
 .results-toolbar select,.results-toolbar input[type=search] {
-  border-color:#a4aeb7;background:#fffdf8;color:#191d21
+  border-color:#a4aeb7;background:#fbfcfc;color:#191d21
 }
 .results-check input {accent-color:#c71a34}
 .result-feature {background:#14181c;color:#f4f6f8}
@@ -176,7 +176,7 @@ summary:focus-visible,[role="button"]:focus-visible {
 .result-bout,.result-event {border-color:#c8d2dc}
 .result-matchup-vs-watermark {color:#8d99a5}
 .result-watch {color:#af152c}
-.event-status-underway {background:#fff1d5;color:#8e3514}
+.event-status-underway {background:#e5eaef;color:#8e3514}
 .event-status-completed {background:#e5eaee;color:#3c434b}
 .event-status-cancelled,.event-status-postponed {background:#f9dfe3;color:#9d1b2f}
 /* Fight Film: warm neutrals + gold active category */
@@ -210,7 +210,7 @@ summary:focus-visible,[role="button"]:focus-visible {
 .befn-alerts-row {border-color:#cdd6df}
 .befn-alerts-row input {accent-color:#b91931}
 .befn-alerts-panel button,.befn-install-panel button {background:#b71a32;color:#fff}
-.befn-alerts-status {border-color:#bfc6cc;background:#fff2db}
+.befn-alerts-status {border-color:#bfc6cc;background:#e9edf1}
 .befn-alerts-toast,.toast {background:#1a1f25;color:#f2f4f6}
 @media(hover:hover) {
   .befn-mobile-tabs a:hover:not([aria-current="page"]) {background:#283039;color:#fff}
@@ -218,7 +218,7 @@ summary:focus-visible,[role="button"]:focus-visible {
 @media(max-width:760px) {
   .befn-mobile-tabs a[aria-current="page"] {background:var(--brand-gold);color:#161a1e}
   .ticker {color:#181d23}
-  .ticker > .ticker-label {background:#a7152b;color:#fffaf1}
+  .ticker > .ticker-label {background:#a7152b;color:#f6f8fa}
 }
 
 /* Page-specific overrides: these original IDs deliberately outrank global component styles. */
@@ -265,13 +265,13 @@ summary:focus-visible,[role="button"]:focus-visible {
 }
 #upcoming-cards-root .upcoming-disclaimer {color:#bfc5cc}
 #upcoming-cards-root .upcoming-time-countdown {
-  background:#242b33;border-color:#5e6b78;color:#ffe4a4
+  background:#242b33;border-color:#5e6b78;color:#c7d2dc
 }
 #upcoming-cards-root .upcoming-tabs .result-card-tab.is-active {
   background:var(--brand-gold);color:#161b20;border-bottom-color:var(--brand-gold)
 }
 .upcoming-tabs .result-card-tab:not(.is-active) {background:#1a1e22;color:#d2dae2}
-.upcoming-source-badge {background:#ffedc5;color:#6f1d29}
+.upcoming-source-badge {background:#dce2e8;color:#6f1d29}
 .upcoming-meta a,.upcoming-bout .result-bout-secondary a {color:#929ea9}
 .upcoming-single-section {background:#1d2329}
 .upcoming-fights {background:#111315!important}
@@ -288,7 +288,7 @@ summary:focus-visible,[role="button"]:focus-visible {
 .result-event-bouts>summary span {background:#a81b30;color:#fff}
 .result-watch {background:var(--brand-gold);color:#181c21}
 .result-bouts-note {background:#e6ebef;color:#4e565e}
-.results-sync {background:#fff0d6;border-left-color:#bd243b;color:#37424e}
+.results-sync {background:#e6ebef;border-left-color:#bd243b;color:#37424e}
 .results-sync::before {background:var(--brand-red);box-shadow:0 0 0 4px rgba(207,24,36,.1)}
 .result-card-tabs {background:#14181c}
 .result-card-tab:hover {background:#262e36}

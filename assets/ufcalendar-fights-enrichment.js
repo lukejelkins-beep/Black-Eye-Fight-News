@@ -9,7 +9,7 @@
     c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const css = document.createElement("style");
   css.textContent = [
-    ".befn-cal-stats{margin:7px 9px 11px;border:1px solid #c8ced3;background:#fffcf6;border-radius:5px;max-width:100%;overflow:hidden}",
+    ".befn-cal-stats{margin:7px 9px 11px;border:1px solid #c8ced3;background:#fafbfb;border-radius:5px;max-width:100%;overflow:hidden}",
     ".befn-cal-stats summary{cursor:pointer;padding:9px 11px;color:#2b333c;font-size:12px;font-weight:800;letter-spacing:.01em;list-style-position:inside}",
     ".befn-cal-stats[open] summary{border-bottom:1px solid #d5dce4}",
     ".befn-cal-table{display:grid;gap:0;padding:5px 10px 9px;overflow-x:auto}",

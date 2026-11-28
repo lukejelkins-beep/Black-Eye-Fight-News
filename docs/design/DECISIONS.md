@@ -2,6 +2,25 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 — Athlete pictures shown consistently
+- Owner: "Can you please make sure athletes pictures are appearing consistently and arent displaying poorly across the site".
+- **Audit:** I measured every athlete photo (about 770 images) on 26 pages at 390 px in Chromium, after scrolling each page so lazy images load: broken, enlarged past 2x, stretched and letterboxed images. Then I looked at a crop of each one.
+  - **None broken or stretched.**
+  - **Worst problems:** the boxing Fighters page and the boxing overview champion tiles. Press-kit photographs are framed every which way: tight close-ups, full-length shots, gym backgrounds. One champion (O’Shaquie Foster) showed a blank silhouette although his photo is in the library.
+  - **Sumo:** the stables cards mixed head-shots with full-length wrestlers. The Sumo stories photo band stretched a 192 px head photo across the full card, nearly 3x.
+- **Boxing, same head size everywhere:**
+  - `scripts/build-cutout-head-metrics.py` now also measures the 66 boxing cut-outs (set `boxer`).
+  - For the 18 boxers with a photograph but no usable cut-out, it finds the face with OpenCV's frontal-face detector (set `boxerPhoto`). Ryan Garcia's crowded weigh-in shot has no detectable face, so his is set by eye in `FACE_BY_EYE`. All 17 detections were checked by eye.
+  - The boxing Fighters page (champion rows, rails, division champion, contender and prospect cards, search rows) and the boxing overview champion tiles place every picture by its head (`assets/cutout-fit.js`).
+  - A photograph also gets a `box`, so a close-up is enlarged until it covers the slot rather than leaving an empty edge.
+  - The overview tiles' initials placeholder now fills the slot instead of a narrow grey strip.
+- **Foster:** `scripts/build-local-image-map.py` dropped a curly apostrophe before straightening it, so "O’Shaquie Foster" never matched. Fixed, and the map rebuilt.
+- **Sumo:**
+  - **Stables:** each stable card prefers a member with a full-length portrait (98 of the 190 JSA portraits are head-and-shoulders, `data/sumo/cutouts.json`). Otherwise, and on every member tile, the card uses the approved head-and-shoulders crop, so faces match.
+  - **Stories:** a head-only wrestler shows as a round head photo, about 1.2x enlargement instead of 2.9x.
+- **Also:** pale cream tints that the Blood and steel conversion skipped are now cool grey. The rule protecting MMA amber also caught very pale tints. `tests/test-sumo-daily.mjs` now expects the cool-white overlay, with the same opacity.
+- No new photograph was fetched for this. — Owner; Claude — awaiting owner "Merge N".
+
 ## 2026-11-28 — Blood and steel in every area; no photo pop-up on fighter names
 - Owner: "Lets do that across the whole website in every area please - also please remove the function where you tap a fighters name and a photo pops up - its clunky and i dont like the underlining of names".
 - **Every area:** after the first swap, the colours still on screen were collected from 36 pages (front page, News, Fights, Results, Fighters, a profile, Analysis and Fight Talk for MMA and Boxing; every Sumo page and sub-page; Sumo stables, stories and fun facts; the three photo-credit pages; the gym article; About, Privacy, Terms and Data deletion). The rest were converted by rule, keeping each colour's lightness (rules recorded here):

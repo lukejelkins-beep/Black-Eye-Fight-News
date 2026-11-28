@@ -15,7 +15,7 @@ const OFFICIAL_STABLES = [
 import { stableFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 const JSA = 'https://www.sumo.or.jp/EnSumoDataSumoBeya/wrap';
 const root = document.getElementById('sumo-main');
-const state = { roster: [], photos: {}, heads: {}, details: null, stables: [], query: '', filter: 'all', sort: 'alpha' };
+const state = { roster: [], photos: {}, heads: {}, partial: new Set(), details: null, stables: [], query: '', filter: 'all', sort: 'alpha' };
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const division = rank => /^(Yokozuna|Ozeki|Sekiwake|Komusubi|Maegashira)\b/i.test(rank) ? 'Makuuchi' : /^Juryo\b/i.test(rank) ? 'Juryo' : /^Makushita\b/i.test(rank) ? 'Makushita' : 'Other';
 const slug = name => String(name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -37,7 +37,17 @@ const photoFor = w => {
     /^assets\/sumo-photos\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/.test(String(p.path||''))
     ? p.path : null;
 };
-function photoMarkup(w,small=false) {
+/* Consistent pictures (owner, 28 Nov 2026): 98 of the 190 JSA portraits are head-and-shoulders shots, not full length
+   (data/sumo/cutouts.json headshotOrPartial). A full-length portrait is drawn full length; anything else, and every
+   member tile, uses the approved transparent head-and-shoulders crop (data/sumo/heads.json), so faces match in size. */
+const isFull = w => !!photoFor(w) && !state.partial.has(String(w.sourceId));
+const headFor = w => {
+  const h = w && state.heads[String(w.sourceId)], p = w && state.photos[String(w.sourceId)];
+  return h && p?.approved === true && h.sourceSha256 === p.sha256 && /^assets\/sumo-photos\/head\/[a-zA-Z0-9_-]+\.webp$/.test(String(h.path||'')) ? h.path : null;
+};
+function photoMarkup(w,small=false,head=false) {
+  const hp=(head||!isFull(w))&&headFor(w);
+  if(hp) return '<img class="is-head" src="'+escapeHtml(hp)+'" alt="'+escapeHtml(w.shikonaEn)+'" loading="lazy" decoding="async">';
   const path=photoFor(w);
   return path ? '<img src="'+escapeHtml(path)+'" alt="'+escapeHtml(w.shikonaEn)+'" loading="lazy" decoding="async">'
     : small ? '<span aria-label="No licensed photograph available">相</span>'
@@ -49,7 +59,7 @@ function prepareStables() {
   state.stables=OFFICIAL_STABLES.map(name=>{
     const members=byStable.get(name).sort((a,b)=>ranking(a)-ranking(b)||String(a.shikonaEn).localeCompare(String(b.shikonaEn)));
     return {name,slug:slug(name),members,byDivision:counts(members),leader:members[0]||null,
-      imageMember:members.find(w=>photoFor(w))||null};
+      imageMember:members.find(isFull)||members.find(w=>photoFor(w))||null};
   });
 }
 function renderCard(stable){
@@ -130,7 +140,7 @@ function recordFor(w){
 function memberCard(w){
  const r=recordFor(w);
  return '<a class="heya-member" href="sumo.html#profile/'+encodeURIComponent(w.sourceId)+'">'+
-  '<div class="heya-member-pic">'+photoMarkup(w,true)+'</div>'+
+  '<div class="heya-member-pic">'+photoMarkup(w,true,true)+'</div>'+
   '<div><strong class="heya-member-name">'+escapeHtml(w.shikonaEn)+'</strong>'+
   (w.shikonaJp?'<span class="heya-member-jp">'+escapeHtml(w.shikonaJp)+'</span>':'')+
   '<span class="heya-member-rank">'+escapeHtml(w.currentRank||'Rank unavailable')+'</span>'+
@@ -195,13 +205,15 @@ async function loadJson(path){
 }
 async function start(){
  try{
-  const [roster,photos,details,heads]=await Promise.all([
+  const [roster,photos,details,heads,cuts]=await Promise.all([
    loadJson('data/sumo/rikishi-index.json'),
    loadJson('data/sumo/approved-photos.json'),
    loadJson('data/sumo/preview-details.json').catch(()=>null),
-   loadJson('data/sumo/heads.json').catch(()=>null)
+   loadJson('data/sumo/heads.json').catch(()=>null),
+   loadJson('data/sumo/cutouts.json').catch(()=>null)
   ]);
   state.heads=heads?.bySourceId||{};
+  state.partial=new Set((cuts?.headshotOrPartial||[]).map(String));
   if(!Array.isArray(roster?.rikishi)) throw new Error('Tracked roster is not available');
   state.roster=roster.rikishi;
   state.photos=photos?.bySourceId||{};

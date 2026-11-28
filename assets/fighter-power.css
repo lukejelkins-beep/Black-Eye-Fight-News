@@ -12,7 +12,7 @@
 .befn-power-panel>summary{
  display:flex;align-items:center;gap:8px;justify-content:space-between;
  min-height:48px;padding:12px 13px;
- background:linear-gradient(105deg,#c0c7ce,#fff9e9);
+ background:linear-gradient(105deg,#c0c7ce,#f2f4f6);
  color:#171b20;font-size:clamp(12px,1.65vw,16px);font-weight:900;
  cursor:pointer;list-style:none;
 }
@@ -357,7 +357,7 @@
  padding-left:4px;min-width:0;
 }
 .befn-history-with-cage .befn-history-duration strong{
- color:#ffe0a1;font-variant-numeric:tabular-nums;
+ color:#cad0d6;font-variant-numeric:tabular-nums;
  font-size:12px;font-weight:900;white-space:nowrap;
 }
 .befn-history-cage-note{margin:0!important;padding:9px 11px;border-top:1px solid #343944}
@@ -441,7 +441,7 @@
 .befn-college-bonus{display:block;margin-top:3px;color:#919da9;font-size:8px;line-height:1.2;font-weight:700}
 .befn-credential[data-credential-verification="reported"]::after{
  content:"?";position:absolute;top:-5px;right:-5px;width:13px;height:13px;
- background:#404952;color:#fff6dc;border-radius:50%;display:grid;place-items:center;
+ background:#404952;color:#eaeef1;border-radius:50%;display:grid;place-items:center;
  border:1px solid #828f9c;font-size:10px;font-weight:900;
 }
 
@@ -480,7 +480,7 @@
  color:#161b20;font-size:11px;font-weight:850;
  line-height:1.2;white-space:normal;text-align:center;
 }
-.befn-champion-profile-link:hover{background:#fff1d8}
+.befn-champion-profile-link:hover{background:#e7ecf0}
 .befn-champion-profile-link:focus-visible{outline:3px solid #9daebe;outline-offset:2px}
 @media(max-width:540px){
  .befn-champion-profile-link{font-size:10px;min-height:33px;padding:6px 9px}
@@ -551,7 +551,7 @@
     padding:12px;
     border:1px solid #cbd0d6;
     border-radius:7px;
-    background:#fffdf7;
+    background:#fafbfc;
     min-width:0;
   }
   #fighterDialog table[data-befn-recent-results] tbody td {
@@ -655,7 +655,7 @@
 .befn-v3 .befn-power-track { height: 11px; border: 0; border-radius: 8px; box-shadow: none; background: #43464a; }
 .befn-v3 .befn-power-track::after { display: none; }
 .befn-v3 .befn-power-fill { border: 0; border-radius: 8px; box-shadow: none; background: var(--v3-tier); }
-.befn-v3 .befn-power-track.is-legendary .befn-power-fill { background: linear-gradient(90deg, #4b555f, #ffe28a); }
+.befn-v3 .befn-power-track.is-legendary .befn-power-fill { background: linear-gradient(90deg, #4b555f, #bdc4cc); }
 @media (max-width: 500px) { .befn-v3-status { position: static; justify-items: center; margin-top: 10px; } }
 .befn-v3-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .befn-v3-tiles > div { display: grid; gap: 2px; padding: 10px 4px; text-align: center; background: #2b2e30; border-radius: 8px; }

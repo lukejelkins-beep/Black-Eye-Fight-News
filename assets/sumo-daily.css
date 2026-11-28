@@ -129,7 +129,7 @@
 }
 .sumo-daily-facts::after {
   content:""; position:absolute; inset:0; z-index:1;
-  background:linear-gradient(105deg,rgba(255,253,247,.83),rgba(249,250,251,.74));
+  background:linear-gradient(105deg,rgba(250,251,252,.83),rgba(249,250,251,.74));
   pointer-events:none;
 }
 .sumo-daily-facts-content {position:relative; z-index:2; min-width:0;}
@@ -145,7 +145,7 @@
 @media(max-width:500px){
  .sumo-daily-facts {padding:12px 10px 14px; min-height:154px;}
  .sumo-daily-facts>.sumo-flag-backdrop {font-size:clamp(180px,60vw,300px);}
- .sumo-daily-facts::after {background:linear-gradient(120deg,rgba(255,253,247,.86),rgba(255,252,246,.77));}
+ .sumo-daily-facts::after {background:linear-gradient(120deg,rgba(250,251,252,.86),rgba(250,251,251,.77));}
  .sumo-daily-facts h2 {line-height:1.03;}
  .sumo-comparison-row strong {font-size:clamp(12px,3.35vw,14px);}
 }

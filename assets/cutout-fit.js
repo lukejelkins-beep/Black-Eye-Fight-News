@@ -5,7 +5,8 @@
  * BEFNCutoutFit.load()                         -> Promise, resolves when the measurements are in (or unavailable)
  * BEFNCutoutFit.style(set, slug, {head, crown}) -> inline style for an <img> inside a position:relative box, or ''
  *   set: 'champion' (official belt portraits) or 'fighter' (per-fighter cut-outs); head: head width in px;
- *   crown: px from the top of the box to the crown. The image is centred on the head, not on the file. */
+ *   crown: px from the top of the box to the crown. The image is centred on the head, not on the file.
+ *   box: [w, h] for photographs, which must cover the slot (see fit). Sets: champion, fighter, boxer, boxerPhoto. */
 (function (root) {
   'use strict';
   let sets = null, pending = null;
@@ -16,10 +17,20 @@
       .catch(() => { sets = {}; return sets; });
     return pending;
   }
+  /* o.box = [width, height] of the slot (photographs only): a photograph has a background, so it must cover the
+     slot. It is enlarged if the head size would leave it smaller than the slot, and kept inside the slot's edges. */
   function fit(m, o) {
-    const [W, , top, headW, cx] = m;
+    const [W, H, top, headW, cx] = m;
     if (!(headW > 0)) return '';
-    const s = o.head / headW, px = v => Math.round(v * 10) / 10 + 'px';
+    const px = v => Math.round(v * 10) / 10 + 'px';
+    let s = o.head / headW;
+    if (o.box && H > 0) {
+      const [bw, bh] = o.box;
+      s = Math.max(s, bw / W, bh / H);
+      const left = Math.min(0, Math.max(bw - W * s, bw / 2 - cx * s));
+      const y = Math.min(0, Math.max(bh - H * s, o.crown - top * s));
+      return 'position:absolute;max-width:none;height:auto;width:' + px(W * s) + ';left:' + px(left) + ';top:' + px(y);
+    }
     return 'position:absolute;max-width:none;height:auto;width:' + px(W * s) + ';left:calc(50% - ' + px(cx * s) + ');top:' + px(o.crown - top * s);
   }
   function style(set, slug, o) {

@@ -322,6 +322,24 @@
     }, 5000);
   }
 
+  /* Consistent champion pictures (owner, 28 Nov 2026): the head is the same size and height in every tile. A cut-out
+     is placed by its measured head; a photograph with no usable cut-out by the face found in it, covering the slot
+     (assets/cutout-fit.js, data/ufc-cutout-head-metrics.json). '' when nothing is measured: the tile keeps its picture. */
+  const SLOT = { head: 30, crown: 10, box: [78, 90] };
+  function fittedChampion(h, name, cutouts) {
+    const Fit = root.BEFNCutoutFit;
+    if (!Fit || !Fit.ready || !Fit.ready()) return '';
+    const k = slug(name), c = cutouts && cutouts[k];
+    const wrap = (src, style, cls) => '<span class="sov-chp is-fit"><img class="' + cls + '" src="' + ownSrc(h, src) + '" alt="" style="' + style + '" loading="lazy" decoding="async"></span>';
+    if (c && c.ok === true) {
+      const set = /boxing-cutouts/.test(c.dir || '') ? 'boxer' : 'fighter', st = Fit.style(set, k, { head: SLOT.head, crown: SLOT.crown });
+      return st ? wrap((c.dir || 'assets/img/ufc-cutouts/') + k + '.webp', st, 'sov-fit') : '';
+    }
+    const u = thumbURL(name, h, 'portrait'), m = /^assets\/img\/boxing\/([a-z0-9-]+)-portrait\.webp$/.exec(u);
+    const st = m ? Fit.style('boxerPhoto', m[1], SLOT) : '';
+    return st ? wrap(u, st, 'sov-fit is-photo') : '';
+  }
+
   function championsBlock(h, ctx, area) {
     if (area === 'mma') {
       const list = ((ctx.champions && ctx.champions.mma) || []).filter(c => c && c.name && !/vacant/i.test(c.name));
@@ -332,7 +350,8 @@
     if (!rows.length) return '';
     const card = c => {
       const url = cutoutURL(c.name, ctx.cutouts) || thumbURL(c.name, h, 'card') || thumbURL(c.name, h);
-      return '<article class="sov-ch' + (c.undisputed ? ' is-und' : '') + '">' + (url ? img(h, url, 'sov-chp', '') : '<span class="sov-chp is-none" aria-hidden="true">' + h.esc(initials(c.name)) + '</span>') +
+      const fitted = fittedChampion(h, c.name, ctx.cutouts);
+      return '<article class="sov-ch' + (c.undisputed ? ' is-und' : '') + '">' + (fitted || (url ? img(h, url, 'sov-chp', '') : '<span class="sov-chp is-none" aria-hidden="true">' + h.esc(initials(c.name)) + '</span>')) +
         '<div><span class="sov-ev">' + h.esc(c.division) + '</span><strong>' + h.esc(c.name) + '</strong>' +
         (c.belts.length ? '<span class="sov-belts">' + c.belts.map(o => '<i>' + h.esc(o) + '</i>').join('') + '</span>' : '') +
         (c.others.length ? '<small>Also: ' + h.esc(c.others.join(', ')) + '</small>' : '') + '</div></article>';

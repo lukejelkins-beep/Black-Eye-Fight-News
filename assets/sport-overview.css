@@ -61,7 +61,7 @@
 /* champions */
 #main .sov-chs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 #main .sov-ch{display:flex;gap:10px;align-items:flex-end;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px 0 0;overflow:hidden;min-height:100px;min-width:0}
-#main .sov-ch.is-und{border:2px solid var(--gold);background:#fffaf0}
+#main .sov-ch.is-und{border:2px solid var(--gold);background:#f6f8f9}
 #main .sov-chp{width:78px;height:96px;object-fit:cover;object-position:top;flex:none;align-self:flex-end}
 #main .sov-chp.is-none{display:flex;align-items:center;justify-content:center;background:#e0e6ec;color:var(--mute);font-weight:800;height:90px}
 #main .sov-ch>div{padding-bottom:10px;min-width:0}#main .sov-ch strong{display:block;line-height:1.2}
@@ -159,3 +159,8 @@
  #main .sov-spot-none{width:180px;height:180px;margin-top:120px;font-size:42px}
 }
 @media (prefers-reduced-motion:reduce){#main .sov-spot-f{transition:opacity .2s}}
+
+/* Fitted champion pictures (28 Nov 2026): the slot is fixed, the image is placed inside it by its measured head. */
+#main .sov-chp.is-fit{position:relative;overflow:hidden;display:block;width:78px;height:90px;flex:none}
+#main .sov-fit.is-photo{-webkit-mask-image:radial-gradient(ellipse 50% 62% at 50% 40%,#000 72%,transparent 100%);mask-image:radial-gradient(ellipse 50% 62% at 50% 40%,#000 72%,transparent 100%)}
+#main .sov-chp.is-none{width:78px;height:90px;border-radius:50% 50% 0 0;font-size:20px;letter-spacing:.02em}
