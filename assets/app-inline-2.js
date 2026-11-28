@@ -1256,7 +1256,8 @@ let fighterOpener=null,pendingFighter='';
    assets/fighter-profile-a.js. UFC depth (ratings, round by round, compare) still comes from fighter-insights.js and is
    moved into the Fights, Stats and Compare tabs. #fighter/mma--<slug> and #fighter/boxing--<slug> open a basic profile
    from results and upcoming cards for fighters without a roster profile. */
-function openFighter(id){if(!dialog.open){const a=document.activeElement;fighterOpener={el:a&&a!==document.body&&!dialog.contains(a)?a:null,id};}
+let shownFighterId='';
+function openFighter(id){shownFighterId=id;if(!dialog.open){const a=document.activeElement;fighterOpener={el:a&&a!==document.body&&!dialog.contains(a)?a:null,id};}
  const ins=window.BEFNFighterInsights,PA=window.BEFNProfileA;
  // Data still loading: open once it has, if the reader is still waiting for this profile.
  const retry=()=>{if(pendingFighter===id||location.hash==='#fighter/'+id||decodeURIComponent(location.hash.slice(9))===id)openFighter(id)};
@@ -1386,7 +1387,9 @@ if(ratio<.8&&img.closest('.thumb'))img.style.objectPosition='50% 6%';},true);
 window.addEventListener('hashchange',navigate);
 // Closing a profile opened from an address (a link or a deep link) gives the address back to the page behind it, so
 // the same name opens again and reloading shows that page.
-document.addEventListener('close',e=>{pendingFighter='';if(e.target===dialog&&location.hash.startsWith('#fighter/'))history.replaceState(null,'',pageHash||'#fighters')},true);
+/* The dialog's close event arrives a moment after it closes. If another profile was opened in that moment (its #fighter/
+   link is already in the address), leave the address alone: resetting it would cancel the new profile (28 Nov 2026). */
+document.addEventListener('close',e=>{pendingFighter='';if(e.target===dialog&&location.hash.startsWith('#fighter/')&&(!shownFighterId||decodeURIComponent(location.hash.slice(9))===shownFighterId))history.replaceState(null,'',pageHash||'#fighters')},true);
 /* Keyboard users return to the card they opened the profile from (QA audit D04). */
 dialog?.addEventListener('close',()=>{const o=fighterOpener;fighterOpener=null;if(!o)return;const back=(o.el&&document.contains(o.el))?o.el:main.querySelector('[data-fighter="'+CSS.escape(o.id)+'"],a[href="#fighter/'+CSS.escape(o.id)+'"]');if(!back){/* The page behind may have changed (a UFC profile from the hub swaps it to the leaderboards); land on its heading, not <body>. */const h=main.querySelector('h1,h2');if(h){if(!h.hasAttribute('tabindex'))h.setAttribute('tabindex','-1');h.focus({preventScroll:true});}return;}back.focus({preventScroll:false});});
 /* Fights Upcoming/Results tabs follow the ARIA tabs pattern: arrows, Home and End move and select. */
