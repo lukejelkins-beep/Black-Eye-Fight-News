@@ -1,13 +1,14 @@
 {
-  "attemptedAt": "2026-11-28T12:26:36.753668+00:00",
-  "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00",
+  "attemptedAt": "2026-11-28T13:41:38.233687+00:00",
+  "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00",
   "sources": [
     {
       "name": "World Boxing News",
       "sport": "boxing",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-28T09:27:33.543533+00:00",
-      "error": "www.worldboxingnews.net: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.worldboxingnews.net/feed/",
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "MMA Fighting",
@@ -15,7 +16,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmafighting.com/rss/index.xml",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "MMA Junkie",
@@ -23,7 +24,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ammajunkie.usatoday.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "Sherdog",
@@ -31,7 +32,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.sherdog.com/rss/news.xml",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "UFC",
@@ -39,7 +40,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.ufc.com/rss/news",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "ONE MMA",
@@ -47,7 +48,7 @@
       "ok": true,
       "items": 6,
       "feedUrl": "https://www.onefc.com/feed/",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "ONE Submission Grappling",
@@ -60,31 +61,32 @@
       "name": "Cage Warriors",
       "sport": "mma",
       "ok": true,
-      "items": 4,
+      "items": 7,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Acagewarriors.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "RIZIN",
       "sport": "mma",
       "ok": true,
-      "items": 6,
+      "items": 5,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Ajp.rizinff.com&format=rss&setmkt=en-US",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "KSW",
       "sport": "mma",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-28T11:25:56.645679+00:00",
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "ok": true,
+      "items": 10,
+      "feedUrl": "https://www.bing.com/news/search?q=site%3Akswmma.com%2Fen&format=rss&setmkt=en-US",
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "ADCC",
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "adcombat.com: mismatched tag: line 93, column 2 | www.bing.com: No recent, source-verified articles"
+      "error": "adcombat.com: No recent, source-verified articles | www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "NCAA Division I Wrestling",
@@ -92,7 +94,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.ncaa.com/news/wrestling-men/d1/rss.xml",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "NCAA Division II Wrestling",
@@ -113,7 +115,7 @@
       "sport": "grappling",
       "ok": false,
       "lastSuccessfulAt": null,
-      "error": "www.bing.com: not well-formed (invalid token): line 1, column 41"
+      "error": "www.bing.com: No recent, source-verified articles"
     },
     {
       "name": "IBJJF",
@@ -128,7 +130,7 @@
       "ok": true,
       "items": 3,
       "feedUrl": "https://www.bing.com/news/search?q=site%3Aflograppling.com%2Farticles&format=rss",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "Real American Freestyle",
@@ -150,7 +152,7 @@
       "ok": true,
       "items": 1,
       "feedUrl": "https://www.onefc.com/category/live-results/feed/",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "Bloody Elbow",
@@ -158,7 +160,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.bloodyelbow.com/feed",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "MMA Weekly",
@@ -166,22 +168,23 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmaweekly.com/feed",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "GracieMag",
       "sport": "grappling",
       "ok": true,
-      "items": 8,
+      "items": 7,
       "feedUrl": "https://www.graciemag.com/feed/",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "D3 Wrestle",
       "sport": "grappling",
-      "ok": false,
-      "lastSuccessfulAt": "2026-11-28T09:27:33.543533+00:00",
-      "error": "d3wrestle.com: mismatched tag: line 93, column 2"
+      "ok": true,
+      "items": 8,
+      "feedUrl": "https://d3wrestle.com/feed",
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "BoxingScene",
@@ -189,7 +192,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingscene.com/feed",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "BBC Sport Boxing",
@@ -197,7 +200,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://feeds.bbci.co.uk/sport/boxing/rss.xml",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "Boxing News 24",
@@ -205,7 +208,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxingnews24.com/feed/",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "Boxing Insider",
@@ -213,7 +216,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.boxinginsider.com/feed/",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "The Guardian Boxing",
@@ -221,7 +224,7 @@
       "ok": true,
       "items": 7,
       "feedUrl": "https://www.theguardian.com/sport/boxing/rss",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "BBC Sport MMA",
@@ -229,7 +232,7 @@
       "ok": true,
       "items": 6,
       "feedUrl": "https://www.bbc.co.uk/sport/mixed-martial-arts/rss.xml",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "MMA News",
@@ -237,7 +240,7 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.mmanews.com/feed",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     },
     {
       "name": "Cageside Press",
@@ -245,10 +248,29 @@
       "ok": true,
       "items": 10,
       "feedUrl": "https://www.cagesidepress.com/feed/",
-      "lastSuccessfulAt": "2026-11-28T12:26:36.753668+00:00"
+      "lastSuccessfulAt": "2026-11-28T13:41:38.233687+00:00"
     }
   ],
   "articles": [
+    {
+      "id": "428e54628887803e88c9",
+      "title": "Ex-kickboxing champion could be UFC bound after his fifth straight first-round knockout",
+      "url": "https://bloodyelbow.com/2026/11/28/ex-kickboxing-champion-could-be-ufc-bound-after-his-fifth-straight-first-round-knockout/",
+      "source": "Bloody Elbow",
+      "sport": "mma",
+      "publishedAt": "2026-11-28T13:00:00+00:00",
+      "score": 8,
+      "image": null,
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Tyjani Beztati might have put himself on the UFC’s radar.",
+        "After becoming GLORY lightweight champion and making five successful defenses, ‘The Wonderboy’ is now pursuing titles in a different sport.",
+        "He is looking to follow in Alex Pereira’s illustrious footsteps by adding UFC gold to his combat sports résumé following significant kickboxing success."
+      ],
+      "firstSeenAt": "2026-11-28T13:41:38.233687+00:00",
+      "coverage": 1
+    },
     {
       "id": "a5e64e59c95965c1ee55",
       "title": "Conor McGregor claims to have ‘loads left in the tank’ as he reminds fans of his last UFC win",
@@ -258,13 +280,13 @@
       "publishedAt": "2026-11-28T12:00:00+00:00",
       "score": 1,
       "image": null,
-      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Conor McGregor thinks his fighting career is far from over.",
         "The former two-division UFC champion is back on the sidelines after what happened in his long-awaited comeback this past July.",
         "After missing five years following his leg break against Dustin Poirier at UFC 264, McGregor suffered a quick knee injury when attempting a flying kick against Max Holloway at UFC 329."
       ],
+      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-28T12:26:36.753668+00:00",
       "coverage": 1,
       "fighterImage": {
@@ -273,6 +295,32 @@
         "kind": "cached-fighter",
         "credit": "File photo of Conor McGregor (owner-cleared)"
       }
+    },
+    {
+      "id": "91825faea830a52377c2",
+      "title": "Fans Renew Saudi Concerns After WWE Star Bronson Reed’s Death",
+      "url": "https://www.worldboxingnews.com/bronson-reed-death-saudi-concerns/",
+      "source": "World Boxing News",
+      "sport": "boxing",
+      "publishedAt": "2026-11-28T11:16:34+00:00",
+      "score": 0,
+      "image": {
+        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Bronson-Reed-WWE.jpg",
+        "alt": "Fans Renew Saudi Concerns After WWE Star Bronson Reed’s Death",
+        "credit": "",
+        "sourceUrl": "https://www.worldboxingnews.com/bronson-reed-death-saudi-concerns/",
+        "kind": "publisher",
+        "checkedAt": "2026-11-28T13:41:38.233687+00:00"
+      },
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "Fans revisit concerns over Saudi sporting events following the death of WWE star Bronson Reed, with the debate extending to boxing.",
+        "WWE announced on Friday that Reed, whose real name was Jermaine Haley, had passed away due to medical complications.",
+        "The Australian made his final WWE appearance at Crown Jewel in Riyadh a week after Canelo Alvarez regained the WBC super middleweight championship against Christian Mbilli in the Saudi capital."
+      ],
+      "firstSeenAt": "2026-11-28T13:41:38.233687+00:00",
+      "coverage": 1
     },
     {
       "id": "f7380f9cfd8f07d713a0",
@@ -287,6 +335,25 @@
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-28T08:25:51.137601+00:00",
       "updatedAt": "2026-11-28T10:28:43.803397+00:00",
+      "coverage": 1
+    },
+    {
+      "id": "9dcae006ce25f2626caa",
+      "title": "UFC veterans in combat sports action after Thanksgiving",
+      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/28/ufc-veterans-fighting-regional-mma-thanksgiving-nov-27-28/92981177007/",
+      "source": "MMA Junkie",
+      "sport": "mma",
+      "publishedAt": "2026-11-28T05:01:00+00:00",
+      "score": 1,
+      "sourceMethod": "Bing News indexed MMA Junkie original",
+      "timeBasis": "Bing News feed timestamp",
+      "image": null,
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
+      "summaryPoints": [
+        "UFC Fight Night 294 takes place at ABHA Arena and features a light heavyweight main event between former champion Jiri Prochazka and Navajo Stirling."
+      ],
+      "firstSeenAt": "2026-11-28T13:41:38.233687+00:00",
       "coverage": 1
     },
     {
@@ -1072,13 +1139,13 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryPoints": [
-        "Here is the final score from every game of the 2026 MHSAA football playoffs, from all eight divisions, including the state finals at Ford Field."
-      ],
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-28T00:27:47.900577+00:00",
-      "coverage": 1
+      "coverage": 1,
+      "summaryPoints": [
+        "Here is the final score from every game of the 2026 MHSAA football playoffs, from all eight divisions, including the state finals at Ford Field."
+      ]
     },
     {
       "id": "557e6a3a6ec5beb9a92c",
@@ -1091,11 +1158,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Tyson Fury has been cleared to fight Anthony Joshua at the same time Tyson's wife retracted her claim Tyson Fury had been diagnosed with schizophrenia."
       ],
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-28T00:27:47.900577+00:00",
       "coverage": 1
     },
@@ -1508,11 +1575,11 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "PBSO Detective Alan Smith died early on Thanksgiving Day from his injuries in a wrong-way crash on Interstate 95 in Palm Beach Gardens."
       ],
+      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-27T23:28:32.959605+00:00",
       "coverage": 1
     },
@@ -1550,11 +1617,12 @@
       "publishedAt": "2026-11-27T11:20:18+00:00",
       "score": 1,
       "image": null,
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
+        "Martin Bakole steps in to face Deontay Wilder on December 11, vowing a revamped camp in Las Vegas will launch his push for a world title in 2027.",
         "Martin Bakole’s road to a heavyweight championship in 2027 starts with a clash against former WBC titleholder Deontay Wilder on December 11."
       ],
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-27T11:31:37.969217+00:00",
       "coverage": 1
     },
@@ -1585,11 +1653,11 @@
       "score": 0,
       "image": {
         "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Fury-vs-Joshua-face-off.jpg",
-        "alt": "Fury vs Joshua Still Awaiting Authorization With 15 Days to Go",
+        "alt": "Fury vs Joshua Given Green Light After BBBofC Assessment",
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/fury-joshua-medical-clearance/",
         "kind": "publisher",
-        "checkedAt": "2026-11-27T10:35:46.925239+00:00"
+        "checkedAt": "2026-11-28T13:41:38.233687+00:00"
       },
       "summaryPoints": [
         "British boxing chiefs have confirmed medical clearance for Tyson Fury to face Anthony Joshua with just 14 days to go until the heavyweight rivals headline in Cardiff.",
@@ -1611,12 +1679,12 @@
       "publishedAt": "2026-11-27T10:04:24+00:00",
       "score": 4,
       "image": null,
-      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Netflix updates the Tyson Fury documentary after Paris clarifies her comments, as the BBBoC expects him to be cleared to face Joshua on December 11.",
         "Paris Fury has clarified her comments suggesting that her husband, Tyson Fury, was diagnosed with schizophrenia during a period of mental health struggles."
       ],
+      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-27T10:35:46.925239+00:00",
       "coverage": 1
     },
@@ -2287,12 +2355,12 @@
       "publishedAt": "2026-11-26T22:08:28+00:00",
       "score": 0,
       "image": null,
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Dmitry Bivol doubts that Canelo Alvarez will fight him again, rating it as just a 5% chance.",
         "Both Canelo and his trainer, Eddy Reynoso, said Dmitry Bivol Puts Canelo Alvarez Rematch Odds At Five Percent @ Boxing News 24"
       ],
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-26T22:40:45.372863+00:00",
       "coverage": 1
     },
@@ -2350,11 +2418,11 @@
       "publishedAt": "2026-11-26T21:25:00+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
-      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Paris Fury, the wife of Tyson Fury, says the boxer has never received a diagnosis of schizophrenia."
       ],
+      "summaryCheckedAt": "2026-11-28T12:26:36.753668+00:00",
+      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-26T19:40:36.298984+00:00",
       "updatedAt": "2026-11-26T21:39:35.002542+00:00",
       "coverage": 1
@@ -2789,11 +2857,11 @@
       "sourceMethod": "Original official domain indexed by Bing News",
       "score": 1,
       "image": null,
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "Chasen Blair returned to winning ways and the welterweight division with a thrilling win in the CW 214 Unplugged main event."
       ],
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-28T00:27:47.900577+00:00",
       "coverage": 1
     },
@@ -2997,7 +3065,7 @@
       "sourceMethod": "Bing News indexed MMA Junkie original",
       "timeBasis": "Bing News feed timestamp",
       "image": null,
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-26T22:40:45.372863+00:00",
       "coverage": 1,
@@ -3159,7 +3227,7 @@
         "credit": "",
         "sourceUrl": "https://www.worldboxingnews.com/scott-fitzgerald-cruiserweight-comeback/",
         "kind": "publisher",
-        "checkedAt": "2026-11-27T12:36:00.706464+00:00"
+        "checkedAt": "2026-11-28T13:41:38.233687+00:00"
       },
       "summaryPoints": [
         "Scott Fitzgerald reveals he reached 207 pounds before shedding more than 26 pounds as the unbeaten ex-British champion targets a comeback.",
@@ -3889,14 +3957,14 @@
       "publishedAt": "2026-11-25T21:24:49+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
       "summaryQualityVersion": 3,
+      "firstSeenAt": "2026-11-25T21:35:23.932763+00:00",
+      "coverage": 1,
       "summaryPoints": [
         "It’s not looking good for Teofimo Lopez to dodge his mandatory obligations at welterweight.",
         "Today, the WBA called a purse bid for December 4 in WBA Sets 75-25 Split for Teofimo Lopez Against Jack Catterall @ Boxing News 24"
-      ],
-      "firstSeenAt": "2026-11-25T21:35:23.932763+00:00",
-      "coverage": 1
+      ]
     },
     {
       "id": "3b9cb444c55798632e5e",
@@ -3924,7 +3992,7 @@
       "publishedAt": "2026-11-25T21:00:13+00:00",
       "score": 0,
       "image": null,
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
       "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-25T21:35:23.932763+00:00",
       "coverage": 1,
@@ -3986,11 +4054,11 @@
       "publishedAt": "2026-11-25T20:37:40+00:00",
       "score": 3,
       "image": null,
+      "summaryCheckedAt": "2026-11-28T13:41:38.233687+00:00",
+      "summaryQualityVersion": 3,
       "summaryPoints": [
         "WBO heavyweight world champion Daniel Dubois will make the second defence of his title against former WBO champion Joseph Parker next year at Co-op Live in Manchester on 30 January."
       ],
-      "summaryCheckedAt": "2026-11-28T00:27:47.900577+00:00",
-      "summaryQualityVersion": 3,
       "firstSeenAt": "2026-11-25T21:35:23.932763+00:00",
       "coverage": 1
     },
@@ -6541,83 +6609,6 @@
         "kind": "cached-fighter",
         "credit": "File photo of Islam Makhachev (owner-cleared)"
       }
-    },
-    {
-      "id": "662ad8479a6d5d011a00",
-      "title": "Josh Hokit reveals 'only regret' in Ciryl Gane title fight at UFC 334",
-      "url": "https://mmajunkie.usatoday.com/story/sports/ufc/2026/11/24/josh-hokit-reveals-only-regret-in-ciryl-gane-title-fight-at-ufc-334/92934390007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-24T13:15:00+00:00",
-      "score": 4,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "image": null,
-      "summaryCheckedAt": "2026-11-28T01:56:20.365879+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-24T21:41:59.030201+00:00",
-      "coverage": 1,
-      "fighterImage": {
-        "url": "assets/img/ufc/josh-hokit-card.webp",
-        "name": "Josh Hokit",
-        "kind": "cached-fighter",
-        "credit": "File photo of Josh Hokit (owner-cleared)"
-      },
-      "summaryPoints": [
-        "Whether it was a severe eye poke to Tom Aspinall or punches to the back of the head to Alex Pereira, Gane's fouls have been a hot-button topic as of late."
-      ]
-    },
-    {
-      "id": "9f5a82bbcfcd96f17678",
-      "title": "3 Gripping Reasons To Watch The Inner Circle 40 On November 27",
-      "url": "https://www.onefc.com/features/3-gripping-reasons-to-watch-the-inner-circle-40-on-november-27/",
-      "source": "ONE MMA",
-      "sport": "mma",
-      "publishedAt": "2026-11-24T13:12:39+00:00",
-      "score": 0,
-      "image": {
-        "url": "https://cdn.onefc.com/wp-content/uploads/2026/06/Yodkhunpon-Semih-Sah-Cindir-ONE-Friday-Fights-160-4-1200x800.jpg",
-        "alt": "Yodkhunpon debuts against Semih Sah Cindir ONE Friday Fights 160 4",
-        "credit": "",
-        "sourceUrl": "https://www.onefc.com/features/3-gripping-reasons-to-watch-the-inner-circle-40-on-november-27/",
-        "kind": "publisher",
-        "checkedAt": "2026-11-26T15:04:16.373625+00:00"
-      },
-      "summaryPoints": [
-        "Veteran grit meets teenage phenom, contract chases collide, and knockout artists shine at Lumpinee Stadium.",
-        "Nearly every fighter stepping into the ring at The Inner Circle 40 is chasing one of two things: a career-defining breakthrough or an immediate escape from a slide.",
-        "That palpable tension runs through all five bouts at Bangkok’s historic Lumpinee Stadium on Friday, November 27, streaming live in Asia primetime exclusively for members at live.onefc.com ."
-      ],
-      "summaryCheckedAt": "2026-11-24T13:19:10.701960+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-24T13:19:10.701960+00:00",
-      "coverage": 1
-    },
-    {
-      "id": "83e33552385c848145d1",
-      "title": "Morning Report: Drew Dober recounts wild story of second-ever MMA fight against ‘Sawed Off’ after no-show opponent",
-      "url": "https://www.mmafighting.com/ufc/522968/morning-report-drew-dober-recounts-wild-story-of-his-second-ever-mma-fight-against-sawed-off-after-no-show-opponent",
-      "source": "MMA Fighting",
-      "sport": "mma",
-      "publishedAt": "2026-11-24T13:00:00+00:00",
-      "score": 1,
-      "image": {
-        "url": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/11/gettyimages-2305155600.jpg?quality=90&strip=all&crop=0,0,100,100",
-        "alt": "Drew Dober",
-        "credit": "Jeff Bottari/Zuffa LLC",
-        "sourceUrl": "https://www.mmafighting.com/ufc/522968/morning-report-drew-dober-recounts-wild-story-of-his-second-ever-mma-fight-against-sawed-off-after-no-show-opponent",
-        "kind": "publisher",
-        "checkedAt": "2026-11-25T14:04:28.316208+00:00"
-      },
-      "summaryPoints": [
-        "Drew Dober’s been in MMA a long time, and as such, he’s got stories.",
-        "A 48-fight veteran who has spent the past 13 years in the UFC, Dober has been fighting since 2006, first as an amateur, before turning professional in 2009.",
-        "Dober certainly does, and on Monday, he shared a funny story about his second-ever fight back when he was just a teenager."
-      ],
-      "summaryCheckedAt": "2026-11-24T13:19:10.701960+00:00",
-      "summaryQualityVersion": 3,
-      "firstSeenAt": "2026-11-24T13:19:10.701960+00:00",
-      "coverage": 1
     }
   ],
   "resultReports": [
@@ -6656,6 +6647,21 @@
       "alsoCoveredBy": [
         "Boxing News 24"
       ]
+    },
+    {
+      "id": "00da8d255f8e44d7bf38",
+      "title": "CW Amateur Academy 2 Weigh-in Results",
+      "url": "https://cagewarriors.com/cw-amateur-academy-weigh-in-results/",
+      "source": "Cage Warriors",
+      "sport": "mma",
+      "publishedAt": "2026-11-27T16:00:00+00:00",
+      "timeBasis": "Bing News index timestamp",
+      "sourceMethod": "Original official domain indexed by Bing News",
+      "score": 1,
+      "_summaryText": "Designed to provide the next generation of talent with an elite platform to develop and showcase their skills, CW Amateur Academy 2 offers fighters the opportunity to gain invaluable competitive ...",
+      "image": null,
+      "firstSeenAt": "2026-11-28T13:41:38.233687+00:00",
+      "coverage": 1
     },
     {
       "id": "5c6127158ae95da2aadd",
@@ -7191,7 +7197,7 @@
         "credit": "",
         "sourceUrl": "https://www.onefc.com/news/one-samurai-5-results-and-highlights-for-every-fight/",
         "kind": "publisher",
-        "checkedAt": "2026-11-27T12:36:00.706464+00:00"
+        "checkedAt": "2026-11-28T13:41:38.233687+00:00"
       },
       "firstSeenAt": "2026-11-18T06:06:37.732219+00:00",
       "coverage": 1
@@ -7944,51 +7950,14 @@
       "firstSeenAt": "2026-11-14T13:30:23.967490+00:00",
       "updatedAt": "2026-11-14T16:24:41.275485+00:00",
       "coverage": 1
-    },
-    {
-      "id": "1de0c49364a545f0809b",
-      "title": "Zuffa Boxing 13 Results: Adames vs. Warburton",
-      "url": "https://www.worldboxingnews.com/zuffa-boxing-13-results-adames-warburton/",
-      "source": "World Boxing News",
-      "sport": "boxing",
-      "publishedAt": "2026-11-14T13:30:21+00:00",
-      "score": 5,
-      "_summaryText": "<p>\n        <img src=\"https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Adames-vs-Warburton-1.jpg\"\n             alt=\"Zuffa Boxing 13 Results: Adames vs. Warburton\"\n             style=\"max-width:100%;height:auto;margin-bottom:10px;\" />\n    </p>World Boxing News provides results from Zuffa Boxing 13, with Carlos Adames facing Gerome Warburton in the main event. WBC middleweight champion Adames (25-1-1) meets Welsh contender Warburton (18-2-2) over ten rounds at a contracted weight of 165 pounds, with the world title not at stake. Former bantamweight world champion Jason Moloney (29-4) faces Andres&#8230;&#160;<a href=\"https://www.worldboxingnews.com/zuffa-boxing-13-results-adames-warburton/\" rel=\"bookmark\">Read More &#187;<span class=\"screen-reader-text\">Zuffa Boxing 13 Results: Adames vs. Warburton</span></a>",
-      "image": {
-        "url": "https://www.worldboxingnews.com/wp-content/uploads/2026/11/Live-Results_-Adames-vs-Warburton-1.jpg",
-        "alt": "Zuffa Boxing 13 Results: Adames vs. Warburton",
-        "credit": "",
-        "sourceUrl": "https://www.worldboxingnews.com/zuffa-boxing-13-results-adames-warburton/",
-        "kind": "publisher",
-        "checkedAt": "2026-11-15T15:25:29.925436+00:00"
-      },
-      "firstSeenAt": "2026-11-14T13:30:23.967490+00:00",
-      "updatedAt": "2026-11-14T19:29:27.605688+00:00",
-      "coverage": 1
-    },
-    {
-      "id": "760866688e485d49e12b",
-      "title": "PFL Dubai results: Sergey Bilostenniy outworks Vadim Nemkov for heavyweight title",
-      "url": "https://mmajunkie.usatoday.com/story/sports/pfl/2026/11/14/pfl-dubai-nemkov-vs-bilostenniy-live-results-highlights--live/92778589007/",
-      "source": "MMA Junkie",
-      "sport": "mma",
-      "publishedAt": "2026-11-14T13:16:00+00:00",
-      "score": 7,
-      "sourceMethod": "Bing News indexed MMA Junkie original",
-      "timeBasis": "Bing News feed timestamp",
-      "_summaryText": "Keep up with live results and highlights from PFL Dubai, where the heavyweight title is on the line in the main event.",
-      "image": null,
-      "firstSeenAt": "2026-11-14T14:21:49.555007+00:00",
-      "updatedAt": "2026-11-14T21:39:32.520089+00:00",
-      "coverage": 1
     }
   ],
   "leads": {
-    "newest": "https://bloodyelbow.com/2026/11/28/conor-mcgregor-claims-to-have-loads-left-in-the-tank-as-he-reminds-fans-of-his-last-ufc-win/",
+    "newest": "https://bloodyelbow.com/2026/11/28/ex-kickboxing-champion-could-be-ufc-bound-after-his-fifth-straight-first-round-knockout/",
     "mostCovered": "https://www.boxingscene.com/articles/tyson-fury-cleared-to-fight-anthony-joshua-by-bbbofc"
   },
   "deduplication": {
-    "checkedAt": "2026-11-28T12:26:36.753668+00:00",
+    "checkedAt": "2026-11-28T13:41:38.233687+00:00",
     "removedArticles": 4,
     "removedResultReports": 1,
     "examples": [
