@@ -96,6 +96,39 @@ class SameName(unittest.TestCase):
             self.assertEqual(out["coverage"]["ambiguous"], ["josesilva"])
 
 
+class Rescue(unittest.TestCase):
+    NAMES = {"cjvergara": "CJ Vergara"}
+
+    def make(self, rec_a, rec_b=(9, 9)):
+        searches = {
+            "CJ Vergara": search_html(),
+            "Vergara": search_html(("/fighter/Cristian-Vergara-1", "Cristian Vergara"), ("/fighter/Other-2", "Someone Else"),
+                                   ("/fighter/Carlos-Vergara-3", "Carlos Vergara")),
+        }
+        pages = {"/fighter/Cristian-Vergara-1": record_page(*rec_a, "Gym A"), "/fighter/Carlos-Vergara-3": record_page(*rec_b, "Gym B")}
+        return gyms.build(self.NAMES, lambda n: searches.get(n, search_html()), pages.get, {"cjvergara": (7, 2)})
+
+    def test_name_parts_loose_queries_and_suffix(self):
+        self.assertEqual(gyms.loose_queries("Allen Frye Jr."), ["Allen Frye Jr.", "Allen Frye", "Frye"])
+        self.assertEqual(gyms.name_parts("Jose Silva Jr."), {"jose", "silva"})
+
+    def test_accepts_the_one_candidate_with_the_same_record(self):
+        out = self.make((7, 2))
+        self.assertEqual(out["fighters"], {"cjvergara": ["Gym A"]})
+        self.assertEqual(out["coverage"]["notFound"], [])
+
+    def test_leaves_out_when_no_record_matches_or_two_do(self):
+        for rec_a, rec_b in (((1, 1), (9, 9)), ((7, 2), (7, 2))):
+            out = self.make(rec_a, rec_b)
+            self.assertEqual(out["fighters"], {})
+            self.assertEqual(out["coverage"]["notFound"], ["cjvergara"])
+
+    def test_unrelated_names_are_never_read(self):
+        # "Someone Else" shares no name part, so its page is never fetched (a fetch would raise).
+        out = self.make((7, 2))
+        self.assertIn("cjvergara", out["fighters"])
+
+
 class Refresh(unittest.TestCase):
     def test_known_fighters_are_read_again_without_a_search_and_keep_their_path(self):
         names = {"islammakhachev": "Islam Makhachev"}

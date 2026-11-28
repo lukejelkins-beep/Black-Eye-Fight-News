@@ -11,6 +11,10 @@ share the name, each candidate's page is read and the one whose Sherdog win-loss
 (data/ufc-overall-records.json) is used, but only if exactly one candidate matches. Zero matches, or several that still
 tie, leave the fighter out, never guessed, and the name is listed under coverage.
 
+A name with no exact match (a nickname, "Jr.", a different name order, an accent Sherdog spells differently) gets one more
+chance: Sherdog is searched on the name without a suffix and on the surname alone, results that share a name part with the
+fighter are read, and the fighter is accepted only if exactly one of them has the same win-loss record as BEFN's.
+
 What the field means: it is where Sherdog lists the fighter as training now. It is not the gym at the time of each
 fight, and a fighter may list several. The site shows it as a plain fact.
 
@@ -88,6 +92,33 @@ def parse_record(html: str):
         return None
 
 
+SUFFIXES = {"jr", "sr", "ii", "iii", "iv"}
+
+
+def name_parts(name: str) -> set:
+    text = unicodedata.normalize("NFKD", str(name or "")).encode("ascii", "ignore").decode().lower()
+    return {t for t in re.findall(r"[a-z0-9]+", text) if len(t) >= 3 and t not in SUFFIXES}
+
+
+def loose_queries(name: str) -> list:
+    """Search texts for a name with no exact Sherdog match: as is, without a suffix, and the surname alone."""
+    words = [w for w in re.split(r"\s+", str(name).strip()) if w]
+    bare = [w for w in words if fold(w) not in SUFFIXES]
+    out = [" ".join(words), " ".join(bare), bare[-1] if bare else ""]
+    return [q for i, q in enumerate(out) if q and q not in out[:i]]
+
+
+def rescue_candidates(name: str, fetch_search, limit: int = 15) -> list:
+    """Sherdog fighter paths that share a name part with `name`, found with the loose searches (capped)."""
+    parts, seen, out = name_parts(name), set(), []
+    for q in loose_queries(name):
+        for path, text in parse_search(fetch_search(q)):
+            if path not in seen and parts & name_parts(text):
+                seen.add(path)
+                out.append(path)
+    return out[:limit]
+
+
 def match(name: str, results: list):
     """The one result whose folded name equals the fighter's, else None (zero or several: not guessed)."""
     key = fold(name)
@@ -125,6 +156,10 @@ def build(names: dict, fetch_search, fetch_page, records: dict | None = None, kn
             same = [known[key]]  # matched on an earlier run: read the page again, no search
         else:
             same = [p for p, t in parse_search(fetch_search(name)) if fold(t) == key]
+            if not same and records.get(key):
+                # No exact name: accept a Sherdog fighter that shares a name part only if exactly one has BEFN's record.
+                hits = [p for p in rescue_candidates(name, fetch_search) if parse_record(fetch_page(p)) == records[key]]
+                same = hits if len(hits) == 1 else []
         if len(same) > 1:
             # Several Sherdog fighters share the name: keep the one whose record equals BEFN's, if exactly one does.
             want = records.get(key)
@@ -188,7 +223,7 @@ def warm(names: dict, records: dict, known: dict, search, page, workers: int = 4
     from concurrent.futures import ThreadPoolExecutor
     with ThreadPoolExecutor(workers) as ex:
         list(ex.map(search, [n for k, n in names.items() if k not in known]))
-        need = set()
+        need, loose = set(), []
         for key, name in names.items():
             if key in known:
                 need.add(known[key])
@@ -196,6 +231,11 @@ def warm(names: dict, records: dict, known: dict, search, page, workers: int = 4
             same = [p for p, t in parse_search(search(name)) if fold(t) == key]
             if len(same) == 1 or (len(same) > 1 and key in records):
                 need.update(same)
+            elif not same and key in records:
+                loose.append(name)
+        list(ex.map(search, [q for n in loose for q in loose_queries(n)]))
+        for n in loose:
+            need.update(rescue_candidates(n, search))
         list(ex.map(page, sorted(need)))
 
 
@@ -203,6 +243,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--cache", help="directory to keep fetched pages, so an interrupted run can resume")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--workers", type=int, default=4, help="requests in flight at once (default 4)")
     args = ap.parse_args()
     if args.cache:
         Path(args.cache).mkdir(parents=True, exist_ok=True)
@@ -211,7 +252,7 @@ def main() -> int:
     out = Path(args.out)
     known = (json.loads(out.read_text(encoding="utf-8")).get("sherdog") or {}) if out.exists() else {}
     names, records = stats_names(), stats_records()
-    warm(names, records, known, search, page)
+    warm(names, records, known, search, page, args.workers)
     result = build(names, search, page, records, known)
     if out.exists():
         before = len(json.loads(out.read_text(encoding="utf-8")).get("fighters") or {})
