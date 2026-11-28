@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-28T03:06:05.780Z",
-  "checkedAt": "2026-11-28T03:06:05.780Z",
-  "updatedAt": "2026-11-27T16:02:41.305633Z",
+  "attemptedAt": "2026-11-28T03:45:46.268Z",
+  "checkedAt": "2026-11-28T03:45:46.268Z",
+  "updatedAt": "2026-11-28T01:02:13Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 3,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 3,
+      "checked": 4,
       "failed": 0,
-      "configured": 3,
-      "message": "3 of 3 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 18,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 53,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 0,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,21 +55,94 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 1,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 53,
-      "X": 18,
-      "Bluesky": 3,
-      "Threads": 10
+      "Threads": 12,
+      "X": 27,
+      "Instagram": 39,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 3,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3dix3wmlu2w",
+      "cid": "bafyreibmtsf372vkpab73hbrdgrm3ltsybhevkrz3qib3oseukk3v34idy",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Cody Garbrandt names dream opponent for final UFC fight after booking expected last bout",
+      "postedAt": "2026-11-28T01:02:13Z",
+      "date": "28 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3dix3wmlu2w",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3d3o4hs3l27",
+      "cid": "bafyreibqtx7ljo7nsunr4plvsqynkyquckz5si7k4wp4n3ii3i6c4pujca",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Josh Hokit’s eye poke complaint sparks new policy suggestion from UFC veteran",
+      "postedAt": "2026-11-27T21:04:33Z",
+      "date": "28 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3d3o4hs3l27",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3cuvhtapk2d",
+      "cid": "bafyreibi46gqapq7n4yvux5a6q5jrhllkozirwa2qmiekxtpdyfor73nda",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC fans only got two dream fights from their 2026 wish list with 18 picks yet to happen or ruled out",
+      "postedAt": "2026-11-27T19:03:23Z",
+      "date": "28 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3cuvhtapk2d",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 1,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:mljgtdz3acgo6ix4j2qegd3f/app.bsky.feed.post/3n3cksfen322g",
       "cid": "bafyreibj7xolimwd6p7ppxatcv327dpaozn74u3leakhof774u4nrzfqca",
@@ -164,6 +237,54 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-27T16:50:41.227Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3chdqqhxt2m",
+      "cid": "bafyreihqgvztjh5jwbcpjzhrfw65m6nqg7dthrk6j2gagbv4wzujgmrjou",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC legend Tyron Woodley reveals final fight is likely in 2027 – and names iconic dream opponent",
+      "postedAt": "2026-11-27T15:00:50Z",
+      "date": "28 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3chdqqhxt2m",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3ce3fzwxs2e",
+      "cid": "bafyreigv2pe3e7pwpygdsprs4fao36mgqbg63m5tinun2xul35qtuczjfq",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "UFC legend Andrei Arlovski wants Ciryl Gane fight and Tom Aspinall rematch after Misfits Boxing return",
+      "postedAt": "2026-11-27T14:02:29Z",
+      "date": "28 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3ce3fzwxs2e",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 1,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -287,6 +408,30 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3caruipdp2g",
+      "cid": "bafyreidz3zyvfjuxpx2joczs7us4c5hvzl23i272vsxig46e5v4pns4ad4",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Rappers Russ Millions and Kirky book new fight date for next week after Unhinged Promotions chaos",
+      "postedAt": "2026-11-27T13:03:27Z",
+      "date": "28 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3caruipdp2g",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
+    {
       "id": "at://did:plc:5kcx5a2jedlsz6n5adrjgy3e/app.bsky.feed.post/3n3c6iebovs2h",
       "cid": "bafyreicpoizdxgclj4ek4freigevwmihilrujyaktqtsz262a2sw7svbfy",
       "platform": "Bluesky",
@@ -379,7 +524,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -427,7 +572,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -451,7 +596,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -499,31 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3av72qalp2z",
-      "cid": "bafyreifa2bkatismrl5ald6q5b7hvja54conymgb5mpcxslbbfirhbxcsy",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Carlos Ulberg’s coach doubts UFC would strip him over Navajo Stirling stance: ‘There’s precedent’",
-      "postedAt": "2026-11-27T00:03:25Z",
-      "date": "27 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3av72qalp2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -548,30 +669,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-27T16:50:41.227Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3arozup4k2z",
-      "cid": "bafyreicjca2yvboionxi2rx3gjjucxvbut4zu7v3l7xs6mpnyxbcbppd7q",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Potential Alexander Volkanovski challenger pitches surprising fight if he doesn’t get a title shot",
-      "postedAt": "2026-11-26T23:00:46Z",
-      "date": "27 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3arozup4k2z",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -695,30 +792,6 @@
       "topic": "Original source post · claims may need confirmation"
     },
     {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3ahpskskq22",
-      "cid": "bafyreide6a6iqmr3drrronnynrw5z73jtqamzpnx2jq24lyedrxlcltdha",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ilia Topuria’s ex-coach blames the former UFC double champion’s new team for ‘taking his hunger’",
-      "postedAt": "2026-11-26T20:02:15Z",
-      "date": "27 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3ahpskskq22",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
       "id": "at://did:plc:awkln6xh4u5zzpsjngsu6xrr/app.bsky.feed.post/3n3aflgqcfz2p",
       "cid": "bafyreietxnozl3s64yqidmubfk4s4ngm5snk6a6u6yeflkp4nzq5xmhm6m",
       "platform": "Bluesky",
@@ -764,54 +837,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-27T16:50:41.227Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3aeisuy7k2k",
-      "cid": "bafyreicyu2lh5v72pxm64pqdmq66pbrr3plfvkw3skwfqtei3i6k2r36gm",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ariel Helwani brings up theory that the UFC recently attempted to hurt Conor McGregor’s future plans",
-      "postedAt": "2026-11-26T19:04:39Z",
-      "date": "27 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3aeisuy7k2k",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 1,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3aaz73qkd24",
-      "cid": "bafyreiau65wpzdmkulprs3z6shk3pdg7m4navxydcdakynsghfh2m4kcf4",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Josh Hokit offers to ‘save’ the UFC light heavyweight division after Ulberg-Stirling statement",
-      "postedAt": "2026-11-26T18:02:14Z",
-      "date": "27 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3aaz73qkd24",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -884,30 +909,6 @@
         "shares": 0
       },
       "engagementCheckedAt": "2026-11-27T16:50:41.227Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3a2arjvxj2m",
-      "cid": "bafyreihjvxw52fblyrqe6erz6dhzqmlpwi4vbexaohzl5ibo5ymevjqqty",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Navajo Stirling told to ‘find a new gym’ or live with ‘regret’ by ex-UFC star",
-      "postedAt": "2026-11-26T16:01:12Z",
-      "date": "27 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3a2arjvxj2m",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1723,7 +1724,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1867,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1891,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1915,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1939,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1963,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1987,7 +1988,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2011,7 +2012,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2455,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-27T09:47:31.099Z",
+      "engagementCheckedAt": "2026-11-28T03:45:46.268Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
