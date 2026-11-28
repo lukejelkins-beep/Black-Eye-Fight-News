@@ -2,6 +2,13 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Consistent champion and fighter cut-outs)
+- **Cut-outs are shown at one head size and height, borderless, fading into what is below** (owner: "the headshots are inconsistent - make them a consistent size - also I want them to be seamless cutouts on top of the details below", then from four mock-ups, "Break out card but seamless borderless - just the photo above the details", and "Fighters hub champion, Division pulse tiles"). Mock-ups: `docs/design/screenshots/champion-cutouts-20261128/mock-1280.webp`.
+  - **Analysis champion strip:** every champion uses the owner-supplied official UFC belt cut-out (one shoot, 25 Nov register), with no card, border or photo background; the photo fades into the page above the division, name, record and last five. Before: nine per-fighter cut-outs cropped to fill the box (a CSS rule meant to keep them whole targeted a class the code never set) and photos on white for Makhachev and Volkanovski.
+  - **Fighters hub:** the division champion card uses the same belt cut-out, fading into the dark card; the division pulse tiles use each fighter's cut-out. A fighter without a usable cut-out (Thomas Gantt today) shows the portrait it would be cut from at the same head size, softened at the edges; it still shows its light background.
+  - **How:** `scripts/build-cutout-head-metrics.py` measures each cut-out's crown and head width once (`data/ufc-cutout-head-metrics.json`, 11 champion and 869 fighter cut-outs); `assets/cutout-fit.js` scales each image so the head is a set width and the crown at a set height, centred on the head. Long hair worn down widens the outline, so three champions carry a 0.86 factor, checked by eye (no skin-colour detection). Re-run the script when cut-outs are added.
+  - Also fixed: `tests/test-ufc-one-rating.cjs` expected whole percentiles on profiles; since the stats rebuild after #574 they print the 2-decimal score, so the test (part of CI profile-integrity) failed on `main`. It now expects the score when the file has one. — Owner; Claude — awaiting owner "Merge N".
+
 ## 2026-11-28 (Sumo design review: owner's picks)
 - **Owner's choices, from the selector:** all four design fixes from the #575 review; keep birthplace in the predictor; one PR.
 - **No repeats between the Sumo home and the Basho review.**

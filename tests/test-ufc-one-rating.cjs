@@ -52,8 +52,11 @@ test("profile rating and skills equal the stats build, with no credential points
   for(const [i,label] of ["Striking","Grappling","Wrestling"].entries()){
    const value=want[i+1],at=ratings.indexOf(">"+label+"<");
    if(value===null){assert.equal(at,-1,slug+" "+label+" has no value and must be left out");continue;}
-   const got=/<b[^>]*>(\d+)/.exec(ratings.slice(at))?.[1];
-   assert.equal(got,String(value),slug+" "+label);
+   // Skills print as the stats build's 2-decimal score when the file has one (owner, 28 Nov 2026: "2 decimal points
+   // and just the number"), else as the whole percentile.
+   const fine=read("data/ufc-stats/fighters/"+slug+".json")?.ratings?.skills?.[label.toLowerCase()]?.score;
+   const got=/<b[^>]*>(\d+(?:\.\d\d)?)/.exec(ratings.slice(at))?.[1];
+   assert.equal(got,Number.isFinite(fine)?fine.toFixed(2):String(value),slug+" "+label);
   }
   assert(!html.includes("Not rated"),slug+" shows Not rated");
  }
