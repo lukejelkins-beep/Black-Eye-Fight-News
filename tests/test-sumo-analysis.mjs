@@ -105,3 +105,20 @@ test('storylines: true to the numbers they quote', () => {
   const g = powerGaps(roster, model);
   assert.ok(g.under.every(x => x.rank - x.power >= 5) && g.over.every(x => x.power - x.rank >= 5));
 });
+
+test('Juryo day view: its own bouts, chances and standings; the title race and kinboshi stay Makuuchi', () => {
+  const det = asDetails(read('202611'));
+  const J = analysis(det, model, { day: 8, division: 'Juryo' });
+  assert.equal(J.division, 'Juryo');
+  assert.ok(J.bouts.length >= 12, 'about 14 Juryo bouts a day');
+  assert.ok(J.bouts.every(b => /^Juryo /.test(b.winner.rank) && /^Juryo /.test(b.loser.rank) && b.p > 0 && b.p < 1));
+  assert.ok(J.table.every(x => /^Juryo /.test(x.rank)));
+  assert.deepEqual(J.race, []);
+  assert.ok(!J.bouts.some(b => b.kinboshi));
+  const html = dayBlock(h, J, {});
+  assert.match(html, /Juryo results/);
+  assert.match(html, /data-analysis-division="Juryo" aria-pressed="true"/);
+  const M = analysis(det, model, { day: 8 });
+  assert.equal(M.division, 'Makuuchi');
+  assert.match(dayBlock(h, M, {}), /data-analysis-division="Makuuchi" aria-pressed="true"/);
+});

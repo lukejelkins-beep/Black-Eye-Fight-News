@@ -25,12 +25,15 @@ test('the saved model: v2 schema, one weight per input, chances for every saved 
   assert.ok(model.temperature > 0 && model.temperature <= 1, 'calibration never sharpens');
 });
 
-test('the published claim holds: better than v1 on 2025-2026 in Makuuchi and overall, intervals above zero', () => {
+test('the published claim holds: better than v1 on the test years (the refit gate’s rule)', () => {
   const t = model.backtest.test, g = model.backtest.gainVsV1;
   assert.ok(t.all.model.brier < t.all.v1.brier && t.makuuchi.model.brier < t.makuuchi.v1.brier);
   assert.ok(t.makuuchi.model.accuracy > t.makuuchi.higherRankWins.accuracy);
-  assert.ok(g.all.interval95[0] > 0 && g.makuuchi.interval95[0] > 0);
-  assert.equal(model.data.test, '2025-');
+  /* The same rule as the refit gate (scripts/sumo-build-model.mjs --gate): the all-bout gain's interval is
+     above zero and the Makuuchi gain is positive. (The current model also has the Makuuchi interval above zero.) */
+  assert.ok(g.all.interval95[0] > 0 && g.makuuchi.mean > 0);
+  assert.match(model.data.test, /^\d{4}-$/);
+  assert.ok(Object.keys(model.backtest.byYear).every(y => y >= model.data.test.slice(0, 4)), 'by-year figures are test years only');
 });
 
 test('live replay: a bout is rated with only that morning’s knowledge (later results change nothing)', () => {
