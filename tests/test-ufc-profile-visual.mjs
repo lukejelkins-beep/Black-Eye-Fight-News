@@ -162,7 +162,13 @@ async function checkProfile(page,profile,screen){
    else window.dispatchEvent(new Event("hashchange"));
   },profile.id);
   const dialog=page.locator("#fighterDialog");
-  await dialog.waitFor({state:"visible",timeout:12000});
+  // If the profile never opens, say what the page was doing instead of a bare timeout.
+  await dialog.waitFor({state:"visible",timeout:12000}).catch(async e=>{
+   const state=await page.evaluate(()=>({hash:location.hash,search:location.search,sport:window.BEFNSport?.get?.(),
+    dialogOpen:!!document.querySelector("#fighterDialog")?.open,main:document.querySelector("#main h1,#main h2")?.textContent?.trim().slice(0,40),
+    fighterKnown:null})).catch(()=>"unavailable");
+   throw new Error(e.message.split("\n")[0]+" | page state: "+JSON.stringify(state));
+  });
   await page.waitForFunction(id=>{
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
