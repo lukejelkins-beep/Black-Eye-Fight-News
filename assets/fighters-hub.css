@@ -1,7 +1,7 @@
 /* Fighters hub (MMA). docs/design/FIGHTERS-HUB-FORM.md section 6; canvas B v4 (390 px) and Desktop (1280 px).
    Site tokens: cream #eef0f2, ink #14181c, red #b3001b, gold #c5ccd3. Nothing under 12 px; 44 px tap targets. */
 .fh{--fh-ink:#14181c;--fh-cream:#eef0f2;--fh-red:#b3001b;--fh-gold:#c5ccd3;--fh-mute:#4a4650;--fh-soft:#6b6570;
- --fh-sand:#efe9de;--fh-blue:#3b5b9a;
+ --fh-sand:#e1e6ec;--fh-blue:#3b5b9a;
  background:var(--fh-cream);color:var(--fh-ink);font-family:'Inter',system-ui,sans-serif;font-size:14px;
  margin:0 calc(-4.2vw) 36px;padding-bottom:4px;scroll-margin-top:60px}
 .fh a{color:inherit;text-decoration:none}
@@ -12,7 +12,7 @@
 .fh-face.is-dim{filter:grayscale(1) contrast(.92)}
 .fh-none{display:flex;align-items:flex-end;justify-content:center}
 .fh-none svg{width:78%;height:88%;fill:#c9d0dc}
-.fh-soft{font-size:12px;color:#cfc8bb}
+.fh-soft{font-size:12px;color:#bec5cc}
 .fh-soft-dark{font-size:12px;color:var(--fh-mute);text-align:right}
 .fh-meta{font-size:12px;color:var(--fh-mute)}
 .fh-meta.is-blue,.fh .is-blue{color:var(--fh-blue);font-weight:700}
@@ -32,9 +32,9 @@
 .fh-top{background:var(--fh-ink);border-bottom:3px solid var(--fh-red);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .fh-top h2{color:#fff;font:900 16px/1.2 Oswald,sans-serif;white-space:nowrap}
 .fh-top .fh-find{font-size:12px;font-weight:700;color:var(--fh-gold);letter-spacing:.08em;text-transform:uppercase;min-height:44px;display:flex;align-items:center;padding:0 2px}
-.fh-pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;background:#fff;border-bottom:1px solid #e6dfd2;scrollbar-width:none}
+.fh-pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;background:#fff;border-bottom:1px solid #d4dce4;scrollbar-width:none}
 .fh-pills::-webkit-scrollbar,.fh-rail::-webkit-scrollbar{display:none}
-.fh-pills button{flex:0 0 auto;min-height:44px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;border:1px solid #d9d2c4;background:#fff;color:var(--fh-ink)}
+.fh-pills button{flex:0 0 auto;min-height:44px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;border:1px solid #c9ced4;background:#fff;color:var(--fh-ink)}
 .fh-pills button[aria-pressed="true"]{background:var(--fh-ink);border-color:var(--fh-ink);color:#fff}
 .fh-sexrow{padding:14px 16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .fh-sex{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));background:var(--fh-ink);border-radius:12px;padding:4px;gap:4px;width:200px;flex:0 0 200px}
@@ -79,7 +79,7 @@
 .fh-rvf{margin-top:24px;padding:18px 14px;display:flex;flex-direction:column;gap:14px}
 .fh-head.is-dark{margin:0;gap:4px}
 .fh-head.is-dark h2{color:#fff}
-.fh-head.is-dark>span{color:#cfc8bb}
+.fh-head.is-dark>span{color:#bec5cc}
 .fh-key{display:flex;gap:14px;margin-top:4px}
 .fh-key span{display:flex;align-items:center;gap:6px}
 .fh-key .fh-ring,.fh-key .fh-dot{position:static;margin:0}
@@ -94,7 +94,7 @@
 .fh-line{left:0;right:0;top:7px;height:2px;background:#2e2a33}
 .fh-span{top:6px;height:4px;border-radius:2px}
 .fh-rv.is-up .fh-span{background:#6fcf7a}.fh-rv.is-down .fh-span{background:#8fb3ff}
-.fh-ring{top:2px;width:12px;height:12px;border-radius:50%;border:2px solid #cfc8bb;box-sizing:border-box;background:var(--fh-ink);margin-left:-6px;display:inline-block}
+.fh-ring{top:2px;width:12px;height:12px;border-radius:50%;border:2px solid #bec5cc;box-sizing:border-box;background:var(--fh-ink);margin-left:-6px;display:inline-block}
 .fh-dot{top:1px;width:14px;height:14px;border-radius:50%;background:var(--fh-gold);margin-left:-7px;display:inline-block}
 
 /* rising stars, breakout */
@@ -103,7 +103,7 @@
 .fh-rise .fh-l5{justify-content:center;margin-top:2px}
 .fh-list{display:flex;flex-direction:column;gap:10px}
 .fh-row{background:#fff;border-radius:14px;overflow:hidden;display:flex;align-items:stretch;min-height:64px}
-.fh-row-pic{width:60px;flex:0 0 60px;background:#f3efe7;display:flex;align-items:flex-end;justify-content:center}
+.fh-row-pic{width:60px;flex:0 0 60px;background:#e9edf1;display:flex;align-items:flex-end;justify-content:center}
 .fh-row-pic .fh-face{width:60px;height:64px}
 .fh-row-body{flex:1;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .fh-row-body>span:first-child{display:flex;flex-direction:column;gap:1px}
@@ -147,7 +147,7 @@
 .fh-badge{font-size:12px;font-weight:700;border-radius:6px;padding:4px 8px;color:#fff;background:#57525c}
 .fh-badge.is-on-fire{background:var(--fh-red)}
 .fh-badge.is-cooling{background:var(--fh-blue)}
-.fh-badge.is-out-injured{background:#7a5a12}
+.fh-badge.is-out-injured{background:#3e464e}
 .fh-ladder{display:flex;flex-direction:column;gap:8px}
 .fh-ladder-head{display:none}
 .fh-lrow{background:#fff;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:44px 56px minmax(0,1fr) auto;grid-template-areas:"rank pic name stage" "rank pic bar bar";
@@ -169,7 +169,7 @@
 .fh-chip.is-champion{background:var(--fh-gold);color:var(--fh-ink)}
 .fh-chip.is-title{background:var(--fh-ink);color:#fff}
 .fh-chip.is-slipping{background:var(--fh-blue);color:#fff}
-.fh-chip.is-rising,.fh-chip.is-breakout,.fh-chip.is-prospect{background:#7a5a12;color:#fff}
+.fh-chip.is-rising,.fh-chip.is-breakout,.fh-chip.is-prospect{background:#3e464e;color:#fff}
 .fh-lbar{grid-area:bar;display:flex;align-items:center;gap:8px;padding-bottom:8px;font-size:12px;font-weight:700;color:var(--fh-mute)}
 .fh-lbar>i{flex:1;height:6px;background:var(--fh-sand);border-radius:3px;display:block}
 .fh-lbar>i>i{display:block;height:6px;border-radius:3px;background:#e0a400}
@@ -181,7 +181,7 @@
 .fh-nextcard .fh-pic{height:136px;background:var(--fh-sand);display:flex;justify-content:center;align-items:flex-end}
 .fh-nextcard .fh-face{width:126px;height:136px}
 .fh-nextcard .fh-name{font-size:14px}
-.fh-stage-text{font-size:12px;font-weight:700;color:#7a5a12}
+.fh-stage-text{font-size:12px;font-weight:700;color:#3e464e}
 .fh-foot{margin:24px 16px 20px;font-size:12px;color:var(--fh-mute);line-height:1.5}
 /* Top 15 sort (owner, 28 Nov 2026). Column headings on desktop, a chip row on the phone. */
 .fh-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end}
@@ -192,7 +192,7 @@
 .fh-sortrow{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;margin:0 0 10px}
 .fh-sortrow::-webkit-scrollbar{display:none}
 .fh-sortrow>span{font-size:12px;font-weight:700;color:var(--fh-soft);text-transform:uppercase;letter-spacing:.08em;flex:0 0 auto}
-.fh-sortrow .fh-sort{flex:0 0 auto;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #d9d2c4;background:#fff;font-size:13px}
+.fh-sortrow .fh-sort{flex:0 0 auto;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #c9ced4;background:#fff;font-size:13px}
 .fh-sortrow .fh-sort.is-on{background:var(--fh-ink);border-color:var(--fh-ink);color:#fff}
 .fh-sortrow .fh-sort.is-on i{color:var(--fh-gold)}
 .fh-ladder-head [role=columnheader]{display:flex;align-items:center}
@@ -279,7 +279,7 @@
  .fh-boards .befn-bcard{flex:0 0 78%;scroll-snap-align:start}
 }
 .fh-lrow.is-champ{box-shadow:inset 4px 0 0 var(--fh-gold)}
-.fh-lrank abbr{text-decoration:none;color:#7a5a12}
+.fh-lrank abbr{text-decoration:none;color:#3e464e}
 @media (max-width:899px){
  .fh-links{gap:12px;flex-wrap:nowrap}
  .fh-top .fh-find{letter-spacing:.04em}
@@ -294,7 +294,7 @@
 /* search inside the hub (owner, 28 Nov 2026) */
 .fh-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .fh-search{display:block;padding:12px 16px 0}
-.fh-search input{width:100%;min-height:44px;border:1px solid #d9d2c4;border-radius:12px;padding:0 14px;font:500 15px 'Inter',sans-serif;background:#fff;color:var(--fh-ink)}
+.fh-search input{width:100%;min-height:44px;border:1px solid #c9ced4;border-radius:12px;padding:0 14px;font:500 15px 'Inter',sans-serif;background:#fff;color:var(--fh-ink)}
 .fh-search input:focus-visible{outline:2px solid var(--fh-red);outline-offset:1px}
 .fh-results:empty{display:none}
 .fh-results{padding:10px 16px 0}

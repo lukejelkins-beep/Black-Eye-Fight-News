@@ -1,5 +1,5 @@
 /* BEFN SUMO — Editorial Profile + Results Desk. Scoped visual overrides, no data pipeline changes. */
-:root{--cream:#eef0f2;--card:#fff;--ink:#14181c;--panel:#14181c;--border:#D9D1C8;--muted:#625A5D;--gold:#D3AA46;--red:#84243A;--green:#17664F;--shadow:none}
+:root{--cream:#eef0f2;--card:#fff;--ink:#14181c;--panel:#14181c;--border:#cbd0d6;--muted:#5a5e62;--gold:#7f8c9a;--red:#842432;--green:#17664F;--shadow:none}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{font:400 16px/1.5 'Inter',system-ui,sans-serif;background:var(--cream);color:var(--ink)}
 button,input,select,summary{font-size:16px;line-height:1.5}
@@ -33,25 +33,25 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .profile-hero :where(a,a:visited){color:#fff0d6}
 .profile-hero .profile-title{min-width:0}
 .profile-hero h1{font:900 clamp(48px,4.1vw,56px)/1.05 'Barlow Condensed',Impact,sans-serif;margin:3px 0;overflow-wrap:anywhere}
-.profile-hero .jp{font-size:18px;color:#ede4de}
+.profile-hero .jp{font-size:18px;color:#e0e6eb}
 .profile-hero .hero-rank{font-size:19px;font-weight:700;margin:7px 0 11px}
 .profile-hero .sumo-country{font-size:14px;color:#fff0d6}
 .profile-hero .sumo-move{background:rgba(255,255,255,.13);color:#fff;display:inline-flex;align-items:center;font-size:13px;padding:3px 6px;border:1px solid #aaa}
-.profile-hero .profile-icon{width:100%;aspect-ratio:4/5;min-height:0;margin:0;overflow:hidden;background:#eee5d8;border-radius:8px}
+.profile-hero .profile-icon{width:100%;aspect-ratio:4/5;min-height:0;margin:0;overflow:hidden;background:#dde3e9;border-radius:8px}
 .profile-hero .profile-icon img{width:100%;height:100%;object-fit:cover}
 .profile-hero .profile-icon:not(.has-photo){display:flex;align-items:center;justify-content:center}
 .profile-hero .profile-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;margin-top:14px}
 .profile-hero .profile-meta>div{min-width:0;padding:0;border:0}
-.profile-hero .profile-meta span{font-size:13px;display:block;color:#d8cecc}
+.profile-hero .profile-meta span{font-size:13px;display:block;color:#cdd2d7}
 .profile-hero .profile-meta strong{font-size:15px;font-weight:700;color:#fff;overflow-wrap:anywhere}
-.profile-hero .profile-current{background:#30272b;border:1px solid #6c555e;padding:16px;border-radius:8px;min-width:0}
-.profile-hero .profile-current .tag{color:#f0cc75;font-size:14px}
+.profile-hero .profile-current{background:#272b30;border:1px solid #55606c;padding:16px;border-radius:8px;min-width:0}
+.profile-hero .profile-current .tag{color:#a9b2bc;font-size:14px}
 .sumo-current-record{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 9px}
 .sumo-current-record>span{display:flex;flex-direction:column;align-items:start;gap:2px;min-width:0}
 .sumo-current-record b{font:800 32px/1.1 'Inter',system-ui,sans-serif;font-variant-numeric:tabular-nums}
-.sumo-current-record small{font-size:13px;color:#e4d5d5}
+.sumo-current-record small{font-size:13px;color:#d8dce1}
 .sumo-current-record .unavailable{font-size:17px}
-.profile-hero .profile-current p{font-size:13px;line-height:1.5;color:#eee0df;margin-bottom:0}
+.profile-hero .profile-current p{font-size:13px;line-height:1.5;color:#e4e6e9;margin-bottom:0}
 .sumo-summary-strip{margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
 .sumo-summary-strip .sumo-summary-stat{padding:16px 18px;border-right:1px solid var(--border);min-width:0}
 .sumo-summary-strip .sumo-summary-stat:last-child{border-right:0}
@@ -64,24 +64,24 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-recent-strip a.win{color:var(--green);border-bottom:3px solid var(--green)}
 .sumo-recent-strip a.loss{color:var(--red);border-bottom:3px solid var(--red)}
 .sumo-section-nav{display:flex;gap:0;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:12;background:var(--ink);color:#fff;border-radius:6px;margin:18px 0 16px}
-.sumo-section-nav a{color:#fff8f0!important;display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;font-size:14px;font-weight:700;text-decoration:none}
-.sumo-section-nav a:focus-visible,.sumo-section-nav a:hover{background:#84243A;outline-color:#fff}
+.sumo-section-nav a{color:#f6f8f9!important;display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;font-size:14px;font-weight:700;text-decoration:none}
+.sumo-section-nav a:focus-visible,.sumo-section-nav a:hover{background:#842432;outline-color:#fff}
 .sumo-section-menu{display:none}
 .sumo-section{scroll-margin-top:76px;min-width:0}
 .sumo-section .section-head{margin-top:38px}
 .sumo-workspace-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .sumo-workspace-controls label{font-size:14px;font-weight:700}
-.sumo-workspace-controls select{background:#fff;color:var(--ink);border:1px solid #8e8384;padding:9px;border-radius:6px;min-height:44px;max-width:100%}
-.sumo-segmented{display:inline-flex;border:1px solid #8e8384;border-radius:6px;overflow:hidden}
+.sumo-workspace-controls select{background:#fff;color:var(--ink);border:1px solid #83888e;padding:9px;border-radius:6px;min-height:44px;max-width:100%}
+.sumo-segmented{display:inline-flex;border:1px solid #83888e;border-radius:6px;overflow:hidden}
 .sumo-segmented button{background:#fff;color:var(--ink);border:0;padding:8px 14px;min-height:44px;font-weight:700}
 .sumo-segmented button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .sumo-results-desk{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
 .sumo-result-header,.sumo-ed-row-main{display:grid;grid-template-columns:84px 74px minmax(180px,1.6fr) minmax(110px,1fr) minmax(150px,1.2fr) 105px;gap:12px;align-items:center}
-.sumo-result-header{background:#f0eae3;font-size:13px;color:var(--muted);font-weight:800;padding:10px 16px}
+.sumo-result-header{background:#e5eaee;font-size:13px;color:var(--muted);font-weight:800;padding:10px 16px}
 .sumo-ed-row{border-bottom:1px solid var(--border);min-width:0;scroll-margin-top:82px}
 .sumo-ed-row:last-child{border-bottom:0}
 .sumo-ed-row-main{padding:11px 16px;min-height:72px;font-size:14px}
-.sumo-ed-row-main :where(a){color:#84243A;font-weight:700}
+.sumo-ed-row-main :where(a){color:#842432;font-weight:700}
 .sumo-ed-date small,.sumo-ed-rank small,.sumo-ed-tech small{display:block;font-size:13px;color:var(--muted)}
 .sumo-ed-result{font-weight:800;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .sumo-ed-result.win{color:var(--green)}.sumo-ed-result.loss{color:var(--red)}
@@ -89,7 +89,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-ed-person .profile-icon{width:40px;height:50px;min-height:0;flex:none;border-radius:4px;overflow:hidden}
 .sumo-ed-person .profile-icon img{width:100%;height:100%;object-fit:cover}
 .sumo-ed-person a{overflow-wrap:anywhere}
-.sumo-ed-extra{border-top:1px solid var(--border);background:#faf7f3;padding:12px 16px}
+.sumo-ed-extra{border-top:1px solid var(--border);background:#f5f6f8;padding:12px 16px}
 .sumo-ed-extra summary{font-size:14px;font-weight:700;cursor:pointer;min-height:36px;display:flex;align-items:center}
 .sumo-ed-extra[open] .sumo-details-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding-top:8px;font-size:14px}
 .sumo-section .sumo-results-desk+.footnote{margin-top:10px}
@@ -108,7 +108,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-career-facts dd{margin:0;font-size:15px;overflow-wrap:anywhere}
 .sumo-career-panels{display:flex;flex-direction:column;gap:16px}
 .sumo-career-panel{background:#fff;border:1px solid var(--border);border-radius:8px;min-width:0;box-shadow:none}
-.sumo-career-panel-head{background:#f0eae3;color:var(--ink);padding:12px 16px}
+.sumo-career-panel-head{background:#e5eaee;color:var(--ink);padding:12px 16px}
 .sumo-career-panel-head h3{font:800 23px/1.2 'Barlow Condensed',sans-serif;margin:2px 0}
 .sumo-career-panel-head small{font-size:13px;color:var(--muted)}
 .sumo-career-panel-main{padding:12px 16px}
@@ -120,30 +120,30 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-weight-connector{stroke:var(--red);stroke-width:1.8;stroke-dasharray:5 6;fill:none}
 .sumo-rank-connector{stroke:var(--red);stroke-width:1.8;fill:none}
 .sumo-weight-point,.sumo-rank-point{fill:var(--red);stroke:#fff;stroke-width:1.4}
-.sumo-chart-axis,.sumo-chart-ranklabel{fill:#4f4248;font-size:14px}
-.sumo-chart-number{fill:#342326;font-size:14px;font-weight:700}
-.sumo-chart-grid{stroke:#e5ded6}
+.sumo-chart-axis,.sumo-chart-ranklabel{fill:#42484f;font-size:14px}
+.sumo-chart-number{fill:#242b33;font-size:14px;font-weight:700}
+.sumo-chart-grid{stroke:#d6dee5}
 .sumo-career-overview{border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin:8px 0}
 .sumo-career-overview span{font-size:13px;font-weight:700}
 .sumo-rank-overview{max-height:84px}
 .sumo-chart-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.sumo-chart-controls button{background:#fff;border:1px solid #8e8384;border-radius:6px;padding:8px 12px;min-height:44px;font-size:14px}
+.sumo-chart-controls button{background:#fff;border:1px solid #83888e;border-radius:6px;padding:8px 12px;min-height:44px;font-size:14px}
 .sumo-chart-controls button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .sumo-data-table summary{font-size:14px;font-weight:700;cursor:pointer;padding:10px 0;min-height:44px}
 .sumo-data-table table{border-collapse:collapse;width:100%;font-size:14px}
 .sumo-data-table th,.sumo-data-table td{border-bottom:1px solid var(--border);padding:9px;text-align:left}
 .sumo-opponent-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0}
 .sumo-opponent-controls label{font-size:14px;font-weight:700}
-.sumo-opponent-controls input,.sumo-opponent-controls select{border:1px solid #8e8384;border-radius:6px;padding:9px;background:#fff;min-height:44px}
+.sumo-opponent-controls input,.sumo-opponent-controls select{border:1px solid #83888e;border-radius:6px;padding:9px;background:#fff;min-height:44px}
 .sumo-rival-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--border);background:#fff;border-radius:8px;overflow:hidden}
 .sumo-rival{background:#fff;border:0;border-bottom:1px solid var(--border);padding:13px 16px;color:var(--ink);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;align-items:center;min-width:0}
 .sumo-rival strong{font-size:15px;font-variant-numeric:tabular-nums}
 .sumo-rival small{font-size:13px;color:var(--muted);grid-column:1/-1}
 .sumo-rival-name{font-size:15px;overflow-wrap:anywhere}
-.sumo-rival:hover{background:#f8f1ed}
+.sumo-rival:hover{background:#f0f2f5}
 .sumo-techniques-list{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 16px}
 .sumo-techniques-list .chart-row{display:grid;grid-template-columns:minmax(110px,1fr) minmax(70px,2fr) minmax(90px,auto);gap:10px;align-items:center;margin:8px 0;font-size:14px}
-.sumo-techniques-list .bar-bg{background:#ece6de;height:12px;border-radius:3px;overflow:hidden}
+.sumo-techniques-list .bar-bg{background:#dfe5eb;height:12px;border-radius:3px;overflow:hidden}
 .sumo-techniques-list .bar-bg>div{background:var(--red);height:100%}
 .sumo-techniques-list .footnote{margin-top:12px}
 .sumo-sources{background:#fff;padding:18px 20px;border:1px solid var(--border);border-radius:8px;overflow-wrap:anywhere}
@@ -151,9 +151,9 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-sources a{color:var(--red)}
 .sumo-h2h-hero{background:var(--ink)!important;color:#fff!important}
 .sumo-h2h-hero :where(a,a:link,a:visited){color:#fff7e5!important;text-decoration:underline;text-underline-offset:3px}
-.sumo-h2h-hero :where(a:hover,a:focus-visible){color:#fff1b4!important}
+.sumo-h2h-hero :where(a:hover,a:focus-visible){color:#d1dae2!important}
 .sumo-h2h-hero .sumo-match-name,.sumo-h2h-hero .sumo-match-name *{color:#fff7e5!important}
-.sumo-h2h-hero .sumo-bio-line,.sumo-h2h-hero small,.sumo-h2h-score span{color:#e5d5d5!important}
+.sumo-h2h-hero .sumo-bio-line,.sumo-h2h-hero small,.sumo-h2h-score span{color:#d9dde1!important}
 .sumo-h2h-hero a:focus-visible{outline-color:#fff}
 .sumo-rank-card,.directory-card{box-shadow:none;border:1px solid var(--border)}
 .directory-card h3{font-size:24px}
@@ -199,7 +199,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .sumo-section-nav{display:none}
  .sumo-section-menu{display:block;position:sticky;top:0;z-index:12;background:var(--ink);color:#fff;margin:12px 0;border-radius:6px}
  .sumo-section-menu label{display:flex;align-items:center;justify-content:space-between;padding:3px 12px;font-size:13px}
- .sumo-section-menu select{width:62%;background:#fff;color:var(--ink);min-height:44px;border-radius:4px;border:1px solid #70666b;padding:5px;font-size:14px}
+ .sumo-section-menu select{width:62%;background:#fff;color:var(--ink);min-height:44px;border-radius:4px;border:1px solid #666b70;padding:5px;font-size:14px}
  .sumo-section .section-head{margin-top:28px}
  .section-head h2{font-size:26px}
  .sumo-result-header{display:none}
@@ -246,9 +246,9 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  .profile-hero>.profile-facts{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
  .profile-hero>.profile-current{grid-column:1/-1;grid-row:3}}
 .sumo-photo-fallback{display:none}
-.profile-hero .sumo-photo-fallback{display:block;font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#14181c;background:#f6f2eadb;padding:4px;z-index:2}
+.profile-hero .sumo-photo-fallback{display:block;font-size:13px;position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#14181c;background:#edf0f3db;padding:4px;z-index:2}
 .profile-hero .profile-icon.sumo-photo:not(.has-photo)>span{display:none}
-.profile-hero .profile-icon:not(.has-photo){background:#e4d9cc}
+.profile-hero .profile-icon:not(.has-photo){background:#cfd8e1}
 .profile-hero .profile-icon:not(.has-photo):before,.profile-hero .profile-icon:not(.has-photo):after{opacity:.18}
 
 /* Original Sumo .sumo-photo.xl has higher specificity and a forced 100% height;
@@ -284,7 +284,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-rank-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:16px 0}
 .sumo-rank-card{display:grid;grid-template-columns:155px minmax(0,1fr);gap:0;border:0;border-bottom:1px solid var(--border);border-radius:0;box-shadow:none;background:#fff}
 .sumo-rank-card:last-child{border-bottom:0}
-.sumo-rank-card-head{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:5px;padding:12px 14px;background:#f1eae3;color:var(--ink);font-size:13px;letter-spacing:0}
+.sumo-rank-card-head{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:5px;padding:12px 14px;background:#e5eaef;color:var(--ink);font-size:13px;letter-spacing:0}
 .sumo-rank-card-head .number-win{color:var(--green)}
 .sumo-rank-card-head .number-loss{color:var(--red)}
 .sumo-rank-card-body{min-height:90px;display:flex;align-items:center;gap:14px;padding:9px 16px}
@@ -338,7 +338,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   text-decoration:none;background:#fff;border:1px solid var(--border);
   border-radius:8px;color:var(--ink);overflow:hidden;
 }
-.sumo-standings-row:hover{border-color:var(--red);background:#faf6f0}
+.sumo-standings-row:hover{border-color:var(--red);background:#f3f5f7}
 .sumo-standings-row .profile-icon.sumo-photo{width:64px;height:68px;min-height:0;max-height:68px;aspect-ratio:auto;border:0;border-radius:6px}
 .sumo-standings-row .profile-icon.sumo-photo img{object-fit:cover;object-position:center top;transform:none}
 .sumo-standings-identity{min-width:0;display:flex;flex-direction:column;gap:3px}
@@ -380,7 +380,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
  grid-column:1;grid-row:1/span 3;align-self:stretch;width:100%!important;
  height:100%!important;min-height:440px!important;max-height:520px!important;
  aspect-ratio:auto!important;border:0;border-radius:0!important;
- margin:0!important;background:#e5d9cb;overflow:hidden;
+ margin:0!important;background:#cfd8e1;overflow:hidden;
 }
 .profile-hero>.profile-icon.sumo-photo.xl img{
  width:100%!important;height:100%!important;object-fit:cover!important;
@@ -391,10 +391,10 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .profile-hero>.profile-facts{grid-column:2;grid-row:3;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
 .profile-hero h1{font-size:clamp(42px,5vw,58px)}
 .profile-hero .sumo-hero-rank{display:flex;align-items:center;gap:9px;margin:8px 0;font-size:18px;flex-wrap:wrap}
-.profile-hero .sumo-hero-peak{color:#f0e8df;font-size:14px;margin:3px 0 12px}
-.sumo-hero-career{display:grid;gap:2px;background:#30272b;border:1px solid #65535a;border-radius:7px;overflow:hidden}
+.profile-hero .sumo-hero-peak{color:#e2e8ed;font-size:14px;margin:3px 0 12px}
+.sumo-hero-career{display:grid;gap:2px;background:#272b30;border:1px solid #535c65;border-radius:7px;overflow:hidden}
 .sumo-hero-career>div{display:grid;grid-template-columns:minmax(0,1.3fr) 1fr 72px;align-items:center;gap:8px;padding:6px 10px}
-.sumo-hero-career>div:first-child{color:#d0bfbd;font-size:12px;border-bottom:1px solid #65535a}
+.sumo-hero-career>div:first-child{color:#c0c6cd;font-size:12px;border-bottom:1px solid #535c65}
 .sumo-hero-career>div:not(:first-child){font-size:14px;font-variant-numeric:tabular-nums}
 .sumo-hero-career>div:not(:first-child) b{text-align:right}
 .profile-hero .profile-current{background:transparent;border:0}
@@ -425,7 +425,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-h2h-hero{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px;align-items:stretch;padding:14px}
 .sumo-h2h-hero>.sumo-h2h-score{grid-column:1/-1;grid-row:1;padding:13px}
 .sumo-h2h-hero>div:not(.sumo-h2h-score){grid-row:2;min-width:0}
-.sumo-h2h-hero .sumo-match-person{display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px;height:100%;padding:12px 8px;min-width:0;background:#30282b;border:1px solid #65534c;border-radius:7px}
+.sumo-h2h-hero .sumo-match-person{display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px;height:100%;padding:12px 8px;min-width:0;background:#282c30;border:1px solid #4e5863;border-radius:7px}
 .sumo-h2h-hero .sumo-match-identity{min-width:0;width:100%}
 .sumo-h2h-hero .sumo-match-name{display:flex;flex-direction:column;align-items:center;gap:4px;overflow-wrap:anywhere;font-size:clamp(17px,4vw,23px)}
 .sumo-h2h-hero .sumo-match-name .sumo-country{justify-content:center}
@@ -436,11 +436,11 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-h2h-kimarite{margin:18px 0 24px}
 .sumo-h2h-kimarite h2{font:800 25px/1.1 'Barlow Condensed',Impact,sans-serif;margin:0 0 8px}
 .sumo-kimarite-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.sumo-kimarite-panel{min-width:0;background:#fffdfa;border:1px solid #ddd2c6;border-radius:9px;padding:14px;color:#282126}
+.sumo-kimarite-panel{min-width:0;background:#fcfcfd;border:1px solid #c7d2dc;border-radius:9px;padding:14px;color:#212428}
 .sumo-kimarite-panel h3{font:800 20px/1.15 'Barlow Condensed',Impact,sans-serif;margin:0 0 14px}
 .sumo-kimarite-content{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .sumo-kimarite-pie{width:138px;height:138px;flex:none;border-radius:50%;display:grid;place-items:center}
-.sumo-kimarite-pie>span{display:flex;flex-direction:column;align-items:center;justify-content:center;width:59%;height:59%;border-radius:50%;background:#fffdfa;text-align:center;color:#282126}
+.sumo-kimarite-pie>span{display:flex;flex-direction:column;align-items:center;justify-content:center;width:59%;height:59%;border-radius:50%;background:#fcfcfd;text-align:center;color:#212428}
 .sumo-kimarite-pie strong{font-size:25px}.sumo-kimarite-pie small{font-size:10px}
 .sumo-kimarite-legend{list-style:none;margin:0;padding:0;flex:1;min-width:120px;display:grid;gap:7px}
 .sumo-kimarite-legend li{display:grid;grid-template-columns:11px minmax(0,1fr) auto;align-items:center;gap:6px;font-size:11px}
@@ -474,8 +474,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-rival-main{grid-column:2;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
 .sumo-rival-name{font-weight:800;font-size:clamp(15px,2.6vw,19px);line-height:1.15;color:#fff}
 .sumo-rival-main>.sumo-country{font-size:17px;line-height:1}
-.sumo-rival-main>small{grid-column:auto;font-size:12px;color:#ddd6d8;line-height:1.3}
-.sumo-rival-record{grid-column:3;font-size:clamp(14px,2.6vw,18px);white-space:nowrap;color:#e7c071}
+.sumo-rival-main>small{grid-column:auto;font-size:12px;color:#d6dadd;line-height:1.3}
+.sumo-rival-record{grid-column:3;font-size:clamp(14px,2.6vw,18px);white-space:nowrap;color:#a2acb6}
 @media(max-width:740px){
   .sumo-rival-grid{grid-template-columns:minmax(0,1fr)}
   .sumo-rival{grid-template-columns:54px minmax(0,1fr) auto;gap:9px;padding:10px;min-height:92px}
@@ -485,7 +485,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-rival-portrait>.profile-icon.sumo-photo{width:44px;height:60px}
   .sumo-rival-record{grid-column:2;grid-row:2;justify-self:start}}
 
-/* Integrated approved Sumo styling from PR #220. */
+/* Integrated approved Sumo styling from PR #0f1113. */
 
 /* Shared approved JSA headshot framing for all compact wrestler portraits.
    Keep the XL profile hero photograph uncropped. */
@@ -498,15 +498,15 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 
 /* Rank history: colour only genuine changes relative to the preceding basho. */
 .sumo-basho-history-item.is-promotion{background:#e3f4e8;border-color:#8ccca3;color:#155d38}
-.sumo-basho-history-item.is-demotion{background:#fce8e7;border-color:#e6aaa6;color:#8e2525}
+.sumo-basho-history-item.is-demotion{background:#fce7ea;border-color:#e6a6b0;color:#8e2535}
 .sumo-basho-history-item.is-promotion small,.sumo-basho-history-item.is-demotion small{color:inherit}
 
 /* Integrated approved Sumo styling from PR #227. */
 
 /* Match PR #225's image-first editorial treatment in the ranked rikishi directory. */
 .directory-card{display:flex;flex-direction:column;border-radius:10px;overflow:hidden}
-.directory-card .directory-upper{display:flex;flex-direction:column;align-items:stretch;gap:0;height:auto;padding:0;background:#211b1e}
-.directory-card .directory-upper>.profile-icon.sumo-photo{display:block;position:relative;width:100%;height:auto;aspect-ratio:3/4;min-height:0;max-height:none;margin:0;border:0;border-radius:0;overflow:hidden;background:#f1ebe4;flex:none}
+.directory-card .directory-upper{display:flex;flex-direction:column;align-items:stretch;gap:0;height:auto;padding:0;background:#1b1e21}
+.directory-card .directory-upper>.profile-icon.sumo-photo{display:block;position:relative;width:100%;height:auto;aspect-ratio:3/4;min-height:0;max-height:none;margin:0;border:0;border-radius:0;overflow:hidden;background:#e6ebef;flex:none}
 .directory-card .directory-upper>.profile-icon.sumo-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transform:none;max-width:none;max-height:none}
 .directory-card .directory-upper>div:last-child{padding:15px 17px 18px;min-width:0}
 .directory-card .directory-upper h3{font-size:clamp(23px,2.5vw,32px);margin:7px 0}
@@ -532,7 +532,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .main{padding-top:16px}
 .sumo-overview-lede{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 26px;background:var(--ink);color:#fff;border-radius:9px}
 .sumo-overview-lede h1{font:900 clamp(34px,4vw,50px)/1 'Barlow Condensed',Impact,sans-serif;margin:3px 0}
-.sumo-overview-lede p{font-size:14px;margin:6px 0;color:#e4d7ce}
+.sumo-overview-lede p{font-size:14px;margin:6px 0;color:#d1d9e1}
 .sumo-overview-lede .btn{flex:none}
 .sumo-home-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px}
 .sumo-home-grid .section-head{margin-top:20px}
@@ -541,7 +541,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-basho-views{display:flex;gap:4px;background:#14181c;padding:5px;margin:18px 0 8px;border-radius:6px}
 .sumo-basho-views button{flex:1;min-width:0;background:transparent;border:0;color:#fff;padding:9px 15px;border-radius:4px;min-height:44px;cursor:pointer;font-weight:750}
 @media(max-width:360px){.sumo-basho-views button{padding:9px 6px}}
-.sumo-basho-views button[aria-pressed=true]{background:#f6f2ea;color:#14181c}
+.sumo-basho-views button[aria-pressed=true]{background:#edf0f3;color:#14181c}
 .sumo-day-quick{font-size:14px;color:var(--muted);margin:14px 0 6px}
 .sumo-empty-bout{background:#fff;padding:18px;border:1px solid var(--border);font-size:14px}
 .sumo-empty-bout button{display:inline-flex;margin-left:10px}
@@ -577,14 +577,14 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-section-nav a{font-size:15px;min-height:44px}
 .sumo-profile-more{position:relative;margin-left:auto;min-height:44px}
 .sumo-profile-more summary{list-style:none;cursor:pointer;padding:9px 14px;font-size:14px;font-weight:750}
-.sumo-profile-more[open]>a{display:block;background:#fff;color:#84243a!important;padding:9px 14px;position:relative;z-index:4}
+.sumo-profile-more[open]>a{display:block;background:#fff;color:#842432!important;padding:9px 14px;position:relative;z-index:4}
 .sumo-recent-strip{margin:14px 0}
 .sumo-recent-strip h2{font:800 24px/1.1 'Barlow Condensed',Impact,sans-serif;margin:0 0 3px}
 .sumo-recent-list{display:grid;grid-template-columns:1fr;gap:4px}
 .sumo-recent-list a{display:grid;grid-template-columns:37px minmax(80px,1.2fr) minmax(110px,1fr) minmax(110px,1fr);gap:10px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:5px;padding:7px 10px;color:var(--ink);text-decoration:none;font-size:13px;min-height:48px}
 .sumo-recent-outcome{border-radius:4px;padding:3px;font-size:14px;font-weight:850;text-align:center;background:#eee}
 .sumo-recent-list a.win .sumo-recent-outcome{background:#e1f4e8;color:#17664f}
-.sumo-recent-list a.loss .sumo-recent-outcome{background:#f9e1e4;color:#84243a}
+.sumo-recent-list a.loss .sumo-recent-outcome{background:#f9e1e5;color:#842432}
 .sumo-recent-person{font-weight:750}
 .sumo-data-coverage{background:#fff;padding:10px 14px;margin:15px 0;border:1px solid var(--border);border-radius:6px;font-size:14px}
 .sumo-data-coverage summary{font-weight:750;cursor:pointer;min-height:32px}
@@ -592,7 +592,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-kimarite-bar strong{text-align:right}
 .sumo-kimarite-panel>p{font-size:14px}
 .sumo-kimarite-panel .bar-bg{height:12px;background:#eee;border-radius:10px;overflow:hidden}
-.sumo-kimarite-panel .bar-bg>div{height:100%;background:#84243a}
+.sumo-kimarite-panel .bar-bg>div{height:100%;background:#842432}
 .sumo-h2h-hero .sumo-bio-line{font-size:13px}
 .sumo-h2h-hero .sumo-photo img{transform:none!important;object-position:center top}
 .sumo-h2h-score>small:not(:last-child){display:none}
@@ -648,10 +648,10 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 
 /* F01: first-screen paths to results and full licensed source photograph. */
 .sumo-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px}
-.sumo-hero-actions a{display:inline-flex;align-items:center;min-height:40px;padding:7px 12px;border:1px solid #ad9184;border-radius:5px;color:#fff;font-size:13px;font-weight:800;text-decoration:none}
-.sumo-hero-actions .sumo-quick-results{background:#d3aa46;color:#14181c;border-color:#d3aa46}
+.sumo-hero-actions a{display:inline-flex;align-items:center;min-height:40px;padding:7px 12px;border:1px solid #8c99a5;border-radius:5px;color:#fff;font-size:13px;font-weight:800;text-decoration:none}
+.sumo-hero-actions .sumo-quick-results{background:#7f8c9a;color:#14181c;border-color:#7f8c9a}
 .sumo-hero-actions a:hover{text-decoration:underline}
-.sumo-hero-actions a:focus-visible{outline:3px solid #d3aa46;outline-offset:3px}
+.sumo-hero-actions a:focus-visible{outline:3px solid #7f8c9a;outline-offset:3px}
 /* F15: opt-in density for visitors scanning a full 190-rikishi directory. */
 .sumo-directory-layout{display:flex;gap:6px;justify-content:flex-end;margin:8px 0 12px}
 .sumo-directory-layout button{min-height:44px;padding:8px 12px;font-size:14px;font-weight:750;border-radius:5px;border:1px solid var(--border);background:#fff;color:#14181c;cursor:pointer}
@@ -678,7 +678,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* One page header everywhere: dark band, uppercase title, one context line. */
 .sumo-page-head{margin:16px 0 18px;padding:clamp(16px,3vw,26px) clamp(16px,3vw,28px);background:#14181c;color:#fff;border-radius:6px;border-left:4px solid var(--brand-red,#b3001b)}
 .sumo-page-head h1{margin:0;font:900 clamp(34px,6vw,56px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;color:#fff;overflow-wrap:anywhere}
-.sumo-page-head p{margin:8px 0 0;color:#d9cfcd;font:600 14px/1.4 'Inter',system-ui,sans-serif}
+.sumo-page-head p{margin:8px 0 0;color:#ced3d8;font:600 14px/1.4 'Inter',system-ui,sans-serif}
 .back-link+.sumo-page-head{margin-top:10px}
 
 /* PR #230 follow-up: image-first rikishi hero; source-grounded Career tiles; readable H2H. */
@@ -687,20 +687,20 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 }
 .sumo-career-strip>div{
   display:flex;flex-direction:column;justify-content:center;gap:5px;
-  min-width:0;padding:16px 20px;border-top:3px solid #d3aa46;
+  min-width:0;padding:16px 20px;border-top:3px solid #7f8c9a;
 }
-.sumo-career-strip>div>span{font-size:clamp(14px,1.6vw,17px);font-weight:800;color:#413639}
+.sumo-career-strip>div>span{font-size:clamp(14px,1.6vw,17px);font-weight:800;color:#363b41}
 .sumo-career-strip>div>strong{
   font:900 clamp(38px,4vw,54px)/1 'Barlow Condensed',Impact,sans-serif;
   color:#14181c;font-variant-numeric:tabular-nums;
 }
-.sumo-career-caveat{margin:8px 0 18px;font-size:13px;line-height:1.5;color:#625a5d}
+.sumo-career-caveat{margin:8px 0 18px;font-size:13px;line-height:1.5;color:#5a5e62}
 .sumo-rival .sumo-rival-record{
-  color:#fff0c3;background:#40332f;border:1px solid #bd9853;border-radius:6px;
+  color:#fff0c3;background:#2f3740;border:1px solid #7a8896;border-radius:6px;
   display:inline-block;padding:8px 10px;min-width:0;max-width:100%;
   font:900 clamp(16px,2vw,21px)/1.1 'Barlow Condensed',Impact,sans-serif;
   font-variant-numeric:tabular-nums;letter-spacing:.02em;
-  white-space:normal;text-align:center;text-shadow:0 1px 1px #100b0c;
+  white-space:normal;text-align:center;text-shadow:0 1px 1px #0b0d10;
   justify-self:end;
 }
 @media(max-width:650px){
@@ -709,7 +709,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .profile-hero>.profile-icon.sumo-photo.xl{
     grid-column:1;grid-row:1!important;
     height:clamp(230px,70vw,305px)!important;max-height:305px!important;
-    background:#e5d9cb;
+    background:#cfd8e1;
   }
   .profile-hero>.profile-icon.sumo-photo.xl img{
     object-fit:cover!important;object-position:center top!important;
@@ -738,7 +738,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-home-feature .feature-card:nth-child(3){
   display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);
   grid-template-rows:minmax(0,1fr) auto;min-height:240px;
-  overflow:hidden;border-radius:10px;background:radial-gradient(circle at right top,#604132,#1a151a 72%);
+  overflow:hidden;border-radius:10px;background:radial-gradient(circle at right top,#3d4955,#15171a 72%);
 }
 .sumo-home-feature .feature-top{display:contents}
 .sumo-home-feature .feature-top>.profile-icon.sumo-photo{
@@ -759,10 +759,10 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   overflow-wrap:anywhere;
 }
 .sumo-home-feature .feature-info h3 .sumo-country{display:block;margin-bottom:8px}
-.sumo-home-feature .feature-info small{font-size:13px;line-height:1.3;color:#ede3d9;overflow-wrap:anywhere}
+.sumo-home-feature .feature-info small{font-size:13px;line-height:1.3;color:#dde3e9;overflow-wrap:anywhere}
 .sumo-home-feature .feature-bottom{
   grid-column:2;grid-row:2;display:flex;flex-direction:column;align-items:flex-start;
-  gap:3px;padding:11px clamp(12px,2vw,22px) 16px;font-size:13px;border-top:1px solid #5a4c4b;
+  gap:3px;padding:11px clamp(12px,2vw,22px) 16px;font-size:13px;border-top:1px solid #4b525a;
 }
 .sumo-home-feature .feature-bottom span:last-child{font-weight:900;font-size:16px;color:#fff8e8;font-variant-numeric:tabular-nums}
 
@@ -823,12 +823,12 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 }
 .sumo-home-leader-controls .pill{
   flex:1 1 auto;min-width:0;min-height:44px;padding:10px 13px;
-  border:1px solid #c9bbae;border-radius:6px;background:#fff;
-  color:#382c30;font-size:14px;font-weight:850;cursor:pointer;
+  border:1px solid #b3bcc4;border-radius:6px;background:#fff;
+  color:#2c3238;font-size:14px;font-weight:850;cursor:pointer;
 }
 .sumo-home-leader-controls .pill.active,
 .sumo-home-leader-controls .pill[aria-pressed="true"]{
-  color:#fff;background:#84243a;border-color:#84243a;
+  color:#fff;background:#842432;border-color:#842432;
 }
 .sumo-home-leaders .sumo-leader-card{
   grid-template-columns:minmax(0,44%) minmax(0,56%);
@@ -870,12 +870,12 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 }
 .sumo-home-leaders .sumo-leader-vitals>span{
   display:flex;flex-direction:column;gap:2px;
-  min-width:0;padding:7px 6px;background:#f2ece5;border-radius:4px;
+  min-width:0;padding:7px 6px;background:#e7ecf0;border-radius:4px;
 }
 .sumo-home-leaders .sumo-leader-vitals small,
 .sumo-home-leaders .sumo-leader-career small,
 .sumo-home-leaders .sumo-leader-last small:first-child{
-  font-size:10px;letter-spacing:.035em;color:#645558;font-weight:850;line-height:1.2;
+  font-size:10px;letter-spacing:.035em;color:#555c64;font-weight:850;line-height:1.2;
 }
 .sumo-home-leaders .sumo-leader-vitals strong{
   font-size:clamp(12px,1.3vw,15px);font-weight:850;line-height:1.2;
@@ -889,7 +889,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   font-variant-numeric:tabular-nums;
 }
 .sumo-home-leaders .sumo-leader-last{
-  margin-top:auto;padding-top:8px;border-top:1px solid #ded3c9;
+  margin-top:auto;padding-top:8px;border-top:1px solid #cad3dd;
   display:flex;flex-direction:column;gap:3px;min-width:0;
 }
 .sumo-home-leaders .sumo-leader-last>span{
@@ -897,7 +897,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   overflow-wrap:anywhere;
 }
 .sumo-home-leaders .sumo-leader-last>small:last-child{
-  color:#665a5a;font-size:clamp(11px,1.05vw,13px);line-height:1.3;
+  color:#5a6066;font-size:clamp(11px,1.05vw,13px);line-height:1.3;
   overflow-wrap:anywhere;
 }
 .sumo-home-leaders .sumo-leader-outcome{
@@ -906,7 +906,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   color:#fff;font-size:12px;font-weight:900;
 }
 .sumo-home-leaders .sumo-leader-outcome.win{background:#146846}
-.sumo-home-leaders .sumo-leader-outcome.loss{background:#ab2b3d}
+.sumo-home-leaders .sumo-leader-outcome.loss{background:#ab2b3e}
 @media(max-width:650px){
   .sumo-home-leaders .sumo-leader-card{grid-template-columns:minmax(0,45%) minmax(0,55%)}
   .sumo-home-leaders .sumo-leader-details{padding:12px;gap:8px}
@@ -928,11 +928,11 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* BEFN recent-five carousel: sourced results only; no profile hero changes. */
 .sumo-recent-strip{
   display:block;margin:16px 0 20px;min-width:0;overflow:hidden;
-  border:1px solid #d4c9be;border-radius:12px;background:#fcfaf5;
+  border:1px solid #c3c9cf;border-radius:12px;background:#f7f9fa;
 }
 .sumo-recent-header{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
-  background:#172137;color:#fff;border-bottom:4px solid #9b1f38;
+  background:#172137;color:#fff;border-bottom:4px solid #9b1f32;
   padding:14px clamp(13px,2.4vw,20px);
 }
 .sumo-recent-strip .sumo-recent-header h2{
@@ -940,22 +940,22 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   text-transform:uppercase;margin:0;letter-spacing:.015em;
 }
 .sumo-recent-header>span{
-  color:#eee5de;font-size:13px;font-weight:650;white-space:nowrap;
+  color:#e0e6ec;font-size:13px;font-weight:650;white-space:nowrap;
 }
 .sumo-recent-summary{
   display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;
-  align-items:center;padding:10px 16px 0;font-size:12px;color:#5c5255;
+  align-items:center;padding:10px 16px 0;font-size:12px;color:#52575c;
 }
-.sumo-recent-record{font-size:14px;font-weight:850;color:#272123}
+.sumo-recent-record{font-size:14px;font-weight:850;color:#212427}
 .sumo-recent-record b:first-child{color:#17664f}
-.sumo-recent-record b:last-child{color:#a42a3d}
+.sumo-recent-record b:last-child{color:#a42a3c}
 .sumo-recent-carousel{display:flex;gap:8px;align-items:center;padding:12px 10px 16px;min-width:0}
 .sumo-recent-arrow{
   flex:0 0 29px;align-self:stretch;min-width:29px;
-  border:0;background:transparent;color:#342b30;
+  border:0;background:transparent;color:#2b3034;
   padding:0;font-size:30px;font-weight:750;cursor:pointer;
 }
-.sumo-recent-arrow:focus-visible{outline:3px solid #84243a;outline-offset:0}
+.sumo-recent-arrow:focus-visible{outline:3px solid #842432;outline-offset:0}
 .sumo-recent-list{
   display:flex;min-width:0;flex:1;gap:9px;
   overflow-x:auto;scroll-snap-type:x proximity;
@@ -965,8 +965,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-recent-list a.sumo-recent-bout{
   flex:1 0 148px;min-width:0;max-width:none;display:flex;flex-direction:column;
   align-items:center;justify-content:flex-start;text-align:center;gap:4px;
-  min-height:130px;padding:0 7px 8px;background:#fff;border:1px solid #d5c9c0;
-  border-radius:10px;color:#252025;text-decoration:none;
+  min-height:130px;padding:0 7px 8px;background:#fff;border:1px solid #c4cbd1;
+  border-radius:10px;color:#202325;text-decoration:none;
   scroll-snap-align:start;overflow:hidden;
 }
 .sumo-recent-list .sumo-recent-bout .sumo-recent-outcome{
@@ -975,19 +975,19 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   font-size:24px;font-weight:900;
 }
 .sumo-recent-list .sumo-recent-bout.loss .sumo-recent-outcome{
-  background:#f8e3e6;color:#9b1f38;
+  background:#f8e3e6;color:#9b1f32;
 }
 .sumo-recent-list .sumo-recent-bout .sumo-recent-person{
   display:block;font-size:14px;line-height:1.12;font-weight:900;
   overflow-wrap:anywhere;
 }
-.sumo-recent-day{font-size:12px;color:#544c4f;font-weight:750}
+.sumo-recent-day{font-size:12px;color:#4c5054;font-weight:750}
 .sumo-recent-list .sumo-recent-bout .sumo-recent-technique{
-  display:block;align-self:stretch;background:#f0ede9;color:#383237;
+  display:block;align-self:stretch;background:#e9ecf0;color:#323538;
   border-radius:5px;margin-top:auto;padding:4px 3px;
   font-size:11px;line-height:1.2;overflow-wrap:anywhere;
 }
-.sumo-recent-list .sumo-recent-bout:hover{border-color:#84243a}
+.sumo-recent-list .sumo-recent-bout:hover{border-color:#842432}
 @media(max-width:650px){
   .sumo-recent-strip{margin:13px 0 16px}
   .sumo-recent-header{padding:13px 12px}
@@ -1005,16 +1005,16 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 
 /* Graph redesign, strictly scoped to the existing rank + weight analysis panels. */
 #sumo-charts .sumo-career-panel{
-  border:1px solid #d4c9be;border-radius:12px;overflow:hidden;
-  background:#fcfaf5;box-shadow:none;
+  border:1px solid #c3c9cf;border-radius:12px;overflow:hidden;
+  background:#f7f9fa;box-shadow:none;
 }
 #sumo-charts .sumo-career-panel-head{
   display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;
-  background:#172137;color:#fff;border-bottom:4px solid #9b1f38;
+  background:#172137;color:#fff;border-bottom:4px solid #9b1f32;
   padding:15px 18px;
 }
 #sumo-charts .sumo-career-panel-head small{
-  color:#dfd7d1;font:800 11px/1.3 'Inter',system-ui,sans-serif;
+  color:#d1d8df;font:800 11px/1.3 'Inter',system-ui,sans-serif;
   letter-spacing:.08em;
 }
 #sumo-charts .sumo-career-panel-head h3{
@@ -1022,16 +1022,16 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   color:#fff;margin:0;text-transform:uppercase;
 }
 #sumo-charts .sumo-chart-controls button{
-  border:1px solid #c7bab4;border-radius:6px;background:#fff;
-  color:#3f3439;font-weight:800;
+  border:1px solid #b6bec5;border-radius:6px;background:#fff;
+  color:#34393f;font-weight:800;
 }
 #sumo-charts .sumo-chart-controls button[aria-pressed="true"]{
-  color:#fff;background:#84243a;border-color:#84243a;
+  color:#fff;background:#842432;border-color:#842432;
 }
-#sumo-charts .sumo-rank-connector{stroke:#971e3b;stroke-width:2.25}
-#sumo-charts .sumo-rank-point{fill:#971e3b;stroke:#fff;stroke-width:2}
-#sumo-charts .sumo-weight-point{fill:#971e3b;stroke:#fff;stroke-width:1.8}
-#sumo-charts .sumo-chart-grid{stroke:#dfd7d1;stroke-width:1}
+#sumo-charts .sumo-rank-connector{stroke:#971e30;stroke-width:2.25}
+#sumo-charts .sumo-rank-point{fill:#971e30;stroke:#fff;stroke-width:2}
+#sumo-charts .sumo-weight-point{fill:#971e30;stroke:#fff;stroke-width:1.8}
+#sumo-charts .sumo-chart-grid{stroke:#d1d8df;stroke-width:1}
 @media(max-width:650px){
   #sumo-charts .sumo-career-panels{gap:14px}
   #sumo-charts .sumo-career-panel-head{
@@ -1052,7 +1052,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   #sumo-charts .sumo-rank-scroll,#sumo-charts .sumo-weight-scroll{
     width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;
     padding:6px 0 9px;overscroll-behavior-x:contain;
-    scrollbar-width:thin;scrollbar-color:#b89da4 #f4ece8;
+    scrollbar-width:thin;scrollbar-color:#a0abb5 #eaeef2;
   }
   #sumo-charts .sumo-rank-svg,#sumo-charts .sumo-weight-svg{
     display:block;width:var(--sumo-mobile-chart-width,100%)!important;
@@ -1060,11 +1060,11 @@ button,input,select,summary{font-size:16px;line-height:1.5}
     height:auto!important;overflow:visible;
   }
   #sumo-charts .sumo-chart-axis,#sumo-charts .sumo-chart-ranklabel{
-    font-size:13px;fill:#4e4248;
+    font-size:13px;fill:#42484e;
   }
   #sumo-charts .sumo-chart-number{font-size:13px}
   #sumo-charts .sumo-chart-note{
-    margin:7px 0;padding:0;color:#655c61;font-size:12px;line-height:1.4;
+    margin:7px 0;padding:0;color:#5c6065;font-size:12px;line-height:1.4;
   }
   #sumo-charts .sumo-chart-scroll-hint{
     margin:4px 0;font-size:12px;line-height:1.4;
@@ -1117,7 +1117,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
     min-width:0;display:block;align-self:center;
     margin:0;padding:0;background:transparent;
     text-align:left;font-size:12px;line-height:1.2;
-    color:#695e60;overflow-wrap:anywhere;
+    color:#5e6469;overflow-wrap:anywhere;
   }}
 @media(max-width:360px){
   .sumo-recent-list a.sumo-recent-bout{
@@ -1155,19 +1155,19 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   display:grid;grid-template-columns:minmax(0,41%) minmax(0,59%);
   grid-template-rows:minmax(0,1fr);gap:0;
   width:100%;height:170px;min-width:0;min-height:0;
-  padding:0;border:1px solid #524a4e;border-radius:9px;
+  padding:0;border:1px solid #4a4e52;border-radius:9px;
   overflow:hidden;isolation:isolate;background:#22252f;
   color:#fff;text-decoration:none;box-shadow:none;
 }
 #sumo-opponents .sumo-rival:hover,
 #sumo-opponents .sumo-rival:focus-visible{
-  background:#2b2d38;border-color:#bd9853;
+  background:#2b2d38;border-color:#7a8896;
   transform:none;outline-offset:2px;
 }
 #sumo-opponents .sumo-rival-portrait{
   display:block;position:relative;grid-column:1;grid-row:1;
   width:100%;height:100%;min-width:0;min-height:0;
-  align-self:stretch;overflow:hidden;background:#423733;
+  align-self:stretch;overflow:hidden;background:#333a42;
   border-radius:0;
 }
 #sumo-opponents .sumo-rival-portrait>.profile-icon.sumo-photo{
@@ -1227,9 +1227,9 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   align-self:flex-start;justify-self:start;
   font-size:clamp(18px,1.8vw,24px);white-space:normal;
   font-variant-numeric:tabular-nums;
-  color:#fff0c3;background:#40332f;border:1px solid #bd9853;
+  color:#fff0c3;background:#2f3740;border:1px solid #7a8896;
   padding:8px 10px;border-radius:6px;text-align:center;
-  text-shadow:0 1px 1px #100b0c;
+  text-shadow:0 1px 1px #0b0d10;
 }
 @media(max-width:900px){
   #sumo-opponents .sumo-rival-grid{grid-template-columns:minmax(0,1fr);gap:10px}
@@ -1325,13 +1325,13 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 #sumo-career .sumo-career-data-tile{
   display:flex;flex-direction:column;justify-content:center;
   min-width:0;min-height:89px;padding:13px 14px;gap:8px;
-  background:#fffdf9;border:1px solid #dcd0c5;
-  border-top:3px solid #c4a25a;border-radius:8px;
+  background:#fffdf9;border:1px solid #cbd0d6;
+  border-top:3px solid #828f9c;border-radius:8px;
   box-shadow:0 1px 3px rgba(29,24,30,.03);
 }
 #sumo-career .sumo-career-data-tile>small{
   display:block;font-size:11px;font-weight:800;
-  color:#6c5d60;line-height:1.25;letter-spacing:.02em;text-transform:uppercase;
+  color:#5d646c;line-height:1.25;letter-spacing:.02em;text-transform:uppercase;
 }
 #sumo-career .sumo-career-data-tile>strong{
   display:block;min-width:0;color:#221e26;
@@ -1342,21 +1342,21 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   display:block;color:#16734b;font-size:12px;line-height:1.1;font-weight:850;
 }
 #sumo-career .sumo-career-data-grid>.sumo-career-empty{
-  margin:0;grid-column:1/-1;border:1px solid #ded4ca;
-  border-radius:8px;padding:15px;color:#6b6064;background:#fff;
+  margin:0;grid-column:1/-1;border:1px solid #cbd4dd;
+  border-radius:8px;padding:15px;color:#60666b;background:#fff;
 }
 #sumo-career .sumo-basho-timeline{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
 }
 #sumo-career .sumo-basho-history-item{
   display:flex;flex-direction:column;gap:6px;min-width:0;min-height:94px;
-  padding:13px 14px;background:#fffdf9;border:1px solid #dcd0c5;
-  border-left:4px solid #aaa09a;border-radius:8px;box-shadow:none;
+  padding:13px 14px;background:#fffdf9;border:1px solid #cbd0d6;
+  border-left:4px solid #9aa2aa;border-radius:8px;box-shadow:none;
 }
 #sumo-career .sumo-basho-history-item.is-promotion{border-left-color:#16734b}
-#sumo-career .sumo-basho-history-item.is-demotion{border-left-color:#ad2c43}
+#sumo-career .sumo-basho-history-item.is-demotion{border-left-color:#ad2c3f}
 #sumo-career .sumo-basho-history-item strong{
-  color:#6b5d62;font-size:12px;line-height:1.25;font-weight:800;
+  color:#5d646b;font-size:12px;line-height:1.25;font-weight:800;
 }
 #sumo-career .sumo-basho-history-item span{
   color:#211e28;font:900 clamp(18px,2.3vw,26px)/1.08 'Barlow Condensed',Impact,sans-serif;
@@ -1366,7 +1366,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   font-weight:800;color:#166e4a;font-size:11px;
 }
 #sumo-techniques .sumo-signature{
-  margin-top:14px;padding:15px;border:1px solid #ded4ca;border-radius:8px;background:#fffdf9;
+  margin-top:14px;padding:15px;border:1px solid #cbd4dd;border-radius:8px;background:#fffdf9;
 }
 #sumo-techniques .sumo-signature h3{
   font:900 22px 'Barlow Condensed',Impact,sans-serif;margin:0 0 6px;
@@ -1408,8 +1408,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   align-items:center;gap:4px 5px;
   width:100%;max-width:none;min-width:0;height:auto;min-height:102px;
   flex:none;margin:0;padding:7px;
-  border:1px solid #d7cbc3;border-radius:8px;background:#fff;
-  color:#2c2529;text-align:left;text-decoration:none;
+  border:1px solid #c7cdd3;border-radius:8px;background:#fff;
+  color:#25282c;text-align:left;text-decoration:none;
   scroll-snap-align:none;overflow:hidden;
 }
 .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-outcome{
@@ -1434,7 +1434,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   grid-column:1/-1;grid-row:3;
   display:block;align-self:stretch;min-width:0;width:100%;
   margin:0;padding:4px 5px;
-  background:#f2efeb;color:#51464b;border-radius:4px;
+  background:#ebeef2;color:#464c51;border-radius:4px;
   font-size:11px;line-height:1.25;font-weight:650;
   overflow-wrap:anywhere;text-align:left;
 }
@@ -1486,17 +1486,17 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   grid-template-rows:minmax(0,1fr);
   box-sizing:border-box;min-width:0;min-height:139px;width:100%;height:auto;
   gap:0;padding:0;margin:0;align-items:stretch;
-  background:#22252f;color:#fff;border:1px solid #524a4e;
+  background:#22252f;color:#fff;border:1px solid #4a4e52;
   border-radius:8px;overflow:hidden;text-align:left;text-decoration:none;
 }
 .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout:hover,
 .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout:focus-visible{
-  border-color:#bd9853;outline-offset:2px;
+  border-color:#7a8896;outline-offset:2px;
 }
 .sumo-recent-strip .sumo-recent-portrait{
   display:block;position:relative;min-width:0;min-height:0;
   height:100%;width:100%;grid-column:1;grid-row:1;
-  overflow:hidden;background:#423733;border-radius:0;
+  overflow:hidden;background:#333a42;border-radius:0;
 }
 .sumo-recent-strip .sumo-recent-portrait>.profile-icon.sumo-photo{
   position:absolute;inset:0;display:block;
@@ -1556,24 +1556,24 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   width:auto;height:auto;min-width:27px;min-height:25px;
   flex:0 0 auto;grid-column:auto;grid-row:auto;align-self:auto;
   box-sizing:border-box;margin:0;padding:4px 6px;
-  border:1px solid #bd9853;border-radius:5px;
+  border:1px solid #7a8896;border-radius:5px;
   background:rgba(42,88,68,.92);color:#e7ffe9;
   font:900 16px/1 'Barlow Condensed',Impact,sans-serif;
 }
 .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout.loss .sumo-recent-outcome{
-  background:rgba(128,41,58,.95);color:#ffe8ed;
+  background:rgba(128,41,54,.95);color:#ffe8eb;
 }
 .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-day{
   display:inline-block;grid-column:auto;grid-row:auto;
   align-self:auto;justify-self:auto;min-width:0;
   font-size:11px;font-weight:750;line-height:1.2;
-  color:#f0e7e2;white-space:normal;
+  color:#e4e9ee;white-space:normal;
 }
 .sumo-recent-strip .sumo-recent-list a.sumo-recent-bout .sumo-recent-technique{
   display:block;grid-column:auto;grid-row:auto;
   align-self:auto;min-width:0;width:auto;max-width:100%;
   margin:0;padding:0;background:transparent;border-radius:0;
-  color:#e3d9d5;font-size:11px;font-weight:650;
+  color:#d5dce3;font-size:11px;font-weight:650;
   line-height:1.24;white-space:normal;overflow-wrap:anywhere;
   text-align:left;
 }
@@ -1647,8 +1647,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 }
 .profile-hero .sumo-hero-country{
   display:inline-block;padding:3px 8px;
-  border:1px solid rgba(238,222,210,.35);border-radius:4px;
-  color:#e8dcda;background:rgba(33,25,28,.3);
+  border:1px solid rgba(217,224,231,.35);border-radius:4px;
+  color:#dde1e5;background:rgba(25,29,33,.3);
   font:700 12px/1.2 'Inter',system-ui,sans-serif;
   letter-spacing:.015em;
 }
@@ -1688,24 +1688,24 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .bout-head.is-portrait .sumo-photo>img{position:absolute;inset:0;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top!important;transform:none!important;
   -webkit-mask-image:linear-gradient(#000 0 55%,transparent 96%),linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);-webkit-mask-composite:source-in;
   mask-image:linear-gradient(#000 0 55%,transparent 96%),linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);mask-composite:intersect}
-.bout-head .sumo-photo>span{font-size:22px;color:#b9b0a4}
+.bout-head .sumo-photo>span{font-size:22px;color:#a5aeb8}
 .bout-head .sumo-photo>small{display:none}
 .bout-id{display:flex;flex-direction:column;flex:1 1 0;min-width:0;line-height:1.15;padding-bottom:0;margin-bottom:-4px;position:relative;z-index:1;text-shadow:0 0 5px #fff,0 0 5px #fff}
 .bout-side.left .bout-id{margin-left:-14px}
 .bout-side.right .bout-id{margin-right:-14px}
 .bout-side.right .bout-id{align-items:flex-end}
 .bout-name{font:800 20px/1.02 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em;text-transform:uppercase;color:var(--ink,#14181c);text-decoration:none;overflow-wrap:anywhere;hyphens:none}
-.bout-id small{font-size:12px;font-weight:600;color:#5f5760;margin-top:3px}
+.bout-id small{font-size:12px;font-weight:600;color:#575c60;margin-top:3px}
 .bout-form{display:inline-flex;gap:2px;align-items:center}
-.bout-form i{display:block;width:9px;height:5px;border-radius:2px;background:#d9d2c7}
+.bout-form i{display:block;width:9px;height:5px;border-radius:2px;background:#cad0d6}
 .bout-form i.w{background:#1f8a4c}
 .bout-form i.l{background:#b3001b}
-.bout-side.is-loser .bout-name,.bout-side.is-loser .bout-id small{color:#5f5760}
+.bout-side.is-loser .bout-name,.bout-side.is-loser .bout-id small{color:#575c60}
 .bout-side.is-loser .bout-photo{opacity:.7}
 .bout-side.is-winner .bout-name{box-shadow:inset 0 -3px 0 var(--gold)}
-.bout-mid{grid-area:m;align-self:center;text-align:center;font-size:12px;font-weight:800;color:#a6820f}
-.bout-vs{font-size:10px;letter-spacing:.08em;color:#5f5760}
-.bout-stats{grid-area:s;margin:0;padding:7px 0 5px;border-top:1px solid #efe9df;display:grid;gap:4px}
+.bout-mid{grid-area:m;align-self:center;text-align:center;font-size:12px;font-weight:800;color:#505a65}
+.bout-vs{font-size:10px;letter-spacing:.08em;color:#575c60}
+.bout-stats{grid-area:s;margin:0;padding:7px 0 5px;border-top:1px solid #e2e7ec;display:grid;gap:4px}
 .bout-stats>div{display:grid;grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);align-items:center;gap:6px}
 .bout-stats dd{margin:0;font:700 13px/1.25 'Inter',sans-serif;color:#14181c}
 .bout-stats dd.l{text-align:left}
@@ -1714,13 +1714,13 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .bout-stats .is-basho dd.r{justify-content:flex-end}
 .bout-stats .is-basho b{font:900 22px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em}
 .bout-stats .is-basho dt{color:#14181c}
-.bout-stats dt{font:700 10px/1 'Inter',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#6d646e;text-align:center;white-space:nowrap}
-.bout-foot{grid-area:f;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding-top:4px;border-top:1px solid #efe9df;font-size:12.5px;color:#4a434b}
+.bout-stats dt{font:700 10px/1 'Inter',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#64696e;text-align:center;white-space:nowrap}
+.bout-foot{grid-area:f;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding-top:4px;border-top:1px solid #e2e7ec;font-size:12.5px;color:#43474b}
 .bout-verdict{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bout-verdict a{color:inherit;text-decoration:underline;text-decoration-color:#b3001b66;text-underline-offset:2px}
 .bout-h2h{flex:none;display:inline-flex;align-items:center;min-height:36px;padding:0 4px;font-weight:800;color:var(--red);text-decoration:none;white-space:nowrap}
-.bout-compare{border-top:1px solid #efe9df;background:#faf7f1}
-.bout-compare>summary{cursor:pointer;list-style:none;padding:0 12px;min-height:40px;display:flex;align-items:center;font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#4a434b}
+.bout-compare{border-top:1px solid #e2e7ec;background:#f3f5f8}
+.bout-compare>summary{cursor:pointer;list-style:none;padding:0 12px;min-height:40px;display:flex;align-items:center;font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#43474b}
 .bout-compare>summary::-webkit-details-marker{display:none}
 .bout-compare>summary::after{content:'+';margin-left:auto;font-size:18px;color:var(--red)}
 .bout-compare[open]>summary::after{content:'\2212'}
@@ -1749,8 +1749,8 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 }
 .sumo-h2h-hero .sumo-match-person>:not(.sumo-hero-flag){position:relative;z-index:1}
 .sumo-h2h-hero .sumo-hero-country{
-  display:inline-block;padding:3px 8px;border:1px solid rgba(238,222,210,.35);border-radius:4px;
-  color:#e8dcda;background:rgba(33,25,28,.3);font:700 12px/1.2 'Inter',system-ui,sans-serif;letter-spacing:.015em;
+  display:inline-block;padding:3px 8px;border:1px solid rgba(217,224,231,.35);border-radius:4px;
+  color:#dde1e5;background:rgba(25,29,33,.3);font:700 12px/1.2 'Inter',system-ui,sans-serif;letter-spacing:.015em;
 }
 
 /* Stage 3: profile hero band and compact rankings rows. Final overrides, kept
@@ -1760,7 +1760,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .profile-hero>.profile-icon.sumo-photo.xl{min-height:380px!important;max-height:620px!important}
 .profile-hero .sumo-current-record{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
 .profile-hero .sumo-current-record b{display:block;font:900 40px/1 'Barlow Condensed',Impact,sans-serif;font-variant-numeric:tabular-nums}
-.profile-hero .sumo-current-record small{display:block;margin-top:3px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#d8cecc}
+.profile-hero .sumo-current-record small{display:block;margin-top:3px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cdd2d7}
 @media(max-width:950px){.profile-hero{grid-template-columns:240px minmax(0,1fr)!important}.profile-hero>.profile-icon.sumo-photo.xl{min-height:320px!important;max-height:380px!important}}
 @media(max-width:650px){
   .profile-hero{grid-template-columns:104px minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;column-gap:12px!important;row-gap:12px!important;padding:14px!important;align-items:start}
@@ -1782,7 +1782,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
   .sumo-rank-card>.sumo-rank-person .profile-icon{width:38px;height:46px;min-height:0;flex:none}
   .sumo-rank-card>.sumo-rank-person .sumo-photo>small{display:none}
   .sumo-rank-card>.sumo-rank-person a{font:800 20px/1.1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;text-decoration:none;color:var(--ink,#14181c)}
-  .sumo-rank-card>.sumo-rank-person small{display:block;font-size:12px;color:#5f5760}
+  .sumo-rank-card>.sumo-rank-person small{display:block;font-size:12px;color:#575c60}
   .sumo-rank-card>.sumo-rank-record{grid-area:rec;align-self:center;text-align:right;white-space:nowrap;font-size:14px}
   .sumo-rank-card>.sumo-rank-published{grid-area:pub;font-size:13px}
   .sumo-rank-card>.sumo-rank-movement{grid-area:mv;justify-self:end}
@@ -1799,7 +1799,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .stage-name{margin:0;font:900 clamp(22px,6.4vw,40px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:normal;word-break:normal;hyphens:none}
 .stage-name.right{text-align:right}
 .stage-name a{color:#14181c;text-decoration:none}
-.stage-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5f5760;text-align:center;padding-bottom:4px}
+.stage-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#575c60;text-align:center;padding-bottom:4px}
 .stage-rule{height:3px;margin:8px 0 0;background:linear-gradient(90deg,var(--lc) 0 50%,var(--rc) 50% 100%)}
 .stage-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"l r" "s s";gap:0 4px;align-items:end}
 .stage-photo{display:block;position:relative;width:100%;aspect-ratio:2/3;max-height:560px;text-decoration:none;
@@ -1808,16 +1808,16 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .stage-photo>.profile-icon.sumo-photo{position:absolute!important;inset:0;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;margin:0!important;border:0!important;border-radius:0!important;aspect-ratio:auto!important;background:transparent!important;isolation:auto!important;overflow:visible!important}
 .stage-photo .sumo-photo>img{position:absolute;inset:0;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important;
   mix-blend-mode:multiply;filter:brightness(1.2) contrast(1.12);-webkit-mask-image:linear-gradient(#000 0 88%,transparent 100%),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(#000 0 88%,transparent 100%),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-composite:intersect}
-.stage-photo .is-cutout>img{mix-blend-mode:normal!important;filter:drop-shadow(0 1px 1.5px rgba(40,30,25,.45)) drop-shadow(0 6px 10px rgba(40,30,25,.18))!important;-webkit-mask-image:none!important;mask-image:none!important;object-fit:contain!important;object-position:center bottom!important}
-.stage-credit{flex-basis:100%;order:3;font-size:11px;color:#6b6168}
+.stage-photo .is-cutout>img{mix-blend-mode:normal!important;filter:drop-shadow(0 1px 1.5px rgba(27,32,38,.45)) drop-shadow(0 6px 10px rgba(27,32,38,.18))!important;-webkit-mask-image:none!important;mask-image:none!important;object-fit:contain!important;object-position:center bottom!important}
+.stage-credit{flex-basis:100%;order:3;font-size:11px;color:#61666b}
 .stage-photo.is-loser{opacity:.7}
 .stage-stats{grid-area:s;margin:10px 0 0;padding:0}
-.stage-stats>div{display:grid;grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr);gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #e6dfd3}
+.stage-stats>div{display:grid;grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr);gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #d5dce4}
 .stage-stats dt{margin:0;text-align:center;font:800 12px/1.2 'Barlow Condensed',Impact,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#14181c}
 .stage-stats dd{margin:0;font-size:15px;font-weight:500;min-width:0;overflow-wrap:anywhere}
 .stage-stats dd.l{color:var(--lc);text-align:left}
 .stage-stats dd.r{color:var(--rc);text-align:right}
-.stage-foot{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;margin:8px 0 0;font-size:13px;color:#4a434b}
+.stage-foot{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;margin:8px 0 0;font-size:13px;color:#43474b}
 .stage-foot a{color:var(--red);font-weight:800;text-decoration:none}
 @media(min-width:900px){
   .stage-body{grid-template-columns:minmax(220px,1fr) minmax(300px,420px) minmax(220px,1fr);grid-template-areas:"l s r";gap:0 18px;align-items:center}
@@ -1832,18 +1832,18 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 
 /* Day flow: released-ahead notice and the home centre stage. */
 .sumo-centre-stage{margin:0 0 28px}
-.sumo-released-note{margin:0 0 10px;padding:9px 12px;background:#fff7dd;border:1px solid #ecd58a;border-radius:8px;font-size:13.5px}
+.sumo-released-note{margin:0 0 10px;padding:9px 12px;background:#fff7dd;border:1px solid #b3bbc3;border-radius:8px;font-size:13.5px}
 .sumo-released-note a{color:var(--red);font-weight:800}
 .sumo-released{background:var(--gold)!important;color:#14181c!important;border:0;font-weight:800}
 /* Bouts page: the predictor's chance under each bout (28 Nov 2026) */
-.bout-chance{display:flex;align-items:center;gap:10px;min-height:44px;margin:6px 0 0;padding:0 12px;border-radius:10px;background:#f4efe7;color:#14181c;text-decoration:none;font:500 13.5px 'Inter',sans-serif}
+.bout-chance{display:flex;align-items:center;gap:10px;min-height:44px;margin:6px 0 0;padding:0 12px;border-radius:10px;background:#eaeef1;color:#14181c;text-decoration:none;font:500 13.5px 'Inter',sans-serif}
 .bout-chance b{font-weight:800}
 .bout-chance em{font-style:normal;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-left:auto}
 .bout-chance.is-hit em{color:#1d6b41}
-.bout-chance.is-miss em{color:#a32a25}
+.bout-chance.is-miss em{color:#a32538}
 .bout-chance i{font-style:normal;font-weight:800;color:#b3001b}
 .bout-chance:not(:has(em)) i{margin-left:auto}
-.bout-chance:hover{background:#ece5db}
+.bout-chance:hover{background:#dde3ea}
 /* Compact bout rows on profiles (28 Nov 2026): one ~60 px line per bout, details one tap deeper.
    Result chip · day · face + name (rank at that basho · technique) · H2H · chevron. */
 .sumo-results-desk.is-compact{display:grid;grid-template-columns:1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
@@ -1851,9 +1851,9 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-results-desk.is-compact .sumo-ed-row.is-compact>.sumo-ed-row-main{display:grid;grid-template-columns:30px 40px minmax(0,1fr) auto 14px;grid-template-areas:none;align-items:center;column-gap:10px;row-gap:0;min-height:60px;padding:8px 12px;cursor:pointer;list-style:none;font-size:14px}
 .sumo-ed-row.is-compact>summary::-webkit-details-marker{display:none}
 .sumo-ed-row.is-compact>summary::marker{content:""}
-.sumo-ed-row.is-compact .sumo-ed-result{grid-area:auto;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:800 14px 'Inter',sans-serif;background:#eee8df;color:var(--muted)}
+.sumo-ed-row.is-compact .sumo-ed-result{grid-area:auto;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:800 14px 'Inter',sans-serif;background:#e1e6ec;color:var(--muted)}
 .sumo-ed-row.is-compact .sumo-ed-result.win{background:#dcefe3;color:#1d6b41}
-.sumo-ed-row.is-compact .sumo-ed-result.loss{background:#fbe3e4;color:#a32a25}
+.sumo-ed-row.is-compact .sumo-ed-result.loss{background:#fbe3e7;color:#a32538}
 .sumo-ed-row.is-compact .sumo-ed-result.scheduled{font-size:12px;width:auto;padding:0 4px}
 .sumo-ed-row.is-compact .sumo-ed-date{grid-area:auto;display:flex;flex-direction:column;line-height:1.1;font-size:14px}
 .sumo-ed-row.is-compact .sumo-ed-date strong{font:800 15px 'Inter',sans-serif;font-variant-numeric:tabular-nums}
@@ -1866,9 +1866,9 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 .sumo-ed-row.is-compact .sumo-ed-tech{grid-area:auto;display:block;text-align:left;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sumo-ed-row.is-compact .sumo-ed-tech a{color:var(--muted);font-weight:600}
 .sumo-ed-row.is-compact .sumo-ed-h2h{grid-area:auto;text-align:right;white-space:nowrap}
-.sumo-ed-row.is-compact .sumo-ed-h2h a{display:inline-flex;flex-direction:column;align-items:flex-end;justify-content:center;min-height:44px;min-width:44px;text-decoration:none;color:#84243A;font:800 14px 'Inter',sans-serif}
+.sumo-ed-row.is-compact .sumo-ed-h2h a{display:inline-flex;flex-direction:column;align-items:flex-end;justify-content:center;min-height:44px;min-width:44px;text-decoration:none;color:#842432;font:800 14px 'Inter',sans-serif}
 .sumo-ed-row.is-compact .sumo-ed-h2h small{font:700 12px 'Inter',sans-serif;color:var(--muted);letter-spacing:.04em}
-.sumo-ed-more::after{content:"";display:block;width:8px;height:8px;border-right:2px solid #b7aca0;border-bottom:2px solid #b7aca0;transform:rotate(45deg);margin-top:-4px;transition:transform .15s}
+.sumo-ed-more::after{content:"";display:block;width:8px;height:8px;border-right:2px solid #a1acb6;border-bottom:2px solid #a1acb6;transform:rotate(45deg);margin-top:-4px;transition:transform .15s}
 .sumo-ed-row.is-compact[open] .sumo-ed-more::after{transform:rotate(225deg);margin-top:4px}
 .sumo-ed-row.is-compact>.sumo-details-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;padding:4px 12px 12px 92px;font-size:13px;color:var(--muted);background:#fff}
 @media(min-width:1000px){
@@ -1884,7 +1884,7 @@ button,input,select,summary{font-size:16px;line-height:1.5}
 /* Details panel: one text size; desktop uses two newspaper columns so an opened row only pushes its own column. */
 .sumo-ed-row.is-compact>.sumo-details-grid,.sumo-ed-row.is-compact>.sumo-details-grid *{font-size:13px;line-height:1.45;margin:0}
 .sumo-ed-row.is-compact>.sumo-details-grid{grid-template-columns:1fr;gap:2px}
-.sumo-ed-row.is-compact .sumo-ed-src{color:#9a8f86}
+.sumo-ed-row.is-compact .sumo-ed-src{color:#86909a}
 @media(min-width:1000px){
   .sumo-results-desk.is-compact{display:block;column-count:2;column-gap:0;column-rule:1px solid var(--border)}
   .sumo-results-desk.is-compact .sumo-ed-row.is-compact{break-inside:avoid;display:block}

@@ -1,7 +1,7 @@
 /* BEFN Sumo: one responsive face-off and shared comparison grid.
    Presentation-only: underlying source records and provenance stay unchanged. */
 .sumo-daily-page{min-width:0}
-.sumo-daily-kicker{font-size:12px;font-weight:800;letter-spacing:.05em;color:#84243a;text-transform:uppercase}
+.sumo-daily-kicker{font-size:12px;font-weight:800;letter-spacing:.05em;color:#842432;text-transform:uppercase}
 .sumo-daily-heading{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:8px 0 10px}
 .sumo-daily-heading h1{font:900 clamp(34px,4vw,54px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;margin:0}
 .sumo-daily-heading p{font-size:14px;color:var(--muted);margin:8px 0 0}
@@ -11,46 +11,46 @@
 .sumo-daily-controls .division-tabs .pill{flex:0 1 145px}
 .sumo-daily-calendar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .sumo-daily-calendar label{font-size:14px;font-weight:750}
-.sumo-daily-calendar select,.sumo-daily-calendar button{min-height:44px;border:1px solid #9d9289;background:#fff;color:#14181c;padding:8px 12px;border-radius:6px;font:700 14px 'Inter',sans-serif}
+.sumo-daily-calendar select,.sumo-daily-calendar button{min-height:44px;border:1px solid #89939d;background:#fff;color:#14181c;padding:8px 12px;border-radius:6px;font:700 14px 'Inter',sans-serif}
 .sumo-daily-calendar button{background:#14181c;color:#fff}
 .sumo-daily-date{margin:4px 0 16px;font-size:14px;font-weight:800;color:#14181c;border-top:1px solid var(--border);padding-top:12px}
 .sumo-daily-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:15px}
 .sumo-daily-card{background:#fff;border:1px solid var(--border);border-top:4px solid var(--gold);border-radius:7px;overflow:hidden;min-width:0;box-shadow:none}
-.sumo-daily-card-header{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#f2ece4;border-bottom:1px solid var(--border);padding:7px 14px;font-size:12px;font-weight:800}
-.sumo-daily-status{color:#84243a}.sumo-daily-status.completed{color:#17664f}
+.sumo-daily-card-header{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#e7ebef;border-bottom:1px solid var(--border);padding:7px 14px;font-size:12px;font-weight:800}
+.sumo-daily-status{color:#842432}.sumo-daily-status.completed{color:#17664f}
 .sumo-daily-match-row{display:grid;grid-template-columns:minmax(130px,20%) minmax(0,1fr) minmax(95px,13%) minmax(0,1fr) minmax(130px,20%);min-height:255px;min-width:0}
-.sumo-daily-photo{min-width:0;overflow:hidden;background:#e5dacb}
+.sumo-daily-photo{min-width:0;overflow:hidden;background:#cfd8e1}
 .sumo-daily-photo .sumo-photo{height:100%!important;min-height:255px!important;width:100%!important;aspect-ratio:auto!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:hidden}
 .sumo-daily-photo .sumo-photo img{display:block;width:100%;height:100%;object-fit:cover!important;object-position:center top!important;transform:none!important}
 .sumo-daily-facts{padding:16px clamp(9px,1.3vw,20px);min-width:0}
 .sumo-daily-facts h2{font:900 clamp(23px,2.5vw,34px)/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere;margin:0 0 5px}
 .sumo-daily-facts h2 a{text-decoration:none;color:#14181c}
-.sumo-daily-facts h2 a:hover{text-decoration:underline;text-decoration-color:#84243a}
+.sumo-daily-facts h2 a:hover{text-decoration:underline;text-decoration-color:#842432}
 .sumo-daily-origin{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:650;color:var(--muted);min-height:21px;margin-bottom:9px}
 .sumo-daily-origin .sumo-country{font-size:18px}
 .sumo-daily-ranks{display:grid;gap:5px;font-size:14px}
 .sumo-daily-ranks strong{font-weight:800}.sumo-daily-ranks small{font-size:13px;color:var(--muted)}
 .sumo-daily-score{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:7px;padding:10px 6px;border-inline:1px solid var(--border);min-width:0}
-.sumo-daily-score-label{font:800 17px/1.1 'Barlow Condensed',Impact,sans-serif;color:#645c5e;text-transform:uppercase}
-.sumo-daily-score strong{font:900 clamp(36px,4.8vw,66px)/1 'Barlow Condensed',Impact,sans-serif;color:#a87d1d;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sumo-daily-score-label{font:800 17px/1.1 'Barlow Condensed',Impact,sans-serif;color:#5c6064;text-transform:uppercase}
+.sumo-daily-score strong{font:900 clamp(36px,4.8vw,66px)/1 'Barlow Condensed',Impact,sans-serif;color:#57626e;white-space:nowrap;font-variant-numeric:tabular-nums}
 .sumo-daily-score small{color:var(--muted);font-size:12px;line-height:1.3}
-.sumo-daily-score a{font-size:13px;font-weight:800;color:#84243a;text-underline-offset:3px}
-.sumo-daily-outcome{margin:0;background:#f2eee6;padding:10px 14px;font-size:15px;font-weight:800;line-height:1.4;text-align:center}
-.sumo-daily-outcome.completed{color:#17664f}.sumo-daily-outcome.pending{color:#6a5355}
+.sumo-daily-score a{font-size:13px;font-weight:800;color:#842432;text-underline-offset:3px}
+.sumo-daily-outcome{margin:0;background:#e8ecf0;padding:10px 14px;font-size:15px;font-weight:800;line-height:1.4;text-align:center}
+.sumo-daily-outcome.completed{color:#17664f}.sumo-daily-outcome.pending{color:#535e6a}
 .sumo-comparison{margin:0;background:#fff;color:#14181c;font-variant-numeric:tabular-nums}
-.sumo-comparison-head,.sumo-comparison-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(125px,.8fr) minmax(0,1fr);align-items:center;gap:12px;padding:8px clamp(12px,2vw,22px);border-bottom:1px solid #e9e1d8}
-.sumo-comparison-head{font-size:13px;font-weight:850;background:#f8f4ef}
+.sumo-comparison-head,.sumo-comparison-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(125px,.8fr) minmax(0,1fr);align-items:center;gap:12px;padding:8px clamp(12px,2vw,22px);border-bottom:1px solid #dae0e7}
+.sumo-comparison-head{font-size:13px;font-weight:850;background:#f1f3f6}
 .sumo-comparison-row{font-size:14px;min-height:38px}
 .sumo-comparison-head>:last-child,.sumo-comparison-row>:last-child{text-align:right}
-.sumo-comparison-row>span{text-align:center;color:#554c4d;font-weight:750}
+.sumo-comparison-row>span{text-align:center;color:#4c5055;font-weight:750}
 .sumo-comparison-row strong{font-size:15px;font-weight:850}
 .sumo-daily-history{display:grid;grid-template-columns:140px minmax(0,1fr);align-items:stretch;border-top:1px solid var(--border);padding:11px 12px;gap:12px}
 .sumo-daily-history-title{display:flex;flex-direction:column;justify-content:center;border-right:3px solid var(--gold);padding:4px 10px 4px 2px;font:900 21px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
 .sumo-daily-history-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;min-width:0}
-.sumo-daily-meeting{display:flex;flex-direction:column;gap:4px;justify-content:center;align-items:center;text-align:center;padding:9px 5px;border:1px solid var(--border);border-radius:5px;background:#f8f5ef;min-width:0}
+.sumo-daily-meeting{display:flex;flex-direction:column;gap:4px;justify-content:center;align-items:center;text-align:center;padding:9px 5px;border:1px solid var(--border);border-radius:5px;background:#f1f3f6;min-width:0}
 .sumo-daily-meeting strong{font-size:12px;line-height:1.2;font-weight:850;color:#14181c;overflow-wrap:anywhere}
-.sumo-daily-meeting span{font-size:12px;line-height:1.3;color:#4e4649}
-.sumo-daily-meeting em{font-size:13px;font-weight:850;color:#84243a;font-style:normal;overflow-wrap:anywhere;line-height:1.25}
+.sumo-daily-meeting span{font-size:12px;line-height:1.3;color:#464a4e}
+.sumo-daily-meeting em{font-size:13px;font-weight:850;color:#842432;font-style:normal;overflow-wrap:anywhere;line-height:1.25}
 .sumo-daily-nohistory{font-size:14px;color:var(--muted);padding:14px}
 .sumo-daily-result-note{font-size:13px;color:var(--muted);padding:10px 14px;margin:0}
 .sumo-daily-empty{padding:18px;background:#fff;border:1px solid var(--border);font-size:14px}
@@ -69,7 +69,7 @@
  .sumo-daily-facts.end{grid-area:factsB}
  .sumo-daily-facts{padding:12px}
  .sumo-daily-facts h2{font-size:clamp(23px,4.5vw,31px)}
- .sumo-daily-score{grid-area:score;flex-direction:row;gap:12px;justify-content:center;border-inline:0;border-block:1px solid var(--border);background:#f4eee6;padding:9px}
+ .sumo-daily-score{grid-area:score;flex-direction:row;gap:12px;justify-content:center;border-inline:0;border-block:1px solid var(--border);background:#e9edf1;padding:9px}
  .sumo-daily-score strong{font-size:37px}
  .sumo-daily-history{grid-template-columns:minmax(0,1fr);gap:8px}
  .sumo-daily-history-title{border-right:0;border-left:3px solid var(--gold);padding:4px 9px}
@@ -114,7 +114,7 @@
 /* Source-mapped birthplace country flags: full-panel artwork behind readable identities. */
 .sumo-daily-facts {
   position:relative; isolation:isolate; overflow:hidden;
-  background:#f8f3e9;
+  background:#edf0f4;
 }
 .sumo-daily-facts>.sumo-flag-backdrop {
   position:absolute; inset:0; z-index:0; display:grid; place-items:center;
@@ -129,12 +129,12 @@
 }
 .sumo-daily-facts::after {
   content:""; position:absolute; inset:0; z-index:1;
-  background:linear-gradient(105deg,rgba(255,253,247,.83),rgba(255,251,245,.74));
+  background:linear-gradient(105deg,rgba(255,253,247,.83),rgba(249,250,251,.74));
   pointer-events:none;
 }
 .sumo-daily-facts-content {position:relative; z-index:2; min-width:0;}
 .sumo-daily-facts h2 a {color:#14181c; text-decoration:none;}
-.sumo-daily-origin {color:#423a3c; font-weight:800;}
+.sumo-daily-origin {color:#3a3e42; font-weight:800;}
 .sumo-daily-ranks strong {color:#14181c;}
 .sumo-comparison-row strong {overflow-wrap:anywhere;line-height:1.3;}
 .sumo-comparison-row:has(>span:first-of-type) {min-width:0;}

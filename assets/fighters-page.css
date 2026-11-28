@@ -1,6 +1,6 @@
 /* Fighters page, "Fight night" look (Phase 1 step 5). Scoped to #main .fighters-unified.
    Loaded after every other stylesheet; legacy rules use ID selectors, hence !important. */
-#main .fighters-unified{--fp-red:#b3001b;--fp-ink:#14181c;--fp-cream:#eef0f2;--fp-line:#e3dccf;--fp-mute:#5c5660;max-width:1120px;margin:0 auto;padding:20px 16px 56px}
+#main .fighters-unified{--fp-red:#b3001b;--fp-ink:#14181c;--fp-cream:#eef0f2;--fp-line:#d1d9e1;--fp-mute:#5c5660;max-width:1120px;margin:0 auto;padding:20px 16px 56px}
 #main .fighters-unified .section-heading{margin:0 0 14px!important}
 #main .fighters-unified .section-heading h1{all:unset;display:block;box-sizing:border-box;transform:none!important;filter:none!important;background:none!important;-webkit-text-fill-color:currentColor!important;-webkit-text-stroke:0!important;font:900 clamp(34px,5vw,52px)/.95 'Barlow Condensed',Impact,sans-serif!important;text-transform:uppercase!important;font-style:normal!important;color:var(--fp-ink)!important;padding:0 0 10px!important;border-bottom:4px solid var(--fp-red)!important;width:max-content;max-width:100%}
 #main .fighters-unified .section-heading h1::after{display:none!important;content:none!important}
@@ -20,7 +20,7 @@
 #main .fighters-unified #fighterGrid .fighter-image{position:relative;height:clamp(150px,18vw,200px)!important;background:var(--fp-cream)!important;border-bottom:3px solid var(--fp-red)}
 #main .fighters-unified #fighterGrid .fighter-image::after{display:none!important}
 #main .fighters-unified #fighterGrid .fighter-image img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 20%!important}
-#main .fighters-unified #fighterGrid .befn-portrait-fallback{background:linear-gradient(160deg,#f1eadd,#e6dccb)!important;color:var(--fp-ink)!important;display:grid;place-content:center;text-align:center;height:100%}
+#main .fighters-unified #fighterGrid .befn-portrait-fallback{background:linear-gradient(160deg,#e2e7ec,#d0d8e1)!important;color:var(--fp-ink)!important;display:grid;place-content:center;text-align:center;height:100%}
 #main .fighters-unified #fighterGrid .befn-portrait-fallback strong{font:900 clamp(44px,6vw,64px)/1 'Barlow Condensed',sans-serif!important;color:var(--fp-red)!important}
 #main .fighters-unified #fighterGrid .befn-portrait-fallback span{font:700 10px 'Inter',sans-serif!important;letter-spacing:.14em;text-transform:uppercase;color:var(--fp-mute)!important}
 #main .fighters-unified #fighterGrid .fighter-tag{position:absolute;left:10px;top:10px;background:var(--fp-ink)!important;color:#fff!important;border-radius:999px!important;padding:4px 10px!important;font:800 10px 'Inter',sans-serif!important;letter-spacing:.1em;text-transform:uppercase;z-index:2}

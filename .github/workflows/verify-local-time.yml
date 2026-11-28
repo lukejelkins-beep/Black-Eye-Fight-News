@@ -11,7 +11,7 @@ on:
       - 'assets/fight-film.js'
       - 'index.html'
       - 'assets/fighter-hover.js'
-      - 'tests/test-fighter-photo-close.cjs'
+      - 'tests/test-no-fighter-photo-popup.cjs'
       - 'sw.js'
   workflow_dispatch:
 jobs:
@@ -32,8 +32,8 @@ jobs:
           node --check assets/live-desk.inc.js
           node --check tests/test-local-time.cjs
           node --check assets/fighter-hover.js
-          node --check tests/test-fighter-photo-close.cjs
+          node --check tests/test-no-fighter-photo-popup.cjs
       - name: Test local time conversions and HTML scripts
         run: |
           node tests/test-local-time.cjs
-          node tests/test-fighter-photo-close.cjs
+          node tests/test-no-fighter-photo-popup.cjs

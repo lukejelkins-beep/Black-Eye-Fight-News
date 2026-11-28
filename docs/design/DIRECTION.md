@@ -17,8 +17,9 @@ Modern, fast and confident, in the spirit of the official UFC site: big photogra
 7. **Fast.** Images sized to their slot and lazy-loaded. No page loads data it does not show.
 
 ## Tokens (current)
-- **Blood and steel** (owner, 28 Nov 2026; replaces red/gold/cream): Blood red `#b3001b` (accent, active states; darker `#8f0016`) · Steel `#c5ccd3` (secondary highlight, where gold was) · Cool grey `#eef0f2` (page) · Gunmetal `#14181c` (text, dark bands) · Raised dark `#303437` (pills and chips on dark bands). Flags keep their real colours (Japan's red sun stays `#cf1824`).
+- **Blood and steel** (owner, 28 Nov 2026; replaces red/gold/cream): Blood red `#b3001b` (accent, active states; darker `#8f0016`) · Steel `#c5ccd3` (secondary highlight, where gold was) · Cool grey `#eef0f2` (page) · Gunmetal `#14181c` (text, dark bands) · Raised dark `#303437` (pills and chips on dark bands). Flags keep their real colours (Japan's red sun stays `#cf1824`). No warm creams, plums, browns or golds anywhere: neutrals are cool grey (hue 210).
 - Headlines and big numbers: **Oswald** 600–700, sentence case (owner, 28 Nov 2026, "Blood and steel"; was Unbounded). Body and UI: **Inter** (was DM Sans). Two families only. **Barlow Condensed** is being phased out of headings: until the site-wide theme ships, existing pages keep it. Russo One is still imported in `index.html` and is probably unused; remove it once confirmed.
+- Fighter names are plain text or a plain link: no photo pop-up and no dotted underline (owner, 28 Nov 2026).
 - Sport colours: boxing red (the blood red `#b3001b`), MMA amber `#e0a400`, sumo blue `#2a4a8f`.
 - Radius 8–12 px. One shadow level. Spacing in multiples of 4.
 

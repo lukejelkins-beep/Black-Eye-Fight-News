@@ -6,7 +6,7 @@
  * and headings are sentence case. Posters, photos and the top bar stay dark on purpose. */
 :root{
   --display:'Oswald','Arial Black',system-ui,sans-serif;
-  --t-ink:#14181c;--t-red:#b3001b;--t-gold:#c5ccd3;--t-cream:#eef0f2;--t-card:#fff;--t-mute:#5b565d;--t-line:#e5e1d8;
+  --t-ink:#14181c;--t-red:#b3001b;--t-gold:#c5ccd3;--t-cream:#eef0f2;--t-card:#fff;--t-mute:#5b565d;--t-line:#d8dee5;
   --sport-boxing:#b3001b;--sport-mma:#e0a400;--sport-sumo:#2a4a8f;
 }
 
@@ -73,17 +73,17 @@ em.sb-score,.result-score em{font-family:var(--display)!important;font-weight:80
 .np-head{border-left:4px solid var(--t-red)}
 .np-head p,.np-note,.np-updated,.np-intl-original{color:var(--t-mute)}
 .np-updated span,.np-coverage{color:var(--t-red)}
-.np-chip{background:#ece7dc;color:var(--t-ink)}
+.np-chip{background:#dee4ea;color:var(--t-ink)}
 .np-chip-role{background:var(--t-gold);color:var(--t-ink)}
 .np-chip-lang{background:var(--t-red);color:#fff}
 .np-tag{color:var(--t-red)}
 .np-lead-meta,.np-row-meta{color:var(--t-mute)}
 .np-row{border-top-color:var(--t-line)}
 .np-intl-card a{background:var(--t-card);box-shadow:0 1px 0 rgba(17,16,19,.06)}
-.np-photo{background:repeating-linear-gradient(135deg,#d9d2c5 0 12px,#e6e0d4 12px 24px)}
+.np-photo{background:repeating-linear-gradient(135deg,#c9cfd5 0 12px,#d6dde4 12px 24px)}
 /* A lead with a photo keeps its photo overlay (white text on the picture). A lead without one is a white card. */
 .np-lead{color:#fff}
-.np-lead .np-lead-meta{color:#e6dfe2}
+.np-lead .np-lead-meta{color:#dfe2e6}
 .np-lead .np-chip{background:rgba(17,16,19,.72);color:#fff}
 .np-lead .np-chip-role{background:var(--t-gold);color:var(--t-ink)}
 .np-lead .np-coverage{color:var(--t-gold)}
@@ -91,7 +91,7 @@ em.sb-score,.result-score em{font-family:var(--display)!important;font-weight:80
 .np-lead:has(.np-photo-empty) .np-lead-link::after{display:none}
 .np-lead:has(.np-photo-empty) .np-lead-title,.np-lead:has(.np-photo-empty) .np-lead-meta{color:var(--t-ink)}
 .np-lead:has(.np-photo-empty) .np-lead-meta{color:var(--t-mute)}
-.np-lead:has(.np-photo-empty) .np-chip{background:#ece7dc;color:var(--t-ink)}
+.np-lead:has(.np-photo-empty) .np-chip{background:#dee4ea;color:var(--t-ink)}
 .np-lead:has(.np-photo-empty) .np-chip-role{background:var(--t-gold)}
 .np-lead:has(.np-photo-empty) .np-coverage{color:var(--t-red)}
 .np-lead:has(.np-photo-empty) .np-lead-copy{top:auto}
@@ -121,7 +121,7 @@ em.sb-score,.result-score em{font-family:var(--display)!important;font-weight:80
 .sumo-page-head h1{color:var(--t-ink)!important}
 .sumo-page-head p{color:var(--t-mute)!important}
 .facts-feature-main{background:var(--sport-sumo)!important}
-.directory-card .directory-upper{background:#ece7dc!important}
+.directory-card .directory-upper{background:#dee4ea!important}
 
 /* ---- Older page-specific heading rules use ID selectors with !important; match them here (this file loads last) ---- */
 html body #main .section-heading h1,html body #main .section-heading h2,html body #main .fighters-unified .section-heading h1,

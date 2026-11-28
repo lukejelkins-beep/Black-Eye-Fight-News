@@ -1,6 +1,6 @@
 /* Home landing page (design D, owner-approved 22 Nov 2026): cream page, Oswald headings,
  * Inter body, one column per sport. Scoped to .lp so no other page changes. */
-#main .lp{--lp-ink:#14181c;--lp-red:#b3001b;--lp-gold:#c5ccd3;--lp-cream:#eef0f2;--lp-mute:#5b565d;--lp-line:#e5e1d8;--lp-display:'Oswald','Arial Black',system-ui,sans-serif;
+#main .lp{--lp-ink:#14181c;--lp-red:#b3001b;--lp-gold:#c5ccd3;--lp-cream:#eef0f2;--lp-mute:#5b565d;--lp-line:#d8dee5;--lp-display:'Oswald','Arial Black',system-ui,sans-serif;
  font-family:'Inter',system-ui,sans-serif;color:var(--lp-ink);display:flex;flex-direction:column;gap:40px;padding:8px 0 24px}
 #main .lp a{color:inherit;text-decoration:none}
 #main .lp h2,#main .lp h3{font-family:var(--lp-display);font-weight:800;letter-spacing:-.03em;text-transform:none;margin:0;color:var(--lp-ink);-webkit-text-fill-color:var(--lp-ink);background:none;transform:none;font-style:normal}
@@ -17,7 +17,7 @@
 /* Lead story and latest-result tile */
 #main .lp-top{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:24px;align-items:start}
 #main .lp-lead{display:flex;flex-direction:column;background:#fff;border-radius:12px;overflow:hidden}
-#main .lp-lead-photo{display:block;height:clamp(200px,28vw,340px);background:repeating-linear-gradient(135deg,#d9d2c5 0 12px,#e6e0d4 12px 24px)}
+#main .lp-lead-photo{display:block;height:clamp(200px,28vw,340px);background:repeating-linear-gradient(135deg,#c9cfd5 0 12px,#d6dde4 12px 24px)}
 #main .lp-lead-photo img{width:100%;height:100%;object-fit:cover;display:block}
 #main .lp-lead-copy{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:20px 22px 24px}
 #main .lp .lp-lead-title,#main .lp .lp-result-title{font-family:var(--lp-display)!important}
@@ -77,7 +77,7 @@
 #main .lp-latest-title{font-weight:700;font-size:15px;line-height:1.35;color:var(--lp-ink)}
 #main .lp-talk{background:var(--lp-ink);color:var(--lp-cream);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;margin-top:44px}
 #main .lp-talk .lp-kicker{color:var(--lp-gold)}
-#main .lp-talk p{margin:0;font-size:14px;line-height:1.5;color:#d6cfd2}
+#main .lp-talk p{margin:0;font-size:14px;line-height:1.5;color:#cfd2d6}
 
 @media (max-width:900px){
  #main .lp{gap:32px}
@@ -109,9 +109,9 @@
    plainly a tile: no face, no event, nothing a reader could take for a photograph. */
 #main .lp-tile{display:block;background:
  repeating-linear-gradient(135deg,rgba(255,255,255,.55) 0 10px,rgba(255,255,255,0) 10px 20px),
- linear-gradient(140deg,var(--lp-tile,#d9d2c5),#efeae0)}
-#main .lp-tile-boxing{--lp-tile:#edc3c6}
-#main .lp-tile-mma{--lp-tile:#f0d9a2}
+ linear-gradient(140deg,var(--lp-tile,#c9cfd5),#e2e8ed)}
+#main .lp-tile-boxing{--lp-tile:#edc3c9}
+#main .lp-tile-mma{--lp-tile:#c3c9cf}
 #main .lp-tile-sumo{--lp-tile:#bcc7e2}
 #main .lp-col-poster{height:150px}
 #main .lp-col-poster img{object-position:center 30%}

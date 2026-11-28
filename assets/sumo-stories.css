@@ -1,6 +1,6 @@
 /* BEFN Sumo Stories hub: dark page head, fact of the day (dark band), themed rails (cream cards).
    Oswald headings and Inter controls, as on the other Sumo pages (28 Nov 2026). */
-.sumo-stories{--st-red:#b3001b;--st-gold:#c5ccd3;--st-ink:#14181c;--st-band:#14181c;--st-line:#e2d9cf}
+.sumo-stories{--st-red:#b3001b;--st-gold:#c5ccd3;--st-ink:#14181c;--st-band:#14181c;--st-line:#d0d8e1}
 .sumo-stories .facts-top h1{font-weight:900}
 .sumo-stories .facts-top h1 em{color:var(--st-red)}
 .st-tabs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px}
@@ -15,15 +15,15 @@
 .st-today-text{display:grid;gap:10px;align-content:start}
 .st-bignum{font:800 clamp(56px,9vw,96px)/.9 Oswald,'Inter',sans-serif;letter-spacing:-.03em;color:var(--st-gold)}
 .st-today h2{font:800 clamp(20px,2.6vw,28px)/1.15 Oswald,'Inter',sans-serif;margin:0;max-width:28ch}
-.st-today p{margin:0;color:#b9aeb2;max-width:56ch}
-.st-today small{color:#b9aeb2;font-size:12px}
+.st-today p{margin:0;color:#aeb3b9;max-width:56ch}
+.st-today small{color:#aeb3b9;font-size:12px}
 .st-today-faces{display:flex;gap:10px}
-.st-face{width:clamp(84px,14vw,150px);aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#2a2226;display:grid;place-items:center}
+.st-face{width:clamp(84px,14vw,150px);aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#22262a;display:grid;place-items:center}
 .st-face img{width:100%;height:100%;object-fit:cover;object-position:top}
 .st-row{margin:0 0 30px}
 .st-rowhead{display:flex;justify-content:space-between;gap:12px;align-items:end;margin:0 0 12px;border-bottom:2px solid var(--st-ink);padding-bottom:8px}
 .st-rowhead h2{font:800 clamp(20px,2.4vw,26px)/1.15 Oswald,'Inter',sans-serif;letter-spacing:-.01em;margin:0}
-.st-rowhead span{font-size:13px;color:#6b6064}
+.st-rowhead span{font-size:13px;color:#60666b}
 .st-all{flex:none;padding:8px 14px;min-height:36px}
 .st-rail{display:grid;grid-auto-flow:column;grid-auto-columns:min(78%,290px);gap:12px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:8px}
 .st-rail>*{scroll-snap-align:start}
@@ -32,8 +32,8 @@
 .st-metric{font:800 40px/1 Oswald,'Inter',sans-serif;letter-spacing:-.02em;color:var(--st-red)}
 .st-metric.st-tag{font-size:20px;line-height:1.1;letter-spacing:.04em;text-transform:uppercase}
 .st-card h3{font:700 16px/1.25 Oswald,'Inter',sans-serif;margin:0}
-.st-card p{margin:0;font-size:14px;color:#5e5657;line-height:1.45}
-.st-card small{font-size:11px;color:#776d6c;margin-top:auto}
+.st-card p{margin:0;font-size:14px;color:#565a5e;line-height:1.45}
+.st-card small{font-size:11px;color:#6c7277;margin-top:auto}
 .st-card small a{color:var(--st-red)}
 .st-people{display:flex;flex-wrap:wrap;gap:6px}
 .st-people a{font:700 12px 'Inter',sans-serif;color:var(--st-ink);border:1px solid var(--st-line);border-radius:999px;padding:4px 9px;text-decoration:none}
@@ -58,10 +58,10 @@
 .sumo-stories .st-hero{background:#14181c;color:#fff;border-radius:12px;border-bottom:4px solid #2a4a8f;padding:22px 24px 18px;margin:0 0 20px;gap:6px}
 .sumo-stories .st-hero-kicker{font:800 12px/1.2 'Inter',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#c5ccd3}
 .sumo-stories .st-hero h1{font:800 clamp(24px,3vw,32px)/1.15 Oswald,'Inter',sans-serif;letter-spacing:-.01em;text-transform:none;color:#fff;margin:2px 0}
-.sumo-stories .st-hero p{color:#cfc7ca;font-size:15px}
-.sumo-stories .st-hero .facts-status{margin:8px 0 0;color:#b8b0b3}
-.sumo-stories .st-hero .facts-status b{background:#14181c;color:#c5ccd3;border:1px solid #3a3036;font-weight:800}
-.sumo-stories .st-hero .facts-status b.is-stale{background:#4a1d20;color:#ffd7d4}
+.sumo-stories .st-hero p{color:#c7cbcf;font-size:15px}
+.sumo-stories .st-hero .facts-status{margin:8px 0 0;color:#b0b4b8}
+.sumo-stories .st-hero .facts-status b{background:#14181c;color:#c5ccd3;border:1px solid #30353a;font-weight:800}
+.sumo-stories .st-hero .facts-status b.is-stale{background:#4a1d24;color:#ffd4da}
 .st-tabs>button[aria-pressed="true"],.st-presets button[aria-pressed="true"]{background:#14181c;color:#fff}
 .st-tabs .facts-find input{min-height:44px}
 .st-rowhead{border-bottom:3px solid #14181c}

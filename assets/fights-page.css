@@ -1,7 +1,7 @@
 /* Fights page, "Fight night" look (owner picked option C, 21 Nov 2026).
    Cream page, live text headings, compact rows, next big card first.
    Loaded after every other stylesheet; scoped to #main .fights-unified. */
-#main .fights-unified{--fp-red:#b3001b;--fp-ink:#14181c;--fp-cream:#eef0f2;--fp-line:#e3dccf;--fp-mute:#5c5660;max-width:1120px;margin:0 auto;padding:20px 16px 56px}
+#main .fights-unified{--fp-red:#b3001b;--fp-ink:#14181c;--fp-cream:#eef0f2;--fp-line:#d1d9e1;--fp-mute:#5c5660;max-width:1120px;margin:0 auto;padding:20px 16px 56px}
 #main .fights-unified .calendar-photo-heading{margin:0 0 14px!important}
 #main .fights-unified .calendar-photo-heading h1,
 #main .fights-unified #upcoming-cards-root .upcoming-list-heading,
@@ -41,7 +41,7 @@
 #main .fights-unified .upcoming-hero-fallback{display:none!important}
 #main .fights-unified .upcoming-hero-media img,
 #main .fights-unified .befn-result-thumb img{width:100%!important;height:100%!important;object-fit:cover;object-position:center top;display:block}
-#main .fights-unified .befn-result-thumb:not(:has(img:not([hidden]))){background:linear-gradient(135deg,#14181c,#2a1f27)!important}
+#main .fights-unified .befn-result-thumb:not(:has(img:not([hidden]))){background:linear-gradient(135deg,#14181c,#1f242a)!important}
 #main .fights-unified .upcoming-hero-content,
 #main .fights-unified .befn-result-summary-copy{display:grid!important;gap:3px;min-width:0;justify-items:start!important;justify-content:start!important;align-content:center;text-align:left!important;padding:0!important;margin:0!important}
 #main .fights-unified .upcoming-hero-title,
@@ -67,7 +67,7 @@
 #main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-hero-content{grid-area:copy;padding:14px 0 0 16px}
 #main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-row-chevron{grid-area:chev;align-self:end;color:#c5ccd3!important}
 #main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-hero-title{color:#fff!important;font-size:clamp(28px,4.4vw,44px)!important}
-#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead :is(.upcoming-hero-times,.upcoming-hero-location){color:#cfc8cf!important}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead :is(.upcoming-hero-times,.upcoming-hero-location){color:#c8cccf!important}
 #main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-row-kicker{color:#c5ccd3!important}
 #main .fights-unified .upcoming-list-group details.upcoming-event.is-lead .upcoming-expanded{background:#fff!important}
 @media(max-width:600px){
@@ -92,46 +92,46 @@
 @media(max-width:600px){#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-title{font-size:26px!important}}
 #main #upcoming-cards-root details.upcoming-event.is-lead,#main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{border-left:0!important;box-shadow:none!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead :is(.upcoming-hero-times,.upcoming-hero-times *,strong,b){color:#fff!important}
-#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-times{color:#cfc8cf!important}
+#main #upcoming-cards-root details.upcoming-event.is-lead .upcoming-hero-times{color:#c8cccf!important}
 /* ===== Expanded fight card: light, flat, same family as the rows ===== */
-#main #upcoming-cards-root details.upcoming-event>.upcoming-expanded{background:#fff!important;border:0!important;border-top:1px solid #ece6dc!important;border-radius:0 0 12px 12px!important;padding:12px 14px 14px!important;box-shadow:none!important}
-#main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar{background:none!important;border:0!important;padding:0 0 8px!important;display:flex;justify-content:space-between;align-items:baseline;color:#6b6468!important}
+#main #upcoming-cards-root details.upcoming-event>.upcoming-expanded{background:#fff!important;border:0!important;border-top:1px solid #dee4ea!important;border-radius:0 0 12px 12px!important;padding:12px 14px 14px!important;box-shadow:none!important}
+#main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar{background:none!important;border:0!important;padding:0 0 8px!important;display:flex;justify-content:space-between;align-items:baseline;color:#64686b!important}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar strong{font:700 15px/1 "Barlow Condensed",sans-serif!important;letter-spacing:.08em;text-transform:uppercase;color:#14181c!important}
-#main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar span{font:600 12px "Inter",sans-serif;color:#6b6468!important}
+#main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar span{font:600 12px "Inter",sans-serif;color:#64686b!important}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-tabs{display:flex!important;gap:6px;margin:0 0 12px!important;background:none!important;border:0!important;padding:0!important}
-#main #upcoming-cards-root .upcoming-expanded .result-card-tab{flex:0 0 auto;background:#eef0f2!important;color:#14181c!important;border:1px solid #e2dbcf!important;border-radius:999px!important;padding:6px 12px!important;font:700 12px "Inter",sans-serif!important;text-transform:uppercase;letter-spacing:.05em;box-shadow:none!important;display:inline-flex;gap:6px;align-items:center}
+#main #upcoming-cards-root .upcoming-expanded .result-card-tab{flex:0 0 auto;background:#eef0f2!important;color:#14181c!important;border:1px solid #d0d8e1!important;border-radius:999px!important;padding:6px 12px!important;font:700 12px "Inter",sans-serif!important;text-transform:uppercase;letter-spacing:.05em;box-shadow:none!important;display:inline-flex;gap:6px;align-items:center}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-tabs:has(>.result-card-tab:nth-child(2):last-child) .result-card-tab{flex:1 1 0;min-width:0;justify-content:center}
 #main #upcoming-cards-root .upcoming-expanded .result-card-tab small{opacity:.6}
 #main #upcoming-cards-root .upcoming-expanded .result-card-tab.is-active{background:#b3001b!important;border-color:#b3001b!important;color:#fff!important}
-#main #upcoming-cards-root .upcoming-expanded .upcoming-single-section{font:700 12px "Inter",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#6b6468;margin:0 0 10px}
+#main #upcoming-cards-root .upcoming-expanded .upcoming-single-section{font:700 12px "Inter",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#64686b;margin:0 0 10px}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-fights{display:grid;gap:8px;background:none!important;border:0!important;padding:0!important}
-#main #upcoming-cards-root .upcoming-expanded .result-bout.upcoming-bout{background:#fff!important;border:1px solid #e7e1d8!important;border-radius:12px!important;box-shadow:none!important;overflow:hidden;margin:0!important}
+#main #upcoming-cards-root .upcoming-expanded .result-bout.upcoming-bout{background:#fff!important;border:1px solid #d9e0e6!important;border-radius:12px!important;box-shadow:none!important;overflow:hidden;margin:0!important}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-bout.is-main-event{border-color:#b3001b!important;box-shadow:inset 3px 0 0 #b3001b!important}
 #main #upcoming-cards-root .upcoming-expanded .result-matchup{background:#fff!important;border:0!important;color:#14181c!important}
-#main #upcoming-cards-root .upcoming-expanded .result-matchup-vs-watermark{color:#f1ebe1!important;opacity:1!important}
+#main #upcoming-cards-root .upcoming-expanded .result-matchup-vs-watermark{color:#e4e9ee!important;opacity:1!important}
 #main #upcoming-cards-root .upcoming-expanded .result-contender-info strong,#main #upcoming-cards-root .upcoming-expanded .result-contender-info .fighter-mention{color:#14181c!important;font-weight:700}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-fighter-record{color:#b3001b!important;font-weight:700}
 #main #upcoming-cards-root .upcoming-expanded .result-photo{border:2px solid #c5ccd3!important;background:#eef0f2!important;box-shadow:none!important}
 #main #upcoming-cards-root .upcoming-expanded .upcoming-matchup-status{color:#8a8388!important;letter-spacing:.1em}
 #main #upcoming-cards-root .upcoming-expanded .result-featured-bout-label{background:#b3001b!important;color:#fff!important;border-radius:999px!important;padding:2px 10px!important}
-#main #upcoming-cards-root .upcoming-expanded .result-bout-detail{background:#eef0f2!important;border:0!important;border-top:1px solid #ece6dc!important;color:#4a4448!important;padding:8px 14px!important;font-weight:600}
-#main #upcoming-cards-root .upcoming-expanded .result-bout-division,#main #upcoming-cards-root .upcoming-expanded .result-bout-rounds{color:#4a4448!important}
-#main #upcoming-cards-root .upcoming-expanded details.befn-fight-snapshot{background:#fff!important;border:0!important;border-top:1px solid #ece6dc!important;border-radius:0!important;margin:0!important;box-shadow:none!important}
+#main #upcoming-cards-root .upcoming-expanded .result-bout-detail{background:#eef0f2!important;border:0!important;border-top:1px solid #dee4ea!important;color:#44474a!important;padding:8px 14px!important;font-weight:600}
+#main #upcoming-cards-root .upcoming-expanded .result-bout-division,#main #upcoming-cards-root .upcoming-expanded .result-bout-rounds{color:#44474a!important}
+#main #upcoming-cards-root .upcoming-expanded details.befn-fight-snapshot{background:#fff!important;border:0!important;border-top:1px solid #dee4ea!important;border-radius:0!important;margin:0!important;box-shadow:none!important}
 #main #upcoming-cards-root .upcoming-expanded details.befn-fight-snapshot>summary{background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#b3001b!important;font:700 12px "Inter",sans-serif!important;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px!important;min-height:0!important}
 #main #upcoming-cards-root .upcoming-expanded details.befn-fight-snapshot>summary span{color:#b3001b!important}
 #main #upcoming-cards-root .upcoming-expanded .result-matchup{background:#fff!important;background-image:none!important}
 #main #upcoming-cards-root .upcoming-expanded .result-matchup:is(:before,:after){display:none!important}
 #main #upcoming-cards-root .upcoming-expanded .result-matchup :is(.result-contender-info,.result-contender-info *,strong,.fighter-mention){color:#14181c!important;text-shadow:none!important}
 #main #upcoming-cards-root .upcoming-expanded .result-matchup .upcoming-fighter-record{color:#b3001b!important}
-#main #upcoming-cards-root .upcoming-expanded .result-matchup-vs-watermark{font-size:clamp(44px,8vw,64px)!important;color:#f3eee5!important;-webkit-text-stroke:0!important;z-index:0}
+#main #upcoming-cards-root .upcoming-expanded .result-matchup-vs-watermark{font-size:clamp(44px,8vw,64px)!important;color:#e8ecf0!important;-webkit-text-stroke:0!important;z-index:0}
 #main #upcoming-cards-root .upcoming-expanded .result-contender{position:relative;z-index:1}
 #main #upcoming-cards-root .upcoming-expanded .result-matchup::before,#main #upcoming-cards-root .upcoming-expanded .result-matchup::after{display:none!important;background:none!important}
 #main #upcoming-cards-root #upcoming-cards-root .upcoming-expanded .result-bout .result-matchup .result-contender .result-contender-info strong{color:#14181c!important;text-shadow:none!important}
 #main #upcoming-cards-root .upcoming-expanded .result-contender-info,#main #upcoming-cards-root .upcoming-expanded .result-contender-info *{-webkit-text-fill-color:#14181c!important;background-image:none!important}
 #main #upcoming-cards-root .upcoming-expanded .result-contender-info .upcoming-fighter-record{-webkit-text-fill-color:#b3001b!important}
-#main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar span{background:none!important;border:0!important;padding:0!important;color:#6b6468!important;-webkit-text-fill-color:#6b6468!important;border-radius:0!important}
-#main #upcoming-cards-root .upcoming-expanded .upcoming-single-section{background:#eef0f2!important;color:#4a4448!important;-webkit-text-fill-color:#4a4448!important;border:1px solid #e2dbcf!important;border-radius:999px!important;display:inline-block;padding:6px 12px!important;margin:0 0 12px!important;font:700 12px "Inter",sans-serif!important}
-#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead[open]{background:#fff!important;border:1px solid #e7e1d8!important}
+#main #upcoming-cards-root .upcoming-expanded .upcoming-card-bar span{background:none!important;border:0!important;padding:0!important;color:#64686b!important;-webkit-text-fill-color:#64686b!important;border-radius:0!important}
+#main #upcoming-cards-root .upcoming-expanded .upcoming-single-section{background:#eef0f2!important;color:#44474a!important;-webkit-text-fill-color:#44474a!important;border:1px solid #d0d8e1!important;border-radius:999px!important;display:inline-block;padding:6px 12px!important;margin:0 0 12px!important;font:700 12px "Inter",sans-serif!important}
+#main .fights-unified .upcoming-list-group details.upcoming-event.is-lead[open]{background:#fff!important;border:1px solid #d9e0e6!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead>summary.upcoming-event-summary.upcoming-schedule-row{background:#14181c!important;border-radius:14px 14px 0 0!important}
 #main #upcoming-cards-root details.upcoming-event.is-lead:not([open])>summary.upcoming-event-summary.upcoming-schedule-row{border-radius:14px!important}
 
@@ -142,26 +142,26 @@
    comparison palette. In particular, cage-time numbers must not be pale on white. */
 #main #upcoming-cards-root .upcoming-expanded .befn-history-panel{
  background:#fff!important;
- border-color:#e2dbcf!important;
+ border-color:#d0d8e1!important;
 }
 #main #upcoming-cards-root .upcoming-expanded .befn-history-fighter b,
 #main #upcoming-cards-root .upcoming-expanded .befn-history-desc strong{
- color:#171317!important;
- -webkit-text-fill-color:#171317!important;
+ color:#131517!important;
+ -webkit-text-fill-color:#131517!important;
 }
 #main #upcoming-cards-root .upcoming-expanded .befn-history-fighter span,
 #main #upcoming-cards-root .upcoming-expanded .befn-history-desc small,
 #main #upcoming-cards-root .upcoming-expanded .befn-history-desc span,
 #main #upcoming-cards-root .upcoming-expanded .befn-history-cage-note{
- color:#645d64!important;
- -webkit-text-fill-color:#645d64!important;
+ color:#5d6064!important;
+ -webkit-text-fill-color:#5d6064!important;
 }
 #main #upcoming-cards-root .upcoming-expanded .befn-history-duration strong{
- color:#a71522!important;
- -webkit-text-fill-color:#a71522!important;
+ color:#a7152b!important;
+ -webkit-text-fill-color:#a7152b!important;
  font-variant-numeric:tabular-nums;
 }
 #main #upcoming-cards-root .upcoming-expanded .befn-history-fight,
 #main #upcoming-cards-root .upcoming-expanded .befn-history-fighter{
- border-bottom-color:#e6dfd6!important;
+ border-bottom-color:#d7dee5!important;
 }

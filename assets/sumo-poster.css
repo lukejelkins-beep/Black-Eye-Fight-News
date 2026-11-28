@@ -3,7 +3,7 @@
 .sumo-poster{position:relative;display:grid;grid-template-columns:minmax(72px,120px) minmax(0,1fr) minmax(0,1fr);gap:0 8px;min-height:560px;margin:4px 0 28px}
 .sumo-poster-kanji{writing-mode:vertical-rl;justify-self:center;padding-top:20px;font:900 clamp(64px,8.5vw,118px)/1 'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif;color:#14181c;letter-spacing:.04em}
 .sumo-poster-kanji[style*="--kanji-count:4"],.sumo-poster-kanji[style*="--kanji-count:5"]{font-size:clamp(52px,6.5vw,92px)}
-.sumo-poster-stage{position:relative;min-height:560px;background:radial-gradient(60% 55% at 50% 58%,#efe6d8 0%,var(--cream) 70%)}
+.sumo-poster-stage{position:relative;min-height:560px;background:radial-gradient(60% 55% at 50% 58%,#dde3ea 0%,var(--cream) 70%)}
 .sumo-poster-stage:before{content:"";position:absolute;left:50%;top:46%;width:min(72%,400px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#b3001b}
 .sumo-poster-stage.is-cutout img{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:94%;max-width:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 18px 24px rgba(17,16,19,.25))}
 .sumo-poster-stage.is-photo img{position:absolute;left:50%;top:46%;width:min(64%,356px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;object-fit:cover;object-position:50% 12%;box-shadow:0 18px 30px rgba(17,16,19,.22)}
@@ -15,16 +15,16 @@
 .sumo-poster-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;font:700 12px/1 'Inter',sans-serif;letter-spacing:.05em;text-transform:uppercase}
 .sumo-poster-chip.rank{background:#b3001b;color:#fff}
 .sumo-poster-chip.peak{background:#14181c;color:#fff}
-.sumo-poster-chip.country{background:#e9e1d4;color:#14181c}
+.sumo-poster-chip.country{background:#d7dee6;color:#14181c}
 .sumo-poster-stats{display:flex;gap:32px;flex-wrap:wrap;margin-top:26px}
 .sumo-poster-stats b{display:block;font:900 clamp(48px,5vw,64px)/.9 'Barlow Condensed',Impact,sans-serif;color:#14181c}
-.sumo-poster-stats span{display:block;margin-top:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#6f6870}
+.sumo-poster-stats span{display:block;margin-top:6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#686c70}
 .sumo-poster-bout{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:72px;padding:16px 18px;border-radius:12px;background:#14181c;color:#fff;text-decoration:none}
-.sumo-poster-bout:hover{background:#2a2026}
+.sumo-poster-bout:hover{background:#20252a}
 .sumo-poster-bout small{display:block;color:var(--gold);font:700 12px/1 'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
 .sumo-poster-bout strong{font:800 24px/1 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase}
 .sumo-poster-bout .h2h{text-align:right;flex:none}
-.sumo-poster-bout .h2h span{display:block;margin-top:4px;font-size:12px;color:#cfc8cf;letter-spacing:.08em;text-transform:uppercase}
+.sumo-poster-bout .h2h span{display:block;margin-top:4px;font-size:12px;color:#c8cccf;letter-spacing:.08em;text-transform:uppercase}
 .sumo-poster-bout .h2h .kim{font-size:20px}
 .sumo-poster-facts{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:13px;color:#5c5660}
 .sumo-poster-facts strong{color:#14181c}

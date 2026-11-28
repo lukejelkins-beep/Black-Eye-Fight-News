@@ -19,7 +19,7 @@
 
 /* Head-to-head face-off: dark band, figures fade into it (matches the profile hero). */
 .sumo-faceoff{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.5fr) minmax(0,1fr);align-items:end;margin:8px 0 28px;border-radius:16px;overflow:hidden;background:#14181c;color:#fff;min-height:420px;isolation:isolate}
-.sumo-faceoff:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,17,21,0) 55%,#14181c 100%);pointer-events:none;z-index:1}
+.sumo-faceoff:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,19,21,0) 55%,#14181c 100%);pointer-events:none;z-index:1}
 .fo-side{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-width:0;min-height:420px}
 .fo-stage{position:absolute;inset:0;z-index:0;overflow:hidden}
 .fo-disc{position:absolute;top:44%;width:min(78%,300px);aspect-ratio:1;border-radius:50%;background:var(--disc);opacity:.42;transform:translate(-50%,-50%);filter:saturate(1.1)}
@@ -34,12 +34,12 @@
 .fo-info h2{margin:10px 0 2px;font:900 clamp(34px,4.6vw,60px)/.9 'Barlow Condensed',Impact,sans-serif;text-transform:uppercase;color:#fff;overflow-wrap:anywhere}
 .fo-info h2 a,.fo-info h2 a:visited{color:#fff;text-decoration:none}
 .fo-info h2 a:hover{text-decoration:underline}
-.fo-jp{color:#cfc8cf;letter-spacing:.2em;font-size:14px}
-.fo-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#cfc8cf}
+.fo-jp{color:#c8cccf;letter-spacing:.2em;font-size:14px}
+.fo-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c8cccf}
 .fo-score{position:relative;z-index:3;align-self:center;text-align:center;padding:0 6px 40px}
 .fo-score span{display:block;font:700 12px/1 'Inter',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#c5ccd3}
 .fo-score strong{display:block;margin:8px 0;font:900 clamp(56px,7vw,96px)/.85 'Barlow Condensed',Impact,sans-serif;color:#fff}
-.fo-score small{font-size:13px;color:#cfc8cf}
+.fo-score small{font-size:13px;color:#c8cccf}
 @media(max-width:720px){
   .sumo-faceoff{grid-template-columns:1fr 1fr;min-height:0}
   .fo-score{grid-column:1/-1;grid-row:1;padding:18px 0 4px;z-index:3}

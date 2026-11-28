@@ -89,9 +89,10 @@ async function hydrateMissingPortraits(){
   }));
  }
 }
-const champThumb=(name,photo)=>{const u=photo||portraitURL(name);return `<button type="button" class="thumb champ-preview-trigger" data-image-for="${esc(name)}" data-initials="${esc(personInitials(name))}" data-hover-fighter="${esc(name)}" data-hover-photo="${u?safeURL(u):''}" aria-label="Preview photograph of ${esc(name)}" aria-describedby="fighter-photo-preview" title="Hover, focus or tap for full photograph">${u?`<img loading="lazy" referrerpolicy="no-referrer" decoding="async" src="${safeURL(u)}" alt="">`:''}</button>`};
+const champThumb=(name,photo)=>{const u=photo||portraitURL(name);return `<span class="thumb" data-image-for="${esc(name)}" data-initials="${esc(personInitials(name))}">${u?`<img loading="lazy" referrerpolicy="no-referrer" decoding="async" src="${safeURL(u)}" alt="">`:''}</span>`};
 const thumb=(url,alt,cls='thumb')=>`<span class="${cls}" data-image-for="${esc(alt)}" data-initials="${esc(personInitials(alt))}">${(url||portraitURL(alt))?`<img loading="lazy" referrerpolicy="no-referrer" decoding="async" src="${safeURL(url||portraitURL(alt))}" alt="">`:''}</span>`;
-const champPeek=(name,photo)=>`<button type="button" class="fighter-hover-name" data-hover-fighter="${esc(name)}" data-hover-photo="${photo||portraitURL(name)?safeURL(photo||portraitURL(name)):''}" aria-label="Preview photograph of ${esc(name)}" aria-describedby="fighter-photo-preview" title="Hover, focus or tap to see a large photograph">${esc(name)}</button>`;
+/* Owner, 28 Nov 2026: no photo pop-up on fighter names and no dotted underline. Plain name. */
+const champPeek=name=>`<strong class="champ-name">${esc(name)}</strong>`;
 const viewTitle=(label,title)=>`<header class="section-heading"><div><h1>${esc(title)}</h1></div></header>`;
 const calendarSportIcons=Object.freeze({
  boxing:`<svg class="sport-toggle-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" focusable="false"><path d="M14.3 29.1c-6.1-.8-9.4-4.9-9.4-10.7v-6.3c0-3.8 2.5-6.4 5.8-6.4 1.2-3 5.5-3.7 7.9-1.2 3.8-2.7 8.2-.6 9.2 3.3 4.2.4 6.8 4.1 6.8 9.2 0 6.5-4.5 11.3-10 12.1" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.7 7.2v7.5a4.3 4.3 0 0 0 4.3 4.3h2.2M17.8 5.8v7.5a4 4 0 0 0 4 4h1.8" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/><path d="M13 28h14v8H13z" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round"/><path d="M13 32h14" stroke="currentColor" stroke-width="2.7"/></svg>`,
@@ -477,8 +478,8 @@ function newsFeedItems(){
    Grappling stays out: the site covers boxing, MMA and sumo. */
 const newsView=()=>location.hash==='#news/sumo'?'sumo':activeSport();
 let newsNameIndex=null;
-/* Fighter names that link to a profile: the names the dotted hover underline already knows
-   (fighter-portrait-registry, same length rule as assets/fighter-hover.js) that are also a fighter profile here. */
+/* Fighter names that link to a profile: the names in the portrait registry
+   (fighter-portrait-registry; at least 5 characters and two words, or over 9) that are also a fighter profile here. */
 function newsFighterNames(){
  if(newsNameIndex)return newsNameIndex;
  let cat={};try{cat=JSON.parse(document.getElementById('fighter-portrait-registry').textContent).fighters||{};}catch(_){cat={};}
@@ -1221,7 +1222,7 @@ function befnTitleBelts(f){
  const named=[...current.map(x=>x.division),...verified.map(x=>x.division)];
  const divisions=named.filter((d,i)=>named.findIndex(x=>befnDivisionKey(x)===befnDivisionKey(d))===i);
  if(!divisions.length)return '';
- const belt='<svg aria-hidden="true" viewBox="0 0 50 26" width="39" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8 13 5 18 8 32 8 37 5 48 8 48 18 37 21 32 18 18 18 13 21 2 18Z" fill="#40301C" stroke="#D0A450" stroke-width="1.5"/><path d="M18 5 32 5 37 13 32 21 18 21 13 13Z" fill="#DBB663" stroke="#FFF0B3" stroke-width="1.2"/><path d="M22 10H28L30 13 28 16H22L20 13Z" fill="#6D4B23"/></svg>';
+ const belt='<svg aria-hidden="true" viewBox="0 0 50 26" width="39" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8 13 5 18 8 32 8 37 5 48 8 48 18 37 21 32 18 18 18 13 21 2 18Z" fill="#282e34" stroke="#83909d" stroke-width="1.5"/><path d="M18 5 32 5 37 13 32 21 18 21 13 13Z" fill="#939fab" stroke="#d1d9e1" stroke-width="1.2"/><path d="M22 10H28L30 13 28 16H22L20 13Z" fill="#3f4851"/></svg>';
  return '<div class="befn-title-belts" aria-label="Documented UFC championships">'+
  divisions.map(div=>'<span class="befn-title-belt" title="UFC '+esc(div)+' title" aria-label="UFC '+esc(div)+' title">'+belt+'<small>'+esc(div)+'</small></span>').join('')+'</div>';
 }
@@ -1338,10 +1339,10 @@ document.addEventListener('change',e=>{
 document.addEventListener('error',e=>{
  const img=e.target;
  if(img.tagName!=='IMG')return;
- const box=img.closest('[data-hover-fighter],[data-image-for]');
+ const box=img.closest('[data-image-for]');
  const card=img.closest('.fighter-card');
  const fighter=card?D.fighters.find(f=>f.id===card.dataset.fighter):null;
- const name=box?.dataset.hoverFighter||box?.dataset.imageFor||fighter?.name||(img.alt||'').match(/^Photograph of (.+)$/)?.[1]||'';
+ const name=box?.dataset.imageFor||fighter?.name||(img.alt||'').match(/^Photograph of (.+)$/)?.[1]||'';
  const portrait=img.closest('[data-fighter-portrait]');
  if(portrait){
   // Reviewed fighter portraits fall back to an honest named placeholder,
@@ -1397,77 +1398,6 @@ loadDesk();
 navigate();
 window.setInterval(()=>{if(location.hash.split('/')[0]==='#social'&&!liveTalk.loading)loadLiveTalk().catch(()=>{})},10*60*1000);
 
-/* One viewport-aware preview outside scrolling tables. Hover/mouse, keyboard focus and touch. */
-(function(){
- const popup=document.createElement('aside');
- popup.id='fighter-photo-preview';popup.setAttribute('role','tooltip');popup.setAttribute('aria-hidden','true');
- popup.innerHTML='<button type="button" class="fighter-preview-close" aria-label="Close fighter photo" title="Close photo">&times;</button><div class="fighter-preview-image"></div><div class="fighter-preview-name"></div><div class="fighter-preview-hint">PHOTO PREVIEW</div>';
- document.body.appendChild(popup);
- const imageBox=popup.querySelector('.fighter-preview-image');
- const label=popup.querySelector('.fighter-preview-name');
- const closeButton=popup.querySelector('.fighter-preview-close');
- let active=null,seq=0,pinned=false,loaded='';
- const target=e=>e&&e.closest?e.closest('.fighter-hover-name,.champ-preview-trigger'):null;
- function position(button){
-  const rect=button.getBoundingClientRect();const w=popup.offsetWidth||440,h=popup.offsetHeight||375,gap=18,margin=12;
-  let left=rect.right+gap;
-  if(left+w>innerWidth-margin)left=rect.left-w-gap;
-  if(left<margin)left=Math.max(margin,Math.min(innerWidth-w-margin,rect.left+(rect.width-w)/2));
-  let top=rect.top-60;
-  if(top+h>innerHeight-margin)top=innerHeight-h-margin;
-  if(top<margin)top=margin;
-  popup.style.left=Math.round(left)+'px';popup.style.top=Math.round(top)+'px';
- }
- function show(button,locked){
-  if(!button)return;
-  const same=active===button&&popup.classList.contains('is-open');
-  if(!same){if(active)active.removeAttribute('aria-expanded');active=button;seq++;loaded='';}
-  pinned=!!locked;popup.classList.toggle('is-pinned',pinned);popup.setAttribute('role',pinned?'dialog':'tooltip');button.setAttribute('aria-expanded','true');
-  label.textContent=button.dataset.hoverFighter||button.dataset.imageFor||button.textContent.trim();
-  popup.classList.add('is-open');popup.setAttribute('aria-hidden','false');
-  if(!same) {
-    imageBox.replaceChildren();
-    const empty=document.createElement('span');empty.className='fighter-preview-empty';empty.textContent='Finding photograph…';imageBox.appendChild(empty);
-    const token=seq;
-    const source=button.dataset.hoverPhoto||portraitURL(label.textContent);
-    const request=source?Promise.resolve(source):findWikipediaPortrait(label.textContent);
-    Promise.resolve(request).then(url=>{
-      if(token!==seq||!active)return;
-      imageBox.replaceChildren();
-      if(!url){const empty=document.createElement('div');empty.className='fighter-preview-empty';empty.textContent='Photograph unavailable';imageBox.appendChild(empty);return;}
-      const img=new Image();img.alt='Photograph of '+label.textContent;img.referrerPolicy='no-referrer';img.decoding='async';
-      img.onload=()=>{if(token===seq){imageBox.replaceChildren(img);position(button)}};
-      img.onerror=()=>{
-        if(token!==seq)return;
-        findWikipediaPortrait(label.textContent).then(other=>{
-          if(!other||other===url)throw Error('No verified fallback');
-          const backup=new Image();backup.alt='Photograph of '+label.textContent;backup.referrerPolicy='no-referrer';
-          backup.onload=()=>{if(token===seq){imageBox.replaceChildren(backup);position(button)}};
-          backup.onerror=()=>{if(token===seq)imageBox.textContent='Photograph currently unavailable'};
-          backup.src=other;
-        }).catch(()=>{if(token===seq)imageBox.textContent='Photograph currently unavailable'});
-      };
-      img.src=url;loaded=url;
-    }).catch(()=>{if(token===seq)imageBox.textContent='Photograph unavailable'});
-  }
-  position(button);
- }
- function hide(force){
-  if(pinned&&!force)return;
-  seq++;if(active){active.removeAttribute('aria-expanded');active=null;}
-  pinned=false;popup.classList.remove('is-open','is-pinned');popup.setAttribute('role','tooltip');popup.setAttribute('aria-hidden','true');imageBox.replaceChildren();
- }
- closeButton.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();hide(true)});
- document.addEventListener('pointerover',e=>{if(e.pointerType==='touch')return;const b=target(e.target);if(b&&b!==active)show(b,false)});
- document.addEventListener('pointerout',e=>{if(e.pointerType==='touch')return;const b=target(e.target);if(b&&b===active&&!pinned&&(!e.relatedTarget||!b.contains(e.relatedTarget)))hide(true)});
- document.addEventListener('focusin',e=>{const b=target(e.target);if(b)show(b,false)});
- document.addEventListener('focusout',e=>{const b=target(e.target);if(b&&b===active&&!pinned)hide(true)});
- document.addEventListener('click',e=>{if(e.target.closest?.('#fighter-photo-preview'))return;const b=target(e.target);if(b){if(pinned&&active===b){hide(true)}else show(b,true);return;}if(active)hide(true)});
- document.addEventListener('keydown',e=>{if(e.key==='Escape')hide(true)});
- window.addEventListener('resize',()=>{if(active)position(active)});
- document.addEventListener('scroll',()=>{if(active){if(pinned)position(active);else hide(true)}},true);
- window.addEventListener('hashchange',()=>hide(true));
-})();
 
 })();
 /* Analysis "On this page" row (28 Nov 2026): jump straight to the leaderboards instead of scrolling past the champions. */

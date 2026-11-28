@@ -2,57 +2,57 @@
 .fights-unified{width:100%;min-width:0;max-width:100%}
 .fights-unified .section-heading{margin-bottom:22px}
 .fights-controls{max-width:100%;min-width:0;display:grid;gap:18px;padding:0 0 22px}
-.fights-search{min-width:0;max-width:100%;width:100%;box-sizing:border-box;display:flex;align-items:center;gap:11px;padding:0 16px;min-height:52px;border:1px solid #c9c3be;border-radius:12px;background:#fff;color:#5c5757}
-.fights-search:focus-within{border-color:#b51422;box-shadow:0 0 0 2px #b5142222}
+.fights-search{min-width:0;max-width:100%;width:100%;box-sizing:border-box;display:flex;align-items:center;gap:11px;padding:0 16px;min-height:52px;border:1px solid #bec3c9;border-radius:12px;background:#fff;color:#5c5757}
+.fights-search:focus-within{border-color:#b5142c;box-shadow:0 0 0 2px #b5142c22}
 .fights-search>span{font-size:27px;font-weight:600;line-height:1}
-.fights-search input{flex:1;width:100%;min-width:0;border:0;outline:0;background:transparent;color:#241d21;min-height:49px;font-size:15px;font-weight:600;font-family:inherit;line-height:1.3}
-.fights-search input::placeholder{color:#777073}
-.fights-view-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid #bbb0af}
+.fights-search input{flex:1;width:100%;min-width:0;border:0;outline:0;background:transparent;color:#1d2024;min-height:49px;font-size:15px;font-weight:600;font-family:inherit;line-height:1.3}
+.fights-search input::placeholder{color:#707477}
+.fights-view-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid #afb5bb}
 .fights-view-tabs button{appearance:none;min-width:0;min-height:52px;padding:12px 7px;border:0;border-bottom:3px solid transparent;background:transparent;color:#827d7e;font:850 17px/1.2 'Barlow',Arial,sans-serif;cursor:pointer}
-.fights-view-tabs button.is-active{border-bottom-color:#b41224;color:#18161a}
-.fights-view-tabs button:focus-visible,.fights-promotion-tab:focus-visible{outline:3px solid #b41224;outline-offset:2px}
+.fights-view-tabs button.is-active{border-bottom-color:#b4122a;color:#18161a}
+.fights-view-tabs button:focus-visible,.fights-promotion-tab:focus-visible{outline:3px solid #b4122a;outline-offset:2px}
 .fights-promotion-tabs{min-width:0;max-width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
 .fights-promotion-tabs[hidden]{display:none!important}
-.fights-promotion-tab{appearance:none;min-width:0;min-height:60px;display:flex;align-items:center;justify-content:center;padding:7px 10px;border:2px solid #c4c0bd;border-radius:12px;background:#fff;color:#21191a;font-weight:900;cursor:pointer;overflow:hidden}
+.fights-promotion-tab{appearance:none;min-width:0;min-height:60px;display:flex;align-items:center;justify-content:center;padding:7px 10px;border:2px solid #bdc0c4;border-radius:12px;background:#fff;color:#191d21;font-weight:900;cursor:pointer;overflow:hidden}
 .fights-promotion-tab img{display:block;max-width:100%;width:94px;height:38px;object-fit:contain}
 .fights-promotion-tab img[hidden]{display:none!important}
 .fights-promotion-tab span:not([hidden]){display:block;font:900 15px/1.1 'Barlow',Arial,sans-serif}
-.fights-promotion-tab.is-active{background:#b40c20;border-color:#ea3b4d;color:white;box-shadow:0 0 0 2px #8f0a18}
+.fights-promotion-tab.is-active{background:#b40c25;border-color:#ea3b55;color:white;box-shadow:0 0 0 2px #8f0a1e}
 .fights-promotion-tab.is-active img{filter:brightness(0) invert(1)}
-#fights-active-content{min-width:0;background:#151318;color:#f5f3f1;border-radius:18px;padding:18px clamp(12px,2.5vw,26px);overflow:clip}
+#fights-active-content{min-width:0;background:#151318;color:#f1f3f5;border-radius:18px;padding:18px clamp(12px,2.5vw,26px);overflow:clip}
 #fights-active-content .upcoming-schedule{margin:0!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:4px 0!important;max-width:100%;background:transparent!important}
 #fights-active-content .upcoming-list-group{padding-top:16px!important}
 #fights-active-content .upcoming-list-group:first-child{padding-top:4px!important}
 #fights-active-content .upcoming-list-heading{font:850 clamp(22px,3.3vw,33px)/1.15 'Barlow',Arial,sans-serif!important;color:#fff!important;letter-spacing:0!important}
 #fights-active-content .upcoming-list-overview{display:none!important}
-#fights-active-content .upcoming-list-date{color:#38c3e9!important}
+#fights-active-content .upcoming-list-date{color:#7a90a7!important}
 #fights-active-content .upcoming-event .upcoming-hero-content{min-width:0}
 #fights-active-content .upcoming-event .upcoming-hero-title{overflow-wrap:anywhere}
 #fights-active-content .results-page{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;padding:0!important;overflow:visible!important;background:transparent!important}
 #fights-active-content .results-count,#fights-active-content .results-sync{display:none!important}
 .fights-results-wrap{display:grid;gap:0;min-width:0}
 .fights-result-group h2{font:850 clamp(22px,3.3vw,33px)/1.15 'Barlow',Arial,sans-serif;color:white;margin:8px 0 15px}
-.fights-result-date{margin:20px 0 8px;color:#38c3e9;font:800 12px/1.3 'Barlow',Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase}
-.fights-result-date span{color:#aaa4ab}
+.fights-result-date{margin:20px 0 8px;color:#7a90a7;font:800 12px/1.3 'Barlow',Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase}
+.fights-result-date span{color:#a4a8ab}
 .befn-result-list-event{min-width:0;border:0;border-bottom:1px solid #36333d;background:transparent;color:#fff}
 .befn-result-list-event>summary{list-style:none;display:grid;grid-template-columns:94px minmax(0,1fr) 18px;align-items:center;gap:16px;min-width:0;padding:13px 2px;cursor:pointer}
 .befn-result-list-event>summary::-webkit-details-marker{display:none}
 .befn-result-list-event>summary::marker{content:''}
-.befn-result-thumb{display:flex;align-items:center;justify-content:center;width:94px;height:124px;background:linear-gradient(130deg,#2f4251,#07121d);border-radius:8px;overflow:hidden;color:#afd8e6;font-weight:900}
+.befn-result-thumb{display:flex;align-items:center;justify-content:center;width:94px;height:124px;background:linear-gradient(130deg,#2f4251,#07121d);border-radius:8px;overflow:hidden;color:#c0cbd5;font-weight:900}
 .befn-result-thumb img{width:100%;height:100%;display:block;object-fit:contain}
 .befn-result-summary-copy{display:grid;gap:8px;min-width:0}
 .befn-result-summary-copy strong{font:800 clamp(19px,2.35vw,26px)/1.16 'Barlow',Arial,sans-serif;color:white;overflow-wrap:anywhere}
 .befn-result-summary-copy small{font:600 12px/1.5 'Barlow',Arial,sans-serif;color:#b3aeb9;overflow-wrap:anywhere}
-.befn-result-summary-copy .fights-result-organisation{font-weight:900;letter-spacing:.09em;color:#f4c85d;text-transform:uppercase;font-size:10px}
-.befn-result-caret{color:#f4c85d;font-size:24px;transition:transform .2s}
+.befn-result-summary-copy .fights-result-organisation{font-weight:900;letter-spacing:.09em;color:#9ea8b3;text-transform:uppercase;font-size:10px}
+.befn-result-caret{color:#9ea8b3;font-size:24px;transition:transform .2s}
 .befn-result-list-event[open]>.befn-result-summary .befn-result-caret{transform:rotate(180deg)}
 .befn-result-expanded{padding:6px 0 22px;min-width:0}
 .befn-result-expanded .result-event{margin:0!important}
 .befn-result-expanded .result-event-heading{overflow-wrap:anywhere}
 .befn-result-expanded .result-event-feature{max-width:100%}
 .befn-result-expanded .result-card-tabs{max-width:100%}
-#fights-active-content .empty,#fights-active-content .upcoming-loading,#fights-active-content .upcoming-empty{padding:20px;color:#f4f1ee;background:transparent;border:0}
-#fights-active-content .compact-note{color:#c6bfc2}
+#fights-active-content .empty,#fights-active-content .upcoming-loading,#fights-active-content .upcoming-empty{padding:20px;color:#eef1f4;background:transparent;border:0}
+#fights-active-content .compact-note{color:#bfc2c6}
 @media(max-width:650px){
   .fights-unified .section-heading{margin-bottom:17px}
   .fights-controls{gap:14px;padding-bottom:17px}
@@ -81,18 +81,18 @@
 #fights-active-content .befn-result-summary::-webkit-details-marker{display:none!important}
 #fights-active-content .befn-result-summary-copy{display:grid!important;gap:7px!important;min-width:0!important}
 #fights-active-content .befn-result-summary-copy>span{font:600 12px/1.45 'Barlow',Arial,sans-serif;color:#b3aeb9;overflow-wrap:anywhere}
-#fights-active-content .befn-result-thumb{display:flex!important;width:94px;height:124px;flex:0 0 94px;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;background:linear-gradient(130deg,#314657,#0a1720);color:#bddde4}
+#fights-active-content .befn-result-thumb{display:flex!important;width:94px;height:124px;flex:0 0 94px;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;background:linear-gradient(130deg,#314657,#0a1720);color:#c7d0da}
 #fights-active-content .befn-result-thumb img{width:100%;height:100%;object-fit:contain;object-position:center}
-#fights-active-content .befn-result-outcome{color:#e9c56d!important;font-weight:750!important}
+#fights-active-content .befn-result-outcome{color:#a1abb5!important;font-weight:750!important}
 #fights-active-content .befn-result-thumb-fallback{font:900 20px/1 'Barlow Condensed',Arial,sans-serif;letter-spacing:.07em}
-#fights-active-content .befn-result-expanded{padding:6px 0 22px!important;background:#f5f7f4;color:#172329;border-radius:10px;overflow:hidden}
+#fights-active-content .befn-result-expanded{padding:6px 0 22px!important;background:#f5f7f4;color:#1a2026;border-radius:10px;overflow:hidden}
 #fights-active-content .befn-result-expanded .result-event-heading{border-radius:0}
 #fights-active-content .fights-result-group{min-width:0;padding-top:9px}
 #fights-active-content .fights-result-group h2{margin:4px 0 14px;font:850 clamp(23px,3.3vw,34px)/1.1 'Barlow',Arial,sans-serif;color:#fff}
 #fights-active-content .fights-result-date{display:block;margin:18px 0 8px;color:#a8a3ad;text-transform:uppercase;font:800 12px/1.3 'Barlow',Arial,sans-serif;letter-spacing:.07em}
-#fights-active-content .fights-result-date span{color:#38c3e9}
+#fights-active-content .fights-result-date span{color:#7a90a7}
 #fights-active-content .befn-result-list-event[open]>.befn-result-summary .befn-result-caret{transform:rotate(180deg)}
-#fights-active-content .upcoming-empty,#fights-active-content .empty{color:#e8e5e6!important}
+#fights-active-content .upcoming-empty,#fights-active-content .empty{color:#e5e6e8!important}
 @media(max-width:650px){
  #fights-active-content .befn-result-summary{grid-template-columns:76px minmax(0,1fr) 14px!important;gap:11px!important;padding:12px 0!important}
  #fights-active-content .befn-result-thumb{width:76px;height:105px;flex-basis:76px}
@@ -108,23 +108,23 @@
 #fights-active-content .befn-result-thumb{background:#1c171d!important}
 #fights-active-content .befn-result-thumb img{object-fit:cover!important;object-position:center!important}
 #fights-active-content .befn-result-thumb.is-landscape-art img{object-fit:contain!important;object-position:center!important;background:#1c171d}
-#fights-active-content .befn-result-summary-copy>small{font-weight:800;color:#b7afb4!important}
+#fights-active-content .befn-result-summary-copy>small{font-weight:800;color:#afb3b7!important}
 #fights-active-content .befn-result-summary-copy .befn-result-outcome{font-size:12px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-#fights-active-content .befn-result-expanded{padding:0 0 12px!important;background:#14181c!important;color:#f7f2f1!important}
+#fights-active-content .befn-result-expanded{padding:0 0 12px!important;background:#14181c!important;color:#f3f4f5!important}
 .befn-result-poster{margin:0;padding:12px 12px 0;background:#14181c}
 .befn-result-poster[hidden]{display:none}
-.befn-result-poster-frame{max-height:620px;min-height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:9px;background:radial-gradient(ellipse at 50% 0%,#37252e,#110d13)}
+.befn-result-poster-frame{max-height:620px;min-height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:9px;background:radial-gradient(ellipse at 50% 0%,#262e36,#110d13)}
 .befn-result-poster-frame img{display:block;max-width:100%;width:auto;height:auto;max-height:620px;object-fit:contain}
 .befn-result-detail-header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px 12px;background:#14181c;border:0;color:#fff}
-.befn-result-detail-header h2{font:850 clamp(18px,3vw,26px)/1.16 'Barlow Condensed',sans-serif;letter-spacing:.01em;margin:0;color:#f4e9e6}
-.befn-result-detail-header>span{flex-shrink:0;font-size:11px;color:#c8bfc2}
+.befn-result-detail-header h2{font:850 clamp(18px,3vw,26px)/1.16 'Barlow Condensed',sans-serif;letter-spacing:.01em;margin:0;color:#e9edf1}
+.befn-result-detail-header>span{flex-shrink:0;font-size:11px;color:#bfc3c8}
 .befn-result-expanded .result-event-bouts{background:#14181c}
-.befn-result-expanded .result-event-bouts>summary{background:#241e25;color:#f0ebe7;border-top:1px solid #534451;padding:12px 18px;font-size:14px}
+.befn-result-expanded .result-event-bouts>summary{background:#1e2225;color:#e7ecf0;border-top:1px solid #444b53;padding:12px 18px;font-size:14px}
 .befn-result-expanded .result-event-bouts .result-bouts{background:#14181c}
-.befn-result-event-foot{display:grid;gap:10px;margin:10px 12px 0;padding:14px 8px 10px;border-top:1px solid #5a5055;color:#d2c9ca;font-size:12px;line-height:1.45}
+.befn-result-event-foot{display:grid;gap:10px;margin:10px 12px 0;padding:14px 8px 10px;border-top:1px solid #50555a;color:#c9ced2;font-size:12px;line-height:1.45}
 .befn-result-event-foot>div{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
-.befn-result-event-foot strong{min-width:62px;color:#f2d288;font-weight:800}
-.befn-result-event-foot a{color:#e9d395;text-decoration:underline}
+.befn-result-event-foot strong{min-width:62px;color:#b5bdc5;font-weight:800}
+.befn-result-event-foot a{color:#b7bfc7;text-decoration:underline}
 @media(max-width:600px){
  .befn-result-poster{padding:10px 10px 0}
  .befn-result-poster-frame{max-height:440px;min-height:130px}

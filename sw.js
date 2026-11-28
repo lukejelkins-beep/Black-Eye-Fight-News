@@ -1,5 +1,5 @@
 /* Offline-ready app shell. Always prioritise network for news and fight data. */
-const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1-ov1-bxh1-nav1-front1-d02-sw1-bxfo1-lf1-kb1-kb2-fx1-trap1-rx1-c01-a05-am1-fa1-am2-am3-am4-am5-tk1-am6-mc1-am7-url1-ffw1-poster2-poster3-pa1-cc1-ffw2-nwa1-paflag1-palatest1-fc1-fc2-dec1-rxp1-sr3-sf3-lb4-cf1-rr1-cr1-pr1-steel1';
+const CACHE_NAME = 'befn-v3-theme-20261122-photos3-boxing2-rating1-film1-cutout1-profiles5-prov1-r2-r2c-r3a-sb1-fresh1-ph151-alias1-hint1-areas1-faceoff1-hub3-results1-heroband1-flags1-ov1-bxh1-nav1-front1-d02-sw1-bxfo1-lf1-kb1-kb2-fx1-trap1-rx1-c01-a05-am1-fa1-am2-am3-am4-am5-tk1-am6-mc1-am7-url1-ffw1-poster2-poster3-pa1-cc1-ffw2-nwa1-paflag1-palatest1-fc1-fc2-dec1-rxp1-sr3-sf3-lb4-cf1-rr1-cr1-pr1-steel1-nopeek1';
 const SHELL = [
   '/', '/index.html', '/manifest.webmanifest',
   '/assets/mark.svg', '/assets/site-favicon-192.png', '/assets/icon-192.png', '/assets/icon-512.png', '/assets/apple-touch-icon.png', '/assets/icon-maskable-512.png',
@@ -9,7 +9,7 @@ const SHELL = [
   '/assets/notifications.css', '/assets/notifications.js', '/assets/push-config.js',
   '/assets/ufcalendar-fights-enrichment.js',
   '/data/ufc334-fighter-evidence.json',
-  '/assets/fighter-hover.js', '/assets/scout-intelligence.js', '/assets/ufcalendar-evidence.js',
+  '/assets/scout-intelligence.js', '/assets/ufcalendar-evidence.js',
   '/assets/local-time.js', '/assets/local-images.js', '/assets/upcoming-cards.js',
   '/assets/upcoming-cards.css', '/assets/related-news.css', '/assets/snapshot-tiles.css', '/assets/snapshot-tiles.js', '/assets/snapshot-result.css', '/assets/snapshot-result.js', '/assets/related-news.js', '/assets/fight-talk-filters.js', '/assets/fight-talk.css', '/assets/fight-talk-cards.css',
   '/assets/fight-film.css', '/assets/fight-film.js',

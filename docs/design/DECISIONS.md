@@ -2,6 +2,23 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 — Blood and steel in every area; no photo pop-up on fighter names
+- Owner: "Lets do that across the whole website in every area please - also please remove the function where you tap a fighters name and a photo pops up - its clunky and i dont like the underlining of names".
+- **Every area:** after the first swap, the colours still on screen were collected from 36 pages (front page, News, Fights, Results, Fighters, a profile, Analysis and Fight Talk for MMA and Boxing; every Sumo page and sub-page; Sumo stables, stories and fun facts; the three photo-credit pages; the gym article; About, Privacy, Terms and Data deletion). The rest were converted by rule, keeping each colour's lightness (rules recorded here):
+  - warm creams and tints → the same lightness in cool grey (hue 210)
+  - warm greys, plums and browns, light or dark → cool grey or gunmetal
+  - golds and yellows → steel
+  - other reds → the blood-red hue
+  - old teal leftovers → steel
+- **Kept on purpose:**
+  - MMA amber, sumo blue, the win and form greens and the blue/purple family
+  - flags (anything under `data-country`, and Japan's red)
+  - social-platform logo colours
+  - the orange-to-green rating scales
+- Sumo's head-to-head "Level" tone was gold; it is now a mid steel.
+- **Names:** the tap/hover photo pop-up is gone everywhere. `assets/fighter-hover.js` is deleted; it wrapped every known fighter name in a dotted teal underline. The champions table's photo pop-up in `app-inline-2.js` is removed too: names are plain bold text and thumbnails are plain photos. News links to a fighter's profile keep working but are no longer underlined. `tests/test-fighter-photo-close.cjs` is replaced by `tests/test-no-fighter-photo-popup.cjs`, which checks the pop-up stays gone.
+- Checked in a browser at 390 and 1280 px on all 36 pages: no horizontal scroll, no pop-up elements, no page errors. — Owner; Claude — PR #594, awaiting owner "Merge 594".
+
 ## 2026-11-28 — Site-wide style: "Blood and steel"
 - Owner asked to see the site with different font and colour combinations. Round 1: six options on the front page; owner liked "Fight poster" (Anton / Inter) and "Ringside" (Bebas Neue / Barlow). Round 2: eight more condensed, poster-style options with their own colour themes. Owner: "This is for the whole site - not just the main page", so all ten were shown on seven pages (front page, Fights, Fighters, a profile, Analysis, News, Sumo). Owner: "I like blood and steel".
 - **Fonts:** headings Oswald (was Unbounded), text Inter (was DM Sans), everywhere the old two were used. The logo and phone masthead keep Barlow Condensed.
