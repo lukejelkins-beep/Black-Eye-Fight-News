@@ -524,6 +524,14 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-cuts])"))el.remove();
   schedule();heroCutout();
  }).catch(()=>{});
+ // Gym under each fighter's form on upcoming UFC cards. Optional: without the file the card is unchanged. Re-render when it arrives.
+ let fighterGyms=null;
+ fetch("data/ufc-fighter-gyms.json").then(r=>r.ok?r.json():null).then(d=>{
+  if(d?.schema!==1||!d.fighters)return;
+  fighterGyms=d.fighters;
+  for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-gyms])"))el.remove();
+  schedule();
+ }).catch(()=>{});
  // Flag on the cutout disc. Optional: a fighter with no country keeps the red disc. Re-render when it arrives.
  fetch("data/ufc-fighter-countries.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.fighters)return;
@@ -1171,7 +1179,7 @@
   const rowRecord=i=>article.querySelectorAll(".result-contender-info .upcoming-fighter-record")[i]?.textContent.trim()||"";
   // Rank, champion and tier tags from the card row travel with the name, since the open snapshot hides that row.
   const rowTags=i=>{const c=article.querySelectorAll(".result-contender-info")[i];return c?[...c.querySelectorAll(".result-fighter-rank,.result-fighter-tier")].map(x=>x.textContent.trim()).filter(Boolean):[]};
-  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):rowRecord(i)||"—",form:formLetters(f[i]),fig:figureFor(pair[i],n),tags:rowTags(i)}));
+  const sides=names.map((n,i)=>({name:n,record:f[i]?.record?shortRecord(f[i]):rowRecord(i)||"—",form:formLetters(f[i]),fig:figureFor(pair[i],n),tags:rowTags(i),gym:fighterGyms?.[T.fold(n)]||null}));
   upgradeRowPhotos(article,sides);
   const shared=pair[0]?.division&&pair[0].division===pair[1]?.division?pair[0].division:"";
   const tabs=bTabs(article,names),stored=selectedTabs.get(key);
@@ -1184,7 +1192,7 @@
   const h={esc:escapeHTML,today:new Date(),division,billing,rounds,status:reported};
   const buttons=profileLinks(f,names,article);
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-tiles="1"'+
-   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+(cardScores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+(fighterGyms?' data-gyms="1"':'')+(cardScores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
    B.tapeHTML(sides,side(0),side(1),h)+
    B.analysisHTML(B.analysisLines(side(0),side(1),names,h.today),h)+

@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Gyms on upcoming UFC cards)
+- Each fighter's gym now shows under their form dots in the open fight snapshot on upcoming UFC cards: a small "Trains at" label and the gym name (two at most). Plain context from `data/ufc-fighter-gyms.json`, never a score or a prediction; the gym analysis finds no general gym effect, so nothing on the card implies one. When either fighter has a gym both columns show the line and the other shows a dash. Not shown on finished-fight cards or boxing, because Sherdog lists where a fighter trains now, not at the time of the fight. The card works without the file (it is optional, like flags and cutouts). Stacked on the fighter-gyms PR because it needs that data file; merge that one first.
+
 ## 2026-11-28 (UFC fighter gyms)
 - UFC fighter profiles show a "Trains at" line from `data/ufc-fighter-gyms.json`, built by `scripts/build-ufc-fighter-gyms.py` from the Association field on Sherdog fighter pages. Owner has Sherdog's permission to use its data on BEFN (28 Nov 2026). It is where Sherdog lists the fighter as training now, not the gym at the time of any fight, so the wording is "Trains at", never "fights out of". A name that matches no Sherdog fighter, or that several share and the win-loss record cannot tell apart, gets no line (no placeholder). Several same-name fighters, and names Sherdog spells differently (nicknames, "Jr.", name order), are matched by the record BEFN holds: a Sherdog fighter is accepted only if exactly one candidate has the same win-loss record (owner, 28 Nov 2026). The gyms refresh monthly through `.github/workflows/refresh-ufc-gyms.yml`, which opens a draft PR (owner, 28 Nov 2026). Gym is shown as a plain fact only: it is not an input to any rating or score, because the 2025 analysis found no gym effect beyond what fighters' records already predict.
 
