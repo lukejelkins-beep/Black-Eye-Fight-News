@@ -109,7 +109,11 @@ class Rescue(unittest.TestCase):
         return gyms.build(self.NAMES, lambda n: searches.get(n, search_html()), pages.get, {"cjvergara": (7, 2)})
 
     def test_name_parts_loose_queries_and_suffix(self):
-        self.assertEqual(gyms.loose_queries("Allen Frye Jr."), ["Allen Frye Jr.", "Allen Frye", "Frye"])
+        self.assertEqual(gyms.loose_queries("Allen Frye Jr."), ["Allen Frye Jr.", "Allen Frye", "Allen", "Frye"])
+        self.assertEqual(gyms.loose_queries("ChangHo Lee"), ["ChangHo Lee", "Chang Ho Lee", "ChangHo", "Lee"])
+        self.assertEqual(gyms.loose_queries("Borislav Nikolić")[0], "Borislav Nikolic")
+        self.assertIn("A.J. Cunningham", gyms.loose_queries("AJ Cunningham"))
+        self.assertEqual(gyms.loose_queries("Aoriqileng"), ["Aoriqileng"])
         self.assertEqual(gyms.name_parts("Jose Silva Jr."), {"jose", "silva"})
 
     def test_accepts_the_one_candidate_with_the_same_record(self):

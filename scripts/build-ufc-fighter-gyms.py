@@ -101,10 +101,15 @@ def name_parts(name: str) -> set:
 
 
 def loose_queries(name: str) -> list:
-    """Search texts for a name with no exact Sherdog match: as is, without a suffix, and the surname alone."""
-    words = [w for w in re.split(r"\s+", str(name).strip()) if w]
+    """Search texts for a name with no exact Sherdog match: as is, ASCII-folded, CamelCase split ("ChangHo" -> "Chang Ho"),
+    dotted initials ("AJ" -> "A.J."), without a suffix, the given name, and the surname alone."""
+    ascii_name = unicodedata.normalize("NFKD", str(name)).encode("ascii", "ignore").decode()
+    words = [w for w in re.split(r"\s+", ascii_name.strip()) if w]
     bare = [w for w in words if fold(w) not in SUFFIXES]
-    out = [" ".join(words), " ".join(bare), bare[-1] if bare else ""]
+    out = [" ".join(words), re.sub(r"(?<=[a-z])(?=[A-Z])", " ", " ".join(words)), " ".join(bare)]
+    if words and len(words[0]) == 2 and words[0].isupper():
+        out.append(".".join(words[0]) + ". " + " ".join(words[1:]))
+    out += [bare[0] if bare else "", bare[-1] if bare else ""]
     return [q for i, q in enumerate(out) if q and q not in out[:i]]
 
 
