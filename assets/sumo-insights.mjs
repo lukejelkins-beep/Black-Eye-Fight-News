@@ -71,11 +71,24 @@ function sizeBlock(h, S) {
     '<div><h3 class="sin-sub">Giant-killers</h3><div class="sin-gks">' + kill + '</div></div></div></section>';
 }
 
+/* Predictor's view: men the predictor rates well above or below their banzuke place (sumo-storylines.mjs powerGaps). */
+function powerBlock(h, g) {
+  if (!g || (!g.under.length && !g.over.length)) return '';
+  const tile = (x, up) => {
+    const img = h.cutout(x.id) || h.head(x.id);
+    return '<article class="srev-tile ' + (up ? 'is-up' : 'is-down') + '"><div class="srev-tile-ph">' + (img ? '<img src="' + h.e(img) + '" alt="" loading="lazy">' : '<span aria-hidden="true">相</span>') + '</div>' +
+      '<div class="srev-tile-bd"><b>' + (up ? '+' : '−') + Math.abs(x.gap) + '</b><strong>' + (h.known && !h.known(x.id) ? h.e(x.name) : '<a href="#predict?a=' + x.id + '">' + h.e(x.name) + '</a>') + '</strong><small>Ranked ' + x.rank + ' of ' + g.size + ', rated ' + x.power + '</small></div></article>';
+  };
+  const row = (title, list, up) => list.length ? '<div class="srev-tilerow"><h3>' + h.e(title) + '</h3><div class="srev-tiles">' + list.slice(0, 5).map(x => tile(x, up)).join('') + '</div></div>' : '';
+  return '<section class="shome-block" id="power">' + head(h, 'Underrated and overrated', ['#predict', 'Power table'], 'Makuuchi places on the banzuke against the predictor’s power table, which adds how each man has done against his rank. Gaps of five places or more.') +
+    row('Better than his rank', g.under, true) + row('Ranked above his results', g.over, false) + '</section>';
+}
+
 export function renderInsights(d, h) {
   return '<div class="sumo-home sumo-insights"><section class="sbz-hero"><div class="sbz-hero-in"><div><div class="shome-kicker">Sumo insights</div><h1>Runs, rivals, stables and records</h1>' +
     '<p>Who is chasing promotion, the rivalries that keep coming round, which stables are winning, the records of the last two years, and the size extremes.</p>' +
-    '<nav class="sin-jump" aria-label="On this page"><a href="#insights/runs">Promotion watch</a><a href="#insights/rivalries">Rivalries</a><a href="#insights/stables">Stables</a><a href="#insights/records">Records</a><a href="#insights/size">Size</a></nav></div></div></section>' +
-    runsBlock(h, d.runs) + rivalBlock(h, d.rivalries) + stableBlock(h, d.stables, d.latestId) + recordsBlock(h, d.records) + sizeBlock(h, d.size) +
+    '<nav class="sin-jump" aria-label="On this page"><a href="#insights/runs">Promotion watch</a><a href="#insights/rivalries">Rivalries</a><a href="#insights/stables">Stables</a><a href="#insights/records">Records</a><a href="#insights/size">Size</a>' + (d.power ? '<a href="#insights/power">Underrated</a>' : '') + '</nav></div></div></section>' +
+    runsBlock(h, d.runs) + rivalBlock(h, d.rivalries) + stableBlock(h, d.stables, d.latestId) + recordsBlock(h, d.records) + sizeBlock(h, d.size) + powerBlock(h, d.power) +
     '<p class="shome-source">Worked out from BEFN’s saved Sumo API records: the basho archive, rank history, roster and head-to-head summary.</p></div>';
 }
 

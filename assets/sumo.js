@@ -3,7 +3,7 @@ import {
   rankTable, leadingRikishi, rankOrderedMatchups, currentDay, dailyResults, validMatchSamples, currentBashoMatchSample,
   techniqueDistribution, detailFor, banzukeFor, searchRikishi, snapshotDate,
   originCountry, banzukeMovement, dayMatchups, verifiedDayMatchups, lastCompletedBashoDay, verifiedHeadToHead, verifiedHighestRank,
-  rankPositions, confirmedCareerHigh, publishedCurrentWeight
+  rankPositions, confirmedCareerHigh, publishedCurrentWeight, announcedTorikumiMatches
 } from './sumo-data.mjs?v=20261116-ranked-matchups';
 import { careerGraphs } from './sumo-editorial-charts.mjs?v=20261124-label-edge';
 import { boutKey, mergeProfileBouts, filterAndSortOpponents, exactNamePriority } from './sumo-editorial-data.mjs';
@@ -13,14 +13,18 @@ import { dailyStats, dailyRecentMeetings, dailyDefaultDay,dailyConcluded, dailyS
 import { ordinalRank } from './sumo-career.mjs';
 import { bestMatchupFact, rivalryFacts, profileFacts, techniqueFacts, factText, factPeople } from './sumo-fact-engine.mjs?v=20261121-phase2';
 import { recentBashoIds, boardRecord, recordTone, boardTotals } from './sumo-h2h-board.mjs?v=20261119-h2h-placeholder';
-import { buildHome, bashoStart, bashoFinished } from './sumo-home-data.mjs?v=20261124-banzuke2';
+import { buildHome, bashoStart, bashoFinished, rows as bzRows } from './sumo-home-data.mjs?v=20261124-banzuke2';
 import { renderHome as renderOverview, exploreBlock } from './sumo-home.mjs?v=20261124-live1';
 import { buildReview } from './sumo-review-data.mjs?v=20261124-review1';
-import { renderReview } from './sumo-review.mjs?v=20261124-review1';
+import { renderReview, selector as reviewSelector } from './sumo-review.mjs?v=20261128-analysis1';
+import { analysis as bashoAnalysis, picks as dayPicks } from './sumo-analysis-data.mjs?v=20261128-analysis1';
+import { raceChart, dayBlock, expectationsBlock, scoreBlock, renderLiveAnalysis } from './sumo-analysis.mjs?v=20261128-analysis1';
+import { renderPredictor } from './sumo-predictor-view.mjs?v=20261128-analysis1';
 import { buildChanges } from './sumo-banzuke-changes.mjs?v=20261124-banzuke2';
 import { renderChanges, releaseCard } from './sumo-banzuke-view.mjs?v=20261124-next1';
 import { fromArchive, fromDetails, runs, stables, rivalries, records, sizeExtremes } from './sumo-insights-data.mjs?v=20261124-size1';
-import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261124-size1';
+import { renderInsights, insightsTeaser } from './sumo-insights.mjs?v=20261128-analysis1';
+import { powerGaps } from './sumo-storylines.mjs?v=20261128-analysis1';
 import { completedDay, recap as liveRecap, asOfDay } from './sumo-live-data.mjs?v=20261124-live1';
 import { renderLiveHome, dayByDay } from './sumo-live.mjs?v=20261124-live1';
 import { asDetails } from './sumo-review-data.mjs?v=20261124-live1';
@@ -1625,19 +1629,66 @@ function renderSumoInsights(){
   if(missing.length){missing.forEach(id=>loadArchive(id));return '<div class="sumo-home"><p class="srev-loading">Loading insights…</p></div>';}
   const basho=ids.filter(id=>ARCHIVE.files[id]).map(id=>fromArchive(ARCHIVE.files[id]));
   const latest=basho[basho.length-1];
-  return renderInsights({runs:runs(basho),rivalries:rivalries(STATE.h2hSummary,STATE.roster),stables:stables(latest,STATE.roster),records:records(basho,STATE.careerHistory,STATE.roster),size:sizeExtremes(basho,STATE.careerHistory,STATE.roster),latestId:latest.bashoId},homeHelpers());
+  loadPredictor();
+  let power=null;try{power=PRED.model?powerGaps(STATE.roster,PRED.model):null;}catch(_){power=null;}
+  return renderInsights({power,runs:runs(basho),rivalries:rivalries(STATE.h2hSummary,STATE.roster),stables:stables(latest,STATE.roster),records:records(basho,STATE.careerHistory,STATE.roster),size:sizeExtremes(basho,STATE.careerHistory,STATE.roster),latestId:latest.bashoId},homeHelpers());
 }
+/* The predictor's saved model (data/sumo/predictor.json), loaded on the analysis pages only. */
+const PRED={model:null,loading:false,failed:false};
+function loadPredictor(){
+  if(PRED.model||PRED.loading||PRED.failed)return;
+  PRED.loading=true;
+  loadJson('data/sumo/predictor.json').then(x=>{PRED.model=x;}).catch(()=>{PRED.failed=true;})
+    .finally(()=>{PRED.loading=false;if(/^#(review|predict|insights)/.test(location.hash))render();});
+}
+/* The live basho, if one is on: its id, or null. #review?liveday=N replays the latest saved basho as of day N. */
+function liveBashoId(){return STATE.details&&!bashoFinished(STATE.details)?String(STATE.details.bashoId):null;}
+function reviewQuery(){return new URLSearchParams(location.hash.split('?')[1]||'');}
+function chosenDay(){const d=Number(STATE.analysisDay||reviewQuery().get('day'));return Number.isInteger(d)&&d>=1&&d<=15?d:null;}
 function renderBashoReview(id){
   if(ARCHIVE.failed)return '<div class="sumo-home"><p class="srev-loading">The tournament archive could not be loaded. Try again later.</p></div>';
+  loadPredictor();
+  const liveId=liveBashoId(),previewDay=Number(reviewQuery().get('liveday'));
   const latest=ARCHIVE.index?.basho?.length?ARCHIVE.index.basho[ARCHIVE.index.basho.length-1].bashoId:null;
+  if(liveId&&(!id||id===liveId)){
+    if(!ARCHIVE.index){loadArchive(null);return '<div class="sumo-home"><p class="srev-loading">Loading the live basho…</p></div>';}
+    return liveAnalysisPage(STATE.details,false);
+  }
   const want=/^\d{6}$/.test(String(id||''))?id:latest;
   if(!ARCHIVE.index||!want||!(want in ARCHIVE.files)||ARCHIVE.loading.has(prevBashoId(want))){loadArchive(want||null);return '<div class="sumo-home"><p class="srev-loading">Loading the basho review…</p></div>';}
   const file=ARCHIVE.files[want];
   if(!file)return '<div class="sumo-home"><p class="srev-loading">No saved review for that tournament. <a href="#review">See the latest basho</a>.</p></div>';
   const det=asDetails(file,null);
-  const recaps=[];for(let day=1;day<=Math.min(15,completedDay(det));day++)recaps.push(liveRecap(det,day));
-  const hh={...homeHelpers(),index:ARCHIVE.index};
-  return renderReview(buildReview(file,ARCHIVE.files[prevBashoId(want)]||null,STATE.careerHistory),file,{...hh,dayByDay:dayByDay(hh,recaps)});
+  if(Number.isInteger(previewDay)&&previewDay>=1&&previewDay<15)return liveAnalysisPage({...asOfDay(det,previewDay),full:det},true);
+  const hh={...homeHelpers(),index:ARCHIVE.index,liveId};
+  const model=PRED.model;
+  const A=bashoAnalysis(det,model,{day:chosenDay()});
+  const start=file.startDate;
+  return renderReview(buildReview(file,ARCHIVE.files[prevBashoId(want)]||null,STATE.careerHistory),file,{...hh,
+    analysis:raceChart(hh,A)+dayBlock(hh,A,{recap:liveRecap(det,A.day),start}),
+    expectations:model?expectationsBlock(hh,A):'',score:model?scoreBlock(hh,A,model):''});
+}
+function liveAnalysisPage(details,preview){
+  const model=PRED.model,day=completedDay(details);
+  const A=bashoAnalysis(details,model,{day:chosenDay()});
+  const hh={...homeHelpers(),index:ARCHIVE.index,liveId:preview?null:String(details.bashoId)};
+  /* Tomorrow's picks: the announced torikumi (live), or the next day's bouts of the replayed basho (preview). */
+  let pairs=[];
+  if(day<15&&model){
+    if(preview)pairs=(details.full?bzRows(details.full.banzuke):[]).flatMap(r=>{const b=(r.record||[])[day];return b&&b.result==='win'&&b.opponentID?[{rikishiId:r.rikishiID,opponentId:b.opponentID}]:[];});
+    else{const t=getAnnouncedTorikumi('Makuuchi',day+1);pairs=announcedTorikumiMatches(t,{bashoId:details.bashoId,division:'Makuuchi',day:day+1}).filter(m=>!m.finished);}
+  }
+  const home=buildHome({details,careerHistory:STATE.careerHistory,roster:STATE.roster,editorial:STATE.editorial});
+  return renderLiveAnalysis({bashoId:details.bashoId,preview,model,picks:dayPicks(details,model,pairs,day+1),recap:day?liveRecap(details,A.day):null,
+    start:details.basho?.data?.startDate,sanyakuView:home},A,
+    {...hh,selector:preview?'':reviewSelector(hh,{bashoId:String(details.bashoId)},ARCHIVE.index)});
+}
+function renderPredictorPage(){
+  loadPredictor();
+  if(PRED.failed)return '<div class="sumo-home"><p class="srev-loading">The predictor could not be loaded. Try again later.</p></div>';
+  if(!PRED.model)return '<div class="sumo-home"><p class="srev-loading">Loading the predictor…</p></div>';
+  const q=reviewQuery();
+  return renderPredictor({model:PRED.model,roster:STATE.roster,details:STATE.details,h2h:STATE.h2hSummary,a:q.get('a'),b:q.get('b')},homeHelpers());
 }
 function render() {
   const hash=decodeURIComponent(location.hash.slice(1)||'home').split('?')[0];
@@ -1650,6 +1701,9 @@ function render() {
   });
   if (STATE.error) { ROOT.innerHTML='<h1>Sumo snapshot unavailable</h1>'+note(STATE.error)+'<p>Existing BEFN pages are unaffected. Try again later.</p>';return;}
   if (!STATE.roster) { ROOT.innerHTML='<div class="loading">Loading sourced Sumo data…</div>';return; }
+  /* While a basho is on, the first Analysis page is the live basho. */
+  const liveLabel=liveBashoId()?'Live basho':'Basho review';
+  document.querySelectorAll('a[data-sumo-page="review"]').forEach(a=>{if(a.textContent!==liveLabel)a.textContent=liveLabel;});
   switch(page) {
     case 'rikishi': ROOT.innerHTML=renderDirectory();break;
     case 'profile': ROOT.innerHTML=renderProfile(id);
@@ -1664,6 +1718,7 @@ function render() {
     case 'home': ROOT.innerHTML=renderSumoHome();break;
     case 'review': ROOT.innerHTML=renderBashoReview(id);break;
     case 'changes': ROOT.innerHTML=renderBanzukeChanges(id);break;
+    case 'predict': ROOT.innerHTML=renderPredictorPage();break;
     case 'insights': ROOT.innerHTML=renderSumoInsights();
       if(id)requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({block:'start'}));break;
     case 'basho': ROOT.innerHTML=renderBasho();break;
@@ -1828,6 +1883,24 @@ document.addEventListener('click',ev=>{
 });
 let lastRoute=location.hash.slice(1).split('?')[0];
 /* Live mode: day picker on the Basho review, and copy/share on recap cards. */
+/* Basho analysis: a day button (or a day column on the race chart) shows that day, keeping the scroll
+   place; the day is kept in the link (?day=N) so it can be shared. */
+document.addEventListener('click',ev=>{
+  const pick=ev.target.closest&&ev.target.closest('[data-analysis-day]');
+  if(!pick||pick.disabled)return;
+  const d=Number(pick.dataset.analysisDay);
+  if(!(d>=1&&d<=15))return;
+  STATE.analysisDay=d;
+  const [route,query]=location.hash.slice(1).split('?');
+  const q=new URLSearchParams(query||'');q.set('day',String(d));
+  history.replaceState(null,'','#'+route+'?'+q.toString());
+  const y=window.scrollY,anchor=document.getElementById('day-by-day'),top=anchor?anchor.getBoundingClientRect().top:null;
+  render();
+  /* Keep the day section where it was on screen (the chart above does not change height). */
+  const again=document.getElementById('day-by-day');
+  window.scrollTo({top:again&&top!==null?window.scrollY+again.getBoundingClientRect().top-top:y,behavior:'instant'});
+  document.querySelector('[data-analysis-day="'+d+'"][aria-pressed]')?.focus({preventScroll:true});
+});
 document.addEventListener('click',ev=>{
   const dayBtn=ev.target.closest&&ev.target.closest('[data-recap-day]');
   if(dayBtn){
@@ -1856,6 +1929,19 @@ document.addEventListener('click',ev=>{
   const f=btn.dataset.bzFilter,match=r=>f==='all'||(f==='up'&&r.dataset.dir==='up')||(f==='dn'&&r.dataset.dir==='dn')||(f==='cross'&&r.dataset.cross==='1')||(f==='win'&&r.dataset.win==='1');
   list.classList.toggle('is-empty',![...list.querySelectorAll('.sbz-row')].some(match));
 });
+/* Predictor: choosing or swapping wrestlers updates the link (#predict?a=ID&b=ID). */
+function predictTo(a,b){location.hash='#predict?a='+encodeURIComponent(a)+'&b='+encodeURIComponent(b);}
+document.addEventListener('change',ev=>{
+  const p=ev.target.closest&&ev.target.closest('[data-predict-select]');
+  if(!p)return;
+  const a=document.querySelector('[data-predict-select="a"]')?.value,b=document.querySelector('[data-predict-select="b"]')?.value;
+  if(a&&b)predictTo(a,b);
+});
+document.addEventListener('click',ev=>{
+  if(!(ev.target.closest&&ev.target.closest('[data-predict-swap]')))return;
+  const a=document.querySelector('[data-predict-select="a"]')?.value,b=document.querySelector('[data-predict-select="b"]')?.value;
+  if(a&&b)predictTo(b,a);
+});
 document.addEventListener('change',ev=>{
   const sel=ev.target.closest&&ev.target.closest('[data-review-select]');
   if(sel)location.hash='#review/'+sel.value;
@@ -1883,6 +1969,8 @@ window.addEventListener('hashchange',()=>{
     STATE.matchupDivision=STATE.h2hReturn.matchupDivision;
     STATE.matchupDay=STATE.h2hReturn.matchupDay;
   }
+  if(route==='predict'&&lastRoute==='predict'){const y=window.scrollY;render();window.scrollTo({top:y,behavior:'instant'});return;}
+  if(route!==lastRoute)STATE.analysisDay=null;
   lastRoute=route;STATE.h2hOldestFirst=false;render();
   const requestedTerm=route==='kimarite'?new URLSearchParams(location.hash.split('?')[1]||'').get('term'):null;
   if(requestedTerm&&/^[a-z-]+$/.test(requestedTerm)&&document.getElementById('kimarite-'+requestedTerm)){
