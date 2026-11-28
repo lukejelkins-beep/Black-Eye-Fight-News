@@ -1,0 +1,107 @@
+name: Sumo predictor refit (twice a year, draft PR)
+# Owner, 28 Nov 2026 ("Refit reminder" from the selector): twice a year, collect the saved basho again,
+# refit the Sumo bout predictor on a rolling window, and open (or update) a draft PR only if the refit
+# still clearly beats the v1 method on the newest bouts. Nothing reaches main without the owner's "Merge N".
+# Method and gate: docs/sumo-predictor.md, scripts/sumo-build-model.mjs (--test-from, --gate).
+# Sumo API use is under the owner's permission of 24 Nov 2026, one request a second; banzuke already
+# in the cache are not fetched again, so a normal run makes about 20 requests (the new basho and the
+# wrestler list).
+on:
+  workflow_dispatch:
+  schedule:
+    # 3 Feb and 3 Aug, 02:41 UTC: the January and July basho are saved by then, and the next basho
+    # (March, September) has not started, so live picks never change mid-basho.
+    - cron: '41 2 3 2,8 *'
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: befn-sumo-predictor-refit
+  cancel-in-progress: false
+jobs:
+  refit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      BRANCH: auto/sumo-predictor-refit
+      CACHE: ${{ github.workspace }}/../sumo-model-cache
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Restore the research cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CACHE }}
+          key: sumo-model-cache-${{ github.run_id }}
+          restore-keys: sumo-model-cache-
+      - name: Collect basho from 2000 to the latest saved one
+        shell: bash
+        run: |
+          set -euo pipefail
+          LAST=$(node -p "const b=require('./data/sumo/basho-archive/index.json').basho; b[b.length-1].bashoId")
+          rm -f "$CACHE/rikishis.json"   # the wrestler list is fetched fresh (about 10 requests)
+          node scripts/sumo-collect-model-data.mjs --from 200001 --to "$LAST" --cache "$CACHE"
+          echo "LAST=$LAST" >> "$GITHUB_ENV"
+      - name: Refit and check the gate
+        id: refit
+        shell: bash
+        run: |
+          set -uo pipefail
+          TEST_FROM=$(( $(date -u +%Y) - 1 ))
+          echo "TEST_FROM=$TEST_FROM" >> "$GITHUB_ENV"
+          node scripts/sumo-build-model.mjs --cache "$CACHE" --test-from "$TEST_FROM" --gate > "$RUNNER_TEMP/refit.json"
+          code=$?
+          if [ "$code" = "2" ]; then
+            echo "::warning::Sumo predictor refit did not clearly beat v1 on $TEST_FROM onwards; no PR opened."
+            { echo "Refit gate not met (test from $TEST_FROM). The site keeps its current model."; echo '```'; head -c 4000 "$RUNNER_TEMP/refit.json"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+            echo "ok=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          [ "$code" = "0" ] || exit "$code"
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+      - name: Tests on the refitted model
+        if: steps.refit.outputs.ok == 'true'
+        run: node --test tests/test-sumo-predict.mjs tests/test-sumo-analysis.mjs tests/test-sumo-prediction-log.mjs
+      - name: Open or update the draft PR
+        if: steps.refit.outputs.ok == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add data/sumo/predictor.json data/sumo/predictor-state.json
+          if git diff --cached --quiet; then echo "No change from the current model." | tee -a "$GITHUB_STEP_SUMMARY"; exit 0; fi
+          git config user.name 'befn-sumo-predictor-bot'
+          git config user.email 'befn-sumo-predictor-bot@users.noreply.github.com'
+          git commit -q -m "Sumo predictor refit: data to $LAST, tested on $TEST_FROM onwards"
+          # The branch belongs to this job and is rebuilt from main each run.
+          git push -q --force origin "HEAD:$BRANCH"
+          node -e "
+            const r=require(process.env.RUNNER_TEMP+'/refit.json'), t=r.backtest.test, g=r.backtest.gainVsV1, pc=x=>(x*100).toFixed(1)+'%';
+            const L=[];
+            L.push('Twice-yearly Sumo predictor refit (owner, 28 Nov 2026). Data '+r.data.from+' to '+r.data.to+', '+r.data.bouts.toLocaleString('en-AU')+' bouts.');
+            L.push('Fitted '+r.data.train+', tuned '+r.data.valid+', **tested on '+r.data.test+'** (not seen in fitting).');
+            L.push('');
+            L.push('| | Brier, all | Brier, Makuuchi | Makuuchi called |');
+            L.push('|---|---|---|---|');
+            L.push('| Refit | '+t.all.model.brier+' | '+t.makuuchi.model.brier+' | '+pc(t.makuuchi.model.accuracy)+' |');
+            L.push('| v1 method | '+t.all.v1.brier+' | '+t.makuuchi.v1.brier+' | '+pc(t.makuuchi.v1.accuracy)+' |');
+            L.push('| Higher rank wins | | | '+pc(t.makuuchi.higherRankWins.accuracy)+' |');
+            L.push('');
+            L.push('Gain over v1: all '+g.all.mean+' ('+g.all.interval95.join(' to ')+'), Makuuchi '+g.makuuchi.mean+' ('+g.makuuchi.interval95.join(' to ')+'). Gate met.');
+            L.push('');
+            L.push('Merging changes the weights and the chances shown for saved basho. The live prediction record (data/sumo/prediction-log.json) is not touched: saved picks keep the model they were made with.');
+            L.push('Merge with \"Merge N\" as usual.');
+            require('fs').writeFileSync(process.env.RUNNER_TEMP+'/body.md', L.join('\n'));"
+          TITLE="Sumo predictor refit: data to $LAST, tested on $TEST_FROM onwards"
+          if [ "$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')" != "0" ]; then
+            gh pr edit "$BRANCH" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --draft --base main --head "$BRANCH" --title "$TITLE" --body-file "$RUNNER_TEMP/body.md" || {
+              echo "::error::Could not open the draft PR. Allow GitHub Actions to create pull requests (Settings > Actions > General), or open one from branch $BRANCH."
+              exit 1; }
+          fi
+          cat "$RUNNER_TEMP/body.md" >> "$GITHUB_STEP_SUMMARY"

@@ -631,3 +631,25 @@
   .sana-pick::-webkit-scrollbar{display:none}
   .sana-pick button{flex:none;scroll-snap-align:center}
 }
+/* Division tabs in the day view (Makuuchi, Juryo) */
+.sana-divs{display:inline-flex;gap:4px;padding:4px;border-radius:24px;background:#ece5db;margin:0 0 12px}
+.sana-divs button{min-height:44px;padding:0 18px;border:0;border-radius:20px;background:transparent;font:700 14px 'DM Sans',sans-serif;color:var(--sh-ink);cursor:pointer}
+.sana-divs button[aria-pressed="true"]{background:var(--sh-ink);color:#fff}
+/* Predictor: live record */
+.spr-live-empty{padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.spr-live-empty b{font:700 16px Unbounded,sans-serif}
+.spr-live-empty span{font-size:13.5px;color:var(--sh-muted)}
+.spr-live-basho{margin:0 0 12px;padding:6px 14px;list-style:none}
+.spr-live-basho li{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1.4fr);gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--sh-line);font-size:14px}
+.spr-live-basho li:last-child{border:0}
+.spr-live-basho b{font:800 16px Unbounded,sans-serif;text-align:right}
+.spr-live-basho small{color:var(--sh-muted);font-size:12.5px}
+.spr-live-day summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:700}
+.spr-live-day ul{margin:0;padding:6px 14px;list-style:none;background:#fff;border:1px solid var(--sh-line);border-radius:12px}
+.spr-live-day li{display:grid;grid-template-columns:minmax(0,1fr) 48px 72px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--sh-line);font-size:14px}
+.spr-live-day li:last-child{border:0}
+.spr-live-day b{font-weight:800;text-align:right}
+.spr-live-day em{font-style:normal;font-size:12.5px;font-weight:700;text-align:right;color:var(--sh-muted)}
+.spr-live-day em.is-hit{color:var(--sh-up)}
+.spr-live-day em.is-miss{color:var(--sh-down)}
+@media(max-width:600px){.spr-live-basho li{grid-template-columns:minmax(0,1fr) 52px}.spr-live-basho small{grid-column:1/-1}}
