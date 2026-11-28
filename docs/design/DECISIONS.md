@@ -2,6 +2,12 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 — Fight Talk: posts open on their own; stray red line fixed
+- Owner: "Weird red line on fight talk - also i want to see the full post with videos/pictures not have to tap to expand". Supersedes the 24 Nov "embed waits for Show post" rule for the reader (the page still never loads every embed at once).
+- Each post card now opens its original post (text, pictures, video) by itself when it comes within about 700 px of the screen (`talkAutoOpen`, IntersectionObserver). "Show post" stays only as the fallback when the browser cannot watch scrolling. Reason for not opening all at once: 23 cards means 23 platform iframes on first load.
+- The red line was the page title's slanted underline (`::after`, absolutely placed) with nothing to anchor to: `all:unset` in `site-theme.css` removed `position:relative` from `.section-heading h1/h2`, so the line floated at screen height across the cards. The rule now keeps `position:relative` (plus 8 px bottom padding), so the stroke sits under the title as on the other headings. Affects every page that uses `.section-heading`.
+- `assets/app-inline-2.js`, `assets/site-theme.css`, `tests/test-fight-talk.cjs`. Checked in Chrome at 390 and 1280 px. — Owner; Claude — awaiting owner "Merge N".
+
 ## 2026-11-28 — Fighter profile: cut the noise
 - Owner: "Remove the noise please - just needs to say 'skills' - also there is double up on the fighter profiles with recent fights and stats". Owner chose, from a mock-up: one latest fight on the Overview, Stats and Compare merged, cut the noise. Then "Build it".
 - Tabs are now Overview, Fights, Stats, News. Overview: key numbers, one "Latest fight" card with "All fights ›" (Fights tab), Skills (Results, Striking, Wrestling, Grappling, Form; heading just "Skills", no explanation), a "How the rating works" link, one news headline with "All news ›". "Next fight: not announced" is gone; the line shows only when a fight is booked.

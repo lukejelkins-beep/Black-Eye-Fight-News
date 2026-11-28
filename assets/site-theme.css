@@ -126,7 +126,7 @@ em.sb-score,.result-score em{font-family:var(--display)!important;font-weight:80
 /* ---- Older page-specific heading rules use ID selectors with !important; match them here (this file loads last) ---- */
 html body #main .section-heading h1,html body #main .section-heading h2,html body #main .fighters-unified .section-heading h1,
 html body #main .calendar-photo-heading{
-  all:unset;display:block;font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;text-transform:none!important;
+  all:unset;display:block;position:relative;padding-bottom:8px;font-family:var(--display)!important;font-weight:800!important;font-style:normal!important;text-transform:none!important;
   letter-spacing:-.03em!important;font-size:clamp(22px,3.4vw,34px)!important;line-height:1.15!important;
   color:var(--t-ink)!important;-webkit-text-fill-color:var(--t-ink)!important;margin:0 0 12px!important;overflow-wrap:anywhere}
 html body #fights-active-content .upcoming-list-heading,html body #main #upcoming-cards-root .upcoming-list-heading,html body #upcoming-cards-root .upcoming-list-heading{
