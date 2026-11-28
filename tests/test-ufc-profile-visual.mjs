@@ -162,7 +162,13 @@ async function checkProfile(page,profile,screen){
    else window.dispatchEvent(new Event("hashchange"));
   },profile.id);
   const dialog=page.locator("#fighterDialog");
-  await dialog.waitFor({state:"visible",timeout:12000});
+  // If the profile never opens, say what the page was doing instead of a bare timeout.
+  await dialog.waitFor({state:"visible",timeout:12000}).catch(async e=>{
+   const state=await page.evaluate(()=>({hash:location.hash,search:location.search,sport:window.BEFNSport?.get?.(),
+    dialogOpen:!!document.querySelector("#fighterDialog")?.open,main:document.querySelector("#main h1,#main h2")?.textContent?.trim().slice(0,40),
+    fighterKnown:null})).catch(()=>"unavailable");
+   throw new Error(e.message.split("\n")[0]+" | page state: "+JSON.stringify(state));
+  });
   await page.waitForFunction(id=>{
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
@@ -451,12 +457,14 @@ try{
   await page.waitForFunction(ids=>
    ids.every(id=>window.COMBAT_DATA?.fighters?.some(f=>f.id===id)),
    profiles.map(x=>x.id),{timeout:30000});
-  const fighterGrid=page.locator("#fighterGrid");
-  await fighterGrid.waitFor({state:"visible",timeout:12000});
+  // The Fighters page: the all-sports grid on a deployment before 28 Nov 2026, or a sport's Fighters hub after
+  // ("Front page only" navigation: #fighters with no saved sport opens the last sport's hub, MMA on a first visit).
+  const fightersPage=page.locator("#fighterGrid, [data-befn-fighters-hub], [data-befn-boxing-hub]").first();
+  await fightersPage.waitFor({state:"visible",timeout:12000});
   // Open a reviewed card through the live Fighter Profiles interface.
   await page.evaluate(()=>{document.querySelector('[data-nav="fighters"]')?.click()});
   await page.waitForTimeout(350);
-  if(!await fighterGrid.count())pushError(screen,"Fighter Profiles grid missing");
+  if(!await page.locator("#fighterGrid, [data-befn-fighters-hub], [data-befn-boxing-hub]").count())pushError(screen,"Fighters page missing");
   for(const f of profiles)await checkProfile(page,f,screen);
   // Production must display actual qualified statistics at both breakpoints,
   // not only a static navigation link or a stale unverified placeholder.
