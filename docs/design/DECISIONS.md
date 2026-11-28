@@ -2,6 +2,13 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 — Fight card Scores tab shows the BEFN ratings
+- Owner asked "What are these scores???" about the Scores tab in an upcoming fight's snapshot: they were the card's own last-five percentiles (1 to 99, `data/ufc-card-scores.json`), so the same fighter read differently on the card and the profile (Oliveira Striking 31 on the card, 41.81 on the profile). Owner: "Yes use BEFN ratings, keep Power under more scores".
+- The Scores tab now shows Results, Striking, Wrestling, Grappling and Form, 2 decimals, the same numbers as each profile (`data/ufc-stats/leaderboards.json`, Form from `data/ufc-fighter-form.json` under the profile's rule). Power (last five fights, 1 to 99) is under "More scores" with its pool named. Durability is no longer shown. `snapshot-tiles.js` `ratingsHTML`; the old `scoresHTML` stays for its tests and the scores build.
+- The ratings file is fetched when a card snapshot is first opened, not with the Fights page; the snapshot redraws with the Scores tab once it arrives.
+- Checked the label the owner's screenshot showed ("Ranked against Lightweight fighters, the division this bout is contracted at"): correct, the bout is contracted at lightweight and the method ranks both fighters there.
+- Checked in a browser at 390 and 1280 px (UFC 335, Oliveira vs Lopes). — PR for branch claude/card-ratings, awaiting "Merge N".
+
 ## 2026-11-28 (Sumo profile results: one compact line per bout)
 - **Owner, with an iPhone screenshot:** "The results on the fighter profile is long and could be refined so it's more visually appealing and saves space".
 - **New row.** Each bout is now one line: result chip (W/L), day, the opponent's round face and name with his rank at that basho and the technique underneath, and H2H. The always-visible "Details" bar is gone: tapping the line opens the details (one tap deeper, DIRECTION.md).

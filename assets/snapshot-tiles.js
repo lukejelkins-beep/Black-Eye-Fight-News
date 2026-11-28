@@ -139,7 +139,40 @@
       ' Scores run 1 to 99 and describe each fighter\'s last five UFC fights. They are not predictions.</p></section>';
   }
 
-  const api = { fold, ROWS, show, recordText, status, widths, lookup, html, scoresEnabled, lookupScores, scoresHTML, SCORE_MAIN, SCORE_MORE };
+  /* ---- BEFN ratings on the card (owner, 28 Nov 2026: "Yes use BEFN ratings, keep Power under more scores") ----
+   * The Scores tab shows the same ratings as each fighter's profile (Results, Striking, Wrestling, Grappling, Form,
+   * 2 decimals), so a fighter has one set of numbers everywhere. Power, the card's last-five knockout score, stays under
+   * "More scores" with its own label. Durability is no longer shown. Numbers are passed in; nothing is calculated here.
+   * entry: {sides: [{results, striking, ...} | null, ...], power: lookupScores(...) | null} */
+  const RATING_ROWS = [['results', 'Results'], ['striking', 'Striking'], ['wrestling', 'Wrestling'], ['grappling', 'Grappling'], ['form', 'Form']];
+  const bandOf = v => v < 35 ? 'red' : v < 55 ? 'orange' : v < 75 ? 'gold' : 'green';
+  function ratingsHTML(entry, names, h) {
+    const esc = h && h.esc ? h.esc : String;
+    if (!entry || !Array.isArray(entry.sides)) return '';
+    const num = v => Number.isFinite(v) ? v : null;
+    const bar = (v, side, band) => '<span class="st-track st-' + side + '" aria-hidden="true">' + (v !== null ? '<span class="st-fill st-band-' + esc(band || bandOf(v)) + '" style="width:' + Math.max(2, Math.min(100, v)) + '%"></span>' : '') + '</span>';
+    const line = (label, a, b, fmt, bands) => (a === null && b === null) ? '' :
+      '<div class="st-row" role="group" aria-label="' + esc(label) + '">' +
+      '<span class="st-num">' + (a === null ? '—' : esc(fmt(a))) + '</span>' + bar(a, 'a', bands && bands[0]) + '<span class="st-label">' + esc(label) + '</span>' +
+      bar(b, 'b', bands && bands[1]) + '<span class="st-num">' + (b === null ? '—' : esc(fmt(b))) + '</span></div>';
+    const main = RATING_ROWS.map(([k, label]) => line(label, num(entry.sides[0] && entry.sides[0][k]), num(entry.sides[1] && entry.sides[1][k]), v => v.toFixed(2))).join('');
+    if (!main) return '';
+    const p = entry.power, pv = i => p && p.sides[i] && p.sides[i].power && Number.isInteger(p.sides[i].power.score) ? p.sides[i].power : null;
+    const power = p ? line('Power', pv(0) ? pv(0).score : null, pv(1) ? pv(1).score : null, String, [pv(0) && pv(0).band, pv(1) && pv(1).band]) : '';
+    let pool = '';
+    if (power) {
+      const bases = Object.values(p.basis || {});
+      pool = p.division && bases.length && bases.every(x => x === 'division' || x === 'contracted') ? p.division + ' fighters' : 'all UFC fighters';
+    }
+    return '<section class="st-scores" aria-label="BEFN ratings">' +
+      '<h3 class="st-title">BEFN ratings</h3>' +
+      '<div class="st-rows">' + main + '</div>' +
+      (power ? '<details class="st-more"><summary>More scores</summary><div class="st-rows">' + power + '</div>' +
+        '<p class="st-note">Power: knockdowns and KO/TKO wins in the last five UFC fights, 1 to 99 against ' + esc(pool) + '.</p></details>' : '') +
+      '<p class="st-note">The same ratings as each fighter\'s profile. 50 is the average UFC fighter. Not predictions.</p></section>';
+  }
+
+  const api = { fold, ROWS, show, recordText, status, widths, lookup, html, scoresEnabled, lookupScores, scoresHTML, ratingsHTML, RATING_ROWS, SCORE_MAIN, SCORE_MORE };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.BEFNSnapshotTiles = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
