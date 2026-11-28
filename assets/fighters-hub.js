@@ -17,7 +17,25 @@
  const STAGE={"Champion":"is-champion","Title contender":"is-title","Contender":"is-contender","Slipping":"is-slipping",
   "Rising star":"is-rising","Prospect":"is-prospect","Breakout":"is-breakout","Established":"is-established",
   "Inactive":"is-inactive"};
- const st={data:null,cuts:null,view:"overall",sex:"men",loading:false};
+ const st={data:null,cuts:null,view:"overall",sex:"men",loading:false,sort:{key:"rank",dir:1}};
+ // Top 15 sort (owner, 28 Nov 2026: "when looking at champ and top 15 can we sort the columns?").
+ // dir 1 is the natural order of each column: UFC rank and form rank low first, Form and Overall high first.
+ const STAGE_ORDER=["Champion","Title contender","Contender","Breakout","Rising star","Prospect","Established","Slipping","Inactive"];
+ const SORTS=[["rank","Rank",f=>f.rank,1],["name","Fighter",f=>f.name,1],["stage","Stage",f=>f.certified?STAGE_ORDER.indexOf(f.stage):null,1],
+  ["form","Form",f=>formShownF(f)?f.form:null,-1],["overall","Overall",f=>f.overall,-1],["formRank","Form rank",f=>f.formRank||null,1]];
+ const formShownF=f=>window.BEFNFormRule?window.BEFNFormRule.shown(f):(f.certified===true&&Number.isFinite(f.form));
+ function sortLadder(list){
+  const [key,,get,nat]=SORTS.find(x=>x[0]===st.sort.key)||SORTS[0];
+  const dir=nat*st.sort.dir;
+  return list.slice().sort((a,b)=>{
+   const x=get(a),y=get(b),nx=x==null||x===-1,ny=y==null||y===-1;
+   if(nx||ny)return nx&&ny?a.rank-b.rank:nx?1:-1;   // fighters without a value always sit at the bottom
+   const c=typeof x==="string"?x.localeCompare(y):x-y;
+   return c*dir||a.rank-b.rank;
+  });
+ }
+ // Rating boards shown on each division page; the same cards as the Analysis page (window.BEFNBoards in fighter-insights.js).
+ const DIV_BOARDS=["overall","form","striking","grappling","wrestling","results"];
 
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
  const url=f=>"#fighter/ufc--"+encodeURIComponent(f.slug);
@@ -167,41 +185,66 @@
    '<span class="fh-champ-form"><b class="fh-red">'+form(champ)+'</b><span class="fh-soft">Form</span></span>'+
    '<span class="fh-champ-ovr">Overall <b>'+ovr(champ)+"</b></span>"+badgesHTML(champ)+"</div>"+
    '<a class="fh-champ-pic" href="'+url(champ)+'">'+img(champ)+"</a></section>";
-  if(ladder.length)h+='<section class="fh-sec fh-padded">'+head("Top 15","UFC rank · stage · form · overall")+
-   '<div class="fh-ladder"><div class="fh-ladder-head" aria-hidden="true"><span>Rank</span><span></span><span>Fighter</span><span>Stage</span><span>Form</span><span>Overall</span><span>Form rank</span></div>'+
-   ladder.map(ladderRow).join("")+"</div></section>";
+  // The champion sits in the table as "C" so the champion and the top 15 sort together.
+  if(ladder.length)h+='<section class="fh-sec fh-padded">'+head((champ?"Champion and top 15":"Top 15"),"Sort by any column")+ladderSortHTML()+
+   '<div class="fh-ladder" role="table" aria-label="'+esc(LABEL[div])+' top 15"><div class="fh-ladder-head" role="row">'+
+   sortHead("rank")+'<span role="columnheader"></span>'+SORTS.slice(1).map(x=>sortHead(x[0])).join("")+"</div>"+
+   sortLadder(champ?[champ,...ladder]:ladder).map(ladderRow).join("")+"</div></section>";
+  h+=divBoardsHTML(div);
   if(next.length)h+='<section class="fh-sec fh-padded">'+head("Coming through","Rising stars, prospects and breakouts in the division")+
    '<div class="fh-next">'+next.map(f=>'<a class="fh-nextcard" href="'+url(f)+'"><span class="fh-pic">'+img(f)+'</span><span class="fh-body">'+
     '<span class="fh-stage-text">'+esc(f.stage)+'</span><span class="fh-name">'+esc(f.name)+'</span><span class="fh-meta">'+rec(f)+" UFC</span>"+nums(f)+
     "</span></a>").join("")+"</div></section>";
   return h||'<p class="fh-note fh-padded">No ranked fighters in this division yet.</p>';
  }
+ function sortHead(key){
+  const [k,label]=SORTS.find(x=>x[0]===key),on=st.sort.key===k;
+  const nat=SORTS.find(x=>x[0]===k)[3],asc=on?(nat*st.sort.dir)>0:null;
+  return '<span role="columnheader" aria-sort="'+(on?(asc?"ascending":"descending"):"none")+'"><button type="button" class="fh-sort'+(on?" is-on":"")+
+   '" data-fh-sort="'+k+'">'+label+(on?'<i aria-hidden="true">'+(asc?"▲":"▼")+"</i>":"")+"</button></span>";
+ }
+ // Phones hide the column headings, so the same sorts sit in a chip row.
+ function ladderSortHTML(){
+  return '<div class="fh-sortrow" role="group" aria-label="Sort the top 15"><span>Sort</span>'+SORTS.filter(x=>x[0]!=="stage").map(([k,l])=>
+   '<button type="button" class="fh-sort'+(st.sort.key===k?" is-on":"")+'" data-fh-sort="'+k+'" aria-pressed="'+(st.sort.key===k)+'">'+l+
+   (st.sort.key===k?'<i aria-hidden="true">'+(SORTS.find(x=>x[0]===k)[3]*st.sort.dir>0?"▲":"▼")+"</i>":"")+"</button>").join("")+"</div>";
+ }
+ function divBoardsHTML(div){
+  const B=window.BEFNBoards;
+  if(!B||B.failed())return "";
+  const body=B.ready()?B.cards(div,DIV_BOARDS,5):'<p class="fh-note">Loading leaderboards…</p>';
+  if(!B.ready())B.load();
+  return '<section class="fh-sec fh-padded fh-boards">'+head("Division leaderboards","Top 5 in "+esc(LABEL[div])+" on each BEFN rating")+
+   '<div class="befn-bgrid is-hub">'+body+'</div>'+
+   '<a class="fh-boards-all" href="#analysis" data-board-division="'+esc(div)+'">Striking, grappling and defence leaderboards for '+esc(LABEL[div])+' ›</a></section>';
+ }
  function badgesHTML(f){
   return (f.badges||[]).length?'<span class="fh-badges">'+f.badges.map(b=>'<span class="fh-badge is-'+b.toLowerCase().replace(/\s+/g,"-")+'">'+esc(b)+"</span>").join("")+"</span>":"";
  }
  function ladderRow(f){
   const fire=f.badges?.includes("On fire"),cool=f.badges?.includes("Cooling");
-  const mv=f.formRank?f.rank-f.formRank:0;
+  const mv=f.formRank&&f.rank?f.rank-f.formRank:0,rk=f.champion?'<abbr title="Champion">C</abbr>':"#"+f.rank;
   const arrow=mv>2?'<span class="fh-mv is-up" title="Form rank '+f.formRank+'">▲</span>':mv<-2?'<span class="fh-mv is-down" title="Form rank '+f.formRank+'">▼</span>':"";
   const bar=fire?"is-fire":f.stage==="Slipping"?"is-slip":"";
   if(!f.certified)
-   return '<a class="fh-lrow" href="'+url(f)+'"><span class="fh-lrank">#'+f.rank+"</span>"+'<span class="fh-lpic">'+img(f)+"</span>"+
+   return '<a class="fh-lrow" href="'+url(f)+'"><span class="fh-lrank">'+rk+"</span>"+'<span class="fh-lpic">'+img(f)+"</span>"+
     '<span class="fh-lname"><b>'+esc(f.name)+'</b><span class="fh-meta">Form not shown until this record is certified</span></span></a>';
-  return '<a class="fh-lrow'+(f.stage==="Slipping"?" is-slip":"")+'" href="'+url(f)+'"><span class="fh-lrank">#'+f.rank+arrow+"</span>"+
+  return '<a class="fh-lrow'+(f.stage==="Slipping"?" is-slip":"")+(f.champion?" is-champ":"")+'" href="'+url(f)+'"><span class="fh-lrank">'+rk+arrow+"</span>"+
    '<span class="fh-lpic">'+img(f,f.stage==="Slipping"?"is-dim":"")+"</span>"+
    '<span class="fh-lname"><b>'+esc(f.name)+"</b>"+last5(f)+"</span>"+
    '<span class="fh-lstage">'+chip(f)+"</span>"+
    '<span class="fh-lbar"><i><i class="'+bar+'" style="width:'+(f.form||0)+'%"></i></i><span class="'+(fire?"fh-red":cool?"is-blue":"")+'">'+
     (fire?"On fire · ":cool?"Cooling · ":"")+"Form "+form(f)+'<span class="fh-ovr-inline"> · Ovr '+ovr(f)+"</span></span></span>"+
    '<span class="fh-lovr">'+ovr(f)+'<small> overall</small></span>'+
-   '<span class="fh-lfr">'+(f.formRank?"form #"+f.formRank:f.injured?"injured":"–")+"</span></a>";
+   '<span class="fh-lfr">'+(f.formRank?"form #"+f.formRank:f.champion?"champion":f.injured?"injured":"–")+"</span></a>";
  }
 
  function render(mount){
   const d=st.data;
   if(!d){mount.innerHTML='<p class="fh-note">'+(st.loading?"Loading Form…":"Form data is unavailable right now.")+"</p>";return;}
   const pills=[["overall","Overall"],...DIVS.filter(([s])=>Object.values(d.fighters).some(f=>f.division===s&&(f.champion||f.rank)))];
-  let h='<div class="fh-top"><h2>Fighters hub</h2><a class="fh-find" href="#leaderboards">Find a fighter ›</a></div>'+
+  let h='<div class="fh-top"><h2>Fighters hub</h2><span class="fh-links"><a class="fh-find" href="#analysis" data-board-division="'+(st.view==="overall"?st.sex:esc(st.view))+'">Leaderboards&nbsp;›</a>'+
+   '<a class="fh-find" href="#leaderboards"><span class="fh-wide">Find a fighter</span><span class="fh-narrow">Search</span>&nbsp;›</a></span></div>'+
    '<nav class="fh-pills" aria-label="Divisions">'+pills.map(([s,n])=>'<button type="button" data-fh-div="'+s+'" aria-pressed="'+(st.view===s)+'">'+esc(n)+"</button>").join("")+"</nav>";
   if(st.view==="overall"){
    const o=overall();
@@ -222,8 +265,15 @@
   if(mount.dataset.fhBound)return;
   mount.dataset.fhBound="1";
   mount.addEventListener("click",e=>{
-   const div=e.target.closest("[data-fh-div]"),sex=e.target.closest("[data-fh-sex]");
-   if(div){st.view=div.dataset.fhDiv;render(mount);mount.scrollIntoView({block:"start"});}
+   const div=e.target.closest("[data-fh-div]"),sex=e.target.closest("[data-fh-sex]"),sort=e.target.closest("[data-fh-sort]");
+   if(sort){
+    const k=sort.dataset.fhSort,inPhoneRow=!!sort.closest(".fh-sortrow");
+    st.sort=st.sort.key===k?{key:k,dir:-st.sort.dir}:{key:k,dir:1};
+    render(mount);
+    mount.querySelector((inPhoneRow?".fh-sortrow ":".fh-ladder-head ")+'[data-fh-sort="'+k+'"]')?.focus({preventScroll:true});
+    return;
+   }
+   if(div){st.view=div.dataset.fhDiv;st.sort={key:"rank",dir:1};render(mount);mount.scrollIntoView({block:"start"});}
    else if(sex){st.sex=sex.dataset.fhSex;render(mount);}
   });
  }
@@ -243,6 +293,8 @@
   });
  }
  window.BEFNFightersHub={silhouette,scan};
+ // Leaderboard data (or Form) arrived after a division page was drawn: redraw it.
+ window.addEventListener("befn:boards",()=>{if(st.data&&st.view!=="overall")document.querySelectorAll("[data-befn-fighters-hub]").forEach(render);});
  if(typeof MutationObserver!=="undefined")new MutationObserver(scan).observe(document.documentElement,{subtree:true,childList:true});
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",scan);else scan();
 })();

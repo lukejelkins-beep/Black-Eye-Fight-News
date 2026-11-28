@@ -44,3 +44,53 @@
  .befn-board-name>a,.befn-board-name>span{font-size:17px}
  .befn-board-value{font-size:24px}
 }
+
+/* Top 10s (owner, 28 Nov 2026): every board as a compact card, grouped Ratings / Striking / Grappling / Defence /
+   Finishing / Pace. The same cards show the top 5 on each Fighters hub division page. */
+.befn-board-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin:0 0 12px}
+.befn-board-bar>.befn-board-field{flex:1 1 220px}
+.befn-board-bar>.befn-board-metric-field{flex:2 1 300px}
+.befn-board-views{margin:0}
+#main .befn-boards-unified .befn-board-views button{min-height:44px}
+.befn-stat-board-page.is-grid .befn-board-metric-field{display:none}
+.befn-bgroup{margin:0 0 22px}
+.befn-bgroup-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:14px 0 10px}
+.befn-bgroup-head h3{margin:0;font:800 20px/1.1 Unbounded,'DM Sans',sans-serif;color:var(--fp-ink,#111013)}
+.befn-bgroup-head span{font:500 12px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.befn-bcard{background:#fff;border:1px solid var(--fp-line,#e3dccf);border-radius:12px;padding:12px 14px 6px;display:flex;flex-direction:column;min-width:0}
+.befn-bcard.is-rating{border-top:3px solid var(--fp-red,#cf1824)}
+.befn-bcard header{display:flex;flex-direction:column;gap:2px;margin:0 0 6px}
+.befn-bcard h4{margin:0;font:800 14px/1.2 'DM Sans',sans-serif;color:var(--fp-ink,#111013)}
+.befn-bcard header small{font:500 12px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-bcard ol{list-style:none;margin:0;padding:0}
+.befn-bcard li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:center;min-height:34px;border-top:1px solid #f0ebe2;margin:0;padding:0;background:none}
+.befn-bc-place{font:800 13px 'DM Sans',sans-serif;color:#9a8d86;text-align:right}
+.befn-bcard li.is-top .befn-bc-place{color:var(--fp-red,#cf1824)}
+.befn-bc-name{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:6px;min-width:0;padding:3px 0}
+.befn-bc-name a{font:700 13px/1.2 'DM Sans',sans-serif;color:var(--fp-ink,#111013)!important;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:2px 0}
+.befn-bc-name a:hover,.befn-bc-name a:focus-visible{color:var(--fp-red,#cf1824)!important;text-decoration:underline}
+.befn-bc-name small{flex-basis:100%;font:500 12px/1.2 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660);white-space:nowrap}
+.befn-bc-name i{font:700 12px 'DM Sans',sans-serif;font-style:normal;color:var(--fp-mute,#5c5660);flex:0 0 auto}
+.befn-bc-name i.is-champ{color:#fff;background:var(--fp-red,#cf1824);border-radius:4px;padding:0 5px}
+.befn-bc-value{font:800 14px 'DM Sans',sans-serif;font-variant-numeric:tabular-nums;color:var(--fp-ink,#111013);white-space:nowrap}
+.befn-bcard li.is-top .befn-bc-value{color:var(--fp-red,#cf1824)}
+.befn-bc-empty{margin:6px 0 10px;font:500 13px 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)}
+.befn-bc-more{align-self:flex-start;display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;background:none;cursor:pointer;
+ font:700 13px 'DM Sans',sans-serif;color:var(--fp-red,#cf1824)!important;text-decoration:none}
+.befn-bgrid.is-hub{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+@media (max-width:680px){
+ .befn-board-bar{gap:10px}
+ .befn-board-bar>.befn-board-field{flex:1 1 100%;min-width:0}
+ .befn-board-bar>.befn-board-metric-field{flex:1 1 100%;order:3}
+ .befn-board-bar .befn-board-field>span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+ /* each group is a swipe rail on the phone so the page stays short */
+ .befn-bgroup .befn-bgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}
+ .befn-bgroup .befn-bgrid::-webkit-scrollbar{display:none}
+ .befn-bgroup .befn-bcard{flex:0 0 82%;scroll-snap-align:start}
+}
+@media (min-width:1000px){
+ /* one row per group (Ratings: two rows of three) so no card sits alone */
+ .befn-bgroup .befn-bgrid{grid-template-columns:repeat(var(--cols,4),minmax(0,1fr))}
+}

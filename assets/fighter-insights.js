@@ -566,6 +566,7 @@
  fetch("data/ufc-fighter-form.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.fighters)return;
   formData=d;update();
+  if(boardData)window.dispatchEvent(new CustomEvent("befn:boards"));
  }).catch(()=>{});
  const namesLoading=fetch("data/ufc-stats/names.json").then(r=>r.ok?r.json():null).then(d=>{
   if(d?.schema!==1||!d.names)return;
@@ -823,18 +824,25 @@
  // UFC stats leaderboards (stage 5): data/ufc-stats/leaderboards.json from the stats build.
  // Ratings are career-based; every other board uses the chosen window. A row needs
  // the file's minimum of complete-stat UFC fights and cage time in that window.
+ // Two views (owner, 28 Nov 2026: "leaderboards for each of the ratings and then an area for striking, grappling etc
+ // with top 10 on each"): "Top 10s" shows every board as a compact card, grouped; "Full table" is the one long board.
+ // The same cards are used on each division page of the Fighters hub (window.BEFNBoards), so the two areas agree.
+ function loadBoards(){
+  if(boardData||boardLoading||boardFailed)return;
+  boardLoading=true;
+  fetch("data/ufc-stats/leaderboards.json").then(r=>r.ok?r.json():null).then(d=>{
+   boardLoading=false;
+   if(d?.schema===1&&Array.isArray(d.fighters)&&d.rows)boardData=d;else boardFailed=true;
+   boardDone();
+  }).catch(()=>{boardLoading=false;boardFailed=true;boardDone();});
+ }
+ const boardWaiters=[];
+ function boardDone(){renderV3Boards();boardWaiters.splice(0).forEach(fn=>{try{fn()}catch(_){}});if(typeof window!=="undefined")window.dispatchEvent(new CustomEvent("befn:boards"));}
  function renderV3Boards(){
   const root=document.querySelector("[data-befn-v3-leaderboards]");
   if(!root||root.dataset.ready)return;
   if(!boardData){
-   if(!boardLoading&&!boardFailed){
-    boardLoading=true;
-    fetch("data/ufc-stats/leaderboards.json").then(r=>r.ok?r.json():null).then(d=>{
-     boardLoading=false;
-     if(d?.schema===1&&Array.isArray(d.fighters)&&d.rows)boardData=d;else boardFailed=true;
-     renderV3Boards();
-    }).catch(()=>{boardLoading=false;boardFailed=true;renderV3Boards();});
-   }
+   loadBoards();
    const msg=boardFailed?"UFC statistics are not published yet. Leaderboards will appear when they are ready.":"Loading UFC statistics…";
    if(root.dataset.status!==(boardFailed?"failed":"pending")){
     root.dataset.status=boardFailed?"failed":"pending";
@@ -845,36 +853,57 @@
   root.dataset.ready="true";
   const groups={};
   for(const s of boardData.stats)(groups[s.group]=groups[s.group]||[]).push(s);
+  const divs=Object.entries(boardData.divisions);
   root.innerHTML='<label class="befn-board-field befn-board-search"><span>Find a fighter</span>'+
    '<input id="befn-board-search" class="field" type="search" autocomplete="off" placeholder="Search '+boardData.fighters.length+' UFC fighters"></label>'+
-   '<div class="befn-board-controls">'+
-   '<label class="befn-board-field"><span>Leaderboard</span><select id="befn-board-metric" class="field" aria-label="Choose UFC leaderboard">'+
+   '<div class="befn-board-bar">'+
+   '<div class="befn-board-views segment" role="group" aria-label="Leaderboard view">'+
+   [["grid","Top 10s"],["table","Full table"]].map(([k,l])=>'<button type="button" data-board-view="'+k+'" aria-pressed="false">'+l+'</button>').join("")+'</div>'+
+   '<label class="befn-board-field befn-board-metric-field"><span>Leaderboard</span><select id="befn-board-metric" class="field" aria-label="Choose UFC leaderboard">'+
    '<optgroup label="Ratings">'+BOARD_RATINGS.map(([id,l])=>'<option value="'+id+'">'+escapeHTML(l)+'</option>').join("")+'</optgroup>'+
    Object.entries(groups).map(([g,list])=>'<optgroup label="'+escapeHTML(g)+'">'+list.map(s=>
     '<option value="'+escapeHTML(s.id)+'">'+escapeHTML(s.label)+'</option>').join("")+'</optgroup>').join("")+
    '</select></label>'+
    '<label class="befn-board-field"><span>Division</span><select id="befn-board-division" class="field" aria-label="Choose division">'+
-   '<option value="all">All divisions</option>'+Object.entries(boardData.divisions).map(([k,l])=>
-    '<option value="'+escapeHTML(k)+'">'+escapeHTML(l)+'</option>').join("")+'</select></label>'+
+   '<option value="all">All divisions</option><option value="men">All men</option><option value="women">All women</option>'+
+   divs.map(([k,l])=>'<option value="'+escapeHTML(k)+'">'+escapeHTML(l)+'</option>').join("")+'</select></label>'+
    '</div><div class="befn-board-windows segment" role="group" aria-label="Time window">'+
    Object.entries(boardData.windows).map(([k,l])=>'<button type="button" data-board-window="'+escapeHTML(k)+'" aria-pressed="false">'+escapeHTML(l)+'</button>').join("")+
    '</div><div class="befn-v3-board-results" aria-live="polite"></div>';
   const metric=root.querySelector("#befn-board-metric"),division=root.querySelector("#befn-board-division");
   metric.value=boardState.metric;division.value=boardState.division;
+  if(division.value!==boardState.division){boardState.division="all";division.value="all";}
   const search=root.querySelector("#befn-board-search");
   search.value=boardState.query;
   search.addEventListener("input",()=>{boardState.query=search.value;showBoard(root);});
   metric.addEventListener("change",()=>{boardState.metric=metric.value;showBoard(root);});
   division.addEventListener("change",()=>{boardState.division=division.value;showBoard(root);});
-  root.querySelectorAll("[data-board-window]").forEach(b=>b.addEventListener("click",()=>{boardState.window=b.dataset.boardWindow;showBoard(root);}));
+  root.addEventListener("click",e=>{
+   const w=e.target.closest("[data-board-window]"),v=e.target.closest("[data-board-view]"),open=e.target.closest("[data-board-open]");
+   if(w){boardState.window=w.dataset.boardWindow;showBoard(root);}
+   else if(v){boardState.view=v.dataset.boardView;showBoard(root);}
+   else if(open){boardState.metric=open.dataset.boardOpen;boardState.view="table";metric.value=boardState.metric;showBoard(root);
+    root.scrollIntoView({block:"start",behavior:"smooth"});}
+  });
   showBoard(root);
+  // Arriving from a hub link: go to the boards. The Analysis top section fills in after this, so settle twice.
+  if(boardState.jump){boardState.jump=false;const go=()=>root.closest(".befn-boards-unified")?.scrollIntoView({block:"start"});[80,700].forEach(ms=>setTimeout(go,ms));}
  }
  let boardData=null,boardLoading=false,boardFailed=false;
- const boardState={metric:"overall",window:"l36",division:"all",query:""};
+ const boardState={metric:"overall",window:"l36",division:"all",query:"",view:"grid",jump:false};
+ // A link from a Fighters hub division page opens these boards on that division.
+ if(typeof document.addEventListener==="function")document.addEventListener("click",e=>{
+  const a=e.target.closest?.("a[data-board-division]");
+  if(!a)return;
+  boardState.division=a.dataset.boardDivision;boardState.query="";boardState.jump=true;
+  if(a.dataset.boardMetric){boardState.metric=a.dataset.boardMetric;boardState.view="table";}else boardState.view="grid";
+ });
  // Rating boards rank whole careers, so they ask for more evidence than a window's stat board.
  const BOARD_RATING_MIN_FIGHTS=5;
  const BOARD_RATINGS=[["overall","BEFN rating","score"],["results","Results rating","pct"],["striking","Striking rating","pct"],
   ["grappling","Grappling rating","pct"],["wrestling","Wrestling rating","pct"],["form","Form","score"]];
+ // Card order for the Top 10s view and the hub: the headline ratings first.
+ const BOARD_RATING_ORDER=["overall","form","results","striking","grappling","wrestling"];
  function boardValue(v,unit){
   if(!Number.isFinite(v))return "—";
   if(unit==="pct")return Math.round(v*100)+"%";
@@ -883,8 +912,10 @@
   if(unit==="ordinal")return ordinal(Math.round(v));
   return v.toFixed(2);
  }
- function boardRows(){
-  const d=boardData,st=boardState;
+ const boardPool=div=>String(div||"").startsWith("womens-")?"women":"men";
+ const inBoardScope=(div,scope)=>scope==="all"||(scope==="men"||scope==="women"?boardPool(div)===scope:div===scope);
+ function boardRows(s=boardState){
+  const d=boardData,st=s;
   const fighters=d.fighters,rating=BOARD_RATINGS.find(r=>r[0]===st.metric);
   let rows,unit,lower=false,label,sampleIndex;
   if(rating){
@@ -903,8 +934,7 @@
    unit=stat.unit;lower=!!stat.lowerIsBetter;label=stat.label;
   }
   const minimum=rating?Math.max(d.minFights,BOARD_RATING_MIN_FIGHTS):d.minFights;
-  rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&
-   (st.division==="all"||fighters[r.f][2]===st.division));
+  rows=rows.filter(r=>Number.isFinite(r.v)&&r.n>=minimum&&inBoardScope(fighters[r.f][2],st.division));
   // Ranks run inside a pool (women, men), so a board that mixes pools is ordered by score instead.
   const ranked=rows.length&&rows.every(r=>Number.isInteger(r.k))&&new Set(rows.map(r=>r.p)).size<=1;
   rows.sort((a,b)=>(ranked?a.k-b.k:0)||(lower?a.v-b.v:b.v-a.v)||String(fighters[a.f][1]).localeCompare(fighters[b.f][1]));
@@ -944,15 +974,58 @@
    '<span class="befn-board-name">'+who+tag+'<small>'+r.n+' UFC fights with full stats'+(division?' · '+escapeHTML(division):'')+'</small></span>'+
    '<strong class="befn-board-value">'+escapeHTML(boardValue(r.v,unit))+'</strong></li>';
  }
+ const shortDivision=div=>String(boardData.divisions[div]||"").replace("Women's ","W ").replace("Light Heavyweight","Light heavy");
+ const scopeLabel=scope=>scope==="all"?"All divisions":scope==="men"?"All men":scope==="women"?"All women":boardData.divisions[scope]||"Division";
+ // One compact top-N card. In a single division the official rank tag replaces the division name.
+ // opts.link: a link to the full table on the Analysis page (hub); otherwise a button that opens it in place.
+ function boardCardHTML(metric,s,n,opts={}){
+  const view=boardRows({...s,metric});
+  const stat=boardData.stats.find(x=>x.id===metric);
+  const single=s.division!=="all"&&s.division!=="men"&&s.division!=="women";
+  const note=view.isRating?(view.unit==="ordinal"?"Percentile":"Out of 100")+(metric==="form"?" · right now":" · career"):
+   (stat?.unit==="pct"?"Share":stat?.unit==="signed"?"Per minute, + is better":"Rate")+(view.lower?" · lower is better":"");
+  const rows=view.rows.slice(0,n);
+  const body=rows.length?'<ol>'+rows.map(r=>{
+   const [slug,name,div,officialRank,champion]=boardData.fighters[r.f];
+   const tag=single?(champion?'<i class="is-champ">C</i>':Number.isInteger(officialRank)&&officialRank>0?'<i>#'+officialRank+'</i>':''):
+    '<small>'+escapeHTML(shortDivision(div))+'</small>';
+   return '<li'+(r.rank<=3?' class="is-top"':'')+'><span class="befn-bc-place">'+r.rank+'</span><span class="befn-bc-name">'+boardLink(slug,name)+tag+'</span>'+
+    '<b class="befn-bc-value">'+escapeHTML(boardValue(r.v,view.unit))+'</b></li>';
+  }).join("")+'</ol>':'<p class="befn-bc-empty">'+(view.formLoading?'Loading Form…':'No fighters qualify yet.')+'</p>';
+  const more=view.total>n?(opts.link?'<a class="befn-bc-more" href="#analysis" data-board-division="'+escapeHTML(s.division)+'" data-board-metric="'+escapeHTML(metric)+'">All '+view.total+' ›</a>':
+   '<button type="button" class="befn-bc-more" data-board-open="'+escapeHTML(metric)+'">All '+view.total+' ›</button>'):'';
+  return '<section class="befn-bcard'+(view.isRating?' is-rating':'')+'"><header><h4>'+escapeHTML(view.label)+'</h4><small>'+escapeHTML(note)+'</small></header>'+body+more+'</section>';
+ }
+ function boardGridHTML(s){
+  const groups={};
+  // Finishing (2 boards) and Pace (1) share a row so no group is a lone card.
+  for(const x of boardData.stats){const g=x.group==="Finishing"||x.group==="Pace"?"Finishing and pace":x.group;(groups[g]=groups[g]||[]).push(x.id);}
+  const win=boardData.windows[s.window]||"";
+  const sec=(title,sub,ids)=>'<section class="befn-bgroup"><div class="befn-bgroup-head"><h3>'+escapeHTML(title)+'</h3><span>'+escapeHTML(sub)+'</span></div>'+
+   '<div class="befn-bgrid" style="--cols:'+(ids.length>5?3:ids.length)+'">'+ids.map(id=>boardCardHTML(id,s,10)).join("")+'</div></section>';
+  return '<div class="befn-board-result-head"><h3>Top 10s</h3><p>'+escapeHTML(scopeLabel(s.division))+' · Ratings are whole UFC careers; stat boards use '+escapeHTML(win.toLowerCase())+
+   ' · Tap “All” for the full table</p></div>'+
+   sec("Ratings","Whole UFC career, recent fights count most. Form is how they are going right now.",BOARD_RATING_ORDER)+
+   Object.entries(groups).map(([g,ids])=>sec(g,win,ids)).join("");
+ }
  function showBoard(root){
   const results=root.querySelector(".befn-v3-board-results");
   const windows=root.querySelector(".befn-board-windows");
+  const grid=boardState.view==="grid";
   const view=boardRows();
   const found=searchRows(boardState.query);
-  if(windows)windows.hidden=!!found||view.isRating;
+  root.classList.toggle("is-grid",grid&&!found);
+  if(windows)windows.hidden=!!found||(!grid&&view.isRating);
+  root.querySelectorAll("[data-board-view]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.boardView===boardState.view)));
   if(found){results.innerHTML=searchHTML(found);return;}
   root.querySelectorAll("[data-board-window]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.boardWindow===boardState.window)));
-  const scope=boardState.division==="all"?"All divisions":boardData.divisions[boardState.division]||"Division";
+  if(grid){
+   results.innerHTML=boardGridHTML(boardState)+'<p class="befn-board-rule">Ratings need '+Math.max(boardData.minFights,BOARD_RATING_MIN_FIGHTS)+
+    ' UFC fights with full round-by-round statistics; stat boards need '+boardData.minFights+' and '+Math.round(boardData.minCageSeconds/60)+
+    ' minutes in the cage in the window. Updated '+escapeHTML(boardData.asOf)+'.</p>';
+   return;
+  }
+  const scope=scopeLabel(boardState.division);
   const when=view.isRating?"Whole UFC career, recent fights count most":boardData.windows[boardState.window];
   const display=view.rows.slice(0,30);
   results.innerHTML='<div class="befn-board-result-head"><h3>'+escapeHTML(view.label)+'</h3><p>'+
@@ -963,6 +1036,17 @@
    '<p class="befn-board-rule">A fighter needs '+view.minimum+' UFC fights with full round-by-round statistics'+
    (view.isRating?'':' and '+Math.round(boardData.minCageSeconds/60)+' minutes in the cage in this window')+'. Updated '+escapeHTML(boardData.asOf)+'.</p>';
  }
+ // Shared with the Fighters hub: the rating cards for one division, from the same data and rules as the Analysis page.
+ if(typeof window!=="undefined")window.BEFNBoards={
+  ready:()=>!!boardData,
+  failed:()=>boardFailed,
+  load(fn){if(boardData||boardFailed){fn&&fn();return;}if(fn)boardWaiters.push(fn);loadBoards();},
+  cards(division,metrics,n){
+   if(!boardData)return "";
+   const s={...boardState,division,window:"l36"};
+   return (metrics||BOARD_RATING_ORDER).map(m=>boardCardHTML(m,s,n||5,{link:true})).join("");
+  }
+ };
  function applyV3(f){
   const record=v3For(f);
   // A schema-4 statistical snapshot never supersedes an independently

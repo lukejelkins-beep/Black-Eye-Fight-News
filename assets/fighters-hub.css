@@ -30,7 +30,7 @@
 
 /* top bar, division pills, men/women */
 .fh-top{background:var(--fh-ink);border-bottom:3px solid var(--fh-red);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.fh-top h2{color:#fff;font:900 16px/1.2 Unbounded,sans-serif}
+.fh-top h2{color:#fff;font:900 16px/1.2 Unbounded,sans-serif;white-space:nowrap}
 .fh-top .fh-find{font-size:12px;font-weight:700;color:var(--fh-gold);letter-spacing:.08em;text-transform:uppercase;min-height:44px;display:flex;align-items:center;padding:0 2px}
 .fh-pills{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;background:#fff;border-bottom:1px solid #e6dfd2;scrollbar-width:none}
 .fh-pills::-webkit-scrollbar,.fh-rail::-webkit-scrollbar{display:none}
@@ -181,6 +181,22 @@
 .fh-nextcard .fh-name{font-size:14px}
 .fh-stage-text{font-size:12px;font-weight:700;color:#7a5a12}
 .fh-foot{margin:24px 16px 20px;font-size:12px;color:var(--fh-mute);line-height:1.5}
+/* Top 15 sort (owner, 28 Nov 2026). Column headings on desktop, a chip row on the phone. */
+.fh-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+.fh-sort{font:700 12px 'DM Sans',sans-serif;color:var(--fh-mute);background:none;border:0;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px;min-height:32px}
+.fh-sort.is-on{color:var(--fh-ink)}
+.fh-sort i{font-style:normal;font-size:12px;color:var(--fh-red)}
+.fh-sort:focus-visible{outline:2px solid var(--fh-red);outline-offset:2px;border-radius:4px}
+.fh-sortrow{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;margin:0 0 10px}
+.fh-sortrow::-webkit-scrollbar{display:none}
+.fh-sortrow>span{font-size:12px;font-weight:700;color:var(--fh-soft);text-transform:uppercase;letter-spacing:.08em;flex:0 0 auto}
+.fh-sortrow .fh-sort{flex:0 0 auto;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #d9d2c4;background:#fff;font-size:13px}
+.fh-sortrow .fh-sort.is-on{background:var(--fh-ink);border-color:var(--fh-ink);color:#fff}
+.fh-sortrow .fh-sort.is-on i{color:var(--fh-gold)}
+.fh-ladder-head [role=columnheader]{display:flex;align-items:center}
+/* division leaderboards: cards from assets/ufc-stat-leaderboards.css */
+.fh-boards .befn-bgrid{margin:0}
+.fh-boards-all{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-size:13px;font-weight:700;color:var(--fh-red)!important}
 .fh-grid-a,.fh-grid-b{display:contents}
 
 /* on the phone the ladder shows overall inside the bar label */
@@ -223,17 +239,19 @@
  .fh-pulse .fh-tile.is-top{grid-column:span 2}
  .fh-tile-pic{height:230px}
  .fh-tile.is-top .fh-tile-pic{min-height:300px}
- .fh-champ{margin:20px 24px 0;border-radius:24px;min-height:300px}
- .fh-champ-body{padding:28px 0 28px 32px}
+ .fh-champ{margin:20px 24px 0;border-radius:24px;min-height:220px}
+ .fh-champ-body{padding:20px 0 20px 28px}
  .fh-champ-name{font-size:34px}
- .fh-champ-form b{font-size:48px}
- .fh-champ-pic .fh-face{width:260px;height:300px}
- .fh-ladder{background:#fff;border-radius:24px;padding:16px 20px;gap:0}
+ .fh-champ-form b{font-size:40px}
+ .fh-champ-pic .fh-face{width:200px;height:220px}
+ .fh-ladder{background:#fff;border-radius:24px;padding:10px 20px;gap:0}
+ .fh-sortrow{display:none}
  .fh-ladder-head{display:grid;grid-template-columns:52px 64px minmax(0,1fr) 140px 200px 90px 80px;gap:10px;padding:0 8px 6px;font-size:12px;font-weight:700;color:var(--fh-soft);border-bottom:1px solid var(--fh-sand)}
- .fh-lrow{grid-template-columns:52px 64px minmax(0,1fr) 140px 200px 90px 80px;grid-template-areas:"rank pic name stage bar ovr fr";column-gap:10px;border-radius:0;border-bottom:1px solid var(--fh-sand);padding:0 8px;min-height:68px}
+ .fh-lrow{grid-template-columns:52px 64px minmax(0,1fr) 140px 200px 90px 80px;grid-template-areas:"rank pic name stage bar ovr fr";column-gap:10px;border-radius:0;border-bottom:1px solid var(--fh-sand);padding:0 8px;min-height:52px}
  .fh-lrow.is-slip{background:#f1f3f8}
  .fh-lname,.fh-lstage{padding-top:0}
- .fh-lname{flex-direction:column;align-items:flex-start;gap:4px}
+ .fh-lname{flex-direction:row;align-items:center;gap:10px}
+ .fh-lpic .fh-face{width:44px;height:50px}
  .fh-lname .fh-l5{display:inline-flex}
  .fh-lbar{padding-bottom:0}
  .fh-lovr{grid-area:ovr;display:block;font:900 16px Unbounded,sans-serif}
@@ -242,4 +260,32 @@
  .fh-next{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
  .fh-padded{padding-left:24px;padding-right:24px}
  .fh-foot{margin:32px 24px 24px}
+ .fh-next .fh-nextcard .fh-pic{height:112px}.fh-next .fh-nextcard .fh-face{width:104px;height:112px}
 }
+/* wide desktop: the podium and Rank vs form side by side instead of stacked */
+@media (min-width:1200px){
+ .fh-grid-a{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:stretch}
+ .fh-grid-a .fh-podium{display:flex;flex-direction:column}
+ .fh-grid-a .fh-podium .fh-podium-row{flex:1;align-items:end}
+ .fh-pod .fh-face{width:130px;height:170px}.fh-pod.is-top .fh-face{width:170px;height:220px}
+ .fh-pod .fh-big{font-size:24px}.fh-pod.is-top .fh-big{font-size:32px}
+ .fh-pod .fh-name{font-size:14px}
+}
+@media (max-width:680px){
+ .fh-boards .befn-bgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}
+ .fh-boards .befn-bgrid::-webkit-scrollbar{display:none}
+ .fh-boards .befn-bcard{flex:0 0 78%;scroll-snap-align:start}
+}
+.fh-lrow.is-champ{box-shadow:inset 4px 0 0 var(--fh-gold)}
+.fh-lrank abbr{text-decoration:none;color:#7a5a12}
+@media (max-width:899px){
+ .fh-links{gap:12px;flex-wrap:nowrap}
+ .fh-top .fh-find{letter-spacing:.04em}
+ .fh-ladder{gap:6px}
+ .fh-lrow{min-height:54px}
+ .fh-lpic .fh-face{width:46px;height:54px}
+ .fh-nextcard .fh-pic{height:104px}.fh-nextcard .fh-face{width:96px;height:104px}
+}
+.fh-top .fh-find{white-space:nowrap}
+.fh-narrow{display:none}
+@media (max-width:420px){.fh-wide{display:none}.fh-narrow{display:inline}}

@@ -1,6 +1,12 @@
 /* Analysis pages (fight-analysis.js). Builds on the .sov blocks in sport-overview.css. */
 #main .fa-h1{font:800 26px/1.2 var(--display,'Unbounded',sans-serif);margin:18px 0 0;color:var(--t-ink,#111013)}
 #main .fa-mma-h1{max-width:1200px;margin:18px auto 0}
+#main .fa-jump{max-width:1200px;margin:10px auto 0;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+#main .fa-jump::-webkit-scrollbar{display:none}
+#main .fa-jump>*{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #d9d2c4;background:#fff;
+ font:700 13px 'DM Sans',sans-serif;color:var(--t-ink,#111013);text-decoration:none;cursor:pointer}
+#main .fa-jump>a{border-color:transparent;background:none;color:var(--t-red,#cf1824)}
+#main .befn-boards-unified{scroll-margin-top:72px}
 #main .fa-mount{display:block}
 #main .fa .fa-f{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top;background:#ece6dc;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--mute);border:2px solid var(--ac)}
 #main .fa .fa-f.is-l{width:38px;height:38px;border-color:var(--line);filter:grayscale(1);margin-left:-12px;align-self:flex-end;font-size:12px}
