@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build analysis-ufc-gyms-2025.html from data/ufc-gym-analysis-2025.json.
+"""Build analysis-ufc-gyms.html from data/ufc-gym-analysis.json.
 
 Offline and deterministic: every figure on the page comes from the JSON, so the page cannot drift from the data
 (tests/test_ufc_gym_article.py rebuilds it and compares). The chart is plain HTML and CSS, not an image, so it reflows
@@ -16,10 +16,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "ufc-gym-analysis-2025.json"
-OUT = ROOT / "analysis-ufc-gyms-2025.html"
+DATA = ROOT / "data" / "ufc-gym-analysis.json"
+OUT = ROOT / "analysis-ufc-gyms.html"
 
-AXIS_MIN, AXIS_MAX = -4.0, 6.0  # wins above expected, in wins
+AXIS_MIN, AXIS_MAX = -5.0, 11.0  # wins above expected, in wins (City Kickboxing is +9.5)
 
 
 def esc(s) -> str:
@@ -28,6 +28,14 @@ def esc(s) -> str:
 
 def signed(v: float) -> str:
     return f"{v:+.1f}".replace("-", "−") if v else "0.0"
+
+
+def seasons_line(g: dict) -> str:
+    parts = []
+    for year in ("2025", "2026"):
+        t = (g.get("seasons") or {}).get(year)
+        parts.append(f"{year}: {t['wins']}-{t['losses']} ({signed(t['winsAboveExpected'])})" if t else f"{year}: no fights")
+    return " &middot; ".join(parts)
 
 
 def row(g: dict) -> str:
@@ -44,6 +52,7 @@ def row(g: dict) -> str:
             f'<div class="rh"><span class="gname">{esc(g["gym"])}</span>'
             f'<span class="grec">{g["wins"]}-{g["losses"]} ({g["winPct"]}%)</span>'
             f'<span class="gdiff {cls}">{signed(v)}</span></div>'
+            f'<div class="seas">{seasons_line(g)}</div>'
             f'<div class="track" aria-hidden="true"><i class="axis" style="left:{zero:.1f}%"></i>'
             f'<b class="bar {cls}" style="left:{left:.1f}%;width:{width:.1f}%"></b></div></li>')
 
@@ -52,8 +61,15 @@ def build(d: dict) -> str:
     gyms = sorted(d["gyms"], key=lambda g: (-g["winsAboveExpected"], g["gym"]))
     by = {g["gym"]: g for g in d["allGyms"]}
     ck, att, xc, ml = by["City Kickboxing"], by["American Top Team"], by["Xtreme Couture"], by["MMA Lab"]
+    ckc = next(g for g in d["gyms"] if g["gym"] == "City Kickboxing")["seasons"]
+    xcs = next(g for g in d["gyms"] if g["gym"] == "Xtreme Couture")["seasons"]
+    mls = next(g for g in d["gyms"] if g["gym"] == "MMA Lab")["seasons"]
+    low = sorted((g for g in d["allGyms"] if d["testMinBouts"] <= g["bouts"] < d["chartMinBouts"]), key=lambda g: g["winsAboveExpected"])[:3]
+    low_txt = ", ".join(f"{g['gym']} {g['wins']}-{g['losses']}" for g in low)
     perm = d["permutation"]
-    n_gyms = d["gymsCompared"]
+    n_tested, n_chart = d["gymsCompared"], len(d["gyms"])
+    one_in = round(1 / d["cityKickboxingChanceOfAnyGym"])
+    s25, s26 = d["seasons"]
     rows = "".join(row(g) for g in gyms)
     return f"""<!doctype html>
 <html lang="en-AU">
@@ -63,7 +79,7 @@ def build(d: dict) -> str:
   <meta name="theme-color" content="#151115">
   <meta name="robots" content="index,follow">
   <title>Do UFC gyms decide fights? | Black Eye Fight News</title>
-  <meta name="description" content="We compared gym records across {d['decidedBouts']} UFC fights in {d['season']}. Once you allow for each fighter's record going in, gyms look much the same.">
+  <meta name="description" content="We compared gym records across {d['decidedBouts']:,} UFC fights in 2025 and 2026. Allowing for each fighter's record going in, most gyms look alike. One does not.">
   <link rel="icon" href="assets/site-favicon-192.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,8 +90,7 @@ def build(d: dict) -> str:
     html{{-webkit-text-size-adjust:100%}}
     body{{margin:0;background:var(--cream);color:var(--ink);font:400 16px/1.55 "DM Sans",system-ui,sans-serif}}
     .skip{{position:absolute;left:-999px}} .skip:focus{{left:12px;top:12px;background:#fff;padding:8px 12px;z-index:9}}
-    .bar-top{{background:var(--band);border-bottom:4px solid var(--red);padding:12px 16px}}
-    .bar-top{{display:flex;justify-content:space-between;align-items:center;gap:12px}}
+    .bar-top{{background:var(--band);border-bottom:4px solid var(--red);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}}
     .bar-top .back{{color:var(--gold)}}
     .bar-top a{{color:#fff;text-decoration:none;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:14px;display:inline-flex;align-items:center;min-height:44px}}
     main{{max-width:720px;margin:0 auto;padding:24px 16px 56px}}
@@ -93,6 +108,7 @@ def build(d: dict) -> str:
     .gname{{font-weight:700;font-size:15px;min-width:0}} .grec{{font-size:13px;color:var(--muted);white-space:nowrap}}
     .gdiff{{font-weight:700;font-size:15px;min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}}
     .gdiff.up{{color:#1f6e3f}} .gdiff.down{{color:var(--red)}} .gdiff.flat{{color:var(--muted)}}
+    .seas{{font-size:13px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}}
     .track{{position:relative;height:12px;margin-top:6px;background:#f1ece2;border-radius:6px}}
     .axis{{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.5}}
     .bar{{position:absolute;top:2px;height:8px;border-radius:4px}} .bar.up{{background:#1f6e3f}} .bar.down{{background:var(--red)}} .bar.flat{{background:var(--muted)}}
@@ -108,37 +124,40 @@ def build(d: dict) -> str:
   <main id="main">
     <p class="kicker">MMA analysis</p>
     <h1>Do UFC gyms decide fights?</h1>
-    <p class="dek">We checked {d['decidedBouts']} UFC fights from {d['season']}. Once you allow for who each fighter was going in, gyms look much the same.</p>
+    <p class="dek">We checked {d['decidedBouts']:,} UFC fights from 2025 and 2026. Allowing for who each fighter was going in, most gyms look much the same. One does not.</p>
     <p class="by">Black Eye Fight News analysis, 28 Nov 2026</p>
 
     <div class="card answer">
       <strong>The short answer</strong>
       <ul>
-        <li>Some gyms had far better years than others: City Kickboxing went {ck['wins']}-{ck['losses']}, American Top Team {att['wins']}-{att['losses']}.</li>
-        <li>But gyms with strong fighters win more because of the fighters. Allowing for each fighter's record going in, the gaps shrink to what luck produces.</li>
-        <li>Shuffling fighters between gyms at random gave gym-to-gym differences as large as the real ones in {round(perm['p'] * 100)}% of {perm['runs']:,} tries.</li>
+        <li>Most gyms finish within a win or two of what their fighters' records predicted, and the big one-season swings tend to reverse the next season.</li>
+        <li>Shuffling fighters between gyms at random gave gym-to-gym differences as large as the real ones {round(perm['p'] * 100)}% of the time. That is a hint that some gyms differ, not proof.</li>
+        <li>The exception is City Kickboxing: {ck['wins']}-{ck['losses']}, about {ck['winsAboveExpected']:.0f} wins more than expected, and ahead of expectation in both seasons.</li>
       </ul>
     </div>
 
     <h2>Wins against what was expected</h2>
-    <p>Each bar compares a gym's wins with the wins its fighters were expected to get, given their records going into each fight. Green is better than expected, red is worse. Only the {n_gyms} gyms with {d['minBouts']} or more bouts are shown.</p>
+    <p>Each bar compares a gym's wins over both seasons with the wins its fighters were expected to get, given their records going into each fight. Green is better than expected, red is worse. The line under each name shows each season on its own. Only the {n_chart} gyms with {d['chartMinBouts']} or more bouts are shown.</p>
     <div class="card">
       <ol class="chart">{rows}</ol>
       <p class="legend">Wins above (+) or below (&minus;) expected. Fights between two fighters from the same gym are left out of that gym's record.</p>
     </div>
 
-    <h2>What stood out</h2>
-    <p><strong>City Kickboxing</strong> won {ck['wins']} of {ck['bouts']}, about {ck['winsAboveExpected']:.0f} wins more than its fighters' records suggested. It is the best result on the chart, but with {n_gyms} gyms compared, one of them looking this good by luck alone is not unusual. It would happen about one year in five.</p>
-    <p><strong>American Top Team</strong>, the busiest gym, went {att['wins']}-{att['losses']}, about {abs(att['winsAboveExpected']):.0f} wins under expectation. That is also well within chance. <strong>Xtreme Couture</strong> ({xc['wins']}-{xc['losses']}) and <strong>MMA Lab</strong> ({ml['wins']}-{ml['losses']}) sit at either end for the same reason: a handful of fights either way.</p>
+    <h2>The one that stood out</h2>
+    <p><strong>City Kickboxing</strong> won {ck['wins']} of {ck['bouts']}: {ckc['2025']['wins']}-{ckc['2025']['losses']} in 2025 ({signed(ckc['2025']['winsAboveExpected'])} against expected) and {ckc['2026']['wins']}-{ckc['2026']['losses']} in 2026 ({signed(ckc['2026']['winsAboveExpected'])}). Being the best in two separate seasons counts for more than one good year. Even so, with {n_tested} gyms compared, a result this strong would turn up by luck about once in {one_in} tries, so it is suggestive, not settled.</p>
+    <p>It also cannot tell us why. A gym that coaches well and a gym that signs fighters on the way up look the same in the results.</p>
+
+    <h2>The swings that reversed</h2>
+    <p><strong>Xtreme Couture</strong> was {signed(xcs['2025']['winsAboveExpected'])} wins against expected in 2025 and {signed(xcs['2026']['winsAboveExpected'])} in 2026. <strong>MMA Lab</strong> went from {signed(mls['2025']['winsAboveExpected'])} to {signed(mls['2026']['winsAboveExpected'])}. <strong>American Top Team</strong>, the busiest gym, went {att['wins']}-{att['losses']} over both seasons, about {abs(att['winsAboveExpected']):.0f} wins under expectation. Turnarounds like these are what luck looks like. Among the smaller gyms (under {d['chartMinBouts']} bouts, not on the chart), the furthest below expectation over both seasons were {low_txt}. Those are small samples.</p>
 
     <h2>Why gyms still matter to fans</h2>
-    <p>This does not say training camps are pointless. It says that over one season, a gym's win-loss record mostly reflects the fighters it already has. A great gym that signs great fighters will win a lot, and the record alone cannot tell you which came first.</p>
+    <p>This does not say training camps are pointless. It says that a gym's win-loss record mostly reflects the fighters it already has, apart from the odd gym that keeps beating expectation. A great gym that signs great fighters will win a lot, and the record alone cannot tell you which came first.</p>
 
     <h2>How we did it</h2>
-    <p>We took every decided UFC bout in {d['season']} ({d['decidedBouts']} fights across {d['events']} events, including Road to UFC). For each fighter we worked out their record going into the fight and, from the gap between the two, how likely each was to win. That method picked the winner in {d['winnerPickedPct']}% of bouts. A gym's expected wins are the sum of those chances.</p>
-    <p class="note">Limits: gyms are where Sherdog lists a fighter training now, not necessarily at the time of the fight, and a fighter who lists several gyms counts for each. Expectations come from records, not betting odds. One season is enough to rule out big gym effects, not small ones.</p>
+    <p>We took every decided UFC bout in 2025 ({s25['decidedBouts']} fights, {s25['events']} events) and in 2026 up to 21 Nov ({s26['decidedBouts']} fights, {s26['events']} events), including Road to UFC. For each fighter we worked out their record going into the fight and, from the gap between the two, how likely each was to win. That method picked the winner in {d['winnerPickedPct']}% of bouts. A gym's expected wins are the sum of those chances.</p>
+    <p class="note">Limits: gyms are where Sherdog lists a fighter training now, not necessarily at the time of the fight, and a fighter who lists several gyms counts for each. Fighters who win may also move to better-known gyms. Expectations come from records, not betting odds. Two seasons rule out big gym effects, not small ones.</p>
 
-    <footer>Results and gym listings: <a href="https://www.sherdog.com">Sherdog</a>, used with permission. Method and code are in <code>research/ufc-gym-analysis-2025</code> in the BEFN repository.</footer>
+    <footer>Results and gym listings: <a href="https://www.sherdog.com">Sherdog</a>, used with permission. Method and code are in <code>research/ufc-gym-analysis</code> in the BEFN repository.</footer>
   </main>
 </body>
 </html>
@@ -152,7 +171,7 @@ def main() -> int:
     page = build(json.loads(DATA.read_text(encoding="utf-8")))
     if args.check:
         same = OUT.exists() and OUT.read_text(encoding="utf-8") == page
-        print("up to date" if same else "analysis-ufc-gyms-2025.html is out of date", file=sys.stderr if not same else sys.stdout)
+        print("up to date" if same else "analysis-ufc-gyms.html is out of date", file=sys.stderr if not same else sys.stdout)
         return 0 if same else 1
     OUT.write_text(page, encoding="utf-8")
     print(f"wrote {OUT.name} ({len(page)} bytes)")

@@ -1,7 +1,8 @@
-import json,math,random,collections
+import json,math,random,collections,sys
 import numpy as np
 from scipy.optimize import minimize
-f=json.load(open("fights_2025.json")); H=json.load(open("hist.json")); G=json.load(open("gyms.json"))
+files=sys.argv[1:] or ["fights_2025.json"]; LABEL="_".join(x.split("_")[-1].split(".")[0] for x in files)
+f=[x for fn in files for x in json.load(open(fn))]; H=json.load(open("hist.json")); G=json.load(open("gyms.json"))
 def pre(u,d):
     w=l=0
     for dd,r in H[u]:
@@ -56,6 +57,6 @@ print("mean z^2 observed",round(obs,2),"; permutation mean",round(np.mean(sims),
 gy1={u:(s if len(s)==1 else set()) for u,s in gy.items()}
 T1=table(gy1,10); print("single-gym only:",[(g,nn,f"{w}-{l}",round(w-e,1)) for g,nn,w,l,e,z in T1[:8]])
 import csv
-with open("gym_table.csv","w",newline="") as fh:
+with open(f"gym_table_{LABEL}.csv","w",newline="") as fh:
     w=csv.writer(fh); w.writerow(["gym","bouts","wins","losses","win_pct","expected_wins","wins_above_expected","z"])
     for g,nn,ww,l,e,z in table(gy,6): w.writerow([g,nn,ww,l,round(100*ww/nn),round(e,1),round(ww-e,1),round(z,2)])
