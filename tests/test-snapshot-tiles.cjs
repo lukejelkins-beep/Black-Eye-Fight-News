@@ -150,3 +150,18 @@ const evil2 = JSON.parse(JSON.stringify(scoreData));
 evil2.events[0].bouts[0].scores[0].power.band = '"><img src=x>';
 assert.ok(!T.scoresHTML(T.lookupScores(evil2, 'e1', sCardNames), sCardNames, { esc }).includes('<img'));
 console.log('snapshot scores: all checks passed');
+
+// Scores tab shows the BEFN ratings (owner, 28 Nov 2026: "Yes use BEFN ratings, keep Power under more scores").
+{
+ const assert=require("node:assert/strict");
+ const R=require("../assets/snapshot-tiles.js");
+ const power={division:"Lightweight",basis:{a:"contracted",b:"contracted"},sides:[{power:{score:11,band:"red"}},{power:{score:80,band:"green"}}]};
+ const html=R.ratingsHTML({sides:[{results:98.73,striking:41.81,wrestling:89.95,grappling:98.9,form:71.4},{results:92.15,striking:84.21}],power},["A","B"],{});
+ assert.match(html,/>98\.73</);assert.match(html,/>98\.90</,"two decimals, like the profile");
+ assert.match(html,/aria-label="Form"[^]*?71\.40[^]*?—/,"a missing rating is a dash");
+ assert.match(html,/<details class="st-more"><summary>More scores<\/summary>[^]*?Power[^]*?against Lightweight fighters/,"Power under More scores, its pool named");
+ assert.doesNotMatch(html,/Durability/);
+ assert.doesNotMatch(R.ratingsHTML({sides:[{results:50},null],power:null},["A","B"],{}),/More scores/,"no Power, no More scores");
+ assert.equal(R.ratingsHTML({sides:[null,null],power},["A","B"],{}),"","no ratings, no tab");
+ console.log("snapshot ratings: ok");
+}

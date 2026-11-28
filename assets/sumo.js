@@ -777,24 +777,40 @@ function sourceCareerBouts(w) {
 }
 function profileBouts(w){return mergeProfileBouts(currentProfileBouts(w),sourceCareerBouts(w));}
 
-function profileBoutRow(w,row){
+/* One bout on a profile (owner, 28 Nov 2026: "long … could be refined so it's more visually appealing and saves
+   space"). One compact line: result chip, day, the opponent's face and name, his rank at that basho and the
+   technique, and the head-to-head. Tapping the line opens the details (one tap deeper, DIRECTION.md). The class
+   names are the ones scripts/sumo-browser-qa.mjs checks for overlap and overflow. */
+const MONTH3={'01':'Jan','03':'Mar','05':'May','07':'Jul','09':'Sep','11':'Nov'};
+function rankAt(id,bashoId){
+  if(String(bashoId)===String(details().bashoId)){const r=bzRows(details().banzuke).find(x=>Number(x.rikishiID)===Number(id));if(r?.rank)return r.rank;}
+  const hist=STATE.careerHistory?.bySourceId?.[String(id)]?.rank||[];
+  return hist.find(x=>String(x.basho)===String(bashoId))?.rank||null;
+}
+function profileBoutRow(w,row,{showBasho=true}={}){
   const id=Number(row.opponentId),opponent=wrestler(id);
   const outcome=String(row.outcome||'').toLowerCase(),absence=outcome==='absence';
-  const label=outcome==='win'?'W':outcome==='loss'?'L':outcome==='scheduled'?'Scheduled':absence?'A':'Not available';
-  const technique=outcome==='scheduled'?'Result pending':absence?'Source-recorded absence — no bout':row.kimarite?techniqueText(row.kimarite):'Technique unavailable';
-  const name=absence?'No opponent — recorded absence':opponent?.shikonaEn||row.opponent||'Opponent unavailable';
+  const label=outcome==='win'?'W':outcome==='loss'?'L':outcome==='scheduled'?'Next':absence?'A':'–';
+  const technique=outcome==='scheduled'?'Result pending':absence?'Absent: no bout':row.kimarite?techniqueText(row.kimarite):'Technique unavailable';
+  const name=absence?'No bout (absent)':opponent?.shikonaEn||row.opponent||'Opponent unavailable';
   const h2h=absence?null:headToHeadFor(w.sourceId,id);
+  const rank=absence?null:rankAt(id,row.bashoId);
   const personal=opponent?bioLine(opponent):absence?'No opponent is assigned to a sourced absence.':'Only the opponent identity is available in this snapshot.';
-  return '<article class="sumo-ed-row" id="sumo-bout-'+e(resultKey(row))+'">'+
-    '<div class="sumo-ed-row-main"><div class="sumo-ed-date"><strong>Day '+e(row.day||'N/A')+'</strong><small>'+e(bashoLabel(row.bashoId))+'</small></div>'+
-    '<div class="sumo-ed-result '+e(outcome)+'">'+e(label)+'</div>'+
-    '<div class="sumo-ed-person">'+portraitFor(opponent,'sm')+
-    (opponent?'<a href="#profile/'+id+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>')+'</div>'+
-    '<div class="sumo-ed-rank"><span>'+e(opponent?.currentRank||'Not available')+'</span></div>'+
-    '<div class="sumo-ed-tech">'+(row.eventType?'<small>'+e(row.eventType)+' · non-regular</small>':'')+techniqueMarkup(row.kimarite,technique)+'</div>'+
-    '<div class="sumo-ed-h2h">'+(absence?'No H2H':'<a href="'+headToHeadUrl(w.sourceId,id)+'" aria-label="Head to head: '+e(w.shikonaEn)+' versus '+e(name)+'">H2H '+e(h2h?h2h.wins+'–'+h2h.losses:'↗')+'</a>')+'</div></div>'+
-    '<details class="sumo-ed-extra"><summary>Details</summary><div class="sumo-details-grid">'+personal+
-    '<span>Source: '+e(row.scope)+'</span><span>Completed result: '+e(outcome==='scheduled'?'No — confirmed scheduled pairing':absence?'No — recorded absence':'Yes')+'</span></div></details></article>';
+  const b=String(row.bashoId||'');
+  const when=showBasho&&/^\d{6}$/.test(b)?'<small>'+e(MONTH3[b.slice(4)]||'')+' '+e(b.slice(2,4))+'</small>':'';
+  const sub=[rank?rankShort(rank):null].filter(Boolean).map(e).join('')+(rank?' · ':'')+(row.eventType?e(row.eventType)+' · ':'')+techniqueMarkup(row.kimarite,technique);
+  return '<details class="sumo-ed-row sumo-ed-extra is-compact" id="sumo-bout-'+e(resultKey(row))+'">'+
+    '<summary class="sumo-ed-row-main">'+
+    '<span class="sumo-ed-result '+e(outcome)+'">'+e(label)+'</span>'+
+    '<span class="sumo-ed-date"><strong>'+e(row.day?'D'+row.day:'–')+'</strong>'+when+'</span>'+
+    '<span class="sumo-ed-person">'+portraitFor(opponent,'sm')+'<span class="sumo-ed-who">'+
+      (opponent?'<a href="#profile/'+id+'">'+e(name)+'</a>':'<span>'+e(name)+'</span>')+
+      '<small class="sumo-ed-tech">'+sub+'</small></span></span>'+
+    '<span class="sumo-ed-h2h">'+(absence?'':'<a href="'+headToHeadUrl(w.sourceId,id)+'" aria-label="Head to head: '+e(w.shikonaEn)+' versus '+e(name)+'"><small>H2H</small>'+e(h2h?h2h.wins+'–'+h2h.losses:'↗')+'</a>')+'</span>'+
+    '<span class="sumo-ed-more" aria-hidden="true"></span></summary>'+
+    '<div class="sumo-details-grid">'+personal+
+    '<span>'+e(bashoLabel(row.bashoId))+', day '+e(row.day||'–')+(rank?' · ranked '+e(rank):'')+(outcome==='scheduled'?' · scheduled, not yet fought':'')+'</span>'+
+    '<span class="sumo-ed-src">Source: '+e(row.scope)+'</span></div></details>';
 }
 function resultDesk(w){
   const all=profileBouts(w),mode=STATE.profileMode,period=STATE.profilePeriod;
@@ -807,7 +823,8 @@ function resultDesk(w){
   const controls='<div class="sumo-workspace-controls"><div class="sumo-segmented" role="group" aria-label="Results view">'+
     '<button type="button" data-results-mode="bouts" aria-pressed="'+(mode==='bouts')+'">Bouts</button>'+
     '<button type="button" data-results-mode="tournaments" aria-pressed="'+(mode==='tournaments')+'">By tournament</button></div>'+select+'</div>';
-  const rowhead='<div class="sumo-result-header" aria-hidden="true"><span>Day / period</span><span>Result</span><span>Opponent</span><span>Rank</span><span>Technique</span><span>Comparison</span></div>';
+  const rowhead='';
+  const many=period==='all';
   const messages=(period==='all'&&!STATE.h2hFull?'<p class="notice">'+(STATE.h2hLoading?'Loading the complete cached career ledger…':STATE.h2hLoadFailed?'Full ledger unavailable; only a recent source sample is shown.':'Open All recorded to load complete career history from cache.')+'</p>':'')+
     '<p class="footnote" role="status" aria-live="polite">'+shown.length+' bouts shown from '+all.length+' currently accessible source rows. Tournament totals are never inferred from partial caches.</p>';
   if(mode==='tournaments'){
@@ -818,11 +835,11 @@ function resultDesk(w){
       const observed=ranks.find(x=>String(x.basho)===String(basho));
       return '<details><summary>'+e(bashoLabel(basho))+' · '+rows.length+' cached bout'+(rows.length===1?'':'s')+
         ' · rank '+e(observed?.rank||'Not available')+' <span>· full W–L–A totals '+(basho===String(details().bashoId)&&entryFor(w)?'provided in current tournament block':'not available from this bout subset')+'</span></summary>'+
-        '<div class="sumo-results-desk">'+rowhead+rows.map(r=>profileBoutRow(w,r)).join('')+'</div></details>';
+        '<div class="sumo-results-desk is-compact">'+rows.map(r=>profileBoutRow(w,r,{showBasho:false})).join('')+'</div></details>';
     }).join('')||'<p class="missing">No individually sourced bouts are available for this period.</p>')+'</div>'+messages;
   }
-  return controls+'<div class="sumo-results-desk">'+rowhead+
-    (shown.length?shown.map(row=>profileBoutRow(w,row)).join(''):'<p class="missing">No completed or confirmed scheduled bouts in this selection.</p>')+
+  return controls+'<div class="sumo-results-desk is-compact">'+
+    (shown.length?shown.map(row=>profileBoutRow(w,row,{showBasho:many})).join(''):'<p class="missing">No completed or confirmed scheduled bouts in this selection.</p>')+
     '</div>'+messages;
 }
 

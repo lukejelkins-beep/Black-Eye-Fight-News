@@ -495,11 +495,36 @@
   for(const el of document.querySelectorAll(".befn-fight-snapshot:not([data-scores])"))el.remove();
   schedule();
  }).catch(()=>{});
+ // Scores tab (owner, 28 Nov 2026): the BEFN ratings from each fighter's profile, with the card's last-five Power under
+ // "More scores". The ratings come from data/ufc-stats/leaderboards.json (the profile's numbers, 2 decimals) and Form
+ // from data/ufc-fighter-form.json under the profile's rule. That file is fetched when a snapshot is first opened, not
+ // with the page, so the Fights page is no heavier; the snapshot redraws with the tab once it arrives.
+ let ratingIndex=null;
+ function ratingsByName(T){
+  if(ratingIndex||!boardData)return ratingIndex;
+  const f=boardData.ratingFields||[],at=k=>f.indexOf(k);
+  ratingIndex=new Map();
+  for(const row of boardData.ratings||[]){
+   const who=boardData.fighters[row[at("fighter")]];if(!who)continue;
+   const v=k=>Number.isFinite(row[at(k)])?row[at(k)]:null;
+   ratingIndex.set(T.fold(who[1]),{slug:who[0],results:v("resultsScore"),striking:v("strikingScore"),wrestling:v("wrestlingScore"),grappling:v("grapplingScore")});
+  }
+  return ratingIndex;
+ }
  function scoresFor(article,names){
   const T=window.BEFNSnapshotTiles;
-  if(!T||!cardScores)return "";
+  if(!T||!T.ratingsHTML)return "";
   const card=article.closest("#upcoming-cards-root [data-upcoming-card]");
-  return card?T.scoresHTML(T.lookupScores(cardScores,card.dataset.upcomingCard||"",names),names,{esc:escapeHTML}):"";
+  if(!card)return "";
+  const idx=ratingsByName(T);
+  if(!idx)return "";
+  const sides=names.map(n=>{
+   const r=idx.get(T.fold(n));if(!r)return null;
+   const e=formData?.fighters?.[r.slug];
+   return {...r,form:formShown(e)?e.form:null};
+  });
+  const power=cardScores?T.lookupScores(cardScores,card.dataset.upcomingCard||"",names):null;
+  return T.ratingsHTML({sides,power},names,{esc:escapeHTML});
  }
  function tilePair(article,names){
   const T=window.BEFNSnapshotTiles;
@@ -848,7 +873,14 @@
   }).catch(()=>{boardLoading=false;boardFailed=true;boardDone();});
  }
  const boardWaiters=[];
- function boardDone(){renderV3Boards();boardWaiters.splice(0).forEach(fn=>{try{fn()}catch(_){}});if(typeof window!=="undefined")window.dispatchEvent(new CustomEvent("befn:boards"));}
+ function boardDone(){
+  // Card snapshots drawn before the ratings arrived are redrawn with the Scores tab (open ones stay open).
+  // (typeof: the leaderboard tests load these functions without the snapshot code.)
+  if(boardData&&typeof schedule==="function"){
+   for(const el of document.querySelectorAll(".befn-fight-snapshot[data-b]:not([data-ratings])"))el.remove();
+   schedule();
+  }
+  renderV3Boards();boardWaiters.splice(0).forEach(fn=>{try{fn()}catch(_){}});if(typeof window!=="undefined")window.dispatchEvent(new CustomEvent("befn:boards"));}
  function renderV3Boards(){
   const root=document.querySelector("[data-befn-v3-leaderboards]");
   if(!root||root.dataset.ready)return;
@@ -1247,7 +1279,7 @@
 
    '</details>';
  }
- // Layout B panels (UFC upcoming cards): Stats (last-five tiles), Scores (only when the flag is on), Fights.
+ // Layout B panels (UFC upcoming cards): Stats (last-five tiles), Scores (BEFN ratings, once loaded), Fights.
  function bTabs(article,names){
   const tabs=[["stats","Stats"]];
   if(scoresFor(article,names))tabs.push(["scores","Scores"]);
@@ -1285,7 +1317,7 @@
   const h={esc:escapeHTML,today:new Date(),division,billing,rounds,status:reported};
   const buttons=profileLinks(f,names,article);
   return '<details class="befn-fight-snapshot" data-snapshot-key="'+escapeHTML(key)+'" data-b="1" data-tiles="1"'+
-   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+(fighterGyms?' data-gyms="1"':'')+(cardScores?' data-scores="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
+   (fighterTape?' data-tape="1"':'')+(cutoutRegister?' data-cuts="1"':'')+(fighterCountries?' data-flags="1"':'')+(fighterGyms?' data-gyms="1"':'')+(cardScores?' data-scores="1"':'')+(boardData?' data-ratings="1"':'')+' '+(openSnapshots.has(key)?'open':'')+'>'+
    '<summary><span>Fight snapshot</span></summary><div class="befn-snapshot-body">'+
    B.tapeHTML(sides,side(0),side(1),h)+
    B.analysisHTML(B.analysisLines(side(0),side(1),names,h.today),h)+
@@ -1738,6 +1770,8 @@
   if(el.open)openSnapshots.add(el.dataset.snapshotKey);
   else openSnapshots.delete(el.dataset.snapshotKey);
   if(el.open&&el.dataset.lazy)fillSnapshot(el);
+  // The ratings for the Scores tab load on the first open of a UFC card snapshot (see scoresFor).
+  if(el.open&&el.dataset.b&&!boardData)loadBoards();
  },true);
  const mount=document.getElementById("main")||document.body;
  if(mount&&typeof MutationObserver!=="undefined")new MutationObserver(schedule).observe(mount,{subtree:true,childList:true});

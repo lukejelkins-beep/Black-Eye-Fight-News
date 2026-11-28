@@ -9,6 +9,28 @@ Format: date — decision — who — where it shows up.
 - Rating bars appear only on the Overview. On Stats each skill (Striking, Wrestling, Grappling) opens to "What drives this rating"; the method note is behind "How the rating works", which the Overview link opens. Recommended by Claude, not separately confirmed by the owner. The bars come back on Stats by dropping `driversOnly()` in `fighter-profile-a.js`.
 - Checked in a browser at 390 and 1280 px (Tsarukyan: all four tabs; a boxing roster profile; a PFL basic profile). — PR #588, awaiting "Merge 588".
 
+## 2026-11-28 — Fight card Scores tab shows the BEFN ratings
+- Owner asked "What are these scores???" about the Scores tab in an upcoming fight's snapshot: they were the card's own last-five percentiles (1 to 99, `data/ufc-card-scores.json`), so the same fighter read differently on the card and the profile (Oliveira Striking 31 on the card, 41.81 on the profile). Owner: "Yes use BEFN ratings, keep Power under more scores".
+- The Scores tab now shows Results, Striking, Wrestling, Grappling and Form, 2 decimals, the same numbers as each profile (`data/ufc-stats/leaderboards.json`, Form from `data/ufc-fighter-form.json` under the profile's rule). Power (last five fights, 1 to 99) is under "More scores" with its pool named. Durability is no longer shown. `snapshot-tiles.js` `ratingsHTML`; the old `scoresHTML` stays for its tests and the scores build.
+- The ratings file is fetched when a card snapshot is first opened, not with the Fights page; the snapshot redraws with the Scores tab once it arrives.
+- Checked the label the owner's screenshot showed ("Ranked against Lightweight fighters, the division this bout is contracted at"): correct, the bout is contracted at lightweight and the method ranks both fighters there.
+- Checked in a browser at 390 and 1280 px (UFC 335, Oliveira vs Lopes). — PR for branch claude/card-ratings, awaiting "Merge N".
+
+## 2026-11-28 (Sumo profile results: one compact line per bout)
+- **Owner, with an iPhone screenshot:** "The results on the fighter profile is long and could be refined so it's more visually appealing and saves space".
+- **New row.** Each bout is now one line: result chip (W/L), day, the opponent's round face and name with his rank at that basho and the technique underneath, and H2H. The always-visible "Details" bar is gone: tapping the line opens the details (one tap deeper, DIRECTION.md).
+- **Measured.** iPhone 13: 186 px to 62 px a bout; a 15-bout basho from about 2,790 px to 930 px. On desktop the rows sit in two newspaper columns, so an opened row only pushes its own column.
+- **Rank fix.** The rank shown is the opponent's rank at that basho (current banzuke or rank history), not his rank today. Previously older bouts showed today's rank.
+- **Details panel.** Staff-style "Completed result: Yes" removed (DIRECTION principle 6); one text size; the source note kept, muted.
+- **320 px.** Smaller face, tighter gaps, no chevron, 13.5 px names, so every name fits (checked against the longest shikona on the banzuke).
+- **QA.** The existing overflow and overlap checks run on the new rows (class names kept). The phone QA adds compact-row and tap-to-open checks.
+- — Owner 28 Nov — awaiting owner "Merge N".
+
+## 2026-11-28 (Fighters hub: form rank written out)
+- **Top 15 rows say "UFC #5 → Form #1"** (owner: "I still think form and form rank is confusing", then chose "Show the move in words" from three options; the others were "Fewer scores per row" and "Drop Form rank entirely"). Before: a bare ▲/▼ sat beside the UFC rank with the form rank only in a tooltip, and the phone hid the Form rank column, so the arrows and the "Form rank" sort chip pointed at a number nobody could see.
+  - **Phone:** a small line under the name on every ranked, non-champion row: "UFC #5 → Form #1", with ▲ (green) or ▼ (blue) in front when the form rank differs from the UFC rank by 3 or more, as before. **Desktop:** the columns stay, and the arrow now sits beside "Form #N" in the last column instead of beside the UFC rank.
+  - The sort chip and column heading "Form rank" are now "Form #", matching what each row shows. Form (0 to 100, how well they are fighting now) and Overall (career) are unchanged. Not done: a browser check at 390 and 1280 px (see the PR). — Owner; Claude — awaiting owner "Merge N".
+
 ## 2026-11-28 (Results card: clean result rows)
 - **The opened event card on Results lists its bouts as design A "Clean result rows"** (owner, from three mock-ups of UFC 334: "A"; and "I like the view when the fight is expanded with the analysis etc so dont want that to change"). Each bout is one light row: both fighters' cut-outs fitted to the same head size (assets/cutout-fit.js), the winner bold with a green tick, the loser faded, a method chip (DEC, SPLIT DEC, MAJ DEC, SUB, KO/TKO, DRAW, NC) with round and time in the middle, and the division and rounds on one quiet line. Tapping the row opens the fight snapshot; Round statistics and Official judges' scorecards show once a fight is opened. Main card / Prelims are light pills. Unchanged on purpose: the opened fight snapshot (poster, analysis, video, statistics, last five) and the dark poster and title band at the top of the card. A fighter without a cut-out (Josh Hokit) shows a small photo disc. The tick is drawn by CSS because the snapshot reads the fighter's name from the row (a text tick became the "surname": "✓ wins by decision"). Before: about 770 px a bout on a phone, dark and gold, with three fold-outs always showing. Mock-ups and screenshots: `docs/design/screenshots/results-rows-20261128/`. — Owner; Claude — `assets/results.js`, `assets/results-rows.css`; awaiting owner "Merge N".
 
@@ -34,6 +56,7 @@ Format: date — decision — who — where it shows up.
   - The strip links to the Predictor with the two wrestlers. Makushita and cross-division bouts have no chance, so no strip.
   - The strip sits after the bout's fact line, which the fact-engine test expects directly under the row.
 - **Checklist:** `docs/design/PHONE-CHECKLIST-2026-11-28-sumo.md`, for the owner to run on an iPhone and in Safari.
+- Merged on "Merge 585", live at 600670d (phone QA 69/69 on the live site).
 - **Owner: "Can u do the checks pls".** Ran the checklist as a script on an emulated iPhone 13 and iPhone SE (Chromium with touch and finger swipes; no WebKit here, no phone attached). 69 of 69 pass after one fix: on 320 x 568 screens the wrapped pills had pushed a profile's name to 544 px of 568, so on narrow, short screens (`max-width:360px` and `max-height:620px`) the profile photo stage is 50 px shorter (name back at 494 px). The share sheet, Safari's engine and native pickers still need a real iPhone.
 - — Owner 28 Nov — awaiting owner "Merge N".
 
