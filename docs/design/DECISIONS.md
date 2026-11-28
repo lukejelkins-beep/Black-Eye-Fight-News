@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (UFC fighter gyms)
+- UFC fighter profiles show a "Trains at" line from `data/ufc-fighter-gyms.json`, built by `scripts/build-ufc-fighter-gyms.py` from the Association field on Sherdog fighter pages. Owner has Sherdog's permission to use its data on BEFN (28 Nov 2026). It is where Sherdog lists the fighter as training now, not the gym at the time of any fight, so the wording is "Trains at", never "fights out of". A name that matches no Sherdog fighter, or that several share and the win-loss record cannot tell apart, gets no line (no placeholder). Several same-name fighters, and names Sherdog spells differently (nicknames, "Jr.", name order), are matched by the record BEFN holds: a Sherdog fighter is accepted only if exactly one candidate has the same win-loss record (owner, 28 Nov 2026). The gyms refresh monthly through `.github/workflows/refresh-ufc-gyms.yml`, which opens a draft PR (owner, 28 Nov 2026). Gym is shown as a plain fact only: it is not an input to any rating or score, because the 2025 analysis found no gym effect beyond what fighters' records already predict.
+
 ## 2026-11-28 (Sumo: live prediction record, Juryo day view, phone pills, refit job)
 - **Owner's picks from the selector:** merge #581 when green (done: `4d62932`, live and checked), and build all four next items, in one PR.
 - **Live prediction record.**
