@@ -262,6 +262,17 @@ def percentile(value, population: list[float]):
     return int(_clamp(round(100 * (below + equal / 2) / len(population)), 1, 99))
 
 
+def percentile_score(value, population: list[float]):
+    """The same mid-rank percentile to 2 decimal places, for display only (owner, 28 Nov 2026: "2 decimal points and
+    just the number"). Whole-point percentile() still feeds the composite, opponent strength and the BEFN rating, so
+    no rating moves; this only separates fighters who share a whole percentile on the boards and profiles."""
+    if value is None or not population:
+        return None
+    below = sum(1 for v in population if v < value)
+    equal = sum(1 for v in population if v == value)
+    return round(_clamp(100 * (below + equal / 2) / len(population), 0.01, 99.99), 2)
+
+
 def recent_form(history: list[dict], quality=None):
     """Port of recentForm(): last five decided UFC fights, recency 5..1, neutral prior."""
     decided = [f for f in history if f["outcome"] in ("W", "L", "D")][:5]
@@ -571,7 +582,9 @@ def _rate_pool(fighters: dict, results: dict, as_of: str | None = None) -> dict:
             "provisional": not rated and slug in headline,
             "sample": {"statFights": w.get("statFights", 0), "effectiveFights": w.get("effectiveFights"),
                        "minimum": MIN_STAT_FIGHTS},
-            "skills": {k: {"roster": pcts.get(k), "division": division_pct.get(k),
+            "skills": {k: {"roster": pcts.get(k),
+                           "score": percentile_score(own[k], roster_pop[k]) if k in own and roster_pop.get(k) else None,
+                           "division": division_pct.get(k),
                            "drivers": drivers(w.get("rates") or {}, w, k) if shown else []} for k in SKILLS},
             "form": {"score": form, "opponents": [
                 {"boutId": fight["boutId"], "opponent": fight["opponent"], "strength": opp.get(fight["boutId"])}
@@ -587,6 +600,7 @@ def _rate_pool(fighters: dict, results: dict, as_of: str | None = None) -> dict:
             "results": None if slug not in results else {
                 "rating": round(results[slug]["rating"]), "fights": results[slug]["fights"],
                 "percentile": percentile(results[slug]["rating"], results_pop),
+                "score": percentile_score(results[slug]["rating"], results_pop),
                 "provisional": results[slug]["fights"] < RESULTS_MIN_FIGHTS},
             "skillsComposite": None if composite.get(slug) is None else round(composite[slug], 1),
             "opponentStrength": strength.get(slug),

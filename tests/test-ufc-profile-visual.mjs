@@ -481,6 +481,18 @@ try{
    // + 16 statistic boards, one picker.
    const options=await page.locator("#befn-board-metric option").count();
    assert.equal(options,22,"UFC leaderboard choices incomplete");
+   // Default view is "Top 10s" (owner, 28 Nov 2026): one card per board, each with 1-10 qualified rows.
+   // A deployment from before that change has no view switch and goes straight to the table checks.
+   if(await page.locator('[data-board-view="table"]').count()){
+    assert.equal(await page.locator(".befn-bcard").count(),22,"Top 10s view should show a card for every board");
+    const cardRows=await board.evaluate(el=>[...el.querySelectorAll(".befn-bcard")].map(c=>c.querySelectorAll("ol > li").length));
+    assert(cardRows.every(n=>n<=10)&&cardRows.filter(n=>n>=1).length>=20,"Top 10s cards should hold 1-10 qualified rows");
+    assert(!await board.evaluate(el=>el.scrollWidth>el.clientWidth+3),"UFC Top 10s view horizontally overflows "+screen);
+    await page.screenshot({path:path.join(screenshots,"ufc-leaderboards-top10s-"+screen+".png"),animations:"disabled",timeout:12000});
+    // The full single-board table is one tap away and keeps every earlier check.
+    await page.locator('[data-board-view="table"]').click();
+    await page.locator(".befn-board-list > li").first().waitFor({state:"visible",timeout:12000});
+   }
    const rows=await page.locator(".befn-board-list > li").count();
    assert(rows>=1&&rows<=30,"Expected 1–30 qualified leaderboard athletes");
    // Default board is the BEFN rating, which needs 5 fights with full stats.
