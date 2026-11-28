@@ -62,8 +62,11 @@
   }
 
   /* Does the headline name this fighter? Looks at every run of headline words as long as the name. */
-  function names(titleWords, who) {
+  function names(titleWords, who, titleSet) {
     const n = who.key.length;
+    // Quick reject (speed, 28 Nov 2026): a match needs every name part in the headline, or all but one when the
+    // last is a close spelling, so a headline holding fewer than n-1 of the parts cannot match.
+    if (titleSet) { let have = 0; for (const part of who.key) if (titleSet.has(part)) have++; if (have < n - 1) return false; }
     for (let i = 0; i + n <= titleWords.length; i++) {
       const window = titleWords.slice(i, i + n).sort();
       if (window.join(' ') === who.key.join(' ') || closeSpelling(window, who.key)) return true;
@@ -76,14 +79,22 @@
 
   /* The latest `limit` stories whose headline names any of `fighterNames`, newest first.
    * Each result is { story, matched: [fighter names] }. Stories need a title, https link, source and date. */
+  // Each event card asks about the same story list, so the sorted list and each headline's words are worked out once.
+  const prepared = new WeakMap();
+  function storiesOf(stories) {
+    let list = prepared.get(stories);
+    if (!list) {
+      list = stories.filter(usable).sort((a, b) => time(b) - time(a)).map(story => { const w = words(story.title); return { story, w, set: new Set(w) }; });
+      prepared.set(stories, list);
+    }
+    return list;
+  }
   function relatedNews(stories, fighterNames, limit) {
     const who = [...new Map((fighterNames || []).map(prepare).filter(Boolean).map(w => [w.key.join(' '), w])).values()];
     if (!who.length || !Array.isArray(stories)) return [];
     const seen = new Set();
-    return stories
-      .filter(usable)
-      .sort((a, b) => time(b) - time(a))
-      .map(story => { const w = words(story.title); return { story, matched: who.filter(f => names(w, f)).map(f => f.name) }; })
+    return storiesOf(stories)
+      .map(({ story, w, set }) => ({ story, matched: who.filter(f => names(w, f, set)).map(f => f.name) }))
       .filter(r => r.matched.length && !seen.has(r.story.url) && seen.add(r.story.url))
       .slice(0, limit == null ? 3 : limit);
   }

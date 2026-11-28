@@ -87,11 +87,28 @@
     return !!card(a.title)&&card(a.title)===card(b.title)&&!!kind(a.title)&&kind(a.title)===kind(b.title)&&
       /\b(?:video|stream|watch|live)\b/i.test(a.title)&&/\b(?:video|stream|watch|live)\b/i.test(b.title);
   }
+  // Per story, worked out once (keyed by the story object): its normalised URL, time, headline terms as a list, a
+  // joined string and a set. same() used to rebuild these for every pair.
+  const prepared=new WeakMap();
+  function prep(a){
+    let p=prepared.get(a);
+    if(!p){const t=terms(a.title);p={u:url(a.url),at:when(a.publishedAt),t,j:t.join(' '),set:new Set(t)};prepared.set(a,p);}
+    return p;
+  }
+  // The page runs this over overlapping story lists (leads, the pool, the feed), so each pair's answer is kept.
+  const pairs=new WeakMap();
   function same(a,b){
-    if(url(a.url)===url(b.url))return true;
-    if(a.sport!==b.sport||Math.abs(when(a.publishedAt)-when(b.publishedAt))>72*3600e3)return false;
-    const x=terms(a.title),y=terms(b.title),sx=new Set(x),sy=new Set(y);
-    if(x.join(' ')==y.join(' '))return true;
+    let m=pairs.get(a);if(!m){m=new WeakMap();pairs.set(a,m);}
+    let r=m.get(b);
+    if(r===undefined){r=sameRaw(a,b);m.set(b,r);}
+    return r;
+  }
+  function sameRaw(a,b){
+    const pa=prep(a),pb=prep(b);
+    if(pa.u===pb.u)return true;
+    if(a.sport!==b.sport||Math.abs(pa.at-pb.at)>72*3600e3)return false;
+    const sx=pa.set,sy=pb.set;
+    if(pa.j==pb.j)return true;
     if(sameEvent(a,b)||sameRewordedHeadline(a,b)||matchingBooking(a,b)||matchingEventMedia(a,b))return true;
     if(Math.min(sx.size,sy.size)<6)return false;
     const stages=s=>[...s].filter(w=>updates.has(w)).sort().join(',');
