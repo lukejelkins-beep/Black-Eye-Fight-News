@@ -52,6 +52,14 @@ window.ResultsDesk=(()=>{
  }
  function media(r){return r.image?`<div class="result-cover"><img src="${url(r.image)}" alt="${esc(r.fighters.map(f=>f.name).join(' vs '))}" loading="lazy"><small>${esc(r.imageCredit)}</small></div>`:`<div class="result-faceoff">${r.fighters.map((f,i)=>photo(f,r.status==='completed'&&r.winner===i)).join('<span class="result-vs">VS</span>')}</div>`}
  function card(r){return `<article class="result-feature">${media(r)}<div class="result-feature-body"><div class="result-eyebrow">${esc(r.sport)} / ${esc(r.division||"Weight class not confirmed")} / ${date(r.date)}</div><h2>${esc(r.fighters[r.winner].name)} wins</h2><p>${esc(r.summary)}</p><div class="result-method">${esc(r.method)} <span>${r.round?`ROUND ${esc(r.round)}`:''}${r.time?` · ${esc(r.time)}`:''}</span></div><div class="result-card-records">${r.fighters.map(f=>`<div><strong>${esc(f.name)}</strong>${record(f)}</div>`).join('')}</div><div class="result-links">${clip(r)}${link(r.source,'Result report')}</div></div></article>`}
+ /* The fighter's UFC cut-out, scaled so every head is the same size (assets/cutout-fit.js); '' when there is none. */
+ const slugOf=n=>String(n||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[łŁ]/g,'l').replace(/[øØ]/g,'o').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ function fitPhoto(f,winner){
+  const Fit=window.BEFNCutoutFit,k=slugOf(f.name),fit=Fit&&Fit.style('fighter',k,{head:30,crown:9});
+  // The older result styles size every photo with !important, so the fitted placement carries !important too.
+  const style=fit&&fit.split(';').map(x=>x+'!important').join(';');
+  return style?`<span class="result-photo rr-fit${winner?' is-winner':''}" data-portrait-ignore><img src="assets/img/ufc-cutouts/${esc(k)}.webp" alt="" style="${style}" loading="lazy" onerror="this.parentNode.classList.add('is-gone')"></span>`:'';
+ }
  function boutRecord(f, complete){
  if(complete&&f.record){const context=f.recordContext==='event-listing'?'as listed for event':f.recordVerifiedAt?'as of '+f.recordVerifiedAt:'after fight';return `<span class="result-bout-record" title="Record ${esc(context)}">${esc(f.record)} <small>${esc(context)}</small></span>`;}
  if(f.preRecord)return `<span class="result-bout-record">${esc(f.preRecord)} <small>before fight</small></span>`;
@@ -99,7 +107,14 @@ window.ResultsDesk=(()=>{
   if(complete){
    const detail=[boutMethod(r.method),r.round?'R'+r.round:'',r.time||''].filter(Boolean).join(' · ');
    const label=r.status==='draw'?'DRAW':r.status==='no_contest'?'NO CONTEST':'FINAL';
-   return `<div class="result-matchup-result" aria-label="Final result"><span class="result-matchup-finished">${label}</span><strong>${esc(detail)}</strong>${r.scores?`<span class="result-matchup-scores">${esc(r.scores)}</span>`:''}</div>`;
+   // Results card rows, design A (owner, 28 Nov 2026): a short method chip and the round and time; the full method stays
+   // in the label and in the fight snapshot.
+   const m=String(r.method||'').toLowerCase();
+   const [kind,chip]=r.status==='draw'||/draw/.test(m)?['draw','DRAW']:r.status==='no_contest'||/no contest/.test(m)?['nc','NC']:
+    /sub/.test(m)?['sub','SUB']:/\b(t?ko|knockout|stoppage|rtd|retire)/.test(m)?['ko','KO/TKO']:
+    /split/.test(m)?['dec','SPLIT DEC']:/majority/.test(m)?['dec','MAJ DEC']:/decision/.test(m)?['dec','DEC']:['',label];
+   const when=[r.round?'R'+r.round:'',r.time||''].filter(Boolean).join(' · ');
+   return `<div class="result-matchup-result" aria-label="${esc(label==='FINAL'?'Final result: '+detail:label+(detail?': '+detail:''))}"><span class="result-matchup-finished">${label}</span><strong>${esc(detail)}</strong><span class="rr-chip is-${kind}" aria-hidden="true">${esc(chip)}</span>${when?`<span class="rr-when" aria-hidden="true">${esc(when)}</span>`:''}${r.scores?`<span class="result-matchup-scores">${esc(r.scores)}</span>`:''}</div>`;
   }
   if(r.status==='underway'||r.status==='live')return '<span class="result-matchup-live">● BOUT UNDERWAY</span>';
   if(r.status==='cancelled')return '<span class="result-matchup-cancelled">BOUT CANCELLED</span>';
@@ -116,11 +131,12 @@ window.ResultsDesk=(()=>{
  function row(r,position={}){
   const finished=isFinalStatus(r.status),winner=finished&&(r.winner===0||r.winner===1);
   const first=(r.fighters||[])[0]||{name:'Fighter TBC'},second=(r.fighters||[])[1]||{name:'Fighter TBC'};
-  const side=(f,i)=>`<div class="result-contender result-contender-${i===0?'left':'right'}${winner&&r.winner===i?' is-winner':''}">${i===0?photo(f,winner&&r.winner===i):''}<div class="result-contender-info"><strong>${esc(f.name)} ${fighterLabels(f).rankLabel}</strong>${boutRecord(f,finished)}${fighterLabels(f).tier}</div>${i===1?photo(f,winner&&r.winner===i):''}</div>`;
+  const pic=(f,w)=>(r.sport==='MMA'&&fitPhoto(f,w))||photo(f,w);
+  const side=(f,i)=>`<div class="result-contender result-contender-${i===0?'left':'right'}${winner&&r.winner===i?' is-winner':''}">${i===0?pic(f,winner&&r.winner===i):''}<div class="result-contender-info"><strong>${esc(f.name)} ${fighterLabels(f).rankLabel}</strong>${boutRecord(f,finished)}${fighterLabels(f).tier}</div>${i===1?pic(f,winner&&r.winner===i):''}</div>`;
   const roundText=Number.isInteger(r.scheduledRounds)&&r.scheduledRounds>0?`<span class="result-bout-rounds">${r.scheduledRounds} rounds</span>`:'';
   const extra=r.divisionNote?'<span class="result-division-caution">Weigh-in note</span>':'';
   return `<article class="result-bout result-bout-compact${finished?' is-completed':''}${position.main?' is-main-event':''}${position.coMain?' is-co-main-event':''}" aria-label="${esc(first.name)} versus ${esc(second.name)}${winner?'; '+esc(r.fighters[r.winner].name)+' winner':''}">
-   <div class="result-matchup ${finished?'has-result':''}">\n    ${position.main?'<span class="result-featured-bout-label">MAIN EVENT</span>':position.coMain?'<span class="result-featured-bout-label">CO-MAIN EVENT</span>':''}
+   <div class="result-matchup ${finished?'has-result':''}${winner?' has-winner':''}">\n    ${position.main?'<span class="result-featured-bout-label">MAIN EVENT</span>':position.coMain?'<span class="result-featured-bout-label">CO-MAIN EVENT</span>':''}
     ${countryFlag(first,'left')}${countryFlag(second,'right')}
     <span class="result-matchup-vs-watermark" aria-hidden="true">VS</span>
     ${matchResult(r)}
@@ -336,6 +352,7 @@ function hydrateResultPhotos(){
  }
  pump();
 }
+ if(window.BEFNCutoutFit)window.BEFNCutoutFit.load().then(()=>{if(data&&document.getElementById('results-content'))update();});
  function update(){
  const el=document.getElementById('results-content');
  if(el){
@@ -409,6 +426,14 @@ function hydrateResultPhotos(){
   if(e.target.closest('#results-retry'))load();
   if(e.target.closest('#results-reset')){filters.query='';filters.clips=false;document.getElementById('main').innerHTML=render()}
  });
+ // Tapping a result row anywhere opens or closes its fight snapshot (links and buttons keep their own action).
+ document.addEventListener('click',e=>{
+  const m=e.target.closest&&e.target.closest('#results-content [data-result-event] .result-bout-compact > .result-matchup');
+  if(!m||e.target.closest('a,button,summary,input'))return;
+  const d=m.parentElement.querySelector(':scope > details.befn-fight-snapshot');
+  if(d)d.open=!d.open;
+ });
+
  document.addEventListener('error',function(e){
  if(e.target.matches?.('.befn-result-thumb img')){
   const img=e.target,fallback=img.dataset.fallbackSrc;
