@@ -64,6 +64,54 @@ class Build(unittest.TestCase):
         self.assertEqual(out["schema"], 1)
 
 
+def record_page(w, l, gym):
+    return (f'<div class="wins"><div class="win"><span>Wins</span><span>{w}</span></div></div>'
+            f'<div class="loses"><div class="lose"><span>Losses</span><span>{l}</span></div></div>'
+            f'<a href="/stats/fightfinder?association={gym}">{gym}</a>')
+
+
+class SameName(unittest.TestCase):
+    NAMES = {"josesilva": "Jose Silva"}
+    SEARCH = {"Jose Silva": search_html(("/fighter/Jose-1", "Jose Silva"), ("/fighter/Jose-2", "Jose Silva"))}
+
+    def run_build(self, pages, records):
+        return gyms.build(self.NAMES, self.SEARCH.get, pages.get, records)
+
+    def test_parse_record(self):
+        self.assertEqual(gyms.parse_record(record_page(12, 3, "X")), (12, 3))
+        self.assertIsNone(gyms.parse_record("<div></div>"))
+
+    def test_same_name_resolved_by_matching_record(self):
+        pages = {"/fighter/Jose-1": record_page(5, 1, "Gym One"), "/fighter/Jose-2": record_page(12, 3, "Gym Two")}
+        out = self.run_build(pages, {"josesilva": (12, 3)})
+        self.assertEqual(out["fighters"], {"josesilva": ["Gym Two"]})
+        self.assertEqual(out["coverage"]["ambiguous"], [])
+
+    def test_same_name_left_out_when_no_record_or_a_tie_or_no_match(self):
+        tie = {"/fighter/Jose-1": record_page(12, 3, "A"), "/fighter/Jose-2": record_page(12, 3, "B")}
+        none = {"/fighter/Jose-1": record_page(5, 1, "A"), "/fighter/Jose-2": record_page(6, 1, "B")}
+        for pages, rec in ((tie, {"josesilva": (12, 3)}), (none, {"josesilva": (12, 3)}), (none, {})):
+            out = self.run_build(pages, rec)
+            self.assertEqual(out["fighters"], {})
+            self.assertEqual(out["coverage"]["ambiguous"], ["josesilva"])
+
+
+class Refresh(unittest.TestCase):
+    def test_known_fighters_are_read_again_without_a_search_and_keep_their_path(self):
+        names = {"islammakhachev": "Islam Makhachev"}
+        def no_search(_):
+            raise AssertionError("a matched fighter must not be searched again")
+        out = gyms.build(names, no_search, {"/fighter/Islam-1": PAGE}.get, known={"islammakhachev": "/fighter/Islam-1"})
+        self.assertEqual(out["fighters"]["islammakhachev"], ["Eagles MMA", "American Kickboxing Academy"])
+        self.assertEqual(out["sherdog"], {"islammakhachev": "/fighter/Islam-1"})
+
+    def test_a_fighter_whose_gym_vanished_drops_out_instead_of_keeping_stale_data(self):
+        out = gyms.build({"islammakhachev": "Islam Makhachev"}, lambda n: "", {"/fighter/Islam-1": "<div></div>"}.get,
+                         known={"islammakhachev": "/fighter/Islam-1"})
+        self.assertEqual(out["fighters"], {})
+        self.assertEqual(out["coverage"]["noGymListed"], ["islammakhachev"])
+
+
 class SavedFile(unittest.TestCase):
     def test_saved_file_shape(self):
         path = ROOT / "data/ufc-fighter-gyms.json"
@@ -77,6 +125,8 @@ class SavedFile(unittest.TestCase):
             self.assertTrue(lst and all(isinstance(x, str) and x for x in lst))
         c = data["coverage"]
         self.assertEqual(c["withGym"], len(data["fighters"]))
+        self.assertEqual(set(data["sherdog"]), set(data["fighters"]))
+        self.assertTrue(all(v.startswith("/fighter/") for v in data["sherdog"].values()))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,68 @@
+name: Monthly UFC gyms refresh (draft PR)
+# Where each UFC fighter on the site trains, from the Association field on Sherdog fighter pages (used with Sherdog's
+# permission, owner, 28 Nov 2026). Free, no key. The refresh reads each matched fighter's page once and only searches
+# again for names left out last time: about 1,000 requests, four at a time with a pause in each worker, so it takes
+# roughly 10 to 20 minutes. Results reach main only through the draft PR this job opens or updates, merged by the owner
+# ("Merge N"). The builder refuses to write if fighters with a gym fall by 30% or more.
+on:
+  workflow_dispatch:
+  schedule:
+    # The 2nd of each month, 03:47 UTC.
+    - cron: '47 3 2 * *'
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: befn-ufc-gyms-refresh
+  cancel-in-progress: false
+jobs:
+  gyms:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      BRANCH: auto/ufc-gyms-refresh
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the two libraries the builder uses
+        run: python -m pip install 'requests>=2.31,<3' 'beautifulsoup4>=4.12,<5'
+      - name: Tests for the gym builder (offline)
+        run: python -m unittest tests/test_ufc_fighter_gyms.py
+      - name: Refresh gyms from Sherdog
+        run: python scripts/build-ufc-fighter-gyms.py
+      - name: Open or update the monthly draft PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add data/ufc-fighter-gyms.json
+          if git diff --cached --quiet; then
+            echo "No gym changes this month." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          asof=$(python3 -c "import json;print(json.load(open('data/ufc-fighter-gyms.json'))['asOf'])")
+          git config user.name 'befn-gyms-bot'
+          git config user.email 'befn-gyms-bot@users.noreply.github.com'
+          git commit -q -m "Refresh UFC fighter gyms: $asof"
+          # The branch belongs to this job and is rebuilt from main every month.
+          git push -q --force origin "HEAD:$BRANCH"
+          {
+            echo "Monthly UFC gyms refresh, **$asof**."
+            echo
+            echo "Merge with \"Merge N\" as usual. Gyms are where Sherdog lists each fighter as training now."
+            echo
+            git diff --cached --stat
+          } > "$RUNNER_TEMP/body.md"
+          if [ "$(gh pr list --head "$BRANCH" --state open --json number --jq 'length')" != "0" ]; then
+            gh pr edit "$BRANCH" --title "Monthly UFC gyms: $asof" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh pr create --draft --base main --head "$BRANCH" \
+              --title "Monthly UFC gyms: $asof" --body-file "$RUNNER_TEMP/body.md" || {
+              echo "::error::Could not open the draft PR. Allow GitHub Actions to create pull requests (Settings > Actions > General), or open one from branch $BRANCH."
+              exit 1; }
+          fi
+          cat "$RUNNER_TEMP/body.md" >> "$GITHUB_STEP_SUMMARY"
