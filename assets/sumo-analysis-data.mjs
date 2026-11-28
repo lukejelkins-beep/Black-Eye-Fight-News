@@ -1,19 +1,21 @@
 /* BEFN Sumo basho analysis: what the Basho review and the live-basho page show for one day.
    Works on a snapshot shaped like preview-details.json (the live basho, or an archive file through
-   asDetails). Pure functions; tests replay saved basho. Makuuchi only.
+   asDetails). Pure functions; tests replay saved basho. Makuuchi by default; the day view can show Juryo.
    Rules as in sumo-live-data.mjs: a win is "win" or "fusen win"; a loss is "loss", "fusen loss" or
    "absent". Predictor chances come from sumo-predict.mjs and use only what was known that morning. */
 import { rows, isMakuuchi, position, tierOf } from './sumo-home-data.mjs';
 import { completedDay, through } from './sumo-live-data.mjs';
 import { bashoPredictions, expectedWins, nextMorning, pickWith } from './sumo-predict.mjs';
 
-const maku = details => rows(details?.banzuke).filter(r => isMakuuchi(r.rank));
+/* Division filter: 'Makuuchi' (default) or 'Juryo'. */
+export const inDivision = (rank, division = 'Makuuchi') => division === 'Juryo' ? tierOf(rank) === 'Juryo' : isMakuuchi(rank);
+const maku = (details, division) => rows(details?.banzuke).filter(r => inDivision(r.rank, division));
 const view = r => ({ id: r.rikishiID, name: r.shikonaEn, rank: r.rank });
 const resultOn = (r, day) => { const b = (r.record || [])[day - 1]; if (!b) return null; return /win/.test(b.result) ? 'win' : /loss|absent/.test(b.result) ? 'loss' : null; };
 
 /* Standings after `day`: fewest losses, then most wins, then rank. Place is shared on equal records. */
-export function standings(details, day, { limit = 10 } = {}) {
-  const list = maku(details).map(r => ({ ...view(r), ...through(r, day), today: resultOn(r, day), yesterday: day > 1 ? through(r, day - 1) : null }));
+export function standings(details, day, { limit = 10, division } = {}) {
+  const list = maku(details, division).map(r => ({ ...view(r), ...through(r, day), today: resultOn(r, day), yesterday: day > 1 ? through(r, day - 1) : null }));
   list.sort((a, b) => a.l - b.l || b.w - a.w || position(a.rank) - position(b.rank));
   let place = 0;
   list.forEach((x, i) => { if (!i || x.l !== list[i - 1].l || x.w !== list[i - 1].w) place = i + 1; x.place = place; });
@@ -29,10 +31,11 @@ export function raceSeries(details, upto, { count = 4 } = {}) {
 }
 
 /* Everything for one basho: per-day results with the morning's chance, and running scores. */
-export function analysis(details, model, { day } = {}) {
+export function analysis(details, model, { day, division = 'Makuuchi' } = {}) {
   const completed = completedDay(details);
   const sel = Math.min(Math.max(1, Number(day) || completed || 1), Math.max(1, completed));
-  const preds = (model && bashoPredictions(details, model) || []).filter(q => isMakuuchi(q.a.rank) && isMakuuchi(q.b.rank) && q.day <= completed);
+  const inDiv = rank => inDivision(rank, division);
+  const preds = (model && bashoPredictions(details, model) || []).filter(q => inDiv(q.a.rank) && inDiv(q.b.rank) && q.day <= completed);
   const bout = q => {
     const w = q.aWon ? q.a : q.b, l = q.aWon ? q.b : q.a, p = q.aWon ? q.p : 1 - q.p;
     return { day: q.day, winner: view(w), loser: view(l), p, called: p >= 0.5, kimarite: q.kimarite,
@@ -43,14 +46,14 @@ export function analysis(details, model, { day } = {}) {
   const tally = list => ({ hit: list.filter(b => b.called).length, n: list.length });
   const shock = list => list.filter(b => !b.called).sort((a, b) => a.p - b.p)[0] || null;
   /* Expected wins through the selected day: who is beating the predictor, and who is falling short. */
-  const missed = new Map(maku(details).map(r => [r.rikishiID, (r.record || []).slice(0, sel).filter(b => b && b.result === 'absent').length]));
-  const exp = expectedWins(preds.filter(q => q.day <= sel), { isMakuuchi }).filter(x => x.bouts >= Math.min(5, sel)).map(x => ({ ...x, missed: missed.get(x.id) || 0 }));
+  const missed = new Map(maku(details, division).map(r => [r.rikishiID, (r.record || []).slice(0, sel).filter(b => b && b.result === 'absent').length]));
+  const exp = expectedWins(preds.filter(q => q.day <= sel), { isMakuuchi: inDiv }).filter(x => x.bouts >= Math.min(5, sel)).map(x => ({ ...x, missed: missed.get(x.id) || 0 }));
   const byDelta = exp.slice().sort((a, b) => b.delta - a.delta);
   return {
-    bashoId: details.bashoId, completed, day: sel, hasModel: !!preds.length,
+    bashoId: details.bashoId, division, completed, day: sel, hasModel: !!preds.length,
     bouts: today, dayScore: tally(today), dayShock: shock(today),
     soFar: tally(all.filter(b => b.day <= sel)), bashoShock: shock(all.filter(b => b.day <= sel)),
-    table: standings(details, sel), race: raceSeries(details, completed),
+    table: standings(details, sel, { division }), race: division === 'Makuuchi' ? raceSeries(details, completed) : [],
     over: byDelta.filter(x => x.delta > 0.5).slice(0, 4), under: byDelta.reverse().filter(x => x.delta < -0.5 && !x.missed).slice(0, 4)
   };
 }

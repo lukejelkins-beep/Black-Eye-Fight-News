@@ -2,6 +2,20 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Sumo: live prediction record, Juryo day view, phone pills, refit job)
+- **Owner's picks from the selector:** merge #581 when green (done: `4d62932`, live and checked), and build all four next items, in one PR.
+- **Live prediction record.**
+  - From the January 2027 basho, the live refresh saves each day's Makuuchi and Juryo picks once the bouts are announced and before any is fought, then adds results after. Saved picks are never changed.
+  - The Predictor page shows the running record and the latest day's picks.
+  - Starts empty; the page says it starts in January.
+- **Juryo in the day view.** A Makuuchi | Juryo switch on the Basho review and live basho day view, with results, morning chances, the day's score and standings. Juryo chances were added to the saved model without changing anything else.
+- **Fighters pills at 320 px.** All Sumo pill rows wrap on phones instead of scrolling off the edge. Measured: a profile's name still starts at 544 px on a 320 x 740 screen, inside the first screen.
+- **Twice-yearly refit.**
+  - A scheduled job (3 Feb, 3 Aug) recollects, refits on a rolling window and opens a draft PR only if the gate holds: all-bout gain interval above zero, Makuuchi gain positive.
+  - The Predictor page's track-record text now follows the model's own window, not fixed years.
+  - The predictor test now checks the gate's rule; a one-year test window is too small for the stricter Makuuchi interval.
+- — Owner 28 Nov — awaiting owner "Merge N".
+
 ## 2026-11-28 (Sumo design review: owner's picks)
 - **Owner's choices, from the selector:** all four design fixes from the #575 review; keep birthplace in the predictor; one PR.
 - **No repeats between the Sumo home and the Basho review.**
@@ -18,8 +32,8 @@ Format: date — decision — who — where it shows up.
 - **Phone navigation.**
   - On phones the five Analysis pills wrap to two even rows. Other sections keep one scrolling row, because a profile's name must stay on the first screen at 320 px.
   - The 15 day buttons are a single swipeable strip, with the chosen day kept in view.
-  - Not changed, and flagged: at 320 px the fourth Fighters pill (Stables) still sits off the edge of its scrolling row.
-- — Owner 28 Nov — awaiting owner "Merge N".
+  - Not changed, and flagged: at 320 px the fourth Fighters pill (Stables) still sits off the edge of its scrolling row (fixed in the next PR).
+- — Owner 28 Nov — merged by the owner ("Merge 581"), live at 4d62932 (checked on the live site).
 
 ## 2026-11-28 (Owner's choices from the clicks and space review)
 - **MMA Analysis: UFC champions become a compact strip** (owner chose "Compact strip"). Eleven small tiles (photo, division, name, UFC record, days as champion, defences, last five, next title fight), a swipe row on the phone and two rows of six on desktop; the name opens the profile, the division opens that division in the Fighters hub. On a phone the stats leaderboards now start about 1,250 px down instead of about 2,000. Boxing keeps its carousel (separate sport, not asked). — `assets/fight-analysis.js` `champStripHTML`.

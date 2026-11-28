@@ -68,6 +68,13 @@ jobs:
             node --test tests/test-sumo-daily.mjs tests/test-sumo-api-source.mjs
             node scripts/sumo-refresh-daily.mjs
           fi
+      # Live prediction record (owner, 28 Nov 2026): save the announced day's picks before it is fought
+      # and score saved picks once fought. Offline; a saved pick is never changed (assets/sumo-prediction-log.mjs).
+      - name: Save and score the predictor's picks
+        if: steps.plan.outputs.mode != 'skip'
+        run: |
+          node --test tests/test-sumo-prediction-log.mjs
+          node scripts/sumo-log-predictions.mjs
       - name: Commit only the Sumo data files
         id: commit
         if: steps.plan.outputs.mode != 'skip'
@@ -80,7 +87,7 @@ jobs:
             data/sumo/career-history.json data/sumo/research-h2h-summary.json \
             data/sumo/research-h2h-opponents.json data/sumo/research-h2h-history.json \
             data/sumo/division-stats.json data/sumo/api-trusted-status.json \
-            data/sumo/jsa-torikumi.json
+            data/sumo/jsa-torikumi.json data/sumo/prediction-log.json
           if git diff --cached --quiet; then
             echo "No data change"
             exit 0

@@ -19,11 +19,9 @@ html[data-befn-area="sumo"] .sh-area-name{color:#8ea6dc}
   .befn-mobile-tabs a svg{height:19px;width:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .befn-mobile-tabs a[aria-current="page"]{background:#f3c332;color:#211417}
   .befn-mobile-tabs a:focus-visible{outline:2px solid #fff}
-  /* One row of pills on phones, so a profile's name stays on the first screen at 320 px
-     (scripts/sumo-browser-qa.mjs); pills keep the 44 px tap height. */
-  .sh-sub{flex-wrap:nowrap;gap:6px;padding:10px 12px 0;overflow-x:auto;scrollbar-width:none}
-  .sh-sub::-webkit-scrollbar{display:none}
+  /* Pills wrap to a second row instead of running off the screen (28 Nov 2026). Measured: a profile's
+     name still starts about 540 px down at 320 x 740, inside the first screen (scripts/sumo-browser-qa.mjs).
+     Pills keep the 44 px tap height and share each row evenly. */
+  .sh-sub{flex-wrap:wrap;gap:6px;padding:10px 12px 0}
   .sh-sub a{flex:1 0 auto;justify-content:center;padding:0 12px;font-size:12px;letter-spacing:.04em;white-space:nowrap}
-  /* Analysis has five pages: two even rows instead of a row that runs off the screen (28 Nov 2026). */
-  .sh-sub[data-section="analysis"]{flex-wrap:wrap;overflow:visible}
 }
