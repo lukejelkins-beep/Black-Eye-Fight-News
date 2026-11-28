@@ -1,24 +1,24 @@
 {
-  "attemptedAt": "2026-11-28T04:51:26.673Z",
-  "checkedAt": "2026-11-28T04:51:26.673Z",
-  "updatedAt": "2026-11-28T04:04:41Z",
+  "attemptedAt": "2026-11-28T05:18:49.555Z",
+  "checkedAt": "2026-11-28T05:18:49.555Z",
+  "updatedAt": "2026-11-28T05:02:42Z",
   "windowDays": 28,
   "sourcesConfigured": 23,
-  "sourcesChecked": 6,
+  "sourcesChecked": 4,
   "sourcesFailed": 0,
   "platformStatus": [
     {
       "platform": "Bluesky",
       "state": "connected",
-      "checked": 6,
+      "checked": 4,
       "failed": 0,
-      "configured": 6,
-      "message": "6 of 6 scheduled sources checked."
+      "configured": 4,
+      "message": "4 of 4 scheduled sources checked."
     },
     {
       "platform": "X",
       "state": "source-linked",
-      "configured": 34,
+      "configured": 27,
       "paidApiCalls": 0,
       "monthlyUsdCap": 2,
       "estimatedMonthlySpendUsd": 0,
@@ -29,7 +29,7 @@
       "state": "unavailable",
       "checked": 0,
       "failed": 0,
-      "configured": 36,
+      "configured": 39,
       "message": "Instagram Business Discovery not permitted (HTTP 401). Check Meta app permissions and Page-linked professional access."
     },
     {
@@ -41,7 +41,7 @@
     {
       "platform": "Reddit",
       "state": "not-connected",
-      "configured": 1,
+      "configured": 2,
       "message": "Official API credential not supplied; selected original post embeds remain available."
     },
     {
@@ -55,22 +55,46 @@
   "rollingScan": {
     "directoryEntries": 449,
     "scheduledEntries": 84,
-    "batchIndex": 4,
+    "batchIndex": 3,
     "batchCount": 6,
     "batchSize": 84,
     "intervalMinutes": 5,
     "nominalCycleMinutes": 30,
     "scheduledByPlatform": {
-      "Instagram": 36,
-      "X": 34,
-      "Bluesky": 6,
-      "Threads": 7,
-      "Reddit": 1
+      "Threads": 12,
+      "X": 27,
+      "Instagram": 39,
+      "Bluesky": 4,
+      "Reddit": 2
     },
-    "directlyChecked": 6,
+    "directlyChecked": 4,
     "note": "Scheduled directory entries are not synonymous with accessible API feeds; source-linked X and Threads accounts do not receive paid timeline checks."
   },
   "posts": [
+    {
+      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3dwf4v6jq24",
+      "cid": "bafyreieepzkyx2l4qulddvbsiason7yft4mobm2ryyq7jz2nvmuoj5du7m",
+      "platform": "Bluesky",
+      "sport": "mma",
+      "type": "post",
+      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
+      "handle": "@bloodyelbow.com",
+      "role": "media",
+      "quote": "Islam Makhachev’s manager says call for UFC to strip him from former champion is ‘sad to see’",
+      "postedAt": "2026-11-28T05:02:42Z",
+      "date": "28 Nov 2026",
+      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3dwf4v6jq24",
+      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
+      "source": "Bluesky public author API",
+      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
+      "engagement": {
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
+      "topic": "Original source post · claims may need confirmation"
+    },
     {
       "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3dt5ex6bp2k",
       "cid": "bafyreib54vmezjkbnvufrrujpjcqxuprf4kdsuqz32in4ciyetfo5wetnq",
@@ -92,7 +116,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -116,7 +140,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -188,7 +212,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -284,7 +308,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -452,7 +476,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -476,7 +500,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -620,7 +644,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -716,7 +740,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -764,31 +788,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
-      "topic": "Original source post · claims may need confirmation"
-    },
-    {
-      "id": "at://did:plc:j5jeaecu4fvtqhl2qh37fhau/app.bsky.feed.post/3n3b3xlrlis2p",
-      "cid": "bafyreifgl4expkkyw4owylshhxqu6cysxjf44cowkeuoxyyr542mmpfbge",
-      "platform": "Bluesky",
-      "sport": "mma",
-      "type": "post",
-      "name": "Bloody Elbow - MMA, UFC & Combat Sports News",
-      "handle": "@bloodyelbow.com",
-      "role": "media",
-      "quote": "Ex-UFC contender claims he’s making ’10 times’ more money since being removed from the roster",
-      "postedAt": "2026-11-27T02:04:31Z",
-      "date": "27 Nov 2026",
-      "url": "https://bsky.app/profile/bloodyelbow.com/post/3n3b3xlrlis2p",
-      "photo": "https://cdn.bsky.app/img/avatar/plain/did:plc:j5jeaecu4fvtqhl2qh37fhau/bafkreig7qbvc3c3a7eswh67uhbwnnubw5isqhs5bobkrmfuahuoke2lrhi",
-      "source": "Bluesky public author API",
-      "verifiedDid": "did:plc:j5jeaecu4fvtqhl2qh37fhau",
-      "engagement": {
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1724,7 +1724,7 @@
         "comments": 0,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1868,7 +1868,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1892,7 +1892,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1916,7 +1916,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1940,7 +1940,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1964,7 +1964,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -1988,7 +1988,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2012,7 +2012,7 @@
         "comments": 3,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
@@ -2456,7 +2456,7 @@
         "comments": 1,
         "shares": 0
       },
-      "engagementCheckedAt": "2026-11-28T04:16:14.251Z",
+      "engagementCheckedAt": "2026-11-28T05:18:49.555Z",
       "topic": "Original source post · claims may need confirmation"
     },
     {
