@@ -173,14 +173,14 @@ async function checkProfile(page,profile,screen){
    const d=document.querySelector("#fighterDialog");
    return !!d?.open&&!!d.querySelector(".befn-profile-insights[data-befn-profile='"+CSS.escape(id)+"']");
   },profile.id,{timeout:12000});
-  // Profile design A (owner, 2026-11-25): a hero rating or recent-form panel, the tab bar, and the nine Recent
-  // Performance tiles moved into the Stats tab. The Ratings card holds only the ratings that have a value, so it is
+  // Profile design A (owner, 2026-11-25): a hero rating or recent-form panel, the tab bar, and the Stats tab. The Ratings card holds only the ratings that have a value, so it is
   // no longer waited for (a fighter with none has no card).
   await page.waitForFunction(()=>{
    const d=document.querySelector("#fighterDialog.befn-pro-dialog");
    return !!d?.querySelector("[data-befn-pro-rating] .befn-pro-score")&&
     !!d?.querySelector(".befn-pa-tabs [role=tab]")&&
-    !!d?.querySelector(".befn-pro-stats .befn-pro-tiles");
+    // Stats tab: the numbers table against the division average (28 Nov 2026), or the nine V3 tiles without a stats file.
+    !!d?.querySelector(".befn-pro-stats .bsp-table,.befn-pro-stats .befn-pro-tiles");
   },null,{timeout:12000});
   // A fighter in the stats build first shows a placeholder ("—") while their stats file loads; count the rating
   // bars only once the real card is in (rating model 2026-11, PR #453: the live site is slower than a local server).
