@@ -9,7 +9,8 @@ Format: date — decision — who — where it shows up.
   - A fought bout is marked Called, Missed, or Upset. "Upset" means the winner had under 40%, the same rule as the Basho review.
   - The strip links to the Predictor with the two wrestlers. Makushita and cross-division bouts have no chance, so no strip.
   - The strip sits after the bout's fact line, which the fact-engine test expects directly under the row.
-- **Checklist:** `docs/design/PHONE-CHECKLIST-2026-11-28-sumo.md`, for the owner to run on an iPhone and in Safari. Testing so far is Chromium only.
+- **Checklist:** `docs/design/PHONE-CHECKLIST-2026-11-28-sumo.md`, for the owner to run on an iPhone and in Safari.
+- **Owner: "Can u do the checks pls".** Ran the checklist as a script on an emulated iPhone 13 and iPhone SE (Chromium with touch and finger swipes; no WebKit here, no phone attached). 69 of 69 pass after one fix: on 320 x 568 screens the wrapped pills had pushed a profile's name to 544 px of 568, so on narrow, short screens (`max-width:360px` and `max-height:620px`) the profile photo stage is 50 px shorter (name back at 494 px). The share sheet, Safari's engine and native pickers still need a real iPhone.
 - — Owner 28 Nov — awaiting owner "Merge N".
 
 ## 2026-11-28 (Sumo: live prediction record, Juryo day view, phone pills, refit job)

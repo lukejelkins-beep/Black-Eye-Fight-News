@@ -2,6 +2,19 @@
 
 For the Sumo work in #575, #581, #583 and the Bouts-page chances. I can only test in Chromium, so this list covers what a phone and Safari can do differently: touch, swiping, the share sheet, the native dropdowns, and the chart's tap targets.
 
+## Automated run, 28 Nov 2026 (what I could check without a phone)
+Every item below was run as a script on an emulated iPhone 13 (390 x 844) and iPhone SE (320 x 568), with touch and real finger swipes. Engine: Chromium, because WebKit is not installed in this environment. The desktop line was run at 1440 px.
+
+**Result: 69 of 69 passed, after one fix.**
+- The fix: on the 320 x 568 iPhone SE, the wrapped Fighters buttons had pushed a wrestler's name to 544 px of 568, barely on screen. On narrow, short screens the profile photo stage is now 50 px shorter, so the name is back at 494 px. No other screen changes.
+- The first run also failed all seven swipe checks. That was the test's swipe method, which does not work headless; real touch events scroll fine.
+
+**Still needs your phone:**
+- Safari's own engine.
+- The iOS share sheet: the Copy fallback passed.
+- Safari's native pickers: changing the value passed.
+- How swiping feels.
+
 Open https://blackeyefightnews.com.au/sumo.html on an iPhone in Safari. If the site is installed as an app, pull to refresh twice so the new version loads. Each line is a yes/no check. For any "no", send a screenshot and say which phone and iOS version.
 
 ## Navigation

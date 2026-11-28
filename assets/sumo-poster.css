@@ -71,3 +71,10 @@
   .sumo-poster-bout strong{font-size:22px}
   .sumo-poster-bout .h2h .kim{font-size:18px}
 }
+
+/* Small, short phones (320 x 568, the first-generation iPhone SE): the pill rows wrap to two lines on
+   phones (28 Nov 2026), which pushed the name to 544 px of 568. A 50 px shorter photo stage brings the
+   name back to where it was. Layout B is unchanged on every other screen. */
+@media(max-width:360px) and (max-height:620px){
+  .sumo-poster-stage{min-height:250px}
+}
