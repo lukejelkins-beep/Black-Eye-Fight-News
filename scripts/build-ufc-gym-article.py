@@ -61,7 +61,7 @@ def build(d: dict) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#151115">
-  <meta name="robots" content="noindex,nofollow">
+  <meta name="robots" content="index,follow">
   <title>Do UFC gyms decide fights? | Black Eye Fight News</title>
   <meta name="description" content="We compared gym records across {d['decidedBouts']} UFC fights in {d['season']}. Once you allow for each fighter's record going in, gyms look much the same.">
   <link rel="icon" href="assets/site-favicon-192.png" type="image/png">
@@ -75,6 +75,8 @@ def build(d: dict) -> str:
     body{{margin:0;background:var(--cream);color:var(--ink);font:400 16px/1.55 "DM Sans",system-ui,sans-serif}}
     .skip{{position:absolute;left:-999px}} .skip:focus{{left:12px;top:12px;background:#fff;padding:8px 12px;z-index:9}}
     .bar-top{{background:var(--band);border-bottom:4px solid var(--red);padding:12px 16px}}
+    .bar-top{{display:flex;justify-content:space-between;align-items:center;gap:12px}}
+    .bar-top .back{{color:var(--gold)}}
     .bar-top a{{color:#fff;text-decoration:none;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:14px;display:inline-flex;align-items:center;min-height:44px}}
     main{{max-width:720px;margin:0 auto;padding:24px 16px 56px}}
     .kicker{{margin:0 0 8px;color:var(--red);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase}}
@@ -102,7 +104,7 @@ def build(d: dict) -> str:
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <div class="bar-top"><a href="index.html#home">Black Eye Fight News</a></div>
+  <div class="bar-top"><a href="index.html#home">Black Eye Fight News</a><a class="back" href="index.html?sport=mma#analysis">MMA analysis</a></div>
   <main id="main">
     <p class="kicker">MMA analysis</p>
     <h1>Do UFC gyms decide fights?</h1>

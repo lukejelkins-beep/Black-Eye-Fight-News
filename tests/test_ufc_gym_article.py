@@ -36,9 +36,14 @@ class Page(unittest.TestCase):
         for needle in (str(DATA["decidedBouts"]), str(DATA["events"]), f'{DATA["winnerPickedPct"]}%'):
             self.assertIn(needle, PAGE)
 
-    def test_draft_is_not_indexed_and_credits_sherdog(self):
-        self.assertIn('name="robots" content="noindex,nofollow"', PAGE)
+    def test_page_is_indexable_like_the_rest_of_the_site_and_credits_sherdog(self):
+        self.assertIn('name="robots" content="index,follow"', PAGE)
         self.assertIn("Sherdog", PAGE)
+        self.assertIn('href="index.html?sport=mma#analysis"', PAGE)
+
+    def test_the_mma_analysis_page_links_to_the_article(self):
+        js = (ROOT / "assets/fight-analysis.js").read_text(encoding="utf-8")
+        self.assertIn('href="analysis-ufc-gyms-2025.html"', js)
 
     def test_no_text_under_12px(self):
         self.assertEqual([s for s in re.findall(r"font-size:(\d+)px", PAGE) if int(s) < 12], [])
