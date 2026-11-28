@@ -40,13 +40,19 @@ jobs:
         run: node scripts/sumo-check-banzuke-release.mjs
       - name: Re-run archive checks on anything saved
         run: node --test tests/test-sumo-basho-archive.mjs tests/test-sumo-banzuke-changes.mjs
+      # The predictor's ratings and saved chances roll forward through any newly saved basho (offline,
+      # no requests). The weights are refitted separately, by hand: docs/sumo-predictor.md.
+      - name: Roll the bout predictor forward
+        run: |
+          node scripts/sumo-build-model.mjs --update
+          node --test tests/test-sumo-predict.mjs tests/test-sumo-analysis.mjs
       - name: Commit data to main
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "BEFN Sumo preview"
           git config user.email "sumo-preview@users.noreply.github.com"
-          git add data/sumo/basho-archive data/sumo/banzuke-release 2>/dev/null || true
+          git add data/sumo/basho-archive data/sumo/banzuke-release data/sumo/predictor.json data/sumo/predictor-state.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new basho or banzuke"
             exit 0
