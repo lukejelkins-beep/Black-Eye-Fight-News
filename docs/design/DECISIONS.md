@@ -2,6 +2,15 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Speed: the site was slow for measurable reasons)
+- **Owner: "the website/app can be a bit laggy/slow"; chose all four fixes.** Measured in Chromium at 4x CPU throttle (about a mid-range phone), site files served locally:
+  - **News dedupe** compared every pair of stories and re-parsed URLs and headlines per pair: one 12.0 s block on the front page (2.4 s unthrottled), 2.9 s on News. Each story is now prepared once and each pair's answer kept; output identical (checked on the saved feed plus 220 planted duplicates, over three overlapping runs).
+  - **18 MB of data on the front page.** The post-fight totals (6.8 MB, fetched with no-store, so on every visit) and the V3 snapshot (1.7 MB) now load only when a profile, an opened fight snapshot or the old fighter grid needs them, with an hourly cache key. The live feeds (news, results, upcoming cards) were fetched by several scripts, each from GitHub and from the site; now once per page per source (`assets/feed-cache.js`), same "newest copy wins" rule. Front page: 18.3 MB to 6.1 MB of site data.
+  - **Fights page built ~9,200 elements**, ~17,500 more inside closed fight snapshots counted in depth. A closed snapshot is now its summary line; the body is drawn, fresh, when opened. 9,172 to 2,291 elements.
+  - **Stylesheets bundled at build time:** each unbroken run of stylesheet links (inline `<style>` blocks split the runs, so the cascade order is unchanged) becomes one `assets/site.<hash>.css`; about 40 stylesheet requests to 9. Built pages checked pixel-identical to the source on five pages at 390 and 1280 px. **Scripts were not bundled:** in one file, an error in any script would stop every script after it, and their real costs (above) are fixed.
+  - Result at 4x throttle: front page longest block 12.0 s to 0.5 s, total blocking 13.9 s to 1.1 s; News 2.9 s to 0.1 s.
+  - Not measured: the live Render site, real phones, network latency. — Owner; Claude — separate PR.
+
 ## 2026-11-26 (Form: title holders keep half their age credit)
 - **A title holder's age part in Form is at least 0.5** (owner: "Gane under 80 and Volk at 85 as defending champs?", then "Half credit"). A title holder is a fighter whose latest title-fight result is a win with no loss since. Age was 15% of Form and reached zero at 38, which held 36-38-year-old champions down (Gane 76.6 to 83.5, Volkanovski 86.2 to 93.0, Gaethje 81.8 to 90.0). Backtest unchanged (Brier 0.2331 from 2022, 0.2401 against 0.2404 in 2018-2021). 160 fighters move by more than 0.05, because former champions who have not lost since a title win count too; non-champions can slip a little as the percentile rescales (Valter Walker 94.16 to 93.73, rank unchanged). `scripts/ufc-form-champion-age.py` re-runs the test.
 - **A title-win bonus on opponent strength was tested and not added** (owner: "No"). Accuracy flat; champions gained 0.4 on average and the biggest rises went to former title winners.
