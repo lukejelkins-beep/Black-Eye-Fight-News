@@ -5,12 +5,12 @@ import { plainRank, bashoName, shortRank } from './sumo-home-data.mjs?v=20261124
 
 const fmtDate = iso => iso ? new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', timeZone: 'UTC' }) : '';
 
-function selector(h, r, index) {
-  const ids = (index?.basho || []).map(b => b.bashoId).sort().reverse();
+export function selector(h, r, index) {
+  const ids = [...new Set([...(h.liveId ? [h.liveId] : []), ...(index?.basho || []).map(b => b.bashoId)])].sort().reverse();
   const i = ids.indexOf(r.bashoId);
   const newer = i > 0 ? ids[i - 1] : null, older = i >= 0 && i < ids.length - 1 ? ids[i + 1] : null;
   return '<div class="srev-pick"><label for="srev-basho">Tournament</label><select id="srev-basho" data-review-select>' +
-    ids.map(id => '<option value="' + h.e(id) + '"' + (id === r.bashoId ? ' selected' : '') + '>' + h.e(bashoName(id)) + '</option>').join('') + '</select>' +
+    ids.map(id => '<option value="' + h.e(id) + '"' + (id === r.bashoId ? ' selected' : '') + '>' + h.e(bashoName(id)) + (id === h.liveId ? ' (live)' : '') + '</option>').join('') + '</select>' +
     (older ? '<a class="srev-step" href="#review/' + h.e(older) + '" aria-label="Previous tournament, ' + h.e(bashoName(older)) + '">‹ ' + h.e(bashoName(older).split(' ')[0].slice(0, 3)) + '</a>' : '') +
     (newer ? '<a class="srev-step" href="#review/' + h.e(newer) + '" aria-label="Next tournament, ' + h.e(bashoName(newer)) + '">' + h.e(bashoName(newer).split(' ')[0].slice(0, 3)) + ' ›</a>' : '') + '</div>';
 }
@@ -26,11 +26,21 @@ function top(h, r, file) {
     (img ? '<div class="shome-hero-photo"><img src="' + h.e(img) + '" alt="' + h.e(c.name) + '"><span class="shome-cup">Makuuchi champion</span></div>' : '') + '</section>';
 }
 
+/* Who did well, who didn't: photo tiles for the best and toughest full records, then the men who
+   missed bouts. The "against the odds" rows (sumo-analysis.mjs) follow when the predictor is loaded. */
 function recordsBlock(h, r) {
-  const col = (title, list, fmt) => list.length ? '<div class="shome-card shome-wcol"><h3>' + h.e(title) + '</h3><ul>' + list.map(x => '<li><span>' + who(h, x.id, x.name) + ' · ' + h.e(shortRank(x.rank)) + '</span><b>' + h.e(fmt(x)) + '</b></li>').join('') + '</ul></div>' : '';
   const rec = x => x.wins + '–' + x.losses + (x.absences ? '–' + x.absences : '');
-  return '<section class="shome-block">' + head(h, 'Who did well, who didn’t', null, 'Makuuchi records. Wrestlers who missed bouts are listed on their own.') + '<div class="shome-watch">' +
-    col('Best records', r.records.best, rec) + col('Toughest basho', r.records.worst, rec) + col('Missed bouts (kyujo)', r.records.absent.slice(0, 6), x => x.absences + ' absent · ' + x.wins + '–' + x.losses) + '</div></section>';
+  const tile = (x, cls) => {
+    const img = h.cutout(x.id) || h.head(x.id);
+    return '<article class="srev-tile ' + cls + '"><div class="srev-tile-ph">' + (img ? '<img src="' + h.e(img) + '" alt="" loading="lazy">' : '<span aria-hidden="true">相</span>') + '</div>' +
+      '<div class="srev-tile-bd"><b>' + h.e(rec(x)) + '</b><strong>' + who(h, x.id, x.name) + '</strong><small>' + h.e(plainRank(x.rank)) + '</small></div></article>';
+  };
+  const row = (title, list, cls) => list.length ? '<div class="srev-tilerow"><h3>' + h.e(title) + '</h3><div class="srev-tiles">' + list.map(x => tile(x, cls)).join('') + '</div></div>' : '';
+  const absent = r.records.absent.slice(0, 8);
+  return '<section class="shome-block" id="who-did-well">' + head(h, 'Who did well, who didn’t', null, 'Makuuchi records with every bout fought. Men who missed bouts are listed on their own.') +
+    row('Best records', r.records.best, 'is-up') + row('Toughest basho', r.records.worst, 'is-down') +
+    (absent.length ? '<div class="srev-tilerow"><h3>Missed bouts (kyujo)</h3><ul class="shome-card srev-kyujo">' + absent.map(x => '<li>' + face(h, x.id) + '<span>' + who(h, x.id, x.name) + '<small>' + h.e(shortRank(x.rank)) + '</small></span><b>' + x.absences + ' absent · ' + x.wins + '–' + x.losses + '</b></li>').join('') + '</ul></div>' : '') +
+    '</section>';
 }
 
 function upsetsBlock(h, r) {
@@ -57,12 +67,13 @@ function dataNotes(h, r) {
 
 export function renderReview(r, file, h) {
   const d = { ...r, finished: true };
-  return '<div class="sumo-home sumo-review">' + top(h, r, file) + (h.dayByDay || '') +
+  return '<div class="sumo-home sumo-review">' + top(h, r, file) + (h.analysis || h.dayByDay || '') +
+    recordsBlock(h, r) + (h.expectations || '') +
     championsBlock(h, d, null) +
     '<section class="shome-block shome-two">' + starsBlock(h, d) + sanyakuBlock(h, d) + '</section>' +
     (r.kadobanKnown ? '' : '<p class="shome-note">Kadoban flags need the tournament before, which is not saved for ' + h.e(r.headline.name) + '.</p>') +
-    recordsBlock(h, r) + upsetsBlock(h, r) + techniqueBlock(h, r) +
-    (r.movers ? moversBlock(h, d) : '') +
+    upsetsBlock(h, r) + techniqueBlock(h, r) +
+    (r.movers ? moversBlock(h, d) : '') + (h.score || '') +
     dataNotes(h, r) +
     '<p class="shome-source">From the saved Sumo API record of the ' + h.e(r.headline.name) + ' basho (collected ' + h.e(fmtDate(r.source.collectedAt)) + ' ' + h.e((r.source.collectedAt || '').slice(0, 4)) + '). Wins are counted from each wrestler’s bouts.</p></div>';
 }
