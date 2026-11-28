@@ -2,6 +2,16 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Sumo profile results: one compact line per bout)
+- **Owner, with an iPhone screenshot:** "The results on the fighter profile is long and could be refined so it's more visually appealing and saves space".
+- **New row.** Each bout is now one line: result chip (W/L), day, the opponent's round face and name with his rank at that basho and the technique underneath, and H2H. The always-visible "Details" bar is gone: tapping the line opens the details (one tap deeper, DIRECTION.md).
+- **Measured.** iPhone 13: 186 px to 62 px a bout; a 15-bout basho from about 2,790 px to 930 px. On desktop the rows sit in two newspaper columns, so an opened row only pushes its own column.
+- **Rank fix.** The rank shown is the opponent's rank at that basho (current banzuke or rank history), not his rank today. Previously older bouts showed today's rank.
+- **Details panel.** Staff-style "Completed result: Yes" removed (DIRECTION principle 6); one text size; the source note kept, muted.
+- **320 px.** Smaller face, tighter gaps, no chevron, 13.5 px names, so every name fits (checked against the longest shikona on the banzuke).
+- **QA.** The existing overflow and overlap checks run on the new rows (class names kept). The phone QA adds compact-row and tap-to-open checks.
+- — Owner 28 Nov — awaiting owner "Merge N".
+
 ## 2026-11-28 (Fighters hub: form rank written out)
 - **Top 15 rows say "UFC #5 → Form #1"** (owner: "I still think form and form rank is confusing", then chose "Show the move in words" from three options; the others were "Fewer scores per row" and "Drop Form rank entirely"). Before: a bare ▲/▼ sat beside the UFC rank with the form rank only in a tooltip, and the phone hid the Form rank column, so the arrows and the "Form rank" sort chip pointed at a number nobody could see.
   - **Phone:** a small line under the name on every ranked, non-champion row: "UFC #5 → Form #1", with ▲ (green) or ▼ (blue) in front when the form rank differs from the UFC rank by 3 or more, as before. **Desktop:** the columns stay, and the arrow now sits beside "Form #N" in the last column instead of beside the UFC rank.
@@ -32,6 +42,7 @@ Format: date — decision — who — where it shows up.
   - The strip links to the Predictor with the two wrestlers. Makushita and cross-division bouts have no chance, so no strip.
   - The strip sits after the bout's fact line, which the fact-engine test expects directly under the row.
 - **Checklist:** `docs/design/PHONE-CHECKLIST-2026-11-28-sumo.md`, for the owner to run on an iPhone and in Safari.
+- Merged on "Merge 585", live at 600670d (phone QA 69/69 on the live site).
 - **Owner: "Can u do the checks pls".** Ran the checklist as a script on an emulated iPhone 13 and iPhone SE (Chromium with touch and finger swipes; no WebKit here, no phone attached). 69 of 69 pass after one fix: on 320 x 568 screens the wrapped pills had pushed a profile's name to 544 px of 568, so on narrow, short screens (`max-width:360px` and `max-height:620px`) the profile photo stage is 50 px shorter (name back at 494 px). The share sheet, Safari's engine and native pickers still need a real iPhone.
 - — Owner 28 Nov — awaiting owner "Merge N".
 

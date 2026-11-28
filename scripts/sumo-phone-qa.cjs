@@ -39,6 +39,11 @@ const inView = (page, sel) => page.evaluate(s => { const e = document.querySelec
     await go(page, 'sumo.html#profile/8850');
     const h1 = await page.evaluate(() => { const r = document.querySelector('#sumo-main h1').getBoundingClientRect(); return { top: Math.round(r.top), vh: innerHeight }; });
     rec(name, 'Navigation', 'Profile name visible without scrolling', h1.top < h1.vh - 30, h1.top + ' of ' + h1.vh + ' px');
+    // Profile results: one compact line per bout (owner, 28 Nov 2026), details one tap deeper, names never cut off.
+    const rows = await page.evaluate(() => { const r = [...document.querySelectorAll('.sumo-results-desk .sumo-ed-row')]; return { n: r.length, avg: Math.round(r.reduce((s, x) => s + x.getBoundingClientRect().height, 0) / Math.max(1, r.length)), cut: [...document.querySelectorAll('.sumo-ed-who>a')].filter(a => a.scrollWidth > a.clientWidth + 1).map(a => a.textContent) }; });
+    rec(name, 'Profile results', 'Compact bout rows (under 72 px), no name cut off', rows.n >= 10 && rows.avg < 72 && !rows.cut.length, rows.n + ' rows, ' + rows.avg + ' px each');
+    const r2 = page.locator('.sumo-results-desk .sumo-ed-row .sumo-ed-row-main').nth(1); await r2.scrollIntoViewIfNeeded(); await r2.tap({ position: { x: 6, y: 20 } }); await page.waitForTimeout(400);
+    rec(name, 'Profile results', 'Tap a bout: its details open', await page.locator('.sumo-results-desk .sumo-ed-row').nth(1).getAttribute('open') === '');
 
     // ---- Sumo home
     await go(page, 'sumo.html#home');
