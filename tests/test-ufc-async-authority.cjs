@@ -64,6 +64,8 @@ async function examine(order) {
   ])
  };
  const window = {
+  // Profile-only data loads when a profile is open (speed, 28 Nov 2026), so the page under test has one open.
+  location:{hash:"#fighter/ufc--regression-champion"},
   COMBAT_DATA:{fighters,champions:{mma:[]}},
   BEFNPowerIndex:engine,
   BEFNUfcClassifier:{
@@ -87,7 +89,8 @@ async function examine(order) {
   getElementById:()=>null,
   body:{}
  };
- const fetch = url=>new Promise(resolve=>{
+ const fetch = raw=>new Promise(resolve=>{
+  const url=String(raw).split("?")[0];   // profile data carries an hourly cache key (?h=)
   assert(paths.includes(url),"Unexpected external fetch: "+url);
   requests.set(url,resolve);
  });

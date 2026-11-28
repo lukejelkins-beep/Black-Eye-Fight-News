@@ -59,7 +59,9 @@
    heading.append(h2,x);
    const grid=document.createElement('div');grid.className='befn-mobile-sheet-grid';
    const area=window.BEFNSport?.get?.()||'all';
-   const areaName=window.BEFNSport?.name?.()||'All sports';
+   // Sections always belong to a sport (owner, 28 Nov 2026); on the front page they are the last sport's.
+   const sectionSport=area==='all'?(window.BEFNSport?.last?.()||'mma'):area;
+   const areaName=window.BEFNSport?.name?.(sectionSport)||'MMA';
    const sports=document.createElement('div');sports.className='befn-mobile-sheet-grid';
    [['#home','All sports (front page)','all'],['#home','Boxing','boxing'],['#home','MMA','mma'],['sumo.html','Sumo','']].forEach(([href,label,key])=>{
      const a=document.createElement('a');a.href=href;a.textContent=label;if(key)a.dataset.area=key;
@@ -69,14 +71,14 @@
    const sportsHead=document.createElement('h3');sportsHead.className='befn-mobile-sheet-sub';sportsHead.textContent='Sports';
    const sectionsHead=document.createElement('h3');sectionsHead.className='befn-mobile-sheet-sub';sectionsHead.textContent=areaName;
    const sections=[
-     ['#home',area==='all'?'Front page':'Overview'],
+     ['#home','Overview'],
      ['#news','News'],
      ['#fights','Upcoming fights'],['#results','Results'],['#highlights','Fight film'],
      ['#fighters','Fighters'],
-     ['#analysis',area==='mma'?'Analysis: UFC stats':'Analysis'],['#social','Fight Talk']
+     ['#analysis',sectionSport==='mma'?'Analysis: UFC stats':'Analysis'],['#social','Fight Talk']
    ];
    const here=(location.hash||'#home').split('/')[0];
-   sections.forEach(([href,label])=>{const a=document.createElement('a');a.href=href;a.textContent=label;if(href===here)a.setAttribute('aria-current','page');a.addEventListener('click',close);grid.append(a);});
+   sections.forEach(([href,label])=>{const a=document.createElement('a');a.href=href;a.textContent=label;if(href==='#home'&&area==='all')a.dataset.area=sectionSport;else if(href===here)a.setAttribute('aria-current','page');a.addEventListener('click',close);grid.append(a);});
    const alerts=document.createElement('button');alerts.type='button';alerts.textContent='Alerts: notification preferences';
    alerts.addEventListener('click',()=>{close();window.BEFNAlerts?.open?.();});
    grid.append(alerts);

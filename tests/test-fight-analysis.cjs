@@ -46,8 +46,12 @@ const page = A.boxingPage({ data: { champions: { boxing: [{ division: '<b>x</b>'
 assert(page.includes('The title picture') && page.includes('&lt;b&gt;x&lt;/b&gt;') && !page.includes('<b>x</b>'));
 const top = A.mmaTop({ data: { champions: { mma: [{ division: 'Heavyweight', name: 'Ciryl Gane', start: '14 Sep 2026', defences: 0 }] } }, events: [], results, now });
 assert(top.includes('UFC champions') && top.includes('Ciryl Gane') && top.includes('Submission'));
-// The champions list became a carousel (25 Nov 2026): the old list markup is gone from both pages.
-assert(top.includes('aria-roledescription="carousel"') && !top.includes('fa-champs'), 'MMA: carousel in place of the champions list');
+// The champions list became a carousel (25 Nov 2026). MMA Analysis then became a compact strip (owner, 28 Nov 2026:
+// "Compact strip") so the leaderboards start within two phone screens; boxing keeps its carousel.
+assert(top.includes('fa-ch-list') && !top.includes('aria-roledescription="carousel"'), 'MMA: compact champion strip, no carousel');
+assert(top.includes('data-hub-division="heavyweight"') && top.includes('fa-stack'), 'MMA: division links to the hub; fights-ended is one stacked bar');
+const wTop = A.mmaTop({ data: { champions: { mma: [{ division: "Women's Strawweight", name: 'Mackenzie Dern', start: '1 Jan 2026' }] } }, events: [], results, now });
+assert(wTop.includes('data-hub-division="womens-strawweight"'), 'women\'s division maps to the hub slug');
 const bxTop = A.boxingPage({ data: { champions: { boxing: [{ division: 'Heavyweight', belts: { WBO: [{ name: 'Daniel Dubois', days: '182 days', defences: 1 }] } }] }, fighters: [] }, events: [], results, now });
 assert(bxTop.includes('aria-roledescription="carousel"') && bxTop.includes('The title picture') && bxTop.indexOf('World champions') < bxTop.indexOf('The title picture'), 'boxing: carousel first, title picture kept');
 
