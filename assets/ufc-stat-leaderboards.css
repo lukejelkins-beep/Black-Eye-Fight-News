@@ -70,7 +70,7 @@
 .befn-bc-name{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:6px;min-width:0;padding:3px 0}
 .befn-bc-name a{font:700 13px/1.2 'DM Sans',sans-serif;color:var(--fp-ink,#111013)!important;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:2px 0}
 .befn-bc-name a:hover,.befn-bc-name a:focus-visible{color:var(--fp-red,#cf1824)!important;text-decoration:underline}
-.befn-bc-name small{flex-basis:100%;font:500 12px/1.2 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660);white-space:nowrap}
+.befn-bc-name small,.befn-bc-name .befn-bc-div{flex-basis:100%;font:500 12px/1.2 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660);white-space:nowrap}
 .befn-bc-name i{font:700 12px 'DM Sans',sans-serif;font-style:normal;color:var(--fp-mute,#5c5660);flex:0 0 auto}
 .befn-bc-name i.is-champ{color:#fff;background:var(--fp-red,#cf1824);border-radius:4px;padding:0 5px}
 .befn-bc-value{font:800 14px 'DM Sans',sans-serif;font-variant-numeric:tabular-nums;color:var(--fp-ink,#111013);white-space:nowrap}
@@ -94,3 +94,6 @@
  /* one row per group (Ratings: two rows of three) so no card sits alone */
  .befn-bgroup .befn-bgrid{grid-template-columns:repeat(var(--cols,4),minmax(0,1fr))}
 }
+.befn-bc-name .befn-bc-div{flex-basis:100%;font:500 12px/1.2 'DM Sans',sans-serif;color:var(--fp-mute,#5c5660)!important;padding:0;text-decoration:none}
+.befn-bc-name .befn-bc-div:hover{text-decoration:underline}
+.befn-board-name small a{color:inherit}

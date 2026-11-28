@@ -289,3 +289,30 @@
 .fh-top .fh-find{white-space:nowrap}
 .fh-narrow{display:none}
 @media (max-width:420px){.fh-wide{display:none}.fh-narrow{display:inline}}
+/* search inside the hub (owner, 28 Nov 2026) */
+.fh-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.fh-search{display:block;padding:12px 16px 0}
+.fh-search input{width:100%;min-height:44px;border:1px solid #d9d2c4;border-radius:12px;padding:0 14px;font:500 15px 'DM Sans',sans-serif;background:#fff;color:var(--fh-ink)}
+.fh-search input:focus-visible{outline:2px solid var(--fh-red);outline-offset:1px}
+.fh-results:empty{display:none}
+.fh-results{padding:10px 16px 0}
+.fh-hits{list-style:none;margin:0;padding:0;background:#fff;border-radius:14px;overflow:hidden}
+.fh-hits li{margin:0;padding:0;border-bottom:1px solid var(--fh-sand)}
+.fh-hits a{display:grid;grid-template-columns:44px minmax(0,1fr) auto auto;gap:10px;align-items:center;min-height:52px;padding:0 12px}
+.fh-hit-pic .fh-face{width:44px;height:50px}
+.fh-hit-body{display:flex;flex-direction:column;min-width:0}
+.fh-hit-body b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fh-hit-num{display:flex;flex-direction:column;align-items:flex-end;font-size:14px}
+.fh-hit-num small{font-size:12px;color:var(--fh-soft)}
+.fh-results .fh-note{padding:6px 2px}
+@media (min-width:900px){.fh-search,.fh-results{padding-left:24px;padding-right:24px}}
+/* division pulse: equal tiles (owner, 28 Nov 2026: "Equal tiles"), two rows of four on desktop */
+.fh-pulse .fh-tile.is-top{grid-column:auto;flex-direction:column}
+.fh-pulse .fh-tile.is-top .fh-tile-pic{width:100%;min-height:0;height:120px}
+.fh-pulse .fh-tile-pic{height:120px}
+.fh-pulse .fh-tile.is-top .fh-tile-body{width:auto;flex:1;padding:4px 14px 16px;justify-content:flex-start}
+.fh-pulse .fh-tile.is-top .fh-depth{font-size:30px}
+@media (min-width:900px){
+ .fh-pulse .fh-tile.is-top{grid-column:auto}
+ .fh-pulse .fh-tile-pic,.fh-pulse .fh-tile.is-top .fh-tile-pic{height:150px;min-height:0}
+}

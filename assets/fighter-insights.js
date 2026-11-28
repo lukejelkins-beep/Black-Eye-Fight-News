@@ -971,7 +971,7 @@
    '<b class="befn-board-tag">#'+officialRank+'</b>':'';
   return '<li class="'+(r.rank<=3?'befn-board-podium':r.rank<=10?'befn-board-topten':'')+'">'+
    '<span class="befn-board-place">'+r.rank+'</span>'+boardPhoto(name)+
-   '<span class="befn-board-name">'+who+tag+'<small>'+r.n+' UFC fights with full stats'+(division?' · '+escapeHTML(division):'')+'</small></span>'+
+   '<span class="befn-board-name">'+who+tag+'<small>'+r.n+' UFC fights with full stats'+(division?' · <a href="#fighters" data-hub-division="'+escapeHTML(div)+'">'+escapeHTML(division)+'</a>':'')+'</small></span>'+
    '<strong class="befn-board-value">'+escapeHTML(boardValue(r.v,unit))+'</strong></li>';
  }
  const shortDivision=div=>String(boardData.divisions[div]||"").replace("Women's ","W ").replace("Light Heavyweight","Light heavy");
@@ -988,7 +988,7 @@
   const body=rows.length?'<ol>'+rows.map(r=>{
    const [slug,name,div,officialRank,champion]=boardData.fighters[r.f];
    const tag=single?(champion?'<i class="is-champ">C</i>':Number.isInteger(officialRank)&&officialRank>0?'<i>#'+officialRank+'</i>':''):
-    '<small>'+escapeHTML(shortDivision(div))+'</small>';
+    '<a class="befn-bc-div" href="#fighters" data-hub-division="'+escapeHTML(div)+'">'+escapeHTML(shortDivision(div))+'</a>';
    return '<li'+(r.rank<=3?' class="is-top"':'')+'><span class="befn-bc-place">'+r.rank+'</span><span class="befn-bc-name">'+boardLink(slug,name)+tag+'</span>'+
     '<b class="befn-bc-value">'+escapeHTML(boardValue(r.v,view.unit))+'</b></li>';
   }).join("")+'</ol>':'<p class="befn-bc-empty">'+(view.formLoading?'Loading Form…':'No fighters qualify yet.')+'</p>';
@@ -1003,10 +1003,8 @@
   const win=boardData.windows[s.window]||"";
   const sec=(title,sub,ids)=>'<section class="befn-bgroup"><div class="befn-bgroup-head"><h3>'+escapeHTML(title)+'</h3><span>'+escapeHTML(sub)+'</span></div>'+
    '<div class="befn-bgrid" style="--cols:'+(ids.length>5?3:ids.length)+'">'+ids.map(id=>boardCardHTML(id,s,10)).join("")+'</div></section>';
-  return '<div class="befn-board-result-head"><h3>Top 10s</h3><p>'+escapeHTML(scopeLabel(s.division))+' · Ratings are whole UFC careers; stat boards use '+escapeHTML(win.toLowerCase())+
-   ' · Tap “All” for the full table</p></div>'+
-   sec("Ratings","Whole UFC career, recent fights count most. Form is how they are going right now.",BOARD_RATING_ORDER)+
-   Object.entries(groups).map(([g,ids])=>sec(g,win,ids)).join("");
+  return sec("Ratings",scopeLabel(s.division),BOARD_RATING_ORDER)+
+   Object.entries(groups).map(([g,ids])=>sec(g,win+(s.division==="all"?"":" · "+scopeLabel(s.division)),ids)).join("");
  }
  function showBoard(root){
   const results=root.querySelector(".befn-v3-board-results");

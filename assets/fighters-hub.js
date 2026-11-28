@@ -17,7 +17,20 @@
  const STAGE={"Champion":"is-champion","Title contender":"is-title","Contender":"is-contender","Slipping":"is-slipping",
   "Rising star":"is-rising","Prospect":"is-prospect","Breakout":"is-breakout","Established":"is-established",
   "Inactive":"is-inactive"};
- const st={data:null,cuts:null,view:"overall",sex:"men",loading:false,sort:{key:"rank",dir:1}};
+ const st={data:null,cuts:null,view:"overall",sex:"men",loading:false,sort:{key:"rank",dir:1},q:""};
+ // Search inside the hub (owner, 28 Nov 2026): every fighter in the Form file, matched as you type; no page change.
+ const fold=v=>String(v||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+ function resultsHTML(){
+  const q=fold(st.q);
+  if(q.length<2||!st.data)return "";
+  const hits=Object.values(st.data.fighters).filter(f=>fold(f.name).includes(q))
+   .sort((a,b)=>(fold(a.name).startsWith(q)?0:1)-(fold(b.name).startsWith(q)?0:1)||(a.rank??99)-(b.rank??99)||a.name.localeCompare(b.name));
+  if(!hits.length)return '<p class="fh-note">No UFC fighter matches “'+esc(st.q)+'”.</p>';
+  return '<ul class="fh-hits">'+hits.slice(0,12).map(f=>'<li><a href="'+url(f)+'"><span class="fh-hit-pic">'+img(f)+'</span><span class="fh-hit-body"><b>'+esc(f.name)+'</b>'+
+   '<span class="fh-meta">'+esc(SHORT(f.division)||"")+(f.champion?" · Champion":f.rank?" · #"+f.rank:"")+(rec(f)?" · "+rec(f):"")+'</span></span>'+
+   '<span class="fh-hit-num"><b class="fh-red">'+form(f)+'</b><small>form</small></span><span class="fh-hit-num"><b>'+ovr(f)+'</b><small>overall</small></span></a></li>').join("")+"</ul>"+
+   (hits.length>12?'<p class="fh-note">'+hits.length+' matches; showing 12. Type more of the name.</p>':"");
+ }
  // Top 15 sort (owner, 28 Nov 2026: "when looking at champ and top 15 can we sort the columns?").
  // dir 1 is the natural order of each column: UFC rank and form rank low first, Form and Overall high first.
  const STAGE_ORDER=["Champion","Title contender","Contender","Breakout","Rising star","Prospect","Established","Slipping","Inactive"];
@@ -125,7 +138,7 @@
  function rankVsFormHTML(ahead,behind){
   if(!ahead.length&&!behind.length)return "";
   return '<section class="fh-panel fh-rvf"><div class="fh-head is-dark"><h2>Rank vs form</h2>'+
-   "<span>Where the UFC ranks them, and where their form says they should be.</span>"+
+
    '<span class="fh-key"><span><i class="fh-ring"></i>UFC rank</span><span><i class="fh-dot"></i>Form rank</span></span></div>'+
    '<div class="fh-rv-groups">'+
    (ahead.length?'<div class="fh-rv-group"><span class="fh-kicker is-green">Fighting above their rank</span>'+ahead.map(f=>dumb(f,true)).join("")+"</div>":"")+
@@ -159,7 +172,7 @@
   if(!list.length)return "";
   const d=list.map(p=>p.top5Form),lo=Math.min(...d),hi=Math.max(...d);
   const mix=t=>{const a=[42,30,34],b=[207,24,36];return "rgb("+a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")+")";};
-  return '<section class="fh-sec fh-padded">'+head("Division pulse","How the top 5 in each division are going right now. Redder means hotter.")+'<div class="fh-pulse">'+
+  return '<section class="fh-sec fh-padded">'+head("Division pulse","Average form of each division's top 5")+'<div class="fh-pulse">'+
    list.map((p,i)=>{
     const t=hi===lo?1:(p.top5Form-lo)/(hi-lo),h=p.hottest,f=h&&st.data.fighters[h.slug];
     return '<div class="fh-tile'+(i===0?" is-top":"")+'" style="background:linear-gradient(135deg,'+mix(t)+" 0%,"+mix(Math.max(0,t-.35))+' 100%)">'+
@@ -169,7 +182,7 @@
      '<span class="fh-depth">'+dec2(p.top5Form)+'</span><span class="fh-soft">Top-5 form</span>'+
      '<span class="fh-counts"><span>'+p.onFire+" on fire</span><span>▲ "+p.rising+" rising</span><span>▼ "+p.slipping+" slipping</span></span>"+
      (f?'<a class="fh-tile-name" href="'+url(f)+'">'+esc(f.name)+" · "+form(f)+"</a>":"")+"</div></div>";
-   }).join("")+'</div><p class="fh-note">Tap a division name to open it, or a fighter to open their profile.</p></section>';
+   }).join("")+'</div></section>';
  }
 
  // ---- division tab
@@ -186,12 +199,12 @@
    '<span class="fh-champ-ovr">Overall <b>'+ovr(champ)+"</b></span>"+badgesHTML(champ)+"</div>"+
    '<a class="fh-champ-pic" href="'+url(champ)+'">'+img(champ)+"</a></section>";
   // The champion sits in the table as "C" so the champion and the top 15 sort together.
-  if(ladder.length)h+='<section class="fh-sec fh-padded">'+head((champ?"Champion and top 15":"Top 15"),"Sort by any column")+ladderSortHTML()+
+  if(ladder.length)h+='<section class="fh-sec fh-padded">'+head((champ?"Champion and top 15":"Top 15"),"")+ladderSortHTML()+
    '<div class="fh-ladder" role="table" aria-label="'+esc(LABEL[div])+' top 15"><div class="fh-ladder-head" role="row">'+
    sortHead("rank")+'<span role="columnheader"></span>'+SORTS.slice(1).map(x=>sortHead(x[0])).join("")+"</div>"+
    sortLadder(champ?[champ,...ladder]:ladder).map(ladderRow).join("")+"</div></section>";
   h+=divBoardsHTML(div);
-  if(next.length)h+='<section class="fh-sec fh-padded">'+head("Coming through","Rising stars, prospects and breakouts in the division")+
+  if(next.length)h+='<section class="fh-sec fh-padded">'+head("Coming through","")+
    '<div class="fh-next">'+next.map(f=>'<a class="fh-nextcard" href="'+url(f)+'"><span class="fh-pic">'+img(f)+'</span><span class="fh-body">'+
     '<span class="fh-stage-text">'+esc(f.stage)+'</span><span class="fh-name">'+esc(f.name)+'</span><span class="fh-meta">'+rec(f)+" UFC</span>"+nums(f)+
     "</span></a>").join("")+"</div></section>";
@@ -214,9 +227,9 @@
   if(!B||B.failed())return "";
   const body=B.ready()?B.cards(div,DIV_BOARDS,5):'<p class="fh-note">Loading leaderboards…</p>';
   if(!B.ready())B.load();
-  return '<section class="fh-sec fh-padded fh-boards">'+head("Division leaderboards","Top 5 in "+esc(LABEL[div])+" on each BEFN rating")+
+  return '<section class="fh-sec fh-padded fh-boards">'+head("Division leaderboards","")+
    '<div class="befn-bgrid is-hub">'+body+'</div>'+
-   '<a class="fh-boards-all" href="#analysis" data-board-division="'+esc(div)+'">Striking, grappling and defence leaderboards for '+esc(LABEL[div])+' ›</a></section>';
+   '<a class="fh-boards-all" href="#analysis" data-board-division="'+esc(div)+'">Striking, grappling and defence leaders ›</a></section>';
  }
  function badgesHTML(f){
   return (f.badges||[]).length?'<span class="fh-badges">'+f.badges.map(b=>'<span class="fh-badge is-'+b.toLowerCase().replace(/\s+/g,"-")+'">'+esc(b)+"</span>").join("")+"</span>":"";
@@ -244,13 +257,15 @@
   if(!d){mount.innerHTML='<p class="fh-note">'+(st.loading?"Loading Form…":"Form data is unavailable right now.")+"</p>";return;}
   const pills=[["overall","Overall"],...DIVS.filter(([s])=>Object.values(d.fighters).some(f=>f.division===s&&(f.champion||f.rank)))];
   let h='<div class="fh-top"><h2>Fighters hub</h2><span class="fh-links"><a class="fh-find" href="#analysis" data-board-division="'+(st.view==="overall"?st.sex:esc(st.view))+'">Leaderboards&nbsp;›</a>'+
-   '<a class="fh-find" href="#leaderboards"><span class="fh-wide">Find a fighter</span><span class="fh-narrow">Search</span>&nbsp;›</a></span></div>'+
+   '</span></div>'+
+   '<label class="fh-search"><span class="fh-sr">Find a UFC fighter</span><input type="search" data-fh-q autocomplete="off" placeholder="Find any of '+Object.keys(d.fighters).length+' UFC fighters" value="'+esc(st.q)+'"></label>'+
+   '<div class="fh-results" data-fh-results aria-live="polite">'+resultsHTML()+'</div>'+
    '<nav class="fh-pills" aria-label="Divisions">'+pills.map(([s,n])=>'<button type="button" data-fh-div="'+s+'" aria-pressed="'+(st.view===s)+'">'+esc(n)+"</button>").join("")+"</nav>";
   if(st.view==="overall"){
    const o=overall();
    h+='<div class="fh-sexrow"><div class="fh-sex" role="tablist" aria-label="Men or women">'+
     [["men","Men"],["women","Women"]].map(([k,n])=>'<button type="button" role="tab" data-fh-sex="'+k+'" aria-selected="'+(st.sex===k)+'">'+n+"</button>").join("")+
-    '</div><span class="fh-soft-dark">Certified fighters · no champions</span></div>'+
+    '</div><span class="fh-soft-dark">Champions not included</span></div>'+
     '<div class="fh-grid-a">'+podiumHTML(o.podium)+rankVsFormHTML(o.ahead,o.behind)+"</div>"+
     fireHTML(o.fire)+'<div class="fh-grid-b">'+risingHTML(o.rising)+breakoutHTML(o.breakout)+"</div>"+
     slippingHTML(o.slipping)+pulseHTML(o.pulse);
@@ -264,6 +279,11 @@
  function bind(mount){
   if(mount.dataset.fhBound)return;
   mount.dataset.fhBound="1";
+  mount.addEventListener("input",e=>{
+   if(!e.target.matches("[data-fh-q]"))return;
+   st.q=e.target.value;
+   const box=mount.querySelector("[data-fh-results]");if(box)box.innerHTML=resultsHTML();
+  });
   mount.addEventListener("click",e=>{
    const div=e.target.closest("[data-fh-div]"),sex=e.target.closest("[data-fh-sex]"),sort=e.target.closest("[data-fh-sort]");
    if(sort){
@@ -293,6 +313,15 @@
   });
  }
  window.BEFNFightersHub={silhouette,scan};
+ // Division names elsewhere (Analysis champions, leaderboard cards) open that division here in one tap.
+ document.addEventListener("click",e=>{
+  const a=e.target.closest?.("a[data-hub-division]");
+  if(!a)return;
+  const div=a.dataset.hubDivision;
+  if(LABEL[div]){st.view=div;st.sort={key:"rank",dir:1};st.sex=div.startsWith("womens")?"women":"men";st.q="";}
+  try{window.BEFNSport?.set?.("mma")}catch(_){}
+  document.querySelectorAll("[data-befn-fighters-hub]").forEach(m=>{if(m.dataset.fhDone)render(m);});
+ });
  // Leaderboard data (or Form) arrived after a division page was drawn: redraw it.
  window.addEventListener("befn:boards",()=>{if(st.data&&st.view!=="overall")document.querySelectorAll("[data-befn-fighters-hub]").forEach(render);});
  if(typeof MutationObserver!=="undefined")new MutationObserver(scan).observe(document.documentElement,{subtree:true,childList:true});
