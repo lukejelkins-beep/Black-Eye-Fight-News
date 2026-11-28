@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (UFC gyms analysis article)
+- Article `analysis-ufc-gyms.html` ("Do UFC gyms decide fights?") on 1,084 UFC bouts, 2025 and 2026 to 21 Nov: gym wins against expected wins from fighters' records going in. Finding: most gyms sit within a win or two of expectation and one-season swings reverse; shuffled gym labels match the real spread 14% of the time (p = 0.14). Exception: City Kickboxing, 30-11 (+9.5), ahead of expectation in both seasons, about once in 14 by luck across 33 gyms, so presented as suggestive, not proven. (The first version covered 2025 only and said "no gym effect"; the 2026 rerun added City Kickboxing as an exception, so the headline was changed.) Figures come from `data/ufc-gym-analysis.json`, and `scripts/build-ufc-gym-article.py` builds the page from it. Lives in the MMA analysis area (owner, 28 Nov 2026): a "Do UFC gyms decide fights?" link under the Fight predictions link on the MMA analysis page; the page is indexable like the rest of the site. Chart is HTML and CSS (12 px minimum, reflows at 390 px), not an image.
+
 ## 2026-11-28 (Gyms on upcoming UFC cards)
 - Each fighter's gym now shows under their form dots in the open fight snapshot on upcoming UFC cards: a small "Trains at" label and the gym name (two at most). Plain context from `data/ufc-fighter-gyms.json`, never a score or a prediction; the gym analysis finds no general gym effect, so nothing on the card implies one. When either fighter has a gym both columns show the line and the other shows a dash. Not shown on finished-fight cards or boxing, because Sherdog lists where a fighter trains now, not at the time of the fight. The card works without the file (it is optional, like flags and cutouts). Stacked on the fighter-gyms PR because it needs that data file; merge that one first.
 
