@@ -156,6 +156,8 @@
 .fh-lrank{grid-area:rank;display:flex;flex-direction:column;align-items:center;font:900 14px Unbounded,sans-serif}
 .fh-mv{font:700 12px 'DM Sans',sans-serif}
 .fh-mv.is-up{color:#2e7d32}.fh-mv.is-down{color:var(--fh-blue)}
+.fh-mvtext{display:block;margin-top:2px;font-size:11px}
+.fh-lfr .fh-mv{margin-right:2px}
 .fh-lpic{grid-area:pic;align-self:end;display:flex;justify-content:center}
 .fh-lpic .fh-face{width:56px;height:64px}
 .fh-lname{grid-area:name;min-width:0;display:flex;align-items:center;gap:6px;padding-top:8px}
@@ -200,7 +202,7 @@
 .fh-grid-a,.fh-grid-b{display:contents}
 
 /* on the phone the ladder shows overall inside the bar label */
-@media (min-width:900px){.fh-ovr-inline{display:none}}
+@media (min-width:900px){.fh-ovr-inline,.fh-mvtext{display:none}}
 
 /* desktop (canvas "Desktop · Fighters hub"): wider grid, side-by-side panels */
 @media (min-width:900px){

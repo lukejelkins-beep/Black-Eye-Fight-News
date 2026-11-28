@@ -35,7 +35,7 @@
  // dir 1 is the natural order of each column: UFC rank and form rank low first, Form and Overall high first.
  const STAGE_ORDER=["Champion","Title contender","Contender","Breakout","Rising star","Prospect","Established","Slipping","Inactive"];
  const SORTS=[["rank","Rank",f=>f.rank,1],["name","Fighter",f=>f.name,1],["stage","Stage",f=>f.certified?STAGE_ORDER.indexOf(f.stage):null,1],
-  ["form","Form",f=>formShownF(f)?f.form:null,-1],["overall","Overall",f=>f.overall,-1],["formRank","Form rank",f=>f.formRank||null,1]];
+  ["form","Form",f=>formShownF(f)?f.form:null,-1],["overall","Overall",f=>f.overall,-1],["formRank","Form #",f=>f.formRank||null,1]];
  const formShownF=f=>window.BEFNFormRule?window.BEFNFormRule.shown(f):(f.certified===true&&Number.isFinite(f.form));
  function sortLadder(list){
   const [key,,get,nat]=SORTS.find(x=>x[0]===st.sort.key)||SORTS[0];
@@ -250,19 +250,22 @@
  function ladderRow(f){
   const fire=f.badges?.includes("On fire"),cool=f.badges?.includes("Cooling");
   const mv=f.formRank&&f.rank?f.rank-f.formRank:0,rk=f.champion?'<abbr title="Champion">C</abbr>':"#"+f.rank;
-  const arrow=mv>2?'<span class="fh-mv is-up" title="Form rank '+f.formRank+'">▲</span>':mv<-2?'<span class="fh-mv is-down" title="Form rank '+f.formRank+'">▼</span>':"";
+  // Owner, 28 Nov 2026: "form and form rank is confusing". The move is written out ("UFC #5 → Form #1") instead of a bare
+  // ▲/▼ beside the rank; the arrow stays as a colour cue when the form rank differs from the UFC rank by 3 or more.
+  const mvClass=mv>2?" is-up":mv<-2?" is-down":"",glyph=mv>2?"▲ ":mv<-2?"▼ ":"";
+  const moved=f.formRank&&f.rank&&!f.champion?'<span class="fh-mv fh-mvtext'+mvClass+'">'+glyph+"UFC #"+f.rank+" → Form #"+f.formRank+"</span>":"";
   const bar=fire?"is-fire":f.stage==="Slipping"?"is-slip":"";
   if(!f.certified)
    return '<a class="fh-lrow" href="'+url(f)+'"><span class="fh-lrank">'+rk+"</span>"+'<span class="fh-lpic">'+img(f)+"</span>"+
     '<span class="fh-lname"><b>'+esc(f.name)+'</b><span class="fh-meta">Form not shown until this record is certified</span></span></a>';
-  return '<a class="fh-lrow'+(f.stage==="Slipping"?" is-slip":"")+(f.champion?" is-champ":"")+'" href="'+url(f)+'"><span class="fh-lrank">'+rk+arrow+"</span>"+
+  return '<a class="fh-lrow'+(f.stage==="Slipping"?" is-slip":"")+(f.champion?" is-champ":"")+'" href="'+url(f)+'"><span class="fh-lrank">'+rk+"</span>"+
    '<span class="fh-lpic">'+img(f,f.stage==="Slipping"?"is-dim":"")+"</span>"+
-   '<span class="fh-lname"><b>'+esc(f.name)+"</b>"+last5(f)+"</span>"+
+   '<span class="fh-lname"><b>'+esc(f.name)+"</b>"+last5(f)+moved+"</span>"+
    '<span class="fh-lstage">'+chip(f)+"</span>"+
    '<span class="fh-lbar"><i><i class="'+bar+'" style="width:'+(f.form||0)+'%"></i></i><span class="'+(fire?"fh-red":cool?"is-blue":"")+'">'+
     (fire?"On fire · ":cool?"Cooling · ":"")+"Form "+form(f)+'<span class="fh-ovr-inline"> · Ovr '+ovr(f)+"</span></span></span>"+
    '<span class="fh-lovr">'+ovr(f)+'<small> overall</small></span>'+
-   '<span class="fh-lfr">'+(f.formRank?"form #"+f.formRank:f.champion?"champion":f.injured?"injured":"–")+"</span></a>";
+   '<span class="fh-lfr">'+(f.formRank?(glyph?'<span class="fh-mv'+mvClass+'">'+glyph+"</span>":"")+"Form #"+f.formRank:f.champion?"champion":f.injured?"injured":"–")+"</span></a>";
  }
 
  function render(mount){
