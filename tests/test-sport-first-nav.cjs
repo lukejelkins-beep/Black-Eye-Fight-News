@@ -14,15 +14,15 @@ function load(store, search = "") {
   vm.runInContext(fs.readFileSync("assets/global-sport-v1.0.3.js", "utf8"), ctx);
   return ctx.BEFNSport;
 }
-// First visit: front page, sections belong to Boxing.
+// First visit: front page, sections belong to MMA (owner, 28 Nov 2026).
 let store = {};
 let S = load(store);
 assert.equal(S.get(), "all");
-assert.equal(S.last(), "boxing", "first visit defaults to Boxing, the first sport tab");
-// Choosing MMA is remembered as the last sport, also after going back to the front page.
-S.set("mma"); S.set("all");
-assert.equal(S.last(), "mma");
-assert.equal(load(store).last(), "mma", "kept across visits");
+assert.equal(S.last(), "mma", "first visit defaults to MMA");
+// Choosing Boxing is remembered as the last sport, also after going back to the front page.
+S.set("boxing"); S.set("all");
+assert.equal(S.last(), "boxing");
+assert.equal(load(store).last(), "boxing", "kept across visits");
 // A shared ?sport=boxing link sets both.
 store = {}; S = load(store, "?sport=boxing");
 assert.equal(S.get(), "boxing"); assert.equal(S.last(), "boxing");

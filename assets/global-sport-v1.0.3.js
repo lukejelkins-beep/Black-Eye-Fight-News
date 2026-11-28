@@ -11,9 +11,9 @@
  'use strict';
  const KEY='befn-selected-sport-v1.0.3';
  /* The front page is the only all-sports page (owner, 28 Nov 2026: "Front page only"). Every section belongs to a sport;
-    opening one from the front page uses the last sport the reader was in (Boxing, the first tab, on a first visit). */
+    opening one from the front page uses the last sport the reader was in (MMA on a first visit; owner, 28 Nov 2026). */
  const LAST_KEY='befn-last-sport-v1';
- let last='boxing';
+ let last='mma';
  try{const saved=localStorage.getItem(LAST_KEY);if(saved==='boxing'||saved==='mma')last=saved}catch(_){}
  const allowed=new Set(['all','boxing','mma']);
  const NAMES={all:'All sports',boxing:'Boxing',mma:'MMA'};

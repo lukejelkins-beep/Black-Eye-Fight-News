@@ -60,8 +60,8 @@
    const grid=document.createElement('div');grid.className='befn-mobile-sheet-grid';
    const area=window.BEFNSport?.get?.()||'all';
    // Sections always belong to a sport (owner, 28 Nov 2026); on the front page they are the last sport's.
-   const sectionSport=area==='all'?(window.BEFNSport?.last?.()||'boxing'):area;
-   const areaName=window.BEFNSport?.name?.(sectionSport)||'Boxing';
+   const sectionSport=area==='all'?(window.BEFNSport?.last?.()||'mma'):area;
+   const areaName=window.BEFNSport?.name?.(sectionSport)||'MMA';
    const sports=document.createElement('div');sports.className='befn-mobile-sheet-grid';
    [['#home','All sports (front page)','all'],['#home','Boxing','boxing'],['#home','MMA','mma'],['sumo.html','Sumo','']].forEach(([href,label,key])=>{
      const a=document.createElement('a');a.href=href;a.textContent=label;if(key)a.dataset.area=key;
