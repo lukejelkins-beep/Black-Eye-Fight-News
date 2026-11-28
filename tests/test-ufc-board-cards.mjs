@@ -67,3 +67,18 @@ test("Top 15 sort: natural order per column, blanks last, champion first by rank
  ctx.st.sort={key:"name",dir:1};
  assert.deepEqual(api.sortLadder(list).map(x=>x.name),["A","B","C","Champ"]);
 });
+test("skill and Results boards use the 2-decimal score column when the file has it",()=>{
+ const b=boards();
+ const fine=JSON.parse(JSON.stringify(data));
+ fine.ratingFields.push("strikingScore","grapplingScore","wrestlingScore","resultsScore");
+ // two fighters share a whole percentile; the score separates them
+ fine.ratings=[[0,80,.9,.5,.5,null,.5,6,2,"men",99.41,50,50,50],[2,85,.9,.5,.5,null,.5,6,1,"men",99.92,50,50,50],[3,70,.6,.5,.5,null,.5,6,3,"men",60.1,50,50,50]];
+ b.set(fine);
+ const v=b.boardRows({metric:"striking",window:"l36",division:"men"});
+ assert.deepEqual(v.rows.map(r=>[r.f,r.rank,r.v]),[[2,1,99.92],[0,2,99.41],[3,3,60.1]]);
+ assert.equal(v.unit,"score","printed as a plain number to 2 decimals, not '99th'");
+ const html=b.boardCardHTML("striking",{metric:"striking",window:"l36",division:"men"},3);
+ assert.match(html,/>99\.92</);assert.doesNotMatch(html,/99th/);
+ b.set(data);
+ assert.equal(b.boardRows({metric:"striking",window:"l36",division:"men"}).unit,"ordinal","an older file keeps the whole percentile");
+});

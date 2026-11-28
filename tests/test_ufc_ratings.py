@@ -71,6 +71,19 @@ class Scale(unittest.TestCase):
         self.assertEqual(r.percentile(-1, list(range(500))), 1)
         self.assertIsNone(r.percentile(None, [1, 2]))
 
+    def test_percentile_score_is_the_same_rank_to_two_decimals(self):
+        # Owner, 28 Nov 2026: shown as "99.92", not "99th". Display only; percentile() is unchanged.
+        self.assertEqual(r.percentile_score(5, list(range(1, 11))), 45.0)
+        self.assertEqual(r.percentile_score(499, list(range(500))), 99.9)
+        self.assertEqual(r.percentile_score(498, list(range(500))), 99.7)
+        self.assertEqual(r.percentile_score(10**6, [1]), 99.99)
+        self.assertEqual(r.percentile_score(-1, [1, 2]), 0.01)
+        self.assertIsNone(r.percentile_score(None, [1]))
+        pop = [x / 7 for x in range(593)]
+        for v in pop[::37]:
+            if 1 < r.percentile(v, pop) < 99:   # the whole percentile is held at 1 and 99; the score is not
+                self.assertLessEqual(abs(r.percentile_score(v, pop) - r.percentile(v, pop)), 0.5)
+
     def test_shrink_toward_mean(self):
         self.assertEqual(r.shrink(80, 40, 4), 60)
         self.assertAlmostEqual(r.shrink(80, 40, 36), 76)

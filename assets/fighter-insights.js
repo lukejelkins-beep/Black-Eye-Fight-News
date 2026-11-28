@@ -293,16 +293,17 @@
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form'){const e=formEntry(stats);return formShown(e)?e.form:null;}
-   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
-   const base=v2.skills?.[id]?.roster;
-   return Number.isFinite(base)?base:null;
+   // 2-decimal score when the stats build publishes it (owner, 28 Nov 2026), else the whole percentile.
+   if(id==='results')return Number.isFinite(v2.results?.score)?v2.results.score:Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
+   const fine=v2.skills?.[id]?.score,base=v2.skills?.[id]?.roster;
+   return Number.isFinite(fine)?fine:Number.isFinite(base)?base:null;
   };
   const v2Overall=Number.isFinite(v2?.overall)?v2.overall:null;
   const v2Meters=v2?V2_METERS.map(([id,label])=>{
    const sc=v2Score(id),d=SKILL_IDS.includes(id)?v2.skills?.[id]?.division:null;
    const hint=id==='form'?formHint(stats):id==='results'?RESULTS_HINT:
     Number.isFinite(d)&&stats.division?ordinal(d)+' in '+stats.division:null;
-   return proMeter(label,sc,id==='form'?'plain':true,scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
+   return proMeter(label,sc,id==='form'||hasFine(v2,id)?'plain':true,scoreTier(sc),hint,SKILL_IDS.includes(id)?driversHTML(v2.skills?.[id]?.drivers):'');
   }).join(''):'';
   const matched=SP&&stats?fights.map(x=>SP.findFight(stats,{date:x.date,opponent:x.opponent})?.boutId).filter(Boolean):[];
   const compareHTML=SP&&stats?SP.compare(stats,statsDivisions):'';
@@ -399,6 +400,8 @@
   return '<div class="befn-form-tags">'+chips.join('')+'</div>'+ranks+why;
  }
  const headlineBar=r=>Number.isFinite(r?.overall)?r.overall:null;
+ // A skill or results rating printed as a 2-decimal score ("99.92"), not "99th" (owner, 28 Nov 2026).
+ const hasFine=(r,id)=>id==='results'?Number.isFinite(r?.results?.score):Number.isFinite(r?.skills?.[id]?.score);
  // Overall and Form to 2 decimal places on every page (assets/form-rule.js score()).
  const dec2=v=>window.BEFNFormRule?.score?window.BEFNFormRule.score(v):Number(v).toFixed(2);
  const headlineHTML=v=>dec2(v)+'<small>/100</small>';
@@ -694,14 +697,15 @@
   // ones. Credentials are displayed, but their points stay off (#106, release R4).
   const v2Score=id=>{
    if(id==='form'){const e=formEntry(stats);return formShown(e)?e.form:null;}
-   if(id==='results')return Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
-   const base=v2.skills?.[id]?.roster;
-   return Number.isFinite(base)?base:null;
+   // 2-decimal score when the stats build publishes it (owner, 28 Nov 2026), else the whole percentile.
+   if(id==='results')return Number.isFinite(v2.results?.score)?v2.results.score:Number.isFinite(v2.results?.percentile)?v2.results.percentile:null;
+   const fine=v2.skills?.[id]?.score,base=v2.skills?.[id]?.roster;
+   return Number.isFinite(fine)?fine:Number.isFinite(base)?base:null;
   };
   const technicalScoreV1=technicalScore;
   const built=ratedByBuild(f);
   const ratingScore=id=>v2?v2Score(id):built?null:technicalScoreV1(id);
-  const isPercentile=id=>v2?(id==='form'?'plain':true):!built&&isPercentileV1(id);
+  const isPercentile=id=>v2?(id==='form'||hasFine(v2,id)?'plain':true):!built&&isPercentileV1(id);
   const score=v2?(Number.isFinite(v2.overall)?v2.overall:null):built?null:Number.isFinite(v3.power)?v3.power:computed.overall;
   const tier=scoreTier(v2?headlineBar(v2):score);
   // Six bars once rated, and also while the stats file is still loading (same layout, empty), so nothing jumps.
@@ -925,8 +929,11 @@
    // The score out of 100 is rounded, so the overall board is ordered by the stored rank (full-precision rating).
    // Form is the one Form score (data/ufc-fighter-form.json), the same number as the profile and the hub.
    const formOf=i=>{const e=formData?.fighters?.[d.fighters[i][0]];return formShown(e)?e.form:null;};
-   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"?(formData?formOf(r[0]):null):r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null,p:poolCol>=0?r[poolCol]:null}));
-   unit=rating[2]==="pct"?"ordinal":"score";label=rating[1];
+   // Skill and Results boards print the 2-decimal score when the file carries it (owner, 28 Nov 2026), so fighters
+   // who share a whole percentile no longer tie; an older file falls back to the whole percentile.
+   const fineCol=rating[2]==="pct"?d.ratingFields.indexOf(st.metric+"Score"):-1;
+   rows=d.ratings.map(r=>({f:r[0],v:st.metric==="form"?(formData?formOf(r[0]):null):fineCol>=0&&Number.isFinite(r[fineCol])?r[fineCol]:r[col],n:r[sampleIndex],k:st.metric==="overall"&&rankCol>=0?r[rankCol]:null,p:poolCol>=0?r[poolCol]:null}));
+   unit=rating[2]==="pct"&&fineCol<0?"ordinal":"score";label=rating[1];
   }else{
    const stat=d.stats.find(s=>s.id===st.metric)||d.stats[0];
    const col=d.rowFields.indexOf(stat.id);
@@ -982,7 +989,7 @@
   const view=boardRows({...s,metric});
   const stat=boardData.stats.find(x=>x.id===metric);
   const single=s.division!=="all"&&s.division!=="men"&&s.division!=="women";
-  const note=view.isRating?(view.unit==="ordinal"?"Percentile":"Out of 100")+(metric==="form"?" · right now":" · career"):
+  const note=view.isRating?(metric==="overall"||metric==="form"?"Out of 100":"Percentile")+(metric==="form"?" · right now":" · career"):
    (stat?.unit==="pct"?"Share":stat?.unit==="signed"?"Per minute, + is better":"Rate")+(view.lower?" · lower is better":"");
   const rows=view.rows.slice(0,n);
   const body=rows.length?'<ol>'+rows.map(r=>{
@@ -1559,9 +1566,11 @@
   const skills=[];
   if(v2){
    for(const [id,label] of [["striking","Striking"],["wrestling","Wrestling"],["grappling","Grappling"]]){
-    const v=v2.skills?.[id]?.roster;if(Number.isFinite(v))skills.push({label,score:v,percentile:true});
+    const fine=v2.skills?.[id]?.score,v=Number.isFinite(fine)?fine:v2.skills?.[id]?.roster;
+    if(Number.isFinite(v))skills.push({label,score:v,percentile:!Number.isFinite(fine)});
    }
-   if(formShown(e))skills.push({label:"Form",score:e.form,percentile:true});
+   // Form is a 2-decimal score (25 Nov 2026), so it prints as "94.74", never "94.74th pct".
+   if(formShown(e))skills.push({label:"Form",score:e.form,percentile:false});
   }
   const pills=[];
   const champion=stats?.champion===true||(isReviewedUfc(f)&&f.category==="Champion");
