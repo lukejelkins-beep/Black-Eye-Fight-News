@@ -1,6 +1,6 @@
 import {currentFactFeed,HIGH_WIN_PCT_THRESHOLD,rollingWinPercentageRows,ROLLING_BASHO_MAX,FACT_DIVISIONS} from './sumo-facts-data.mjs?v=20261121-v1';
 import {factText,factPeople} from './sumo-fact-engine.mjs?v=20261121-phase2';
-import {storylines} from './sumo-storylines.mjs?v=20261128-analysis1';
+import {storylines} from './sumo-storylines.mjs?v=20261128-model2';
 /* BEFN Sumo Stories: the hub. A fact of the day, themed rows, wrestler/pair search.
  * Facts come from the fact engine index (level B, scoped to BEFN's bout records)
  * and the owner-approved editorial file (level A/C). Nothing here is invented. */

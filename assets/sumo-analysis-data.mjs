@@ -5,7 +5,7 @@
    "absent". Predictor chances come from sumo-predict.mjs and use only what was known that morning. */
 import { rows, isMakuuchi, position, tierOf } from './sumo-home-data.mjs';
 import { completedDay, through } from './sumo-live-data.mjs';
-import { bashoPredictions, expectedWins, replayBasho, ratingsMap, features, probability } from './sumo-predict.mjs';
+import { bashoPredictions, expectedWins, nextMorning, pickWith } from './sumo-predict.mjs';
 
 const maku = details => rows(details?.banzuke).filter(r => isMakuuchi(r.rank));
 const view = r => ({ id: r.rikishiID, name: r.shikonaEn, rank: r.rank });
@@ -56,22 +56,21 @@ export function analysis(details, model, { day } = {}) {
 }
 
 /* Picks for a day not yet fought (live mode): pairs [{ rikishiId, opponentId }] from the announced
-   torikumi, rated with everything up to the day before. */
+   torikumi, rated the morning of `day` (everything through the day before). */
 export function picks(details, model, pairs, day) {
-  if (!model || !pairs?.length) return [];
-  const saved = Object.keys(model.preBasho || {}).sort();
-  const start = model.preBasho?.[details.bashoId] || (saved.length && String(details.bashoId) > saved[saved.length - 1] ? model.ratings : null);
-  if (!start) return [];
-  const ratings = ratingsMap(start);
-  replayBasho(details, ratings, model, { onlyThroughDay: day - 1 });
+  if (!pairs?.length || !model) return [];
+  /* A saved basho replayed as a preview (#review?liveday=N) uses the chances saved for it. */
+  const saved = model.archive?.[details.bashoId];
+  const M = saved ? null : nextMorning(model, { details, completed: day - 1 });
+  if (!saved && !M) return [];
   const byId = new Map(maku(details).map(r => [Number(r.rikishiID), r]));
   const out = [];
   for (const m of pairs) {
     const x = byId.get(Number(m.rikishiId)), y = byId.get(Number(m.opponentId));
     if (!x || !y) continue;
     const [a, b] = position(x.rank) <= position(y.rank) ? [x, y] : [y, x];
-    const p = probability(features(a, b, ratings, day), model);
-    out.push({ day, a: view(a), b: view(b), p });
+    const p = saved ? saved[day + ':' + a.rikishiID + ':' + b.rikishiID] : pickWith(M, model, a.rikishiID, b.rikishiID)?.p;
+    if (p != null) out.push({ day, a: view(a), b: view(b), p });
   }
   return out.sort((m, n) => position(m.a.rank) - position(n.a.rank));
 }

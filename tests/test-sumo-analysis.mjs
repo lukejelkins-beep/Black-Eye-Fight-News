@@ -20,8 +20,8 @@ test('November 2026, day 8: the day shows its own bouts, the table after it, and
   const A = analysis(asDetails(read('202611')), model, { day: 8 });
   assert.equal(A.day, 8);
   assert.ok(A.bouts.length >= 18 && A.bouts.every(b => b.day === 8));
-  assert.equal(A.dayShock.winner.name, 'Hakunofuji');
-  assert.ok(A.dayShock.kinboshi);
+  assert.equal(A.dayShock.p, Math.min(...A.bouts.map(b => b.p)), 'the shock is the day’s longest odds overcome');
+  assert.ok(A.bouts.some(b => b.kinboshi && b.winner.name === 'Hakunofuji'), 'Hakunofuji’s gold star is in the day');
   assert.equal(A.table[0].w + A.table[0].l, 8, 'standings are through day 8');
   assert.equal(A.soFar.n, A.bouts.length + analysis(asDetails(read('202611')), model, { day: 7 }).soFar.n);
 });
@@ -85,10 +85,12 @@ test('over and under performers: expected wins are earned, kyujo men are not cal
 
 test('predictor page: defaults to the top two, chances add to one, swap mirrors', () => {
   const v = predictorView({ model, roster, details: null, h2h: null });
+  assert.equal(v.live, false);
   assert.ok(v.A && v.B && v.A.id !== v.B.id);
   const w = predictorView({ model, roster, details: null, h2h: null, a: v.B.id, b: v.A.id });
   assert.ok(Math.abs(v.p.p + w.p.p - 1) < 1e-12);
-  assert.ok(v.table.every((x, i) => !i || x.s <= v.table[i - 1].s));
+  assert.ok(v.table.every((x, i) => !i || x.power <= v.table[i - 1].power));
+  assert.ok(Object.keys(v.p.parts).length === 7, 'seven groups explain the chance');
   const html = renderPredictor({ model, roster, details: null, h2h: null }, h);
   assert.equal((html.match(/<h1>/g) || []).length, 1);
   assert.match(html, /Track record/);

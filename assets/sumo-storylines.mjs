@@ -5,7 +5,7 @@
 import { isMakuuchi, position, plainRank, bashoName } from './sumo-home-data.mjs';
 import { asDetails } from './sumo-review-data.mjs';
 import { analysis } from './sumo-analysis-data.mjs';
-import { strength, ratingsMap } from './sumo-predict.mjs';
+import { nextMorning, power } from './sumo-predict.mjs';
 
 const one = n => n.toFixed(1);
 const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
@@ -49,18 +49,21 @@ export function storylines(file, model, roster) {
   const gaps = powerGaps(roster, model).under;
   const g = take(gaps);
   if (g && g.gap >= 5) cards.push({ tag: 'Underrated', metric: '#' + g.power, headline: g.w.shikonaEn + ' is ranked ' + ordinal(g.rank) + ' in Makuuchi but rated ' + ordinal(g.power),
-    description: 'The predictor’s power table weighs his rank (' + plainRank(g.w.currentRank) + ') with how he has done against that rank since ' + model.builtFrom.basho[0].slice(0, 4) + '.', memberIds: [Number(g.w.sourceId)], link: 'sumo.html#predict' });
+    description: 'The predictor’s power table (each man’s average chance against the rest of Makuuchi) puts him well above his rank of ' + plainRank(g.w.currentRank) + '.', memberIds: [Number(g.w.sourceId)], link: 'sumo.html#predict' });
   return cards;
 }
 const ordinal = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
 
-/* Banzuke order against the predictor's power order for the men now in Makuuchi. `under`: rated well
-   above their rank; `over`: ranked above where the predictor puts them. Gap in places, biggest first. */
+/* Banzuke order against the predictor's power order for the men now in Makuuchi (power: average chance
+   against every other man in Makuuchi on day 1 of the next basho). `under`: rated well above their
+   rank; `over`: ranked above where the predictor puts them. Gap in places, biggest first. */
 export function powerGaps(roster, model, { min = 5 } = {}) {
-  const R = ratingsMap(model.ratings);
   const now = (roster?.rikishi || []).filter(w => isMakuuchi(w.currentRank));
+  if (!model?.state || !now.length) return { under: [], over: [], size: now.length };
+  const M = nextMorning(model, { ranks: new Map(now.map(w => [Number(w.sourceId), w.currentRank])) });
+  const pw = new Map(power(M, model, now.map(w => Number(w.sourceId))).map(x => [x.id, x.power ?? 0]));
   const byRank = now.slice().sort((a, b) => position(a.currentRank) - position(b.currentRank)).map(w => w.sourceId);
-  const byPower = now.slice().sort((a, b) => strength(b.currentRank, R.get(Number(b.sourceId)) || 0, model) - strength(a.currentRank, R.get(Number(a.sourceId)) || 0, model)).map(w => w.sourceId);
+  const byPower = now.slice().sort((a, b) => pw.get(Number(b.sourceId)) - pw.get(Number(a.sourceId))).map(w => w.sourceId);
   const all = now.map(w => ({ w, id: Number(w.sourceId), name: w.shikonaEn, rankText: w.currentRank, rank: byRank.indexOf(w.sourceId) + 1, power: byPower.indexOf(w.sourceId) + 1 })).map(x => ({ ...x, gap: x.rank - x.power }));
   return { under: all.filter(x => x.gap >= min).sort((a, b) => b.gap - a.gap), over: all.filter(x => -x.gap >= min).sort((a, b) => a.gap - b.gap), size: now.length };
 }

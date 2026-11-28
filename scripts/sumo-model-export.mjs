@@ -13,6 +13,7 @@ const attrs = attrsFrom(JSON.parse(readFileSync(cache + '/rikishis.json', 'utf8'
 const files = readdirSync(cache + '/banzuke').filter(f => /^\d{6}-\w+\.json$/.test(f));
 const ids = [...new Set(files.map(f => f.slice(0, 6)))].sort();
 const R = new SumoReplay(attrs);
+R.probeSize = process.argv.includes('--probe-size');
 const SIDE = ['pos', 'rs', 'r8', 'r16', 'r32', 'elo', 'n', 'w', 'l', 'ab', 'f', 'decided', 'must', 'needFrac', 'age', 'h', 'kg', 'bmi', 'since', 'maku', 'foreign', 'push', 'belt', 'pull', 'styleN', 'pw', 'pl', 'pa', 'dpos'];
 const head = ['basho', 'day', 'divA', 'divB', 'idA', 'idB', 'h2hA', 'h2hB', 'lastMet', ...SIDE.map(k => 'a_' + k), ...SIDE.map(k => 'b_' + k), 'y'];
 const lines = [head.join(',')];

@@ -39,11 +39,15 @@ const rpath = cache + '/rikishis.json';
 if (!existsSync(rpath)) {
   const all = [];
   let total = null;
-  for (let skip = 0; total === null || skip < total; skip += 1000) {
-    const page = await call(c => c.listRikishi({ limit: 1000, skip, measurements: true, ranks: false, intai: true }));
+  /* The API may return fewer than the limit asked for (100 per page after the first): advance by what came back. */
+  for (let skip = 0; total === null || skip < total;) {
+    /* measurements=true makes the API ignore skip, so the plain list is paged (height and weight are the current listed values). */
+    const page = await call(c => c.listRikishi({ limit: 1000, skip, intai: true }));
     total = page.total; all.push(...page.records);
     if (!page.records.length) break;
+    skip += page.records.length;
   }
+  if (all.length < total) throw new Error('Wrestler list incomplete: ' + all.length + ' of ' + total);
   await writeFile(rpath, JSON.stringify({ total, records: all }));
   console.log('rikishis', all.length, 'of', total);
 }

@@ -80,7 +80,7 @@ function powerBlock(h, g) {
       '<div class="srev-tile-bd"><b>' + (up ? '+' : '−') + Math.abs(x.gap) + '</b><strong>' + (h.known && !h.known(x.id) ? h.e(x.name) : '<a href="#predict?a=' + x.id + '">' + h.e(x.name) + '</a>') + '</strong><small>Ranked ' + x.rank + ' of ' + g.size + ', rated ' + x.power + '</small></div></article>';
   };
   const row = (title, list, up) => list.length ? '<div class="srev-tilerow"><h3>' + h.e(title) + '</h3><div class="srev-tiles">' + list.slice(0, 5).map(x => tile(x, up)).join('') + '</div></div>' : '';
-  return '<section class="shome-block" id="power">' + head(h, 'Underrated and overrated', ['#predict', 'Power table'], 'Makuuchi places on the banzuke against the predictor’s power table, which adds how each man has done against his rank. Gaps of five places or more.') +
+  return '<section class="shome-block" id="power">' + head(h, 'Underrated and overrated', ['#predict', 'Power table'], 'Makuuchi places on the banzuke against the predictor’s power table (each man’s average chance against the rest of Makuuchi, from his rating, form, career and record). Gaps of five places or more.') +
     row('Better than his rank', g.under, true) + row('Ranked above his results', g.over, false) + '</section>';
 }
 

@@ -2,6 +2,22 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (Sumo predictor v2: every known fact, 2000-2026)
+- **The Sumo predictor is rebuilt on 2000-2026** (owner: "consider all known facts about the sumo wrestler and stats about their bouts and create an algorithm that is as accurate as possible"). It learns from 125,791 Makuuchi, Juryo and Makushita bouts collected from the Sumo API (paced, about 500 requests, under the 24 Nov permission). For each bout it uses what was known that morning:
+  - rank;
+  - an Elo that starts from rank and learns fast for newcomers, plus a rating against rank;
+  - this basho's form and absences, and kachi-koshi pressure (needs every remaining win while the opponent's record is decided);
+  - age, years in sumo and time in Makuuchi;
+  - head-to-head;
+  - last basho's record, absences and rank change;
+  - fighting style from winning techniques;
+  - birthplace.
+- **Calibrated logistic model.** Fitted 2003-2022, tuned 2023-2024, tested on 2025-2026: Makuuchi 60.1% called (v1 method 59.6%, higher rank 56.1%), Brier 0.2355 v 0.2377 (gain interval 0.0004 to 0.0036). Over all bouts, 0.2377 v 0.2417.
+- **Left out after testing:** height and weight (no gain), a LightGBM model (no better), sharpening (already over-confident above 70%).
+- **Birthplace is kept for accuracy** (0.0002 Brier in Makuuchi), shown under "Style and background"; the owner can drop it.
+- **Bug fixed while testing:** a replay changed the saved state's head-to-head and style arrays in place, so later replays on the same page started from altered data. Found by the no-lookahead test.
+- The Predictor page explains each chance in seven groups. The power table is each man's average chance against the rest of Makuuchi. Method in `docs/sumo-predictor.md`. — Built 28 Nov — awaiting owner "Merge N".
+
 ## 2026-11-28 (Sumo: predictor, live/review analysis, photo-led stories)
 - **Sumo bout predictor** (owner asked for "a fight predictor algorithm and % fight predictor"). Rank (log scale), an Elo-style rating against rank, and this basho's form; fitted on Jan 2025 to Mar 2026 and scored on the four newest basho: 59.8% of Makuuchi bouts called against 56.8% for "higher rank wins", Brier gain over rank alone 0.0049 (interval 0.0026 to 0.0073). Head-to-head tested and left out (no clear gain). Slightly over-confident above 70%, shown on the page. Method in `docs/sumo-predictor.md`. New page `sumo.html#predict` under Analysis ("Predictor"). — Built 28 Nov — awaiting owner "Merge N".
 - **Basho analysis: live, then review** (owner: "selecting the day by day doesn't do anything really except change the highlights ... an analysis area for when the basho is currently going then a basho in review"). The day picker now changes the whole day view: that day's Makuuchi results with each winner's morning chance and an "Upset" tag under 40%, the standings after the day with W/L marks, the predictor's score for the day and the biggest shock. A title-race chart (wins minus losses by day for the top four, tap a day) sits above. While a basho is on, the Analysis pill reads "Live basho" and `#review` shows the tournament so far plus the next day's picks; finished basho stay under the same selector. The chosen day is kept in the link (`?day=N`). `#review?liveday=N` previews live mode on a finished basho.

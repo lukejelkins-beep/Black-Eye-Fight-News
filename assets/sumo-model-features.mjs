@@ -20,7 +20,10 @@ const PULL = new Set(['hatakikomi', 'hikiotoshi', 'hikkake', 'tsukiotoshi', 'kat
 /* Japanese birthplaces read "Hyogo-ken, ...", "Tokyo-to, ...", "Osaka-fu, ...", "Hokkaido, ...". */
 export const foreignBorn = shusshin => { const s = String(shusshin || '').trim(); if (!s) return null; return /^(\S+-(ken|to|fu)\b|Hokkaido|Tokyo|Osaka|Kyoto)/i.test(s) ? 0 : 1; };
 
-export const ELO = { residual: [8, 16, 32], rankWeight: 0.25, pureK: 20 };
+/* Ratings. `elo`: starts from rank (scale x rank score) the first time a man is seen; K is Kmin plus a
+   newcomer boost that fades with his rated bouts (tuned on 2003-2024, see docs/sumo-predictor.md).
+   `residual`: the v1 rating against rank, kept as a second view. */
+export const ELO = { residual: [8, 16, 32], rankWeight: 0.25, Kmin: 12, Kx: 80, tau: 20, scale: 175 };
 
 export class SumoReplay {
   /* attrs: Map id -> { birthDate, shusshin, debut, heights: [[bashoId, cm, kg], ...] ascending } */
@@ -30,9 +33,11 @@ export class SumoReplay {
     this.res = (s.res || ELO.residual.map(() => ({}))).map(o => new Map(Object.entries(o).map(([k, v]) => [Number(k), v])));
     this.pure = new Map(Object.entries(s.pure || {}).map(([k, v]) => [Number(k), v]));
     this.n = new Map(Object.entries(s.n || {}).map(([k, v]) => [Number(k), v]));
-    this.h2h = new Map(Object.entries(s.h2h || {}));
-    this.style = new Map(Object.entries(s.style || {}).map(([k, v]) => [Number(k), v]));
-    this.prev = new Map(Object.entries(s.prev || {}).map(([k, v]) => [Number(k), v]));
+    /* Copies, never the saved arrays themselves: a replay updates these in place, and the same saved
+       state is replayed many times in one page. */
+    this.h2h = new Map(Object.entries(s.h2h || {}).map(([k, v]) => [k, v.slice()]));
+    this.style = new Map(Object.entries(s.style || {}).map(([k, v]) => [Number(k), v.slice()]));
+    this.prev = new Map(Object.entries(s.prev || {}).map(([k, v]) => [Number(k), v.slice()]));
     this.maku = new Map(Object.entries(s.maku || {}).map(([k, v]) => [Number(k), v]));
     this.lastBasho = s.lastBasho || null;
   }
@@ -51,7 +56,7 @@ export class SumoReplay {
     this.bashoId = String(bashoId);
     this.rows = new Map(rows.map(r => [Number(r.rikishiID), { ...r, div: divOf(r.rank) }]));
     /* Pure Elo starts from rank the first time a man is seen. */
-    for (const r of this.rows.values()) if (!this.pure.has(r.rikishiID)) this.pure.set(r.rikishiID, 1500 + 400 * rankScore(r.rank) / LN10 * 0.6);
+    for (const r of this.rows.values()) if (!this.pure.has(r.rikishiID)) this.pure.set(r.rikishiID, ELO.scale * rankScore(r.rank));
   }
 
   /* Wins, losses, absences of one man before `day` this basho. */
@@ -70,6 +75,8 @@ export class SumoReplay {
     if (at.birthDate) age = (Date.UTC(+this.bashoId.slice(0, 4), +this.bashoId.slice(4) - 1, 10) - Date.parse(at.birthDate)) / (365.25 * 864e5);
     let h = null, kg = null;
     for (const [b, cm, w] of at.heights || []) { if (b <= this.bashoId) { if (cm) h = cm; if (w) kg = w; } else break; }
+    /* Research probe only: current listed size when no dated measurement exists (leaks later size). */
+    if (this.probeSize) { if (h == null) h = at.height || null; if (kg == null) kg = at.weight || null; }
     const st = this.style.get(id) || [0, 0, 0, 0];
     const pv = this.prev.get(id);
     let since = null;
@@ -114,8 +121,10 @@ export class SumoReplay {
         const m = this.res[i], e = sig(ELO.rankWeight * d + ((m.get(W) || 0) - (m.get(L) || 0)) * LN10 / 400);
         m.set(W, (m.get(W) || 0) + K * (1 - e)); m.set(L, (m.get(L) || 0) - K * (1 - e));
       });
-      const pe = sig(((this.pure.get(W) || 1500) - (this.pure.get(L) || 1500)) * LN10 / 400);
-      this.pure.set(W, (this.pure.get(W) || 1500) + ELO.pureK * (1 - pe)); this.pure.set(L, (this.pure.get(L) || 1500) - ELO.pureK * (1 - pe));
+      const pe = sig(((this.pure.get(W) || 0) - (this.pure.get(L) || 0)) * LN10 / 400);
+      const kOf = id => ELO.Kmin + ELO.Kx * Math.exp(-(this.n.get(id) || 0) / ELO.tau);
+      const kw = kOf(W), kl = kOf(L);
+      this.pure.set(W, (this.pure.get(W) || 0) + kw * (1 - pe)); this.pure.set(L, (this.pure.get(L) || 0) - kl * (1 - pe));
       this.n.set(W, (this.n.get(W) || 0) + 1); this.n.set(L, (this.n.get(L) || 0) + 1);
       const k = Math.min(W, L) + ':' + Math.max(W, L), hh = this.h2h.get(k) || [0, 0, 0];
       hh[W < L ? 0 : 1]++; hh[2] = W; this.h2h.set(k, hh);
@@ -142,7 +151,8 @@ export function attrsFrom(records) {
   const m = new Map();
   for (const r of records || []) {
     const hist = (r.measurementHistory || []).map(x => [String(x.bashoId), x.height || null, x.weight || null]).sort((a, b) => a[0].localeCompare(b[0]));
-    m.set(Number(r.id), { birthDate: r.birthDate && !/^0001/.test(r.birthDate) ? r.birthDate : null, shusshin: r.shusshin || '', debut: r.debut || '', heights: hist });
+    if (m.has(Number(r.id))) continue;
+    m.set(Number(r.id), { height: r.height || null, weight: r.weight || null, birthDate: r.birthDate && !/^0001/.test(r.birthDate) ? r.birthDate : null, shusshin: r.shusshin || '', debut: r.debut || '', heights: hist });
   }
   return m;
 }
