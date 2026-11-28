@@ -445,8 +445,13 @@ async function testSite(viewport,isMobile,label,fullCohort=true) {
   }));
   assert.ok(opponentScores.length>=10&&opponentScores.every(x=>x.inside&&x.width>40),
     'Opponent scores must fit inside dark card at '+viewport.width+'px: '+JSON.stringify(opponentScores));
-  assert.ok(opponentScores.every(x=>x.colour==='rgb(255, 240, 195)'&&x.bg==='rgb(64, 51, 47)'),
-    'Opponent scores must use opaque cream/gold contrast: '+JSON.stringify(opponentScores));
+  // Blood and steel (owner, 28 Nov 2026): pale steel on gunmetal replaced cream on brown. What matters is an opaque
+  // badge with strong contrast, so check that (WCAG ratio at least 7:1) rather than one palette's exact values.
+  const lum=c=>{const [r,g,b]=(c.match(/\d+(\.\d+)?/g)||[]).slice(0,3).map(Number).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*r+.7152*g+.0722*b};
+  const opaque=c=>/^rgb\(/.test(c)||/,\s*1\)$/.test(c);
+  const ratio=x=>{const a=lum(x.colour),b=lum(x.bg);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)};
+  assert.ok(opponentScores.every(x=>opaque(x.bg)&&ratio(x)>=7),
+    'Opponent scores must be an opaque, high-contrast badge (7:1): '+JSON.stringify(opponentScores));
   await page.locator('#sumo-career').scrollIntoViewIfNeeded();
   await snap(page,label+'-profile-career',{fullPage:false});
   await page.locator('#sumo-opponents').scrollIntoViewIfNeeded();
