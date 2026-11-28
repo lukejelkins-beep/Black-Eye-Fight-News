@@ -51,6 +51,21 @@ test("the Top 10s grid leads with ratings and folds Finishing and Pace into one 
  assert.deepEqual(heads,["Ratings","Striking","Finishing and pace"]);
  assert.match(html,/--cols:3/,"six rating cards sit in two rows of three");
 });
+test("Top 15 rows write the move out: UFC #5 → Form #1, arrow only when it differs by 3 or more",()=>{
+ const start=hub.indexOf(" function ladderRow(f){"),end=hub.indexOf(" function render(mount){");
+ const ctx={esc:v=>String(v),url:f=>"#"+f.name,img:()=>"",last5:()=>"",chip:()=>"",form:f=>f.form,ovr:f=>f.overall};
+ const row=vm.runInNewContext(hub.slice(start,end)+"\n(ladderRow)",ctx);
+ const f=(rank,formRank,extra={})=>({name:"N",rank,formRank,form:80,overall:60,certified:true,stage:"Contender",badges:[],...extra});
+ const up=row(f(5,1));
+ assert.match(up,/fh-mvtext is-up">▲ UFC #5 → Form #1</,"ahead of their rank");
+ assert.match(up,/fh-lfr"><span class="fh-mv is-up">▲ <\/span>Form #1</,"desktop column keeps the arrow beside the form rank");
+ assert.doesNotMatch(up,/fh-lrank">#5<span/,"no bare arrow beside the UFC rank");
+ assert.match(row(f(1,6)),/fh-mvtext is-down">▼ UFC #1 → Form #6</);
+ const near=row(f(4,3));
+ assert.match(near,/fh-mvtext">UFC #4 → Form #3</,"small gaps are written out with no arrow");
+ assert.doesNotMatch(near,/▲|▼/);
+ assert.doesNotMatch(row(f(0,null,{champion:true,stage:"Champion"})),/UFC #/,"champions have no form rank");
+});
 test("Top 15 sort: natural order per column, blanks last, champion first by rank",()=>{
  const start=hub.indexOf(" const STAGE_ORDER="),end=hub.indexOf(" // Rating boards shown on each division page");
  const ctx={st:{sort:{key:"rank",dir:1}},window:{},Number};
