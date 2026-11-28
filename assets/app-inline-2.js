@@ -702,8 +702,9 @@ function originalTalkPost(p){
  }
  return '<div class="talk-native-static">'+fallback+'</div>';
 }
-function hydrateTalkEmbeds(){
+function hydrateTalkEmbeds(skipAuto){
  if(!document.getElementById('talk-results'))return;
+ if(!skipAuto)talkAutoOpen();
  ++talkEmbedRender;
  const renderToken=talkEmbedRender;
  if(document.querySelector('.instagram-media')){
@@ -835,10 +836,35 @@ function talkCard(p,hot){
   (direct?'<button type="button" class="tk-show" data-talk-show="'+i+'">Show post ▸</button>':'')+
   (p.url?'<a class="tk-open'+(direct?'':' tk-show')+'" href="'+safeURL(p.url)+'" target="_blank" rel="noopener noreferrer" aria-label="Open post on '+esc(p.platform)+'">Open ↗</a>':'')+'</footer></article>';
 }
+/* Owner, 28 Nov 2026: "I want to see the full post with videos/pictures, not have to tap to expand".
+   Each card now opens its original post by itself as it comes within about a screen of the viewport, so the
+   page still does not load two dozen embeds at once. "Show post" stays as the fallback when the browser
+   cannot watch scrolling (and for a tap that beats the observer). */
+function talkExpand(idx){
+ const p=talkShown[Number(idx)],body=document.querySelector('[data-talk-body="'+idx+'"]');if(!p||!body)return false;
+ body.innerHTML='<div class="talk-native-card">'+originalTalkPost(p)+'</div>';
+ document.querySelector('button[data-talk-show="'+idx+'"]')?.remove();return true;
+}
+let talkObserver=null;
+function talkAutoOpen(){
+ talkObserver?.disconnect();talkObserver=null;
+ const buttons=[...document.querySelectorAll('#talk-results button[data-talk-show]')];
+ if(!buttons.length)return;
+ if(typeof IntersectionObserver==='undefined'){buttons.forEach(b=>talkExpand(b.dataset.talkShow));hydrateTalkEmbeds(true);return}
+ talkObserver=new IntersectionObserver(entries=>{
+  let opened=false;
+  for(const en of entries){
+   if(!en.isIntersecting)continue;
+   talkObserver.unobserve(en.target);
+   if(talkExpand(en.target.dataset.talkCard))opened=true;
+  }
+  if(opened)hydrateTalkEmbeds(true);
+ },{rootMargin:'700px 0px'});
+ for(const b of buttons){const card=b.closest('.tk-card');if(!card)continue;card.dataset.talkCard=b.dataset.talkShow;talkObserver.observe(card)}
+}
 if(typeof document!=='undefined')document.addEventListener('click',e=>{
  const b=e.target.closest&&e.target.closest('button[data-talk-show]');if(!b)return;
- const p=talkShown[Number(b.dataset.talkShow)],body=document.querySelector('[data-talk-body="'+b.dataset.talkShow+'"]');if(!p||!body)return;
- body.innerHTML='<div class="talk-native-card">'+originalTalkPost(p)+'</div>';b.remove();hydrateTalkEmbeds();
+ if(talkExpand(b.dataset.talkShow))hydrateTalkEmbeds(true);
 });
 
 
