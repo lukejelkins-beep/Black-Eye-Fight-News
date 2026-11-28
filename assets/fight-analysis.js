@@ -402,7 +402,8 @@
   function mmaTop(ctx) {
     const H = helpers(), D = ctx.data || {}, now = ctx.now;
     const slides = mmaSlides({ champions: D.champions && D.champions.mma, now, events: ctx.events, form: ctx.form, regs: regsOf(ctx, 'ufc'), portrait: portraitOf(ctx) });
-    return '<div class="sov fa fa-mma"><a class="fp-teaser" href="#predictions"><span><b>Fight predictions</b><small>Who wins, whether it ends in a finish and how, for the announced UFC cards</small></span><span class="fp-teaser-go">Open</span></a>' + champStripHTML(slides, { title: 'UFC champions', belts: beltFiles(ctx.belts) }) +
+    return '<div class="sov fa fa-mma"><a class="fp-teaser" href="#predictions"><span><b>Fight predictions</b><small>Who wins, whether it ends in a finish and how, for the announced UFC cards</small></span><span class="fp-teaser-go">Open</span></a>' +
+      '<a class="fp-teaser" href="analysis-ufc-gyms.html"><span><b>Do UFC gyms decide fights?</b><small>UFC fights in 2025 and 2026: gym records against what was expected</small></span><span class="fp-teaser-go">Read</span></a>' + champStripHTML(slides, { title: 'UFC champions', belts: beltFiles(ctx.belts) }) +
       '<div class="fa-two">' + endedHTML(H, withClips(ended(recent(ctx.results, 'MMA', now)), ctx, 'mma'), 'mma') + fightsHTML(H, titleFights(ctx.events, 'mma', now), 'UFC title fights coming up') + '</div></div>';
   }
 

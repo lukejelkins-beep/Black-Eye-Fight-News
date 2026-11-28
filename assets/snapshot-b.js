@@ -125,12 +125,16 @@
     const won = h && (h.winner === 0 || h.winner === 1) ? h.winner : null;
     // When either side has a tag (rank, tier, "Won"), both get the tag line, so the records stay level.
     const tagLine = sides.some(s => s && s.tags && s.tags.length);
+    // Gym line (UFC upcoming cards only): plain context from data/ufc-fighter-gyms.json, never a score. When either side has
+    // one, both get the line so the columns stay level; a missing gym shows a dash.
+    const gymLine = sides.some(s => s && s.gym && s.gym.length);
     const info = (s, i) => '<div class="sb-fighter sb-' + (i ? 'b' : 'a') + (won === null ? '' : won === i ? ' is-winner' : ' is-loser') + '">' +
       '<strong class="sb-name">' + esc(s.name) + '</strong>' +
       (tagLine ? '<span class="sb-tags">' + (s.tags || []).map(t => '<em>' + esc(t) + '</em>').join('') + '</span>' : '') +
       '<span class="sb-record">' + esc(s.record || '—') + (s.note ? ' <small>' + esc(s.note) + '</small>' : '') + '</span>' +
       (s.form && s.form.length ? '<span class="sb-form" aria-label="Last ' + s.form.length + ' fights, newest first: ' + esc(s.form.join(', ')) + '">' +
-        s.form.map(x => '<i class="' + (FORM_CLASS[x] || 'is-draw') + '">' + esc(x) + '</i>').join('') + '</span>' : '') + '</div>';
+        s.form.map(x => '<i class="' + (FORM_CLASS[x] || 'is-draw') + '">' + esc(x) + '</i>').join('') + '</span>' : '') +
+      (gymLine ? '<span class="sb-gym"><small>Trains at</small> ' + esc(s.gym && s.gym.length ? s.gym.slice(0, 2).join(', ') : '—') + '</span>' : '') + '</div>';
     const bar = (w, i, lead) => w ? '<span class="sb-bar sb-bar-' + (i ? 'b' : 'a') + (lead ? ' is-lead' : '') + '" aria-hidden="true"><i style="width:' + w[i] + '%"></i></span>' : '<span class="sb-bar" aria-hidden="true"></span>';
     const rowHTML = rows.map(r => {
       const w = barWidths(r);
