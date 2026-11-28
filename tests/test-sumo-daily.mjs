@@ -140,7 +140,7 @@ test('full-panel flag overlays preserve readability and historical statistics fi
   const css=readFileSync(new URL('../assets/sumo-daily.css',import.meta.url),'utf8');
   const js=readFileSync(new URL('../assets/sumo.js',import.meta.url),'utf8');
   assert.match(css,/\.sumo-daily-facts>\.sumo-flag-backdrop\s*\{[^}]*inset:0/s);
-  assert.match(css,/\.sumo-daily-facts::after\s*\{[^}]*rgba\(255,253,247,\.83\)/s);
+  assert.match(css,/\.sumo-daily-facts::after\s*\{[^}]*rgba\(250,251,252,\.83\)/s);
   assert.match(css,/\.sumo-daily-facts-content\s*\{[^}]*z-index:2/s);
   assert.match(js,/--sumo-flag-url:url\(https:\/\/flagcdn\.com\/w640\//);
   assert.match(js,/makushitaWins:stats\?\.winsByDivision\?\.Makushita/);

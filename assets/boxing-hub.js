@@ -73,7 +73,20 @@
   return root.BEFNLocalImages?root.BEFNLocalImages.url(name,kind||"portrait"):"";
  };
  const SIL='<span class="fh-face fh-none" aria-hidden="true"><svg viewBox="0 0 90 120"><circle cx="45" cy="38" r="22"/><path d="M4 120c0-30 18-50 41-50s41 20 41 50z"/></svg></span>';
- const face=(name,cls)=>{const u=pic(name);return u?'<img class="fh-face'+(cls?" "+cls:"")+'" src="'+esc(u)+'" alt="" loading="lazy">':SIL;};
+ /* Consistent pictures (owner, 28 Nov 2026: "make sure athletes pictures are appearing consistently"): in each slot
+    every boxer's head is the same width with the crown at the same height. A cut-out is placed by its measured head
+    (data/ufc-cutout-head-metrics.json, set "boxer"); a photograph with no usable cut-out by the face found in it (set
+    "boxerPhoto"), softened at the edges. Without a measurement the slot keeps the old picture or the silhouette. */
+ const FIT={champ:{head:30,crown:12,box:[64,100]},card:{head:44,crown:14,box:[140,124]},next:{head:46,crown:14,box:[220,136]},big:{head:66,crown:22,box:[180,236]},row:{head:24,crown:8,box:[60,64]}};
+ const fitted=(name,slot)=>{
+  const Fit=root.BEFNCutoutFit,o=FIT[slot];if(!Fit||!o||!Fit.ready())return "";
+  const k=slug(name);
+  if(st.cuts&&st.cuts[k]&&st.cuts[k].ok===true){const s=Fit.style("boxer",k,{head:o.head,crown:o.crown});return s?'<img class="fh-fit" src="assets/img/boxing-cutouts/'+esc(k)+'.webp" alt="" style="'+s+'" loading="lazy">':"";}
+  const u=root.BEFNLocalImages?root.BEFNLocalImages.url(name,"portrait"):"",m=/\/([a-z0-9-]+)-portrait\.webp$/.exec(u||"");
+  const s=m&&u.indexOf("assets/img/boxing/")===0?Fit.style("boxerPhoto",m[1],o):"";  // o.box: a photograph covers its slot
+  return s?'<img class="fh-fit is-photo" src="'+esc(u)+'" alt="" style="'+s+'" loading="lazy">':"";
+ };
+ const face=(name,cls,slot)=>{const f=slot?fitted(name,slot):"";if(f)return f;const u=pic(name);return u?'<img class="fh-face'+(cls?" "+cls:"")+'" src="'+esc(u)+'" alt="" loading="lazy">':SIL;};
  const href=f=>f.id?'#fighter/'+encodeURIComponent(f.id):"";
  const tag=(f,inner,cls)=>{const h=href(f);return h?'<a class="'+cls+'" href="'+h+'">'+inner+"</a>":'<div class="'+cls+'">'+inner+"</div>";};
  const l5=f=>f.last&&f.last.length?'<span class="fh-l5" aria-label="Last fights, newest first: '+esc(f.last.join(" "))+'">'+f.last.map(o=>'<b class="is-'+(o==="W"?"w":o==="L"?"l":"d")+'">'+esc(o==="NC"?"N":o)+"</b>").join("")+"</span>":"";
@@ -81,7 +94,7 @@
  const head=(t,sub)=>'<div class="fh-head"><h2>'+esc(t)+"</h2>"+(sub?"<span>"+esc(sub)+"</span>":"")+"</div>";
 
  function card(f){
-  return tag(f,'<span class="fh-pic">'+face(f.name)+'</span><span class="fh-body"><span class="fh-name">'+esc(f.name)+"</span>"+
+  return tag(f,'<span class="fh-pic">'+face(f.name,"","card")+'</span><span class="fh-body"><span class="fh-name">'+esc(f.name)+"</span>"+
    '<span class="fh-meta">'+esc(f.division)+(f.record?" · "+esc(f.record):"")+"</span>"+l5(f)+"</span>","fh-card bxh-card");
  }
  function rail(title,sub,list){
@@ -92,12 +105,12 @@
   if(!rows.length)return "";
   return '<section class="fh-sec fh-padded">'+head("Champions","Whoever holds the most belts in each division. Gold edge: undisputed.")+'<div class="bxh-champs">'+
    rows.map(c=>{const h=c.holders[0];return '<button type="button" class="bxh-champ'+(c.undisputed?" is-und":"")+'" data-fh-div="'+esc(c.division)+'">'+
-    '<span class="bxh-champ-pic">'+face(h.name)+'</span><span class="bxh-champ-body"><span class="fh-kicker">'+esc(c.division)+"</span>"+
+    '<span class="bxh-champ-pic">'+face(h.name,"","champ")+'</span><span class="bxh-champ-body"><span class="fh-kicker">'+esc(c.division)+"</span>"+
     '<span class="fh-name">'+esc(h.name)+"</span>"+belts(h.belts)+(c.holders.length>1?'<span class="fh-meta">Also: '+esc(c.holders.slice(1,3).map(x=>x.name).join(", "))+"</span>":"")+
     "</span></button>";}).join("")+"</div></section>";
  }
  function nextCards(list){
-  return '<div class="fh-next">'+list.map(f=>tag(f,'<span class="fh-pic">'+face(f.name)+'</span><span class="fh-body"><span class="fh-stage-text">'+esc(f.category)+"</span>"+
+  return '<div class="fh-next">'+list.map(f=>tag(f,'<span class="fh-pic">'+face(f.name,"","next")+'</span><span class="fh-body"><span class="fh-stage-text">'+esc(f.category)+"</span>"+
    '<span class="fh-name">'+esc(f.name)+'</span><span class="fh-meta">'+esc(f.record||"Record not confirmed")+"</span>"+l5(f)+"</span>","fh-nextcard")).join("")+"</div>";
  }
  function divisionHTML(div,list,champs){
@@ -107,7 +120,7 @@
    '<span class="fh-champ-name">'+esc(h.name)+"</span>"+belts(h.belts)+
    (Number.isInteger(h.defences)?'<span class="fh-soft">'+h.defences+(h.defences===1?" defence":" defences")+"</span>":"")+
    (c.holders.length>1?'<span class="bxh-others">'+c.holders.slice(1).map(x=>"<span><b>"+esc(x.name)+"</b> "+esc(x.belts.join(", "))+"</span>").join("")+"</span>":"")+
-   '</div><span class="fh-champ-pic">'+face(h.name)+"</span></section>";
+   '</div><span class="fh-champ-pic">'+face(h.name,"","big")+"</span></section>";
   else out+='<p class="fh-note fh-padded">No major belt holder recorded in this division.</p>';
   const inDiv=list.filter(f=>f.division===div);
   for(const [cat,sub] of [["Contender","Closest to a world title shot"],["Prospect","Coming through"]]){
@@ -118,7 +131,7 @@
  }
  function resultsHTML(found){
   if(!found.length)return '<p class="fh-note fh-padded bxh-none">No boxer on this page matches “'+esc(st.q)+"”.</p>";
-  return '<section class="fh-sec fh-padded">'+head("Search results")+'<div class="fh-list">'+found.map(f=>tag(f,'<span class="fh-row-pic">'+face(f.name)+'</span><span class="fh-row-body"><span>'+
+  return '<section class="fh-sec fh-padded">'+head("Search results")+'<div class="fh-list">'+found.map(f=>tag(f,'<span class="fh-row-pic">'+face(f.name,"","row")+'</span><span class="fh-row-body"><span>'+
    '<span class="fh-name">'+esc(f.name)+'</span><span class="fh-meta">'+esc(f.division)+(f.record?" · "+esc(f.record):"")+"</span>"+(f.belts?belts(f.belts):l5(f))+"</span>"+
    '<span class="fh-meta">'+esc(f.kind)+"</span></span>","fh-row")).join("")+"</div></section>";
  }
@@ -151,8 +164,8 @@
   if(typeof document==="undefined")return;
   document.querySelectorAll("[data-befn-boxing-hub]").forEach(m=>{
    if(m.dataset.bxhDone)return;m.dataset.bxhDone="1";bind(m);render(m);
-   if(!st.cuts)Promise.all([fetch("data/boxing-cutout-register.json").then(r=>r.ok?r.json():null).catch(()=>null),fetch("data/results.json").then(r=>r.ok?r.json():null).catch(()=>null)])
-    .then(([c,r])=>{st.cuts=(c&&c.cutouts)||{};st.results=r;document.querySelectorAll("[data-befn-boxing-hub]").forEach(render);});
+   if(!st.cuts)Promise.all([root.BEFNCutoutFit?root.BEFNCutoutFit.load():null,fetch("data/boxing-cutout-register.json").then(r=>r.ok?r.json():null).catch(()=>null),fetch("data/results.json").then(r=>r.ok?r.json():null).catch(()=>null)])
+    .then(([,c,r])=>{st.cuts=(c&&c.cutouts)||{};st.results=r;document.querySelectorAll("[data-befn-boxing-hub]").forEach(render);});
   });
  }
  const api={champions,roster,unbeaten,search,scan};

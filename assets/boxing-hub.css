@@ -10,7 +10,7 @@
 .bxh-champs{display:grid;grid-template-columns:1fr;gap:10px}
 @media (min-width:600px){.bxh-champs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .bxh-champ{display:flex;align-items:flex-end;gap:10px;min-height:104px;width:100%;background:#fff;border:1px solid #d4dce4;border-radius:16px;overflow:hidden;padding:0 10px 0 0;text-align:left;font:inherit;color:inherit;cursor:pointer}
-.bxh-champ.is-und{border:2px solid var(--fh-gold);background:#fffaf0}
+.bxh-champ.is-und{border:2px solid var(--fh-gold);background:#f6f8f9}
 .bxh-champ-pic{flex:0 0 64px;align-self:flex-end;display:flex;height:100px}
 .bxh-champ-pic .fh-face{width:64px;height:100px}
 .bxh-champ-body{display:flex;flex-direction:column;gap:3px;padding:10px 0;min-width:0}
@@ -26,3 +26,9 @@
  .bxh-champ{min-height:128px}.bxh-champ-pic{flex-basis:78px;height:112px}.bxh-champ-pic .fh-face{width:78px;height:112px}
  .fh-boxing .fh-next{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+
+/* Fitted pictures (28 Nov 2026): the slot holds the picture; the image is placed inside it by its measured head. */
+:is(.bxh-champ-pic,.fh-pic,.fh-champ-pic,.fh-row-pic):has(>img.fh-fit){position:relative;overflow:hidden}
+.bxh-champ-pic:has(>img.fh-fit){width:64px;height:100px;flex-basis:64px}
+.fh-champ-pic:has(>img.fh-fit){width:180px;height:236px;flex:none}
+.fh-row-pic:has(>img.fh-fit){min-height:64px}

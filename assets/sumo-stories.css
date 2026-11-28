@@ -49,8 +49,8 @@
 .st-band{margin:-16px -16px 4px;height:150px;display:flex;align-items:flex-end;justify-content:center;gap:4px;background:linear-gradient(180deg,#23345f,#2a4a8f);overflow:hidden}
 .st-band img{height:94%;max-width:50%;object-fit:contain;object-position:bottom}
 .st-band.is-pair img{max-width:46%}
-.st-band img.is-head{height:100%;width:50%;max-width:none;object-fit:cover;object-position:top}
-.st-band:not(.is-pair) img.is-head{width:100%}
+/* A wrestler with no full-length cut-out (28 Nov 2026): his 192 px head photo as a disc, never stretched across the band. */
+.st-band img.is-head{height:112px;width:112px;max-width:none;flex:none;align-self:center;border-radius:50%;object-fit:cover;object-position:50% 25%;border:3px solid rgba(255,255,255,.35)}
 .st-kicker{font:800 12px/1 'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2a4a8f}
 .st-story .st-metric{font-size:52px}
 /* Page head and controls in the Sumo house style (28 Nov 2026): dark band with a blue edge like

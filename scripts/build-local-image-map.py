@@ -10,7 +10,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parent.parent
 REGISTERS = ["data/ufc-image-register.json", "data/boxing-image-register.json", "data/mma-image-register.json"]
-norm = lambda s: unicodedata.normalize("NFD", s).encode("ascii", "ignore").decode().replace("‘", "'").replace("’", "'").strip().lower()
+norm = lambda s: unicodedata.normalize("NFD", s.replace("\u2018", "'").replace("\u2019", "'")).encode("ascii", "ignore").decode().strip().lower()
 
 bases, m, clash = [], {}, set()
 for path in REGISTERS:

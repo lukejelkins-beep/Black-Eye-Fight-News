@@ -343,6 +343,10 @@ REVIEWED_OUT_PRESS = {
 # (slug -> Commons file), and only a file named here is ever taken from that search.
 # Its licence, size and agency checks are run again at fetch time.
 COMMONS_PICKS = {
+    # 2026-11-28, looked at by eye (owner: "We need more boxer headshots")
+    'mirco-cuello': "File:Boxing at the 2018 Summer Youth Olympics – Boys' bantamweight Victory Ceremony 18 (Mirco Cuello).jpg",
+    'shakhram-giyasov': 'File:Shakhram Giyasov, April 2021-1.jpg',
+    'tenshin-nasukawa': "File:TENSHIN NASUKAWA 'I WANT TO KICK FLOYD MAYWEATHER' RIZIN FF 14 00'10.png",
 }
 # Candidates looked at and not used, with the reason, so a later look starts without them.
 REVIEWED_OUT_FILES = {
@@ -352,6 +356,11 @@ REVIEWED_OUT_FILES = {
     "File:Daniel Dubois walkout.jpg": "a ring walk seen from the stands: a crowd, his face tiny",
     "File:Erislandy Lara.jpg": "the lead photograph already reviewed out: mid-fight, side-on, face small",
     "File:Russell vs Masuk Rio2016.jpg": "two boxers in a clinch at Rio 2016, his face turned away",
+    # 2026-11-28, looked at by eye
+    'File:April 2023 President Marcos Jr. meeting with athletes and artists - boxers.jpg': 'a ceremony group photo: several people, his face small',
+    'File:Philippine Boxing Team 2016.jpg': 'a ceremony group photo: a crowd around a desk, his face small',
+    'File:Jose Andres Cortes.jpg': 'a studio shot in a suit that I could not tie to this boxer by eye',
+    'File:Buddy McGirt and Vito Mielnicki Jr warming up at Arnold Expo.jpg': 'a gym session from the side: trainer in front, his face hidden',
 }
 
 FREE_LICENCE = re.compile(r"^(cc[ -]?by([ -]?sa)?([ -]?\d(\.\d)?)?|cc0|public domain|pd[- ])", re.I)
