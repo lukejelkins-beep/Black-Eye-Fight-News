@@ -86,7 +86,7 @@
  .befn-board-bar .befn-board-field>span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
  /* each group is a swipe rail on the phone so the page stays short */
- .befn-bgroup .befn-bgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}
+ .befn-bgroup .befn-bgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0;padding:0 0 4px;scrollbar-width:none}
  .befn-bgroup .befn-bgrid::-webkit-scrollbar{display:none}
  .befn-bgroup .befn-bcard{flex:0 0 82%;scroll-snap-align:start}
 }
