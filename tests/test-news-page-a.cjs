@@ -47,7 +47,14 @@ const lang = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'news
 const pool = live.articles.filter(a => a.sport === 'boxing' || a.sport === 'mma');
 const liveNow = Date.parse(live.lastSuccessfulAt) + 30 * 60e3;
 const clusters = F.buildClusters(pool, live.deduplication, window.BEFNNewsClusters);
-const sumo = lang.stories.filter(s => s.title && s.title !== s.originalTitle);
+const liveSumo = lang.stories.filter(s => s.title && s.title !== s.originalTitle);
+/* The translation feed can legitimately come back empty for a refresh (28 Nov 2026: 0 stories, no
+   successful fetch). The box rules are then checked on a fixed set of translated stories so this test
+   does not depend on whatever the feed held at the last refresh; an empty feed must show no box. */
+const sumo = liveSumo.length >= 4 ? liveSumo : ['Asahi', 'Nikkan', 'Sankei', 'Mainichi', 'Kyodo'].map((source, i) => ({
+  source, url: 'https://example.com/sumo/' + i, title: 'Translated sumo headline ' + i, originalTitle: '相撲 ' + i,
+  publishedAt: new Date(liveNow - (i + 1) * 3600e3).toISOString(), translationProvider: 'DeepL'
+}));
 for (const tz of [TZ, 'UTC', 'America/New_York']) {
   for (const view of ['all', 'boxing', 'mma', 'sumo']) {
     const page = F.pageHTML({ view, sort: 'latest', page: 3, clusters: view === 'sumo' ? [] : clusters.filter(c => view === 'all' || c.story.sport === view), sumo, updatedAt: live.lastSuccessfulAt, now: liveNow, tz }, h);
@@ -65,6 +72,7 @@ for (const tz of [TZ, 'UTC', 'America/New_York']) {
   assert(all.includes('Sumo news from Japan') && /More from Japan \(\d+\)/.test(all) && all.includes('translated'), 'sumo box with its translated note');
   assert.strictEqual((all.match(/<li><a [^>]*lang="en"/g) || []).length, sumo.length, 'sumo box holds every translated story (3 shown, the rest behind the button)');
   assert(/id="nwa-sumo-more" hidden/.test(all), 'the extra sumo headlines start closed');
+  assert(!F.pageHTML({ view: 'all', sort: 'latest', clusters, sumo: [], updatedAt: live.lastSuccessfulAt, now: liveNow, tz: TZ }, h).includes('Sumo news from Japan'), 'an empty translation feed shows no sumo box');
   const box = F.pageHTML({ view: 'boxing', sort: 'latest', clusters, sumo, now: liveNow, tz: TZ }, h);
   assert(!box.includes('Sumo news from Japan'), 'no sumo box on Boxing');
   const su = F.pageHTML({ view: 'sumo', sort: 'latest', clusters: [], sumo, now: liveNow, tz: TZ }, h);

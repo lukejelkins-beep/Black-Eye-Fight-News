@@ -2,6 +2,10 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 — News test no longer depends on the live translation feed
+- The 07:45 UTC "Refresh Japanese and Spanish headlines" run committed `data/news-language-live.json` with 0 stories (`lastSuccessfulAt` null), so `tests/test-news-page-a.cjs` failed "sumo box with its translated note", `release-preflight` went red on #592's merge and Render (deploys on checks passing) held every later main commit.
+- Owner chose: make the test accept an empty feed. With fewer than four live translated stories the box rules run on five fixed stories, and a new check says an empty feed shows no sumo box. The feed file, the workflow and the page code are untouched. — Owner; Claude — `tests/test-news-page-a.cjs`; awaiting owner "Merge N".
+
 ## 2026-11-28 — Fight Talk: posts open on their own; stray red line fixed
 - Owner: "Weird red line on fight talk - also i want to see the full post with videos/pictures not have to tap to expand". Supersedes the 24 Nov "embed waits for Show post" rule for the reader (the page still never loads every embed at once).
 - Each post card now opens its original post (text, pictures, video) by itself when it comes within about 700 px of the screen (`talkAutoOpen`, IntersectionObserver). "Show post" stays only as the fallback when the browser cannot watch scrolling. Reason for not opening all at once: 23 cards means 23 platform iframes on first load.
