@@ -1,0 +1,491 @@
+{
+ "schema": 1,
+ "asOf": "2026-11-28",
+ "season": 2025,
+ "source": "Sherdog event and fighter pages, used with Sherdog's permission",
+ "events": 48,
+ "decidedBouts": 544,
+ "winnerPickedPct": 58.5,
+ "gymsCompared": 15,
+ "minBouts": 12,
+ "permutation": {
+  "runs": 2000,
+  "observedMeanZ2": 0.88,
+  "shuffledMeanZ2": 1.02,
+  "p": 0.6
+ },
+ "gyms": [
+  {
+   "gym": "American Top Team",
+   "bouts": 59,
+   "wins": 27,
+   "losses": 32,
+   "winPct": 46,
+   "expectedWins": 30.3,
+   "winsAboveExpected": -3.3,
+   "z": -0.88
+  },
+  {
+   "gym": "Kill Cliff FC",
+   "bouts": 41,
+   "wins": 23,
+   "losses": 18,
+   "winPct": 56,
+   "expectedWins": 20.6,
+   "winsAboveExpected": 2.4,
+   "z": 0.78
+  },
+  {
+   "gym": "Xtreme Couture",
+   "bouts": 34,
+   "wins": 21,
+   "losses": 13,
+   "winPct": 62,
+   "expectedWins": 17.5,
+   "winsAboveExpected": 3.5,
+   "z": 1.22
+  },
+  {
+   "gym": "Team Alpha Male",
+   "bouts": 26,
+   "wins": 11,
+   "losses": 15,
+   "winPct": 42,
+   "expectedWins": 12.5,
+   "winsAboveExpected": -1.5,
+   "z": -0.6
+  },
+  {
+   "gym": "MMA Lab",
+   "bouts": 22,
+   "wins": 8,
+   "losses": 14,
+   "winPct": 36,
+   "expectedWins": 10.5,
+   "winsAboveExpected": -2.5,
+   "z": -1.1
+  },
+  {
+   "gym": "Factory X",
+   "bouts": 22,
+   "wins": 9,
+   "losses": 13,
+   "winPct": 41,
+   "expectedWins": 10.2,
+   "winsAboveExpected": -1.2,
+   "z": -0.54
+  },
+  {
+   "gym": "City Kickboxing",
+   "bouts": 18,
+   "wins": 14,
+   "losses": 4,
+   "winPct": 78,
+   "expectedWins": 9.0,
+   "winsAboveExpected": 5.0,
+   "z": 2.4
+  },
+  {
+   "gym": "Chute Boxe Diego Lima",
+   "bouts": 17,
+   "wins": 11,
+   "losses": 6,
+   "winPct": 65,
+   "expectedWins": 8.4,
+   "winsAboveExpected": 2.6,
+   "z": 1.3
+  },
+  {
+   "gym": "Fortis MMA",
+   "bouts": 16,
+   "wins": 6,
+   "losses": 10,
+   "winPct": 38,
+   "expectedWins": 6.8,
+   "winsAboveExpected": -0.8,
+   "z": -0.42
+  },
+  {
+   "gym": "Nova Uniao",
+   "bouts": 16,
+   "wins": 8,
+   "losses": 8,
+   "winPct": 50,
+   "expectedWins": 8.4,
+   "winsAboveExpected": -0.4,
+   "z": -0.23
+  },
+  {
+   "gym": "Elevation Fight Team",
+   "bouts": 15,
+   "wins": 8,
+   "losses": 7,
+   "winPct": 53,
+   "expectedWins": 6.6,
+   "winsAboveExpected": 1.4,
+   "z": 0.74
+  },
+  {
+   "gym": "Kings MMA",
+   "bouts": 15,
+   "wins": 7,
+   "losses": 8,
+   "winPct": 47,
+   "expectedWins": 7.0,
+   "winsAboveExpected": 0.0,
+   "z": -0.02
+  },
+  {
+   "gym": "The Fighting Nerds",
+   "bouts": 15,
+   "wins": 7,
+   "losses": 8,
+   "winPct": 47,
+   "expectedWins": 7.7,
+   "winsAboveExpected": -0.7,
+   "z": -0.35
+  },
+  {
+   "gym": "Syndicate MMA",
+   "bouts": 13,
+   "wins": 6,
+   "losses": 7,
+   "winPct": 46,
+   "expectedWins": 6.3,
+   "winsAboveExpected": -0.3,
+   "z": -0.19
+  },
+  {
+   "gym": "Valle Flow Striking",
+   "bouts": 12,
+   "wins": 5,
+   "losses": 7,
+   "winPct": 42,
+   "expectedWins": 5.3,
+   "winsAboveExpected": -0.3,
+   "z": -0.15
+  }
+ ],
+ "allGyms": [
+  {
+   "gym": "American Top Team",
+   "bouts": 59,
+   "wins": 27,
+   "losses": 32,
+   "winPct": 46,
+   "expectedWins": 30.3,
+   "winsAboveExpected": -3.3,
+   "z": -0.88
+  },
+  {
+   "gym": "Kill Cliff FC",
+   "bouts": 41,
+   "wins": 23,
+   "losses": 18,
+   "winPct": 56,
+   "expectedWins": 20.6,
+   "winsAboveExpected": 2.4,
+   "z": 0.78
+  },
+  {
+   "gym": "Xtreme Couture",
+   "bouts": 34,
+   "wins": 21,
+   "losses": 13,
+   "winPct": 62,
+   "expectedWins": 17.5,
+   "winsAboveExpected": 3.5,
+   "z": 1.22
+  },
+  {
+   "gym": "Team Alpha Male",
+   "bouts": 26,
+   "wins": 11,
+   "losses": 15,
+   "winPct": 42,
+   "expectedWins": 12.5,
+   "winsAboveExpected": -1.5,
+   "z": -0.6
+  },
+  {
+   "gym": "MMA Lab",
+   "bouts": 22,
+   "wins": 8,
+   "losses": 14,
+   "winPct": 36,
+   "expectedWins": 10.5,
+   "winsAboveExpected": -2.5,
+   "z": -1.1
+  },
+  {
+   "gym": "Factory X",
+   "bouts": 22,
+   "wins": 9,
+   "losses": 13,
+   "winPct": 41,
+   "expectedWins": 10.2,
+   "winsAboveExpected": -1.2,
+   "z": -0.54
+  },
+  {
+   "gym": "City Kickboxing",
+   "bouts": 18,
+   "wins": 14,
+   "losses": 4,
+   "winPct": 78,
+   "expectedWins": 9.0,
+   "winsAboveExpected": 5.0,
+   "z": 2.4
+  },
+  {
+   "gym": "Chute Boxe Diego Lima",
+   "bouts": 17,
+   "wins": 11,
+   "losses": 6,
+   "winPct": 65,
+   "expectedWins": 8.4,
+   "winsAboveExpected": 2.6,
+   "z": 1.3
+  },
+  {
+   "gym": "Fortis MMA",
+   "bouts": 16,
+   "wins": 6,
+   "losses": 10,
+   "winPct": 38,
+   "expectedWins": 6.8,
+   "winsAboveExpected": -0.8,
+   "z": -0.42
+  },
+  {
+   "gym": "Nova Uniao",
+   "bouts": 16,
+   "wins": 8,
+   "losses": 8,
+   "winPct": 50,
+   "expectedWins": 8.4,
+   "winsAboveExpected": -0.4,
+   "z": -0.23
+  },
+  {
+   "gym": "Elevation Fight Team",
+   "bouts": 15,
+   "wins": 8,
+   "losses": 7,
+   "winPct": 53,
+   "expectedWins": 6.6,
+   "winsAboveExpected": 1.4,
+   "z": 0.74
+  },
+  {
+   "gym": "Kings MMA",
+   "bouts": 15,
+   "wins": 7,
+   "losses": 8,
+   "winPct": 47,
+   "expectedWins": 7.0,
+   "winsAboveExpected": 0.0,
+   "z": -0.02
+  },
+  {
+   "gym": "The Fighting Nerds",
+   "bouts": 15,
+   "wins": 7,
+   "losses": 8,
+   "winPct": 47,
+   "expectedWins": 7.7,
+   "winsAboveExpected": -0.7,
+   "z": -0.35
+  },
+  {
+   "gym": "Syndicate MMA",
+   "bouts": 13,
+   "wins": 6,
+   "losses": 7,
+   "winPct": 46,
+   "expectedWins": 6.3,
+   "winsAboveExpected": -0.3,
+   "z": -0.19
+  },
+  {
+   "gym": "Valle Flow Striking",
+   "bouts": 12,
+   "wins": 5,
+   "losses": 7,
+   "winPct": 42,
+   "expectedWins": 5.3,
+   "winsAboveExpected": -0.3,
+   "z": -0.15
+  },
+  {
+   "gym": "Fight Ready",
+   "bouts": 11,
+   "wins": 4,
+   "losses": 7,
+   "winPct": 36,
+   "expectedWins": 5.3,
+   "winsAboveExpected": -1.3,
+   "z": -0.81
+  },
+  {
+   "gym": "Renzo Gracie Philly",
+   "bouts": 10,
+   "wins": 7,
+   "losses": 3,
+   "winPct": 70,
+   "expectedWins": 5.3,
+   "winsAboveExpected": 1.7,
+   "z": 1.06
+  },
+  {
+   "gym": "Eagles MMA",
+   "bouts": 9,
+   "wins": 7,
+   "losses": 2,
+   "winPct": 78,
+   "expectedWins": 5.0,
+   "winsAboveExpected": 2.0,
+   "z": 1.37
+  },
+  {
+   "gym": "Entram Gym",
+   "bouts": 9,
+   "wins": 6,
+   "losses": 3,
+   "winPct": 67,
+   "expectedWins": 4.9,
+   "winsAboveExpected": 1.1,
+   "z": 0.79
+  },
+  {
+   "gym": "Enbo Fight Club",
+   "bouts": 9,
+   "wins": 7,
+   "losses": 2,
+   "winPct": 78,
+   "expectedWins": 4.6,
+   "winsAboveExpected": 2.4,
+   "z": 1.64
+  },
+  {
+   "gym": "Fusion X-Cel Performance",
+   "bouts": 8,
+   "wins": 3,
+   "losses": 5,
+   "winPct": 38,
+   "expectedWins": 3.6,
+   "winsAboveExpected": -0.6,
+   "z": -0.43
+  },
+  {
+   "gym": "Tiger Muay Thai",
+   "bouts": 8,
+   "wins": 5,
+   "losses": 3,
+   "winPct": 62,
+   "expectedWins": 3.9,
+   "winsAboveExpected": 1.1,
+   "z": 0.82
+  },
+  {
+   "gym": "Raty Team",
+   "bouts": 7,
+   "wins": 1,
+   "losses": 6,
+   "winPct": 14,
+   "expectedWins": 3.2,
+   "winsAboveExpected": -2.2,
+   "z": -1.7
+  },
+  {
+   "gym": "4oz. Fight Club",
+   "bouts": 7,
+   "wins": 6,
+   "losses": 1,
+   "winPct": 86,
+   "expectedWins": 3.8,
+   "winsAboveExpected": 2.2,
+   "z": 1.68
+  },
+  {
+   "gym": "Brazilian TKO",
+   "bouts": 7,
+   "wins": 4,
+   "losses": 3,
+   "winPct": 57,
+   "expectedWins": 3.0,
+   "winsAboveExpected": 1.0,
+   "z": 0.78
+  },
+  {
+   "gym": "Serra-Longo Fight Team",
+   "bouts": 6,
+   "wins": 5,
+   "losses": 1,
+   "winPct": 83,
+   "expectedWins": 2.7,
+   "winsAboveExpected": 2.3,
+   "z": 1.95
+  },
+  {
+   "gym": "Galpao da Luta",
+   "bouts": 6,
+   "wins": 2,
+   "losses": 4,
+   "winPct": 33,
+   "expectedWins": 3.3,
+   "winsAboveExpected": -1.3,
+   "z": -1.12
+  },
+  {
+   "gym": "GAEA Project",
+   "bouts": 6,
+   "wins": 3,
+   "losses": 3,
+   "winPct": 50,
+   "expectedWins": 2.8,
+   "winsAboveExpected": 0.2,
+   "z": 0.2
+  },
+  {
+   "gym": "Team Lucas Mineiro",
+   "bouts": 6,
+   "wins": 4,
+   "losses": 2,
+   "winPct": 67,
+   "expectedWins": 3.6,
+   "winsAboveExpected": 0.4,
+   "z": 0.38
+  },
+  {
+   "gym": "Chute Boxe Joao Emilio",
+   "bouts": 6,
+   "wins": 5,
+   "losses": 1,
+   "winPct": 83,
+   "expectedWins": 3.0,
+   "winsAboveExpected": 2.0,
+   "z": 1.61
+  },
+  {
+   "gym": "Lobo Gym MMA",
+   "bouts": 6,
+   "wins": 3,
+   "losses": 3,
+   "winPct": 50,
+   "expectedWins": 2.8,
+   "winsAboveExpected": 0.2,
+   "z": 0.18
+  },
+  {
+   "gym": "Havas MMA",
+   "bouts": 6,
+   "wins": 5,
+   "losses": 1,
+   "winPct": 83,
+   "expectedWins": 2.7,
+   "winsAboveExpected": 2.3,
+   "z": 1.89
+  }
+ ]
+}

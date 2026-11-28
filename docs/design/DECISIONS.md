@@ -2,6 +2,9 @@
 
 Format: date — decision — who — where it shows up.
 
+## 2026-11-28 (UFC gyms analysis article, draft)
+- Draft article `analysis-ufc-gyms-2025.html` ("Do UFC gyms decide fights?"): 544 UFC bouts from 2025, gym wins against expected wins from fighters' records going in. Finding: no gym effect beyond what records predict. Figures come from `data/ufc-gym-analysis-2025.json`, and `scripts/build-ufc-gym-article.py` builds the page from it. Not linked from navigation and set to noindex until the owner decides where analysis articles live. Chart is HTML and CSS (12 px minimum, reflows at 390 px), not an image.
+
 ## 2026-11-26 (Form: title holders keep half their age credit)
 - **A title holder's age part in Form is at least 0.5** (owner: "Gane under 80 and Volk at 85 as defending champs?", then "Half credit"). A title holder is a fighter whose latest title-fight result is a win with no loss since. Age was 15% of Form and reached zero at 38, which held 36-38-year-old champions down (Gane 76.6 to 83.5, Volkanovski 86.2 to 93.0, Gaethje 81.8 to 90.0). Backtest unchanged (Brier 0.2331 from 2022, 0.2401 against 0.2404 in 2018-2021). 160 fighters move by more than 0.05, because former champions who have not lost since a title win count too; non-champions can slip a little as the percentile rescales (Valter Walker 94.16 to 93.73, rank unchanged). `scripts/ufc-form-champion-age.py` re-runs the test.
 - **A title-win bonus on opponent strength was tested and not added** (owner: "No"). Accuracy flat; champions gained 0.4 on average and the biggest rises went to former title winners.
