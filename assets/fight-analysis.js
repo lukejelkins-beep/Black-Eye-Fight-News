@@ -274,12 +274,18 @@
     const chip = x => '<b class="is-' + (x === 'W' ? 'w' : x === 'L' ? 'l' : 'd') + '">' + esc(x === 'NC' ? 'NC' : x) + '</b>';
     const stat = (s, label) => (s.stats.find(x => x.label === label) || {}).value || '';
     const hubDiv = d => String(d || '').toLowerCase().replace(/[\u2019']/g, '').replace(/^women?s\s+/, 'womens-').replace(/\s+/g, '-');
+    /* Owner, 28 Nov 2026: the same official belt cut-out for every champion, scaled so each head is the same size and
+       height (assets/cutout-fit.js), borderless: the photo fades into the page above the details. */
+    const belts = o.belts || {}, Fit = root.BEFNCutoutFit;
     const tile = (s, i) => {
-      const f = s.figure, pic = f.kind === 'none' ? '<span class="fa-ch-ini" aria-hidden="true">' + esc(f.initials) + '</span>' :
+      const k = slug(s.name), belt = belts[k];
+      const fitted = belt && Fit ? Fit.style('champion', k, { head: 44, crown: 4 }) : '';
+      const f = s.figure, pic = belt && fitted ? '<img class="is-fit" src="' + esc(belt) + '" alt="" style="' + fitted + '" ' + (i < 4 ? '' : 'loading="lazy" ') + 'decoding="async" onerror="this.remove()">' :
+        f.kind === 'none' ? '<span class="fa-ch-ini" aria-hidden="true">' + esc(f.initials) + '</span>' :
         '<img src="' + esc(f.url) + '" alt="" ' + (i < 4 ? '' : 'loading="lazy" ') + 'decoding="async" onerror="this.remove()">';
       const days = stat(s, 'Days as champion'), def = stat(s, 'Title defences'), rec = stat(s, 'UFC record') || stat(s, 'Pro record');
       const name = s.href ? '<a class="fa-ch-name" href="' + esc(s.href) + '">' + esc(s.name) + '</a>' : '<span class="fa-ch-name">' + esc(s.name) + '</span>';
-      return '<li class="fa-ch"><span class="fa-ch-pic is-' + esc(f.kind) + '">' + pic + '</span><span class="fa-ch-body">' +
+      return '<li class="fa-ch"><span class="fa-ch-pic is-' + (belt && fitted ? 'belt' : esc(f.kind)) + '">' + pic + '</span><span class="fa-ch-body">' +
         '<a class="fa-ch-div" href="#fighters" data-hub-division="' + esc(hubDiv(s.division)) + '">' + esc(shortDiv(s.division)) + '</a>' + name +
         '<span class="fa-ch-meta">' + esc([rec, days ? days + ' days' : '', def ? def + (def === '1' ? ' defence' : ' defences') : ''].filter(Boolean).join(' · ')) + '</span>' +
         (s.form ? '<span class="fa-cs-l5" role="img" aria-label="' + esc('Last ' + s.form.length + ', newest first: ' + s.form.join(' ')) + '">' + s.form.map(chip).join('') + '</span>' : '') +
@@ -287,6 +293,16 @@
     };
     return '<section class="sov-blk fa-champs-strip" data-portrait-ignore><div class="sov-hd fa-cs-hd"><h2>' + esc(o.title) + '</h2></div>' +
       '<ul class="fa-ch-list">' + slides.map(tile).join('') + '</ul></section>';
+  }
+
+  /* The owner-supplied official UFC belt cut-outs (data/ufc-champion-photo-register.json): slug -> file. */
+  function beltFiles(reg) {
+    const out = {};
+    for (const p of (reg && reg.photos) || []) {
+      const f = p && p.cutout && p.cutout.file;
+      if (p.slug && typeof f === 'string' && /^assets\/img\/ufc-champions\/cutout\/[a-z0-9-]+\.webp$/.test(f)) out[p.slug] = f;
+    }
+    return out;
   }
 
   /* ---------- rendering ---------- */
@@ -387,7 +403,7 @@
     const H = helpers(), D = ctx.data || {}, now = ctx.now;
     const slides = mmaSlides({ champions: D.champions && D.champions.mma, now, events: ctx.events, form: ctx.form, regs: regsOf(ctx, 'ufc'), portrait: portraitOf(ctx) });
     return '<div class="sov fa fa-mma"><a class="fp-teaser" href="#predictions"><span><b>Fight predictions</b><small>Who wins, whether it ends in a finish and how, for the announced UFC cards</small></span><span class="fp-teaser-go">Open</span></a>' +
-      '<a class="fp-teaser" href="analysis-ufc-gyms.html"><span><b>Do UFC gyms decide fights?</b><small>UFC fights in 2025 and 2026: gym records against what was expected</small></span><span class="fp-teaser-go">Read</span></a>' + champStripHTML(slides, { title: 'UFC champions' }) +
+      '<a class="fp-teaser" href="analysis-ufc-gyms.html"><span><b>Do UFC gyms decide fights?</b><small>UFC fights in 2025 and 2026: gym records against what was expected</small></span><span class="fp-teaser-go">Read</span></a>' + champStripHTML(slides, { title: 'UFC champions', belts: beltFiles(ctx.belts) }) +
       '<div class="fa-two">' + endedHTML(H, withClips(ended(recent(ctx.results, 'MMA', now)), ctx, 'mma'), 'mma') + fightsHTML(H, titleFights(ctx.events, 'mma', now), 'UFC title fights coming up') + '</div></div>';
   }
 
@@ -441,10 +457,12 @@
     if (root.addEventListener) root.addEventListener('resize', () => { if (sec.isConnected) track.scrollLeft = slides[cur].offsetLeft; });
   }
   const URLS = { events: 'data/upcoming-cards.json', results: 'data/results.json', form: 'data/ufc-fighter-form.json',
-    ufcCutouts: 'data/ufc-cutout-register.json', boxingCutouts: 'data/boxing-cutout-register.json', fullbody: 'data/fullbody-cutout-register.json', film: 'data/fight-film.json' };
-  const NEEDS = { mma: ['events', 'results', 'form', 'ufcCutouts', 'fullbody', 'film'], boxing: ['events', 'results', 'boxingCutouts', 'fullbody', 'film'] };
+    ufcCutouts: 'data/ufc-cutout-register.json', belts: 'data/ufc-champion-photo-register.json', boxingCutouts: 'data/boxing-cutout-register.json', fullbody: 'data/fullbody-cutout-register.json', film: 'data/fight-film.json' };
+  const NEEDS = { mma: ['events', 'results', 'form', 'ufcCutouts', 'fullbody', 'film', 'belts', 'heads'], boxing: ['events', 'results', 'boxingCutouts', 'fullbody', 'film'] };
   const st = {}, pending = {};
   function get(key) {
+    // Head measurements come through the shared helper, so the page fetches them once.
+    if (key === 'heads') return pending.heads || (pending.heads = (root.BEFNCutoutFit ? root.BEFNCutoutFit.load() : Promise.resolve(null)).then(v => (st.heads = v)));
     if (!pending[key]) pending[key] = fetch(URLS[key]).then(r => r.ok ? r.json() : null).catch(() => null).then(v => {
       st[key] = key === 'events' ? (v && Array.isArray(v.events) ? v.events : []) : key === 'results' ? (v || { results: [] }) : v;
       return st[key];

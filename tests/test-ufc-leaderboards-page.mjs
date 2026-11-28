@@ -32,7 +32,8 @@ function sandbox({data=null,fail=false}={}){
   escapeHTML:v=>String(v).replace(/</g,"&lt;").replace(/>/g,"&gt;"),
   byName:new Map([["verifiedathlete",{id:"mma-ufc--verified-athlete"}]]),
   norm:v=>String(v).toLowerCase().replace(/[^a-z0-9]/g,""),
-  opponentPhoto:()=>"",ordinal:n=>n+"th",encodeURIComponent,Math,Number,String,Object,Array
+  opponentPhoto:()=>"",ordinal:n=>n+"th",encodeURIComponent,Math,Number,String,Object,Array,
+  formData:null // the Form file is loaded elsewhere in the page; these tests run without it
  };
  const api=vm.runInNewContext(block+"\n({renderV3Boards,boardRows,boardValue,boardRowHTML,searchRows,searchHTML,state:boardState,set:d=>{boardData=d}})",ctx);
  return {root,api};
@@ -81,6 +82,30 @@ test("rating boards ask for five full-stat fights and ignore the window",()=>{
  assert.equal(view.isRating,true);
  assert.equal(view.minimum,5);
  assert.deepEqual(view.rows.map(r=>r.f),[2],"a four-fight rating is not listed");
+});
+test("a chosen window rebuilds the Ratings boards from that window's own rows; Form and an older file stay on career",()=>{
+ const {api}=sandbox();
+ // Window rows use the same fields as the career ratings. Fighter 3 has three fights in the window (below the career five).
+ api.set({...data,windows:{last5:"Last 5 fights",l12:"Last 12 months",l36:"Last 36 months",career:"UFC career"},
+  ratingWindows:{l12:[[3,66,50,50,50,50,50,3],[0,71,50,50,50,50,50,4]]}});
+ Object.assign(api.state,{metric:"overall",window:"l12",ratingWindow:"l12",division:"all"});
+ let view=api.boardRows();
+ assert.equal(view.ratingWindow,"l12");
+ assert.equal(view.minimum,3,"a window needs the stat boards' three fights, not the career five");
+ assert.deepEqual(view.rows.map(r=>[r.f,r.v]),[[0,71],[3,66]],"ordered by the window's own score");
+ api.state.metric="form";
+ assert.equal(api.boardRows().ratingWindow,"career","Form is right now whatever the window");
+ api.state.metric="overall";api.state.ratingWindow="career";
+ view=api.boardRows();
+ assert.equal(view.ratingWindow,"career");
+ assert.deepEqual(view.rows.map(r=>r.f),[2],"career rating is unchanged");
+ api.set(data);api.state.ratingWindow="l12";
+ assert.equal(api.boardRows().ratingWindow,"career","a file without ratingWindows falls back to career");
+});
+test("the window buttons set the Ratings window and the hub keeps asking for career",()=>{
+ assert.match(block,/boardState\.ratingWindow=w\.dataset\.boardWindow/);
+ assert.match(block,/window:"l36",ratingWindow:"career"\};\s*return \(metrics/);
+ assert.match(block,/ratingWindow:"career",division:"all"/,"the page opens on the career rating");
 });
 test("rows link to profiles internally and show sample and tags",()=>{
  const {api}=sandbox();api.set(data);

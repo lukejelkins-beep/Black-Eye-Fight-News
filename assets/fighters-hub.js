@@ -67,6 +67,19 @@
   return '<img class="fh-face is-photo'+c+'" src="assets/img/ufc/'+esc(f.slug)+'-portrait.webp" alt="'+alt+
    '" loading="lazy" onerror="this.replaceWith(BEFNFightersHub.silhouette(\''+(cls||"")+'\'))">';
  }
+ // Consistent cut-outs (owner, 28 Nov 2026): the champion card uses the official belt portrait and the division pulse
+ // tiles the fighter's cut-out, each scaled so the head is the same size and height (assets/cutout-fit.js). Falls back
+ // to the usual image when a cut-out or its measurement is missing.
+ function fitImg(f,set,o,cls){
+  const Fit=window.BEFNCutoutFit,file=set==="champion"?st.belts?.[f.slug]:(st.cuts?.[f.slug]?.ok===true?"assets/img/ufc-cutouts/"+f.slug+".webp":"");
+  const style=file&&Fit?Fit.style(set,f.slug,o):"";
+  // No usable cut-out: the portrait it would have been cut from has the same framing, so place it with the typical
+  // fighter measurements (median of the measured cut-outs) and the head still comes out the same size.
+  if(!style&&set==="fighter"&&Fit?.fit&&st.cuts&&st.cuts[f.slug]?.ok!==true)
+   return '<img class="fh-fit is-photo'+(cls?" "+cls:"")+'" src="assets/img/ufc/'+esc(f.slug)+'-portrait.webp" alt="'+esc(f.name)+'" style="'+Fit.fit([400,500,16,159,200],o)+'" loading="lazy" onerror="this.replaceWith(BEFNFightersHub.silhouette(\'\'))">';
+  if(!style)return img(f,cls);
+  return '<img class="fh-fit'+(cls?" "+cls:"")+'" src="'+esc(file)+'" alt="'+esc(f.name)+'" style="'+style+'" loading="lazy">';
+ }
  function silhouette(cls){
   const s=document.createElement("span");
   s.className="fh-face fh-none"+(cls?" "+cls:"");s.setAttribute("aria-hidden","true");
@@ -176,7 +189,7 @@
    list.map((p,i)=>{
     const t=hi===lo?1:(p.top5Form-lo)/(hi-lo),h=p.hottest,f=h&&st.data.fighters[h.slug];
     return '<div class="fh-tile'+(i===0?" is-top":"")+'" style="background:linear-gradient(135deg,'+mix(t)+" 0%,"+mix(Math.max(0,t-.35))+' 100%)">'+
-     (f?'<a class="fh-tile-pic" href="'+url(f)+'" aria-label="'+esc(f.name)+' profile">'+img(f)+"</a>":"")+
+     (f?'<a class="fh-tile-pic is-fit" href="'+url(f)+'" aria-label="'+esc(f.name)+' profile">'+fitImg(f,"fighter",{head:62,crown:12})+"</a>":"")+
      '<div class="fh-tile-body"><button type="button" data-fh-div="'+esc(p.slug)+'"><span class="fh-tag">'+(i===0?"Hottest division":"#"+(i+1))+
      "</span><span>"+esc(LABEL[p.slug])+"</span></button>"+
      '<span class="fh-depth">'+dec2(p.top5Form)+'</span><span class="fh-soft">Top-5 form</span>'+
@@ -197,7 +210,7 @@
    '<span class="fh-soft">'+rec(champ)+" in the UFC</span>"+last5(champ)+
    '<span class="fh-champ-form"><b class="fh-red">'+form(champ)+'</b><span class="fh-soft">Form</span></span>'+
    '<span class="fh-champ-ovr">Overall <b>'+ovr(champ)+"</b></span>"+badgesHTML(champ)+"</div>"+
-   '<a class="fh-champ-pic" href="'+url(champ)+'">'+img(champ)+"</a></section>";
+   '<a class="fh-champ-pic is-fit" href="'+url(champ)+'">'+fitImg(champ,"champion",{head:58,crown:16})+"</a></section>";
   // The champion sits in the table as "C" so the champion and the top 15 sort together.
   if(ladder.length)h+='<section class="fh-sec fh-padded">'+head((champ?"Champion and top 15":"Top 15"),"")+ladderSortHTML()+
    '<div class="fh-ladder" role="table" aria-label="'+esc(LABEL[div])+' top 15"><div class="fh-ladder-head" role="row">'+
@@ -301,8 +314,11 @@
   if(st.data||st.loading)return;
   st.loading=true;
   Promise.all([fetch("data/ufc-fighter-form.json").then(r=>r.ok?r.json():null).catch(()=>null),
-   fetch("data/ufc-cutout-register.json").then(r=>r.ok?r.json():null).catch(()=>null)]).then(([f,c])=>{
+   fetch("data/ufc-cutout-register.json").then(r=>r.ok?r.json():null).catch(()=>null),
+   fetch("data/ufc-champion-photo-register.json").then(r=>r.ok?r.json():null).catch(()=>null),
+   window.BEFNCutoutFit?window.BEFNCutoutFit.load():null]).then(([f,c,b])=>{
    st.loading=false;st.data=f&&f.fighters?f:null;st.cuts=c?.cutouts||{};
+   st.belts={};for(const p of b?.photos||[]){const file=p?.cutout?.file;if(p?.slug&&/^assets\/img\/ufc-champions\/cutout\/[a-z0-9-]+\.webp$/.test(file||""))st.belts[p.slug]=file;}
    document.querySelectorAll("[data-befn-fighters-hub]").forEach(render);
   });
  }

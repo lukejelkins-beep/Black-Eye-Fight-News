@@ -402,5 +402,48 @@ class Effectiveness(unittest.TestCase):
             self.assertAlmostEqual(sum(d["weight"] for d in r.drivers(STRONG, {}, skill)), 1.0, msg=skill)
 
 
+class WindowedResults(unittest.TestCase):
+    """results_in_window: the results part of a rating built from only a window's bouts (owner, 28 Nov 2026)."""
+
+    def bouts(self):
+        mk = lambda i, date, a, b, o: {"boutId": i, "date": date, "a": a, "b": b, "outcome": o, "method": "dec",
+                                       "methodDetail": "Unanimous"}
+        return [mk("old", "2023-01-01", "ann", "bea", "W"), mk("mid", "2025-03-01", "ann", "cat", "W"),
+                mk("new", "2026-05-01", "bea", "cat", "L")]
+
+    def test_only_counted_bouts_move_a_rating_and_only_for_the_counted_fighter(self):
+        _state, pre = r.results_walk(self.bouts())
+        out = r.results_in_window(pre, {"ann": {"mid"}, "bea": set(), "cat": {"mid"}}, "2026-06-01")
+        self.assertEqual(out["ann"]["fights"], 1)
+        self.assertEqual(out["cat"]["fights"], 1)
+        self.assertNotIn("bea", out, "a fighter with no bout in the window is not in the results")
+        self.assertGreater(out["ann"]["rating"], r.RESULTS_MEAN)
+        self.assertLess(out["cat"]["rating"], r.RESULTS_MEAN)
+
+    def test_opponent_is_valued_at_their_career_rating_going_in(self):
+        _state, pre = r.results_walk(self.bouts())
+        mid = next(x for x in pre if x[0]["boutId"] == "mid")
+        _bout, ann_going_in, cat_going_in = mid[0], mid[1], mid[2]
+        out = r.results_in_window(pre, {"ann": {"mid"}}, "2025-03-01")
+        expected = 1 / (1 + 10 ** ((cat_going_in - r.RESULTS_MEAN) / 400))
+        want = r.RESULTS_MEAN + r.RESULTS["k"] * (1 + r.RESULTS["boost"]) * (1 - expected)
+        self.assertAlmostEqual(out["ann"]["rating"], want, places=6)
+        self.assertGreater(ann_going_in, r.RESULTS_MEAN, "ann had already won in 2023, cat is valued as the weaker side")
+
+    def test_wider_window_counts_more_fights(self):
+        _state, pre = r.results_walk(self.bouts())
+        narrow = r.results_in_window(pre, {"ann": {"mid"}}, "2026-06-01")
+        wide = r.results_in_window(pre, {"ann": {"old", "mid"}}, "2026-06-01")
+        self.assertEqual((narrow["ann"]["fights"], wide["ann"]["fights"]), (1, 2))
+
+    def test_rate_roster_with_ready_results_matches_the_default_path(self):
+        helper = Roster()
+        fighters = helper.roster()
+        bouts = bouts_for(fighters)
+        default = r.rate_roster(fighters, bouts, "2026-01-01")
+        ready = r.rate_roster(fighters, None, "2026-01-01", None, results=r.results_as_of(bouts, "2026-01-01"))
+        self.assertEqual(default, ready)
+
+
 if __name__ == "__main__":
     unittest.main()

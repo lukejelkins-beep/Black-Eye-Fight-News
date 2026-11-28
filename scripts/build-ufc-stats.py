@@ -974,8 +974,10 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
         w = c["windows"]["weighted"] if len(h) == len(c["history"]) else windows_for(h, as_of)["weighted"]
         rate_inputs[slug] = {"window": w, "history": h, "divisionSlug": c["divisionSlug"], "born": born.get(slug),
                              "height": heights.get(slug), "pool": pools[slug]}
-    ratings = ufc_ratings.rate_roster(rate_inputs,
-                                      results_bouts(per_fighter), as_of.isoformat(), pre_ufc_priors())
+    bouts = results_bouts(per_fighter)
+    priors = pre_ufc_priors()
+    ratings = ufc_ratings.rate_roster(rate_inputs, bouts, as_of.isoformat(), priors)
+    rating_windows = windowed_ratings(rate_inputs, bouts, priors, as_of)
 
     if parity_out:  # inputs + Python raw composites for tests/ufc-ratings-parity.cjs
         rows = []
@@ -1056,7 +1058,7 @@ def build(as_of: dt.date, out_dir: Path, parity_out: Path | None = None, repairs
                                                    separators=(",", ":"), sort_keys=True), encoding="utf-8")
     (out_dir / "divisions.json").write_text(json.dumps(division_averages(index_rows, as_of), separators=(",", ":")),
                                             encoding="utf-8")
-    (out_dir / "leaderboards.json").write_text(json.dumps(build_leaderboards(computed, ratings, as_of),
+    (out_dir / "leaderboards.json").write_text(json.dumps(build_leaderboards(computed, ratings, as_of, rating_windows),
                                                           separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
     return index
 
@@ -1083,7 +1085,42 @@ BOARD_STATS = (
     ("roundWinRate", "Rounds won on the judges' cards", "Finishing", "pct", False, "judging"),
     ("paceRetention", "Output after round 1 vs round 1", "Pace", "pct", False, "rate"),
 )
-BOARD_WINDOWS = ("last5", "l12", "l36", "career")
+BOARD_WINDOWS = ("last5", "l12", "l24", "l36", "career")
+# Windows the BEFN rating can be rebuilt for (owner, 28 Nov 2026): the same blend of results and skills, from only the
+# fights in the window. Career is the headline rating and is not repeated here. last5 is the fighter's own last five.
+RATING_WINDOWS = {"last5": None, "l12": 12, "l24": 24, "l36": 36}
+
+
+def window_fights(history: list[dict], as_of: dt.date, key: str) -> list[dict]:
+    """Newest-first fights of one board window (same cut-off rule as windows_for)."""
+    if key == "last5":
+        return history[:5]
+    if key == "career":
+        return history
+    cutoff = as_of - dt.timedelta(days=int(RATING_WINDOWS[key] * 30.44))
+    return [f for f in history if (parse_date(f["date"]) or as_of) >= cutoff]
+
+
+def windowed_ratings(rate_inputs: dict, bouts: list[dict], priors: dict, as_of: dt.date) -> dict:
+    """window key -> slug -> rating, each worked out from only that window's rated fights. The skills part reads the
+    window's own totals (no recency weights); the results part is ufc_ratings.results_in_window; age and height
+    adjustments and the pool centring are as for the career rating, so 50 is the median fighter of that window."""
+    _state, pre = ufc_ratings.results_walk(bouts, None, priors)
+    out = {}
+    for key in RATING_WINDOWS:
+        inputs, ids = {}, {}
+        for slug, f in rate_inputs.items():
+            fights = window_fights(f["history"], as_of, key)
+            ids[slug] = {x["boutId"] for x in fights}
+            window = aggregate(fights)
+            if (window.get("cageSeconds") or 0) < BOARD_MIN_SECONDS:
+                # Under the boards' cage-time minimum: not rated in this window at all, so no one is ranked and then
+                # dropped (which would leave gaps in the ranks) and the percentiles use the same fighters as the boards.
+                window, ids[slug] = aggregate([]), set()
+            inputs[slug] = {**f, "window": window}
+        results = ufc_ratings.results_in_window(pre, ids, as_of.isoformat())
+        out[key] = {"ratings": ufc_ratings.rate_roster(inputs, None, as_of.isoformat(), None, results=results)}
+    return out
 
 
 def board_value(window: dict, source: str, stat: str):
@@ -1097,7 +1134,15 @@ def board_value(window: dict, source: str, stat: str):
     return round(value, 3) if isinstance(value, (int, float)) else None
 
 
-def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
+def rating_row(position: int, r: dict) -> list:
+    """One rating row, in the order of ratingFields."""
+    return [position, r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
+            r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"],
+            r.get("overallRank"), r.get("pool"),
+            *[r["skills"][k].get("score") for k in ufc_ratings.SKILLS], (r.get("results") or {}).get("score")]
+
+
+def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date, rating_windows: dict | None = None) -> dict:
     """Compact leaderboard file: fighters once, then per-window rows of values (null = not measured)."""
     slugs = sorted(computed)
     position = {slug: i for i, slug in enumerate(slugs)}
@@ -1110,7 +1155,7 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
     for key in BOARD_WINDOWS:
         rows = []
         for slug in slugs:
-            w = computed[slug]["windows"][key]
+            w = computed[slug]["windows"].get(key) or aggregate(window_fights(computed[slug]["history"], as_of, key))
             if (w.get("statFights") or 0) < BOARD_MIN_FIGHTS or (w.get("cageSeconds") or 0) < BOARD_MIN_SECONDS:
                 continue
             values = [board_value(w, source, stat) for stat, *_rest, source in BOARD_STATS]
@@ -1121,10 +1166,17 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
     for slug in slugs:
         r = ratings.get(slug)
         if r and r.get("eligible"):
-            rated.append([position[slug], r["overall"], *[r["skills"][k]["roster"] for k in ufc_ratings.SKILLS],
-                          r["form"]["score"], (r.get("results") or {}).get("percentile"), r["sample"]["statFights"],
-                          r.get("overallRank"), r.get("pool"),
-                          *[r["skills"][k].get("score") for k in ufc_ratings.SKILLS], (r.get("results") or {}).get("score")])
+            rated.append(rating_row(position[slug], r))
+    # The same rating rows as `ratings`, rebuilt for each window (windowed_ratings already applies the boards' minimum of
+    # complete-stat fights and cage time inside the window).
+    rated_windows = {}
+    for key, built in (rating_windows or {}).items():
+        rows = []
+        for slug in slugs:
+            r = built["ratings"].get(slug)
+            if r and r.get("eligible"):
+                rows.append(rating_row(position[slug], r))
+        rated_windows[key] = rows
     labels = {}
     for c in computed.values():
         if c["divisionSlug"] and c["division"]:
@@ -1132,7 +1184,8 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
     return {
         "schema": SCHEMA, "asOf": as_of.isoformat(),
         "minFights": BOARD_MIN_FIGHTS, "minCageSeconds": BOARD_MIN_SECONDS,
-        "windows": {"last5": "Last 5 fights", "l12": "Last 12 months", "l36": "Last 36 months", "career": "UFC career"},
+        "windows": {"last5": "Last 5 fights", "l12": "Last 12 months", "l24": "Last 24 months", "l36": "Last 36 months",
+                    "career": "UFC career"},
         "stats": [{"id": i, "label": l, "group": g, "unit": u, "lowerIsBetter": lb} for i, l, g, u, lb, _ in BOARD_STATS],
         "divisions": dict(sorted(labels.items())),
         "fighterFields": ["slug", "name", "divisionSlug", "officialRank", "champion"],
@@ -1143,6 +1196,8 @@ def build_leaderboards(computed: dict, ratings: dict, as_of: dt.date) -> dict:
         "ratingFields": ["fighter", "overall", *ufc_ratings.SKILLS, "form", "results", "statFights", "overallRank", "pool",
                          *[k + "Score" for k in ufc_ratings.SKILLS], "resultsScore"],
         "ratings": rated,
+        # Same fields as ratings, one list per window; the career list above is the headline BEFN rating.
+        "ratingWindows": rated_windows,
     }
 
 
