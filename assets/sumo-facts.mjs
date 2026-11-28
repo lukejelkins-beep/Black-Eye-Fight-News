@@ -1,10 +1,11 @@
 import {currentFactFeed,HIGH_WIN_PCT_THRESHOLD,rollingWinPercentageRows,ROLLING_BASHO_MAX,FACT_DIVISIONS} from './sumo-facts-data.mjs?v=20261121-v1';
 import {factText,factPeople} from './sumo-fact-engine.mjs?v=20261121-phase2';
+import {storylines} from './sumo-storylines.mjs?v=20261128-model2';
 /* BEFN Sumo Stories: the hub. A fact of the day, themed rows, wrestler/pair search.
  * Facts come from the fact engine index (level B, scoped to BEFN's bout records)
  * and the owner-approved editorial file (level A/C). Nothing here is invented. */
 const ROOT=document.querySelector('#sumo-main');
-const S={roster:null,details:null,photos:{},feed:null,query:'',open:null,view:'stories',rollingBashos:1};
+const S={roster:null,details:null,photos:{},cutouts:{},heads:{},lastBasho:[],feed:null,query:'',open:null,view:'stories',rollingBashos:1};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const profile=w=>'sumo.html#profile/'+encodeURIComponent(w.sourceId);
 const byId=id=>S.roster.rikishi.find(w=>String(w.sourceId)===String(id));
@@ -18,6 +19,17 @@ function portrait(w,cls,priority=false){
  const path=photo(w);
  return '<div class="'+cls+'">'+(path?'<img src="'+esc(path)+'" alt="'+esc(w?.shikonaEn)+'" loading="'+(priority?'eager':'lazy')+'" decoding="async">':
  '<span class="facts-figure-fallback" aria-label="Portrait unavailable">相</span>')+'</div>';
+}
+/* Cut-out (or head crop) for a story card: only derivatives of an approved photo, as sumo.js checks. */
+function derivative(map,id,dir){
+ const d=map?.[String(id)],p=S.photos[String(id)];
+ return d&&p?.approved===true&&d.sourceSha256===p.sha256&&new RegExp('^assets/sumo-photos/'+dir+'/[a-zA-Z0-9_-]+\\.webp$').test(String(d.path||''))?d.path:'';
+}
+/* Photo band on a story card: one or two wrestlers, cut-outs on the sumo blue. */
+function band(ids){
+ const shots=ids.slice(0,2).map(id=>({w:byId(id),src:derivative(S.cutouts,id,'cutout')||derivative(S.heads,id,'head')})).filter(x=>x.w&&x.src);
+ if(!shots.length)return '';
+ return '<div class="st-band'+(shots.length>1?' is-pair':'')+'">'+shots.map(x=>'<img src="'+esc(x.src)+'" alt="'+esc(x.w.shikonaEn)+'" loading="lazy" decoding="async"'+(x.src.includes('/head/')?' class="is-head"':'')+'>').join('')+'</div>';
 }
 /* ---- engine facts -> displayable records ------------------------------- */
 const metricOf=f=>{
@@ -55,16 +67,22 @@ function engineFacts(){
 /* ---- pieces ------------------------------------------------------------- */
 const names=ids=>ids.map(id=>{const w=byId(id);return w?'<a href="'+profile(w)+'">'+esc(w.shikonaEn)+'</a>':'';}).join('');
 function railCard(r){
- return '<article class="st-card"><span class="st-metric">'+esc(r.metric)+'</span>'+
+ return '<article class="st-card">'+band(r.members)+'<span class="st-metric">'+esc(r.metric)+'</span>'+
   '<h3>'+esc(r.t.lead)+'</h3>'+(r.t.rest?'<p>'+esc(r.t.rest)+'</p>':'')+
   '<div class="st-people">'+names(r.members)+'</div><small>'+esc(r.t.scope)+'</small></article>';
 }
 function editorialCard(c){
  const src=/^https:\/\//.test(c.sourceUrl||'')?'<a href="'+esc(c.sourceUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(c.sourceLabel||'Source')+' ↗</a>':'';
  const ids=c.memberIds||[];
- return '<article class="st-card"><span class="st-metric st-tag">'+esc(c.metric||c.tag)+'</span>'+
+ return '<article class="st-card">'+band(ids)+'<span class="st-metric st-tag">'+esc(c.metric||c.tag)+'</span>'+
   '<h3>'+esc(c.headline)+'</h3><p>'+esc(c.description)+'</p>'+
   '<div class="st-people">'+names(ids)+'</div><small>'+(c.kind==='dynamic'?'Tournament snapshot':'Checked '+esc(c.verifiedAt||''))+' '+src+'</small></article>';
+}
+/* Storylines of the last finished basho (sumo-storylines.mjs): big number, tag, photo, link to the review. */
+function storyCard(c){
+ return '<article class="st-card st-story">'+band(c.memberIds||[])+'<span class="st-kicker">'+esc(c.tag)+'</span><span class="st-metric">'+esc(c.metric)+'</span>'+
+  '<h3>'+esc(c.headline)+'</h3><p>'+esc(c.description)+'</p>'+
+  '<div class="st-people">'+names(c.memberIds||[])+'</div><small>BEFN predictor and bout records · <a href="'+esc(c.link)+'">'+(c.link.includes('#predict')?'Power table':'Basho review')+' ›</a></small></article>';
 }
 function row(id,title,sub,cards,{limit=6}={}){
  if(!cards.length)return '';
@@ -144,7 +162,8 @@ function storiesBody(){
   row('records','Records','Honours, re-checked every 90 days.',pick(['records']).map(editorialCard))
  ];
  const thisBasho=live.length?row('basho','This basho','Live from the current tournament. Hidden when data is over 48 hours old.',live.map(editorialCard)):'';
- return factOfTheDay(all)+thisBasho+rows.join('')+ed.join('');
+ const last=S.lastBasho.length?row('lastbasho',S.lastBashoName?'The '+S.lastBashoName+' basho':'The last basho','Who beat the odds, who fell short, and the biggest shock, by BEFN’s predictor.',S.lastBasho.map(storyCard)):'';
+ return factOfTheDay(all)+thisBasho+last+rows.join('')+ed.join('');
 }
 function render(){
  const f=S.feed,highPct=f.fresh?f.rows.filter(w=>w.bouts>=(w.division==='Makushita'?3:5)&&w.wins*100>=HIGH_WIN_PCT_THRESHOLD*w.bouts).length:'—';
@@ -180,6 +199,14 @@ async function main(){
   if(!Array.isArray(roster?.rikishi)||!details?.banzuke)throw Error('Incomplete Sumo data');
   S.roster=roster;S.details=details;S.photos=photos?.bySourceId||{};
   S.feed=currentFactFeed(roster,details,curated);
+  /* Photos and the last basho's storylines are extras: the page shows without them. */
+  const [cut,heads,model,index]=await Promise.all(['data/sumo/cutouts.json','data/sumo/heads.json','data/sumo/predictor.json','data/sumo/basho-archive/index.json'].map(u=>load(u).catch(()=>null)));
+  S.cutouts=cut?.bySourceId||{};S.heads=heads?.bySourceId||{};
+  const lastId=index?.basho?.length?index.basho[index.basho.length-1].bashoId:null;
+  if(model&&/^\d{6}$/.test(String(lastId||''))){
+   const file=await load('data/sumo/basho-archive/'+lastId+'.json').catch(()=>null);
+   try{S.lastBasho=storylines(file,model,roster);S.lastBashoName=new Date(Date.UTC(+lastId.slice(0,4),+lastId.slice(4)-1,1)).toLocaleDateString('en-AU',{month:'long',year:'numeric',timeZone:'UTC'});}catch(e){S.lastBasho=[];}
+  }
   if(new URLSearchParams(location.search).get('view')==='winpct')S.view='winpct';
   render();
  }catch(error){
